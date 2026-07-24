@@ -803,14 +803,14 @@ export declare interface IonFabList extends Components.IonFabList {}
 
 
 @ProxyCmp({
-  inputs: ['collapse', 'mode', 'theme', 'translucent']
+  inputs: ['collapse', 'mode', 'scrollEffect', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', 'mode', 'theme', 'translucent'],
+  inputs: ['collapse', 'mode', 'scrollEffect', 'theme', 'translucent'],
 })
 export class IonFooter {
   protected el: HTMLIonFooterElement;
@@ -891,14 +891,14 @@ export declare interface IonGrid extends Components.IonGrid {}
 
 
 @ProxyCmp({
-  inputs: ['collapse', 'divider', 'mode', 'theme', 'translucent']
+  inputs: ['collapse', 'divider', 'mode', 'scrollEffect', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', 'divider', 'mode', 'theme', 'translucent'],
+  inputs: ['collapse', 'divider', 'mode', 'scrollEffect', 'theme', 'translucent'],
 })
 export class IonHeader {
   protected el: HTMLIonHeaderElement;
@@ -2414,14 +2414,14 @@ export declare interface IonTab extends Components.IonTab {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'expand', 'hideOnScroll', 'mode', 'selectedTab', 'shape', 'theme', 'translucent']
+  inputs: ['color', 'expand', 'mode', 'scrollEffect', 'selectedTab', 'shape', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-tab-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'expand', 'hideOnScroll', 'mode', 'selectedTab', 'shape', 'theme', 'translucent'],
+  inputs: ['color', 'expand', 'mode', 'scrollEffect', 'selectedTab', 'shape', 'theme', 'translucent'],
 })
 export class IonTabBar {
   protected el: HTMLIonTabBarElement;

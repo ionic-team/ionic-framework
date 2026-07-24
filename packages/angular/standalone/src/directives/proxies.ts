@@ -844,14 +844,14 @@ export declare interface IonFabList extends Components.IonFabList {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonFooter,
-  inputs: ['collapse', 'mode', 'theme', 'translucent']
+  inputs: ['collapse', 'mode', 'scrollEffect', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', 'mode', 'theme', 'translucent'],
+  inputs: ['collapse', 'mode', 'scrollEffect', 'theme', 'translucent'],
   standalone: true
 })
 export class IonFooter {
@@ -940,14 +940,14 @@ export declare interface IonGrid extends Components.IonGrid {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonHeader,
-  inputs: ['collapse', 'divider', 'mode', 'theme', 'translucent']
+  inputs: ['collapse', 'divider', 'mode', 'scrollEffect', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', 'divider', 'mode', 'theme', 'translucent'],
+  inputs: ['collapse', 'divider', 'mode', 'scrollEffect', 'theme', 'translucent'],
   standalone: true
 })
 export class IonHeader {
@@ -2163,14 +2163,14 @@ export declare interface IonTab extends Components.IonTab {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonTabBar,
-  inputs: ['color', 'expand', 'hideOnScroll', 'mode', 'selectedTab', 'shape', 'theme', 'translucent']
+  inputs: ['color', 'expand', 'mode', 'scrollEffect', 'selectedTab', 'shape', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-tab-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'expand', 'hideOnScroll', 'mode', 'selectedTab', 'shape', 'theme', 'translucent'],
+  inputs: ['color', 'expand', 'mode', 'scrollEffect', 'selectedTab', 'shape', 'theme', 'translucent'],
   standalone: true
 })
 export class IonTabBar {

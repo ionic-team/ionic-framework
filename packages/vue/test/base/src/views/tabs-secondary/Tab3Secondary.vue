@@ -6,7 +6,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
+      <ion-header scroll-effect="condense">
         <ion-toolbar>
           <ion-title size="large">Tab 3 - Secondary</ion-title>
         </ion-toolbar>

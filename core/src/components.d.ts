@@ -16,7 +16,9 @@ import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/bre
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { FooterScrollEffect } from "./components/footer/footer-interface";
 import { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
+import { HeaderScrollEffect } from "./components/header/header-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -40,7 +42,7 @@ import { SegmentViewScrollEvent } from "./components/segment-view/segment-view-i
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectModalOption } from "./components/select-modal/select-modal-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
-import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+import { TabBarChangedEventDetail, TabBarScrollEffect, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -55,7 +57,9 @@ export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/bre
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { FooterScrollEffect } from "./components/footer/footer-interface";
 export { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
+export { HeaderScrollEffect } from "./components/header/header-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -79,7 +83,7 @@ export { SegmentViewScrollEvent } from "./components/segment-view/segment-view-i
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectModalOption } from "./components/select-modal/select-modal-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
-export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+export { TabBarChangedEventDetail, TabBarScrollEffect, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -1459,12 +1463,17 @@ export namespace Components {
     interface IonFooter {
         /**
           * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
+          * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'fade';
         /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll.
+         */
+        "scrollEffect"?: FooterScrollEffect;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -1536,6 +1545,7 @@ export namespace Components {
     interface IonHeader {
         /**
           * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'condense' | 'fade';
         /**
@@ -1547,6 +1557,10 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. `"fade"` fades the toolbar background on scroll.
+         */
+        "scrollEffect"?: HeaderScrollEffect;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -4042,14 +4056,13 @@ export namespace Components {
          */
         "expand": 'compact' | 'full';
         /**
-          * If `true`, the tab bar will be hidden when the user scrolls down and shown when the user scrolls up. Only applies when the theme is `"ionic"` and `expand` is `"compact"`.
-          * @default false
-         */
-        "hideOnScroll": boolean;
-        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.  Note: `"hide"` is ignored when the tab bar is nested inside an `ion-footer` to avoid leaving an empty footer visible on screen. Set `scroll-effect="hide"` on the footer instead so the entire footer hides together.
+         */
+        "scrollEffect"?: TabBarScrollEffect;
         /**
           * The selected tab component
          */
@@ -7536,12 +7549,17 @@ declare namespace LocalJSX {
     interface IonFooter {
         /**
           * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
+          * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'fade';
         /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll.
+         */
+        "scrollEffect"?: FooterScrollEffect;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -7609,6 +7627,7 @@ declare namespace LocalJSX {
     interface IonHeader {
         /**
           * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'condense' | 'fade';
         /**
@@ -7620,6 +7639,10 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. `"fade"` fades the toolbar background on scroll.
+         */
+        "scrollEffect"?: HeaderScrollEffect;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -10209,16 +10232,15 @@ declare namespace LocalJSX {
          */
         "expand"?: 'compact' | 'full';
         /**
-          * If `true`, the tab bar will be hidden when the user scrolls down and shown when the user scrolls up. Only applies when the theme is `"ionic"` and `expand` is `"compact"`.
-          * @default false
-         */
-        "hideOnScroll"?: boolean;
-        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         "onIonTabBarChanged"?: (event: IonTabBarCustomEvent<TabBarChangedEventDetail>) => void;
         "onIonTabBarLoaded"?: (event: IonTabBarCustomEvent<void>) => void;
+        /**
+          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.  Note: `"hide"` is ignored when the tab bar is nested inside an `ion-footer` to avoid leaving an empty footer visible on screen. Set `scroll-effect="hide"` on the footer instead so the entire footer hides together.
+         */
+        "scrollEffect"?: TabBarScrollEffect;
         /**
           * The selected tab component
          */
@@ -11015,6 +11037,7 @@ declare namespace LocalJSX {
         "side": 'start' | 'end' | 'top' | 'bottom';
     }
     interface IonFooterAttributes {
+        "scrollEffect": FooterScrollEffect;
         "collapse": 'fade';
         "translucent": boolean;
     }
@@ -11028,6 +11051,7 @@ declare namespace LocalJSX {
         "fixed": boolean;
     }
     interface IonHeaderAttributes {
+        "scrollEffect": HeaderScrollEffect;
         "collapse": 'condense' | 'fade';
         "divider": boolean;
         "translucent": boolean;
@@ -11465,7 +11489,7 @@ declare namespace LocalJSX {
     interface IonTabBarAttributes {
         "color": Color;
         "selectedTab": string;
-        "hideOnScroll": boolean;
+        "scrollEffect": TabBarScrollEffect;
         "translucent": boolean;
         "expand": 'compact' | 'full';
         "shape": 'soft' | 'round' | 'rectangular';

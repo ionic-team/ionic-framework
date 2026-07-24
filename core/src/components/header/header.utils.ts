@@ -76,7 +76,7 @@ export const setToolbarBackgroundOpacity = (headerEl: HTMLIonHeaderElement, opac
    * has collapsed, so it is handled
    * by handleHeaderFade()
    */
-  if (headerEl.collapse === 'fade') {
+  if ((headerEl.scrollEffect ?? headerEl.collapse) === 'fade') {
     return;
   }
 
@@ -262,21 +262,13 @@ export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, con
  * Get the role type for the ion-header.
  *
  * @param isInsideMenu If ion-header is inside ion-menu.
- * @param isCondensed If ion-header has collapse="condense".
- * @param theme The current theme.
- * @returns 'none' if inside ion-menu or if condensed in md
- * theme, otherwise 'banner'.
+ * @returns 'none' if inside ion-menu, otherwise 'banner'.
+ * Condensed headers start as 'banner' and have their role
+ * toggled dynamically by setHeaderActive() on scroll.
  */
-export const getRoleType = (isInsideMenu: boolean, isCondensed: boolean, theme: 'ios' | 'md' | 'ionic') => {
+export const getRoleType = (isInsideMenu: boolean) => {
   // If the header is inside a menu, it should not have the banner role.
   if (isInsideMenu) {
-    return ROLE_NONE;
-  }
-  /**
-   * Only apply role="none" to `md` & `ionic` theme condensed headers
-   * since the large header is never shown.
-   */
-  if (isCondensed && theme !== 'ios') {
     return ROLE_NONE;
   }
   // Default to banner role.

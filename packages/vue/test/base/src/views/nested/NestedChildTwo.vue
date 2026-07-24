@@ -10,7 +10,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
+      <ion-header scroll-effect="condense">
         <ion-toolbar>
           <ion-title size="large">Nested Child Two</ion-title>
         </ion-toolbar>
