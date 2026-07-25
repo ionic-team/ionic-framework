@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
+import { ariaAttributes } from '@utils/helpers';
 import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
@@ -150,30 +151,34 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 });
 
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('button: aria description updates'), () => {
-    test('native button updates aria-description when host attribute changes', async ({ page }) => {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
-      });
+  test.describe(title('button: aria attribute sync'), () => {
+    // Mirrors the ignoreList passed to inheritAriaAttributes/watchForAriaAttributeChanges
+    // in button.tsx. aria-disabled is excluded because button.tsx manages it internally
+    // via the `disabled` prop.
+    const watchedAriaAttributes = ariaAttributes.filter((attr) => attr !== 'aria-disabled');
 
-      await page.setContent(
-        `
-        <ion-button aria-label="label" aria-description="0">Button</ion-button>
-      `,
-        config
-      );
+    for (const attr of watchedAriaAttributes) {
+      test(`native button updates ${attr} when host attribute changes`, async ({ page }) => {
+        await page.setContent(`<ion-button ${attr}="initial">Button</ion-button>`, config);
+
+        const host = page.locator('ion-button');
+        const nativeButton = host.locator('button');
+
+        await expect(nativeButton).toHaveAttribute(attr, 'initial');
+
+        await host.evaluate((el, attr) => el.setAttribute(attr, 'updated'), attr);
+
+        await expect(nativeButton).toHaveAttribute(attr, 'updated');
+      });
+    }
+
+    test('does not sync aria-disabled, since button.tsx manages it internally', async ({ page }) => {
+      await page.setContent(`<ion-button aria-disabled="true">Button</ion-button>`, config);
 
       const host = page.locator('ion-button');
       const nativeButton = host.locator('button');
 
-      await expect(nativeButton).toHaveAttribute('aria-description', '0');
-
-      await host.evaluate((el) => {
-        el.setAttribute('aria-description', '1');
-      });
-
-      await expect(nativeButton).toHaveAttribute('aria-description', '1');
+      await expect(nativeButton).not.toHaveAttribute('aria-disabled', 'true');
     });
   });
 });
