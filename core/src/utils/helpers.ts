@@ -121,7 +121,7 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
  * Removed deprecated attributes.
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
  */
-const ariaAttributes = [
+export const ariaAttributes = [
   'role',
   'aria-activedescendant',
   'aria-atomic',
@@ -188,6 +188,76 @@ export const inheritAriaAttributes = (el: HTMLElement, ignoreList?: string[]) =>
     attributesToInherit = attributesToInherit.filter((attr) => !ignoreList.includes(attr));
   }
   return inheritAttributes(el, attributesToInherit);
+};
+
+export interface AttributeWatcher {
+  disconnect: () => void;
+}
+
+/**
+ * Watches an element for changes to a given set of attributes and calls
+ * onChange whenever one of them is set. Because inheritAttributes() strips
+ * the attribute from the host as it reads it, any subsequent mutation is
+ * just checked that the new value isn't null.
+ */
+export const watchAttributes = (
+  el: HTMLElement,
+  attributes: string[],
+  onChange: (changed: { [k: string]: string }) => void
+): AttributeWatcher => {
+    if (typeof MutationObserver === 'undefined') {
+      // Not available in Stencil's mock-doc test environment (used by
+      // `stencil test --spec`), and, as a defensive fallback, environments
+      // without native MutationObserver support.
+      return { disconnect: () => {} };
+    }
+  
+  // Set up mutation observer to observe attribute changes
+  const observer = new MutationObserver((mutations) => {
+    const changed: { [k: string]: string } = {};
+    for (const mutation of mutations) {
+      if (mutation.type !== 'attributes' || !mutation.attributeName) continue;
+      const name = mutation.attributeName;
+      if (!attributes.includes(name)) continue;
+      const value = el.getAttribute(name);
+      if (value === null) continue;
+      changed[name] = value;
+    }
+
+    // If attribute changes, re-strip so the value doesn't live on both host 
+    // and native element.
+    if (Object.keys(changed).length > 0) {
+      Object.keys(changed).forEach((name) => el.removeAttribute(name));
+      onChange(changed);
+    }
+  });
+
+  // Watch for attribute changes on this element
+  observer.observe(el, { attributes: true, attributeFilter: attributes });
+
+  // Stop watching, called by `disconnectedCallback`
+  return { disconnect: () => observer.disconnect() };
+};
+
+/**
+ * Watches an element for changes to ARIA attributes (and `role`) and invokes
+ * a callback whenever one is set externally, so that inherited ARIA state
+ * stays in sync for the lifetime of the component — not just at initial load.
+ *
+ * This should be called once in componentWillLoad, alongside the initial
+ * call to inheritAriaAttributes, and the returned AttributeWatcher must be
+ * disconnected in disconnectedCallback to avoid leaking the observer.
+ */
+export const watchForAriaAttributeChanges = (
+  el: HTMLElement,
+  onChange: (changed: { [k: string]: string }) => void,
+  ignoreList?: string[]
+): AttributeWatcher => {
+  let attributesToWatch = ariaAttributes;
+  if (ignoreList && ignoreList.length > 0) {
+    attributesToWatch = attributesToWatch.filter((attr) => !ignoreList.includes(attr));
+  }
+  return watchAttributes(el, attributesToWatch, onChange);
 };
 
 export const addEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
