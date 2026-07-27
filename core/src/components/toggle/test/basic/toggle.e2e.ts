@@ -102,7 +102,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         `
         <style>
           #container {
-            display: inline-block;
+            width: fit-content;
             padding: 10px;
           }
         </style>
