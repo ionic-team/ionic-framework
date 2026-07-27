@@ -195,7 +195,9 @@ configs().forEach(({ title, screenshot, config }) => {
         const select = page.locator('ion-select');
         await expect(select).toHaveScreenshot(screenshot(`select-label-floating-no-value-placeholder`));
       });
-      test('label should appear on top of the select when it is focused, has a placeholder, and no value', async ({ page }) => {
+      test('label should appear on top of the select when it is focused, has a placeholder, and no value', async ({
+        page,
+      }) => {
         await page.setContent(
           `
            <ion-select label="Label" label-placement="floating" placeholder="Placeholder">
@@ -207,7 +209,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
         await select.click();
-        const cancel = page.locator("button.alert-button-role-cancel");
+        const cancel = page.locator('button.alert-button-role-cancel');
         await cancel.click();
         await expect(select).toHaveScreenshot(screenshot(`select-label-focus-floating-no-value-placeholder`));
       });
