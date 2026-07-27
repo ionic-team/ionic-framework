@@ -14,6 +14,29 @@ describe('angular-css-tilde', () => {
     expect(ctx.readFile('src/global.scss')).toBe(`@import '@ionic/angular/css/core.css';\n`);
   });
 
+  it('removes the ~ prefix from a plain .css file', () => {
+    const ctx = createInMemoryContext({
+      'src/global.css': `@import '~@ionic/angular/css/core.css';\n`,
+    });
+
+    migration.fix!(ctx);
+
+    expect(ctx.readFile('src/global.css')).toBe(`@import '@ionic/angular/css/core.css';\n`);
+  });
+
+  it('removes the ~ prefix from @use and @forward rules', () => {
+    const ctx = createInMemoryContext({
+      'src/global.scss':
+        `@use '~@ionic/angular/css/core.css';\n` + `@forward '~@ionic/angular/css/normalize.css';\n`,
+    });
+
+    migration.fix!(ctx);
+
+    expect(ctx.readFile('src/global.scss')).toBe(
+      `@use '@ionic/angular/css/core.css';\n` + `@forward '@ionic/angular/css/normalize.css';\n`
+    );
+  });
+
   it('leaves non-ionic tilde imports alone', () => {
     const input = `@import '~bootstrap/scss/bootstrap';\n`;
     const ctx = createInMemoryContext({ 'src/global.scss': input });

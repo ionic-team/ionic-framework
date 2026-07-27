@@ -9,6 +9,6 @@
  * We pin the exact version rather than the `dev` dist-tag because that tag is
  * shared with `main`'s dev builds and moves whenever any dev build publishes.
  *
- * Swap this for `^9.0.0` (or `latest`) at GA.
+ * TODO(FW-7579): Swap this for `^9.0.0` at GA.
  */
 export const IONIC_V9_VERSION = '8.8.14-dev.11784563563.137a903a';

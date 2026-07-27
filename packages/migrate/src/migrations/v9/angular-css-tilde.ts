@@ -1,14 +1,17 @@
 import type { Finding, Migration } from '../../types.js';
 
 /**
- * Angular's build pipeline no longer supports the webpack-loader `~` prefix in
- * CSS `@import` statements for `@ionic/angular` stylesheets:
+ * Angular's build pipeline no longer supports the webpack-loader `~` prefix when
+ * pulling in `@ionic/angular` stylesheets:
  *
  *   @import '~@ionic/angular/css/core.css';  ->  @import '@ionic/angular/css/core.css';
  *
+ * `@use` and `@forward` are covered too: webpack's sass-loader honored the `~`
+ * prefix on all three, so a Sass app may write it on any of them.
+ *
  * See https://ionicframework.com/docs/updating/9-0#css-imports
  */
-const TILDE_IONIC_IMPORT = /(@import\s+['"])~(@ionic\/angular\/)/g;
+const TILDE_IONIC_IMPORT = /((?:@import|@use|@forward)\s+['"])~(@ionic\/angular\/)/g;
 
 export const angularCssTilde: Migration = {
   id: 'angular-css-tilde',
