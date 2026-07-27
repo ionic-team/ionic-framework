@@ -16,6 +16,11 @@ const NON_BOOLEAN_FALSE_ATTRIBUTES = new Set(['draggable', 'translate', 'spell-c
  * wrappers (createReactComponent, createRoutingComponent, ...) render attributes
  * directly and sync props through attachProps, so we strip the stray attribute
  * here after the property has been assigned.
+ *
+ * This only matters on React 17 and 18. React 19 added full custom-element
+ * support and no longer serializes a `false` boolean prop to a `="false"`
+ * attribute, so there is nothing to strip there (this stays a harmless no-op).
+ * Once React 17/18 support is dropped, this stripping can be removed.
  */
 const isStaleFalseBooleanAttribute = (attribute: string) =>
   !attribute.startsWith('aria-') && !attribute.startsWith('data-') && !NON_BOOLEAN_FALSE_ATTRIBUTES.has(attribute);
