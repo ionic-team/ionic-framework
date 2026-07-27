@@ -132,7 +132,11 @@ if [ "$SKIP_BUILD" = "0" ]; then
   sh ./build.sh "$APP_NAME"
   cd "$BUILD_APP_DIR"
   echo "Installing dependencies..."
-  npm install > npm_install.log 2>&1
+  # vue-router 5.1+ declares an optional peer on vite ^7||^8 (for the experimental
+  # typed-routes unplugin, which Ionic doesn't use). The test app pins vite@3, so
+  # npm's strict resolver errors on the optional peer. --legacy-peer-deps bridges
+  # this until the test app's vite is upgraded.
+  npm install --legacy-peer-deps > npm_install.log 2>&1
   npm run sync
 else
   echo "Skipping build (--skip-build)."

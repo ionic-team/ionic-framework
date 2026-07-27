@@ -23,7 +23,7 @@
     "@ionic/vue-router": "^6.0.12",
     "ionicons": "^8.0.13",
     "vue": "^3.5.0",
-    "vue-router": "^5.0.6"
+    "vue-router": "^5.2.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",

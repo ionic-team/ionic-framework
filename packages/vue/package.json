@@ -65,7 +65,7 @@
     "rollup": "^4.2.0",
     "typescript": "^5.7.3",
     "vue": "^3.5.0",
-    "vue-router": "^5.0.6"
+    "vue-router": "^5.2.0"
   },
   "dependencies": {
     "@ionic/core": "^8.8.15",

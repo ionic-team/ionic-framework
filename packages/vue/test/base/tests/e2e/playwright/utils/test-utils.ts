@@ -36,19 +36,30 @@ async function waitForDebugIonRouter(page: Page): Promise<void> {
   await page.waitForFunction(() => Boolean((window as any).debugIonRouter));
 }
 
+// Fire the navigation without returning its promise to page.evaluate. Returning
+// router.push/replace/go's promise makes evaluate await it across the resulting
+// client-side navigation, which intermittently fails with "Execution context was
+// destroyed". Callers always follow these with ionPageVisible/ionPageHidden, which
+// poll the DOM for the resulting state, so the navigation promise isn't needed.
 export async function routerPush(page: Page, path: string): Promise<void> {
   await waitForDebugRouter(page);
-  await page.evaluate((p: string) => (window as any).debugRouter.push(p), path);
+  await page.evaluate((p: string) => {
+    (window as any).debugRouter.push(p);
+  }, path);
 }
 
 export async function routerReplace(page: Page, path: string): Promise<void> {
   await waitForDebugRouter(page);
-  await page.evaluate((p: string) => (window as any).debugRouter.replace(p), path);
+  await page.evaluate((p: string) => {
+    (window as any).debugRouter.replace(p);
+  }, path);
 }
 
 export async function routerGo(page: Page, n: number): Promise<void> {
   await waitForDebugRouter(page);
-  await page.evaluate((delta: number) => (window as any).debugRouter.go(delta), n);
+  await page.evaluate((delta: number) => {
+    (window as any).debugRouter.go(delta);
+  }, n);
 }
 
 /**
@@ -64,20 +75,25 @@ export async function ionRouterNavigate(
 ): Promise<void> {
   await waitForDebugIonRouter(page);
   await page.evaluate(
-    ({ p, d, a }: { p: string; d: string; a?: string }) =>
-      (window as any).debugIonRouter.navigate(p, d, a),
+    ({ p, d, a }: { p: string; d: string; a?: string }) => {
+      (window as any).debugIonRouter.navigate(p, d, a);
+    },
     { p: path, d: direction, a: action }
   );
 }
 
 export async function ionRouterBack(page: Page): Promise<void> {
   await waitForDebugIonRouter(page);
-  await page.evaluate(() => (window as any).debugIonRouter.back());
+  await page.evaluate(() => {
+    (window as any).debugIonRouter.back();
+  });
 }
 
 export async function ionRouterReplace(page: Page, path: string): Promise<void> {
   await waitForDebugIonRouter(page);
-  await page.evaluate((p: string) => (window as any).debugIonRouter.replace(p), path);
+  await page.evaluate((p: string) => {
+    (window as any).debugIonRouter.replace(p);
+  }, path);
 }
 
 export async function tabClick(page: Page, tabId: string): Promise<void> {
