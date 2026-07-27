@@ -80,6 +80,26 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
   });
 });
 
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('radio: multiple inputs in item'), () => {
+    test('should not have visual regressions with multiple radios in an item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-item>
+              <ion-radio-group value="1"><ion-radio value="1" justify="start">Radio 1</ion-radio></ion-radio-group>
+              <ion-radio-group value="2"><ion-radio value="2" justify="start">Radio 2</ion-radio></ion-radio-group>
+            </ion-item>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`radio-multiple-in-item`));
+    });
+  });
+});
+
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('radio: item functionality'), () => {
     test('clicking padded space within item should click the radio', async ({ page }) => {

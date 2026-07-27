@@ -126,6 +126,24 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(list).toHaveScreenshot(screenshot(`checkbox-stacked-label-in-item`));
     });
   });
+
+  test.describe(title('checkbox: multiple inputs in item'), () => {
+    test('should not have visual regressions with multiple checkboxes in an item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-item>
+              <ion-checkbox justify="start">Checkbox 1</ion-checkbox>
+              <ion-checkbox justify="start">Checkbox 2</ion-checkbox>
+            </ion-item>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`checkbox-multiple-in-item`));
+    });
+  });
 });
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {

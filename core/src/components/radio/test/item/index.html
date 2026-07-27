@@ -15,7 +15,7 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-template-columns: repeat(3, minmax(auto, 1fr));
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
@@ -212,8 +212,8 @@
             <h2>Two Radios (multi-input item). Focus is on the input, not the item.</h2>
             <ion-list>
               <ion-item>
-                <ion-radio-group value="1"><ion-radio value="1" justify="start">Radio 1</ion-radio></ion-radio-group>
-                <ion-radio-group value="2"><ion-radio value="2" justify="start">Radio 2</ion-radio></ion-radio-group>
+                <ion-radio-group allow-empty-selection value="1"><ion-radio value="1" justify="start">Radio 1</ion-radio></ion-radio-group>
+                <ion-radio-group allow-empty-selection value="2"><ion-radio value="2" justify="start">Radio 2</ion-radio></ion-radio-group>
               </ion-item>
             </ion-list>
           </div>

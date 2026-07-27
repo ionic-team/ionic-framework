@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * This behavior does not vary across modes/directions
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('toggle: ionChange'), () => {
     test('should fire ionChange when interacting with toggle', async ({ page }) => {
       await page.setContent(
@@ -95,60 +95,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
   });
 
   test.describe(title('toggle: ionFocus'), () => {
-    test('should not have visual regressions', async ({ page, pageUtils }) => {
-      // `ion-app` is required so `startFocusVisible` runs and applies the
-      // `ion-focused` class on keyboard focus, which drives the focus indicator.
-      await page.setContent(
-        `
-        <style>
-          #container {
-            width: fit-content;
-            padding: 10px;
-          }
-        </style>
-
-        <ion-app>
-          <div id="container">
-            <ion-toggle>Unchecked</ion-toggle>
-          </div>
-        </ion-app>
-      `,
-        config
-      );
-
-      const toggle = page.locator('ion-toggle');
-
-      // The focus listeners attach asynchronously, so the first Tab can miss
-      // them. Retry until `ion-focused` sticks before taking the snapshot.
-      await expect(async () => {
-        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
-        await pageUtils.pressKeys('Tab');
-        await expect(toggle).toHaveClass(/ion-focused/, { timeout: 250 });
-      }).toPass({ timeout: 5000 });
-
-      const container = page.locator('#container');
-
-      await expect(container).toHaveScreenshot(screenshot(`toggle-focus`));
-    });
-
-    test('should not have visual regressions when interacting with toggle in item', async ({ page, pageUtils }) => {
-      await page.setContent(
-        `
-        <ion-item class="ion-focused">
-          <ion-toggle>Unchecked</ion-toggle>
-        </ion-item>
-      `,
-        config
-      );
-
-      // Test focus with keyboard navigation
-      await pageUtils.pressKeys('Tab');
-
-      const item = page.locator('ion-item');
-
-      await expect(item).toHaveScreenshot(screenshot(`toggle-in-item-focus`));
-    });
-
     test('should fire ionFocus when toggle is focused', async ({ page, pageUtils }) => {
       await page.setContent(
         `
@@ -294,6 +240,102 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       // Verify that the event target is the toggle and not the item
       const eventByClick = ionBlur.events[0];
       expect((eventByClick.target as HTMLElement).tagName.toLowerCase()).toBe('ion-toggle');
+    });
+  });
+});
+
+/**
+ * The focus indicator UI differs between iOS and MD, so these visual tests run
+ * in both modes. Direction does not affect the indicator, so only LTR is run.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toggle: focus visual'), () => {
+    test('should render focus indicator when unchecked', async ({ page, pageUtils }) => {
+      // `ion-app` is required so `startFocusVisible` runs and applies the
+      // `ion-focused` class on keyboard focus, which drives the focus indicator.
+      await page.setContent(
+        `
+        <style>
+          #container {
+            width: fit-content;
+            padding: 10px;
+          }
+        </style>
+
+        <ion-app>
+          <div id="container">
+            <ion-toggle>Unchecked</ion-toggle>
+          </div>
+        </ion-app>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+
+      // The focus listeners attach asynchronously, so the first Tab can miss
+      // them. Retry until `ion-focused` sticks before taking the snapshot.
+      await expect(async () => {
+        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+        await pageUtils.pressKeys('Tab');
+        await expect(toggle).toHaveClass(/ion-focused/, { timeout: 250 });
+      }).toPass({ timeout: 5000 });
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`toggle-focus`));
+    });
+
+    test('should render focus indicator when checked', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <style>
+          #container {
+            width: fit-content;
+            padding: 10px;
+          }
+        </style>
+
+        <ion-app>
+          <div id="container">
+            <ion-toggle checked>Checked</ion-toggle>
+          </div>
+        </ion-app>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+
+      // The focus listeners attach asynchronously, so the first Tab can miss
+      // them. Retry until `ion-focused` sticks before taking the snapshot.
+      await expect(async () => {
+        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+        await pageUtils.pressKeys('Tab');
+        await expect(toggle).toHaveClass(/ion-focused/, { timeout: 250 });
+      }).toPass({ timeout: 5000 });
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`toggle-focus-checked`));
+    });
+
+    test('should render focus indicator in an item', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <ion-item class="ion-focused">
+          <ion-toggle>Unchecked</ion-toggle>
+        </ion-item>
+      `,
+        config
+      );
+
+      // Test focus with keyboard navigation
+      await pageUtils.pressKeys('Tab');
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`toggle-in-item-focus`));
     });
   });
 });
