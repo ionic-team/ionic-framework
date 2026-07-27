@@ -9,6 +9,8 @@ import { run } from './runner.js';
 import { buildReport } from './report.js';
 import { formatTouched, prettierFormatter } from './format.js';
 import { allMigrations } from './migrations/index.js';
+import { detectPackageManager } from './package-manager.js';
+import { bold, cyan, dim } from './style.js';
 
 interface Args {
   dir: string;
@@ -17,6 +19,7 @@ interface Args {
   experimental: boolean;
   force: boolean;
   noFormat: boolean;
+  noInstall: boolean;
   help: boolean;
   from?: number;
   to?: number;
@@ -33,6 +36,7 @@ Options:
   --experimental   Include experimental migrations
   --force          Write even if the working tree is dirty or not a git repo
   --no-format      Skip running the project's Prettier over changed files
+  --no-install     Skip reinstalling dependencies after the version bump
   --from <major>   Override the detected source major version
   --to <major>     Override the target major version
   -h, --help       Show this help`;
@@ -55,6 +59,7 @@ function parseArgs(argv: string[]): Args {
     experimental: false,
     force: false,
     noFormat: false,
+    noInstall: false,
     help: false,
   };
   for (let i = 0; i < argv.length; i++) {
@@ -64,6 +69,7 @@ function parseArgs(argv: string[]): Args {
     else if (a === '--experimental') args.experimental = true;
     else if (a === '--force') args.force = true;
     else if (a === '--no-format') args.noFormat = true;
+    else if (a === '--no-install') args.noInstall = true;
     else if (a === '--help' || a === '-h') args.help = true;
     else if (a === '--from') args.from = parseMajorArg('--from', argv[++i]);
     else if (a === '--to') args.to = parseMajorArg('--to', argv[++i]);
@@ -131,7 +137,9 @@ function main(): void {
   });
 
   const label = detected.map((d) => `${d.framework}@${d.major}`).join(', ');
-  console.log(`Ionic migrate: ${label}  (v${fromMajor} -> v${toMajor}, ${migrations.length} migration(s))\n`);
+  console.log(
+    bold(`Ionic migrate: ${label}  (v${fromMajor} -> v${toMajor}, ${migrations.length} migration(s))`) + '\n'
+  );
 
   const writing = !args.dryRun && !args.check;
   if (writing && !args.force) {
@@ -159,7 +167,7 @@ function main(): void {
     try {
       const formatted = formatTouched(ctx, prettierFormatter);
       if (formatted.length > 0) {
-        console.log(`\nFormatted ${formatted.length} changed file(s) with Prettier.`);
+        console.log(dim(`\nFormatted ${formatted.length} changed file(s) with Prettier.`));
       }
     } catch (e) {
       // Formatting is cosmetic and runs after the edits are already on disk, so
@@ -169,6 +177,34 @@ function main(): void {
       const reason = String(stderr ?? '').trim() || (e instanceof Error ? e.message : String(e));
       console.warn(`\nSkipped Prettier formatting. It exited with an error:\n${reason}`);
     }
+  }
+
+  // Only after a run that actually changed something: the version bump in
+  // package.json leaves node_modules stale, so reinstall to match (unless
+  // opted out). A dry run or check writes nothing, so there is nothing to sync.
+  const applied = result.entries.some((e) => e.applied);
+  if (writing && applied) {
+    const pm = detectPackageManager(rootDir);
+    if (args.noInstall) {
+      console.log(dim(`\nSkipped dependency install. Run \`${pm.installCmd}\` before starting your app.`));
+    } else {
+      console.log(cyan(`\nInstalling dependencies with ${pm.name} to match the version bump...`));
+      try {
+        execSync(pm.installCmd, { cwd: rootDir, stdio: 'inherit' });
+      } catch {
+        // The edits are already on disk; a failed install must not fail the run.
+        console.warn(`\nDependency install failed. Run \`${pm.installCmd}\` manually.`);
+      }
+    }
+    // This tool is single-shot: the bumped @ionic/* version closes the re-run
+    // gate, so a second run detects the target major and does nothing. Say so,
+    // since it is easy to read a no-op re-run as the tool being broken.
+    console.log(
+      dim(
+        '\nThis migration runs once. Your @ionic/* version is now bumped, so re-running detects the ' +
+          'new major and skips these migrations. Use git to review or undo the changes.'
+      )
+    );
   }
 
   if (args.check && result.entries.length > 0) {

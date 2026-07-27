@@ -27,6 +27,7 @@ tree, so git is your undo. Then review the diff and the checklist it prints.
 --experimental   Include experimental migrations
 --force          Write even if the working tree is dirty or not a git repo
 --no-format      Skip running the project's Prettier over changed files
+--no-install     Skip reinstalling dependencies after the version bump
 --from <major>   Override the detected source major version
 --to <major>     Override the target major version
 -h, --help       Show this help
@@ -85,9 +86,12 @@ the tool leaves them out rather than guess. Check these by hand against the
 2. Select the migrations whose version range applies. A project already on the
    target major selects nothing, so a finished migration doesn't run again.
 3. Apply the auto-fixes and collect the report-only findings.
-4. Format the changed files with the project's own Prettier, so the AST-based
+4. Print a grouped summary of what was fixed and what's left for you.
+5. Format the changed files with the project's own Prettier, so the AST-based
    edits come out as clean diffs. Pass `--no-format` to skip it.
-5. Print a grouped summary of what was fixed and what's left for you.
+6. Reinstall dependencies (using the lockfile's package manager) so
+   `node_modules` matches the bumped `package.json`. Pass `--no-install` to skip
+   it, then reinstall yourself before starting the app.
 
 Transforms use `ts-morph` to locate nodes for TypeScript and TSX, and a small
 quote-aware scanner for HTML and Vue templates, so it doesn't touch string
