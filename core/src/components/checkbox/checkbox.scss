@@ -119,6 +119,12 @@ input {
   display: none;
 }
 
+// The host is focusable, so the browser draws a native focus ring on it.
+// Suppress it in favor of the mode-specific keyboard focus indicator.
+:host(:focus) {
+  outline: none;
+}
+
 .native-wrapper {
   display: flex;
 

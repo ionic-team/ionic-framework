@@ -49,7 +49,6 @@
 
 :host(.ion-focused) .radio-icon::after {
   @include border-radius(var(--inner-border-radius));
-  @include position(-8px, null, null, -9px);
 
   display: block;
   position: absolute;
