@@ -139,6 +139,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
   test.describe(title('checkbox: ionFocus'), () => {
     test('should not have visual regressions', async ({ page, pageUtils }) => {
+      // `ion-app` is required so `startFocusVisible` runs and applies the
+      // `ion-focused` class on keyboard focus, which drives the focus indicator.
       await page.setContent(
         `
         <style>
@@ -148,14 +150,24 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
           }
         </style>
 
-        <div id="container">
-          <ion-checkbox>Unchecked</ion-checkbox>
-        </div>
+        <ion-app>
+          <div id="container">
+            <ion-checkbox>Unchecked</ion-checkbox>
+          </div>
+        </ion-app>
       `,
         config
       );
 
-      await pageUtils.pressKeys('Tab');
+      const checkbox = page.locator('ion-checkbox');
+
+      // The focus listeners attach asynchronously, so the first Tab can miss
+      // them. Retry until `ion-focused` sticks before taking the snapshot.
+      await expect(async () => {
+        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+        await pageUtils.pressKeys('Tab');
+        await expect(checkbox).toHaveClass(/ion-focused/, { timeout: 250 });
+      }).toPass({ timeout: 5000 });
 
       const container = page.locator('#container');
 
