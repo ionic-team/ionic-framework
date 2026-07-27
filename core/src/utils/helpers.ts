@@ -205,13 +205,13 @@ export const watchAttributes = (
   attributes: string[],
   onChange: (changed: { [k: string]: string }) => void
 ): AttributeWatcher => {
-    if (typeof MutationObserver === 'undefined') {
-      // Not available in Stencil's mock-doc test environment (used by
-      // `stencil test --spec`), and, as a defensive fallback, environments
-      // without native MutationObserver support.
-      return { disconnect: () => {} };
-    }
-  
+  if (typeof MutationObserver === 'undefined') {
+    // Not available in Stencil's mock-doc test environment (used by
+    // `stencil test --spec`), and, as a defensive fallback, environments
+    // without native MutationObserver support.
+    return { disconnect: () => {} };
+  }
+
   // Set up mutation observer to observe attribute changes
   const observer = new MutationObserver((mutations) => {
     const changed: { [k: string]: string } = {};
@@ -224,7 +224,7 @@ export const watchAttributes = (
       changed[name] = value;
     }
 
-    // If attribute changes, re-strip so the value doesn't live on both host 
+    // If attribute changes, re-strip so the value doesn't live on both host
     // and native element.
     if (Object.keys(changed).length > 0) {
       Object.keys(changed).forEach((name) => el.removeAttribute(name));
