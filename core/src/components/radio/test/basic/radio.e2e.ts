@@ -100,5 +100,35 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(item).toHaveScreenshot(screenshot(`radio-in-item-focus`));
     });
+
+    test('should render focus indicator for a radio in a multi-input item', async ({ page, pageUtils }) => {
+      // A multi-input item cannot draw a single focus indicator, so each radio
+      // shows its own. Focus the first one and confirm its indicator renders.
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-radio-group value="a"><ion-radio value="a" justify="start">Radio 1</ion-radio></ion-radio-group>
+            <ion-radio-group value="b"><ion-radio value="b" justify="start">Radio 2</ion-radio></ion-radio-group>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio').first();
+
+      // The focus listeners attach asynchronously, so the first Tab can miss
+      // them. Retry until `ion-focused` sticks before taking the snapshot.
+      await expect(async () => {
+        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+        await pageUtils.pressKeys('Tab');
+        await expect(radio).toHaveClass(/ion-focused/, { timeout: 250 });
+      }).toPass({ timeout: 5000 });
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`radio-multiple-in-item-focus`));
+    });
   });
 });
