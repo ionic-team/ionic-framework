@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { createInMemoryContext } from '../src/context.js';
 import { coreAutocorrectManual as migration } from '../src/migrations/v9/core-autocorrect-manual.js';
+import { DETAIL, ON_DETAIL } from '../src/migrations/v9/core-autocorrect.js';
 
 describe('core-autocorrect-manual (report-only)', () => {
   it('reports an ion-input in an Angular inline template', () => {
@@ -38,12 +39,27 @@ describe('core-autocorrect-manual (report-only)', () => {
     expect(migration.detect(ctx)).toEqual([]);
   });
 
-  it('ignores autocorrect="on" and native inputs', () => {
+  it('reports autocorrect="on" for manual conversion to a boolean binding', () => {
     const ctx = createInMemoryContext({
       'a.ts': `const t = '<ion-input autocorrect="on"></ion-input>';\n`,
-      'b.jsx': `const a = <input autocorrect="off" />;\n`,
+      'b.jsx': `const a = <IonInput autocorrect="on" />;\n`,
     });
 
+    const findings = migration.detect(ctx);
+
+    expect(findings.map((f) => f.filePath).sort()).toEqual(['a.ts', 'b.jsx']);
+    expect(findings.every((f) => f.detail === ON_DETAIL)).toBe(true);
+  });
+
+  it('ignores native inputs', () => {
+    const ctx = createInMemoryContext({ 'b.jsx': `const a = <input autocorrect="off" />;\n` });
+
     expect(migration.detect(ctx)).toEqual([]);
+  });
+
+  it('reports autocorrect="off" with the removal detail', () => {
+    const ctx = createInMemoryContext({ 'App.jsx': `const a = <IonInput autocorrect="off" />;\n` });
+
+    expect(migration.detect(ctx)[0].detail).toBe(DETAIL);
   });
 });

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { createInMemoryContext } from '../src/context.js';
-import { coreAutocorrect as migration } from '../src/migrations/v9/core-autocorrect.js';
+import { coreAutocorrect as migration, ON_DETAIL } from '../src/migrations/v9/core-autocorrect.js';
 
 describe('core-autocorrect', () => {
   it('removes autocorrect="off" from an ion-input in an html template', () => {
@@ -41,13 +41,50 @@ describe('core-autocorrect', () => {
     expect(ctx.readFile('index.html')).toBe(input);
   });
 
-  it('leaves autocorrect="on" untouched (behavior unchanged in v9)', () => {
+  it('leaves autocorrect="on" in a vanilla .html untouched (no binding syntax)', () => {
+    // No package.json means no Angular is detected, so this .html reads as a
+    // vanilla template with no property-binding syntax. "on" already coerces to
+    // true in v9, so there is nothing safe to rewrite.
     const input = `<ion-input autocorrect="on"></ion-input>\n`;
-    const ctx = createInMemoryContext({ 'home.page.html': input });
+    const ctx = createInMemoryContext({ 'index.html': input });
 
     expect(migration.detect(ctx)).toEqual([]);
     migration.fix!(ctx);
-    expect(ctx.readFile('home.page.html')).toBe(input);
+    expect(ctx.readFile('index.html')).toBe(input);
+  });
+
+  it('rewrites autocorrect="on" to [autocorrect]="true" in an Angular .html template', () => {
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify({ dependencies: { '@ionic/angular': '^8.0.0' } }),
+      'home.page.html': `<ion-input autocorrect="on"></ion-input>\n`,
+    });
+
+    expect(migration.detect(ctx)).toEqual([
+      { filePath: 'home.page.html', line: 1, detail: ON_DETAIL },
+    ]);
+    migration.fix!(ctx);
+
+    expect(ctx.readFile('home.page.html')).toBe(`<ion-input [autocorrect]="true"></ion-input>\n`);
+  });
+
+  it('rewrites autocorrect="on" to :autocorrect="true" in a Vue SFC', () => {
+    const ctx = createInMemoryContext({
+      'Page.vue': `<template>\n  <ion-searchbar autocorrect="on" />\n</template>\n`,
+    });
+
+    migration.fix!(ctx);
+
+    expect(ctx.readFile('Page.vue')).toBe(`<template>\n  <ion-searchbar :autocorrect="true" />\n</template>\n`);
+  });
+
+  it('rewrites autocorrect="on" to autocorrect={true} in a React <IonInput> via ts-morph', () => {
+    const ctx = createInMemoryContext({ 'App.tsx': `const a = <IonInput autocorrect="on" />;\n` });
+
+    migration.fix!(ctx);
+
+    expect(ctx.project.getSourceFileOrThrow(`${ctx.rootDir}/App.tsx`).getFullText()).toBe(
+      `const a = <IonInput autocorrect={true} />;\n`
+    );
   });
 
   it('does not break on a `>` inside an attribute value', () => {
