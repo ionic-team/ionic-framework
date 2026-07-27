@@ -52,7 +52,7 @@ describe('attachProps', () => {
   });
 });
 
-describe('attachProps boolean attributes (FW-7393)', () => {
+describe('attachProps boolean attributes', () => {
   it('should strip a stray disabled="false" attribute when the prop is false', () => {
     const div = document.createElement('div');
     div.setAttribute('disabled', 'false');

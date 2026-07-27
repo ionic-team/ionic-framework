@@ -3,11 +3,11 @@ import { test, expect } from '@playwright/test';
 import { ionPageVisible, withTestingMode } from './utils/test-utils';
 
 /**
- * FW-7393: `<IonButton disabled={false}>` must not leave a `disabled="false"`
- * attribute on the host. ion-button is routing-wrapped (createRoutingComponent),
- * so this is the real end-to-end check with an actual @ionic/react component.
+ * `<IonButton disabled={false}>` must not leave a `disabled="false"` attribute
+ * on the host. ion-button is routing-wrapped (createRoutingComponent), so this
+ * is the real end-to-end check with an actual @ionic/react component.
  */
-test.describe('IonButton disabled boolean attribute (FW-7393)', () => {
+test.describe('IonButton disabled boolean attribute', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(withTestingMode('/disabled-button'));
     await ionPageVisible(page, 'disabled-button');

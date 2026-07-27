@@ -11,7 +11,7 @@ import { act, render } from '@testing-library/react';
 import { createRoutingComponent } from '../createRoutingComponent';
 
 /**
- * FW-7393: routing-wrapped components (ion-button, ion-card, ion-fab-button,
+ * Routing-wrapped components (ion-button, ion-card, ion-fab-button,
  * ion-item-option, ion-breadcrumb, ion-router-link) go through
  * `createRoutingComponent`, which is not covered by the @lit/react runtime that
  * fixes the generated components on v9. `disabled={false}` must not leave a
@@ -20,7 +20,7 @@ import { createRoutingComponent } from '../createRoutingComponent';
  */
 const RoutingEl = createRoutingComponent<any, any>('fake-routing-el');
 
-describe('createRoutingComponent boolean attributes (FW-7393)', () => {
+describe('createRoutingComponent boolean attributes', () => {
   it('should not leave a disabled="false" attribute when disabled={false}', () => {
     const { container } = render(<RoutingEl disabled={false}>x</RoutingEl>);
     const el = container.querySelector('fake-routing-el')!;

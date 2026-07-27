@@ -2,10 +2,9 @@ import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from 
 import React, { useState } from 'react';
 
 /**
- * FW-7393: `<IonButton disabled={false}>` must not render a `disabled="false"`
- * attribute on the host. ion-button is a routing-wrapped component
- * (createRoutingComponent), so this validates the fix end-to-end with a real
- * component in a real browser.
+ * `<IonButton disabled={false}>` must not render a `disabled="false"` attribute
+ * on the host. ion-button is a routing-wrapped component (createRoutingComponent),
+ * so this validates the fix end-to-end with a real component in a real browser.
  */
 const DisabledButton: React.FC = () => {
   const [toggleDisabled, setToggleDisabled] = useState(false);

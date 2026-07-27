@@ -15,7 +15,7 @@ const NON_BOOLEAN_FALSE_ATTRIBUTES = new Set(['draggable', 'translate', 'spell-c
  * runtime fixes this for the generated components on v9, but the hand-rolled
  * wrappers (createReactComponent, createRoutingComponent, ...) render attributes
  * directly and sync props through attachProps, so we strip the stray attribute
- * here after the property has been assigned. See FW-7393.
+ * here after the property has been assigned.
  */
 const isStaleFalseBooleanAttribute = (attribute: string) =>
   !attribute.startsWith('aria-') && !attribute.startsWith('data-') && !NON_BOOLEAN_FALSE_ATTRIBUTES.has(attribute);
