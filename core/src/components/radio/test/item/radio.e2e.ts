@@ -100,6 +100,64 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
+/**
+ * The focus indicator UI differs between iOS and MD, so these visual tests run
+ * in both modes. Direction does not affect the indicator, so only LTR is run.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('radio: focus in item'), () => {
+    test('should render focus indicator in an item', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <ion-item class="ion-focused">
+          <ion-radio-group>
+            <ion-radio value="a">Unchecked</ion-radio>
+          </ion-radio-group>
+        </ion-item>
+      `,
+        config
+      );
+
+      // Test focus with keyboard navigation
+      await pageUtils.pressKeys('Tab');
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`radio-in-item-focus`));
+    });
+
+    test('should render focus indicator for a radio in a multi-input item', async ({ page, pageUtils }) => {
+      // A multi-input item cannot draw a single focus indicator, so each radio
+      // shows its own. Focus the first one and confirm its indicator renders.
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-radio-group value="a"><ion-radio value="a" justify="start">Radio 1</ion-radio></ion-radio-group>
+            <ion-radio-group value="b"><ion-radio value="b" justify="start">Radio 2</ion-radio></ion-radio-group>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio').first();
+
+      // The focus listeners attach asynchronously, so the first Tab can miss
+      // them. Retry until `ion-focused` sticks before taking the snapshot.
+      await expect(async () => {
+        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+        await pageUtils.pressKeys('Tab');
+        await expect(radio).toHaveClass(/ion-focused/, { timeout: 250 });
+      }).toPass({ timeout: 5000 });
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`radio-multiple-in-item-focus`));
+    });
+  });
+});
+
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('radio: item functionality'), () => {
     test('clicking padded space within item should click the radio', async ({ page }) => {

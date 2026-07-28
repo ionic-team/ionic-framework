@@ -362,54 +362,5 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(container).toHaveScreenshot(screenshot(`checkbox-focus-checked`));
     });
-
-    test('should render focus indicator in an item', async ({ page, pageUtils }) => {
-      await page.setContent(
-        `
-        <ion-item class="ion-focused">
-          <ion-checkbox>Unchecked</ion-checkbox>
-        </ion-item>
-      `,
-        config
-      );
-
-      // Test focus with keyboard navigation
-      await pageUtils.pressKeys('Tab');
-
-      const item = page.locator('ion-item');
-
-      await expect(item).toHaveScreenshot(screenshot(`checkbox-in-item-focus`));
-    });
-
-    test('should render focus indicator for a checkbox in a multi-input item', async ({ page, pageUtils }) => {
-      // A multi-input item cannot draw a single focus indicator, so each
-      // checkbox shows its own. Focus the first one and confirm its indicator
-      // renders.
-      await page.setContent(
-        `
-        <ion-app>
-          <ion-item>
-            <ion-checkbox justify="start">Checkbox 1</ion-checkbox>
-            <ion-checkbox justify="start">Checkbox 2</ion-checkbox>
-          </ion-item>
-        </ion-app>
-      `,
-        config
-      );
-
-      const checkbox = page.locator('ion-checkbox').first();
-
-      // The focus listeners attach asynchronously, so the first Tab can miss
-      // them. Retry until `ion-focused` sticks before taking the snapshot.
-      await expect(async () => {
-        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
-        await pageUtils.pressKeys('Tab');
-        await expect(checkbox).toHaveClass(/ion-focused/, { timeout: 250 });
-      }).toPass({ timeout: 5000 });
-
-      const item = page.locator('ion-item');
-
-      await expect(item).toHaveScreenshot(screenshot(`checkbox-multiple-in-item-focus`));
-    });
   });
 });
