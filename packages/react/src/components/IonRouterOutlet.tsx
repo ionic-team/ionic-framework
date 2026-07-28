@@ -21,7 +21,6 @@ interface InternalProps extends Props {
   children: React.ReactNode;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface InternalState {}
 
 class IonRouterOutletContainer extends React.Component<InternalProps, InternalState> {
