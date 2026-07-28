@@ -41,16 +41,24 @@ interface StackManagerProps {
 }
 
 const isViewVisible = (el: HTMLElement) =>
-  !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden') && el.style.visibility !== 'hidden';
+  !el.classList.contains('ion-page-invisible') &&
+  !el.classList.contains('ion-page-hidden') &&
+  el.style.visibility !== 'hidden';
 
 const hideIonPageElement = (element: HTMLElement | undefined): void => {
   if (element) {
     if (element.id === 'section-a' || element.id === 'section-b') {
       // eslint-disable-next-line no-console
-      console.log('[HideIonPageElement]', JSON.stringify({
-        id: element.id,
-        stack: new Error().stack?.split('\n').slice(1, 6).map((s) => s.trim()),
-      }));
+      console.log(
+        '[HideIonPageElement]',
+        JSON.stringify({
+          id: element.id,
+          stack: new Error().stack
+            ?.split('\n')
+            .slice(1, 6)
+            .map((s) => s.trim()),
+        })
+      );
     }
     element.classList.add('ion-page-hidden');
     element.setAttribute('aria-hidden', 'true');
@@ -94,15 +102,18 @@ const revealIonPageForSwipeBack = (element: HTMLElement | undefined): void => {
     element.classList.remove('ion-page-hidden');
     element.removeAttribute('aria-hidden');
     // eslint-disable-next-line no-console
-    console.log('[SwipeBackReveal]', JSON.stringify({
-      before,
-      after: {
-        inlineDisplay: element.style.display,
-        hasHiddenClass: element.classList.contains('ion-page-hidden'),
-        ariaHidden: element.getAttribute('aria-hidden'),
-        computedDisplay: getComputedStyle(element).display,
-      },
-    }));
+    console.log(
+      '[SwipeBackReveal]',
+      JSON.stringify({
+        before,
+        after: {
+          inlineDisplay: element.style.display,
+          hasHiddenClass: element.classList.contains('ion-page-hidden'),
+          ariaHidden: element.getAttribute('aria-hidden'),
+          computedDisplay: getComputedStyle(element).display,
+        },
+      })
+    );
   } else {
     // eslint-disable-next-line no-console
     console.log('[SwipeBackReveal] element is undefined');
@@ -361,7 +372,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // no matching ionViewWillEnter/DidEnter when the view comes back in scope.
     const isIonPageOutlet = this.routerOutletElement?.classList.contains('ion-page');
     if (isIonPageOutlet) {
-      const parentOutlet = this.routerOutletElement?.parentElement?.closest<HTMLIonRouterOutletElement>('ion-router-outlet');
+      const parentOutlet =
+        this.routerOutletElement?.parentElement?.closest<HTMLIonRouterOutletElement>('ion-router-outlet');
       if (parentOutlet?.swipeGesture === true) {
         this.dismissPresentedOverlays();
         return true;
@@ -502,7 +514,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // When entering === leaving, the view is already visible - skip transition to prevent flash
     if (enteringViewItem === leavingViewItem) {
       if (isParameterizedRoute || isWildcardContainerRoute) {
-        const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true, this.outletMountPath);
+        const updatedMatch = matchComponent(
+          enteringViewItem.reactElement,
+          routeInfo.pathname,
+          true,
+          this.outletMountPath
+        );
         if (updatedMatch) {
           enteringViewItem.routeData.match = updatedMatch;
         }
@@ -540,7 +557,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         routeInfo.lastPathname.startsWith(containerBase + '/') || routeInfo.lastPathname === containerBase;
 
       if (currentInContainer && previousInContainer) {
-        const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true, this.outletMountPath);
+        const updatedMatch = matchComponent(
+          enteringViewItem.reactElement,
+          routeInfo.pathname,
+          true,
+          this.outletMountPath
+        );
         if (updatedMatch) {
           enteringViewItem.routeData.match = updatedMatch;
         }
@@ -632,8 +654,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       //
       // handleLeavingViewUnmount below is a no-op for non-replace actions (early return),
       // so pop-preserved views pass through it untouched.
-      const shouldPreserveLeavingView =
-        routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(leavingViewItem);
+      const shouldPreserveLeavingView = routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(leavingViewItem);
       if (routeInfo.routeAction !== 'replace' && !shouldPreserveLeavingView) {
         leavingViewItem.mount = false;
       } else if (shouldPreserveLeavingView) {
@@ -875,10 +896,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    * visibility:hidden preserves element geometry so commit() animations
    * can resolve normally.
    */
-  private applySkipAnimationIfNeeded(
-    enteringViewItem: ViewItem,
-    leavingViewItem: ViewItem | undefined
-  ): boolean {
+  private applySkipAnimationIfNeeded(enteringViewItem: ViewItem, leavingViewItem: ViewItem | undefined): boolean {
     // Only skip for outlets genuinely nested inside a page's content area.
     // Walk from the outlet up to the nearest .ion-page; if an ion-content
     // sits in between, the outlet is inside scrollable page content and
@@ -976,7 +994,14 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
       if (latestEnteringView?.ionPageElement) {
         const shouldSkipAnimation = this.applySkipAnimationIfNeeded(latestEnteringView, latestLeavingView ?? undefined);
-        this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined, undefined, false, shouldSkipAnimation);
+        this.transitionPage(
+          routeInfo,
+          latestEnteringView,
+          latestLeavingView ?? undefined,
+          undefined,
+          false,
+          shouldSkipAnimation
+        );
 
         if (shouldUnmountLeavingViewItem && latestLeavingView && latestEnteringView !== latestLeavingView) {
           const shouldPreserveLeavingView =
@@ -1409,16 +1434,19 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         enteringViewItem.routeData.match.pathname !== routeInfo.pathname;
 
       // eslint-disable-next-line no-console
-      console.log('[SwipeBackCanStart]', JSON.stringify({
-        outletId: this.id,
-        routePathname: routeInfo.pathname,
-        swipeBackPathname: swipeBackRouteInfo?.pathname,
-        enteringViewId: enteringViewItem?.id,
-        enteringViewPath: enteringViewItem?.reactElement?.props?.path,
-        enteringMount: enteringViewItem?.mount,
-        ionPageInDocument,
-        canStartSwipe,
-      }));
+      console.log(
+        '[SwipeBackCanStart]',
+        JSON.stringify({
+          outletId: this.id,
+          routePathname: routeInfo.pathname,
+          swipeBackPathname: swipeBackRouteInfo?.pathname,
+          enteringViewId: enteringViewItem?.id,
+          enteringViewPath: enteringViewItem?.reactElement?.props?.path,
+          enteringMount: enteringViewItem?.mount,
+          ionPageInDocument,
+          canStartSwipe,
+        })
+      );
 
       return canStartSwipe;
     };
@@ -1430,16 +1458,19 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
       // eslint-disable-next-line no-console
-      console.log('[SwipeBackOnStart:entry]', JSON.stringify({
-        outletId: this.id,
-        routePathname: routeInfo.pathname,
-        swipeBackPathname: swipeBackRouteInfo?.pathname,
-        enteringViewId: enteringViewItem?.id,
-        enteringViewPath: enteringViewItem?.reactElement?.props?.path,
-        enteringMount: enteringViewItem?.mount,
-        hasEnteringIonPageElement: !!enteringViewItem?.ionPageElement,
-        leavingViewId: leavingViewItem?.id,
-      }));
+      console.log(
+        '[SwipeBackOnStart:entry]',
+        JSON.stringify({
+          outletId: this.id,
+          routePathname: routeInfo.pathname,
+          swipeBackPathname: swipeBackRouteInfo?.pathname,
+          enteringViewId: enteringViewItem?.id,
+          enteringViewPath: enteringViewItem?.reactElement?.props?.path,
+          enteringMount: enteringViewItem?.mount,
+          hasEnteringIonPageElement: !!enteringViewItem?.ionPageElement,
+          leavingViewId: leavingViewItem?.id,
+        })
+      );
 
       // Ensure the entering view is mounted so React keeps rendering it during the gesture.
       // This is important when the view was previously marked for unmount but its
@@ -1459,14 +1490,17 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       }
 
       // eslint-disable-next-line no-console
-      console.log('[SwipeBackOnStart:exit]', JSON.stringify({
-        outletId: this.id,
-        enteringFinalComputedDisplay: enteringViewItem?.ionPageElement
-          ? getComputedStyle(enteringViewItem.ionPageElement).display
-          : null,
-        enteringFinalInlineDisplay: enteringViewItem?.ionPageElement?.style.display ?? null,
-        enteringFinalHiddenClass: enteringViewItem?.ionPageElement?.classList.contains('ion-page-hidden') ?? null,
-      }));
+      console.log(
+        '[SwipeBackOnStart:exit]',
+        JSON.stringify({
+          outletId: this.id,
+          enteringFinalComputedDisplay: enteringViewItem?.ionPageElement
+            ? getComputedStyle(enteringViewItem.ionPageElement).display
+            : null,
+          enteringFinalInlineDisplay: enteringViewItem?.ionPageElement?.style.display ?? null,
+          enteringFinalHiddenClass: enteringViewItem?.ionPageElement?.classList.contains('ion-page-hidden') ?? null,
+        })
+      );
 
       return Promise.resolve();
     };
@@ -1930,9 +1964,7 @@ function matchComponent(node: React.ReactElement, pathname: string, forceExact?:
   let pathnameToMatch: string;
   if (parentPath && routePath && !routePath.startsWith('/')) {
     // When parent path is known, compute exact relative pathname
-    const relative = pathname.startsWith(parentPath)
-      ? pathname.slice(parentPath.length).replace(/^\//, '')
-      : pathname;
+    const relative = pathname.startsWith(parentPath) ? pathname.slice(parentPath.length).replace(/^\//, '') : pathname;
     pathnameToMatch = relative;
   } else {
     pathnameToMatch = derivePathnameToMatch(pathname, routePath);
