@@ -634,7 +634,7 @@ export class ReactRouterViewStack extends ViewStacks {
           this.outletMountPaths.set(outletId, result.outletMountPath);
         }
       }
-    } catch (e) {
+    } catch {
       // Non-fatal: if we fail to compute parentPath, fall back to previous behavior
     }
 
