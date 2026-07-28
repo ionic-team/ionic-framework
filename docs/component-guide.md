@@ -20,6 +20,7 @@
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
 - [Sass Variables](#sass-variables)
 - [CSS Shadow Parts](#css-shadow-parts)
+- [Icon Styling](#icon-styling)
 - [RTL](#rtl)
 - [Themes vs. Modes](#themes-vs-modes)
 - [Adding New Components with Native Input Support](#adding-new-components-with-native-input-support)
@@ -760,6 +761,28 @@ For guidelines on when to use Sass Variables, see the [Sass Guidelines](./sass-g
 ## CSS Shadow Parts
 
 For guidelines on adding CSS shadow parts, see the [CSS Shadow Parts Guidelines](./shadow-parts-guidelines.md).
+
+## Icon Styling
+
+When sizing `<ion-icon>` elements, use `font-size` instead of `width` and `height` properties. `<ion-icon>` now supports both SVG icons and font-based icons (web fonts), and font icons only respond to `font-size`, not `width` and `height`.
+
+✅ **Correct**
+
+```scss
+::slotted(ion-icon) {
+  font-size: 24px;
+}
+```
+
+❌ **Incorrect**
+
+```scss
+// Don't do this
+::slotted(ion-icon) {
+  width: 24px;
+  height: 24px;
+}
+```
 
 ## RTL
 

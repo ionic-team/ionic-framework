@@ -59,8 +59,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  width: globals.$ion-scale-600;
-  height: globals.$ion-scale-600;
+  font-size: globals.$ion-font-size-600;
 }
 
 // Segment Button: Checked
