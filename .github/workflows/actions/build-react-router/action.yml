@@ -32,6 +32,12 @@ runs:
       run: npm run build
       shell: bash
       working-directory: ./packages/react-router
+    - name: Clean package.json updates
+      run: git checkout ./core/package.json ./packages/react/package.json
+      shell: bash
+    - name: 🔍 Check Diff
+      run: git diff --exit-code
+      shell: bash
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-react-router
