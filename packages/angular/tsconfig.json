@@ -1,44 +1,16 @@
 {
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": true,
-    "skipTemplateCodegen": true,
-    "fullTemplateTypeCheck": false,
-    "enableResourceInlining": true,
-    "compilationMode": "partial"
-  },
   "compilerOptions": {
-    "alwaysStrict": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "declaration": true,
-    "declarationDir": "dist",
     "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "es2017"],
-    "module": "es2022",
-    "moduleResolution": "bundler",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "build/es2015",
-    "pretty": true,
-    "removeComments": false,
-    "importHelpers": true,
-    "rootDir": "./",
     "strictPropertyInitialization": false,
-    "target": "es2015",
-    "plugins": [
-      {
-        "name": "typescript-eslint-language-service"
-      }
-    ],
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": "src",
     "paths": {
-      "@ionic/angular/common": ["./common/src/index.ts"]
+      "@ionic/angular/common": ["./src/common/index.ts"]
     }
   },
-  "exclude": ["node_modules", "schematics"],
-  "files": ["lazy/src/index.ts", "common/src/index.ts", "standalone/src/index.ts"]
+  "angularCompilerOptions": {
+    
+  },
+  "files": ["src/standalone/index.ts", "src/lazy/index.ts"]
 }

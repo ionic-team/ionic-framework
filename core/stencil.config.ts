@@ -30,14 +30,14 @@ const getAngularOutputTargets = () => {
   return [
     angularOutputTarget({
       componentCorePackage,
-      directivesProxyFile: '../packages/angular/lazy/src/directives/proxies.ts',
-      directivesArrayFile: '../packages/angular/lazy/src/directives/proxies-list.ts',
+      directivesProxyFile: '../packages/angular/src/lazy/directives/proxies.ts',
+      directivesArrayFile: '../packages/angular/src/lazy/directives/proxies-list.ts',
       excludeComponents,
       outputType: 'component',
     }),
     angularOutputTarget({
       componentCorePackage,
-      directivesProxyFile: '../packages/angular/standalone/src/directives/proxies.ts',
+      directivesProxyFile: '../packages/angular/src/standalone/directives/proxies.ts',
       excludeComponents: [
         ...excludeComponents,
         /**
@@ -64,6 +64,7 @@ const getAngularOutputTargets = () => {
 
       ],
       outputType: 'standalone',
+      esModules: true,
     })
   ];
 }

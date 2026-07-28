@@ -2,16 +2,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const spawn = require('child_process').spawn;
 
-const typescriptPath = path.join(__dirname, '..', 'node_modules', '.bin');
-
-function copyCSS() {
-  const src = path.join(__dirname, '..', '..', '..', 'core', 'css');
-  const dst = path.join(__dirname, '..','dist', 'css');
-
-  fs.removeSync(dst);
-  fs.copySync(src, dst);
-}
-
 function buildSchematics(){
   return new Promise((resolve, reject) => {
     const cmd = 'tsc';
@@ -20,7 +10,8 @@ function buildSchematics(){
       path.join(__dirname, '..', 'tsconfig.schematics.json'),
     ];
 
-    const p = spawn(cmd, args, { cwd: typescriptPath, stdio: 'inherit', shell: true });
+    const typescriptPath = path.join(__dirname, '..', 'node_modules', '.bin');
+    const p = spawn(cmd, args, { cwd: typescriptPath, stdio: 'inherit'});
     p.on('close', (code) => {
       if (code > 0) {
         console.log(`ng-add build exited with ${code}`);
@@ -48,6 +39,5 @@ function copySchematicsJson(){
 
 }
 
-copyCSS();
 buildSchematics();
 copySchematicsJson()

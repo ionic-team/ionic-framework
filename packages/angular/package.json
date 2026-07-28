@@ -24,8 +24,9 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
-    "build.core": "node scripts/build-core.js",
+    "build": "ngc && npm run build.css && npm run build.schematics",
+    "build.css": "node scripts/build-css.js",
+    "build.schematics": "node scripts/build-schematics.js",
     "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
     "build.watch": "npm run build.ng -- --watch",
     "clean": "node scripts/clean.js",
@@ -43,10 +44,26 @@
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "exports": {
+    ".": {
+      "default": "./dist/standalone/index.js"
+    },
+    "./*": {
+      "default": "./dist/standalone/directives/*.js"
+    },
+    "./lazy": {
+      "default": "./dist/lazy/index.js"
+    },
+    "./common": {
+      "default": "./dist/common/index.js"
+    },
     "./css/*": {
       "style": "./css/*"
     }
   },
+  "files": [
+    "dist/",
+    "css/"
+  ],
   "dependencies": {
     "@ionic/core": "^8.8.13",
     "ionicons": "^8.0.13",
@@ -97,5 +114,6 @@
     "zone.js": "~0.16.0"
   },
   "prettier": "@ionic/prettier-config",
-  "schematics": "./schematics/collection.json"
+  "schematics": "./schematics/collection.json",
+  "sideEffects": false
 }
