@@ -3,6 +3,7 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "declaration": true,
+    "sourceMap": true,
     "outDir": "dist",
     "rootDir": "src",
     "paths": {
