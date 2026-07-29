@@ -5,7 +5,7 @@ import { matchBreakpoint } from '@utils/media';
 import { getIonMode } from '../../global/ionic-global';
 
 const win = typeof (window as any) !== 'undefined' ? (window as any) : undefined;
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+
 const SUPPORTS_VARS = win && !!(win.CSS && win.CSS.supports && win.CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
