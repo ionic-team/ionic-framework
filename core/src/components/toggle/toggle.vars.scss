@@ -6,5 +6,8 @@ $toggle-item-label-margin-top: 10px;
 /// @prop - Bottom margin of toggle's label when in an item
 $toggle-item-label-margin-bottom: 10px;
 
-/// @prop - Color of the focus indicator ring for the toggle when focused
-$toggle-focus-ring-color: ion-color(primary, base, 0.2);
+/// @prop - Alpha of the focus indicator that follows the toggle's color
+$toggle-focus-ring-color-alpha: .2;
+
+/// @prop - Color of the focus indicator that follows the toggle's color
+$toggle-focus-ring-color: ion-color(primary, base, $toggle-focus-ring-color-alpha);

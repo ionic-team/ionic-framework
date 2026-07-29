@@ -67,6 +67,61 @@
   height: 100%;
 }
 
+// Material Design Toggle: Keyboard Focus
+// ----------------------------------------------------------
+// The indicator is drawn on the wrapper rather than the handle
+// because the handle uses `contain: strict`, which would clip it.
+// The wrapper translates with the handle, so the indicator travels
+// with it.
+
+:host(.ion-focused) .toggle-icon-wrapper::after {
+  @include border-radius(50%);
+
+  display: block;
+  position: absolute;
+
+  width: $toggle-md-focus-ring-size;
+  height: $toggle-md-focus-ring-size;
+
+  transform: translateY(-50%);
+
+  background: $toggle-md-focus-ring-color-off;
+
+  // The indicator is translucent while the handle is not, so the
+  // indicator is drawn behind the handle to avoid tinting it. The
+  // wrapper is its own stacking context, so this only moves the
+  // indicator behind the handle and not behind the track.
+  content: "";
+  z-index: -1;
+
+  inset-block-start: 50%;
+}
+
+// The handle sits at the inline start of the wrapper, so insetting the
+// indicator by half the difference between the two sizes centers it on
+// the handle. This uses physical properties for the same reason the
+// handle itself does: the handle's side is chosen by the .toggle-ltr /
+// .toggle-rtl classes, which are derived from the host's own `dir` and
+// so can disagree with the inherited text direction.
+
+:host(.toggle-ltr.ion-focused) .toggle-icon-wrapper::after {
+  // stylelint-disable-next-line property-disallowed-list
+  left: calc((var(--handle-width) - #{$toggle-md-focus-ring-size}) / 2);
+}
+
+:host(.toggle-rtl.ion-focused) .toggle-icon-wrapper::after {
+  // stylelint-disable-next-line property-disallowed-list
+  right: calc((var(--handle-width) - #{$toggle-md-focus-ring-size}) / 2);
+}
+
+:host(.ion-focused.toggle-checked) .toggle-icon-wrapper::after {
+  background: $toggle-focus-ring-color;
+}
+
+:host(.ion-color.ion-focused.toggle-checked) .toggle-icon-wrapper::after {
+  background: current-color(base, $toggle-focus-ring-color-alpha);
+}
+
 // Material Design Toggle: Disabled
 // ----------------------------------------------------------
 // The toggle and label should use the

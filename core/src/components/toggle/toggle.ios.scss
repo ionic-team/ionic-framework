@@ -171,3 +171,14 @@
 :host(.toggle-disabled) {
   opacity: $toggle-ios-disabled-opacity;
 }
+
+// iOS Toggle: Keyboard Focus
+// ----------------------------------------------------------
+
+:host(.ion-focused) .toggle-icon {
+  box-shadow: 0 0 0 4px $toggle-focus-ring-color;
+}
+
+:host(.ion-color.ion-focused.toggle-checked) .toggle-icon {
+  box-shadow: 0 0 0 4px current-color(base, $toggle-focus-ring-color-alpha);
+}
