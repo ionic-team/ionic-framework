@@ -24,7 +24,7 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "build": "npm run build.ng && npm run build.css && npm run build.schematics",
+    "build": "npm run clean && npm run build.ng && npm run build.css && npm run build.schematics",
     "build.css": "node scripts/build-css.js",
     "build.schematics": "node scripts/build-schematics.js",
     "build.ng": "ngc",
