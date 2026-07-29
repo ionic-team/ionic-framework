@@ -60,6 +60,7 @@
     "@typescript-eslint/parser": "^8.0.0",
     "change-case": "^4.1.1",
     "eslint": "^9.0.0",
+    "eslint-plugin-import": "^2.31.0",
     "fs-extra": "^9.1.0",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",

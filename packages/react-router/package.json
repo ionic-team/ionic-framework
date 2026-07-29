@@ -58,6 +58,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",
+    "eslint-plugin-import": "^2.31.0",
     "prettier": "^2.8.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
