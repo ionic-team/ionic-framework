@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.16](https://github.com/ionic-team/ionic-framework/compare/v8.8.15...v8.8.16) (2026-07-29)
+
+
+### Bug Fixes
+
+* **angular:** guard transition against destroyed router outlet ([#31297](https://github.com/ionic-team/ionic-framework/issues/31297)) ([fdef61c](https://github.com/ionic-team/ionic-framework/commit/fdef61cc74285caff0549ba8bdac70cedaaba865)), closes [#31296](https://github.com/ionic-team/ionic-framework/issues/31296)
+
+
+
+
+
 ## [8.8.15](https://github.com/ionic-team/ionic-framework/compare/v8.8.14...v8.8.15) (2026-07-22)
 
 **Note:** Version bump only for package @ionic/angular
