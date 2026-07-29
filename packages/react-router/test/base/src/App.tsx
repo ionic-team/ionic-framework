@@ -70,6 +70,7 @@ import { RouterLinkModifierClick, RouterLinkModifierClickTarget } from './pages/
 import { NavigateRootPageA, NavigateRootPageB, NavigateRootPageC } from './pages/navigate-root/NavigateRoot';
 import SuspenseOutlet from './pages/suspense-outlet/SuspenseOutlet';
 import { PropsUpdateDirect, PropsUpdateRoutesWrapper } from './pages/props-update/PropsUpdate';
+import DisabledButton from './pages/disabled-button/DisabledButton';
 
 setupIonicReact();
 
@@ -81,6 +82,7 @@ const App: React.FC = () => {
       <IonReactRouter basename={import.meta.env?.BASE_URL?.replace(/\/$/, '') || undefined}>
         <IonRouterOutlet>
           <Route path="/" element={<Main />} />
+          <Route path="/disabled-button" element={<DisabledButton />} />
           <Route path="/routing/*" element={<Routing />} />
           <Route path="/dynamic-routes/*" element={<DynamicRoutes />} />
           <Route path="/multiple-tabs/*" element={<MultipleTabs />} />

@@ -1,5 +1,4 @@
-import { defineConfig } from 'vite';
-import { configDefaults } from 'vitest/config';
+import { defineConfig, configDefaults } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
