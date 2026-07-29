@@ -38,6 +38,23 @@ export type DatetimeHighlightCallback = (dateIsoString: string) => DatetimeHighl
 
 export type DatetimeHourCycle = 'h11' | 'h12' | 'h23' | 'h24';
 
+export type DatetimeSelectionMode = 'multiple' | 'range';
+
+export type DatetimeMonthNavigation = 'arrows' | 'scroll';
+
+export type DatetimeMonthYearPickerView = 'wheel' | 'grid';
+
+/**
+ * Represents the active parts when selectionMode="range".
+ * `start` is always set once the user picks a first date.
+ * `end` is set once the user picks the second date (or `start` is set again
+ * when a complete range is reset).
+ */
+export interface DatetimeRangeParts {
+  start: DatetimeParts;
+  end?: DatetimeParts;
+}
+
 /**
  * FormatOptions must include date and/or time; it cannot be an empty object
  */

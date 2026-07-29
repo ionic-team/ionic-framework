@@ -1166,6 +1166,11 @@ export namespace Components {
          */
         "doneText": string;
         /**
+          * The label for the range end date shown in the header when `showDefaultTitle` is enabled and no end date has been selected yet. Useful for translating or customizing the default placeholder text. Only applies when `selectionMode="range"`.
+          * @default 'End date'
+         */
+        "endDateLabel": string;
+        /**
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
           * @default 0
          */
@@ -1212,15 +1217,22 @@ export namespace Components {
          */
         "minuteValues"?: number[] | number | string;
         /**
-          * The mode determines the platform behaviors of the component.
+          * Controls the month navigation mode when using a grid-style layout.  - `"arrows"` (default) preserves the existing prev/next button behaviour. - `"scroll"` swaps the horizontal scroll axis to vertical. The   `previous-button` and `next-button` shadow parts remain in the DOM   and keyboard-focusable in both modes.
+          * @default 'arrows'
          */
-        "mode"?: "ios" | "md";
+        "monthNavigation": 'arrows' | 'scroll';
         /**
           * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
          */
         "monthValues"?: number[] | number | string;
         /**
+          * Controls the month/year picker overlay style when using a grid-style layout.  - `"wheel"` (default) preserves the existing `ion-picker-column` behaviour. - `"grid"` replaces the wheel columns with a month name grid and a year grid   shown simultaneously inside the existing toggle overlay.
+          * @default 'wheel'
+         */
+        "monthYearPickerView": 'wheel' | 'grid';
+        /**
           * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+          * @deprecated Use `selectionMode="multiple"` instead.
           * @default false
          */
         "multiple": boolean;
@@ -1249,6 +1261,10 @@ export namespace Components {
           * @param startDate A valid [ISO-8601 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format) to reset the datetime state to.
          */
         "reset": (startDate?: string) => Promise<void>;
+        /**
+          * Controls date selection behaviour when using a grid-style layout.  - `"multiple"` enables toggling of individual dates (replaces the deprecated `multiple` boolean). - `"range"` enables start/end date range selection. `value` will emit a two-element ISO 8601   string array `[startDate, endDate]` once both dates are selected.  Only applies to `presentation="date"` and `preferWheel="false"`. Logs a warning if used with any other `presentation` or with `preferWheel="true"`.
+         */
+        "selectionMode"?: 'single' | 'multiple' | 'range';
         /**
           * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
           * @default false
@@ -1280,9 +1296,10 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * The theme determines the visual appearance of the component.
+          * The label for the range start date shown in the header when `showDefaultTitle` is enabled and no start date has been selected yet. Useful for translating or customizing the default placeholder text. Only applies when `selectionMode="range"`.
+          * @default 'Start date'
          */
-        "theme"?: "ios" | "md" | "ionic";
+        "startDateLabel": string;
         /**
           * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
@@ -7233,6 +7250,11 @@ declare namespace LocalJSX {
          */
         "doneText"?: string;
         /**
+          * The label for the range end date shown in the header when `showDefaultTitle` is enabled and no end date has been selected yet. Useful for translating or customizing the default placeholder text. Only applies when `selectionMode="range"`.
+          * @default 'End date'
+         */
+        "endDateLabel"?: string;
+        /**
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
           * @default 0
          */
@@ -7275,15 +7297,22 @@ declare namespace LocalJSX {
          */
         "minuteValues"?: number[] | number | string;
         /**
-          * The mode determines the platform behaviors of the component.
+          * Controls the month navigation mode when using a grid-style layout.  - `"arrows"` (default) preserves the existing prev/next button behaviour. - `"scroll"` swaps the horizontal scroll axis to vertical. The   `previous-button` and `next-button` shadow parts remain in the DOM   and keyboard-focusable in both modes.
+          * @default 'arrows'
          */
-        "mode"?: "ios" | "md";
+        "monthNavigation"?: 'arrows' | 'scroll';
         /**
           * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
          */
         "monthValues"?: number[] | number | string;
         /**
+          * Controls the month/year picker overlay style when using a grid-style layout.  - `"wheel"` (default) preserves the existing `ion-picker-column` behaviour. - `"grid"` replaces the wheel columns with a month name grid and a year grid   shown simultaneously inside the existing toggle overlay.
+          * @default 'wheel'
+         */
+        "monthYearPickerView"?: 'wheel' | 'grid';
+        /**
           * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+          * @deprecated Use `selectionMode="multiple"` instead.
           * @default false
          */
         "multiple"?: boolean;
@@ -7336,6 +7365,10 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
+          * Controls date selection behaviour when using a grid-style layout.  - `"multiple"` enables toggling of individual dates (replaces the deprecated `multiple` boolean). - `"range"` enables start/end date range selection. `value` will emit a two-element ISO 8601   string array `[startDate, endDate]` once both dates are selected.  Only applies to `presentation="date"` and `preferWheel="false"`. Logs a warning if used with any other `presentation` or with `preferWheel="true"`.
+         */
+        "selectionMode"?: 'single' | 'multiple' | 'range';
+        /**
           * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
           * @default false
          */
@@ -7366,9 +7399,10 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * The theme determines the visual appearance of the component.
+          * The label for the range start date shown in the header when `showDefaultTitle` is enabled and no start date has been selected yet. Useful for translating or customizing the default placeholder text. Only applies when `selectionMode="range"`.
+          * @default 'Start date'
          */
-        "theme"?: "ios" | "md" | "ionic";
+        "startDateLabel"?: string;
         /**
           * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
@@ -10993,8 +11027,13 @@ declare namespace LocalJSX {
         "locale": string;
         "firstDayOfWeek": number;
         "multiple": boolean;
+        "selectionMode": 'single' | 'multiple' | 'range';
+        "monthNavigation": 'arrows' | 'scroll';
+        "monthYearPickerView": 'wheel' | 'grid';
         "value": string | string[] | null;
         "showDefaultTitle": boolean;
+        "startDateLabel": string;
+        "endDateLabel": string;
         "showDefaultButtons": boolean;
         "showClearButton": boolean;
         "showDefaultTimeLabel": boolean;

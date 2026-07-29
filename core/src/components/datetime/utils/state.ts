@@ -92,6 +92,10 @@ export const isDayDisabled = (
 /**
  * Given a locale, a date, the selected date(s), and today's date,
  * generate the state for a given calendar day button.
+ *
+ * When `rangeParts` is provided (selectionMode="range"), the `activeParts`
+ * argument should be passed as `[]` and range-specific states are computed
+ * from `rangeParts` instead.
  */
 export const getCalendarDayState = (
   locale: string,
@@ -100,7 +104,8 @@ export const getCalendarDayState = (
   todayParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
-  dayValues?: number[]
+  dayValues?: number[],
+  rangeParts?: { start: DatetimeParts; end?: DatetimeParts }
 ) => {
   /**
    * activeParts signals what day(s) are currently selected in the datetime.
@@ -121,14 +126,43 @@ export const getCalendarDayState = (
   const disabled = isDayDisabled(refParts, minParts, maxParts, dayValues);
 
   /**
+   * Range-specific states.
+   * Only computed when `rangeParts` is provided (selectionMode="range").
+   */
+  let isRangeStart = false;
+  let isInRange = false;
+  let isRangeEnd = false;
+
+  if (rangeParts !== undefined) {
+    const { start, end } = rangeParts;
+    isRangeStart = isSameDay(refParts, start);
+    isRangeEnd = end !== undefined && isSameDay(refParts, end);
+
+    /**
+     * A day is "in range" when it falls strictly between the
+     * start and end dates of a committed range (both start and end set).
+     * Disabled days are excluded from the range highlight as a visual cue
+     * that they cannot be selected but may fall between the bounds.
+     */
+    if (end !== undefined && !disabled) {
+      isInRange = isAfter(refParts, start) && isBefore(refParts, end);
+    }
+  }
+
+  const isActiveOrRangeBound = isActive || isRangeStart || isRangeEnd;
+
+  /**
    * Note that we always return one object regardless of whether activeParts
    * was an array, since we pare down to one value for isActive.
    */
   return {
     disabled,
-    isActive,
+    isActive: isActiveOrRangeBound,
     isToday,
-    ariaSelected: isActive ? 'true' : null,
+    isRangeStart,
+    isInRange,
+    isRangeEnd,
+    ariaSelected: isActiveOrRangeBound ? 'true' : null,
     ariaLabel: generateDayAriaLabel(locale, isToday, refParts),
     text: refParts.day != null ? getDay(locale, refParts) : null,
   };

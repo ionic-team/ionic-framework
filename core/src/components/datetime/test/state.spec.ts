@@ -10,6 +10,9 @@ describe('getCalendarDayState()', () => {
       isActive: false,
       isToday: false,
       disabled: false,
+      isRangeStart: false,
+      isInRange: false,
+      isRangeEnd: false,
       ariaSelected: null,
       ariaLabel: 'Tuesday, January 1',
       text: '1',
@@ -19,6 +22,9 @@ describe('getCalendarDayState()', () => {
       isActive: true,
       isToday: false,
       disabled: false,
+      isRangeStart: false,
+      isInRange: false,
+      isRangeEnd: false,
       ariaSelected: 'true',
       ariaLabel: 'Tuesday, January 1',
       text: '1',
@@ -28,6 +34,9 @@ describe('getCalendarDayState()', () => {
       isActive: false,
       isToday: true,
       disabled: false,
+      isRangeStart: false,
+      isInRange: false,
+      isRangeEnd: false,
       ariaSelected: null,
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
@@ -37,6 +46,9 @@ describe('getCalendarDayState()', () => {
       isActive: true,
       isToday: true,
       disabled: false,
+      isRangeStart: false,
+      isInRange: false,
+      isRangeEnd: false,
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
@@ -46,6 +58,9 @@ describe('getCalendarDayState()', () => {
       isActive: true,
       isToday: true,
       disabled: false,
+      isRangeStart: false,
+      isInRange: false,
+      isRangeEnd: false,
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
@@ -55,9 +70,102 @@ describe('getCalendarDayState()', () => {
       isActive: true,
       isToday: true,
       disabled: true,
+      isRangeStart: false,
+      isInRange: false,
+      isRangeEnd: false,
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
+    });
+  });
+
+  describe('with rangeParts', () => {
+    const today = { month: 1, day: 15, year: 2025 };
+
+    const startParts = { month: 1, day: 10, year: 2025 };
+    const endParts = { month: 1, day: 20, year: 2025 };
+
+    it('should mark the start day as isRangeStart and isActive', () => {
+      const state = getCalendarDayState('en-US', startParts, [], today, undefined, undefined, undefined, {
+        start: startParts,
+        end: endParts,
+      });
+      expect(state.isRangeStart).toBe(true);
+      expect(state.isRangeEnd).toBe(false);
+      expect(state.isInRange).toBe(false);
+      expect(state.isActive).toBe(true);
+      expect(state.ariaSelected).toBe('true');
+    });
+
+    it('should mark the end day as isRangeEnd and isActive', () => {
+      const state = getCalendarDayState('en-US', endParts, [], today, undefined, undefined, undefined, {
+        start: startParts,
+        end: endParts,
+      });
+      expect(state.isRangeEnd).toBe(true);
+      expect(state.isRangeStart).toBe(false);
+      expect(state.isInRange).toBe(false);
+      expect(state.isActive).toBe(true);
+      expect(state.ariaSelected).toBe('true');
+    });
+
+    it('should mark a day strictly between start and end as isInRange', () => {
+      const between = { month: 1, day: 15, year: 2025 };
+      const state = getCalendarDayState('en-US', between, [], today, undefined, undefined, undefined, {
+        start: startParts,
+        end: endParts,
+      });
+      expect(state.isInRange).toBe(true);
+      expect(state.isRangeStart).toBe(false);
+      expect(state.isRangeEnd).toBe(false);
+      expect(state.isActive).toBe(false);
+    });
+
+    it('should not mark a day outside the range', () => {
+      const outside = { month: 1, day: 5, year: 2025 };
+      const state = getCalendarDayState('en-US', outside, [], today, undefined, undefined, undefined, {
+        start: startParts,
+        end: endParts,
+      });
+      expect(state.isRangeStart).toBe(false);
+      expect(state.isInRange).toBe(false);
+      expect(state.isRangeEnd).toBe(false);
+      expect(state.isActive).toBe(false);
+    });
+
+    it('should not mark in-range when only start is set (partial range)', () => {
+      const between = { month: 1, day: 15, year: 2025 };
+      const state = getCalendarDayState('en-US', between, [], today, undefined, undefined, undefined, {
+        start: startParts,
+        // end is undefined — partial range
+      });
+      expect(state.isInRange).toBe(false);
+    });
+
+    it('should not mark disabled days as in-range', () => {
+      const between = { month: 1, day: 15, year: 2025 };
+      const minAfterBetween = { month: 1, day: 16, year: 2025 };
+      const state = getCalendarDayState(
+        'en-US',
+        between,
+        [],
+        today,
+        minAfterBetween, // min is after `between`, so it is disabled
+        undefined,
+        undefined,
+        { start: startParts, end: endParts }
+      );
+      expect(state.disabled).toBe(true);
+      expect(state.isInRange).toBe(false);
+    });
+
+    it('should have no range state when rangeParts is not provided', () => {
+      const state = getCalendarDayState('en-US', startParts, [startParts], today);
+      expect(state.isRangeStart).toBe(false);
+      expect(state.isInRange).toBe(false);
+      expect(state.isRangeEnd).toBe(false);
+      // isActive is still set through the activeParts array path
+      expect(state.isActive).toBe(true);
     });
   });
 });

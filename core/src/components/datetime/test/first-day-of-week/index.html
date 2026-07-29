@@ -47,11 +47,25 @@
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>Default</h2>
-            <ion-datetime first-day-of-week="1" value="2022-05-03"></ion-datetime>
-            <button onclick="increase()">Increase firstDayOfWeek</button>
+            <h2>Default (arrows)</h2>
+            <ion-datetime id="datetime-arrows" first-day-of-week="1" value="2022-05-03"></ion-datetime>
+            <button onclick="increase('datetime-arrows', 'start-of-week-arrows')">Increase firstDayOfWeek</button>
             <div>
-              <span>FirstDayOfWeek: <span id="start-of-week">1</span></span>
+              <span>FirstDayOfWeek: <span id="start-of-week-arrows">1</span></span>
+            </div>
+          </div>
+
+          <div class="grid-item">
+            <h2>Scroll Mode</h2>
+            <ion-datetime
+              id="datetime-scroll"
+              first-day-of-week="1"
+              month-navigation="scroll"
+              value="2022-05-03"
+            ></ion-datetime>
+            <button onclick="increase('datetime-scroll', 'start-of-week-scroll')">Increase firstDayOfWeek</button>
+            <div>
+              <span>FirstDayOfWeek: <span id="start-of-week-scroll">1</span></span>
             </div>
           </div>
         </div>
@@ -59,11 +73,11 @@
     </ion-app>
   </body>
   <script>
-    function increase() {
-      const datetime = document.querySelector('ion-datetime');
+    function increase(datetimeId, spanId) {
+      const datetime = document.querySelector(`#${datetimeId}`);
       datetime.firstDayOfWeek = datetime.firstDayOfWeek + 1;
 
-      const span = document.getElementById('start-of-week');
+      const span = document.getElementById(spanId);
       span.innerText = datetime.firstDayOfWeek;
     }
   </script>

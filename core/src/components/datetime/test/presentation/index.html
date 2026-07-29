@@ -35,16 +35,32 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-datetime presentation="date-time" value="2022-03-10T13:00:00" max="2022"></ion-datetime>
+        <h2>Wheel (Default)</h2>
+        <ion-datetime
+          id="datetime-wheel"
+          presentation="date-time"
+          value="2022-03-10T13:00:00"
+          max="2022"
+        ></ion-datetime>
+        <h2>Grid</h2>
+        <ion-datetime
+          id="datetime-grid"
+          presentation="date-time"
+          value="2022-03-10T13:00:00"
+          max="2022"
+          month-year-picker-view="grid"
+        ></ion-datetime>
       </ion-content>
     </ion-app>
     <script>
-      const datetime = document.querySelector('ion-datetime');
+      const datetimeWheel = document.querySelector('#datetime-wheel');
+      const datetimeGrid = document.querySelector('#datetime-grid');
       const select = document.querySelector('select');
 
       select.addEventListener('change', (ev) => {
         const presentation = ev.target.value;
-        datetime.presentation = presentation;
+        datetimeWheel.presentation = presentation;
+        datetimeGrid.presentation = presentation;
       });
     </script>
   </body>
