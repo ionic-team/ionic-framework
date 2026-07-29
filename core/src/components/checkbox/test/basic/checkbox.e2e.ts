@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { applyKeyboardFocus, configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: basic visual tests'), () => {
@@ -292,7 +292,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: focus visual'), () => {
-    test('should render focus indicator when unchecked', async ({ page, pageUtils }) => {
+    test('should render focus indicator when unchecked', async ({ page }) => {
       // `ion-app` is required so `startFocusVisible` applies `ion-focused` on keyboard focus.
       await page.setContent(
         `
@@ -314,19 +314,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const checkbox = page.locator('ion-checkbox');
 
-      // The focus listeners attach asynchronously, so retry Tab until `ion-focused` sticks.
-      await expect(async () => {
-        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
-        await pageUtils.pressKeys('Tab');
-        await expect(checkbox).toHaveClass(/ion-focused/, { timeout: 250 });
-      }).toPass({ timeout: 5000 });
+      await applyKeyboardFocus(page, checkbox);
 
       const container = page.locator('#container');
 
       await expect(container).toHaveScreenshot(screenshot(`checkbox-focus`));
     });
 
-    test('should render focus indicator when checked', async ({ page, pageUtils }) => {
+    test('should render focus indicator when checked', async ({ page }) => {
       await page.setContent(
         `
         <style>
@@ -347,11 +342,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const checkbox = page.locator('ion-checkbox');
 
-      await expect(async () => {
-        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
-        await pageUtils.pressKeys('Tab');
-        await expect(checkbox).toHaveClass(/ion-focused/, { timeout: 250 });
-      }).toPass({ timeout: 5000 });
+      await applyKeyboardFocus(page, checkbox);
 
       const container = page.locator('#container');
 

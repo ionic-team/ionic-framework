@@ -40,9 +40,10 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
 
       const toggle = page.locator('ion-toggle');
       await expect(toggle).toHaveClass(/ion-focusable/);
+      await expect(toggle).not.toHaveClass(/toggle-defers-indicator/);
     });
 
-    test('toggle in a single-input item should be focusable', async ({ page }) => {
+    test('toggle in a single-input item should defer the indicator to the item', async ({ page }) => {
       await page.setContent(
         `
         <ion-app>
@@ -54,9 +55,31 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
         config
       );
 
-      // Unlike checkbox and radio, a single-input item does not suppress the toggle's indicator.
       const toggle = page.locator('ion-toggle');
+
+      // The toggle's `ion-focusable` is what makes the item focusable, so both carry it.
       await expect(toggle).toHaveClass(/ion-focusable/);
+      await expect(toggle).toHaveClass(/toggle-defers-indicator/);
+      await expect(page.locator('ion-item')).toHaveClass(/ion-focusable/);
+    });
+
+    test('toggle in a clickable item should keep its own indicator', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item button>
+            <ion-toggle>Toggle</ion-toggle>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+
+      // Two tab stops sharing one indicator would be indistinguishable.
+      await expect(page.locator('ion-item')).toHaveClass(/ion-activatable/);
+      await expect(toggle).not.toHaveClass(/toggle-defers-indicator/);
     });
 
     test('toggle in a multi-input item should be focusable', async ({ page }) => {
@@ -75,6 +98,10 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
       const toggles = page.locator('ion-toggle');
       await expect(toggles.nth(0)).toHaveClass(/ion-focusable/);
       await expect(toggles.nth(1)).toHaveClass(/ion-focusable/);
+
+      // No single indicator to defer to, so each toggle draws its own.
+      await expect(toggles.nth(0)).not.toHaveClass(/toggle-defers-indicator/);
+      await expect(toggles.nth(1)).not.toHaveClass(/toggle-defers-indicator/);
     });
   });
 });

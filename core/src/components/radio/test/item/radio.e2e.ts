@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { applyKeyboardFocus, configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: item'), () => {
@@ -124,7 +124,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(item).toHaveScreenshot(screenshot(`radio-in-item-focus`));
     });
 
-    test('should render focus indicator for a radio in a multi-input item', async ({ page, pageUtils }) => {
+    test('should render focus indicator for a radio in a multi-input item', async ({ page }) => {
       await page.setContent(
         `
         <ion-app>
@@ -139,12 +139,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const radio = page.locator('ion-radio').first();
 
-      // The focus listeners attach asynchronously, so retry Tab until `ion-focused` sticks.
-      await expect(async () => {
-        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
-        await pageUtils.pressKeys('Tab');
-        await expect(radio).toHaveClass(/ion-focused/, { timeout: 250 });
-      }).toPass({ timeout: 5000 });
+      await applyKeyboardFocus(page, radio);
 
       const item = page.locator('ion-item');
 

@@ -174,15 +174,17 @@
 
 // iOS Toggle: Keyboard Focus
 // ----------------------------------------------------------
+// `toggle-defers-indicator` is excluded rather than overridden, because an
+// override would have to out-specify every rule below, including `.ion-color`.
 
-:host(.ion-focused) .toggle-icon {
+:host(.ion-focused:not(.toggle-defers-indicator)) .toggle-icon {
   box-shadow: 0 0 0 4px $toggle-focus-ring-color-off;
 }
 
-:host(.ion-focused.toggle-checked) .toggle-icon {
+:host(.ion-focused.toggle-checked:not(.toggle-defers-indicator)) .toggle-icon {
   box-shadow: 0 0 0 4px $toggle-focus-ring-color;
 }
 
-:host(.ion-color.ion-focused.toggle-checked) .toggle-icon {
+:host(.ion-color.ion-focused.toggle-checked:not(.toggle-defers-indicator)) .toggle-icon {
   box-shadow: 0 0 0 4px current-color(base, $toggle-focus-ring-color-alpha);
 }

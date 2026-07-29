@@ -72,8 +72,11 @@
 // ----------------------------------------------------------
 // The indicator is drawn on the wrapper because the handle uses
 // `contain: strict`, which would clip it. The wrapper travels with the handle.
+//
+// `toggle-defers-indicator` is excluded rather than overridden so the indicator
+// is never created, leaving the rules that position and color it nothing to act on.
 
-:host(.ion-focused) .toggle-icon-wrapper::after {
+:host(.ion-focused:not(.toggle-defers-indicator)) .toggle-icon-wrapper::after {
   @include border-radius(50%);
 
   display: block;
