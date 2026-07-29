@@ -11,7 +11,7 @@
     }
   },
   "angularCompilerOptions": {
-    
+    "compilationMode": "partial"
   },
   "files": ["src/standalone/index.ts", "src/lazy/index.ts"]
 }
