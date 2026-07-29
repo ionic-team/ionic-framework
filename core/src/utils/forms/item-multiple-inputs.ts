@@ -5,10 +5,12 @@ import { Build } from '@stencil/core';
  * inputs are added or removed. Controls that change their focus indicator based
  * on that class need to re-render when it flips.
  *
- * Observes the closest `ion-item` and invokes `onChange` whenever
- * `item-multiple-inputs` is added or removed. Returns the observer so the caller
- * can disconnect it in `disconnectedCallback`, or `undefined` when there is no
- * parent item or `MutationObserver` is unavailable.
+ * @internal
+ * @param el The form control whose closest `ion-item` should be observed.
+ * @param onChange Called whenever `item-multiple-inputs` is added or removed.
+ * @returns The observer, for the caller to disconnect in `disconnectedCallback`,
+ * or `undefined` when there is no parent item, this is not a browser build, or
+ * `MutationObserver` is unavailable.
  */
 export const createItemMultipleInputsObserver = (
   el: HTMLElement,

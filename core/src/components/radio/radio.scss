@@ -1,4 +1,3 @@
-@import "../../themes/ionic.globals";
 @import "./radio.vars.scss";
 
 // Radio
@@ -53,6 +52,8 @@ input {
   @include visually-hidden();
 }
 
+// The host is focusable, so the browser draws a native focus ring on it.
+// Suppress it in favor of the keyboard focus indicator.
 :host(:focus) {
   outline: none;
 }
@@ -78,6 +79,24 @@ input {
   flex: initial;
 
   width: auto;
+}
+
+// Radio: Keyboard Focus
+// ---------------------------------------------
+
+:host(.ion-focused) .radio-icon::after {
+  @include border-radius(var(--inner-border-radius));
+
+  display: block;
+  position: absolute;
+
+  width: 36px;
+  height: 36px;
+
+  background: $radio-background-color-focused;
+
+  content: "";
+  opacity: 0.2;
 }
 
 // Radio Wrapper

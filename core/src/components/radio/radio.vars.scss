@@ -1,5 +1,10 @@
+@import "../../themes/ionic.globals";
+
 /// @prop - Top margin of radio's label when in an item
 $radio-item-label-margin-top: 10px;
 
 /// @prop - Bottom margin of radio's label when in an item
 $radio-item-label-margin-bottom: 10px;
+
+/// @prop - Background color of focus indicator for radio when focused
+$radio-background-color-focused: ion-color(primary, tint);

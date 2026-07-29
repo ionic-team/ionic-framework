@@ -76,10 +76,3 @@
 :host(.toggle-disabled) {
   opacity: $toggle-md-disabled-opacity;
 }
-
-// Material Design Toggle: Keyboard Focus
-// -----------------------------------------
-
-:host(.ion-focused) .toggle-icon {
-  box-shadow: 0 0 0 4px $toggle-md-focus-ring-color;
-}

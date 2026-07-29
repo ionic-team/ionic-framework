@@ -1,4 +1,3 @@
-@import "../../themes/ionic.globals";
 @import "./checkbox.vars.scss";
 
 // Checkbox
@@ -120,7 +119,7 @@ input {
 }
 
 // The host is focusable, so the browser draws a native focus ring on it.
-// Suppress it in favor of the mode-specific keyboard focus indicator.
+// Suppress it in favor of the keyboard focus indicator.
 :host(:focus) {
   outline: none;
 }
@@ -131,29 +130,6 @@ input {
   position: relative;
 
   align-items: center;
-}
-
-// Checkbox: Keyboard Focus
-// ---------------------------------------------
-
-:host(.ion-focused) .native-wrapper::after {
-  @include border-radius(50%);
-
-  display: block;
-  position: absolute;
-
-  width: 36px;
-  height: 36px;
-
-  transform: translate(-50%, -50%);
-
-  background: $checkbox-background-color-focused;
-
-  content: "";
-  opacity: 0.2;
-
-  inset-block-start: 50%;
-  inset-inline-start: 50%;
 }
 
 .checkbox-icon {
@@ -181,6 +157,29 @@ input {
   stroke-width: var(--checkmark-width);
 
   opacity: 0;
+}
+
+// Checkbox: Keyboard Focus
+// ---------------------------------------------
+
+:host(.ion-focused) .native-wrapper::after {
+  @include border-radius(50%);
+
+  display: block;
+  position: absolute;
+
+  width: 36px;
+  height: 36px;
+
+  transform: translate(-50%, -50%);
+
+  background: $checkbox-background-color-focused;
+
+  content: "";
+  opacity: 0.2;
+
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
 }
 
 // Checkbox Bottom Content

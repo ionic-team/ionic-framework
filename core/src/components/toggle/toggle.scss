@@ -1,4 +1,3 @@
-@import "../../themes/ionic.globals";
 @import "./toggle.vars.scss";
 
 // Toggle
@@ -72,9 +71,16 @@ input {
 }
 
 // The host is focusable, so the browser draws a native focus ring on it.
-// Suppress it in favor of the mode-specific keyboard focus indicator.
+// Suppress it in favor of the keyboard focus indicator.
 :host(:focus) {
   outline: none;
+}
+
+// Toggle: Keyboard Focus
+// ---------------------------------------------
+
+:host(.ion-focused) .toggle-icon {
+  box-shadow: 0 0 0 4px $toggle-focus-ring-color;
 }
 
 // Toggle Wrapper
