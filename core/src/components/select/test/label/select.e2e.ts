@@ -377,3 +377,27 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select: floating label focus'), () => {
+    test('label should appear on top of the select when it is focused, has a placeholder, and no value', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+           <ion-select label="Label" label-placement="floating" placeholder="Placeholder">
+             <ion-select-option value="apples">Apples</ion-select-option>
+           </ion-select>
+         `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      await page.locator('ion-select button').focus();
+      await expect(select).toHaveScreenshot(screenshot(`select-label-floating-focus-no-value-placeholder`));
+    });
+  });
+});

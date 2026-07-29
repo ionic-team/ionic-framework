@@ -1175,8 +1175,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   private onModalFocus = (ev: FocusEvent) => {
     const { dragHandleEl, el } = this;
-    // Only handle focus if the modal itself was focused (not a child element)
-    if (ev.target === el && dragHandleEl && dragHandleEl.tabIndex !== -1) {
+    /**
+     * Shadow DOM focus is retargeted to the host, so `ev.target === el` is also
+     * true when a shadow child (the dialog wrapper present() focuses) is focused.
+     * shadowRoot's activeElement is null only when the host was focused directly,
+     * so redirect to the handle only then and leave present()'s wrapper focus intact.
+     */
+    if (ev.target === el && el.shadowRoot?.activeElement == null && dragHandleEl && dragHandleEl.tabIndex !== -1) {
       dragHandleEl.focus();
     }
   };
