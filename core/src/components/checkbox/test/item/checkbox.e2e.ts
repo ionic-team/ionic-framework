@@ -147,8 +147,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * The focus indicator UI differs between iOS and MD, so these visual tests run
- * in both modes. Direction does not affect the indicator, so only LTR is run.
+ * This behavior does not vary across directions
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: focus in item'), () => {

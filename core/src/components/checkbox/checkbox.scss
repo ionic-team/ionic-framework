@@ -133,6 +133,29 @@ input {
   align-items: center;
 }
 
+// Checkbox: Keyboard Focus
+// ---------------------------------------------
+
+:host(.ion-focused) .native-wrapper::after {
+  @include border-radius(50%);
+
+  display: block;
+  position: absolute;
+
+  width: 36px;
+  height: 36px;
+
+  transform: translate(-50%, -50%);
+
+  background: $checkbox-background-color-focused;
+
+  content: "";
+  opacity: 0.2;
+
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+}
+
 .checkbox-icon {
   @include border-radius(var(--border-radius));
 

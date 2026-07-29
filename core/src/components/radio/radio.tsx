@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import { isOptionSelected } from '@utils/forms';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { createItemMultipleInputsObserver, isOptionSelected } from '@utils/forms';
 import { addEventListener, removeEventListener } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
 
@@ -152,21 +152,9 @@ export class Radio implements ComponentInterface {
       addEventListener(radioGroup, 'ionValueChange', this.updateState);
     }
 
-    // The item toggles `item-multiple-inputs` after this control renders and as
-    // inputs are added or removed. Re-render when it flips so the focus
+    // Re-render when the item flips `item-multiple-inputs` so the focus
     // indicator stays in sync.
-    const item = this.el.closest('ion-item');
-    if (item && Build.isBrowser && typeof MutationObserver !== 'undefined') {
-      let wasMultipleInputs = item.classList.contains('item-multiple-inputs');
-      this.itemFocusObserver = new MutationObserver(() => {
-        const isMultipleInputs = item.classList.contains('item-multiple-inputs');
-        if (isMultipleInputs !== wasMultipleInputs) {
-          wasMultipleInputs = isMultipleInputs;
-          forceUpdate(this);
-        }
-      });
-      this.itemFocusObserver.observe(item, { attributes: true, attributeFilter: ['class'] });
-    }
+    this.itemFocusObserver = createItemMultipleInputsObserver(this.el, () => forceUpdate(this));
   }
 
   disconnectedCallback() {
