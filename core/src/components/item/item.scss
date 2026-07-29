@@ -355,6 +355,12 @@ a {
 }
 
 .input-wrapper {
+  // Widens the clip boundary so focus indicators on slotted controls are not cut
+  // off. `overflow` has to stay: the scroll container zeroes the automatic
+  // minimum size, which is what lets long labels ellipsize.
+  @include margin-horizontal(-$item-input-focus-indicator-room);
+  @include padding-horizontal($item-input-focus-indicator-room);
+
   display: flex;
 
   // This flex property is required in order to keep
@@ -369,6 +375,8 @@ a {
 
   text-overflow: ellipsis;
 
+  // Has to stay: being a scroll container zeroes the automatic minimum size,
+  // which is what lets long labels ellipsize instead of pushing the control out.
   overflow: inherit;
   box-sizing: border-box;
 }

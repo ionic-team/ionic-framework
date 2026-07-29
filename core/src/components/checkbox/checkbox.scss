@@ -118,8 +118,7 @@ input {
   display: none;
 }
 
-// The host is focusable, so the browser draws a native focus ring on it.
-// Suppress it in favor of the keyboard focus indicator.
+// Hide the native focus ring since we draw our own focus indicator.
 :host(:focus) {
   outline: none;
 }
@@ -168,18 +167,17 @@ input {
   display: block;
   position: absolute;
 
-  width: 36px;
-  height: 36px;
-
-  transform: translate(-50%, -50%);
+  width: $checkbox-focus-ring-size;
+  height: $checkbox-focus-ring-size;
 
   background: $checkbox-background-color-focused;
 
   content: "";
   opacity: 0.2;
 
-  inset-block-start: 50%;
-  inset-inline-start: 50%;
+  // Centered with insets because `transform` is physical and breaks in RTL.
+  inset-block-start: calc(50% - #{$checkbox-focus-ring-size} / 2);
+  inset-inline-start: calc(50% - #{$checkbox-focus-ring-size} / 2);
 }
 
 // Checkbox Bottom Content

@@ -7,8 +7,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: focus visual'), () => {
     test('should render focus indicator when unchecked', async ({ page, pageUtils }) => {
-      // `ion-app` is required so `startFocusVisible` runs and applies the
-      // `ion-focused` class on keyboard focus, which drives the focus indicator.
+      // `ion-app` is required so `startFocusVisible` applies `ion-focused` on keyboard focus.
       await page.setContent(
         `
         <style>
@@ -31,8 +30,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const radio = page.locator('ion-radio');
 
-      // The focus listeners attach asynchronously, so the first Tab can miss
-      // them. Retry until `ion-focused` sticks before taking the snapshot.
+      // The focus listeners attach asynchronously, so retry Tab until `ion-focused` sticks.
       await expect(async () => {
         await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
         await pageUtils.pressKeys('Tab');
@@ -67,8 +65,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const radio = page.locator('ion-radio');
 
-      // The focus listeners attach asynchronously, so the first Tab can miss
-      // them. Retry until `ion-focused` sticks before taking the snapshot.
       await expect(async () => {
         await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
         await pageUtils.pressKeys('Tab');

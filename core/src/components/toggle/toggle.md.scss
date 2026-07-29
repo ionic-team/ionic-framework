@@ -15,7 +15,8 @@
   --handle-width: #{$toggle-md-handle-width};
   --handle-height: #{$toggle-md-handle-height};
   --handle-max-height: #{$toggle-md-handle-max-height};
-  --handle-spacing: 0;
+  // A length, not a bare 0, so it composes in `calc()`.
+  --handle-spacing: 0px;
   --handle-transition: #{$toggle-md-transition};
 }
 
@@ -69,10 +70,8 @@
 
 // Material Design Toggle: Keyboard Focus
 // ----------------------------------------------------------
-// The indicator is drawn on the wrapper rather than the handle
-// because the handle uses `contain: strict`, which would clip it.
-// The wrapper translates with the handle, so the indicator travels
-// with it.
+// The indicator is drawn on the wrapper because the handle uses
+// `contain: strict`, which would clip it. The wrapper travels with the handle.
 
 :host(.ion-focused) .toggle-icon-wrapper::after {
   @include border-radius(50%);
@@ -85,33 +84,40 @@
 
   transform: translateY(-50%);
 
-  background: $toggle-md-focus-ring-color-off;
+  background: $toggle-focus-ring-color-off;
 
-  // The indicator is translucent while the handle is not, so the
-  // indicator is drawn behind the handle to avoid tinting it. The
-  // wrapper is its own stacking context, so this only moves the
-  // indicator behind the handle and not behind the track.
   content: "";
+
+  // Drawn behind the handle so the translucent indicator does not tint it. The
+  // wrapper is its own stacking context, so it stays above the track.
   z-index: -1;
 
   inset-block-start: 50%;
 }
 
-// The handle sits at the inline start of the wrapper, so insetting the
-// indicator by half the difference between the two sizes centers it on
-// the handle. This uses physical properties for the same reason the
-// handle itself does: the handle's side is chosen by the .toggle-ltr /
-// .toggle-rtl classes, which are derived from the host's own `dir` and
-// so can disagree with the inherited text direction.
+// Positioned the same way as `.toggle-inner`, offset by half the size difference
+// so it centers on the handle. Anchored physically to mirror the handle, which
+// uses `left` in LTR and `right` in RTL.
 
 :host(.toggle-ltr.ion-focused) .toggle-icon-wrapper::after {
   // stylelint-disable-next-line property-disallowed-list
-  left: calc((var(--handle-width) - #{$toggle-md-focus-ring-size}) / 2);
+  left: calc(var(--handle-spacing) + (var(--handle-width) - #{$toggle-md-focus-ring-size}) / 2);
 }
 
 :host(.toggle-rtl.ion-focused) .toggle-icon-wrapper::after {
   // stylelint-disable-next-line property-disallowed-list
-  right: calc((var(--handle-width) - #{$toggle-md-focus-ring-size}) / 2);
+  right: calc(var(--handle-spacing) + (var(--handle-width) - #{$toggle-md-focus-ring-size}) / 2);
+}
+
+// Matches the checked shift `.toggle-inner` applies, so the indicator stays on
+// the handle. The Y component repeats the centering from the base rule.
+
+:host(.toggle-ltr.ion-focused.toggle-checked) .toggle-icon-wrapper::after {
+  transform: translate(calc(var(--handle-spacing) * -2), -50%);
+}
+
+:host(.toggle-rtl.ion-focused.toggle-checked) .toggle-icon-wrapper::after {
+  transform: translate(calc(var(--handle-spacing) * 2), -50%);
 }
 
 :host(.ion-focused.toggle-checked) .toggle-icon-wrapper::after {

@@ -201,8 +201,6 @@ export class Checkbox implements ComponentInterface {
     this.isInvalid = checkInvalidState(el);
     this.hasLabelContent = this.el.textContent !== '';
 
-    // Re-render when the item flips `item-multiple-inputs` so the focus
-    // indicator stays in sync.
     this.itemFocusObserver = createItemMultipleInputsObserver(el, () => forceUpdate(this));
   }
 
@@ -215,7 +213,6 @@ export class Checkbox implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    // Clean up observers to prevent memory leaks.
     if (this.validationObserver) {
       this.validationObserver.disconnect();
       this.validationObserver = undefined;
@@ -376,9 +373,8 @@ export class Checkbox implements ComponentInterface {
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
-          // Focus styling should not apply when the checkbox is in an item,
-          // since the item handles the focus indicator instead. The exception
-          // is a multi-input item, which has no single indicator of its own.
+          // A single-input item has the input cover and draws the indicator itself.
+          // A multi-input item has no cover, so each control draws its own.
           'ion-focusable': !inItem || inMultipleInputsItem,
           [`checkbox-justify-${justify}`]: justify !== undefined,
           [`checkbox-alignment-${alignment}`]: alignment !== undefined,

@@ -161,7 +161,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      // Test focus with keyboard navigation
       await pageUtils.pressKeys('Tab');
 
       const item = page.locator('ion-item');
@@ -170,9 +169,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render focus indicator for a checkbox in a multi-input item', async ({ page, pageUtils }) => {
-      // A multi-input item cannot draw a single focus indicator, so each
-      // checkbox shows its own. Focus the first one and confirm its indicator
-      // renders.
       await page.setContent(
         `
         <ion-app>
@@ -187,8 +183,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const checkbox = page.locator('ion-checkbox').first();
 
-      // The focus listeners attach asynchronously, so the first Tab can miss
-      // them. Retry until `ion-focused` sticks before taking the snapshot.
+      // The focus listeners attach asynchronously, so retry Tab until `ion-focused` sticks.
       await expect(async () => {
         await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
         await pageUtils.pressKeys('Tab');

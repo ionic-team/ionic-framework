@@ -1,16 +1,14 @@
 import { Build } from '@stencil/core';
 
 /**
- * An item toggles `item-multiple-inputs` after its form controls render and as
- * inputs are added or removed. Controls that change their focus indicator based
- * on that class need to re-render when it flips.
+ * `item-multiple-inputs` is toggled on the item after its form controls render,
+ * so a control whose focus styling depends on it needs to re-render when it flips.
  *
  * @internal
  * @param el The form control whose closest `ion-item` should be observed.
  * @param onChange Called whenever `item-multiple-inputs` is added or removed.
- * @returns The observer, for the caller to disconnect in `disconnectedCallback`,
- * or `undefined` when there is no parent item, this is not a browser build, or
- * `MutationObserver` is unavailable.
+ * @returns The observer to disconnect in `disconnectedCallback`, or `undefined`
+ * if it could not be created.
  */
 export const createItemMultipleInputsObserver = (
   el: HTMLElement,

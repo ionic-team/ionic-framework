@@ -28,8 +28,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should apply color to the focus indicator when checked', async ({ page, pageUtils }) => {
-      // `ion-app` is required so `startFocusVisible` runs and applies the
-      // `ion-focused` class on keyboard focus, which drives the focus indicator.
+      // `ion-app` is required so `startFocusVisible` applies `ion-focused` on keyboard focus.
       await page.setContent(
         `
         <style>
@@ -50,8 +49,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const toggle = page.locator('ion-toggle');
 
-      // The focus listeners attach asynchronously, so the first Tab can miss
-      // them. Retry until `ion-focused` sticks before taking the snapshot.
+      // The focus listeners attach asynchronously, so retry Tab until `ion-focused` sticks.
       await expect(async () => {
         await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
         await pageUtils.pressKeys('Tab');
@@ -84,8 +82,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const toggle = page.locator('ion-toggle');
 
-      // The focus listeners attach asynchronously, so the first Tab can miss
-      // them. Retry until `ion-focused` sticks before taking the snapshot.
       await expect(async () => {
         await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
         await pageUtils.pressKeys('Tab');

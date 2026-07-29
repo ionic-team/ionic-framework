@@ -152,8 +152,6 @@ export class Radio implements ComponentInterface {
       addEventListener(radioGroup, 'ionValueChange', this.updateState);
     }
 
-    // Re-render when the item flips `item-multiple-inputs` so the focus
-    // indicator stays in sync.
     this.itemFocusObserver = createItemMultipleInputsObserver(this.el, () => forceUpdate(this));
   }
 
@@ -240,9 +238,9 @@ export class Radio implements ComponentInterface {
           [`radio-justify-${justify}`]: justify !== undefined,
           [`radio-alignment-${alignment}`]: alignment !== undefined,
           [`radio-label-placement-${labelPlacement}`]: true,
-          // Focus/active styling should not apply in an item, since the item
-          // handles it. The exception is a multi-input item, which has no single
-          // indicator of its own; active styling stays suppressed there regardless.
+          // A single-input item has the input cover and draws the indicator itself.
+          // A multi-input item has no cover, so each control draws its own. Active
+          // styling stays suppressed either way.
           'ion-activatable': !inItem,
           'ion-focusable': !inItem || inMultipleInputsItem,
         })}

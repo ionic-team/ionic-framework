@@ -52,8 +52,7 @@ input {
   @include visually-hidden();
 }
 
-// The host is focusable, so the browser draws a native focus ring on it.
-// Suppress it in favor of the keyboard focus indicator.
+// Hide the native focus ring since we draw our own focus indicator.
 :host(:focus) {
   outline: none;
 }

@@ -23,10 +23,8 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
 });
 
 /**
- * These assert the `ion-focusable` class the component controls, not the
- * rendered ring. `ion-focused` is not asserted directly because it depends on
- * keyboard-mode detection, which is unreliable on WebKit. The class is
- * mode-independent, so only md is exercised.
+ * These assert `ion-focusable`, not the rendered ring, because `ion-focused`
+ * relies on keyboard-mode detection that is flaky on WebKit. Gating is mode-independent.
  */
 configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
   test.describe(title('toggle: focus indicator'), () => {
@@ -56,8 +54,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
         config
       );
 
-      // Unlike checkbox/radio, a single-input item does not suppress a toggle's
-      // own indicator.
+      // Unlike checkbox and radio, a single-input item does not suppress the toggle's indicator.
       const toggle = page.locator('ion-toggle');
       await expect(toggle).toHaveClass(/ion-focusable/);
     });
