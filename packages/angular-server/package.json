@@ -69,6 +69,13 @@
     "rxjs": "^7.8.0",
     "typescript": "~6.0.0"
   },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
+  },
   "prettier": "@ionic/prettier-config",
   "dependencies": {
     "@ionic/core": "^8.8.15"

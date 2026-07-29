@@ -68,5 +68,12 @@
     "rollup": "^4.2.0",
     "typescript": "^6.0.0"
   },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
+  },
   "prettier": "@ionic/prettier-config"
 }

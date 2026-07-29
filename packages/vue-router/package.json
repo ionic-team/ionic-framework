@@ -62,5 +62,12 @@
     "typescript": "^6.0.0",
     "vue": "^3.5.0",
     "vue-router": "^5.2.0"
+  },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
   }
 }

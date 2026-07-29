@@ -77,6 +77,13 @@
     "ts-jest": "^29.4.0",
     "typescript": "^6.0.0"
   },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
+  },
   "jest": {
     "testEnvironment": "jsdom",
     "preset": "ts-jest",

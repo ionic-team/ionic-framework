@@ -69,6 +69,13 @@
     "vue": "^3.5.0",
     "vue-router": "^5.2.0"
   },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
+  },
   "dependencies": {
     "@ionic/core": "^8.8.15",
     "@stencil/vue-output-target": "0.13.1",
