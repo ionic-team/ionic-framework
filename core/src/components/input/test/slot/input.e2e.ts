@@ -126,7 +126,9 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
           await expect(container).toHaveScreenshot(screenshot(`input-slot-fill-${fill}-label-start`));
         });
 
-        test('should not have visual regressions with a start-positioned label when value is present', async ({ page }) => {
+        test('should not have visual regressions with a start-positioned label when value is present', async ({
+          page,
+        }) => {
           await page.setContent(
             `
               <!-- Apply container styles to capture the entire input -->
