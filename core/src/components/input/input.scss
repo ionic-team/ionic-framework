@@ -259,6 +259,18 @@
   line-height: normal;
 }
 
+// Input Content (Label + Input)
+// ----------------------------------------------------------------
+
+.input-content {
+  display: flex;
+  position: relative;
+
+  flex-grow: 1;
+
+  width: 100%;
+}
+
 // Input Native Wrapper
 // ----------------------------------------------------------------
 
@@ -269,10 +281,22 @@
 
   flex-grow: 1;
 
-  // ensure start/end slot content is vertically centered
-  align-items: center;
-
   width: 100%;
+}
+
+// Input Start/End Slots
+// ----------------------------------------------------------------
+
+.input-start-slot,
+.input-end-slot {
+  display: flex;
+
+  position: relative;
+
+  flex-shrink: 0;
+
+  // Ensure start/end slot content is vertically centered
+  align-items: center;
 }
 
 // Input Highlight
@@ -532,10 +556,9 @@
  * Floating: Label sits over the input when the input has no
  * value and is blurred. Label sits above the input and is scaled
  * down when the input is focused or has a value.
- *
  */
-:host(.input-label-placement-stacked) .input-wrapper,
-:host(.input-label-placement-floating) .input-wrapper {
+:host(.input-label-placement-stacked) .input-content,
+:host(.input-label-placement-floating) .input-content {
   flex-direction: column;
   align-items: start;
 }
@@ -557,15 +580,6 @@
    * autofill background too.
    */
   z-index: 2;
-}
-
-/**
- * Ensures the input does not
- * overlap the label.
- */
-:host(.input-label-placement-stacked) input,
-:host(.input-label-placement-floating) input {
-  @include margin(1px, 0, 0, 0);
 }
 
 /**

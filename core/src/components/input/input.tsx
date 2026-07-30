@@ -466,6 +466,23 @@ export class Input implements ComponentInterface {
     this.notchController?.calculateNotchWidth();
   }
 
+  /**
+   * Gets the width of the start slot, rounded to 1 decimal place.
+   * Only applies to inputs with `md` mode and `fill="outline"`.
+   */
+  private getStartSlotAdjustment(): string {
+    const startSlot = this.el.querySelector('.input-start-slot') as HTMLElement | null;
+    if (!startSlot || !Build.isBrowser || getIonMode(this) !== 'md' || this.fill !== 'outline') {
+      return '';
+    }
+
+    // Round the width to a half pixel to ensure the label is
+    // placed properly when a start slot is added or removed.
+    const startSlotWidth = startSlot.getBoundingClientRect().width;
+    const roundedWidth = Math.round(startSlotWidth * 10) / 10;
+    return roundedWidth ? `-${roundedWidth}px` : '0px';
+  }
+
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(
@@ -811,37 +828,24 @@ export class Input implements ComponentInterface {
    * Renders the border container
    * when fill="outline".
    */
+  private renderOutlineDecorations() {
+    return [
+      <div class="input-outline-start"></div>,
+      <div
+        class={{
+          'input-outline-notch': true,
+          'input-outline-notch-hidden': !this.hasLabel,
+        }}
+      >
+        <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+          {this.label}
+        </div>
+      </div>,
+      <div class="input-outline-end"></div>,
+    ];
+  }
+
   private renderLabelContainer() {
-    const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
-
-    if (hasOutlineFill) {
-      /**
-       * The outline fill has a special outline
-       * that appears around the input and the label.
-       * Certain stacked and floating label placements cause the
-       * label to translate up and create a "cut out"
-       * inside of that border by using the notch-spacer element.
-       */
-      return [
-        <div class="input-outline-container">
-          <div class="input-outline-start"></div>
-          <div
-            class={{
-              'input-outline-notch': true,
-              'input-outline-notch-hidden': !this.hasLabel,
-            }}
-          >
-            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
-              {this.label}
-            </div>
-          </div>
-          <div class="input-outline-end"></div>
-        </div>,
-        this.renderLabel(),
-      ];
-    }
-
     /**
      * If not using the outline style,
      * we can render just the label.
@@ -850,7 +854,7 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, clearInputIcon } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, hasFocus, clearInputIcon } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -859,27 +863,14 @@ export class Input implements ComponentInterface {
     const clearIconData = clearInputIcon ?? defaultClearIcon;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+    const hasOutlineFill = mode === 'md' && fill === 'outline';
 
     /**
      * If the label is stacked, it should always sit above the input.
      * For floating labels, the label should move above the input if
-     * the input has a value, is focused, or has anything in either
-     * the start or end slot.
-     *
-     * If there is content in the start slot, the label would overlap
-     * it if not forced to float. This is also applied to the end slot
-     * because with the default or solid fills, the input is not
-     * vertically centered in the container, but the label is. This
-     * causes the slots and label to appear vertically offset from each
-     * other when the label isn't floating above the input. This doesn't
-     * apply to the outline fill, but this was not accounted for to keep
-     * things consistent.
-     *
-     * TODO(FW-5592): Remove hasStartEndSlots condition
+     * the input has a value or is focused.
      */
-    const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+    const labelShouldFloat = labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus));
 
     return (
       <Host
@@ -895,6 +886,7 @@ export class Input implements ComponentInterface {
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,
         })}
+        style={{ '--start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
@@ -903,64 +895,71 @@ export class Input implements ComponentInterface {
          * since it comes before the input in the DOM.
          */}
         <label class="input-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
-          {this.renderLabelContainer()}
-          <div class="native-wrapper" onClick={this.onLabelClick}>
+          {hasOutlineFill && <div class="input-outline-container">{this.renderOutlineDecorations()}</div>}
+          <div class="input-start-slot">
             <slot name="start"></slot>
-            <input
-              class="native-input"
-              ref={(input) => (this.nativeInput = input)}
-              id={inputId}
-              disabled={disabled}
-              autoCapitalize={this.autocapitalize}
-              autoComplete={this.autocomplete}
-              autoCorrect={this.autocorrect ? 'on' : 'off'}
-              autoFocus={this.autofocus}
-              enterKeyHint={this.enterkeyhint}
-              inputMode={this.inputmode}
-              min={this.min}
-              max={this.max}
-              minLength={this.minlength}
-              maxLength={this.maxlength}
-              multiple={this.multiple}
-              name={this.name}
-              pattern={this.pattern}
-              placeholder={this.placeholder || ''}
-              readOnly={readonly}
-              required={this.required}
-              spellcheck={this.spellcheck}
-              step={this.step}
-              type={this.type}
-              value={value}
-              onInput={this.onInput}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-              onFocus={this.onFocus}
-              onKeyDown={this.onKeydown}
-              onCompositionstart={this.onCompositionStart}
-              onCompositionend={this.onCompositionEnd}
-              aria-describedby={this.getHintTextID()}
-              aria-invalid={this.isInvalid ? 'true' : undefined}
-              aria-labelledby={this.getLabelledById()}
-              {...this.inheritedAttributes}
-            />
-            {this.clearInput && !readonly && !disabled && (
-              <button
-                aria-label="reset"
-                type="button"
-                class="input-clear-icon"
-                onPointerDown={(ev) => {
-                  /**
-                   * This prevents mobile browsers from
-                   * blurring the input when the clear
-                   * button is activated.
-                   */
-                  ev.preventDefault();
-                }}
-                onClick={this.clearTextInput}
-              >
-                <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
-              </button>
-            )}
+          </div>
+          <div class="input-content">
+            {this.renderLabelContainer()}
+            <div class="native-wrapper" onClick={this.onLabelClick}>
+              <input
+                class="native-input"
+                ref={(input) => (this.nativeInput = input)}
+                id={inputId}
+                disabled={disabled}
+                autoCapitalize={this.autocapitalize}
+                autoComplete={this.autocomplete}
+                autoCorrect={this.autocorrect ? 'on' : 'off'}
+                autoFocus={this.autofocus}
+                enterKeyHint={this.enterkeyhint}
+                inputMode={this.inputmode}
+                min={this.min}
+                max={this.max}
+                minLength={this.minlength}
+                maxLength={this.maxlength}
+                multiple={this.multiple}
+                name={this.name}
+                pattern={this.pattern}
+                placeholder={this.placeholder || ''}
+                readOnly={readonly}
+                required={this.required}
+                spellcheck={this.spellcheck}
+                step={this.step}
+                type={this.type}
+                value={value}
+                onInput={this.onInput}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+                onFocus={this.onFocus}
+                onKeyDown={this.onKeydown}
+                onCompositionstart={this.onCompositionStart}
+                onCompositionend={this.onCompositionEnd}
+                aria-describedby={this.getHintTextID()}
+                aria-invalid={this.isInvalid ? 'true' : undefined}
+                aria-labelledby={this.getLabelledById()}
+                {...this.inheritedAttributes}
+              />
+              {this.clearInput && !readonly && !disabled && (
+                <button
+                  aria-label="reset"
+                  type="button"
+                  class="input-clear-icon"
+                  onPointerDown={(ev) => {
+                    /**
+                     * This prevents mobile browsers from
+                     * blurring the input when the clear
+                     * button is activated.
+                     */
+                    ev.preventDefault();
+                  }}
+                  onClick={this.clearTextInput}
+                >
+                  <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
+                </button>
+              )}
+            </div>
+          </div>
+          <div class="input-end-slot">
             <slot name="end"></slot>
           </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
