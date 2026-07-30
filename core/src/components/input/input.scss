@@ -511,7 +511,7 @@
  * Label is on the right of the input in LTR and
  * on the left in RTL.
  */
-:host(.input-label-placement-end) .input-wrapper {
+:host(.input-label-placement-end) .input-content {
   flex-direction: row-reverse;
 }
 
