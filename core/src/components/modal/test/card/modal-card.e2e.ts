@@ -120,7 +120,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       expect(ionDragStart.length).toBe(1);
 
       expect(ionDragMove.length).toBeGreaterThan(0);
-      expect(Object.keys(dragMoveEvent.detail).length).toBe(4);
+      expect(Object.keys(dragMoveEvent.detail).sort()).toEqual(['currentY', 'deltaY', 'progress', 'velocityY']);
 
       expect(ionDragEnd.length).toBe(0);
 
@@ -138,7 +138,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       expect(ionDragMove.length).toBeGreaterThan(0);
 
       expect(ionDragEnd.length).toBe(1);
-      expect(Object.keys(dragEndEvent.detail).length).toBe(4);
+      expect(Object.keys(dragEndEvent.detail).sort()).toEqual([
+        'currentY',
+        'deltaY',
+        'isDismissing',
+        'progress',
+        'velocityY',
+      ]);
     });
   });
 });

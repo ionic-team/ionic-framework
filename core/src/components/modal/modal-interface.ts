@@ -72,4 +72,10 @@ export interface ModalDragEventDetail {
    * the gesture.
    */
   snapBreakpoint?: number;
+  /**
+   * Whether the card modal will dismiss when the drag gesture ends.
+   * `true` if the gesture passed the dismiss threshold, `false` if the
+   * modal will remain open.
+   */
+  isDismissing?: boolean;
 }
