@@ -375,8 +375,6 @@ a {
 
   text-overflow: ellipsis;
 
-  // Has to stay: being a scroll container zeroes the automatic minimum size,
-  // which is what lets long labels ellipsize instead of pushing the control out.
   overflow: inherit;
   box-sizing: border-box;
 }
