@@ -189,7 +189,6 @@
 // --------------------------------------------------
 
 .input-clear-icon {
-  @include margin(auto);
   @include padding(0);
   @include background-position(center);
 
@@ -259,11 +258,12 @@
   line-height: normal;
 }
 
-// Input Content (Label + Input)
+// Input Control (Label + Input)
 // ----------------------------------------------------------------
 
-.input-content {
+.input-control {
   display: flex;
+
   position: relative;
 
   flex-grow: 1;
@@ -284,18 +284,18 @@
   width: 100%;
 }
 
-// Input Start/End Slots
+// Input Start/End Containers
 // ----------------------------------------------------------------
 
-.input-start-slot,
-.input-end-slot {
+.input-start,
+.input-end {
   display: flex;
 
   position: relative;
 
   flex-shrink: 0;
 
-  // Ensure start/end slot content is vertically centered
+  // Ensure start/end content is vertically centered
   align-items: center;
 }
 
@@ -511,7 +511,7 @@
  * Label is on the right of the input in LTR and
  * on the left in RTL.
  */
-:host(.input-label-placement-end) .input-content {
+:host(.input-label-placement-end) .input-control {
   flex-direction: row-reverse;
 }
 
@@ -557,8 +557,8 @@
  * value and is blurred. Label sits above the input and is scaled
  * down when the input is focused or has a value.
  */
-:host(.input-label-placement-stacked) .input-content,
-:host(.input-label-placement-floating) .input-content {
+:host(.input-label-placement-stacked) .input-control,
+:host(.input-label-placement-floating) .input-control {
   flex-direction: column;
   align-items: start;
 }

@@ -20,7 +20,7 @@ import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnRea
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
-import { closeCircle, closeSharp } from 'ionicons/icons';
+import { closeCircle, closeCircleSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, TextFieldTypes } from '../../interface';
@@ -469,9 +469,10 @@ export class Input implements ComponentInterface {
   /**
    * Gets the width of the start slot, rounded to 1 decimal place.
    * Only applies to inputs with `md` mode and `fill="outline"`.
+   * In RTL mode, the adjustment is positive; in LTR mode, it's negative.
    */
   private getStartSlotAdjustment(): string {
-    const startSlot = this.el.querySelector('.input-start-slot') as HTMLElement | null;
+    const startSlot = this.el.querySelector('.input-start') as HTMLElement | null;
     if (!startSlot || !Build.isBrowser || getIonMode(this) !== 'md' || this.fill !== 'outline') {
       return '';
     }
@@ -480,7 +481,9 @@ export class Input implements ComponentInterface {
     // placed properly when a start slot is added or removed.
     const startSlotWidth = startSlot.getBoundingClientRect().width;
     const roundedWidth = Math.round(startSlotWidth * 10) / 10;
-    return roundedWidth ? `-${roundedWidth}px` : '0px';
+    const isRTL = document.dir === 'rtl';
+    const sign = isRTL ? '' : '-';
+    return roundedWidth ? `${sign}${roundedWidth}px` : '0px';
   }
 
   disconnectedCallback() {
@@ -855,7 +858,7 @@ export class Input implements ComponentInterface {
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
-    const defaultClearIcon = mode === 'ios' ? closeCircle : closeSharp;
+    const defaultClearIcon = mode === 'ios' ? closeCircle : closeCircleSharp;
     const clearIconData = clearInputIcon ?? defaultClearIcon;
 
     const hasValue = this.hasValue();
@@ -892,10 +895,10 @@ export class Input implements ComponentInterface {
          */}
         <label class="input-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
           {hasOutlineFill && <div class="input-outline-container">{this.renderOutlineDecorations()}</div>}
-          <div class="input-start-slot">
+          <div class="input-start">
             <slot name="start"></slot>
           </div>
-          <div class="input-content">
+          <div class="input-control">
             {this.renderLabelContainer()}
             <div class="native-wrapper" onClick={this.onLabelClick}>
               <input
@@ -935,27 +938,27 @@ export class Input implements ComponentInterface {
                 aria-labelledby={this.getLabelledById()}
                 {...this.inheritedAttributes}
               />
-              {this.clearInput && !readonly && !disabled && (
-                <button
-                  aria-label="reset"
-                  type="button"
-                  class="input-clear-icon"
-                  onPointerDown={(ev) => {
-                    /**
-                     * This prevents mobile browsers from
-                     * blurring the input when the clear
-                     * button is activated.
-                     */
-                    ev.preventDefault();
-                  }}
-                  onClick={this.clearTextInput}
-                >
-                  <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
-                </button>
-              )}
             </div>
           </div>
-          <div class="input-end-slot">
+          <div class="input-end">
+            {this.clearInput && !readonly && !disabled && (
+              <button
+                aria-label="reset"
+                type="button"
+                class="input-clear-icon"
+                onPointerDown={(ev) => {
+                  /**
+                   * This prevents mobile browsers from
+                   * blurring the input when the clear
+                   * button is activated.
+                   */
+                  ev.preventDefault();
+                }}
+                onClick={this.clearTextInput}
+              >
+                <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
+              </button>
+            )}
             <slot name="end"></slot>
           </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
