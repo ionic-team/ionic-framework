@@ -49,7 +49,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('input: start and end slots (functionality checks)'), () => {
-    test('should raise floating label when there is content in the start slot', async ({ page }) => {
+    test('should not raise floating label when there is only content in the start slot', async ({ page }) => {
       await page.setContent(
         `
           <ion-input label-placement="floating" fill="solid" label="Weight">
@@ -60,14 +60,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
 
       const input = page.locator('ion-input');
-      await expect(input).toHaveClass(/label-floating/);
+      await expect(input).not.toHaveClass(/label-floating/);
     });
 
-    test('should raise floating label when there is content in the end slot', async ({ page }) => {
+    test('should not raise floating label when there is only content in the end slot', async ({ page }) => {
       await page.setContent(
         `
           <ion-input label-placement="floating" fill="solid" label="Weight">
             <ion-icon slot="end" name="barbell" aria-hidden="true"></ion-icon>
+          </ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      await expect(input).not.toHaveClass(/label-floating/);
+    });
+
+    test('should raise floating label when there is only content in the start slot and input has a value', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+          <ion-input label-placement="floating" fill="solid" label="Weight" value="100">
+            <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
           </ion-input>
         `,
         config

@@ -53,42 +53,42 @@
         <div class="grid">
           <div class="grid-item">
             <h2>No Fill / Start Label</h2>
-            <ion-input label-placement="start" value="hi@ionic.io">
+            <ion-input label-placement="start">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Solid / Start Label</h2>
-            <ion-input label-placement="start" fill="solid" value="hi@ionic.io">
+            <ion-input label-placement="start" fill="solid">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Outline / Start Label</h2>
-            <ion-input label-placement="start" fill="outline" value="hi@ionic.io">
+            <ion-input label-placement="start" fill="outline">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>No Fill / Floating Label</h2>
-            <ion-input label-placement="floating" value="hi@ionic.io">
+            <ion-input label-placement="floating">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Solid / Floating Label</h2>
-            <ion-input label-placement="floating" fill="solid" value="hi@ionic.io">
+            <ion-input label-placement="floating" fill="solid">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Outline / Floating Label</h2>
-            <ion-input label-placement="floating" fill="outline" value="hi@ionic.io">
+            <ion-input label-placement="floating" fill="outline">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
@@ -98,7 +98,7 @@
         <div class="grid">
           <div class="grid-item">
             <h2>No Fill / Start Label</h2>
-            <ion-input label-placement="start" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="start" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -108,7 +108,7 @@
 
           <div class="grid-item">
             <h2>Solid / Start Label</h2>
-            <ion-input label-placement="start" fill="solid" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="start" fill="solid" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -118,7 +118,7 @@
 
           <div class="grid-item">
             <h2>Outline / Start Label</h2>
-            <ion-input label-placement="start" fill="outline" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="start" fill="outline" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -128,7 +128,7 @@
 
           <div class="grid-item">
             <h2>No Fill / Floating Label</h2>
-            <ion-input label-placement="floating" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="floating" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -138,7 +138,7 @@
 
           <div class="grid-item">
             <h2>Solid / Floating Label</h2>
-            <ion-input label-placement="floating" fill="solid" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="floating" fill="solid" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -148,7 +148,7 @@
 
           <div class="grid-item">
             <h2>Outline / Floating Label</h2>
-            <ion-input label-placement="floating" fill="outline" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="floating" fill="outline" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -161,7 +161,7 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Outline / Async Label</h2>
-            <ion-input id="solid-async" label-placement="floating" fill="outline" value="hi@ionic.io"></ion-input>
+            <ion-input id="solid-async" label-placement="floating" fill="outline"></ion-input>
           </div>
 
           <div class="grid-item">
@@ -173,6 +173,7 @@
         <ion-button onclick="addSlot()">Add Slotted Content</ion-button>
         <ion-button onclick="updateSlot()">Update Slotted Content</ion-button>
         <ion-button onclick="removeSlot()">Remove Slotted Content</ion-button>
+        <ion-button onclick="addValueToAll()">Add Value to All</ion-button>
       </ion-content>
     </ion-app>
 
@@ -241,6 +242,13 @@
         if (slottedContent !== null) {
           slottedContent.textContent = 'This is my really really really long text';
         }
+      };
+
+      const addValueToAll = () => {
+        const inputs = document.querySelectorAll('ion-input');
+        inputs.forEach((input) => {
+          input.value = 'hi@ionic.io';
+        });
       };
     </script>
   </body>
