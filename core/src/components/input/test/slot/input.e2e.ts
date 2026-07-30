@@ -2,11 +2,11 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('input: start and end slots (visual checks)'), () => {
+  test.describe(title('input: slot'), () => {
     test('should not have visual regressions with a start-positioned label', async ({ page }) => {
       await page.setContent(
         `
-          <ion-input label-placement="start" fill="solid" value="100" label="Weight" clear-input="true">
+          <ion-input label-placement="start" value="100" label="Weight" clear-input="true">
             <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
             <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
             <ion-button slot="end" aria-label="Show/hide password">
@@ -21,13 +21,13 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      await expect(input).toHaveScreenshot(screenshot(`input-slots-label-start`));
+      await expect(input).toHaveScreenshot(screenshot(`input-slot-label-start`));
     });
 
     test('should not have visual regressions with a floating label', async ({ page }) => {
       await page.setContent(
         `
-          <ion-input label-placement="floating" fill="solid" value="100" label="Weight" clear-input="true">
+          <ion-input label-placement="floating" value="100" label="Weight" clear-input="true">
             <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
             <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
             <ion-button slot="end" aria-label="Show/hide password">
@@ -42,55 +42,78 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      await expect(input).toHaveScreenshot(screenshot(`input-slots-label-floating`));
+      await expect(input).toHaveScreenshot(screenshot(`input-slot-label-floating`));
     });
   });
 });
 
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('input: start and end slots (functionality checks)'), () => {
-    test('should not raise floating label when there is only content in the start slot', async ({ page }) => {
-      await page.setContent(
-        `
-          <ion-input label-placement="floating" fill="solid" label="Weight">
-            <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
-          </ion-input>
-        `,
-        config
-      );
+/**
+ * The solid and outline fills are only supported by `md` mode.
+ */
+configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: slot'), () => {
+    ['solid', 'outline'].forEach((fill) => {
+      test.describe(`fill: ${fill}`, () => {
+        test('should not have visual regressions with a start-positioned label', async ({ page }) => {
+          await page.setContent(
+            `
+              <!-- Apply container styles to capture the entire input -->
+              <style>
+                .container {
+                  padding: 8px;
+                }
+              </style>
 
-      const input = page.locator('ion-input');
-      await expect(input).not.toHaveClass(/label-floating/);
-    });
+              <div class="container">
+                <ion-input label-placement="start" fill="${fill}" value="100" label="Weight" clear-input="true">
+                  <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+                  <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+                  <ion-button slot="end" aria-label="Show/hide password">
+                    <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+                  </ion-button>
+                  <ion-button slot="end">
+                    <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+                  </ion-button>
+                </ion-input>
+              </div>
+            `,
+            config
+          );
 
-    test('should not raise floating label when there is only content in the end slot', async ({ page }) => {
-      await page.setContent(
-        `
-          <ion-input label-placement="floating" fill="solid" label="Weight">
-            <ion-icon slot="end" name="barbell" aria-hidden="true"></ion-icon>
-          </ion-input>
-        `,
-        config
-      );
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`input-slot-fill-${fill}-label-start`));
+        });
 
-      const input = page.locator('ion-input');
-      await expect(input).not.toHaveClass(/label-floating/);
-    });
+        test('should not have visual regressions with a floating label', async ({ page }) => {
+          await page.setContent(
+            `
+              <!-- Apply container styles to capture the entire input -->
+              <style>
+                .container {
+                  padding: 8px;
+                }
+              </style>
 
-    test('should raise floating label when there is only content in the start slot and input has a value', async ({
-      page,
-    }) => {
-      await page.setContent(
-        `
-          <ion-input label-placement="floating" fill="solid" label="Weight" value="100">
-            <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
-          </ion-input>
-        `,
-        config
-      );
+              <div class="container">
+                <ion-input label-placement="floating" fill="${fill}" value="100" label="Weight" clear-input="true">
+                  <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+                  <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+                  <ion-button slot="end" aria-label="Show/hide password">
+                    <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+                  </ion-button>
+                  <ion-button slot="end">
+                    <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+                  </ion-button>
+                </ion-input>
+              </div>
+            `,
+            config
+          );
 
-      const input = page.locator('ion-input');
-      await expect(input).toHaveClass(/label-floating/);
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`input-slot-fill-${fill}-label-floating`));
+        });
+      });
     });
   });
 });
