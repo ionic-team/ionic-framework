@@ -55,7 +55,7 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
       expect(results.violations).toEqual([]);
     });
     test.describe(title('radio: keyboard navigation'), () => {
-      test.beforeEach(async ({ page, browserName }) => {
+      test.beforeEach(async ({ page }) => {
         await page.setContent(
           `
         <ion-app>
@@ -98,20 +98,13 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
           config
         );
 
-        if (browserName === 'webkit') {
-          const radio = page.locator('#first-group ion-radio').first();
-          /**
-           * Sometimes Safari does not focus the first radio.
-           * This is a workaround to ensure the first radio is focused.
-           *
-           * Wait for the first radio to be rendered before tabbing.
-           * This is necessary because the first radio may not be rendered
-           * when the page first loads.
-           *
-           * This would cause the first radio to be skipped when tabbing.
-           */
-          await radio.waitFor();
-        }
+        /**
+         * The group assigns `tabindex` in its `componentDidLoad` and each radio
+         * re-renders to pick it up. Tabbing before that lands on something else,
+         * and focus never comes back to the first radio.
+         */
+        await expect(page.locator('#first-group ion-radio').first()).toHaveAttribute('tabindex', '0');
+        await expect(page.locator('#second-group ion-radio').first()).toHaveAttribute('tabindex', '0');
       });
 
       test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
