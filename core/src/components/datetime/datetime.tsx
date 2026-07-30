@@ -8,6 +8,7 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
 
@@ -135,6 +136,12 @@ export class Datetime implements ComponentInterface {
   private todayParts!: DatetimeParts;
   private defaultParts!: DatetimeParts;
   private loadTimeout: ReturnType<typeof setTimeout> | undefined;
+  /**
+   * Set true only by `visibleCallback`. Lets `hiddenCallback` ignore the
+   * synthetic "not intersecting" entry IntersectionObserver fires on
+   * `observe()` when the host mounts offscreen.
+   */
+  private hasBeenIntersecting = false;
 
   private prevPresentation: string | null = null;
 
@@ -174,7 +181,7 @@ export class Datetime implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color = 'primary';
+  @Prop() color?: Color;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -596,6 +603,18 @@ export class Datetime implements ComponentInterface {
     if (closeOverlay) {
       this.closeParentOverlay(CANCEL_ROLE);
     }
+  }
+
+  /**
+   * Returns the default parts the datetime falls back to when no value is set:
+   * today's date and time snapped to the closest value allowed by the
+   * component's constraints (`min`, `max`, and the `*Values` props).
+   *
+   * @internal
+   */
+  @Method()
+  async getDefaultPart(): Promise<DatetimeParts> {
+    return this.defaultParts;
   }
 
   private warnIfIncorrectValueUsage = () => {
@@ -1033,6 +1052,11 @@ export class Datetime implements ComponentInterface {
           if (this.resolveForceDateScrolling) {
             this.resolveForceDateScrolling();
           }
+
+          const activeEl = this.el.shadowRoot!.activeElement as HTMLElement | null;
+          if (activeEl && activeEl.classList.contains('calendar-day')) {
+            (activeEl.closest('.calendar-body') as HTMLElement | null)?.focus();
+          }
         });
       };
 
@@ -1081,6 +1105,9 @@ export class Datetime implements ComponentInterface {
 
   connectedCallback() {
     this.clearFocusVisible = startFocusVisible(this.el).destroy;
+    this.loadTimeout = setTimeout(() => {
+      this.ensureReadyIfVisible();
+    }, 100);
   }
 
   disconnectedCallback() {
@@ -1088,9 +1115,8 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible();
       this.clearFocusVisible = undefined;
     }
-    if (this.loadTimeout) {
-      clearTimeout(this.loadTimeout);
-    }
+    this.loadTimeoutCleanup();
+    this.hasBeenIntersecting = false;
   }
 
   /**
@@ -1134,11 +1160,33 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    this.markReady();
+  };
+
+  private markReady = () => {
+    if (this.el.classList.contains('datetime-ready')) {
+      return;
+    }
     this.initializeListeners();
 
+    /**
+     * TODO FW-2793: Datetime needs a frame to ensure that it
+     * can properly scroll contents into view. As a result
+     * we hide the scrollable content until after that frame
+     * so users do not see the content quickly shifting. The downside
+     * is that the content will pop into view a frame after. Maybe there
+     * is a better way to handle this?
+     */
     writeTask(() => {
       this.el.classList.add('datetime-ready');
     });
+  };
+
+  private loadTimeoutCleanup = () => {
+    if (this.loadTimeout) {
+      clearTimeout(this.loadTimeout);
+      this.loadTimeout = undefined;
+    }
   };
 
   componentDidLoad() {
@@ -1157,19 +1205,8 @@ export class Datetime implements ComponentInterface {
         return;
       }
 
-      this.initializeListeners();
-
-      /**
-       * TODO FW-2793: Datetime needs a frame to ensure that it
-       * can properly scroll contents into view. As a result
-       * we hide the scrollable content until after that frame
-       * so users do not see the content quickly shifting. The downside
-       * is that the content will pop into view a frame after. Maybe there
-       * is a better way to handle this?
-       */
-      writeTask(() => {
-        this.el.classList.add('datetime-ready');
-      });
+      this.hasBeenIntersecting = true;
+      this.markReady();
     };
     const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01, root: el });
 
@@ -1188,7 +1225,10 @@ export class Datetime implements ComponentInterface {
      * we still initialize listeners and mark the component as ready.
      *
      * We schedule this after everything has had a chance to run.
+     *
+     * We also clean up the load timeout to ensure that we don't have multiple timeouts running.
      */
+    this.loadTimeoutCleanup();
     this.loadTimeout = setTimeout(() => {
       this.ensureReadyIfVisible();
     }, 100);
@@ -1205,6 +1245,12 @@ export class Datetime implements ComponentInterface {
       if (ev.isIntersecting) {
         return;
       }
+
+      // Ignore the initial "not intersecting" entry IntersectionObserver fires on observe().
+      if (!this.hasBeenIntersecting) {
+        return;
+      }
+      this.hasBeenIntersecting = false;
 
       this.destroyInteractionListeners();
 
@@ -1522,10 +1568,11 @@ export class Datetime implements ComponentInterface {
 
     const left = (nextMonth as HTMLElement).offsetWidth * 2;
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? -1 : 1),
-      behavior: 'smooth',
+      behavior: scrollMode,
     });
   };
 
@@ -1540,10 +1587,13 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const left = (prevMonth as HTMLElement).offsetWidth * 2;
+
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
-      left: 0,
-      behavior: 'smooth',
+      left: left * (isRTL(this.el) ? 1 : -1),
+      behavior: scrollMode,
     });
   };
 
@@ -1763,6 +1813,7 @@ export class Datetime implements ComponentInterface {
       >
         {items.map((item) => (
           <ion-picker-column-option
+            color={this.color}
             part={item.value === todayString ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={item.value}
             disabled={item.disabled}
@@ -1881,6 +1932,7 @@ export class Datetime implements ComponentInterface {
       >
         {days.map((day) => (
           <ion-picker-column-option
+            color={this.color}
             part={day.value === pickerColumnValue ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={day.value}
             disabled={day.disabled}
@@ -1916,16 +1968,20 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            month: ev.detail.value,
-          });
+          // Month wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              month: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
       >
         {months.map((month) => (
           <ion-picker-column-option
+            color={this.color}
             part={month.value === workingParts.month ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={month.value}
             disabled={month.disabled}
@@ -1960,16 +2016,20 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            year: ev.detail.value,
-          });
+          // Year wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              year: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
       >
         {years.map((year) => (
           <ion-picker-column-option
+            color={this.color}
             part={year.value === workingParts.year ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={year.value}
             disabled={year.disabled}
@@ -2045,6 +2105,7 @@ export class Datetime implements ComponentInterface {
       >
         {hoursData.map((hour) => (
           <ion-picker-column-option
+            color={this.color}
             part={hour.value === activePart.hour ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={hour.value}
             disabled={hour.disabled}
@@ -2086,6 +2147,7 @@ export class Datetime implements ComponentInterface {
       >
         {minutesData.map((minute) => (
           <ion-picker-column-option
+            color={this.color}
             part={minute.value === activePart.minute ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={minute.value}
             disabled={minute.disabled}
@@ -2134,6 +2196,7 @@ export class Datetime implements ComponentInterface {
       >
         {dayPeriodData.map((dayPeriod) => (
           <ion-picker-column-option
+            color={this.color}
             part={
               dayPeriod.value === activePart.ampm ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART
             }

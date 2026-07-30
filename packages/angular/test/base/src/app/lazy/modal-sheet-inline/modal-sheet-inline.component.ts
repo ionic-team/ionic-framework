@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonModal } from "@ionic/angular";
+import { IonModal } from "@ionic/angular/lazy";
 
 interface Contact {
   name: string;

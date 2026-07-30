@@ -221,7 +221,6 @@ export class NavController {
 
   private navigate(url: string | UrlTree | any[], options: NavigationOptions) {
     if (Array.isArray(url)) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return this.router!.navigate(url, options);
     } else {
       /**
@@ -245,7 +244,6 @@ export class NavController {
        * that do not modify the url, such as `replaceUrl` which is why
        * `options` is passed in here.
        */
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return this.router!.navigateByUrl(urlTree, options);
     }
   }

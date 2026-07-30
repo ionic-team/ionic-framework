@@ -88,7 +88,6 @@ export class Platform {
           { once: true }
         );
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         readyResolve!('dom');
       }
     });

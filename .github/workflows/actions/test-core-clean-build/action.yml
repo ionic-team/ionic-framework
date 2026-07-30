@@ -3,7 +3,7 @@ description: 'Test Core Clean Build'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: 24.x
 
@@ -12,10 +12,9 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Clean core package.json
-      run: git checkout ./package.json
+    - name: Clean package.json updates
+      run: git checkout ./core/package.json ./packages/react/package.json
       shell: bash
-      working-directory: ./core
     - name: 🔍 Check Diff
       run: |
         git diff --exit-code || {

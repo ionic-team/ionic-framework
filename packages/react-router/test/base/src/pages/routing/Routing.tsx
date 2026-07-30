@@ -1,57 +1,43 @@
-import React from 'react';
 import {
   IonContent,
   IonPage,
   IonRouterOutlet,
   IonSplitPane,
 } from '@ionic/react';
-import Menu from './Menu';
-import { Route, Redirect } from 'react-router';
-import Tabs from './Tabs';
+import React from 'react';
+import { Route, Navigate } from 'react-router';
+
 import Favorites from './Favorites';
+import Menu from './Menu';
 import OtherPage from './OtherPage';
 import PropsTest from './PropsTest';
 import RedirectRouting from './RedirectRouting';
+import Tabs from './Tabs';
 
-interface RoutingProps {}
-
-const Routing: React.FC<RoutingProps> = () => {
+const Routing: React.FC = () => {
   return (
     <IonSplitPane contentId="main">
       <Menu />
       <IonRouterOutlet id="main">
-        <Route path="/routing/tabs" render={() => <Tabs />} />
-        {/* <Route path="/routing/tabs" component={Tabs} /> */}
-        <Route path="/routing/" render={() => <Redirect to="/routing/tabs" />} exact />
-        <Route path="/routing/favorites" component={Favorites} />
-        {/* <Route path="/routing/favorites" render={() => {
-        return (
-          <IonRouterOutlet id="favorites">
-            <Route path="/routing/favorites" component={Favorites} />
-          </IonRouterOutlet>
-        );
-      }} /> */}
-        {/* <Route path="/routing/otherpage" render={() => {
-        return (
-          <IonRouterOutlet id="otherpage">
-            <Route path="/routing/otherpage" component={OtherPage} />
-          </IonRouterOutlet>
-        );
-      }} /> */}
-        <Route path="/routing/otherpage" component={OtherPage} />
-        <Route path="/routing/propstest" component={PropsTest} />
-        <Route path="/routing/redirect" render={() => <Redirect to="/routing/tabs" />} />
-        <Route path="/routing/redirect-routing" render={() => <RedirectRouting />} />
+        <Route index element={<Navigate to="/routing/tabs" replace />} />
+
+        <Route path="tabs/*" element={<Tabs />} />
+        <Route path="favorites" element={<Favorites />} />
+        <Route path="otherpage" element={<OtherPage />} />
+        <Route path="propstest" element={<PropsTest />} />
+        <Route path="redirect" element={<Navigate to="/routing/tabs" replace />} />
+        <Route path="redirect-routing" element={<RedirectRouting />} />
+
         <Route
-          render={() => (
+          path="*"
+          element={
             <IonPage data-pageid="not-found">
               <IonContent>
-                <div>Not found</div>
+                <div>Not found in routing.tsx</div>
               </IonContent>
             </IonPage>
-          )}
+          }
         />
-        {/* <Route render={() => <Redirect to="/tabs" />} /> */}
       </IonRouterOutlet>
     </IonSplitPane>
   );

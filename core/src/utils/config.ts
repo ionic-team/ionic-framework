@@ -146,11 +146,6 @@ export interface IonicConfig {
   toastEnter?: AnimationBuilder;
 
   /**
-   * Provides a custom enter animation for all `ion-picker-legacy`, overriding the default "animation".
-   */
-  pickerEnter?: AnimationBuilder;
-
-  /**
    * Provides a custom leave animation for all `ion-action-sheet`, overriding the default "animation".
    */
   actionSheetLeave?: AnimationBuilder;
@@ -179,11 +174,6 @@ export interface IonicConfig {
    * Provides a custom leave animation for all `ion-toast`, overriding the default "animation".
    */
   toastLeave?: AnimationBuilder;
-
-  /**
-   * Provides a custom leave animation for all `ion-picker-legacy`, overriding the default "animation".
-   */
-  pickerLeave?: AnimationBuilder;
 
   /**
    * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.

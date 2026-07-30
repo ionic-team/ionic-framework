@@ -46,7 +46,7 @@
     "@angular/cli": "^18.0.0",
     "@angular/compiler-cli": "^18.0.0",
     "@angular/language-service": "^18.0.0",
-    "@playwright/test": "^1.54.2",
+    "@playwright/test": "^1.60.0",
     "@types/express": "^4.17.7",
     "@types/ws": "8.5.3",
     "@typescript-eslint/eslint-plugin": "^6.0.0",

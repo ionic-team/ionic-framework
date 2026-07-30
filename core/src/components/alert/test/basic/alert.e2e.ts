@@ -101,6 +101,29 @@ configs().forEach(({ config, screenshot, title }) => {
   });
 });
 
+/**
+ * The right-border-between-buttons styling only exists in iOS mode (see
+ * alert.ios.scss). MD mode has no border to clear, so this is iOS only.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('alert: button group wrap'), () => {
+    test('two buttons that wrap should switch to vertical layout', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-7244',
+      });
+
+      await page.goto('/src/components/alert/test/basic', config);
+      const alertFixture = new AlertFixture(page);
+      await alertFixture.open('#confirmLongText');
+
+      const buttonGroup = page.locator('ion-alert .alert-button-group');
+      await expect(buttonGroup).toHaveClass(/alert-button-group-vertical/);
+    });
+  });
+});
+
 configs({ palettes: ['light', 'dark'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('should not have visual regressions'), () => {
     test('more than two buttons', async ({ page }) => {
@@ -153,6 +176,10 @@ class AlertFixture {
     await ionAlertDidPresent.next();
     this.alert = this.page.locator('ion-alert');
     await expect(this.alert).toBeVisible();
+
+    // Move mouse to the top-left corner of the page to avoid hover
+    // styles on buttons when taking screenshots
+    await this.page.mouse.move(0, 0);
 
     return this.alert;
   }

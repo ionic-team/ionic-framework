@@ -33,11 +33,11 @@ function buildSchematics(){
 }
 
 function copySchematicsJson(){
-  const src = path.join(__dirname, '..', 'src', 'schematics', 'collection.json');
-  const fileSrc = path.join(__dirname, '..', 'src', 'schematics', 'add', 'files');
-  const dst = path.join(__dirname, '..', 'dist','schematics', 'collection.json');
+  const src = path.join(__dirname, '..', 'schematics', 'collection.json');
+  const fileSrc = path.join(__dirname, '..', 'schematics', 'add', 'files');
+  const dst = path.join(__dirname, '..', 'dist', 'schematics', 'collection.json');
   const fileDst = path.join(__dirname, '..', 'dist', 'schematics', 'add', 'files');
-  const schemaSrc = path.join(__dirname, '..', 'src', 'schematics', 'add', 'schema.json');
+  const schemaSrc = path.join(__dirname, '..', 'schematics', 'add', 'schema.json');
   const schemaDst = path.join(__dirname, '..', 'dist', 'schematics', 'add', 'schema.json');
 
   fs.removeSync(dst);

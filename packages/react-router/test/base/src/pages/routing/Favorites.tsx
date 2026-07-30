@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -9,10 +8,9 @@ import {
   IonMenuButton,
   useIonViewWillEnter,
 } from '@ionic/react';
+import React, { useEffect } from 'react';
 
-interface FavoritesProps {}
-
-const Favorites: React.FC<FavoritesProps> = () => {
+const Favorites: React.FC = () => {
   useIonViewWillEnter(() => {
     console.log('IVWE on Favorites');
   });

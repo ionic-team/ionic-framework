@@ -72,7 +72,7 @@ This guide shows you how to test the local Ionic Framework build with a new Angu
     ```sh
     # Change to whichever directory you want the app in
     cd ~/Documents/
-    ng new my-app --style=css --ssr=false --zoneless=false
+    ng new my-app --style=css --ssr=false
     cd my-app
     ```
 
@@ -99,16 +99,19 @@ The local Ionic Framework build is now active in the Angular app. Changes to the
 
 This is where logic that is shared between lazy loaded and standalone components live. For example, the lazy loaded IonPopover and standalone IonPopover components extend from a base IonPopover implementation that exists in this directory.
 
-**Note:** This directory exposes internal APIs and is only accessed in the `standalone` and `src` submodules. Ionic developers should never import directly from `@ionic/angular/common`. Instead, they should import from `@ionic/angular` or `@ionic/angular/standalone`.
+**Note:** This directory exposes internal APIs and is only accessed in the `standalone` and `lazy` submodules. Ionic developers should never import directly from `@ionic/angular/common`. Instead, they should import from `@ionic/angular` or `@ionic/angular/lazy`.
 
 **standalone**
 
-This is where the standalone component implementations live. It was added as a separate entry point to avoid any lazy loaded logic from accidentally being pulled in to the final build. Having a separate directory allows the lazy loaded implementation to remain accessible from `@ionic/angular` for backwards compatibility.
+This is where the standalone component implementations live. It was added as a separate entry point to avoid any lazy loaded logic from accidentally being pulled in to the final build. Having a separate directory allows the lazy loaded implementation to remain accessible from `@ionic/angular/lazy` for backwards compatibility.
 
-Ionic developers can access this by importing from `@ionic/angular/standalone`.
+Ionic developers can access this by importing from `@ionic/angular`.
 
-**src**
+**lazy**
 
 This is where the lazy loaded component implementations live.
 
-Ionic developers can access this by importing from `@ionic/angular`.
+Ionic developers can access this by importing from `@ionic/angular/lazy`.
+
+> [!CAUTION]
+> The lazy loaded build, including `IonicModule`, is deprecated and will be removed in a future major version. New code should use the standalone components and `provideIonicAngular()` imported from `@ionic/angular`.

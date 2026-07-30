@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "8.8.0",
+  "version": "8.8.15",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
@@ -64,12 +64,12 @@
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
     "typescript": "^5.7.3",
-    "vue": "3.4.38",
-    "vue-router": "^4.0.16"
+    "vue": "^3.5.0",
+    "vue-router": "^5.2.0"
   },
   "dependencies": {
-    "@ionic/core": "^8.8.0",
-    "@stencil/vue-output-target": "0.10.7",
+    "@ionic/core": "^8.8.15",
+    "@stencil/vue-output-target": "0.13.1",
     "ionicons": "^8.0.13"
   },
   "vetur": {

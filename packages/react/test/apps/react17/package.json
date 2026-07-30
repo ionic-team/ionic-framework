@@ -2,18 +2,22 @@
   "name": "test-app",
   "version": "0.0.1",
   "private": true,
+  "overrides": {
+    "@ionic/react-router": {
+      "react-router": "$react-router",
+      "react-router-dom": "$react-router-dom"
+    }
+  },
   "dependencies": {
     "@ionic/react": "^6.6.1",
     "@ionic/react-router": "^6.6.1",
     "@types/react": "^17.0.53",
     "@types/react-dom": "^17.0.19",
-    "@types/react-router": "^5.1.20",
-    "@types/react-router-dom": "^5.3.3",
     "ionicons": "^8.0.13",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router": "^5.3.4",
-    "react-router-dom": "^5.3.4",
+    "react-router": "^6.0.0",
+    "react-router-dom": "^6.0.0",
     "react-scripts": "^5.0.0",
     "typescript": "^4.1.3"
   },

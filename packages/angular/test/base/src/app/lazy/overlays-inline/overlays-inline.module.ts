@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from "@ionic/angular/lazy";
 import { OverlaysInlineRoutingModule } from "./overlays-inline-routing.module";
 import { OverlaysInlineComponent } from "./overlays-inline.component";
 

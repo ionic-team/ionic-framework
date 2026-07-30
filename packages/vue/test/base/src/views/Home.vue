@@ -41,6 +41,9 @@
         <ion-item router-link="/nested" id="nested">
           <ion-label>Nested Router Outlet</ion-label>
         </ion-item>
+        <ion-item router-link="/swipe-gesture-disabled" router-direction="root" id="swipe-gesture-disabled">
+          <ion-label>Swipe Gesture Disabled</ion-label>
+        </ion-item>
         <ion-item router-link="/tabs" id="tabs">
           <ion-label>Tabs</ion-label>
         </ion-item>
@@ -52,6 +55,9 @@
         </ion-item>
         <ion-item router-link="/tabs-similar-prefixes" id="tabs-similar-prefixes">
           <ion-label>Tabs with Similar Route Prefixes</ion-label>
+        </ion-item>
+        <ion-item router-link="/tabs-search-params" id="tabs-search-params">
+          <ion-label>Tabs with Search Params on Href</ion-label>
         </ion-item>
         <ion-item router-link="/lifecycle" id="lifecycle">
           <ion-label>Lifecycle</ion-label>

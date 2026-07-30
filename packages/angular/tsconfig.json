@@ -17,8 +17,8 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "es2017"],
-    "module": "es2015",
-    "moduleResolution": "node",
+    "module": "es2022",
+    "moduleResolution": "bundler",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -30,16 +30,15 @@
     "rootDir": "./",
     "strictPropertyInitialization": false,
     "target": "es2015",
-    "baseUrl": ".",
     "plugins": [
       {
         "name": "typescript-eslint-language-service"
       }
     ],
     "paths": {
-      "@ionic/angular/common": ["common/src/index.ts"]
+      "@ionic/angular/common": ["./common/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "src/schematics"],
-  "files": ["src/index.ts", "common/src/index.ts", "standalone/src/index.ts"]
+  "exclude": ["node_modules", "schematics"],
+  "files": ["lazy/src/index.ts", "common/src/index.ts", "standalone/src/index.ts"]
 }

@@ -50,12 +50,28 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/DefaultHref.vue')
   },
   {
+    path: '/direction-none-back/a',
+    component: () => import('@/views/DirectionNoneBackA.vue')
+  },
+  {
+    path: '/direction-none-back/b',
+    component: () => import('@/views/DirectionNoneBackB.vue')
+  },
+  {
+    path: '/direction-none-back/fallback',
+    component: () => import('@/views/DirectionNoneBackFallback.vue')
+  },
+  {
     path: '/routing',
     component: () => import('@/views/Routing.vue')
   },
   {
     path: '/routing/child',
     component: () => import('@/views/RoutingChild.vue')
+  },
+  {
+    path: '/routing/guards',
+    component: () => import('@/views/RoutingGuards.vue')
   },
   {
     path: '/routing/:id',
@@ -85,6 +101,20 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/reorder-group',
     component: () => import('@/views/ReorderGroup.vue')
+  },
+  {
+    path: '/swipe-gesture-disabled',
+    component: () => import('@/views/swipe-gesture-disabled/SwipeGestureDisabledOutlet.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/swipe-gesture-disabled/SwipeGestureDisabledMain.vue')
+      },
+      {
+        path: 'details',
+        component: () => import('@/views/swipe-gesture-disabled/SwipeGestureDisabledDetails.vue')
+      }
+    ]
   },
   {
     path: '/nested',
@@ -127,6 +157,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/tabs/Tab2.vue')
       },
       {
+        path: 'tab2/:id',
+        component: () => import('@/views/tabs/Tab2Parameter.vue'),
+        props: true
+      },
+      {
         path: 'tab3',
         beforeEnter: (to, from, next) => {
           next({ path: '/tabs/tab1' });
@@ -164,6 +199,32 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/tabs-basic',
     component: () => import('@/views/TabsBasic.vue')
+  },
+  {
+    path: '/tabs-search-params/',
+    component: () => import('@/views/tabs-search-params/TabsSearchParams.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/tabs-search-params/tab1?foo=bar'
+      },
+      {
+        path: 'tab1',
+        component: () => import('@/views/tabs-search-params/Tab1.vue')
+      },
+      {
+        path: 'tab2',
+        component: () => import('@/views/tabs-search-params/Tab2.vue')
+      },
+      {
+        path: 'tab3',
+        component: () => import('@/views/tabs-search-params/Tab3.vue')
+      },
+      {
+        path: 'tab4',
+        component: () => import('@/views/tabs-search-params/Tab4.vue')
+      }
+    ]
   },
   {
     path: '/tabs-similar-prefixes/',

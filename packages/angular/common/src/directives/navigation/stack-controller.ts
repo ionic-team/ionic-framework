@@ -41,7 +41,7 @@ export class StackController {
   createView(ref: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
     const url = getUrl(this.router, activatedRoute);
     const element = ref?.location?.nativeElement as HTMLElement;
-    const unlistenEvents = bindLifecycleEvents(this.zone, ref.instance, element);
+    const unlistenEvents = bindLifecycleEvents(this.zone, ref.changeDetectorRef, ref.instance, element);
     return {
       id: this.nextId++,
       stackId: computeStackId(this.tabsPrefix, url),
@@ -236,7 +236,6 @@ export class StackController {
   }
 
   destroy(): void {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.containerEl = undefined!;
     this.views.forEach(destroyView);
     this.activeView = undefined;

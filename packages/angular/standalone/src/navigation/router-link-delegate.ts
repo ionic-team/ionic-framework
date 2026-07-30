@@ -8,12 +8,10 @@ import {
   selector: ':not(a):not(area)[routerLink]',
   standalone: true,
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterLink extends RouterLinkDelegateBase {}
 
 @Directive({
   selector: 'a[routerLink],area[routerLink]',
   standalone: true,
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterLinkWithHref extends RouterLinkHrefDelegateBase {}

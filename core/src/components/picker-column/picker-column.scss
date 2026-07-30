@@ -185,6 +185,10 @@
   :host(:focus) .picker-opts {
     outline: none;
 
+    background: rgba(#{ion-color(primary, base, null, true)}, 0.2);
+  }
+
+  :host(.ion-color:focus) .picker-opts {
     background: current-color(base, 0.2);
   }
 }

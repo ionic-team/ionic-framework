@@ -290,6 +290,19 @@ export class RadioGroup implements ComponentInterface {
         // to the bottom of the screen
         ev.preventDefault();
       }
+
+      // Inside a select interface, Enter commits the focused radio
+      // value (matching native <select>). The !ev.repeat guard stops
+      // a held Enter on the triggering ion-select from re-committing
+      // once focus lands in the opened popover/modal.
+      if (ev.key === 'Enter' && inSelectInterface && !ev.repeat) {
+        const previousValue = this.value;
+        this.value = current.value;
+        if (previousValue !== this.value) {
+          this.emitValueChange(ev);
+        }
+        ev.preventDefault();
+      }
     }
   }
 

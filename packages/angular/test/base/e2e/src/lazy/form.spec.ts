@@ -290,8 +290,11 @@ test.describe('Form', () => {
   }
 
   async function testData(page: any, data: any) {
-    const text = await page.locator('#data').textContent();
-    const value = JSON.parse(text!);
-    expect(value).toEqual(data);
+    // Zoneless change detection is scheduled asynchronously, so a one-shot read
+    // can race the render. Poll instead of reading textContent once.
+    await expect.poll(async () => {
+      const text = await page.locator('#data').textContent();
+      return JSON.parse(text!);
+    }).toEqual(data);
   }
 });

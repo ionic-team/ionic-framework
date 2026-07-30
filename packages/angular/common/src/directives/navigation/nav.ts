@@ -49,7 +49,6 @@ export declare interface IonNav extends Components.IonNav {
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: NAV_INPUTS,
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonNav {
   protected el: HTMLElement;
   constructor(

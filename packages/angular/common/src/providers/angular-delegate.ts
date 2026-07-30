@@ -1,5 +1,6 @@
 import {
   ApplicationRef,
+  ChangeDetectorRef,
   ComponentRef,
   createComponent,
   EnvironmentInjector,
@@ -228,10 +229,24 @@ export const attachView = (
       hostElement.classList.add(cssClass);
     }
   }
-  const unbindEvents = bindLifecycleEvents(zone, instance, hostElement);
+  const unbindEvents = bindLifecycleEvents(zone, componentRef.changeDetectorRef, instance, hostElement);
   container.appendChild(hostElement);
 
   applicationRef.attachView(componentRef.hostView);
+
+  /**
+   * Run change detection on the freshly attached view so Angular's init hooks
+   * (`ngOnInit`, `ngAfterViewInit`) fire and template bindings (e.g.
+   * `<ion-nav [root]="rootPage">`) apply during this synchronous pass, before the
+   * web component runs its load lifecycle and dispatches its Ionic lifecycle events
+   * (`ionViewWillEnter`, etc.). `createComponent` only runs the creation pass; the
+   * init hooks and binding updates run during an update pass. Under Zone.js an
+   * implicit tick used to cover this, but zoneless Angular schedules no such tick,
+   * so without this the binding could land after the element has loaded (too late
+   * for `ion-nav` to read it) and the first `ionViewWillEnter` could run before
+   * `ngOnInit`.
+   */
+  componentRef.changeDetectorRef.detectChanges();
 
   elRefMap.set(hostElement, componentRef);
   elEventsMap.set(hostElement, unbindEvents);
@@ -246,10 +261,29 @@ const LIFECYCLES = [
   LIFECYCLE_WILL_UNLOAD,
 ];
 
-export const bindLifecycleEvents = (zone: NgZone, instance: any, element: HTMLElement): (() => void) => {
+export const bindLifecycleEvents = (
+  zone: NgZone,
+  changeDetectorRef: ChangeDetectorRef,
+  instance: any,
+  element: HTMLElement
+): (() => void) => {
+  /**
+   * `zone.run` keeps the listener registration (and, under Zone.js, the handler
+   * execution) inside the Angular zone, so async work started inside a lifecycle
+   * hook is still zone-tracked. Under zoneless Angular it is a passthrough.
+   */
   return zone.run(() => {
     const unregisters = LIFECYCLES.filter((eventName) => typeof instance[eventName] === 'function').map((eventName) => {
-      const handler = (ev: any) => instance[eventName](ev.detail);
+      const handler = (ev: any) => {
+        instance[eventName](ev.detail);
+        /**
+         * Ionic lifecycle events (`ionViewWillEnter`, etc.) are dispatched from
+         * the web component via a native event listener, so under zoneless
+         * Angular nothing schedules change detection for state the hook mutates.
+         * Mark the view dirty explicitly. This is a no-op-or-better under Zone.js.
+         */
+        changeDetectorRef.markForCheck();
+      };
       element.addEventListener(eventName, handler);
       return () => element.removeEventListener(eventName, handler);
     });

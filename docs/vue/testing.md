@@ -14,6 +14,37 @@ The Vue test app supports syncing your locally built changes for validation.
 
 From here you can either build the application or start a local dev server. When re-syncing changes, you will need to wipe the build cache in `node_modules/.cache` and restart the dev server/re-build.
 
+## Running the Test Suites
+
+`packages/vue-router/scripts/test_runner.sh` orchestrates the Vue + Vue Router test suites end to end: it builds `@ionic/core`, `@ionic/vue`, and `@ionic/vue-router`, builds the test app, syncs local packages, runs Vitest unit tests in jsdom, then starts the Vite dev server and runs Cypress and Playwright e2e suites against it. By default it uses the `vue3` app, which targets the latest supported Vue version.
+
+```shell
+# Full run (build + Vitest + Cypress + Playwright)
+sh packages/vue-router/scripts/test_runner.sh
+
+# Reuse the existing build/<app> directory and run only Playwright
+sh packages/vue-router/scripts/test_runner.sh --skip-build --playwright-only
+
+# Filter Cypress to a single spec
+sh packages/vue-router/scripts/test_runner.sh --cypress-only --spec routing
+
+# Build/sync and serve the app for manual testing (no specs run)
+sh packages/vue-router/scripts/test_runner.sh --serve
+```
+
+Useful flags:
+
+| Flag | Effect |
+|------|--------|
+| `--skip-build` | Reuse existing `packages/vue/test/build/<app>/` instead of rebuilding |
+| `--vitest-only` | Run only the Vitest unit suite |
+| `--cypress-only` | Run only the Cypress e2e suite |
+| `--playwright-only` | Run only the Playwright e2e suite |
+| `--spec <pattern>` | Filter Cypress specs by file path |
+| `--pw-spec <pattern>` | Filter Playwright specs by file path |
+| `--app <name>` | Pick a different app variant from `packages/vue/test/apps/` (default: `vue3`, the latest supported Vue version) |
+| `--serve` | Start the dev server only and open the browser |
+
 ## Test App Build Structure
 
 > [!NOTE]

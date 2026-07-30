@@ -15,7 +15,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -25,7 +25,6 @@ import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, S
 import { ViewController } from "./components/nav/view-controller";
 import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
 import { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
-import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
@@ -53,7 +52,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -63,7 +62,6 @@ export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, S
 export { ViewController } from "./components/nav/view-controller";
 export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
 export { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
-export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
@@ -930,7 +928,6 @@ export namespace Components {
         "clearText": string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -961,6 +958,10 @@ export namespace Components {
           * Formatting options for dates and times. Should include a 'date' and/or 'time' object, each of which is of type [Intl.DateTimeFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options).
          */
         "formatOptions"?: FormatOptions;
+        /**
+          * Returns the default parts the datetime falls back to when no value is set: today's date and time snapped to the closest value allowed by the component's constraints (`min`, `max`, and the `*Values` props).
+         */
+        "getDefaultPart": () => Promise<DatetimeParts>;
         /**
           * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
          */
@@ -1078,7 +1079,6 @@ export namespace Components {
     interface IonDatetimeButton {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -1241,6 +1241,9 @@ export namespace Components {
          */
         "translucent": boolean;
     }
+    /**
+     * @deprecated 
+     */
     interface IonImg {
         /**
           * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
@@ -1295,9 +1298,9 @@ export namespace Components {
         "autocomplete": AutocompleteTypes;
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
-          * @default 'off'
+          * @default false
          */
-        "autocorrect": 'on' | 'off';
+        "autocorrect": boolean;
         /**
           * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
           * @default false
@@ -2005,8 +2008,8 @@ export namespace Components {
          */
         "handle"?: boolean;
         /**
-          * The interaction behavior for the sheet modal when the handle is pressed.  Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).
-          * @default 'none'
+          * The interaction behavior for the sheet modal when the handle is pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).  Set to `"cycle"` to make the handle focusable and let the sheet modal cycle between available breakpoints when pressed. This keeps the sheet operable with assistive technology.  Set to `"none"` to make the handle purely decorative when pressed and removed from the tab order.  Defaults to `"cycle"`.
+          * @default 'cycle'
          */
         "handleBehavior"?: ModalHandleBehavior;
         /**
@@ -2111,10 +2114,6 @@ export namespace Components {
          */
         "getPrevious": (view?: ViewController) => Promise<ViewController | undefined>;
         /**
-          * Called by <ion-router> to retrieve the current component.
-         */
-        "getRouteId": () => Promise<RouteID | undefined>;
-        /**
           * Inserts a component into the navigation stack at the specified index. This is useful to add a component at any point in the navigation stack.
           * @param insertIndex The index to insert the component at in the stack.
           * @param component The component to insert into the navigation stack.
@@ -2190,15 +2189,6 @@ export namespace Components {
          */
         "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
-          * Called by the router to update the view.
-          * @param id The component tag.
-          * @param params The component params.
-          * @param direction A direction hint.
-          * @param animation an AnimationBuilder.
-          * @return the status.
-         */
-        "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
-        /**
           * If the nav component should allow for swipe-to-go-back.
          */
         "swipeGesture"?: boolean;
@@ -2242,7 +2232,6 @@ export namespace Components {
     interface IonPickerColumn {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -2276,7 +2265,6 @@ export namespace Components {
     interface IonPickerColumnOption {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -2288,107 +2276,6 @@ export namespace Components {
           * The text value of the option.
          */
         "value"?: any | null;
-    }
-    interface IonPickerLegacy {
-        /**
-          * If `true`, the picker will animate.
-          * @default true
-         */
-        "animated": boolean;
-        /**
-          * If `true`, the picker will be dismissed when the backdrop is clicked.
-          * @default true
-         */
-        "backdropDismiss": boolean;
-        /**
-          * Array of buttons to be displayed at the top of the picker.
-          * @default []
-         */
-        "buttons": PickerButton[];
-        /**
-          * Array of columns to be displayed in the picker.
-          * @default []
-         */
-        "columns": PickerColumn[];
-        /**
-          * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-         */
-        "cssClass"?: string | string[];
-        "delegate"?: FrameworkDelegate;
-        /**
-          * Dismiss the picker overlay after it has been presented.
-          * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the picker. This can be useful in a button handler for determining which button was clicked to dismiss the picker. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-         */
-        "dismiss": (data?: any, role?: string) => Promise<boolean>;
-        /**
-          * Number of milliseconds to wait before dismissing the picker.
-          * @default 0
-         */
-        "duration": number;
-        /**
-          * Animation to use when the picker is presented.
-         */
-        "enterAnimation"?: AnimationBuilder;
-        /**
-          * Get the column that matches the specified name.
-          * @param name The name of the column.
-         */
-        "getColumn": (name: string) => Promise<PickerColumn | undefined>;
-        /**
-          * @default false
-         */
-        "hasController": boolean;
-        /**
-          * Additional attributes to pass to the picker.
-         */
-        "htmlAttributes"?: { [key: string]: any };
-        /**
-          * If `true`, the picker will open. If `false`, the picker will close. Use this if you need finer grained control over presentation, otherwise just use the pickerController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the picker dismisses. You will need to do that in your code.
-          * @default false
-         */
-        "isOpen": boolean;
-        /**
-          * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
-          * @default true
-         */
-        "keyboardClose": boolean;
-        /**
-          * Animation to use when the picker is dismissed.
-         */
-        "leaveAnimation"?: AnimationBuilder;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Returns a promise that resolves when the picker did dismiss.
-         */
-        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
-        /**
-          * Returns a promise that resolves when the picker will dismiss.
-         */
-        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
-        "overlayIndex": number;
-        /**
-          * Present the picker overlay after it has been created.
-         */
-        "present": () => Promise<void>;
-        /**
-          * If `true`, a backdrop will be displayed behind the picker.
-          * @default true
-         */
-        "showBackdrop": boolean;
-        /**
-          * An ID corresponding to the trigger element that causes the picker to open when clicked.
-         */
-        "trigger": string | undefined;
-    }
-    interface IonPickerLegacyColumn {
-        /**
-          * Picker column data
-         */
-        "col": PickerColumn;
     }
     interface IonPopover {
         /**
@@ -2820,7 +2707,7 @@ export namespace Components {
          */
         "beforeLeave"?: NavigationHookCallback;
         /**
-          * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
+          * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-router-outlet`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
          */
         "component": string;
         /**
@@ -2915,6 +2802,10 @@ export namespace Components {
          */
         "mode": "ios" | "md";
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
+        /**
+          * If `true`, the router-outlet should allow navigation via swipe-to-go-back gesture. Defaults to `true` for `"ios"` mode and `false` for `"md"` mode.
+         */
+        "swipeGesture"?: boolean;
         "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {
@@ -2937,9 +2828,9 @@ export namespace Components {
         "autocomplete": AutocompleteTypes;
         /**
           * Set the input's autocorrect property.
-          * @default 'off'
+          * @default false
          */
-        "autocorrect": 'on' | 'off';
+        "autocorrect": boolean;
         /**
           * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
           * @default config.get('backButtonIcon', arrowBackSharp) as string
@@ -3242,10 +3133,26 @@ export namespace Components {
     }
     interface IonSelectOption {
         /**
-          * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
+          * Text that is placed underneath the option text to provide additional details about the option.
+         */
+        "description"?: string;
+        /**
+          * If `true`, the user cannot interact with the select option.
           * @default false
          */
         "disabled": boolean;
+        /**
+          * How to pack the label and the option's selection control within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on `md` (the radio control is hidden there).  When unset, the interface picks a default based on mode and control type.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where the label is placed relative to the option's selection control (radio circle or checkbox box) when the option is rendered in an `alert`, `popover`, or `modal` interface. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on `md` (the radio control is hidden there).  When unset, the interface picks a default based on mode and control type.
+         */
+        "labelPlacement"?: 'start' | 'end';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * The text value of the option.
          */
@@ -3313,7 +3220,7 @@ export namespace Components {
         "isVisible": () => Promise<boolean>;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when": string | boolean;
     }
@@ -3858,14 +3765,6 @@ export interface IonPickerColumnCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonPickerColumnElement;
 }
-export interface IonPickerLegacyCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLIonPickerLegacyElement;
-}
-export interface IonPickerLegacyColumnCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLIonPickerLegacyColumnElement;
-}
 export interface IonPopoverCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonPopoverElement;
@@ -4294,6 +4193,9 @@ declare global {
         "ionImgDidLoad": void;
         "ionError": void;
     }
+    /**
+     * @deprecated 
+     */
     interface HTMLIonImgElement extends Components.IonImg, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonImgElementEventMap>(type: K, listener: (this: HTMLIonImgElement, ev: IonImgCustomEvent<HTMLIonImgElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4622,47 +4524,6 @@ declare global {
     var HTMLIonPickerColumnOptionElement: {
         prototype: HTMLIonPickerColumnOptionElement;
         new (): HTMLIonPickerColumnOptionElement;
-    };
-    interface HTMLIonPickerLegacyElementEventMap {
-        "ionPickerDidPresent": void;
-        "ionPickerWillPresent": void;
-        "ionPickerWillDismiss": OverlayEventDetail;
-        "ionPickerDidDismiss": OverlayEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
-    }
-    interface HTMLIonPickerLegacyElement extends Components.IonPickerLegacy, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerLegacyElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyElement, ev: IonPickerLegacyCustomEvent<HTMLIonPickerLegacyElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerLegacyElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyElement, ev: IonPickerLegacyCustomEvent<HTMLIonPickerLegacyElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLIonPickerLegacyElement: {
-        prototype: HTMLIonPickerLegacyElement;
-        new (): HTMLIonPickerLegacyElement;
-    };
-    interface HTMLIonPickerLegacyColumnElementEventMap {
-        "ionPickerColChange": PickerColumn;
-    }
-    interface HTMLIonPickerLegacyColumnElement extends Components.IonPickerLegacyColumn, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerLegacyColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyColumnElement, ev: IonPickerLegacyColumnCustomEvent<HTMLIonPickerLegacyColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerLegacyColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyColumnElement, ev: IonPickerLegacyColumnCustomEvent<HTMLIonPickerLegacyColumnElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLIonPickerLegacyColumnElement: {
-        prototype: HTMLIonPickerLegacyColumnElement;
-        new (): HTMLIonPickerLegacyColumnElement;
     };
     interface HTMLIonPopoverElementEventMap {
         "ionPopoverDidPresent": void;
@@ -5261,8 +5122,6 @@ declare global {
         "ion-picker": HTMLIonPickerElement;
         "ion-picker-column": HTMLIonPickerColumnElement;
         "ion-picker-column-option": HTMLIonPickerColumnOptionElement;
-        "ion-picker-legacy": HTMLIonPickerLegacyElement;
-        "ion-picker-legacy-column": HTMLIonPickerLegacyColumnElement;
         "ion-popover": HTMLIonPopoverElement;
         "ion-progress-bar": HTMLIonProgressBarElement;
         "ion-radio": HTMLIonRadioElement;
@@ -6191,7 +6050,6 @@ declare namespace LocalJSX {
         "clearText"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -6357,7 +6215,6 @@ declare namespace LocalJSX {
     interface IonDatetimeButton {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -6520,6 +6377,9 @@ declare namespace LocalJSX {
          */
         "translucent"?: boolean;
     }
+    /**
+     * @deprecated 
+     */
     interface IonImg {
         /**
           * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
@@ -6586,9 +6446,9 @@ declare namespace LocalJSX {
         "autocomplete"?: AutocompleteTypes;
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
-          * @default 'off'
+          * @default false
          */
-        "autocorrect"?: 'on' | 'off';
+        "autocorrect"?: boolean;
         /**
           * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
           * @default false
@@ -7302,8 +7162,8 @@ declare namespace LocalJSX {
          */
         "handle"?: boolean;
         /**
-          * The interaction behavior for the sheet modal when the handle is pressed.  Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).
-          * @default 'none'
+          * The interaction behavior for the sheet modal when the handle is pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).  Set to `"cycle"` to make the handle focusable and let the sheet modal cycle between available breakpoints when pressed. This keeps the sheet operable with assistive technology.  Set to `"none"` to make the handle purely decorative when pressed and removed from the tab order.  Defaults to `"cycle"`.
+          * @default 'cycle'
          */
         "handleBehavior"?: ModalHandleBehavior;
         /**
@@ -7483,7 +7343,6 @@ declare namespace LocalJSX {
     interface IonPickerColumn {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -7512,7 +7371,6 @@ declare namespace LocalJSX {
     interface IonPickerColumnOption {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -7524,120 +7382,6 @@ declare namespace LocalJSX {
           * The text value of the option.
          */
         "value"?: any | null;
-    }
-    interface IonPickerLegacy {
-        /**
-          * If `true`, the picker will animate.
-          * @default true
-         */
-        "animated"?: boolean;
-        /**
-          * If `true`, the picker will be dismissed when the backdrop is clicked.
-          * @default true
-         */
-        "backdropDismiss"?: boolean;
-        /**
-          * Array of buttons to be displayed at the top of the picker.
-          * @default []
-         */
-        "buttons"?: PickerButton[];
-        /**
-          * Array of columns to be displayed in the picker.
-          * @default []
-         */
-        "columns"?: PickerColumn[];
-        /**
-          * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-         */
-        "cssClass"?: string | string[];
-        "delegate"?: FrameworkDelegate;
-        /**
-          * Number of milliseconds to wait before dismissing the picker.
-          * @default 0
-         */
-        "duration"?: number;
-        /**
-          * Animation to use when the picker is presented.
-         */
-        "enterAnimation"?: AnimationBuilder;
-        /**
-          * @default false
-         */
-        "hasController"?: boolean;
-        /**
-          * Additional attributes to pass to the picker.
-         */
-        "htmlAttributes"?: { [key: string]: any };
-        /**
-          * If `true`, the picker will open. If `false`, the picker will close. Use this if you need finer grained control over presentation, otherwise just use the pickerController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the picker dismisses. You will need to do that in your code.
-          * @default false
-         */
-        "isOpen"?: boolean;
-        /**
-          * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
-          * @default true
-         */
-        "keyboardClose"?: boolean;
-        /**
-          * Animation to use when the picker is dismissed.
-         */
-        "leaveAnimation"?: AnimationBuilder;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Emitted after the picker has dismissed. Shorthand for ionPickerDidDismiss.
-         */
-        "onDidDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
-        /**
-          * Emitted after the picker has presented. Shorthand for ionPickerWillDismiss.
-         */
-        "onDidPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
-        /**
-          * Emitted after the picker has dismissed.
-         */
-        "onIonPickerDidDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
-        /**
-          * Emitted after the picker has presented.
-         */
-        "onIonPickerDidPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
-        /**
-          * Emitted before the picker has dismissed.
-         */
-        "onIonPickerWillDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
-        /**
-          * Emitted before the picker has presented.
-         */
-        "onIonPickerWillPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
-        /**
-          * Emitted before the picker has dismissed. Shorthand for ionPickerWillDismiss.
-         */
-        "onWillDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
-        /**
-          * Emitted before the picker has presented. Shorthand for ionPickerWillPresent.
-         */
-        "onWillPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
-        "overlayIndex": number;
-        /**
-          * If `true`, a backdrop will be displayed behind the picker.
-          * @default true
-         */
-        "showBackdrop"?: boolean;
-        /**
-          * An ID corresponding to the trigger element that causes the picker to open when clicked.
-         */
-        "trigger"?: string | undefined;
-    }
-    interface IonPickerLegacyColumn {
-        /**
-          * Picker column data
-         */
-        "col": PickerColumn;
-        /**
-          * Emitted when the selected value has changed
-         */
-        "onIonPickerColChange"?: (event: IonPickerLegacyColumnCustomEvent<PickerColumn>) => void;
     }
     interface IonPopover {
         /**
@@ -8046,7 +7790,7 @@ declare namespace LocalJSX {
          */
         "onIonRefresh"?: (event: IonRefresherCustomEvent<RefresherEventDetail>) => void;
         /**
-          * Emitted when the user begins to start pulling down. TODO(FW-7044): Remove this in a major release
+          * Emitted when the user begins to start pulling down.
           * @deprecated Use `ionPullStart` instead.
          */
         "onIonStart"?: (event: IonRefresherCustomEvent<void>) => void;
@@ -8132,7 +7876,7 @@ declare namespace LocalJSX {
          */
         "beforeLeave"?: NavigationHookCallback;
         /**
-          * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
+          * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-router-outlet`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
          */
         "component": string;
         /**
@@ -8229,6 +7973,10 @@ declare namespace LocalJSX {
         "onIonNavDidChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillLoad"?: (event: IonRouterOutletCustomEvent<void>) => void;
+        /**
+          * If `true`, the router-outlet should allow navigation via swipe-to-go-back gesture. Defaults to `true` for `"ios"` mode and `false` for `"md"` mode.
+         */
+        "swipeGesture"?: boolean;
         "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {
@@ -8251,9 +7999,9 @@ declare namespace LocalJSX {
         "autocomplete"?: AutocompleteTypes;
         /**
           * Set the input's autocorrect property.
-          * @default 'off'
+          * @default false
          */
-        "autocorrect"?: 'on' | 'off';
+        "autocorrect"?: boolean;
         /**
           * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
           * @default config.get('backButtonIcon', arrowBackSharp) as string
@@ -8605,10 +8353,26 @@ declare namespace LocalJSX {
     }
     interface IonSelectOption {
         /**
-          * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
+          * Text that is placed underneath the option text to provide additional details about the option.
+         */
+        "description"?: string;
+        /**
+          * If `true`, the user cannot interact with the select option.
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * How to pack the label and the option's selection control within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on `md` (the radio control is hidden there).  When unset, the interface picks a default based on mode and control type.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where the label is placed relative to the option's selection control (radio circle or checkbox box) when the option is rendered in an `alert`, `popover`, or `modal` interface. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on `md` (the radio control is hidden there).  When unset, the interface picks a default based on mode and control type.
+         */
+        "labelPlacement"?: 'start' | 'end';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * The text value of the option.
          */
@@ -8683,7 +8447,7 @@ declare namespace LocalJSX {
         "onIonSplitPaneVisible"?: (event: IonSplitPaneCustomEvent<{ visible: boolean }>) => void;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when"?: string | boolean;
     }
@@ -9428,7 +9192,7 @@ declare namespace LocalJSX {
         "color": Color;
         "autocapitalize": string;
         "autocomplete": AutocompleteTypes;
-        "autocorrect": 'on' | 'off';
+        "autocorrect": boolean;
         "autofocus": boolean;
         "clearInput": boolean;
         "clearInputIcon": string;
@@ -9604,18 +9368,6 @@ declare namespace LocalJSX {
         "value": string;
         "color": Color;
     }
-    interface IonPickerLegacyAttributes {
-        "overlayIndex": number;
-        "hasController": boolean;
-        "keyboardClose": boolean;
-        "cssClass": string | string[];
-        "duration": number;
-        "showBackdrop": boolean;
-        "backdropDismiss": boolean;
-        "animated": boolean;
-        "isOpen": boolean;
-        "trigger": string | undefined;
-    }
     interface IonPopoverAttributes {
         "hasController": boolean;
         "overlayIndex": number;
@@ -9723,13 +9475,14 @@ declare namespace LocalJSX {
     interface IonRouterOutletAttributes {
         "mode": "ios" | "md";
         "animated": boolean;
+        "swipeGesture": boolean;
     }
     interface IonSearchbarAttributes {
         "color": Color;
         "animated": boolean;
         "autocapitalize": string;
         "autocomplete": AutocompleteTypes;
-        "autocorrect": 'on' | 'off';
+        "autocorrect": boolean;
         "cancelButtonIcon": string;
         "cancelButtonText": string;
         "clearIcon": string;
@@ -9799,6 +9552,9 @@ declare namespace LocalJSX {
     interface IonSelectOptionAttributes {
         "disabled": boolean;
         "value": string;
+        "description": string;
+        "labelPlacement": 'start' | 'end';
+        "justify": 'start' | 'end' | 'space-between';
     }
     interface IonSelectPopoverAttributes {
         "header": string;
@@ -9973,8 +9729,6 @@ declare namespace LocalJSX {
         "ion-picker": IonPicker;
         "ion-picker-column": Omit<IonPickerColumn, keyof IonPickerColumnAttributes> & { [K in keyof IonPickerColumn & keyof IonPickerColumnAttributes]?: IonPickerColumn[K] } & { [K in keyof IonPickerColumn & keyof IonPickerColumnAttributes as `attr:${K}`]?: IonPickerColumnAttributes[K] } & { [K in keyof IonPickerColumn & keyof IonPickerColumnAttributes as `prop:${K}`]?: IonPickerColumn[K] };
         "ion-picker-column-option": Omit<IonPickerColumnOption, keyof IonPickerColumnOptionAttributes> & { [K in keyof IonPickerColumnOption & keyof IonPickerColumnOptionAttributes]?: IonPickerColumnOption[K] } & { [K in keyof IonPickerColumnOption & keyof IonPickerColumnOptionAttributes as `attr:${K}`]?: IonPickerColumnOptionAttributes[K] } & { [K in keyof IonPickerColumnOption & keyof IonPickerColumnOptionAttributes as `prop:${K}`]?: IonPickerColumnOption[K] };
-        "ion-picker-legacy": Omit<IonPickerLegacy, keyof IonPickerLegacyAttributes> & { [K in keyof IonPickerLegacy & keyof IonPickerLegacyAttributes]?: IonPickerLegacy[K] } & { [K in keyof IonPickerLegacy & keyof IonPickerLegacyAttributes as `attr:${K}`]?: IonPickerLegacyAttributes[K] } & { [K in keyof IonPickerLegacy & keyof IonPickerLegacyAttributes as `prop:${K}`]?: IonPickerLegacy[K] } & OneOf<"overlayIndex", IonPickerLegacy["overlayIndex"], IonPickerLegacyAttributes["overlayIndex"]>;
-        "ion-picker-legacy-column": IonPickerLegacyColumn;
         "ion-popover": Omit<IonPopover, keyof IonPopoverAttributes> & { [K in keyof IonPopover & keyof IonPopoverAttributes]?: IonPopover[K] } & { [K in keyof IonPopover & keyof IonPopoverAttributes as `attr:${K}`]?: IonPopoverAttributes[K] } & { [K in keyof IonPopover & keyof IonPopoverAttributes as `prop:${K}`]?: IonPopover[K] } & OneOf<"overlayIndex", IonPopover["overlayIndex"], IonPopoverAttributes["overlayIndex"]>;
         "ion-progress-bar": Omit<IonProgressBar, keyof IonProgressBarAttributes> & { [K in keyof IonProgressBar & keyof IonProgressBarAttributes]?: IonProgressBar[K] } & { [K in keyof IonProgressBar & keyof IonProgressBarAttributes as `attr:${K}`]?: IonProgressBarAttributes[K] } & { [K in keyof IonProgressBar & keyof IonProgressBarAttributes as `prop:${K}`]?: IonProgressBar[K] };
         "ion-radio": Omit<IonRadio, keyof IonRadioAttributes> & { [K in keyof IonRadio & keyof IonRadioAttributes]?: IonRadio[K] } & { [K in keyof IonRadio & keyof IonRadioAttributes as `attr:${K}`]?: IonRadioAttributes[K] } & { [K in keyof IonRadio & keyof IonRadioAttributes as `prop:${K}`]?: IonRadio[K] };
@@ -10050,6 +9804,9 @@ declare module "@stencil/core" {
             "ion-footer": LocalJSX.IntrinsicElements["ion-footer"] & JSXBase.HTMLAttributes<HTMLIonFooterElement>;
             "ion-grid": LocalJSX.IntrinsicElements["ion-grid"] & JSXBase.HTMLAttributes<HTMLIonGridElement>;
             "ion-header": LocalJSX.IntrinsicElements["ion-header"] & JSXBase.HTMLAttributes<HTMLIonHeaderElement>;
+            /**
+             * @deprecated 
+             */
             "ion-img": LocalJSX.IntrinsicElements["ion-img"] & JSXBase.HTMLAttributes<HTMLIonImgElement>;
             "ion-infinite-scroll": LocalJSX.IntrinsicElements["ion-infinite-scroll"] & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollElement>;
             "ion-infinite-scroll-content": LocalJSX.IntrinsicElements["ion-infinite-scroll-content"] & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollContentElement>;
@@ -10076,8 +9833,6 @@ declare module "@stencil/core" {
             "ion-picker": LocalJSX.IntrinsicElements["ion-picker"] & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
             "ion-picker-column": LocalJSX.IntrinsicElements["ion-picker-column"] & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
             "ion-picker-column-option": LocalJSX.IntrinsicElements["ion-picker-column-option"] & JSXBase.HTMLAttributes<HTMLIonPickerColumnOptionElement>;
-            "ion-picker-legacy": LocalJSX.IntrinsicElements["ion-picker-legacy"] & JSXBase.HTMLAttributes<HTMLIonPickerLegacyElement>;
-            "ion-picker-legacy-column": LocalJSX.IntrinsicElements["ion-picker-legacy-column"] & JSXBase.HTMLAttributes<HTMLIonPickerLegacyColumnElement>;
             "ion-popover": LocalJSX.IntrinsicElements["ion-popover"] & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
             "ion-progress-bar": LocalJSX.IntrinsicElements["ion-progress-bar"] & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
             "ion-radio": LocalJSX.IntrinsicElements["ion-radio"] & JSXBase.HTMLAttributes<HTMLIonRadioElement>;

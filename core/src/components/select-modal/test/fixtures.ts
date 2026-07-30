@@ -63,6 +63,11 @@ export class SelectModalPage {
     await option.press('Space');
   }
 
+  async pressEnterOnOption(value: string) {
+    const option = this.getOption(value);
+    await option.press('Enter');
+  }
+
   private getOption(value: string) {
     const { multiple, selectModal } = this;
     const selector = multiple ? 'ion-checkbox' : 'ion-radio';

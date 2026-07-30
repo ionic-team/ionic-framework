@@ -9,11 +9,16 @@ on:
     - cron: '00 06 * * 1-5'
   workflow_dispatch:
     inputs:
-      npm_release_tag:
+      npm_release_tag_core:
         required: true
         type: string
-        description: What version should be pulled from NPM?
+        description: What stencil/core version should be pulled from NPM?
         default: nightly
+      npm_release_tag_react_output_target:
+        required: true
+        type: string
+        description: What stencil/react-output-target version should be pulled from NPM?
+        default: latest
 
 # When pushing a new commit we should
 # cancel the previous test run to not
@@ -26,33 +31,35 @@ jobs:
   build-core-with-stencil-nightly:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/workflows/actions/build-core-stencil-prerelease
         with:
-          stencil-version: ${{ inputs.npm_release_tag || 'nightly' }}
+          stencil-core-version: ${{ inputs.npm_release_tag_core || 'nightly' }}
+          stencil-react-output-target-version: ${{ inputs.npm_release_tag_react_output_target || 'latest' }}
+
 
   test-core-clean-build:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/workflows/actions/test-core-clean-build
 
   test-core-lint:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/workflows/actions/test-core-lint
 
   test-core-spec:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/workflows/actions/test-core-spec
         with:
-          stencil-version: ${{ inputs.npm_release_tag || 'nightly' }}
+          stencil-version: ${{ inputs.npm_release_tag_core || 'nightly' }}
 
   test-core-screenshot:
     strategy:
@@ -72,7 +79,7 @@ jobs:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/workflows/actions/test-core-screenshot
         with:
           shard: ${{ matrix.shard }}
@@ -100,14 +107,14 @@ jobs:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
     - uses: ./.github/workflows/actions/build-vue
 
   build-vue-router:
     needs: [build-vue]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
     - uses: ./.github/workflows/actions/build-vue-router
 
   test-vue-e2e:
@@ -118,7 +125,7 @@ jobs:
     needs: [build-vue, build-vue-router]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
     - uses: ./.github/workflows/actions/test-vue-e2e
       with:
         app: ${{ matrix.apps }}
@@ -136,25 +143,25 @@ jobs:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
     - uses: ./.github/workflows/actions/build-angular
 
   build-angular-server:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
     - uses: ./.github/workflows/actions/build-angular-server
 
   test-angular-e2e:
     strategy:
       fail-fast: false
       matrix:
-        apps: [ng16, ng17, ng18, ng19, ng20]
+        apps: [ng18, ng19, ng20, ng21, ng22]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
     - uses: ./.github/workflows/actions/test-angular-e2e
       with:
         app: ${{ matrix.apps }}
@@ -172,25 +179,29 @@ jobs:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+    - name: Install Stencil React Output Target
+      working-directory: ./packages/react
+      run: npm i @stencil/react-output-target@${{ inputs.npm_release_tag_react_output_target || 'latest' }}
+      shell: bash
     - uses: ./.github/workflows/actions/build-react
 
   build-react-router:
     needs: [build-react]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
     - uses: ./.github/workflows/actions/build-react-router
 
   test-react-router-e2e:
     strategy:
       fail-fast: false
       matrix:
-        apps: [reactrouter5]
+        apps: [reactrouter6-react18, reactrouter6-react19]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
     - uses: ./.github/workflows/actions/test-react-router-e2e
       with:
         app: ${{ matrix.apps }}
@@ -212,7 +223,7 @@ jobs:
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
     - uses: ./.github/workflows/actions/test-react-e2e
       with:
         app: ${{ matrix.apps }}

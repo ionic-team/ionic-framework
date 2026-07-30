@@ -183,7 +183,32 @@ export const createIonRouter = (
            * is not good because we would have two /tabs/tab1/child1 entries
            * separated by a /tabs/tab1/child2 entry.
            */
-          router.go(prevInfo.position - routeInfo.position);
+          const positionDelta = prevInfo.position! - routeInfo.position!;
+          if (positionDelta < 0) {
+            router.go(positionDelta);
+          } else if (prevInfo.pathname) {
+            /**
+             * prevInfo's history position was wiped when the user went
+             * back then pushed a new route, so router.go can't
+             * reach it. Replace falls through to afterEach with the
+             * pop/back `incomingRouteParams` set above, which preserves
+             * the back animation and consumes the params so they don't
+             * leak into the next navigation. We replace even when
+             * `positionDelta === 0` for the same consumption reason.
+             */
+            router.replace({
+              path: prevInfo.pathname,
+              query: parseQuery(prevInfo.search),
+            });
+          } else {
+            /**
+             * prevInfo has no pathname (synthesized root entry). Route
+             * to `defaultHref` so the pop/back `incomingRouteParams`
+             * set above gets consumed instead of leaking into the next
+             * navigation.
+             */
+            handleNavigate(defaultHref, "pop", "back", routerAnimation);
+          }
         }
       } else {
         handleNavigate(defaultHref, "pop", "back", routerAnimation);
@@ -326,6 +351,30 @@ export const createIonRouter = (
               routeInfo,
               delta
             );
+            if (
+              prevRouteInfo &&
+              prevRouteInfo.pathname &&
+              prevRouteInfo.pathname !== location.path &&
+              (routeInfo.tab || prevRouteInfo.tab)
+            ) {
+              /**
+               * Browser POP destination differs from the within-tab back
+               * target (e.g. user is on a re-activated tab child and the
+               * browser's linear predecessor is in a different tab). Sync
+               * URL with the displayed page via router.replace so the back
+               * stack stays consistent with what the user sees, matching
+               * handleNavigateBack's non-linear path.
+               */
+              handleNavigate(
+                prevRouteInfo.pathname +
+                  (prevRouteInfo.search ? "?" + prevRouteInfo.search : ""),
+                "pop",
+                "back",
+                undefined,
+                prevRouteInfo.tab
+              );
+              return;
+            }
             incomingRouteParams = {
               ...prevRouteInfo,
               routerAction: "pop",
@@ -383,6 +432,25 @@ export const createIonRouter = (
             routeInfo.tab
           );
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+        } else if (
+          routeInfo.routerAction === "push" &&
+          routeInfo.routerDirection === "none" &&
+          routeInfo.tab === leavingLocationInfo.tab
+        ) {
+          /**
+           * Same-tab push with direction "none" still needs pushedByRoute so
+           * ion-back-button uses history instead of falling back to defaultHref.
+           * Cross-tab pushes hit the branch above.
+           *
+           * Skip when the candidate equals the current pathname (e.g. /a?x=1 ->
+           * /a?x=2) to avoid a self-loop on back. Same guard as the replace
+           * branch below.
+           */
+          const candidate = leavingLocationInfo.pathname;
+          routeInfo.pushedByRoute =
+            candidate !== "" && candidate !== routeInfo.pathname
+              ? candidate
+              : undefined;
         } else if (routeInfo.routerAction === "replace") {
           /**
            * When replacing a route, we want to make sure we select the current route
@@ -415,10 +483,15 @@ export const createIonRouter = (
           routeInfo.lastPathname =
             currentRouteInfo?.pathname || routeInfo.lastPathname;
           routeInfo.pushedByRoute = pushedByRoute;
+          /**
+           * Prefer the direction/animation the caller specified on
+           * the navigate call; fall back to the leaving route's
+           * values only when none was provided.
+           */
           routeInfo.routerDirection =
-            currentRouteInfo?.routerDirection || routeInfo.routerDirection;
+            routeInfo.routerDirection || currentRouteInfo?.routerDirection;
           routeInfo.routerAnimation =
-            currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
+            routeInfo.routerAnimation || currentRouteInfo?.routerAnimation;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
       }
@@ -511,7 +584,7 @@ export const createIonRouter = (
     router.push(routerLink);
   };
 
-  const resetTab = (tab: string) => {
+  const resetTab = (tab: string, originalHref?: string) => {
     /**
      * Resetting the tab should go back
      * to the initial view in the tab stack.
@@ -526,7 +599,29 @@ export const createIonRouter = (
      */
     const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
-      router.go(routeInfo.position - currentHistoryPosition);
+      const delta = routeInfo.position - currentHistoryPosition;
+      if (delta !== 0) {
+        router.go(delta);
+        return;
+      }
+      /**
+       * The first history entry for this tab is the current entry,
+       * so there's nothing earlier to traverse back to. Happens
+       * after a deep load onto a tab child or an external navigation
+       * that reset the SPA history. Replace with `originalHref` so
+       * no stale child entry stays in browser history.
+       */
+      if (originalHref && routeInfo.pathname !== originalHref) {
+        handleNavigate(originalHref, "pop", "back", undefined, tab);
+      }
+      return;
+    }
+    /**
+     * No routeInfo for this tab yet. Replace the current entry
+     * with `originalHref` so the tab has a root to reset to.
+     */
+    if (originalHref) {
+      handleNavigate(originalHref, "pop", "back", undefined, tab);
     }
   };
 
@@ -534,7 +629,18 @@ export const createIonRouter = (
     if (!path) return;
 
     const routeInfo = locationHistory.getCurrentRouteInfoForTab(tab);
-    const [pathname] = path.split("?");
+    /**
+     * Strip the fragment before parsing the query so that a `#frag` on the
+     * href cannot leak into the last query value or corrupt the pathname.
+     */
+    const hashIndex = path.indexOf("#");
+    const beforeHash = hashIndex >= 0 ? path.slice(0, hashIndex) : path;
+    const hrefHash =
+      hashIndex >= 0 && hashIndex < path.length - 1
+        ? path.slice(hashIndex)
+        : "";
+    const [pathname, search] = beforeHash.split("?");
+    const hrefSearch = search ? `?${search}` : "";
 
     if (routeInfo) {
       incomingRouteParams = {
@@ -550,17 +656,29 @@ export const createIonRouter = (
        * for the route info to be incorrect
        * as the tab you want is not the
        * tab you are on.
+       *
+       * If the incoming href carries its own query string, prefer that over
+       * the previously-saved search so query params on the tab button href
+       * are honored when re-selecting the tab.
        */
+      const effectiveSearch = hrefSearch || routeInfo.search;
+      const push = {
+        query: parseQuery(effectiveSearch),
+        ...(hrefHash ? { hash: hrefHash } : {}),
+      };
       if (routeInfo.pathname === pathname) {
-        router.push({
-          path: routeInfo.pathname,
-          query: parseQuery(routeInfo.search),
-        });
+        router.push({ path: routeInfo.pathname, ...push });
       } else {
-        router.push({ path: pathname, query: parseQuery(routeInfo.search) });
+        router.push({ path: pathname, ...push });
       }
     } else {
-      handleNavigate(pathname, "push", "none", undefined, tab);
+      handleNavigate(
+        pathname + hrefSearch + hrefHash,
+        "push",
+        "none",
+        undefined,
+        tab
+      );
     }
   };
 

@@ -9,7 +9,7 @@ import { IonRouterOutlet } from './router-outlet';
 
 const BACK_BUTTON_INPUTS = ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type'];
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export declare interface IonBackButton extends Components.IonBackButton {}
 
 @ProxyCmp({
@@ -19,7 +19,6 @@ export declare interface IonBackButton extends Components.IonBackButton {}
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: BACK_BUTTON_INPUTS,
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonBackButton {
   protected el: HTMLElement;
 

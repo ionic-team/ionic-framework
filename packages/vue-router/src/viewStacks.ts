@@ -34,9 +34,29 @@ export const createViewStacks = (router: Router) => {
      * and will not run route guards that
      * are written in the component.
      */
+    const instance = viewItem.vueComponentRef.value;
     viewItem.matchedRoute.instances = {
-      default: viewItem.vueComponentRef.value,
+      default: instance,
     };
+
+    /**
+     * Run any callbacks passed to `next()` inside a
+     * `beforeRouteEnter` guard now that the component
+     * instance is available. Vue Router's official
+     * `<router-view>` does this in a post-flush watcher;
+     * because IonRouterOutlet manages rendering itself,
+     * the wrapper must invoke them explicitly.
+     */
+    const enterCallbacks = viewItem.matchedRoute.enterCallbacks?.default;
+    if (instance && enterCallbacks && enterCallbacks.length > 0) {
+      /**
+       * Clear before invoking so any synchronous navigation
+       * triggered by a callback can push fresh callbacks onto
+       * the array without being wiped by a post-iteration reset.
+       */
+      viewItem.matchedRoute.enterCallbacks.default = [];
+      enterCallbacks.forEach((cb) => cb(instance));
+    }
   };
 
   const findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
@@ -196,8 +216,15 @@ export const createViewStacks = (router: Router) => {
     if (!viewStack) return;
 
     const startIndex = viewStack.findIndex((v) => v === viewItem);
+    if (startIndex === -1) return;
 
-    for (let i = startIndex + 1; i < startIndex - delta; i++) {
+    // delta from popstate reflects browser history depth, which can exceed
+    // the outlet's view stack when tab switches build up history without
+    // adding new view items. Clamp to the stack length so we never index
+    // past the end of the array.
+    const endIndex = Math.min(viewStack.length, startIndex - delta);
+
+    for (let i = startIndex + 1; i < endIndex; i++) {
       const viewItem = viewStack[i];
       viewItem.mount = false;
       viewItem.ionPageElement = undefined;
@@ -233,8 +260,11 @@ export const createViewStacks = (router: Router) => {
     if (!viewStack) return;
 
     const startIndex = viewStack.findIndex((v) => v === viewItem);
+    if (startIndex === -1) return;
 
-    for (let i = startIndex + 1; i < startIndex + delta; i++) {
+    const endIndex = Math.min(viewStack.length, startIndex + delta);
+
+    for (let i = startIndex + 1; i < endIndex; i++) {
       viewStack[i].mount = true;
     }
   };

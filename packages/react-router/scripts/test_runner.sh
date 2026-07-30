@@ -1,0 +1,168 @@
+#!/bin/bash
+set -x
+
+# Change to script's directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+# ---------------------------------------------------------------------------
+# Flags
+#   --skip-build         Skip all build steps (reuse existing build artifacts)
+#   --playwright-only    Skip Cypress, run only Playwright
+#   --spec <pattern>     Filter Playwright tests by file path pattern
+#   --app <name>         Test app variant (default: reactrouter6-react18)
+#   --serve              Build and start the dev server only (no tests), open browser
+#                        Combine with --skip-build to serve an existing build
+# ---------------------------------------------------------------------------
+SKIP_BUILD=0
+PLAYWRIGHT_ONLY=0
+SERVE_ONLY=0
+PLAYWRIGHT_SPEC=""
+APP_NAME="reactrouter6-react18"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --skip-build)
+      SKIP_BUILD=1
+      shift
+      ;;
+    --playwright-only)
+      PLAYWRIGHT_ONLY=1
+      shift
+      ;;
+    --serve)
+      SERVE_ONLY=1
+      shift
+      ;;
+    --spec)
+      if [[ -z "$2" || "$2" == --* ]]; then
+        echo "Error: --spec requires a value"
+        exit 1
+      fi
+      PLAYWRIGHT_SPEC="$2"
+      shift 2
+      ;;
+    --app)
+      if [[ -z "$2" || "$2" == --* ]]; then
+        echo "Error: --app requires a value"
+        exit 1
+      fi
+      APP_NAME="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown flag: $1"
+      echo "Usage: $0 [--skip-build] [--playwright-only] [--serve] [--spec <pattern>] [--app <name>]"
+      exit 1
+      ;;
+  esac
+done
+
+if [ "$SKIP_BUILD" = "0" ]; then
+  # Inside core
+  echo "Building core..."
+  cd ../../../core
+  npm ci
+  npm run build
+
+  # Inside packages/react
+  echo "Building packages/react..."
+  cd ../packages/react
+  npm ci
+  npm run sync
+  npm run build
+
+  # Inside packages/react-router
+  echo "Building packages/react-router..."
+  cd ../react-router
+  npm ci
+  npm run sync
+  npm run build
+
+  # Inside packages/react-router/test
+  echo "Building test app ($APP_NAME)..."
+  cd ./test
+  rm -rf "build/$APP_NAME" || true
+  sh ./build.sh "$APP_NAME"
+  cd "build/$APP_NAME"
+  echo "Installing dependencies..."
+  npm install --legacy-peer-deps > npm_install.log 2>&1
+  npm run sync
+else
+  echo "Skipping build (--skip-build)."
+  cd "../test/build/$APP_NAME"
+fi
+
+echo "Cleaning up port 3000..."
+lsof -ti:3000 | xargs kill -9 || true
+
+if [ "$SERVE_ONLY" = "1" ]; then
+  echo "Starting server for manual testing..."
+  echo "Press Ctrl+C to stop."
+
+  # Start server in background, wait for it, then open browser
+  npm start > server.log 2>&1 &
+  SERVER_PID=$!
+  trap "kill $SERVER_PID 2>/dev/null" EXIT
+
+  for i in $(seq 1 60); do
+    if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 2>/dev/null | grep -q "200"; then
+      echo "Server is ready at http://localhost:3000"
+      open "http://localhost:3000" 2>/dev/null || true
+      break
+    fi
+    if [ "$i" -eq 60 ]; then
+      echo "Server did not start within 60s."
+      cat server.log
+      exit 1
+    fi
+    sleep 1
+  done
+
+  # Keep running until Ctrl+C
+  wait $SERVER_PID
+  exit $?
+fi
+
+# Install Playwright browsers if not already present
+npx playwright install chromium 2>/dev/null || true
+
+echo "Starting server..."
+# Start server in background and save PID
+npm start > server.log 2>&1 &
+SERVER_PID=$!
+
+# Ensure server is killed on script exit
+trap "kill $SERVER_PID 2>/dev/null" EXIT
+
+echo "Waiting for server to start..."
+# Poll until the server responds (up to 60s)
+for i in $(seq 1 60); do
+  if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 2>/dev/null | grep -q "200"; then
+    echo "Server is healthy."
+    break
+  fi
+  if [ "$i" -eq 60 ]; then
+    echo "Server did not start within 60s. Exiting."
+    cat server.log
+    exit 1
+  fi
+  sleep 1
+done
+
+if [ "$PLAYWRIGHT_ONLY" = "0" ]; then
+  echo "Running Cypress tests..."
+  npm run cypress || CYPRESS_FAILED=1
+fi
+
+echo "Running Playwright tests..."
+if [ -n "$PLAYWRIGHT_SPEC" ]; then
+  npx playwright test --retries=2 "$PLAYWRIGHT_SPEC" || PLAYWRIGHT_FAILED=1
+else
+  npx playwright test --retries=2 || PLAYWRIGHT_FAILED=1
+fi
+
+if [ "${CYPRESS_FAILED:-0}" = "1" ] || [ "${PLAYWRIGHT_FAILED:-0}" = "1" ]; then
+  echo "One or more test suites failed."
+  exit 1
+fi
