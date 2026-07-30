@@ -817,11 +817,7 @@ export class Input implements ComponentInterface {
    * otherwise, two clicks will be triggered.
    */
   private onLabelClick = (ev: MouseEvent) => {
-    // Only stop propagation if the click was directly on the label
-    // and not on the input or other child elements
-    if (ev.target === ev.currentTarget) {
-      ev.stopPropagation();
-    }
+    ev.stopPropagation();
   };
 
   /**
