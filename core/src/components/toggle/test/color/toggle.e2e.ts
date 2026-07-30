@@ -28,7 +28,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should apply color to the focus indicator when checked', async ({ page }) => {
-      // `ion-app` is required so `startFocusVisible` applies `ion-focused` on keyboard focus.
       await page.setContent(
         `
         <style>

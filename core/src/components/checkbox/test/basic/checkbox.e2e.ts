@@ -293,7 +293,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: focus visual'), () => {
     test('should render focus indicator when unchecked', async ({ page }) => {
-      // `ion-app` is required so `startFocusVisible` applies `ion-focused` on keyboard focus.
       await page.setContent(
         `
         <style>

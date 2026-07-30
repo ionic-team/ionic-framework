@@ -105,23 +105,70 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: focus in item'), () => {
-    test('should render focus indicator in an item', async ({ page, pageUtils }) => {
+    test('should render focus indicator in an item', async ({ page }) => {
       await page.setContent(
         `
-        <ion-item class="ion-focused">
-          <ion-radio-group>
-            <ion-radio value="a">Unchecked</ion-radio>
-          </ion-radio-group>
-        </ion-item>
+        <ion-app>
+          <ion-item>
+            <ion-radio-group>
+              <ion-radio value="a">Unchecked</ion-radio>
+            </ion-radio-group>
+          </ion-item>
+        </ion-app>
       `,
         config
       );
 
-      await pageUtils.pressKeys('Tab');
-
+      const radio = page.locator('ion-radio');
       const item = page.locator('ion-item');
 
+      await applyKeyboardFocus(page, radio, item);
+
       await expect(item).toHaveScreenshot(screenshot(`radio-in-item-focus`));
+    });
+
+    test('should render focus indicator for a checked radio in an item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-radio-group value="a">
+              <ion-radio value="a">Checked</ion-radio>
+            </ion-radio-group>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      const item = page.locator('ion-item');
+
+      await applyKeyboardFocus(page, radio, item);
+
+      await expect(item).toHaveScreenshot(screenshot(`radio-checked-in-item-focus`));
+    });
+
+    test('should render focus indicator for a radio in a clickable item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item button>
+            <ion-radio-group>
+              <ion-radio value="a">Unchecked</ion-radio>
+            </ion-radio-group>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      const item = page.locator('ion-item');
+
+      await applyKeyboardFocus(page, radio);
+
+      await expect(item).toHaveScreenshot(screenshot(`radio-in-clickable-item-focus`));
     });
 
     test('should render focus indicator for a radio in a multi-input item', async ({ page }) => {
