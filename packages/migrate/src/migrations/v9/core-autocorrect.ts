@@ -5,6 +5,7 @@ import type { MigrationContext } from '../../context.js';
 import type { Finding, Migration } from '../../types.js';
 import { findOpeningTags, lineAt } from '../../ast/markup.js';
 import { detectFrameworks } from '../../detect.js';
+import { V9_DOCS } from './docs.js';
 
 /**
  * `autocorrect` on `ion-input`/`ion-searchbar` is now a boolean defaulting to
@@ -40,15 +41,33 @@ export const DETAIL = 'remove autocorrect="off" (v9 boolean: "off" now enables a
 export const ON_DETAIL = 'switch autocorrect="on" to the boolean binding (v9 autocorrect is a boolean)';
 
 /**
+ * The guide documents this break separately per component, so link the section
+ * for the tag actually found. A searchbar finding pointed at the input section
+ * reads as a false positive, and dismissing it leaves autocorrect inverted.
+ */
+export function autocorrectDocsUrl(tagName: string): string {
+  return `${V9_DOCS}#${tagName.toLowerCase().includes('searchbar') ? 'searchbar' : 'input'}`;
+}
+
+/** An `autocorrect` attribute on a JSX Ionic input, with how to describe it. */
+interface AutocorrectAttr {
+  attr: JsxAttribute;
+  value: 'on' | 'off';
+  /** `IonInput`/`IonSearchbar`, which picks the docs anchor. */
+  tagName: string;
+}
+
+/**
  * `<IonInput>`/`<IonSearchbar>` `autocorrect` attributes with a literal
  * `"on"`/`"off"` value, across the loaded TS sources.
  */
-function jsxAutocorrectAttrs(ctx: MigrationContext): { attr: JsxAttribute; value: 'on' | 'off' }[] {
-  const found: { attr: JsxAttribute; value: 'on' | 'off' }[] = [];
+function jsxAutocorrectAttrs(ctx: MigrationContext): AutocorrectAttr[] {
+  const found: AutocorrectAttr[] = [];
   for (const file of ctx.project.getSourceFiles()) {
     for (const kind of [SyntaxKind.JsxOpeningElement, SyntaxKind.JsxSelfClosingElement] as const) {
       for (const el of file.getDescendantsOfKind(kind)) {
-        if (!JSX_TAGS.has(el.getTagNameNode().getText())) continue;
+        const tagName = el.getTagNameNode().getText();
+        if (!JSX_TAGS.has(tagName)) continue;
         // Only this element's own attributes. `getDescendantsOfKind` would also
         // return attributes on JSX nested inside an attribute expression.
         for (const attr of el.getAttributes()) {
@@ -58,7 +77,7 @@ function jsxAutocorrectAttrs(ctx: MigrationContext): { attr: JsxAttribute; value
           const init = jsxAttr.getInitializer();
           if (init && Node.isStringLiteral(init)) {
             const value = init.getLiteralValue();
-            if (value === 'on' || value === 'off') found.push({ attr: jsxAttr, value });
+            if (value === 'on' || value === 'off') found.push({ attr: jsxAttr, value, tagName });
           }
         }
       }
@@ -86,19 +105,21 @@ export const coreAutocorrect: Migration = {
       // or Angular templates (`.html` in an Angular app).
       const convertsOn = filePath.endsWith('.vue') || isAngular;
       for (const tag of findOpeningTags(text, TEMPLATE_TAGS)) {
+        const docsUrl = autocorrectDocsUrl(tag.name);
         if (OFF_ATTR.test(tag.text)) {
-          findings.push({ filePath, line: lineAt(text, tag.start), detail: DETAIL });
+          findings.push({ filePath, line: lineAt(text, tag.start), detail: DETAIL, docsUrl });
         } else if (convertsOn && ON_ATTR.test(tag.text)) {
-          findings.push({ filePath, line: lineAt(text, tag.start), detail: ON_DETAIL });
+          findings.push({ filePath, line: lineAt(text, tag.start), detail: ON_DETAIL, docsUrl });
         }
       }
     }
 
-    for (const { attr, value } of jsxAutocorrectAttrs(ctx)) {
+    for (const { attr, value, tagName } of jsxAutocorrectAttrs(ctx)) {
       findings.push({
         filePath: ctx.relative(attr.getSourceFile().getFilePath()),
         line: attr.getStartLineNumber(),
         detail: value === 'off' ? DETAIL : ON_DETAIL,
+        docsUrl: autocorrectDocsUrl(tagName),
       });
     }
 

@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { createInMemoryContext } from '../src/context.js';
 import { coreAutocorrectManual as migration } from '../src/migrations/v9/core-autocorrect-manual.js';
 import { DETAIL, ON_DETAIL } from '../src/migrations/v9/core-autocorrect.js';
+import { V9_DOCS } from '../src/migrations/v9/docs.js';
 
 describe('core-autocorrect-manual (report-only)', () => {
   it('reports an ion-input in an Angular inline template', () => {
@@ -18,6 +19,17 @@ describe('core-autocorrect-manual (report-only)', () => {
     expect(findings).toHaveLength(1);
     expect(findings[0].filePath).toBe('home.page.ts');
     expect(findings[0].line).toBe(2);
+  });
+
+  it('anchors a searchbar finding at the searchbar section, not the input one', () => {
+    // The Pascal spelling specifically: this path only reaches `#searchbar`
+    // because `findOpeningTags` lower-cases tag names. If that stopped, the
+    // finding would fall through to `#input` silently.
+    const ctx = createInMemoryContext({
+      'App.jsx': `const a = <IonSearchbar autocorrect="off" />;\n`,
+    });
+
+    expect(migration.detect(ctx).map((f) => f.docsUrl)).toEqual([`${V9_DOCS}#searchbar`]);
   });
 
   it('reports a React <IonInput> in a .jsx file (never loaded into ts-morph)', () => {

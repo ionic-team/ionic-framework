@@ -5,7 +5,7 @@ import { IONIC_V9_VERSION } from '../src/versions.js';
 import { angularDeps } from '../src/migrations/v9/angular-deps.js';
 import { reactDeps } from '../src/migrations/v9/react-deps.js';
 import { reactRouter6Code } from '../src/migrations/v9/react-router-6-code.js';
-import { reactRouter6Routes, V9_DOCS } from '../src/migrations/v9/react-router-6-routes.js';
+import { V9_DOCS } from '../src/migrations/v9/docs.js';
 import { vueDeps } from '../src/migrations/v9/vue-deps.js';
 import { vueRouterNextGuard } from '../src/migrations/v9/vue-router-next-guard.js';
 import { coreLegacyPicker } from '../src/migrations/v9/core-legacy-picker.js';
@@ -233,10 +233,9 @@ describe('core report-only migrations', () => {
   });
 });
 
-describe('react router docs anchors', () => {
-  // These anchors are headings in ionic-docs `docs/updating/9-0.md`. A finding
-  // that keeps the parent `#react-router` link makes the reader scan the whole
-  // section, so pin the mapping here to catch a silent regression to it.
+describe('react-router-6-code (docs anchors)', () => {
+  // These anchors are headings in ionic-docs `docs/updating/9-0.md`. Pinned here
+  // to catch a silent regression back to the parent `#react-router` link.
   it('points each reported change at its own subsection', () => {
     const ctx = createInMemoryContext({
       'App.tsx':
@@ -257,22 +256,10 @@ describe('react router docs anchors', () => {
     expect(anchorFor('IonRedirect removed')).toBe(`${V9_DOCS}#ionredirect-removed`);
     expect(anchorFor('history prop removed')).toBe(`${V9_DOCS}#custom-history-prop-removed`);
     expect(anchorFor('regex path constraints')).toBe(`${V9_DOCS}#path-regex-constraints-removed`);
-    // `render` and `component` are both route-definition changes, but the docs
-    // give `render` its own heading, so they don't share an anchor.
+    // Both are route-definition changes, but the docs give `render` its own
+    // heading, so they don't share an anchor.
     expect(anchorFor('Route "render" prop removed')).toBe(`${V9_DOCS}#render-prop-removed`);
     expect(anchorFor('Route "component" prop removed')).toBe(`${V9_DOCS}#route-definition-changes`);
-  });
-
-  it('splits the auto-fixable route changes by subsection too', () => {
-    const ctx = createInMemoryContext({
-      'App.tsx': `export const App = () => <Route path="/" component={Home} exact />;\n`,
-    });
-
-    const anchors = reactRouter6Routes.detect(ctx).map((f) => f.docsUrl);
-
-    expect(new Set(anchors)).toEqual(
-      new Set([`${V9_DOCS}#exact-prop-removed`, `${V9_DOCS}#route-definition-changes`])
-    );
   });
 });
 

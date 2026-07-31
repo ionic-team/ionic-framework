@@ -1,6 +1,6 @@
 import type { Finding, Migration } from '../../types.js';
 import { findOpeningTags, lineAt } from '../../ast/markup.js';
-import { DETAIL, OFF_ATTR, ON_ATTR, ON_DETAIL } from './core-autocorrect.js';
+import { autocorrectDocsUrl, DETAIL, OFF_ATTR, ON_ATTR, ON_DETAIL } from './core-autocorrect.js';
 
 /**
  * Report-only companion to `core-autocorrect`, for the two surfaces that can't
@@ -38,10 +38,11 @@ export const coreAutocorrectManual: Migration = {
       const text = ctx.readFile(filePath);
       if (text === undefined) continue;
       for (const tag of findOpeningTags(text, REPORT_TAGS)) {
+        const docsUrl = autocorrectDocsUrl(tag.name);
         if (OFF_ATTR.test(tag.text)) {
-          findings.push({ filePath, line: lineAt(text, tag.start), detail: DETAIL });
+          findings.push({ filePath, line: lineAt(text, tag.start), detail: DETAIL, docsUrl });
         } else if (ON_ATTR.test(tag.text)) {
-          findings.push({ filePath, line: lineAt(text, tag.start), detail: ON_DETAIL });
+          findings.push({ filePath, line: lineAt(text, tag.start), detail: ON_DETAIL, docsUrl });
         }
       }
     }

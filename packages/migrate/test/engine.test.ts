@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { createInMemoryContext } from '../src/context.js';
 import { detectFrameworks, parseMajor } from '../src/detect.js';
 import { IONIC_V9_VERSION } from '../src/versions.js';
-import { latestKnownMajor, selectMigrations } from '../src/registry.js';
+import { resolveTarget, selectMigrations } from '../src/registry.js';
 import { allMigrations } from '../src/migrations/index.js';
 import { run } from '../src/runner.js';
 import { buildReport } from '../src/report.js';
@@ -120,21 +120,118 @@ describe('selectMigrations', () => {
   });
 });
 
-describe('latestKnownMajor', () => {
-  it('reports the highest major any registered migration targets', () => {
-    const all = [
+describe('the shipped registry', () => {
+  it('reaches v9 and no further, so a v9 project has nothing to apply', () => {
+    // Tripwire: this fails the moment a migration targets v10.
+    expect(resolveTarget(allMigrations, 9)).toEqual({
+      kind: 'nothing-to-do',
+      reason: 'at-ceiling',
+      fromMajor: 9,
+      latestMajor: 9,
+    });
+  });
+
+  it('holds the strict-hop invariant that resolveTarget depends on', () => {
+    // `resolveTarget`'s ceiling gate relies on this, and `fromMajor`/`toMajor` are
+    // bare numbers, so nothing else enforces it.
+    expect(allMigrations.every((m) => m.toMajor > m.fromMajor)).toBe(true);
+  });
+});
+
+describe('resolveTarget', () => {
+  const all = [fakeMigration({ id: 'a', fromMajor: 8, toMajor: 9 })];
+
+  it('defaults to one major up when no target is given', () => {
+    expect(resolveTarget(all, 8)).toEqual({ kind: 'run', toMajor: 9 });
+  });
+
+  it('has nothing to do against an empty registry, which reaches no major at all', () => {
+    expect(resolveTarget([], 8)).toEqual({
+      kind: 'nothing-to-do',
+      reason: 'at-ceiling',
+      fromMajor: 8,
+      latestMajor: 0,
+    });
+  });
+
+  it('honors an explicit target the tool has a path to', () => {
+    expect(resolveTarget(all, 8, 9)).toEqual({ kind: 'run', toMajor: 9 });
+  });
+
+  it('clamps a target above the newest known major instead of skipping the run', () => {
+    // Why clamp rather than refuse: see resolveTarget in registry.ts.
+    expect(resolveTarget(all, 8, 10)).toEqual({ kind: 'run', toMajor: 9, clampedFrom: 10 });
+  });
+
+  it('has nothing to do when the source is already at the newest known major', () => {
+    expect(resolveTarget(all, 9)).toEqual({
+      kind: 'nothing-to-do',
+      reason: 'at-ceiling',
+      fromMajor: 9,
+      latestMajor: 9,
+    });
+  });
+
+  it('has nothing to do for a target equal to the source at the ceiling, not an error', () => {
+    // `--to 9` on an already-migrated v9 app is a re-run, not a typo, so it
+    // shouldn't fail CI.
+    expect(resolveTarget(all, 9, 9)).toEqual({
+      kind: 'nothing-to-do',
+      reason: 'at-ceiling',
+      fromMajor: 9,
+      latestMajor: 9,
+    });
+  });
+
+  it('rejects a target equal to the source when work exists above it', () => {
+    // Unlike the case above, the ceiling branch doesn't fire on v8, so an empty
+    // [8,8] range would otherwise run and print "0 migration(s)".
+    expect(resolveTarget(all, 8, 8)).toEqual({
+      kind: 'invalid',
+      reason: 'not-above-source',
+      requestedTo: 8,
+      fromMajor: 8,
+    });
+  });
+
+  it('rejects a target below the source major', () => {
+    expect(resolveTarget(all, 9, 8)).toEqual({
+      kind: 'invalid',
+      reason: 'below-source',
+      requestedTo: 8,
+      fromMajor: 9,
+    });
+  });
+
+  // The shipped registry only hops v8 -> v9, so nothing else covers these.
+  describe('with a registry that spans more than one hop', () => {
+    const multi = [
       fakeMigration({ id: 'a', fromMajor: 8, toMajor: 9 }),
       fakeMigration({ id: 'b', fromMajor: 9, toMajor: 10 }),
     ];
-    expect(latestKnownMajor(all)).toBe(10);
-  });
 
-  it('is 0 when nothing is registered, so no target is reachable', () => {
-    expect(latestKnownMajor([])).toBe(0);
-  });
+    it('still defaults to a single hop rather than the furthest reachable major', () => {
+      expect(resolveTarget(multi, 8)).toEqual({ kind: 'run', toMajor: 9 });
+    });
 
-  it('matches the shipped registry, which only migrates to v9 today', () => {
-    expect(latestKnownMajor(allMigrations)).toBe(9);
+    it('honors an explicit multi-hop target', () => {
+      expect(resolveTarget(multi, 8, 10)).toEqual({ kind: 'run', toMajor: 10 });
+    });
+
+    it('clamps only down to the furthest reachable major, not to one hop', () => {
+      expect(resolveTarget(multi, 8, 12)).toEqual({ kind: 'run', toMajor: 10, clampedFrom: 12 });
+    });
+
+    it('rejects a target equal to the source even when a higher major is reachable', () => {
+      // The same `(9, 9)` that's an at-ceiling no-op today. Once v10 is
+      // reachable it's this error instead, by the choice noted in registry.ts.
+      expect(resolveTarget(multi, 9, 9)).toEqual({
+        kind: 'invalid',
+        reason: 'not-above-source',
+        requestedTo: 9,
+        fromMajor: 9,
+      });
+    });
   });
 });
 

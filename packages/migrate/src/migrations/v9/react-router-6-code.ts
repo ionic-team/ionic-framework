@@ -2,24 +2,13 @@ import { Node, SyntaxKind } from 'ts-morph';
 import type { JsxAttribute } from 'ts-morph';
 
 import type { Finding, Migration } from '../../types.js';
-import { isAutoFixableComponent, ROUTE_TAGS, V9_DOCS } from './react-router-6-routes.js';
+import { isAutoFixableComponent, ROUTE_TAGS } from './react-router-6-routes.js';
+import { V9_DOCS } from './docs.js';
 
 /**
- * Reports the React Router v5 -> v6 changes that need semantic rework: the
- * removed react-router imports (`Redirect`, `useHistory`, `RouteComponentProps`),
- * `IonRedirect` from `@ionic/react`, the removed `render`/`component` route
- * props, the removed `history` prop on the `IonReact*Router` components, and
- * regex path constraints. The deterministic `exact`/bare-`component={X}` rewrites
- * are auto-fixed by `react-router-6-routes`, so a `component` prop it can't
- * auto-fix (a non-identifier initializer) is reported here instead of dropped.
- *
- * See https://ionicframework.com/docs/updating/9-0#react-router
- */
-/**
  * A reported change: what to tell the developer, and the docs subsection that
- * explains it. This migration spans several of the React Router changes, so each
- * finding carries its own anchor instead of all of them pointing at the parent
- * "React Router" section.
+ * explains it. This migration spans several React Router changes, so each finding
+ * carries its own anchor instead of the parent section.
  */
 interface ReportedChange {
   detail: string;
@@ -78,6 +67,17 @@ function stringAttrValue(attr: JsxAttribute): string | undefined {
   return undefined;
 }
 
+/**
+ * Reports the React Router v5 -> v6 changes that need semantic rework: the
+ * removed react-router imports (`Redirect`, `useHistory`, `RouteComponentProps`),
+ * `IonRedirect` from `@ionic/react`, the removed `render`/`component` route
+ * props, the removed `history` prop on the `IonReact*Router` components, and
+ * regex path constraints. The deterministic `exact`/bare-`component={X}` rewrites
+ * are auto-fixed by `react-router-6-routes`, so a `component` prop it can't
+ * auto-fix (a non-identifier initializer) is reported here instead of dropped.
+ *
+ * See https://ionicframework.com/docs/updating/9-0#react-router
+ */
 export const reactRouter6Code: Migration = {
   id: 'react-router-6-code',
   framework: 'react',

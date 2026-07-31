@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { createInMemoryContext } from '../src/context.js';
 import { reactRouter6Routes as migration } from '../src/migrations/v9/react-router-6-routes.js';
+import { V9_DOCS } from '../src/migrations/v9/docs.js';
 
 function withTsx(text: string, name = 'App.tsx') {
   const ctx = createInMemoryContext({ [name]: text });
@@ -49,6 +50,18 @@ describe('react-router-6-routes', () => {
 
     expect(details).toContain('component={Home} -> element={<Home />}');
     expect(details).toContain('remove `exact` (v6 matches exactly by default)');
+  });
+
+  it('anchors each attribute change at its own docs subsection', () => {
+    // Both are route changes, but the guide gives `exact` its own heading, so
+    // they must not collapse to one link.
+    const { ctx } = withTsx(`const a = <Route path="/" component={Home} exact />;\n`);
+
+    const anchors = new Set(migration.detect(ctx).map((f) => f.docsUrl));
+
+    expect(anchors).toEqual(
+      new Set([`${V9_DOCS}#exact-prop-removed`, `${V9_DOCS}#route-definition-changes`])
+    );
   });
 
   it('fixes a nested Route once, without walking it via the outer Route attributes', () => {

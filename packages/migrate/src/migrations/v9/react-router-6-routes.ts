@@ -3,6 +3,7 @@ import type { JsxAttribute, JsxExpression, JsxOpeningElement, JsxSelfClosingElem
 
 import type { MigrationContext } from '../../context.js';
 import type { Migration } from '../../types.js';
+import { V9_DOCS } from './docs.js';
 
 /** The route element tags handled by both react-router migrations. */
 export const ROUTE_TAGS = new Set(['Route', 'IonRoute']);
@@ -38,18 +39,10 @@ export function isAutoFixableComponent(attr: JsxAttribute): boolean {
   return simpleComponentName(attr) !== undefined;
 }
 
-/**
- * Base URL of the v9 upgrade guide. The React Router migrations each cover
- * several subsections of it, so they build anchors from this rather than
- * carrying one section-level link like the single-change migrations do.
- */
-export const V9_DOCS = 'https://ionicframework.com/docs/updating/9-0';
-
 /** A route attribute this migration can auto-fix, with how to describe/apply it. */
 interface RouteAction {
   attr: JsxAttribute;
   detail: string;
-  /** Docs subsection for this specific attribute change. */
   docsUrl: string;
   apply(): void;
 }

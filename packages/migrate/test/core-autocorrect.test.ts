@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { createInMemoryContext } from '../src/context.js';
 import { coreAutocorrect as migration, ON_DETAIL } from '../src/migrations/v9/core-autocorrect.js';
+import { V9_DOCS } from '../src/migrations/v9/docs.js';
 
 describe('core-autocorrect', () => {
   it('removes autocorrect="off" from an ion-input in an html template', () => {
@@ -32,6 +33,21 @@ describe('core-autocorrect', () => {
     );
   });
 
+  it('links each finding to the section for its own component', () => {
+    const ctx = createInMemoryContext({
+      'page.html': `<ion-input autocorrect="off"></ion-input>\n<ion-searchbar autocorrect="off"></ion-searchbar>\n`,
+      'App.tsx': `const a = <IonSearchbar autocorrect="off" />;\n`,
+    });
+
+    const anchors = migration.detect(ctx).map((f) => `${f.filePath}:${f.line} ${f.docsUrl}`);
+
+    expect(anchors).toEqual([
+      `page.html:1 ${V9_DOCS}#input`,
+      `page.html:2 ${V9_DOCS}#searchbar`,
+      `App.tsx:1 ${V9_DOCS}#searchbar`,
+    ]);
+  });
+
   it('leaves a native <input autocorrect="off"> untouched', () => {
     const input = `<input autocorrect="off" />\n`;
     const ctx = createInMemoryContext({ 'index.html': input });
@@ -60,7 +76,7 @@ describe('core-autocorrect', () => {
     });
 
     expect(migration.detect(ctx)).toEqual([
-      { filePath: 'home.page.html', line: 1, detail: ON_DETAIL },
+      { filePath: 'home.page.html', line: 1, detail: ON_DETAIL, docsUrl: `${V9_DOCS}#input` },
     ]);
     migration.fix!(ctx);
 

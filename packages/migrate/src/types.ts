@@ -12,11 +12,9 @@ export interface Finding {
   /** Human-readable description of what was found at this location. */
   detail: string;
   /**
-   * Docs section for this finding specifically. Defaults to
-   * {@link Migration.docsUrl}, which is right for a migration whose findings are
-   * all the same breaking change. Set it where one migration spans several
-   * (the React Router ones), so the report links the subsection that applies
-   * instead of making the reader hunt through the whole section.
+   * Docs section for this finding specifically, defaulting to
+   * {@link Migration.docsUrl}. Set it where one migration spans several breaking
+   * changes, so the report links the subsection that applies.
    */
   docsUrl?: string;
 }

@@ -52,7 +52,7 @@ describe('buildReport', () => {
     };
 
     expect(buildReport(result)).toContain(
-      'review https://ionicframework.com/docs/updating/9-0#angular-standalone-imports'
+      'docs https://ionicframework.com/docs/updating/9-0#angular-standalone-imports'
     );
   });
 
@@ -73,16 +73,14 @@ describe('buildReport', () => {
 
     const out = buildReport(result);
 
-    // Each finding sits directly above the subsection that explains it, rather
-    // than all of them sharing the migration's section-level link.
     expect(out).toBe(
       [
         'Applied 1 automatic migration(s):',
         '  [fixed] react-router-6-routes (2 change(s))',
         '            src/app.ts:7 - remove `exact`',
-        '            review https://docs.test/#exact-prop-removed',
+        '            docs https://docs.test/#exact-prop-removed',
         '            src/app.ts:7 - component={Home} -> element={<Home />}',
-        '            review https://docs.test/#route-definition-changes',
+        '            docs https://docs.test/#route-definition-changes',
       ].join('\n')
     );
   });
@@ -137,5 +135,25 @@ describe('buildReport', () => {
     expect(out).toContain('[todo]  core-ion-img (1 location(s))');
     expect(out).toContain('src/app.ts:7 - replace ion-img with a native img');
     expect(out).toContain('review https://ionicframework.com/docs/updating/9-0#core-ion-img');
+  });
+
+  it('uses a different link label per bucket, the only plain-text cue when piped', () => {
+    const result: RunResult = {
+      entries: [
+        { migration: migration('core-autocorrect'), findings: [finding('remove autocorrect="off"')], applied: true },
+        {
+          migration: migration('core-ion-img', { auto: false }),
+          findings: [finding('replace ion-img with a native img')],
+          applied: false,
+        },
+      ],
+    };
+
+    const out = buildReport(result);
+
+    expect(out).toContain('docs https://ionicframework.com/docs/updating/9-0#core-autocorrect');
+    expect(out).toContain('review https://ionicframework.com/docs/updating/9-0#core-ion-img');
+    expect(out.match(/ docs /g)).toHaveLength(1);
+    expect(out.match(/ review /g)).toHaveLength(1);
   });
 });
