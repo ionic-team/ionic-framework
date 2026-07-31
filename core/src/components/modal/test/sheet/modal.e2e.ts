@@ -355,14 +355,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 
   test.describe(title('sheet modal: drag events'), () => {
-    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#drag-events');
       await ionModalDidPresent.next();
-
+    });
+    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }) => {
       const ionDragStart = await page.spyOnEvent('ionDragStart');
       const ionDragMove = await page.spyOnEvent('ionDragMove');
       const ionDragEnd = await page.spyOnEvent('ionDragEnd');
@@ -378,7 +379,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(ionDragStart.length).toBe(1);
 
       expect(ionDragMove.length).toBeGreaterThan(0);
-      expect(Object.keys(dragMoveEvent.detail).length).toBe(5);
+      expect(Object.keys(dragMoveEvent.detail).sort()).toEqual([
+        'currentY',
+        'deltaY',
+        'progress',
+        'snapBreakpoint',
+        'velocityY',
+      ]);
 
       expect(ionDragEnd.length).toBe(0);
 
@@ -396,7 +403,51 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(ionDragMove.length).toBeGreaterThan(0);
 
       expect(ionDragEnd.length).toBe(1);
-      expect(Object.keys(dragEndEvent.detail).length).toBe(5);
+      expect(Object.keys(dragEndEvent.detail).sort()).toEqual([
+        'currentY',
+        'deltaY',
+        'isDismissing',
+        'progress',
+        'snapBreakpoint',
+        'velocityY',
+      ]);
+    });
+    test('should report isDismissing as true when the gesture dismisses the modal', async ({ page }) => {
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      const header = page.locator('.modal-sheet ion-header');
+      const headerBox = (await header.boundingBox())!;
+      const viewport = page.viewportSize()!;
+
+      /**
+       * The sheet starts at breakpoint 0.5, so its header sits near the middle
+       * of the viewport and the drag has to stay inside the bottom half.
+       * Dragging as far as the viewport allows moves the sheet well past the
+       * midpoint between breakpoints 0 and 0.25, so it snaps to 0 and dismisses.
+       */
+      const dragByY = viewport.height - (headerBox.y + headerBox.height / 2) - 10;
+
+      await dragElementBy(header, page, 0, dragByY);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.isDismissing).toBe(true);
+
+      await ionModalDidDismiss.next();
+    });
+    test('should report isDismissing as false when the sheet snaps to another breakpoint', async ({ page }) => {
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      const header = page.locator('.modal-sheet ion-header');
+
+      // Dragging this little keeps the sheet above breakpoint 0
+      await dragElementBy(header, page, 0, 50);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.isDismissing).toBe(false);
+      await expect(page.locator('ion-modal')).toBeVisible();
     });
   });
 
