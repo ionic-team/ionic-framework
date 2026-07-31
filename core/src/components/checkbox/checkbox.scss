@@ -1,4 +1,3 @@
-@import "../../themes/ionic.globals";
 @import "./checkbox.vars.scss";
 
 // Checkbox
@@ -119,8 +118,15 @@ input {
   display: none;
 }
 
+// Hide the native focus ring since we draw our own focus indicator.
+:host(:focus) {
+  outline: none;
+}
+
 .native-wrapper {
   display: flex;
+
+  position: relative;
 
   align-items: center;
 }
@@ -150,6 +156,28 @@ input {
   stroke-width: var(--checkmark-width);
 
   opacity: 0;
+}
+
+// Checkbox: Keyboard Focus
+// ---------------------------------------------
+
+:host(.ion-focused) .native-wrapper::after {
+  @include border-radius(50%);
+
+  display: block;
+  position: absolute;
+
+  width: $checkbox-focus-ring-size;
+  height: $checkbox-focus-ring-size;
+
+  background: $checkbox-background-color-focused;
+
+  content: "";
+  opacity: 0.2;
+
+  // Centered with insets because `transform` is physical and breaks in RTL.
+  inset-block-start: calc(50% - #{$checkbox-focus-ring-size} / 2);
+  inset-inline-start: calc(50% - #{$checkbox-focus-ring-size} / 2);
 }
 
 // Checkbox Bottom Content
