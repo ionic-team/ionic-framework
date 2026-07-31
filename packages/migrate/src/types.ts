@@ -11,6 +11,14 @@ export interface Finding {
   line: number;
   /** Human-readable description of what was found at this location. */
   detail: string;
+  /**
+   * Docs section for this finding specifically. Defaults to
+   * {@link Migration.docsUrl}, which is right for a migration whose findings are
+   * all the same breaking change. Set it where one migration spans several
+   * (the React Router ones), so the report links the subsection that applies
+   * instead of making the reader hunt through the whole section.
+   */
+  docsUrl?: string;
 }
 
 /** The framework a migration targets. `core` applies regardless of framework. */

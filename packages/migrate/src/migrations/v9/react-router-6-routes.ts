@@ -38,10 +38,19 @@ export function isAutoFixableComponent(attr: JsxAttribute): boolean {
   return simpleComponentName(attr) !== undefined;
 }
 
+/**
+ * Base URL of the v9 upgrade guide. The React Router migrations each cover
+ * several subsections of it, so they build anchors from this rather than
+ * carrying one section-level link like the single-change migrations do.
+ */
+export const V9_DOCS = 'https://ionicframework.com/docs/updating/9-0';
+
 /** A route attribute this migration can auto-fix, with how to describe/apply it. */
 interface RouteAction {
   attr: JsxAttribute;
   detail: string;
+  /** Docs subsection for this specific attribute change. */
+  docsUrl: string;
   apply(): void;
 }
 
@@ -67,6 +76,7 @@ function routeActions(ctx: MigrationContext): RouteAction[] {
           actions.push({
             attr: jsxAttr,
             detail: 'remove `exact` (v6 matches exactly by default)',
+            docsUrl: `${V9_DOCS}#exact-prop-removed`,
             apply: () => jsxAttr.remove(),
           });
         } else if (name === 'component') {
@@ -75,6 +85,7 @@ function routeActions(ctx: MigrationContext): RouteAction[] {
             actions.push({
               attr: jsxAttr,
               detail: `component={${componentName}} -> element={<${componentName} />}`,
+              docsUrl: `${V9_DOCS}#route-definition-changes`,
               apply: () => jsxAttr.replaceWithText(`element={<${componentName} />}`),
             });
           }
@@ -105,10 +116,11 @@ export const reactRouter6Routes: Migration = {
   docsUrl: 'https://ionicframework.com/docs/updating/9-0#react-router',
 
   detect(ctx) {
-    return routeActions(ctx).map(({ attr, detail }) => ({
+    return routeActions(ctx).map(({ attr, detail, docsUrl }) => ({
       filePath: ctx.relative(attr.getSourceFile().getFilePath()),
       line: attr.getStartLineNumber(),
       detail,
+      docsUrl,
     }));
   },
 

@@ -44,6 +44,71 @@ describe('buildReport', () => {
     expect(out).toContain('src/app.ts:7 - add provideZoneChangeDetection() to preserve Zone.js change detection');
   });
 
+  it('links the docs for auto-fix migrations, not just manual ones', () => {
+    const result: RunResult = {
+      entries: [
+        { migration: migration('angular-standalone-imports'), findings: [finding("'@ionic/angular' -> '@ionic/angular/lazy'")], applied: true },
+      ],
+    };
+
+    expect(buildReport(result)).toContain(
+      'review https://ionicframework.com/docs/updating/9-0#angular-standalone-imports'
+    );
+  });
+
+  it('links a finding to its own docs section when it overrides the migration', () => {
+    // react-router-6-routes shape: one migration, two distinct breaking changes.
+    const result: RunResult = {
+      entries: [
+        {
+          migration: migration('react-router-6-routes'),
+          findings: [
+            { ...finding('remove `exact`'), docsUrl: 'https://docs.test/#exact-prop-removed' },
+            { ...finding('component={Home} -> element={<Home />}'), docsUrl: 'https://docs.test/#route-definition-changes' },
+          ],
+          applied: true,
+        },
+      ],
+    };
+
+    const out = buildReport(result);
+
+    // Each finding sits directly above the subsection that explains it, rather
+    // than all of them sharing the migration's section-level link.
+    expect(out).toBe(
+      [
+        'Applied 1 automatic migration(s):',
+        '  [fixed] react-router-6-routes (2 change(s))',
+        '            src/app.ts:7 - remove `exact`',
+        '            review https://docs.test/#exact-prop-removed',
+        '            src/app.ts:7 - component={Home} -> element={<Home />}',
+        '            review https://docs.test/#route-definition-changes',
+      ].join('\n')
+    );
+  });
+
+  it('groups findings that share a docs section under one link', () => {
+    const shared = 'https://docs.test/#path-regex-constraints-removed';
+    const result: RunResult = {
+      entries: [
+        {
+          migration: migration('react-router-6-code', { auto: false }),
+          findings: [
+            { ...finding('regex path constraints removed'), docsUrl: shared },
+            { ...finding('regex path constraints removed'), line: 9, docsUrl: shared },
+          ],
+          applied: false,
+        },
+      ],
+    };
+
+    const out = buildReport(result);
+
+    expect(out.match(/review /g)).toHaveLength(1);
+    expect(out).toContain('src/app.ts:7 - regex path constraints removed');
+    expect(out).toContain('src/app.ts:9 - regex path constraints removed');
+  });
+
   it('marks a dry run as would-fix rather than fixed', () => {
     const result: RunResult = {
       entries: [{ migration: migration('core-autocorrect'), findings: [finding('remove autocorrect="off"')], applied: false }],
@@ -71,6 +136,6 @@ describe('buildReport', () => {
     expect(out).toContain('1 migration(s) need manual review:');
     expect(out).toContain('[todo]  core-ion-img (1 location(s))');
     expect(out).toContain('src/app.ts:7 - replace ion-img with a native img');
-    expect(out).toContain('see https://ionicframework.com/docs/updating/9-0#core-ion-img');
+    expect(out).toContain('review https://ionicframework.com/docs/updating/9-0#core-ion-img');
   });
 });

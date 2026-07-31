@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 
 import { createDiskContext } from './context.js';
 import { detectFrameworks } from './detect.js';
-import { selectMigrations } from './registry.js';
+import { latestKnownMajor, selectMigrations } from './registry.js';
 import { run } from './runner.js';
 import { buildReport } from './report.js';
 import { formatTouched, prettierFormatter } from './format.js';
@@ -128,6 +128,28 @@ function main(): void {
 
   const fromMajor = args.from ?? detectedMajor;
   const toMajor = args.to ?? fromMajor + 1;
+  const label = detected.map((d) => `${d.framework}@${d.major}`).join(', ');
+
+  if (args.to !== undefined && args.to <= fromMajor) {
+    console.error(`Invalid value for --to: ${args.to} must be greater than the source major (v${fromMajor}).`);
+    process.exit(1);
+  }
+
+  // The default target is one major up from what is installed, which overshoots
+  // once a project is on the newest major this build knows about (the common
+  // case being a re-run right after a successful migration). Say that plainly
+  // instead of reporting a v9 -> v10 run with zero migrations, which reads as
+  // though v10 exists and the app needs nothing for it.
+  const latestMajor = latestKnownMajor(allMigrations);
+  if (toMajor > latestMajor) {
+    console.log(
+      `Ionic migrate: ${label}\n\n` +
+        `Nothing to do. This version of the tool migrates up to v${latestMajor}, so there is no ` +
+        `v${fromMajor} -> v${toMajor} path.`
+    );
+    return;
+  }
+
   const frameworks = detected.map((d) => d.framework);
   const migrations = selectMigrations(allMigrations, {
     fromMajor,
@@ -136,7 +158,6 @@ function main(): void {
     includeExperimental: args.experimental,
   });
 
-  const label = detected.map((d) => `${d.framework}@${d.major}`).join(', ');
   console.log(
     bold(`Ionic migrate: ${label}  (v${fromMajor} -> v${toMajor}, ${migrations.length} migration(s))`) + '\n'
   );

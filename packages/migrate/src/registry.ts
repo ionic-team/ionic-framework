@@ -12,6 +12,16 @@ export interface SelectOptions {
 }
 
 /**
+ * The newest major any registered migration targets, i.e. the highest version
+ * this build of the tool can migrate to. Callers use it to reject a target the
+ * tool has no path to, instead of reporting an empty run that reads as "your
+ * app is clean" for a major that does not exist yet.
+ */
+export function latestKnownMajor(all: Migration[]): number {
+  return all.reduce((max, m) => Math.max(max, m.toMajor), 0);
+}
+
+/**
  * Choose the migrations that apply to a project, in the order they should run.
  *
  * A migration is selected when its version hop sits within the requested range

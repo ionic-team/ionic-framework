@@ -1,5 +1,45 @@
-import type { RunResult } from './runner.js';
-import { bold, cyan, dim, green, yellow } from './style.js';
+import type { RunEntry, RunResult } from './runner.js';
+import type { Finding } from './types.js';
+import { bold, brightBlue, cyan, dim, green, yellow } from './style.js';
+
+/** Findings that share a docs section, in the order the sections first appear. */
+interface DocsGroup {
+  docsUrl: string;
+  findings: Finding[];
+}
+
+/**
+ * Group an entry's findings by the docs section each one points at. Most
+ * migrations are a single breaking change and collapse to one group, which reads
+ * exactly as before: every finding, then one link. The React Router migrations
+ * cover several changes at once, so grouping keeps each finding next to the
+ * subsection that explains it rather than one section-level link for all of them.
+ */
+function groupByDocs(entry: RunEntry): DocsGroup[] {
+  const groups = new Map<string, Finding[]>();
+  for (const finding of entry.findings) {
+    const url = finding.docsUrl ?? entry.migration.docsUrl;
+    const existing = groups.get(url);
+    if (existing) {
+      existing.push(finding);
+    } else {
+      groups.set(url, [finding]);
+    }
+  }
+  return [...groups].map(([docsUrl, findings]) => ({ docsUrl, findings }));
+}
+
+/** Render one entry's findings, grouped by docs section with a link per group. */
+function findingLines(entry: RunEntry): string[] {
+  const lines: string[] = [];
+  for (const group of groupByDocs(entry)) {
+    for (const finding of group.findings) {
+      lines.push(`            ${dim(`${finding.filePath}:${finding.line}`)} - ${finding.detail}`);
+    }
+    lines.push(`            review ${cyan(group.docsUrl)}`);
+  }
+  return lines;
+}
 
 /**
  * Render a "doctor" report of a run: one section per matched migration, grouped
@@ -28,11 +68,11 @@ export function buildReport(result: RunResult): string {
       )
     );
     for (const entry of auto) {
-      const tag = entry.applied ? green('[fixed]') : yellow('[would-fix]');
+      // Blue, not yellow: a pending auto-fix is informational, and yellow next
+      // to the manual-review section reads as a warning about the app.
+      const tag = entry.applied ? green('[fixed]') : brightBlue('[would-fix]');
       lines.push(`  ${tag} ${bold(entry.migration.id)} (${entry.findings.length} change(s))`);
-      for (const finding of entry.findings) {
-        lines.push(`            ${dim(`${finding.filePath}:${finding.line}`)} - ${finding.detail}`);
-      }
+      lines.push(...findingLines(entry));
     }
     lines.push('');
   }
@@ -41,10 +81,7 @@ export function buildReport(result: RunResult): string {
     lines.push(bold(yellow(`${manual.length} migration(s) need manual review:`)));
     for (const entry of manual) {
       lines.push(`  ${yellow('[todo]')}  ${bold(entry.migration.id)} (${entry.findings.length} location(s))`);
-      for (const finding of entry.findings) {
-        lines.push(`            ${dim(`${finding.filePath}:${finding.line}`)} - ${finding.detail}`);
-      }
-      lines.push(`            see ${cyan(entry.migration.docsUrl)}`);
+      lines.push(...findingLines(entry));
     }
   }
 

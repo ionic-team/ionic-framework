@@ -16,3 +16,4 @@ export const dim = sgr(2, 22);
 export const green = sgr(32, 39);
 export const yellow = sgr(33, 39);
 export const cyan = sgr(36, 39);
+export const brightBlue = sgr(94, 39);

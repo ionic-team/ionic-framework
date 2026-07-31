@@ -3,7 +3,8 @@ import { describe, expect, it } from 'vitest';
 import { createInMemoryContext } from '../src/context.js';
 import { detectFrameworks, parseMajor } from '../src/detect.js';
 import { IONIC_V9_VERSION } from '../src/versions.js';
-import { selectMigrations } from '../src/registry.js';
+import { latestKnownMajor, selectMigrations } from '../src/registry.js';
+import { allMigrations } from '../src/migrations/index.js';
 import { run } from '../src/runner.js';
 import { buildReport } from '../src/report.js';
 import type { Migration } from '../src/types.js';
@@ -116,6 +117,24 @@ describe('selectMigrations', () => {
     });
     expect(stable.map((m) => m.id)).toEqual(['c']);
     expect(withExp.map((m) => m.id)).toEqual(['c', 'x']);
+  });
+});
+
+describe('latestKnownMajor', () => {
+  it('reports the highest major any registered migration targets', () => {
+    const all = [
+      fakeMigration({ id: 'a', fromMajor: 8, toMajor: 9 }),
+      fakeMigration({ id: 'b', fromMajor: 9, toMajor: 10 }),
+    ];
+    expect(latestKnownMajor(all)).toBe(10);
+  });
+
+  it('is 0 when nothing is registered, so no target is reachable', () => {
+    expect(latestKnownMajor([])).toBe(0);
+  });
+
+  it('matches the shipped registry, which only migrates to v9 today', () => {
+    expect(latestKnownMajor(allMigrations)).toBe(9);
   });
 });
 
