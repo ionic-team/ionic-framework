@@ -73,9 +73,10 @@ export interface ModalDragEventDetail {
    */
   snapBreakpoint?: number;
   /**
-   * Whether the card modal will dismiss when the drag gesture ends.
-   * `true` if the gesture passed the dismiss threshold, `false` if the
-   * modal will remain open.
+   * Whether the card modal is attempting to dismiss when the drag
+   * gesture ends. A `canDismiss` callback can still cancel the dismiss
+   * after this event is emitted, so use `ionModalDidDismiss` to confirm
+   * that the modal actually closed.
    */
   isDismissing?: boolean;
 }

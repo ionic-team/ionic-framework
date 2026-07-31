@@ -304,18 +304,32 @@ export const createSwipeToCloseGesture = (
      * check canDismiss. 25% was chosen
      * to avoid accidental swipes.
      */
-    if (isAttemptingDismissWithCanDismiss && clampedStep > maxStep / 4) {
+    const isAttemptingCanDismiss = isAttemptingDismissWithCanDismiss && clampedStep > maxStep / 4;
+
+    if (isAttemptingCanDismiss) {
       handleCanDismiss(el, animation);
     } else if (shouldComplete) {
       onDismiss();
     }
+
+    /**
+     * `shouldComplete` is always `false` when canDismiss blocks the
+     * gesture, since it only describes a dismiss that happens right
+     * away. In that case the modal dismisses through `handleCanDismiss`
+     * instead, which only dismisses when canDismiss is a function.
+     * A canDismiss function can still cancel the dismiss after this
+     * event is emitted.
+     */
+    const isDismissing = isAttemptingDismissWithCanDismiss
+      ? isAttemptingCanDismiss && typeof el.canDismiss === 'function'
+      : shouldComplete;
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
       progress: calculateProgress(el, detail.deltaY),
-      isDismissing: shouldComplete,
+      isDismissing,
     };
 
     onDragEnd(eventDetail);

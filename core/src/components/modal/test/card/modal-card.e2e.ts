@@ -156,5 +156,22 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         'velocityY',
       ]);
     });
+    test('should report isDismissing when canDismiss allows the dismiss', async ({ page }) => {
+      const cardModalPage = new CardModalPage(page);
+      await cardModalPage.navigate('/src/components/modal/test/card', config);
+      await cardModalPage.openModalByTrigger('#drag-events-can-dismiss');
+
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      /**
+       * `swipeToCloseModal` waits for `ionModalDidDismiss`, so this also
+       * verifies that the modal dismissed after canDismiss resolved.
+       */
+      await cardModalPage.swipeToCloseModal('.modal-card ion-header');
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.isDismissing).toBe(true);
+    });
   });
 });
