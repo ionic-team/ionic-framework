@@ -52,13 +52,6 @@
             Card Modal Custom Radius
           </button>
           <button class="expand" id="drag-events" onclick="dragEvents()">Card Modal Drag Events</button>
-          <button
-            class="expand"
-            id="drag-events-can-dismiss"
-            onclick="dragEvents({ id: 'drag-events-can-dismiss', canDismiss: () => Promise.resolve(true) })"
-          >
-            Card Modal Drag Events With canDismiss
-          </button>
         </ion-content>
       </div>
     </ion-app>
@@ -172,8 +165,8 @@
         await modal.present();
       }
 
-      async function dragEvents(opts) {
-        const modal = await createModal(document.querySelectorAll('.ion-page')[1], { id: 'drag-events', ...opts });
+      async function dragEvents() {
+        const modal = await createModal(document.querySelectorAll('.ion-page')[1], { id: 'drag-events' });
 
         modal.addEventListener('ionDragStart', (event) => {
           console.log('Drag started');

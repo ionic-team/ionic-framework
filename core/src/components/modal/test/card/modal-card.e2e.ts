@@ -107,13 +107,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
   });
 
   test.describe(title('card modal: drag events'), () => {
+    let cardModalPage: CardModalPage;
+
+    test.beforeEach(async ({ page }) => {
+      cardModalPage = new CardModalPage(page);
+      await cardModalPage.navigate('/src/components/modal/test/card', config);
+    });
+
     test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }) => {
-      await page.goto('/src/components/modal/test/card', config);
-
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-      await page.click('#drag-events');
-      await ionModalDidPresent.next();
+      await cardModalPage.openModalByTrigger('#drag-events');
 
       const ionDragStart = await page.spyOnEvent('ionDragStart');
       const ionDragMove = await page.spyOnEvent('ionDragMove');
@@ -156,22 +158,36 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         'velocityY',
       ]);
     });
-    test('should report isDismissing when canDismiss allows the dismiss', async ({ page }) => {
-      const cardModalPage = new CardModalPage(page);
-      await cardModalPage.navigate('/src/components/modal/test/card', config);
-      await cardModalPage.openModalByTrigger('#drag-events-can-dismiss');
+
+    test('should report isDismissing as true when the gesture dismisses the modal', async ({ page }) => {
+      await cardModalPage.openModalByTrigger('#card');
 
       const ionDragEnd = await page.spyOnEvent('ionDragEnd');
 
       /**
-       * `swipeToCloseModal` waits for `ionModalDidDismiss`, so this also
-       * verifies that the modal dismissed after canDismiss resolved.
+       * `swipeToCloseModal` drags 300px and waits for `ionModalDidDismiss`,
+       * so the modal is known to have dismissed by the time the event
+       * detail is checked.
        */
-      await cardModalPage.swipeToCloseModal('.modal-card ion-header');
+      await cardModalPage.swipeToCloseModal('ion-modal ion-header');
 
       const dragEndEvent = await ionDragEnd.next();
 
       expect(dragEndEvent.detail.isDismissing).toBe(true);
+    });
+
+    test('should report isDismissing as false when the modal settles back open', async ({ page }) => {
+      const modal = await cardModalPage.openModalByTrigger('#card');
+
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      // 20px is short enough that the gesture never passes the dismiss threshold
+      await cardModalPage.swipeToCloseModal('ion-modal ion-header', false, 20);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.isDismissing).toBe(false);
+      await expect(modal).toBeVisible();
     });
   });
 });
