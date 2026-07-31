@@ -176,12 +176,12 @@
 // ----------------------------------------------------------
 // `toggle-defers-indicator` is excluded rather than overridden, because an
 // override would have to out-specify every rule below, including `.ion-color`.
+//
+// The indicator is the same color checked or unchecked, unlike `md`, which follows
+// the Material state layer in using a neutral color when unchecked. `color` still
+// only applies when checked, matching the track.
 
 :host(.ion-focused:not(.toggle-defers-indicator)) .toggle-icon {
-  box-shadow: 0 0 0 4px $toggle-focus-ring-color-off;
-}
-
-:host(.ion-focused.toggle-checked:not(.toggle-defers-indicator)) .toggle-icon {
   box-shadow: 0 0 0 4px $toggle-focus-ring-color;
 }
 
