@@ -1,4 +1,3 @@
-@import "../../themes/ionic.globals";
 @import "./toggle.vars.scss";
 
 // Toggle
@@ -59,10 +58,6 @@
   width: auto;
 }
 
-:host(.ion-focused) input {
-  border: 2px solid #5e9ed6;
-}
-
 :host(.toggle-disabled) {
   pointer-events: none;
 }
@@ -73,6 +68,11 @@
  */
 input {
   display: none;
+}
+
+// Hide the native focus ring since we draw our own focus indicator.
+:host(:focus) {
+  outline: none;
 }
 
 // Toggle Wrapper
