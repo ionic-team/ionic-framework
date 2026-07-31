@@ -20,8 +20,6 @@ The Angular test app supports syncing your locally built changes for validation.
 
 From here you can either build the application or start a local dev server. When re-syncing changes, you will need to [wipe or disable the application cache](#application-cache).
 
-If this is your first time running Playwright tests in the repository, install the [Playwright browser dependencies](/docs/core/testing/usage-instructions.md#installing-dependencies)
-
 > [!NOTE]
 > Syncing is required to verify that the minimal supported Angular version is still compatible with the latest Ionic Framework changes.
 > For example, Ionic Framework 8 supports Angular 16, but the latest version of Ionic Framework may not be compatible with Angular 16. Syncing allows you to verify that the latest changes are still compatible with the minimal supported version.
