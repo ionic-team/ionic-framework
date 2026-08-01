@@ -299,8 +299,18 @@ export class Refresher implements ComponentInterface {
 
     this.scrollEl!.addEventListener('scroll', this.scrollListenerCallback);
 
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.scrollEl!,
+    const { createGesture } = await import('../../utils/gesture');
+
+    /**
+     * The dynamic import createGesture yields to the event loop, so the refresher may
+     * be disconnected if the component unmounts while it resolves.
+     */
+    if (!this.scrollEl) {
+      return;
+    }
+
+    this.gesture = createGesture({
+      el: this.scrollEl,
       gestureName: 'refresher',
       gesturePriority: 31,
       direction: 'y',
@@ -369,8 +379,18 @@ export class Refresher implements ComponentInterface {
       });
     }
 
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.scrollEl!,
+    const { createGesture } = await import('../../utils/gesture');
+
+    /**
+     * The dynamic import createGesture yields to the event loop, so the refresher may
+     * be disconnected if the component unmounts while it resolves.
+     */
+    if (!this.scrollEl) {
+      return;
+    }
+
+    this.gesture = createGesture({
+      el: this.scrollEl,
       gestureName: 'refresher',
       gesturePriority: 31,
       direction: 'y',
