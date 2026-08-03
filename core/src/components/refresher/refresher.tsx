@@ -302,8 +302,9 @@ export class Refresher implements ComponentInterface {
     const { createGesture } = await import('../../utils/gesture');
 
     /**
-     * The dynamic import createGesture yields to the event loop, so the refresher may
-     * be disconnected if the component unmounts while it resolves.
+     * Awaiting the dynamic import yields to the event loop, so the component can
+     * disconnect before it resolves. disconnectedCallback clears scrollEl, so a
+     * missing scrollEl here means there is nothing left to attach a gesture to.
      */
     if (!this.scrollEl) {
       return;
