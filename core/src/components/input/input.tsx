@@ -824,8 +824,7 @@ export class Input implements ComponentInterface {
   };
 
   /**
-   * Renders the border container
-   * when fill="outline".
+   * Renders the outline border with a notch for the label.
    */
   private renderOutlineDecorations() {
     return [
@@ -842,14 +841,6 @@ export class Input implements ComponentInterface {
       </div>,
       <div class="input-outline-end"></div>,
     ];
-  }
-
-  private renderLabelContainer() {
-    /**
-     * If not using the outline style,
-     * we can render just the label.
-     */
-    return this.renderLabel();
   }
 
   render() {
@@ -899,7 +890,7 @@ export class Input implements ComponentInterface {
             <slot name="start"></slot>
           </div>
           <div class="input-control">
-            {this.renderLabelContainer()}
+            {this.renderLabel()}
             <div class="native-wrapper" onClick={this.onLabelClick}>
               <input
                 class="native-input"
