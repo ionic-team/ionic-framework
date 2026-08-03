@@ -108,10 +108,10 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-// Slotted content, such as buttons, should have a smaller
-// margin to align them properly with the label
-::slotted([slot="start"]),
-::slotted([slot="end"]) {
+// Buttons should have a smaller margin top to
+// align them properly with the label
+::slotted(ion-button[slot="start"]),
+::slotted(ion-button[slot="end"]) {
   margin-top: 7px;
 }
 

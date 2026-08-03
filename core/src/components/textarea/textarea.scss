@@ -670,10 +670,10 @@
   align-self: start;
 }
 
-// Icons do not have a larger width/height, so we set
-// them to the same top margin as the label
-::slotted(ion-icon[slot="start"]),
-::slotted(ion-icon[slot="end"]) {
+// Align slotted content with the top of the label by
+// matching the label's top padding
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
   margin-top: var(--padding-top);
 }
 
