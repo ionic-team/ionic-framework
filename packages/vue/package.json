@@ -7,6 +7,7 @@
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "build": "npm run clean && npm run copy && npm run copy.overlays && npm run bundle && npm run build.vetur && npm run build.web-types",
     "build.watch": "npm run bundle -- --watch",

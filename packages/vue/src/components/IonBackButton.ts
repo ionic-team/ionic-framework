@@ -1,6 +1,8 @@
 import { defineCustomElement } from "@ionic/core/components/ion-back-button.js";
 import { h, inject, defineComponent } from "vue";
 
+import { getConfig } from "../utils";
+
 export const IonBackButton = /*@__PURE__*/ defineComponent(
   (_, { attrs, slots }) => {
     defineCustomElement();
@@ -29,7 +31,15 @@ export const IonBackButton = /*@__PURE__*/ defineComponent(
         return;
       }
 
-      const defaultHref = attrs["default-href"] || attrs["defaultHref"];
+      /**
+       * Core resolves `backButtonDefaultHref` itself and only renders the
+       * button once it has a href, so read the config here too or a
+       * config-only back button would be visible but do nothing.
+       */
+      const defaultHref =
+        attrs["default-href"] ||
+        attrs["defaultHref"] ||
+        getConfig()?.get("backButtonDefaultHref");
       const routerAnimation =
         attrs["router-animation"] || attrs["routerAnimation"];
 
