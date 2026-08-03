@@ -20,7 +20,7 @@ import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnRea
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
-import { closeCircle, closeCircleSharp } from 'ionicons/icons';
+import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, TextFieldTypes } from '../../interface';
@@ -858,7 +858,7 @@ export class Input implements ComponentInterface {
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
-    const defaultClearIcon = mode === 'ios' ? closeCircle : closeCircleSharp;
+    const defaultClearIcon = mode === 'ios' ? closeCircle : closeSharp;
     const clearIconData = clearInputIcon ?? defaultClearIcon;
 
     const hasValue = this.hasValue();
