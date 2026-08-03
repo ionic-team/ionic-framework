@@ -8,8 +8,7 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
-
-  min-height: 56px;
+  --start-slot-adjustment: 0px;
 }
 
 :host(.textarea-fill-outline.textarea-shape-round) {
@@ -90,7 +89,7 @@
  * This makes the label sit above the textarea.
  */
 :host(.label-floating.textarea-fill-outline) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
+  @include transform(translate(var(--start-slot-adjustment), -32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
@@ -104,21 +103,14 @@
 
 /**
  * This ensures that the textarea does not
- * overlap the floating label while still
+ * overlap the outline container while still
  * remaining visually centered.
  */
 :host(.textarea-fill-outline.textarea-label-placement-stacked) textarea,
 :host(.textarea-fill-outline.textarea-label-placement-floating) textarea,
 :host(.textarea-fill-outline.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
 :host(.textarea-fill-outline.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
-  @include margin(12px, 0px, 0px, 0px);
-}
-
-:host(.textarea-fill-outline.textarea-label-placement-stacked) ::slotted([slot="start"]),
-:host(.textarea-fill-outline.textarea-label-placement-stacked) ::slotted([slot="end"]),
-:host(.textarea-fill-outline.textarea-label-placement-floating) ::slotted([slot="start"]),
-:host(.textarea-fill-outline.textarea-label-placement-floating) ::slotted([slot="end"]) {
-  margin-top: 12px;
+  @include margin(19px, 0px, 0px, 0px);
 }
 
 // Textarea Fill: Outline Outline Container

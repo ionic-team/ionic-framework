@@ -26,8 +26,42 @@
   opacity: #{$textarea-ios-disabled-opacity};
 }
 
+// Textarea Label Placement - Stacked and Floating
+// ----------------------------------------------------------------
+
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  --padding-top: 20px;
+  --padding-bottom: 6px;
+}
+
 // Start/End Slots
 // ----------------------------------------------------------------
+
+// Slotted content, such as buttons, should have a smaller
+// margin to align them properly with the label
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  margin-top: 2px;
+}
+
+// Slotted content in a floating/stacked layout need
+// more margin to align with the label
+:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
+:host(.textarea-label-placement-floating) ::slotted([slot="end"]),
+:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
+:host(.textarea-label-placement-stacked) ::slotted([slot="end"]) {
+  margin-top: 10px;
+}
+
+// Icons in a floating/stacked layout need more margin
+// to align with the label
+:host(.textarea-label-placement-floating) ::slotted(ion-icon[slot="start"]),
+:host(.textarea-label-placement-floating) ::slotted(ion-icon[slot="end"]),
+:host(.textarea-label-placement-stacked) ::slotted(ion-icon[slot="start"]),
+:host(.textarea-label-placement-stacked) ::slotted(ion-icon[slot="end"]) {
+  margin-top: var(--padding-top);
+}
 
 /**
  * Slotted buttons have a lot of default padding that can

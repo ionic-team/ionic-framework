@@ -611,51 +611,45 @@ export class Textarea implements ComponentInterface {
    * otherwise, two clicks will be triggered.
    */
   private onLabelClick = (ev: MouseEvent) => {
-    // Only stop propagation if the click was directly on the label
-    // and not on the input or other child elements
-    if (ev.target === ev.currentTarget) {
-      ev.stopPropagation();
-    }
+    ev.stopPropagation();
   };
 
   /**
-   * Renders the border container when fill="outline".
+   * Gets the width of the start slot, rounded to 1 decimal place.
+   * Only applies to textareas with `md` mode and `fill="outline"`.
+   * In RTL mode, the adjustment is positive; in LTR mode, it's negative.
    */
-  private renderLabelContainer() {
-    const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
-
-    if (hasOutlineFill) {
-      /**
-       * The outline fill has a special outline
-       * that appears around the textarea and the label.
-       * Certain stacked and floating label placements cause the
-       * label to translate up and create a "cut out"
-       * inside of that border by using the notch-spacer element.
-       */
-      return [
-        <div class="textarea-outline-container">
-          <div class="textarea-outline-start"></div>
-          <div
-            class={{
-              'textarea-outline-notch': true,
-              'textarea-outline-notch-hidden': !this.hasLabel,
-            }}
-          >
-            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
-              {this.label}
-            </div>
-          </div>
-          <div class="textarea-outline-end"></div>
-        </div>,
-        this.renderLabel(),
-      ];
+  private getStartSlotAdjustment(): string {
+    const startSlot = this.el.querySelector('.textarea-start') as HTMLElement | null;
+    if (!startSlot || !Build.isBrowser || getIonMode(this) !== 'md' || this.fill !== 'outline') {
+      return '';
     }
-    /**
-     * If not using the outline style,
-     * we can render just the label.
-     */
-    return this.renderLabel();
+
+    const startSlotWidth = startSlot.getBoundingClientRect().width;
+    const roundedWidth = Math.round(startSlotWidth * 10) / 10;
+    const isRTL = document.dir === 'rtl';
+    const sign = isRTL ? '' : '-';
+    return roundedWidth ? `${sign}${roundedWidth}px` : '0px';
+  }
+
+  /**
+   * Renders the outline border with a notch for the label.
+   */
+  private renderOutlineDecorations() {
+    return [
+      <div class="textarea-outline-start"></div>,
+      <div
+        class={{
+          'textarea-outline-notch': true,
+          'textarea-outline-notch-hidden': !this.hasLabel,
+        }}
+      >
+        <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+          {this.label}
+        </div>
+      </div>,
+      <div class="textarea-outline-end"></div>,
+    ];
   }
 
   /**
@@ -724,34 +718,21 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
+    const { inputId, disabled, fill, shape, labelPlacement, hasFocus } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+    const hasOutlineFill = mode === 'md' && fill === 'outline';
 
     /**
      * If the label is stacked, it should always sit above the textarea.
      * For floating labels, the label should move above the textarea if
-     * the textarea has a value, is focused, or has anything in either
-     * the start or end slot.
-     *
-     * If there is content in the start slot, the label would overlap
-     * it if not forced to float. This is also applied to the end slot
-     * because with the default or solid fills, the textarea is not
-     * vertically centered in the container, but the label is. This
-     * causes the slots and label to appear vertically offset from each
-     * other when the label isn't floating above the input. This doesn't
-     * apply to the outline fill, but this was not accounted for to keep
-     * things consistent.
-     *
-     * TODO(FW-5592): Remove hasStartEndSlots condition
+     * the textarea has a value or is focused.
      */
-    const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+    const labelShouldFloat = labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus));
 
     return (
       <Host
@@ -765,6 +746,7 @@ export class Textarea implements ComponentInterface {
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
         })}
+        style={{ '--start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
@@ -773,18 +755,12 @@ export class Textarea implements ComponentInterface {
          * since it comes before the textarea in the DOM.
          */}
         <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
-          {this.renderLabelContainer()}
-          <div class="textarea-wrapper-inner">
-            {/**
-             * Some elements have their own padding styles which may
-             * interfere with slot content alignment (such as icon-
-             * only buttons setting --padding-top=0). To avoid this,
-             * we wrap both the start and end slots in separate
-             * elements and apply our padding styles to that instead.
-             */}
-            <div class="start-slot-wrapper">
-              <slot name="start"></slot>
-            </div>
+          {hasOutlineFill && <div class="textarea-outline-container">{this.renderOutlineDecorations()}</div>}
+          <div class="textarea-start">
+            <slot name="start"></slot>
+          </div>
+          <div class="textarea-control">
+            {this.renderLabel()}
             <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
               <textarea
                 class="native-textarea"
@@ -817,9 +793,9 @@ export class Textarea implements ComponentInterface {
                 {value}
               </textarea>
             </div>
-            <div class="end-slot-wrapper">
-              <slot name="end"></slot>
-            </div>
+          </div>
+          <div class="textarea-end">
+            <slot name="end"></slot>
           </div>
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>

@@ -16,6 +16,10 @@
   --padding-start: 0px;
   --highlight-height: 2px;
 
+  // Setting the min-height to 72px enforces consistent heights
+  // across all label placements and fills.
+  min-height: 72px;
+
   font-size: $textarea-md-font-size;
 }
 
@@ -43,6 +47,15 @@
 :host(.has-focus.textarea-label-placement-stacked.ion-valid) .label-text-wrapper,
 :host(.textarea-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
   color: var(--highlight-color);
+}
+
+// Textarea Label Placement - Stacked and Floating
+// ----------------------------------------------------------------
+
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  --padding-top: 20px;
+  --padding-bottom: 6px;
 }
 
 // Textarea - Disabled
@@ -94,6 +107,13 @@
 
 // Start/End Slots
 // ----------------------------------------------------------------
+
+// Slotted content, such as buttons, should have a smaller
+// margin to align them properly with the label
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  margin-top: 7px;
+}
 
 /**
  * Slotted buttons have a lot of default padding that can

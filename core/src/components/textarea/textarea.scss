@@ -70,24 +70,6 @@
   box-sizing: border-box;
 }
 
-// Textarea Wrapper
-// ----------------------------------------------------------------
-
-/**
- * Since the label sits on top of the element,
- * the component needs to be taller otherwise the
- * label will appear too close to the textarea text.
- * Also, floating and stacked labels should not
- * push the label down since it it
- * sits on top of the textarea.
- */
-:host(.textarea-label-placement-floating),
-:host(.textarea-label-placement-stacked) {
-  --padding-top: 0px;
-
-  min-height: 56px;
-}
-
 /**
  * When the cols property is set we should
  * respect that width instead of defaulting
@@ -265,6 +247,28 @@
   line-height: normal;
 }
 
+// Textarea Control
+// ----------------------------------------------------------------
+
+.textarea-control {
+  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
+
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: start;
+
+  width: 100%;
+}
+
+:host(.textarea-label-placement-floating) .textarea-control,
+:host(.textarea-label-placement-stacked) .textarea-control {
+  --padding-top: 0px;
+}
+
 // Textarea Native Wrapper
 // ----------------------------------------------------------------
 
@@ -281,10 +285,6 @@
 
 :host(.has-focus) textarea {
   caret-color: var(--highlight-color);
-}
-
-.native-wrapper textarea {
-  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
 
 .native-wrapper {
@@ -345,13 +345,6 @@
   grid-area: 1 / 1 / 2 / 2;
 
   word-break: break-word;
-}
-
-.textarea-wrapper-inner {
-  display: flex;
-
-  width: 100%;
-  min-height: inherit;
 }
 
 // Textarea Highlight
@@ -456,8 +449,6 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
-
   /**
    * Label text should not extend
    * beyond the bounds of the textarea.
@@ -526,7 +517,7 @@
  * Label is on the left of the textarea in LTR and
  * on the right in RTL.
  */
-:host(.textarea-label-placement-start) .textarea-wrapper {
+:host(.textarea-label-placement-start) .textarea-control {
   flex-direction: row;
 }
 
@@ -546,7 +537,7 @@
  * Label is on the right of the textarea in LTR and
  * on the left in RTL.
  */
-:host(.textarea-label-placement-end) .textarea-wrapper {
+:host(.textarea-label-placement-end) .textarea-control {
   flex-direction: row-reverse;
 }
 
@@ -593,8 +584,8 @@
  * down when the textarea is focused or has a value.
  *
  */
-:host(.textarea-label-placement-stacked) .textarea-wrapper,
-:host(.textarea-label-placement-floating) .textarea-wrapper {
+:host(.textarea-label-placement-stacked) .textarea-control,
+:host(.textarea-label-placement-floating) .textarea-control {
   flex-direction: column;
   align-items: start;
 }
@@ -628,13 +619,6 @@
 :host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
 :host(.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
   @include margin(8px, 0px, 0px, 0px);
-}
-
-:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
-:host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
-  margin-top: 8px;
 }
 
 /**
@@ -675,19 +659,22 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-.start-slot-wrapper, .end-slot-wrapper {
-  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
-
+.textarea-start,
+.textarea-end {
   display: flex;
+
+  position: relative;
 
   flex-shrink: 0;
 
   align-self: start;
 }
 
-::slotted([slot="start"]),
-::slotted([slot="end"]) {
-  margin-top: 0; // ensure slot content is vertically aligned with label
+// Icons do not have a larger width/height, so we set
+// them to the same top margin as the label
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-icon[slot="end"]) {
+  margin-top: var(--padding-top);
 }
 
 ::slotted([slot="start"]:last-of-type) {
