@@ -8,6 +8,7 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
+  --start-slot-adjustment: 0px;
 
   min-height: 56px;
 }
@@ -103,7 +104,7 @@
  * This makes the label sit above the select.
  */
 :host(.label-floating.select-fill-outline) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
+  @include transform(translate(var(--start-slot-adjustment), -32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
@@ -197,13 +198,8 @@
 
 :host(.select-fill-outline) .select-outline-start {
   @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
-}
-
-:host(.select-fill-outline) .select-outline-start {
   @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
-}
 
-:host(.select-fill-outline) .select-outline-start {
   /**
    * There should be spacing between the translated text
    * and .select-outline-start. However, we can't add this
@@ -217,13 +213,8 @@
 
 :host(.select-fill-outline) .select-outline-end {
   @include border(null, var(--border-width) var(--border-style) var(--border-color), null, null);
-}
-
-:host(.select-fill-outline) .select-outline-end {
   @include border-radius(0px, var(--border-radius), var(--border-radius), 0px);
-}
 
-:host(.select-fill-outline) .select-outline-end {
   /**
    * The ending outline fragment
    * should take up the remaining free space.

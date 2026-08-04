@@ -1058,42 +1058,32 @@ export class Select implements ComponentInterface {
    * Renders the border container
    * when fill="outline".
    */
-  private renderLabelContainer() {
+  private renderOutlineContainer() {
     const mode = getIonMode(this);
     const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
-    if (hasOutlineFill) {
-      /**
-       * The outline fill has a special outline
-       * that appears around the select and the label.
-       * Certain stacked and floating label placements cause the
-       * label to translate up and create a "cut out"
-       * inside of that border by using the notch-spacer element.
-       */
-      return [
-        <div class="select-outline-container">
-          <div class="select-outline-start"></div>
-          <div
-            class={{
-              'select-outline-notch': true,
-              'select-outline-notch-hidden': !this.hasLabel,
-            }}
-          >
-            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
-              {this.label}
-            </div>
-          </div>
-          <div class="select-outline-end"></div>
-        </div>,
-        this.renderLabel(),
-      ];
+    if (!hasOutlineFill) {
+      return null;
     }
 
-    /**
-     * If not using the outline style,
-     * we can render just the label.
-     */
-    return this.renderLabel();
+    return <div class="select-outline-container">{this.renderOutlineDecorations()}</div>;
+  }
+
+  private renderOutlineDecorations() {
+    return [
+      <div class="select-outline-start"></div>,
+      <div
+        class={{
+          'select-outline-notch': true,
+          'select-outline-notch-hidden': !this.hasLabel,
+        }}
+      >
+        <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+          {this.label}
+        </div>
+      </div>,
+      <div class="select-outline-end"></div>,
+    ];
   }
 
   /**
@@ -1306,6 +1296,19 @@ export class Select implements ComponentInterface {
     );
   }
 
+  private getStartSlotAdjustment(): string {
+    const startSlot = this.el.shadowRoot?.querySelector('.select-start') as HTMLElement | null;
+    if (!startSlot || !Build.isBrowser || getIonMode(this) !== 'md' || this.fill !== 'outline') {
+      return '';
+    }
+
+    const startSlotWidth = startSlot.getBoundingClientRect().width;
+    const roundedWidth = Math.round(startSlotWidth * 10) / 10;
+    const isRTL = document.dir === 'rtl';
+    const sign = isRTL ? '' : '-';
+    return roundedWidth ? `${sign}${roundedWidth}px` : '0px';
+  }
+
   render() {
     const {
       disabled,
@@ -1329,29 +1332,11 @@ export class Select implements ComponentInterface {
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
 
     renderHiddenInput(true, el, name, parseValue(value), disabled);
 
-    /**
-     * If the label is stacked, it should always sit above the select.
-     * For floating labels, the label should move above the select if
-     * the select has a value, is open, or has anything in either
-     * the start or end slot.
-     *
-     * If there is content in the start slot, the label would overlap
-     * it if not forced to float. This is also applied to the end slot
-     * because with the default or solid fills, the select is not
-     * vertically centered in the container, but the label is. This
-     * causes the slots and label to appear vertically offset from each
-     * other when the label isn't floating above the input. This doesn't
-     * apply to the outline fill, but this was not accounted for to keep
-     * things consistent.
-     *
-     * TODO(FW-5592): Remove hasStartEndSlots condition
-     */
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded || hasStartEndSlots));
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded));
 
     return (
       <Host
@@ -1375,28 +1360,24 @@ export class Select implements ComponentInterface {
           [`select-shape-${shape}`]: shape !== undefined,
           [`select-label-placement-${labelPlacement}`]: true,
         })}
+        style={{ '--start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
         <label class="select-wrapper" id="select-label" onClick={this.onLabelClick} part="wrapper">
-          {this.renderLabelContainer()}
-          <div class="select-wrapper-inner" part="inner">
+          {this.renderOutlineContainer()}
+          <div class="select-start">
             <slot name="start"></slot>
+          </div>
+          <div class="select-control" part="inner">
+            {this.renderLabel()}
             <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
               {this.renderSelectText()}
               {this.renderListbox()}
             </div>
-            <slot name="end"></slot>
-            {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
           </div>
-          {/**
-           * The icon in a floating/stacked select
-           * must be centered with the entire select,
-           * while the start/end slots and native control
-           * are vertically offset in the default or
-           * solid fills. As a result, we render the
-           * icon outside the inner wrapper, which holds
-           * those components.
-           */}
-          {hasFloatingOrStackedLabel && this.renderSelectIcon()}
+          <div class="select-end">
+            <slot name="end"></slot>
+            {this.renderSelectIcon()}
+          </div>
           {shouldRenderHighlight && <div class="select-highlight"></div>}
         </label>
         {this.renderBottomContent()}
