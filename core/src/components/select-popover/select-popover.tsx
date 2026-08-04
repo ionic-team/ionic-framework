@@ -22,6 +22,12 @@ import type { SelectPopoverOption } from './select-popover-interface';
 })
 export class SelectPopover implements ComponentInterface {
   @Element() el!: HTMLIonSelectPopoverElement;
+
+  // Tracks the option that received Enter-keydown so keyup only
+  // dismisses when the press started on the same option. Prevents
+  // Enter on the triggering ion-select from auto-dismissing.
+  private pendingEnterTarget: HTMLElement | null = null;
+
   /**
    * The header text of the popover
    */
@@ -159,14 +165,21 @@ export class SelectPopover implements ComponentInterface {
               value={option.value}
               disabled={option.disabled}
               onClick={() => this.dismissParentPopover()}
+              onKeyDown={(ev) => {
+                if (ev.key === 'Enter' && !ev.repeat) {
+                  this.pendingEnterTarget = ev.currentTarget as HTMLElement;
+                }
+              }}
               onKeyUp={(ev) => {
                 if (ev.key === ' ') {
-                  /**
-                   * Selecting a radio option with keyboard navigation,
-                   * either through the Enter or Space keys, should
-                   * dismiss the popover.
-                   */
+                  // Space selects and dismisses in one press.
                   this.dismissParentPopover();
+                } else if (ev.key === 'Enter') {
+                  const shouldDismiss = this.pendingEnterTarget === ev.currentTarget;
+                  this.pendingEnterTarget = null;
+                  if (shouldDismiss) {
+                    this.dismissParentPopover();
+                  }
                 }
               }}
             >

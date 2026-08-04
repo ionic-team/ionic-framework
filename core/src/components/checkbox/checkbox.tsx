@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
-import { checkInvalidState } from '@utils/forms';
+import { Build, Component, Element, Event, Host, Method, Prop, State, forceUpdate, h } from '@stencil/core';
+import { checkInvalidState, createItemMultipleInputsObserver } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -37,6 +37,7 @@ export class Checkbox implements ComponentInterface {
   private errorTextId = `${this.inputId}-error-text`;
   private inheritedAttributes: Attributes = {};
   private validationObserver?: MutationObserver;
+  private itemFocusObserver?: MutationObserver;
 
   @Element() el!: HTMLIonCheckboxElement;
 
@@ -127,6 +128,8 @@ export class Checkbox implements ComponentInterface {
    */
   @State() isInvalid = false;
 
+  @State() private hasLabelContent = false;
+
   @State() private hintTextId?: string;
 
   /**
@@ -149,44 +152,56 @@ export class Checkbox implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
 
-    // Watch for class changes to update validation state.
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
-      this.validationObserver = new MutationObserver(() => {
-        const newIsInvalid = checkInvalidState(el);
-        if (this.isInvalid !== newIsInvalid) {
-          this.isInvalid = newIsInvalid;
-          /**
-           * Screen readers tend to announce changes
-           * to `aria-describedby` when the attribute
-           * is changed during a blur event for a
-           * native form control.
-           * However, the announcement can be spotty
-           * when using a non-native form control
-           * and `forceUpdate()`.
-           * This is due to `forceUpdate()` internally
-           * rescheduling the DOM update to a lower
-           * priority queue regardless if it's called
-           * inside a Promise or not, thus causing
-           * the screen reader to potentially miss the
-           * change.
-           * By using a State variable inside a Promise,
-           * it guarantees a re-render immediately at
-           * a higher priority.
-           */
-          Promise.resolve().then(() => {
-            this.hintTextId = this.getHintTextId();
-          });
+      this.validationObserver = new MutationObserver((mutations) => {
+        // Watch for label content changes
+        if (mutations.some((mutation) => mutation.type === 'characterData' || mutation.type === 'childList')) {
+          this.hasLabelContent = this.el.textContent !== '';
+        }
+        // Watch for class changes to update validation state.
+        if (mutations.some((mutation) => mutation.type === 'attributes' && mutation.target === el)) {
+          const newIsInvalid = checkInvalidState(el);
+          if (this.isInvalid !== newIsInvalid) {
+            this.isInvalid = newIsInvalid;
+            /**
+             * Screen readers tend to announce changes
+             * to `aria-describedby` when the attribute
+             * is changed during a blur event for a
+             * native form control.
+             * However, the announcement can be spotty
+             * when using a non-native form control
+             * and `forceUpdate()`.
+             * This is due to `forceUpdate()` internally
+             * rescheduling the DOM update to a lower
+             * priority queue regardless if it's called
+             * inside a Promise or not, thus causing
+             * the screen reader to potentially miss the
+             * change.
+             * By using a State variable inside a Promise,
+             * it guarantees a re-render immediately at
+             * a higher priority.
+             */
+            Promise.resolve().then(() => {
+              this.hintTextId = this.getHintTextId();
+            });
+          }
         }
       });
 
       this.validationObserver.observe(el, {
         attributes: true,
         attributeFilter: ['class'],
+        characterData: true,
+        childList: true,
+        subtree: true,
       });
     }
 
     // Always set initial state
     this.isInvalid = checkInvalidState(el);
+    this.hasLabelContent = this.el.textContent !== '';
+
+    this.itemFocusObserver = createItemMultipleInputsObserver(el, () => forceUpdate(this));
   }
 
   componentWillLoad() {
@@ -198,10 +213,13 @@ export class Checkbox implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    // Clean up validation observer to prevent memory leaks.
     if (this.validationObserver) {
       this.validationObserver.disconnect();
       this.validationObserver = undefined;
+    }
+    if (this.itemFocusObserver) {
+      this.itemFocusObserver.disconnect();
+      this.itemFocusObserver = undefined;
     }
   }
 
@@ -326,7 +344,8 @@ export class Checkbox implements ComponentInterface {
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
-    const hasLabelContent = el.textContent !== '';
+    const inItem = hostContext('ion-item', el);
+    const inMultipleInputsItem = hostContext('ion-item.item-multiple-inputs', el);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -338,7 +357,7 @@ export class Checkbox implements ComponentInterface {
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
         aria-describedby={this.hintTextId}
         aria-invalid={this.isInvalid ? 'true' : undefined}
-        aria-labelledby={hasLabelContent ? this.inputLabelId : null}
+        aria-labelledby={this.hasLabelContent ? this.inputLabelId : null}
         aria-label={inheritedAttributes['aria-label'] || null}
         aria-disabled={disabled ? 'true' : null}
         aria-required={required ? 'true' : undefined}
@@ -349,11 +368,14 @@ export class Checkbox implements ComponentInterface {
         onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
-          'in-item': hostContext('ion-item', el),
+          'in-item': inItem,
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
+          // A single-input item has the input cover and draws the indicator itself.
+          // A multi-input item has no cover, so each control draws its own.
+          'ion-focusable': !inItem || inMultipleInputsItem,
           [`checkbox-justify-${justify}`]: justify !== undefined,
           [`checkbox-alignment-${alignment}`]: alignment !== undefined,
           [`checkbox-label-placement-${labelPlacement}`]: true,
@@ -376,7 +398,7 @@ export class Checkbox implements ComponentInterface {
           <div
             class={{
               'label-text-wrapper': true,
-              'label-text-wrapper-hidden': !hasLabelContent,
+              'label-text-wrapper-hidden': !this.hasLabelContent,
             }}
             part="label"
             id={this.inputLabelId}

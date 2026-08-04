@@ -224,12 +224,20 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         this.context.resetTab(e.detail.tab, originalHref, tappedTab.originalRouteOptions);
       }
     } else {
-      if (this.props.onIonTabsWillChange) {
-        this.props.onIonTabsWillChange(new CustomEvent('ionTabWillChange', { detail: { tab: e.detail.tab } }));
+      let onWillChange = this.props.onIonTabsWillChange;
+      let onDidChange = this.props.onIonTabsDidChange;
+      if (this.props.tabsContext) {
+        onWillChange = this.props.tabsContext?.tabBarProps.onIonTabsWillChange ?? this.props.onIonTabsWillChange;
+        onDidChange = this.props.tabsContext?.tabBarProps.onIonTabsDidChange ?? this.props.onIonTabsDidChange;
       }
-      if (this.props.onIonTabsDidChange) {
-        this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
+
+      if (onWillChange) {
+        onWillChange(new CustomEvent('ionTabWillChange', { detail: { tab: e.detail.tab } }));
       }
+      if (onDidChange) {
+        onDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
+      }
+
       if (hasRouterOutlet) {
         this.setActiveTabOnContext(e.detail.tab);
         this.context.changeTab(e.detail.tab, currentHref, e.detail.routeOptions);

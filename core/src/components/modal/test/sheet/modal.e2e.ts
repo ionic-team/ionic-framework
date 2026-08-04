@@ -399,4 +399,51 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(Object.keys(dragEndEvent.detail).length).toBe(5);
     });
   });
+
+  test.describe(title('sheet modal: late breakpoints binding'), () => {
+    test('should not crash when swiped after breakpoints are set after the modal loads', async ({ page }) => {
+      const pageErrors: string[] = [];
+      page.on('pageerror', (err) => pageErrors.push(err.message));
+
+      await page.setContent(
+        `
+        <ion-modal initial-breakpoint="1">
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+      `,
+        config
+      );
+
+      const modal = page.locator('ion-modal');
+
+      /**
+       * Simulates a JS framework (e.g. Angular with zoneless change detection)
+       * applying the `breakpoints` binding after the web component has finished
+       * loading. `setContent` resolves after `componentDidLoad`, so this lands
+       * too late for the manual `breakpointsChanged()` call in `componentDidLoad`
+       * to pick it up
+       */
+      await modal.evaluate((el: HTMLIonModalElement) => {
+        el.breakpoints = [0, 1];
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+
+      // Swiping the sheet down should snap it to breakpoint 0 and dismiss it
+      // without throwing an error
+      const handle = page.locator('ion-modal .modal-handle');
+      await expect(handle).toBeVisible();
+      await dragElementBy(handle, page, 0, 600);
+
+      // Flush any pending errors from the gesture's end handler
+      await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      expect(pageErrors).toEqual([]);
+
+      await ionModalDidDismiss.next();
+    });
+  });
 });

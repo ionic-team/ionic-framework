@@ -1,11 +1,10 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Fragment, Host, Prop, State, h, Watch } from '@stencil/core';
+import { Component, Element, Event, Fragment, Host, Method, Prop, State, h, Watch } from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
-import { Method } from 'ionicons/dist/types/stencil-public-runtime';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
@@ -535,9 +534,20 @@ export class InputOTP implements ComponentInterface {
    * - Tab: Allows normal tab navigation between components
    */
   private onKeyDown = (index: number) => (event: KeyboardEvent) => {
-    const { length } = this;
+    const { disabled, length, readonly } = this;
     const rtl = isRTL(this.el);
     const input = event.target as HTMLInputElement;
+
+    if (disabled) {
+      return;
+    }
+
+    if (readonly) {
+      if (event.key === 'Backspace' || event.key === 'Delete') {
+        event.preventDefault();
+        return;
+      }
+    }
 
     // Meta shortcuts are used to copy, paste, and select text
     // We don't want to handle these keys here
@@ -603,10 +613,14 @@ export class InputOTP implements ComponentInterface {
    * 5. Single character replacement
    */
   private onInput = (index: number) => (event: InputEvent) => {
-    const { length, validKeyPattern } = this;
+    const { disabled, length, readonly, validKeyPattern } = this;
     const input = event.target as HTMLInputElement;
     const value = input.value;
     const previousValue = this.previousInputValues[index] || '';
+
+    if (disabled || readonly) {
+      return;
+    }
 
     // 1. Autofill handling
     // If the length of the value increases by more than 1 from the previous
@@ -735,9 +749,13 @@ export class InputOTP implements ComponentInterface {
    * the next empty input after pasting.
    */
   private onPaste = (event: ClipboardEvent) => {
-    const { inputRefs, length, validKeyPattern } = this;
+    const { disabled, inputRefs, length, readonly, validKeyPattern } = this;
 
     event.preventDefault();
+
+    if (disabled || readonly) {
+      return;
+    }
 
     const pastedText = event.clipboardData?.getData('text');
 

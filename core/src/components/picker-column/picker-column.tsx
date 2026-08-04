@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { doc } from '@utils/browser';
-import { getElementRoot, raf } from '@utils/helpers';
+import { raf } from '@utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
 import { isPlatform } from '@utils/platform';
 import { createColorClasses } from '@utils/theme';
@@ -122,9 +122,7 @@ export class PickerColumn implements ComponentInterface {
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
          */
-        const oldActive = getElementRoot(el).querySelector<HTMLIonPickerColumnOptionElement>(
-          `.${PICKER_ITEM_ACTIVE_CLASS}`
-        );
+        const oldActive = el.querySelector<HTMLIonPickerColumnOptionElement>(`.${PICKER_ITEM_ACTIVE_CLASS}`);
         if (oldActive) {
           this.setPickerItemActiveState(oldActive, false);
         }

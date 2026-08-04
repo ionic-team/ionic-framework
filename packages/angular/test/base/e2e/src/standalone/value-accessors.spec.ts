@@ -8,13 +8,19 @@ test.describe('Value Accessors', () => {
 
     test('should update the form value', async ({ page }) => {
       await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ checkbox: false }, null, 2));
-      await expect(page.locator('ion-checkbox')).toHaveClass(/ion-pristine/);
+      await expect(page.getByRole('checkbox', { name: 'Static Checkbox Label' })).toHaveClass(/ion-pristine/);
 
-      await page.locator('ion-checkbox').click();
+      await page.getByRole('checkbox', { name: 'Static Checkbox Label' }).click();
 
       await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ checkbox: true }, null, 2));
-      await expect(page.locator('ion-checkbox')).toHaveClass(/ion-dirty/);
-      await expect(page.locator('ion-checkbox')).toHaveClass(/ion-valid/);
+      await expect(page.getByRole('checkbox', { name: 'Static Checkbox Label' })).toHaveClass(/ion-dirty/);
+      await expect(page.getByRole('checkbox', { name: 'Static Checkbox Label' })).toHaveClass(/ion-valid/);
+
+      await expect(page.getByRole('checkbox', { name: 'Static Checkbox Label' })).toBeVisible();
+    });
+
+    test('should display dynamically set label', async ({ page }) => {
+      await expect(page.getByRole('checkbox', { name: 'Dynamic Checkbox Label' })).toBeVisible();
     });
   });
 
