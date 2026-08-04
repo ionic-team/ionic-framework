@@ -47,7 +47,7 @@ const supportsPassive = (node: Node) => {
         },
         opts
       );
-    } catch (e) {
+    } catch {
       _sPassive = false;
     }
   }

@@ -32,7 +32,7 @@ export const createRoutingComponent = <PropType, ElementType>(tagName: string, c
 
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
-    context!: React.ContextType<typeof NavContext>;
+    declare context: React.ContextType<typeof NavContext>;
     ref: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
 

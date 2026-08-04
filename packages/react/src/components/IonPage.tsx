@@ -6,7 +6,6 @@ import PageManager from '../routing/PageManager';
 import type { IonicReactProps } from './IonicReactProps';
 import { createForwardRef } from './utils';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IonPageProps extends IonicReactProps {}
 
 interface IonPageInternalProps extends IonPageProps {
@@ -15,7 +14,7 @@ interface IonPageInternalProps extends IonPageProps {
 }
 
 class IonPageInternal extends React.Component<IonPageInternalProps> {
-  context!: React.ContextType<typeof NavContext>;
+  declare context: React.ContextType<typeof NavContext>;
 
   constructor(props: IonPageInternalProps) {
     super(props);
