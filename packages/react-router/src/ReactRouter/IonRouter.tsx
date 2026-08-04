@@ -230,8 +230,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
         if (action === 'POP') {
           const currentRoute = locationHistory.current.current();
           const isForwardNavigation =
-            forwardStack.current.length > 0 &&
-            forwardStack.current[forwardStack.current.length - 1] === location.key;
+            forwardStack.current.length > 0 && forwardStack.current[forwardStack.current.length - 1] === location.key;
 
           if (isForwardNavigation) {
             forwardStack.current.pop();
@@ -259,7 +258,14 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
               // Sync URL via replace, like handleNavigateBack's non-linear path (#25141).
               incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
               forwardStack.current = [];
-              handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back', undefined, undefined, prevInfo.tab);
+              handleNavigate(
+                prevInfo.pathname + (prevInfo.search || ''),
+                'pop',
+                'back',
+                undefined,
+                undefined,
+                prevInfo.tab
+              );
               return;
             } else {
               incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };

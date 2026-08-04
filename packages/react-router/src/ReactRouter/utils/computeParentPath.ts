@@ -165,10 +165,7 @@ const findFirstSpecificMatchingRoute = (
  * The outlet's mount path is always known from React Router's RouteContext,
  * so no heuristic-based discovery is needed.
  */
-const couldSpecificRouteMatch = (
-  routeChildren: React.ReactElement[],
-  remainingPath: string
-): boolean => {
+const couldSpecificRouteMatch = (routeChildren: React.ReactElement[], remainingPath: string): boolean => {
   const remainingFirstSegment = remainingPath.split('/')[0];
 
   return routeChildren.some((route) => {

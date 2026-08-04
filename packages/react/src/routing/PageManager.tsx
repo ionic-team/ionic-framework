@@ -15,7 +15,7 @@ interface PageManagerProps {
 
 export class PageManager extends React.PureComponent<PageManagerProps> {
   ionLifeCycleContext!: React.ContextType<typeof IonLifeCycleContext>;
-  context!: React.ContextType<typeof StackContext>;
+  declare context: React.ContextType<typeof StackContext>;
   ionPageElementRef: React.RefObject<HTMLDivElement>;
   stableMergedRefs: React.RefCallback<HTMLDivElement>;
 
