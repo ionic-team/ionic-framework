@@ -772,7 +772,7 @@ export class Nav implements ComponentInterface {
       : undefined;
     const mode = getIonMode(this);
     const enteringEl = enteringView.element!;
-    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+
     const leavingEl = leavingView && leavingView.element!;
     const animationOpts: TransitionOptions = {
       mode,

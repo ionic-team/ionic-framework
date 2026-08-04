@@ -47,18 +47,28 @@
     "@ionic/vue": "^8.8.15"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/node": "^14.10.1",
-    "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "@typescript-eslint/parser": "^5.48.2",
-    "eslint": "^7.32.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-import": "^2.31.0",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
-    "typescript": "^5.7.3",
+    "typescript": "^6.0.0",
     "vue": "^3.5.0",
     "vue-router": "^5.2.0"
+  },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
   }
 }

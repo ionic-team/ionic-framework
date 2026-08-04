@@ -29,8 +29,8 @@
     "build.prod": "npm run clean && npm run build",
     "build.watch": "npm run build -- --watch",
     "clean": "rm -rf ./dist",
-    "lint": "eslint . --ext .ts && npm run prettier",
-    "lint.fix": "eslint . --ext .ts --fix && npm run prettier.fix",
+    "lint": "eslint . && npm run prettier",
+    "lint.fix": "eslint . --fix && npm run prettier.fix",
     "prettier": "prettier \"**/*.ts\" --check",
     "prettier.fix": "prettier \"**/*.ts\" --write",
     "sync": "sh ./scripts/sync.sh"
@@ -55,14 +55,26 @@
     "@angular/platform-browser": "^22.0.0",
     "@angular/platform-browser-dynamic": "^22.0.0",
     "@angular/platform-server": "^22.0.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.0.0",
     "@ionic/eslint-config": "^0.4.0",
     "@ionic/prettier-config": "^2.0.0",
     "@types/node": "^22.9.3",
-    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-import": "^2.31.0",
     "ng-packagr": "^22.0.0",
     "prettier": "^2.4.1",
     "rxjs": "^7.8.0",
     "typescript": "~6.0.0"
+  },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
   },
   "prettier": "@ionic/prettier-config",
   "dependencies": {

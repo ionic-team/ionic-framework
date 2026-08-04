@@ -38,6 +38,12 @@ runs:
       run: npm run build
       shell: bash
       working-directory: ./packages/vue-router
+    - name: Clean package.json updates
+      run: git checkout ./core/package.json
+      shell: bash
+    - name: 🔍 Check Diff
+      run: git diff --exit-code
+      shell: bash
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-vue-router

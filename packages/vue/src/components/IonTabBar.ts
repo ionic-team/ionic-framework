@@ -92,10 +92,8 @@ export const IonTabBar = defineComponent({
        * No-ops until `mounted` swaps in IonTabs' emitters, if IonTabs is
        * present.
        */
-      /* eslint-disable @typescript-eslint/no-empty-function */
       _tabsWillChange: (() => {}) as TabChangeHandler,
       _tabsDidChange: (() => {}) as TabChangeHandler,
-      /* eslint-enable @typescript-eslint/no-empty-function */
     };
   },
   updated() {
