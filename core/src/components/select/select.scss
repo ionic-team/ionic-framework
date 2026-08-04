@@ -527,7 +527,6 @@ button {
 :host(.select-label-placement-stacked) .select-control,
 :host(.select-label-placement-floating) .select-control {
   flex-direction: column;
-  align-items: start;
 
   /**
    * When using a stacked/floating label, the inner wrapper is
@@ -536,6 +535,8 @@ button {
    * of the component.
    */
   flex-grow: 1;
+
+  align-items: start;
 }
 
 /**
