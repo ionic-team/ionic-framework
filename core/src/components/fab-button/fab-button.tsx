@@ -163,18 +163,22 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   };
 
   /**
-   * Renders a hidden native button inside the associated form so that pressing
-   * Enter on a form field or clicking this component triggers form submission.
-   * The shadow DOM button does not participate in form submission natively,
-   * which is why this workaround is necessary.
+   * The native button rendered inside `ion-fab-button` is in the Shadow DOM and
+   * does not participate in form submission, so a hidden native button is added
+   * to the associated form and clicked instead.
    */
   private renderHiddenButton() {
     const formEl = (this.formEl = this.findForm());
     if (formEl) {
       const { formButtonEl } = this;
+
+      // Reuse the existing hidden button, syncing values that changed since it was created.
       if (formButtonEl !== null && formEl.contains(formButtonEl)) {
+        formButtonEl.disabled = this.disabled;
+        formButtonEl.type = this.type;
         return;
       }
+
       const newFormButtonEl = (this.formButtonEl = document.createElement('button'));
       newFormButtonEl.type = this.type;
       newFormButtonEl.style.display = 'none';
@@ -244,6 +248,10 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
             target: this.target,
           };
 
+    /**
+     * The hidden button is created during render so that setting `type` or
+     * `form` after the component loads still adds it to the form.
+     */
     if (type !== 'button') {
       this.renderHiddenButton();
     }
@@ -272,7 +280,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          onClick={(ev: Event) => openURL(href, ev, this.routerDirection, this.routerAnimation)}
+          onClick={(ev: Event) => type === 'button' && openURL(href, ev, this.routerDirection, this.routerAnimation)}
           {...inheritedAttributes}
         >
           <ion-icon

@@ -24,24 +24,22 @@
 
       <ion-content class="ion-padding" id="content">
         <p>The FAB button below is inside the form. Clicking it should submit the form.</p>
-        <form onsubmit="handleSubmit(event)" action="http://httpbin.org/get" method="GET">
+        <form onsubmit="handleSubmit(event)">
           <ion-list>
             <ion-item>
               <ion-input label="Name" name="name" required placeholder="Enter name"></ion-input>
             </ion-item>
           </ion-list>
 
-          <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button type="submit">
-              <ion-icon name="cloud-upload-outline"></ion-icon>
-            </ion-fab-button>
-          </ion-fab>
+          <ion-fab-button type="submit">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+          </ion-fab-button>
         </form>
 
         <br /><br />
 
         <p>The FAB button below is outside the form but linked by id. Clicking it should also submit the form.</p>
-        <form id="outside-form" onsubmit="handleSubmit(event)" action="http://httpbin.org/get" method="GET">
+        <form id="outside-form" onsubmit="handleSubmit(event)">
           <ion-list>
             <ion-item>
               <ion-input label="Email" name="email" type="email" required placeholder="Enter email"></ion-input>
@@ -52,6 +50,18 @@
         <ion-fab-button form="outside-form" type="submit">
           <ion-icon name="checkmark-outline"></ion-icon>
         </ion-fab-button>
+
+        <p>
+          The fixed FAB below submits the form above it. A fixed FAB has to be a direct child of
+          <code>ion-content</code> for <code>slot="fixed"</code> to apply, so it cannot be nested in the form and needs
+          <code>form</code> to target it.
+        </p>
+
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+          <ion-fab-button form="outside-form" type="submit">
+            <ion-icon name="send-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
       </ion-content>
     </ion-app>
 
