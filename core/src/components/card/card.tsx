@@ -1,8 +1,8 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Element, Component, Host, Prop, h } from '@stencil/core';
+import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAttributes } from '@utils/helpers';
+import type { Attributes, AttributeWatcher } from '@utils/helpers';
+import { inheritAttributes, watchAttributes } from '@utils/helpers';
 import { createColorClasses, openURL } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -24,6 +24,7 @@ import type { RouterDirection } from '../router/utils/interface';
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
   private inheritedAriaAttributes: Attributes = {};
+  private ariaWatcher?: AttributeWatcher;
 
   @Element() el!: HTMLElement;
   /**
@@ -89,6 +90,18 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentWillLoad() {
     this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
+  connectedCallback() {
+    this.ariaWatcher = watchAttributes(this.el, ['aria-label'], (changed) => {
+      this.inheritedAriaAttributes = { ...this.inheritedAriaAttributes, ...changed };
+      forceUpdate(this);
+    });
+  }
+
+  disconnectedCallback() {
+    this.ariaWatcher?.destroy();
+    this.ariaWatcher = undefined;
   }
 
   private isClickable(): boolean {

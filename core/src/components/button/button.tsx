@@ -205,17 +205,24 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inToolbar = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
+  }
+
+  connectedCallback() {
+    /**
+     * Must run before watchForAriaAttributeChanges: it calls removeAttribute
+     * internally to strip the host's initial values, and that call must
+     * happen before removeAttribute is patched below — otherwise this
+     * strip would itself be treated as an external removal.
+     */
     this.inheritedAttributes = inheritAriaAttributes(this.el, ['aria-disabled']);
 
     /**
      * Keeps inherited ARIA attributes in sync with the host element for the
-     * lifetime of the component, not just at initial load. This replaces the
-     * previous approach of manually re-declaring @Watch for each aria attribute
-     * that could change post-load
-     *
-     * aria-disabled is excluded here (and from the initial inheritAriaAttributes
-     * call above) because button.tsx sets it itself on Host based on the `disabled` prop
+     * lifetime of the component, not just at initial load. `aria-disabled` is excluded here
+     * (and from the initial inheritAriaAttributes call above) because button.tsx sets
+     * it itself on Host based on the `disabled` prop.
      */
+
     this.ariaWatcher = watchForAriaAttributeChanges(
       this.el,
       (changed) => {
@@ -226,9 +233,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     );
   }
 
-  // Prevents
   disconnectedCallback() {
-    this.ariaWatcher?.disconnect();
+    this.ariaWatcher?.destroy();
     this.ariaWatcher = undefined;
   }
 
