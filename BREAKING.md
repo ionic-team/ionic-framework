@@ -244,6 +244,10 @@ The following internal elements have been modified:
 
 While the public API has not changed, selectors or style overrides targeting the previous markup will need to be updated to reference the new element names and their organization. If you have custom CSS targeting the internal structure of textarea, update your selectors to account for these structural changes.
 
+**Minimum Height Change**
+
+The minimum height of textarea in Material Design (`md` mode) has been increased from `56px` to `72px`. This change ensures consistent heights across textareas regardless of the `fill` property or `labelPlacement`, providing a more uniform and predictable user experience. If you were relying on textareas being `56px` tall or had custom CSS based on that value, you will need to either update your styles to accommodate the new `72px` height or override it back to `56px` if needed.
+
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
 <h4 id="version-9x-angular">Angular</h4>
