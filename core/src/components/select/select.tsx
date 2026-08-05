@@ -1340,7 +1340,7 @@ export class Select implements ComponentInterface {
     renderHiddenInput(true, el, name, parseValue(value), disabled);
 
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded));
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || isExpanded));
 
     return (
       <Host
