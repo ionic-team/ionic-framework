@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.17](https://github.com/ionic-team/ionic-framework/compare/v8.8.16...v8.8.17) (2026-08-05)
+
+
+### Bug Fixes
+
+* **react-router:** symmetric pathname+search url comparison ([#31153](https://github.com/ionic-team/ionic-framework/issues/31153)) ([ffef25d](https://github.com/ionic-team/ionic-framework/commit/ffef25d2e2597bee5fdb8833d9e50ff9234d74e0)), closes [#31152](https://github.com/ionic-team/ionic-framework/issues/31152) [#31152](https://github.com/ionic-team/ionic-framework/issues/31152) [#25534](https://github.com/ionic-team/ionic-framework/issues/25534)
+
+
+
+
+
 ## [8.8.16](https://github.com/ionic-team/ionic-framework/compare/v8.8.15...v8.8.16) (2026-07-29)
 
 **Note:** Version bump only for package @ionic/react-router
