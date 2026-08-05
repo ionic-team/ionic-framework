@@ -24,6 +24,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Router Outlet](#version-9x-router-outlet)
   - [Searchbar](#version-9x-searchbar)
   - [Select](#version-9x-select)
+  - [Textarea](#version-9x-textarea)
 - [Framework Specific](#version-9x-framework-specific)
   - [Angular](#version-9x-angular)
   - [React](#version-9x-react)
@@ -228,6 +229,20 @@ Apps that relied on `ionChange` firing on every confirmation (for example, to de
 When using `interface="action-sheet"`, `ion-select` no longer assigns the `selected` role to the action sheet button for the currently selected option. This aligns the `action-sheet` interface with the `alert`, `popover`, and `modal` interfaces, none of which assign this role. This does not change the selected option's styling.
 
 Previously, the `selected` role was assigned only to the option matching the select's current value. Because the dismiss role mirrors the tapped button, this surfaced in just one case: re-selecting the already-selected option dismissed the action sheet with `role: "selected"` in `ionActionSheetDidDismiss`. Tapping any other option changed the value and dismissed with `role: ""`. Now that the role is no longer assigned, both cases dismiss with `role: undefined`. Apps that inspected this role to detect that a value was chosen, such as reading `role` from the underlying action sheet's `onDidDismiss` result, should listen for `ion-select`'s `ionChange` event instead, which emits the selected value when the selection changes.
+
+<h4 id="version-9x-textarea">Textarea</h4>
+
+**Internal DOM Structure Changes**
+
+Due to the structural changes required to support floating labels with slotted start and end content, and because Textarea is a scoped component, this change has the potential to introduce breaking changes for developers who rely on the component's internal DOM structure or apply custom styling to internal elements.
+
+The following internal elements have been modified:
+- Removed: `<div class="textarea-wrapper-inner">`
+- Renamed: `<div class="start-slot-wrapper">` is now `<div class="textarea-start">`
+- Added: `<div class="textarea-control">` wrapper for the label and native control
+- Renamed: `<div class="end-slot-wrapper">` is now `<div class="textarea-end">`
+
+While the public API has not changed, selectors or style overrides targeting the previous markup will need to be updated to use the new class names. If you have custom CSS targeting the internal structure of textarea, update your selectors to reference the new element names.
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
