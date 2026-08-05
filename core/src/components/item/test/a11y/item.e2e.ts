@@ -153,3 +153,94 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
     });
   });
 });
+
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('item: aria attribute sync'), () => {
+    test('native element updates aria-label when host attribute changes', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
+      });
+
+      await page.setContent(
+        `
+        <ion-item button="true" aria-label="label">Item</ion-item>
+      `,
+        config
+      );
+
+      const host = page.locator('ion-item');
+      const nativeItem = host.locator('[part="native"]');
+
+      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+
+      await expect(nativeItem).toHaveAttribute('aria-label', 'updated');
+    });
+
+    test('aria-label sync survives detach and reattach', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="container">
+          <ion-item button="true" aria-label="label">Item</ion-item>
+        </div>
+      `,
+        config
+      );
+
+      const host = page.locator('ion-item');
+      const nativeItem = host.locator('[part="native"]');
+
+      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
+
+      await host.evaluate((itemEl) => {
+        const parent = itemEl.parentElement!;
+        parent.removeChild(itemEl);
+        parent.appendChild(itemEl);
+      });
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+      await expect(nativeItem).toHaveAttribute('aria-label', 'updated');
+    });
+
+    test('helper strips host attribute and syncs native element through set, empty, and remove', async ({ page }) => {
+      page.on('console', (msg) => {
+        console.log(`[browser] ${msg.type()}: ${msg.text()}`);
+      });
+
+      await page.setContent(
+        `
+          <ion-item button="true" aria-label="initial">Button</ion-button>
+        `,
+        config
+      );
+
+      const host = page.locator('ion-item');
+      const nativeButton = host.locator('[part="native"]');
+
+      // Initial load: inheritAriaAttributes should have stripped aria-label
+      // from the host and copied it onto the native element.
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).toHaveAttribute('aria-label', 'initial');
+
+      // Setting a new value on the host: watcher should capture it, sync it
+      // to native, and re-strip it from the host.
+      await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).toHaveAttribute('aria-label', 'second');
+
+      // Setting to empty string: empty string is a valid, non-null value.
+      await host.evaluate((el) => el.setAttribute('aria-label', ''));
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).toHaveAttribute('aria-label', '');
+
+      // Removing the attribute directly: the patched removeAttribute should
+      // fire onChange with null, which should remove aria-label from native
+      // and host.
+      await host.evaluate((el) => el.removeAttribute('aria-label'));
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).not.toHaveAttribute('aria-label');
+    });
+  });
+});
