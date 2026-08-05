@@ -1059,20 +1059,8 @@ export class Select implements ComponentInterface {
   };
 
   /**
-   * Renders the border container
-   * when fill="outline".
+   * Renders the outline border with a notch for the label.
    */
-  private renderOutlineContainer() {
-    const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
-
-    if (!hasOutlineFill) {
-      return null;
-    }
-
-    return <div class="select-outline-container">{this.renderOutlineDecorations()}</div>;
-  }
-
   private renderOutlineDecorations() {
     return [
       <div class="select-outline-start"></div>,
@@ -1336,6 +1324,7 @@ export class Select implements ComponentInterface {
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
+    const hasOutlineFill = mode === 'md' && fill === 'outline';
 
     renderHiddenInput(true, el, name, parseValue(value), disabled);
 
@@ -1367,7 +1356,7 @@ export class Select implements ComponentInterface {
         style={{ '--start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
         <label class="select-wrapper" id="select-label" onClick={this.onLabelClick} part="wrapper">
-          {this.renderOutlineContainer()}
+          {hasOutlineFill && <div class="select-outline-container">{this.renderOutlineDecorations()}</div>}
           <div class="select-start" part="start">
             <slot name="start"></slot>
           </div>
