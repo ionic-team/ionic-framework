@@ -187,6 +187,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     }
   }
 
+  // TODO(FW-7663): share the hidden button and form lookup with ion-button
   private findForm(): HTMLFormElement | null {
     const { form } = this;
     if (form instanceof HTMLFormElement) {
