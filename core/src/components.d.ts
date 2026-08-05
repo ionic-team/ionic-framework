@@ -1152,6 +1152,10 @@ export namespace Components {
          */
         "download": string | undefined;
         /**
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+         */
+        "form"?: string | HTMLFormElement;
+        /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href": string | undefined;
@@ -6423,6 +6427,10 @@ declare namespace LocalJSX {
          */
         "download"?: string | undefined;
         /**
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+         */
+        "form"?: string | HTMLFormElement;
+        /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href"?: string | undefined;
@@ -9397,6 +9405,7 @@ declare namespace LocalJSX {
         "show": boolean;
         "translucent": boolean;
         "type": 'submit' | 'reset' | 'button';
+        "form": string | HTMLFormElement;
         "size": 'small';
         "closeIcon": string;
     }
