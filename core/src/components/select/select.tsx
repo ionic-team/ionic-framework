@@ -55,8 +55,8 @@ import type {
  * @part bottom - The container element for helper text, error text, and counter.
  * @part wrapper - The clickable label element that wraps the entire form field (label text, slots, selected values or placeholder, and toggle icons).
  * @part start - The wrapper element for the content in the start slot.
- * @part control - The wrapper element containing the label and native select control.
- * @part end - The wrapper element for the content in the end slot and the dropdown icon.
+ * @part control - The wrapper element containing the label and native select control. When the label is not floating or stacked, this part also contains the dropdown icon.
+ * @part end - The wrapper element for the content in the end slot. When the label is floating or stacked, this part also contains the dropdown icon.
  */
 @Component({
   tag: 'ion-select',
@@ -1376,11 +1376,23 @@ export class Select implements ComponentInterface {
             <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
               {this.renderSelectText()}
               {this.renderListbox()}
+              {/**
+               * The icon is rendered inside the native wrapper when the
+               * label is not floating or stacked so it stays grouped with
+               * the control. This keeps it positioned correctly when the
+               * justify property is set.
+               */}
+              {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
             </div>
           </div>
           <div class="select-end" part="end">
+            {/**
+             * The icon is rendered in the end container when the
+             * select has a floating or stacked label so it is
+             * centered vertically relative to the entire select.
+             */}
+            {hasFloatingOrStackedLabel && this.renderSelectIcon()}
             <slot name="end"></slot>
-            {this.renderSelectIcon()}
           </div>
           {shouldRenderHighlight && <div class="select-highlight"></div>}
         </label>

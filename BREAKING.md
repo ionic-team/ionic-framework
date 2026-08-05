@@ -235,8 +235,8 @@ The component's internal DOM structure has been restructured to support floating
 
 Developers who previously styled `ion-select::part(inner)` should migrate to targeting the updated component structure using the following CSS parts instead:
 - `ion-select::part(start)` - Target the start slot wrapper
-- `ion-select::part(control)` - Target the control wrapper containing the label and select
-- `ion-select::part(end)` - Target the end slot and icon wrapper
+- `ion-select::part(control)` - Target the control wrapper containing the label and native select. When the label is not floating or stacked, this part also contains the dropdown icon.
+- `ion-select::part(end)` - Target the end slot wrapper. When the label is floating or stacked, this part also contains the dropdown icon.
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
