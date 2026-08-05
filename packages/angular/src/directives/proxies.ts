@@ -749,14 +749,14 @@ export declare interface IonFab extends Components.IonFab {}
 
 
 @ProxyCmp({
-  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'theme', 'translucent', 'type']
+  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'theme', 'translucent', 'type']
 })
 @Component({
   selector: 'ion-fab-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'theme', 'translucent', 'type'],
+  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'theme', 'translucent', 'type'],
 })
 export class IonFabButton {
   protected el: HTMLIonFabButtonElement;

@@ -31,14 +31,24 @@ Rancher Desktop provides the Docker engine functionality needed to run our conta
 
 ### Installing Rancher Desktop
 
-Rancher Desktop can be installed by [following the steps on the Rancher Desktop website](https://rancherdesktop.io/).
+Install Rancher Desktop by following the instructions on the [Rancher Desktop website](https://rancherdesktop.io/).
 
-After launching Rancher Desktop, choose the following settings to ensure Docker is properly configured:
-  - Uncheck "Enable Kubernetes"
-  - Choose Container Engine: `dockerd` (this enables the Docker Engine)
+After launching Rancher Desktop, open **Preferences** and configure the following settings:
+
+- **Container Engine → General**
+  - Enable Kubernetes: Unchecked
+  - Container Engine: `dockerd`
+
+- **Application**
   - Configure PATH: Automatic
 
-Once installed and configured, you can use all Docker commands through Rancher Desktop just as you would with Docker Desktop. All commands in this guide that reference Docker (such as `npm run test.e2e.docker`) will work through Rancher Desktop's Docker engine.
+- **Virtual Machine**
+  - Emulation: `VZ`
+  - Volumes: `virtiofs`
+
+The **Virtual Machine** settings above are required for Docker to execute binaries correctly within mounted volumes during E2E tests.
+
+Once Rancher Desktop is configured, you can use Docker commands just as you would with Docker Desktop.
 
 ### Docker and Windows Development
 

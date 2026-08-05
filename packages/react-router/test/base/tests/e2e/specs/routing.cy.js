@@ -250,7 +250,7 @@ describe('Routing Tests', () => {
   it('/routing/ > Details 1 > Details 2 > Details 3 > Back > Settings Tab > Home Tab > Should be at details 2 page', () => {
     // fixes an issue where route history was being lost after starting to go back, switching tabs
     // and switching back to the same tab again
-    // for bug https://github.com/ionic-team/ionic-framework/issues/21834
+    // For bug https://github.com/ionic-team/ionic-framework/issues/21834
     cy.visit(`http://localhost:${port}/routing`);
     cy.ionPageVisible('home-page');
     cy.ionNav('ion-item', 'Details 1');
@@ -342,6 +342,65 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-details-page-1');
 
     cy.get('div.ion-page[data-pageid=home-details-page-1] [data-testid="details-input"]').should('have.value', '1');
+  });
+
+  it('Details 1 with Query Params > pop a same-URL history entry, should stay on details 1', () => {
+    // Regression: popstate over a same-URL entry on a search-bearing route used to trigger a false POP transition.
+    // For bug https://github.com/ionic-team/ionic-framework/issues/31152
+    cy.visit(`http://localhost:${port}/routing`);
+    cy.ionNav('ion-item', 'Details 1 with Query Params');
+    cy.ionPageVisible('home-details-page-1');
+    cy.location('search').should('eq', '?hello=there');
+
+    cy.window().then((win) => {
+      win.history.pushState({ marker: true }, '', win.location.href);
+    });
+
+    cy.go('back');
+
+    // Wait for a late teleport, otherwise the assertions pass against the pre-transition state.
+    cy.wait(1000);
+
+    cy.ionPageVisible('home-details-page-1');
+    cy.ionPageHidden('home-page');
+    cy.location('pathname').should('eq', '/routing/tabs/home/details/1');
+    cy.location('search').should('eq', '?hello=there');
+  });
+
+  it('Details 1 > Settings Details 1 > Back > Settings Tab > pop a same-URL history entry, should stay on settings', () => {
+    // Regression: switching to a tab recorded a route with no search, so a popstate over a
+    // same-URL entry used to teleport to the home tab.
+    // For bug https://github.com/ionic-team/ionic-framework/issues/31152
+    cy.visit(`http://localhost:${port}/routing`);
+    cy.ionNav('ion-item', 'Details 1');
+    cy.ionPageVisible('home-details-page-1');
+
+    cy.ionNav('ion-button', 'Go to Settings Details 1');
+    cy.ionPageVisible('settings-details-page-1');
+
+    cy.go('back');
+    cy.ionPageVisible('home-details-page-1');
+
+    cy.ionTabClick('Settings');
+    cy.ionPageVisible('settings-page');
+    cy.location('pathname').should('eq', '/routing/tabs/settings');
+
+    // Let the tab switch finish so the pop doesn't race the transition.
+    cy.wait(1000);
+
+    cy.window().then((win) => {
+      win.history.pushState({ marker: true }, '', win.location.href);
+    });
+
+    cy.go('back');
+
+    // Wait for a late teleport, otherwise the assertions pass against the pre-transition state.
+    cy.wait(1000);
+
+    cy.ionPageVisible('settings-page');
+    cy.ionPageHidden('home-details-page-1');
+    cy.location('pathname').should('eq', '/routing/tabs/settings');
+    cy.location('search').should('eq', '');
   });
 
   /*

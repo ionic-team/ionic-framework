@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { applyKeyboardFocus, configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: basic visual tests'), () => {
@@ -58,7 +58,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
 /**
  * This behavior does not vary across modes/directions
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('checkbox: ionChange'), () => {
     test('should fire ionChange when interacting with checkbox', async ({ page }) => {
       await page.setContent(
@@ -149,48 +149,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
   });
 
   test.describe(title('checkbox: ionFocus'), () => {
-    test('should not have visual regressions', async ({ page, pageUtils }) => {
-      await page.setContent(
-        `
-        <style>
-          #container {
-            display: inline-block;
-            padding: 10px;
-          }
-        </style>
-
-        <div id="container">
-          <ion-checkbox>Unchecked</ion-checkbox>
-        </div>
-      `,
-        config
-      );
-
-      await pageUtils.pressKeys('Tab');
-
-      const container = page.locator('#container');
-
-      await expect(container).toHaveScreenshot(screenshot(`checkbox-focus`));
-    });
-
-    test('should not have visual regressions when interacting with checkbox in item', async ({ page, pageUtils }) => {
-      await page.setContent(
-        `
-        <ion-item class="ion-focused">
-          <ion-checkbox>Unchecked</ion-checkbox>
-        </ion-item>
-      `,
-        config
-      );
-
-      // Test focus with keyboard navigation
-      await pageUtils.pressKeys('Tab');
-
-      const item = page.locator('ion-item');
-
-      await expect(item).toHaveScreenshot(screenshot(`checkbox-in-item-focus`));
-    });
-
     test('should fire ionFocus when checkbox is focused', async ({ page, pageUtils }) => {
       await page.setContent(
         `
@@ -425,6 +383,69 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
       const checkboxes = page.locator('#checkboxes');
       await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-shape-rectangular`));
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('checkbox: focus visual'), () => {
+    test('should render focus indicator when unchecked', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          #container {
+            width: fit-content;
+            padding: 10px;
+          }
+        </style>
+
+        <ion-app>
+          <div id="container">
+            <ion-checkbox>Unchecked</ion-checkbox>
+          </div>
+        </ion-app>
+      `,
+        config
+      );
+
+      const checkbox = page.locator('ion-checkbox');
+
+      await applyKeyboardFocus(page, checkbox);
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`checkbox-focus`));
+    });
+
+    test('should render focus indicator when checked', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          #container {
+            width: fit-content;
+            padding: 10px;
+          }
+        </style>
+
+        <ion-app>
+          <div id="container">
+            <ion-checkbox checked>Checked</ion-checkbox>
+          </div>
+        </ion-app>
+      `,
+        config
+      );
+
+      const checkbox = page.locator('ion-checkbox');
+
+      await applyKeyboardFocus(page, checkbox);
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`checkbox-focus-checked`));
     });
   });
 });
