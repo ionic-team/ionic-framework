@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.17](https://github.com/ionic-team/ionic-framework/compare/v8.8.16...v8.8.17) (2026-08-05)
+
+
+### Bug Fixes
+
+* **checkbox,radio,toggle:** add missing keyboard focus indicators ([#31295](https://github.com/ionic-team/ionic-framework/issues/31295)) ([2f9c0b7](https://github.com/ionic-team/ionic-framework/commit/2f9c0b7d8fa6371785cfdf1d99857eece4835e4d))
+* **fab-button:** restore submit, reset, and disabled form functionality ([#31249](https://github.com/ionic-team/ionic-framework/issues/31249)) ([93ee380](https://github.com/ionic-team/ionic-framework/commit/93ee38015125619509b9aa844d6f0025be0a71b7)), closes [#18550](https://github.com/ionic-team/ionic-framework/issues/18550)
+* **react-router:** symmetric pathname+search url comparison ([#31153](https://github.com/ionic-team/ionic-framework/issues/31153)) ([ffef25d](https://github.com/ionic-team/ionic-framework/commit/ffef25d2e2597bee5fdb8833d9e50ff9234d74e0)), closes [#31152](https://github.com/ionic-team/ionic-framework/issues/31152) [#31152](https://github.com/ionic-team/ionic-framework/issues/31152) [#25534](https://github.com/ionic-team/ionic-framework/issues/25534)
+* **refresher:** avoid gesture setup after disconnect ([#31316](https://github.com/ionic-team/ionic-framework/issues/31316)) ([d9b877f](https://github.com/ionic-team/ionic-framework/commit/d9b877f6059992808cccec503dbe2a30f6ccdb48)), closes [#31315](https://github.com/ionic-team/ionic-framework/issues/31315)
+* **tab:** retry lazy load after a failed attach ([#31324](https://github.com/ionic-team/ionic-framework/issues/31324)) ([81b52e2](https://github.com/ionic-team/ionic-framework/commit/81b52e25bd8fa55b905da2791d84b381a2db630b))
+
+
+
+
+
+## [8.8.16](https://github.com/ionic-team/ionic-framework/compare/v8.8.15...v8.8.16) (2026-07-29)
+
+
+### Bug Fixes
+
+* **angular:** guard transition against destroyed router outlet ([#31297](https://github.com/ionic-team/ionic-framework/issues/31297)) ([fdef61c](https://github.com/ionic-team/ionic-framework/commit/fdef61cc74285caff0549ba8bdac70cedaaba865)), closes [#31296](https://github.com/ionic-team/ionic-framework/issues/31296)
+* **modal:** keep focus on dialog for cycle sheet modals ([#31293](https://github.com/ionic-team/ionic-framework/issues/31293)) ([b4b2603](https://github.com/ionic-team/ionic-framework/commit/b4b2603210b313fc2f2ee2c88b9112751e24b338))
+* **select:** prevent floating label and placeholder from overlapping when focused ([#31276](https://github.com/ionic-team/ionic-framework/issues/31276)) ([e987009](https://github.com/ionic-team/ionic-framework/commit/e9870091c2f7460a1dc12c4b407ddfde39e1b156)), closes [#30401](https://github.com/ionic-team/ionic-framework/issues/30401)
+
+
+
+
+
 ## [8.8.15](https://github.com/ionic-team/ionic-framework/compare/v8.8.14...v8.8.15) (2026-07-22)
 
 

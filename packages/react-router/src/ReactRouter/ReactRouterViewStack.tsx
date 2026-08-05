@@ -282,7 +282,12 @@ export class ReactRouterViewStack extends ViewStacks {
         if (hasParams) {
           if (isWildcard) {
             const existingPathnameBase = v.routeData?.match?.pathnameBase;
-            const newMatch = matchComponent(reactElement, routeInfo.pathname, false, this.outletParentPaths.get(outletId));
+            const newMatch = matchComponent(
+              reactElement,
+              routeInfo.pathname,
+              false,
+              this.outletParentPaths.get(outletId)
+            );
             const newPathnameBase = newMatch?.pathnameBase;
             if (existingPathnameBase !== newPathnameBase) {
               return false;
@@ -455,9 +460,7 @@ export class ReactRouterViewStack extends ViewStacks {
 
       // When parent path context is available, compute the relative pathname once
       // outside the loop since both routeInfo.pathname and parentPath are invariant.
-      const relativePathname = parentPath
-        ? computeRelativeToParent(routeInfo.pathname, parentPath)
-        : null;
+      const relativePathname = parentPath ? computeRelativeToParent(routeInfo.pathname, parentPath) : null;
 
       let hasSpecificMatch = outletViews.some((v) => {
         if (v.id === viewItem.id) return false; // Skip self
@@ -631,7 +634,7 @@ export class ReactRouterViewStack extends ViewStacks {
           this.outletMountPaths.set(outletId, result.outletMountPath);
         }
       }
-    } catch (e) {
+    } catch {
       // Non-fatal: if we fail to compute parentPath, fall back to previous behavior
     }
 
@@ -991,9 +994,7 @@ function matchComponent(node: React.ReactElement, pathname: string, allowFallbac
   if (parentPath && routePath && !routePath.startsWith('/')) {
     // When parent path is known, compute exact relative pathname
     // instead of using the tail-slice heuristic
-    const relative = pathname.startsWith(parentPath)
-      ? pathname.slice(parentPath.length).replace(/^\//, '')
-      : pathname;
+    const relative = pathname.startsWith(parentPath) ? pathname.slice(parentPath.length).replace(/^\//, '') : pathname;
     pathnameToMatch = relative;
   } else {
     pathnameToMatch = derivePathnameToMatch(pathname, routePath);

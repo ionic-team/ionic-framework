@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { isOptionSelected } from '@utils/forms';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { createItemMultipleInputsObserver, isOptionSelected } from '@utils/forms';
 import { addEventListener, removeEventListener } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
 
@@ -27,6 +27,7 @@ import type { Color } from '../../interface';
 export class Radio implements ComponentInterface {
   private inputId = `ion-rb-${radioButtonIds++}`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
+  private itemFocusObserver?: MutationObserver;
 
   @Element() el!: HTMLIonRadioElement;
 
@@ -150,6 +151,8 @@ export class Radio implements ComponentInterface {
       this.updateState();
       addEventListener(radioGroup, 'ionValueChange', this.updateState);
     }
+
+    this.itemFocusObserver = createItemMultipleInputsObserver(this.el, () => forceUpdate(this));
   }
 
   disconnectedCallback() {
@@ -157,6 +160,10 @@ export class Radio implements ComponentInterface {
     if (radioGroup) {
       removeEventListener(radioGroup, 'ionValueChange', this.updateState);
       this.radioGroup = null;
+    }
+    if (this.itemFocusObserver) {
+      this.itemFocusObserver.disconnect();
+      this.itemFocusObserver = undefined;
     }
   }
 
@@ -216,6 +223,7 @@ export class Radio implements ComponentInterface {
     const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, alignment } = this;
     const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
+    const inMultipleInputsItem = hostContext('ion-item.item-multiple-inputs', el);
 
     return (
       <Host
@@ -230,9 +238,11 @@ export class Radio implements ComponentInterface {
           [`radio-justify-${justify}`]: justify !== undefined,
           [`radio-alignment-${alignment}`]: alignment !== undefined,
           [`radio-label-placement-${labelPlacement}`]: true,
-          // Focus and active styling should not apply when the radio is in an item
+          // A single-input item has the input cover and draws the indicator itself.
+          // A multi-input item has no cover, so each control draws its own. Active
+          // styling stays suppressed either way.
           'ion-activatable': !inItem,
-          'ion-focusable': !inItem,
+          'ion-focusable': !inItem || inMultipleInputsItem,
         })}
         role="radio"
         aria-checked={checked ? 'true' : 'false'}

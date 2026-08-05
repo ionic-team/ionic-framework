@@ -78,10 +78,8 @@ export const IonTabBar = defineComponent({
         hasRouterOutlet: false,
       },
       tabVnodes: [] as VNode[],
-      /* eslint-disable @typescript-eslint/no-empty-function */
       _tabsWillChange: { type: Function, default: () => {} },
       _tabsDidChange: { type: Function, default: () => {} },
-      /* eslint-enable @typescript-eslint/no-empty-function */
     };
   },
   updated() {

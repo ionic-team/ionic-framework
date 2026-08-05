@@ -19,8 +19,20 @@ runs:
       run: npm run sync
       shell: bash
       working-directory: ./packages/angular-server
+    - name: 🖌️ Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./packages/angular-server
     - name: 🏗️ Build
       run: npm run build.prod
+      shell: bash
+      working-directory: ./packages/angular-server
+    - name: Clean core package.json
+      run: git checkout ./package.json
+      shell: bash
+      working-directory: ./core
+    - name: 🔍 Check Diff
+      run: git diff --exit-code
       shell: bash
       working-directory: ./packages/angular-server
     - uses: ./.github/workflows/actions/upload-archive

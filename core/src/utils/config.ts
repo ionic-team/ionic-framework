@@ -241,7 +241,7 @@ type FocusManagerPriority = 'content' | 'heading' | 'banner';
 export const setupConfig = (config: IonicConfig) => {
   const win = window as any;
   const Ionic = win.Ionic;
-  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
     return;
   }
