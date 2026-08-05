@@ -91,6 +91,10 @@
 
   content: "";
 
+  // The indicator overhangs the handle, so it must not take pointer events;
+  // otherwise it widens the hit area and swallows clicks aimed past the toggle.
+  pointer-events: none;
+
   // Drawn behind the handle so the translucent indicator does not tint it. The
   // wrapper is its own stacking context, so it stays above the track.
   z-index: -1;

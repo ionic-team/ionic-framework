@@ -25,6 +25,10 @@
 
   content: "";
   opacity: 0.2;
+
+  // The indicator overhangs the control, so it must not take pointer events;
+  // otherwise it widens the hit area and swallows clicks aimed past the control.
+  pointer-events: none;
 }
 
 // Radio Label

@@ -46,6 +46,10 @@
   content: "";
   opacity: 0.2;
 
+  // The indicator overhangs the control, so it must not take pointer events;
+  // otherwise it widens the hit area and swallows clicks aimed past the control.
+  pointer-events: none;
+
   // Centered with insets because `transform` is physical and breaks in RTL.
   inset-block-start: calc(50% - #{$checkbox-focus-ring-size} / 2);
   inset-inline-start: calc(50% - #{$checkbox-focus-ring-size} / 2);
