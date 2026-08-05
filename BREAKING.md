@@ -229,9 +229,9 @@ When using `interface="action-sheet"`, `ion-select` no longer assigns the `selec
 
 Previously, the `selected` role was assigned only to the option matching the select's current value. Because the dismiss role mirrors the tapped button, this surfaced in just one case: re-selecting the already-selected option dismissed the action sheet with `role: "selected"` in `ionActionSheetDidDismiss`. Tapping any other option changed the value and dismissed with `role: ""`. Now that the role is no longer assigned, both cases dismiss with `role: undefined`. Apps that inspected this role to detect that a value was chosen, such as reading `role` from the underlying action sheet's `onDidDismiss` result, should listen for `ion-select`'s `ionChange` event instead, which emits the selected value when the selection changes.
 
-**Removal of `inner` CSS Part**
+**Internal DOM Structure Changes**
 
-Due to the structural changes required to support floating labels with slotted start and end content, the `inner` CSS part has been removed. This change has the potential to introduce breaking changes for developers who apply custom styling targeting the `::part(inner)` selector.
+The component's internal DOM structure has been restructured to support floating labels with slotted start and end content. Additionally, the structure of the component has been reorganized, with some elements now grouped differently than before. The `inner` wrapper element has been removed, and its content has been split across separate wrapper elements for the start slot, control, and end slot. This may introduce breaking changes for developers who rely on the component's internal DOM structure or apply custom styling to internal elements.
 
 Developers who previously styled `ion-select::part(inner)` should migrate to targeting the updated component structure using the following CSS parts instead:
 - `ion-select::part(start)` - Target the start slot wrapper
