@@ -369,7 +369,10 @@ a {
 
   text-overflow: ellipsis;
 
+  // Makes the wrapper a scroll container, which zeroes its automatic minimum
+  // size and lets long labels ellipsize
   overflow: inherit;
+
   box-sizing: border-box;
 }
 
@@ -382,6 +385,17 @@ a {
 :host(.item-label-floating) .input-wrapper {
   flex: 1;
   flex-direction: column;
+}
+
+// Item Focus Indicator Room
+// --------------------------------------------------
+// Widens the clip boundary so a focus indicator on a control in the default
+// slot isn't cut off. Scoped because the wider painted box overlaps end slot
+// content on items with nothing overhanging
+
+:host(.item-focus-indicator-room) .input-wrapper {
+  @include margin-horizontal(-$item-input-focus-indicator-room);
+  @include padding-horizontal($item-input-focus-indicator-room);
 }
 
 // Item w/ Multiple Inputs
@@ -415,4 +429,3 @@ a {
 ion-ripple-effect {
   color: var(--ripple-color);
 }
-

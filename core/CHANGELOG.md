@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.17](https://github.com/ionic-team/ionic-framework/compare/v8.8.16...v8.8.17) (2026-08-05)
+
+
+### Bug Fixes
+
+* **checkbox,radio,toggle:** add missing keyboard focus indicators ([#31295](https://github.com/ionic-team/ionic-framework/issues/31295)) ([2f9c0b7](https://github.com/ionic-team/ionic-framework/commit/2f9c0b7d8fa6371785cfdf1d99857eece4835e4d))
+* **fab-button:** restore submit, reset, and disabled form functionality ([#31249](https://github.com/ionic-team/ionic-framework/issues/31249)) ([93ee380](https://github.com/ionic-team/ionic-framework/commit/93ee38015125619509b9aa844d6f0025be0a71b7)), closes [#18550](https://github.com/ionic-team/ionic-framework/issues/18550)
+* **refresher:** avoid gesture setup after disconnect ([#31316](https://github.com/ionic-team/ionic-framework/issues/31316)) ([d9b877f](https://github.com/ionic-team/ionic-framework/commit/d9b877f6059992808cccec503dbe2a30f6ccdb48)), closes [#31315](https://github.com/ionic-team/ionic-framework/issues/31315)
+* **tab:** retry lazy load after a failed attach ([#31324](https://github.com/ionic-team/ionic-framework/issues/31324)) ([81b52e2](https://github.com/ionic-team/ionic-framework/commit/81b52e25bd8fa55b905da2791d84b381a2db630b))
+
+
+
+
+
 ## [8.8.16](https://github.com/ionic-team/ionic-framework/compare/v8.8.15...v8.8.16) (2026-07-29)
 
 
