@@ -191,7 +191,7 @@ export const inheritAriaAttributes = (el: HTMLElement, ignoreList?: string[]) =>
 };
 
 export interface AttributeWatcher {
-  disconnect: () => void;
+  destroy: () => void;
 }
 
 /**
@@ -203,14 +203,21 @@ export interface AttributeWatcher {
 export const watchAttributes = (
   el: HTMLElement,
   attributes: string[],
-  onChange: (changed: { [k: string]: string }) => void
+  onChange: (changed: { [k: string]: string | null }) => void
 ): AttributeWatcher => {
   if (typeof MutationObserver === 'undefined') {
     // Not available in Stencil's mock-doc test environment (used by
     // `stencil test --spec`), and, as a defensive fallback, environments
     // without native MutationObserver support.
-    return { disconnect: () => {} };
+    return { destroy: () => {} };
   }
+
+  // Keep a reference to the browser's original implementation.
+  // removeAttribute is patched below because MutationObserver cannot
+  // observe removeAttribute() calls once inheritAttributes() has
+  // already stripped the attribute from the host. In that case the
+  // browser performs no DOM mutation and emits no MutationRecord.
+  const originalRemoveAttribute = el.removeAttribute.bind(el);
 
   // Set up mutation observer to observe attribute changes
   const observer = new MutationObserver((mutations) => {
@@ -223,11 +230,12 @@ export const watchAttributes = (
       if (value === null) continue;
       changed[name] = value;
     }
-
-    // If attribute changes, re-strip so the value doesn't live on both host
-    // and native element.
     if (Object.keys(changed).length > 0) {
-      Object.keys(changed).forEach((name) => el.removeAttribute(name));
+      // Use the original implementation here. Calling the patched
+      // removeAttribute would recursively invoke onChange() with
+      // { [name]: null }, even though we are only stripping the host
+      // after synchronizing a new value.
+      Object.keys(changed).forEach((name) => originalRemoveAttribute(name));
       onChange(changed);
     }
   });
@@ -235,8 +243,24 @@ export const watchAttributes = (
   // Watch for attribute changes on this element
   observer.observe(el, { attributes: true, attributeFilter: attributes });
 
-  // Stop watching, called by `disconnectedCallback`
-  return { disconnect: () => observer.disconnect() };
+  // Intercept removeAttribute so we can notify consumers when an
+  // already-synced attribute is explicitly cleared.
+  el.removeAttribute = (name: string) => {
+    if (attributes.includes(name)) {
+      originalRemoveAttribute(name);
+      onChange({ [name]: null });
+      return;
+    }
+    originalRemoveAttribute(name);
+  };
+
+  // Stop watching. Call this from `disconnectedCallback`.
+  return {
+    destroy: () => {
+      observer.disconnect();
+      el.removeAttribute = originalRemoveAttribute;
+    },
+  };
 };
 
 /**
@@ -250,7 +274,7 @@ export const watchAttributes = (
  */
 export const watchForAriaAttributeChanges = (
   el: HTMLElement,
-  onChange: (changed: { [k: string]: string }) => void,
+  onChange: (changed: { [k: string]: string | null }) => void,
   ignoreList?: string[]
 ): AttributeWatcher => {
   let attributesToWatch = ariaAttributes;
