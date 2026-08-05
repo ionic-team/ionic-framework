@@ -7,10 +7,10 @@ $toggle-item-label-margin-top: 10px;
 $toggle-item-label-margin-bottom: 10px;
 
 /// @prop - Color of the focus indicator for the unchecked toggle
-$toggle-focus-ring-color-off: rgba(var(--ion-text-color-rgb, 0, 0, 0), .12);
+$toggle-focus-ring-color-off: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
 
 /// @prop - Alpha of the focus indicator for the checked toggle
-$toggle-focus-ring-color-alpha: .2;
+$toggle-focus-ring-color-alpha: 0.2;
 
 /// @prop - Color of the focus indicator for the checked toggle
 $toggle-focus-ring-color: ion-color(primary, base, $toggle-focus-ring-color-alpha);
