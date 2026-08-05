@@ -234,7 +234,7 @@ Previously, the `selected` role was assigned only to the option matching the sel
 
 **Internal DOM Structure Changes**
 
-Due to the structural changes required to support floating labels with slotted start and end content, and because Textarea is a scoped component, this change has the potential to introduce breaking changes for developers who rely on the component's internal DOM structure or apply custom styling to internal elements.
+The internal DOM structure has been modified to support floating labels with slotted start and end content. Additionally, the structure of the component has been reorganized, with some elements now grouped differently than before. This may introduce breaking changes for developers who rely on the component's internal DOM structure or apply custom styling to internal elements.
 
 The following internal elements have been modified:
 - Removed: `<div class="textarea-wrapper-inner">`
@@ -242,7 +242,7 @@ The following internal elements have been modified:
 - Added: `<div class="textarea-control">` wrapper for the label and native control
 - Renamed: `<div class="end-slot-wrapper">` is now `<div class="textarea-end">`
 
-While the public API has not changed, selectors or style overrides targeting the previous markup will need to be updated to use the new class names. If you have custom CSS targeting the internal structure of textarea, update your selectors to reference the new element names.
+While the public API has not changed, selectors or style overrides targeting the previous markup will need to be updated to reference the new element names and their organization. If you have custom CSS targeting the internal structure of textarea, update your selectors to account for these structural changes.
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
