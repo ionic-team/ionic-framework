@@ -1,5 +1,30 @@
 import { camelToDashCase } from './case';
 
+// Enumerated attributes where the literal string "false" is meaningful and
+// differs from the attribute being absent, so they must not be stripped like
+// HTML boolean attributes. These are the dash-cased attribute names produced by
+// camelToDashCase (e.g. the `spellCheck` prop renders as `spell-check`), so the
+// entries must match that form. aria-* and data-* are handled by prefix below.
+const NON_BOOLEAN_FALSE_ATTRIBUTES = new Set(['draggable', 'translate', 'spell-check', 'content-editable']);
+
+/**
+ * React serializes a boolean prop set to `false` (e.g. `disabled={false}`) as
+ * the string attribute `disabled="false"`. For HTML boolean attributes the mere
+ * presence means "true", so assistive tech treats the element as
+ * disabled/readonly even though Ionic renders it as interactive. The @lit/react
+ * runtime fixes this for the generated components on v9, but the hand-rolled
+ * wrappers (createReactComponent, createRoutingComponent, ...) render attributes
+ * directly and sync props through attachProps, so we strip the stray attribute
+ * here after the property has been assigned.
+ *
+ * TODO(FW-7629): This only matters on React 17 and 18. React 19 added full custom-element
+ * support and no longer serializes a `false` boolean prop to a `="false"`
+ * attribute, so there is nothing to strip there (this stays a harmless no-op).
+ * Once React 17/18 support is dropped, this stripping can be removed.
+ */
+const isStaleFalseBooleanAttribute = (attribute: string) =>
+  !attribute.startsWith('aria-') && !attribute.startsWith('data-') && !NON_BOOLEAN_FALSE_ATTRIBUTES.has(attribute);
+
 export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // some test frameworks don't render DOM elements, so we test here to make sure we are dealing with DOM first
   if (node instanceof Element) {
@@ -32,6 +57,11 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
         const propType = typeof newProps[name];
         if (propType === 'string') {
           node.setAttribute(camelToDashCase(name), newProps[name]);
+        } else if (newProps[name] === false) {
+          const attribute = camelToDashCase(name);
+          if (isStaleFalseBooleanAttribute(attribute)) {
+            node.removeAttribute(attribute);
+          }
         }
       }
     });

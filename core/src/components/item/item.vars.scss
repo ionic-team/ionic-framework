@@ -2,3 +2,7 @@
 
 // Item
 // --------------------------------------------------
+
+// Room for the focus indicator to paint outside a slotted control. Widest
+// overhang is the iOS radio: a 36px indicator around a 15px icon.
+$item-input-focus-indicator-room: 12px;

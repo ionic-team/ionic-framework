@@ -1,4 +1,5 @@
 {
+  "extends": "../../core/tsconfig.base.json",
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
@@ -8,28 +9,10 @@
     "compilationMode": "partial"
   },
   "compilerOptions": {
-    "alwaysStrict": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "declaration": true,
     "declarationDir": "dist",
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "es2017"],
     "module": "es2022",
-    "moduleResolution": "bundler",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "build/es2015",
-    "pretty": true,
-    "removeComments": false,
-    "importHelpers": true,
     "rootDir": "./",
-    "strictPropertyInitialization": false,
-    "target": "es2015",
+    "target": "es2022",
     "plugins": [
       {
         "name": "typescript-eslint-language-service"

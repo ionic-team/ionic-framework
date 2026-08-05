@@ -192,6 +192,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/props-update-direct/child">
             <IonLabel>Props Update (direct)</IonLabel>
           </IonItem>
+          <IonItem routerLink="/disabled-button">
+            <IonLabel>Disabled Button</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

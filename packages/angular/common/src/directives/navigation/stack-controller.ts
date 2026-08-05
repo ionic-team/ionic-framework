@@ -274,7 +274,10 @@ export class StackController {
       enteringEl.classList.add('ion-page');
       enteringEl.classList.add('ion-page-invisible');
 
-      if ((containerEl as any).commit) {
+      // containerEl is set to undefined when the stack controller is destroyed,
+      // so a transition that resolves after its outlet was destroyed must not
+      // dereference it (see destroy()).
+      if ((containerEl as any)?.commit) {
         return containerEl.commit(enteringEl, leavingEl, {
           duration: direction === undefined ? 0 : undefined,
           direction,

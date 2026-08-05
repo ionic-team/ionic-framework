@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "8.8.15",
+  "version": "8.8.17",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -39,7 +39,6 @@
     "sync": "./scripts/sync.sh",
     "local.sync.and.pack": "./scripts/sync-and-pack.sh",
     "test": "echo 'angular no tests yet'",
-    "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "exports": {
@@ -48,7 +47,7 @@
     }
   },
   "dependencies": {
-    "@ionic/core": "^8.8.15",
+    "@ionic/core": "^8.8.17",
     "ionicons": "^8.0.13",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"

@@ -18,7 +18,7 @@ interface OutletPageManagerProps {
 
 export class OutletPageManager extends React.Component<OutletPageManagerProps> {
   ionLifeCycleContext!: React.ContextType<typeof IonLifeCycleContext>;
-  context!: React.ContextType<typeof StackContext>;
+  declare context: React.ContextType<typeof StackContext>;
   ionRouterOutlet: HTMLIonRouterOutletElement | undefined;
   outletIsReady: boolean;
 
