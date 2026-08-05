@@ -82,12 +82,25 @@ Apps on `moduleResolution: "node"` (classic) and webpack 4 keep resolving throug
 
 <h4 id="version-9x-input">Input</h4>
 
+**`autocorrect` Property Type Changed to Boolean**
+
 The `autocorrect` property on `ion-input` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
 
 The string form no longer behaves the same way. Because an HTML attribute coerces to `true` for any non-empty string, `autocorrect="off"` now evaluates to `true` (autocorrect enabled). Migrate to the boolean property:
 
 - Remove the attribute to keep autocorrect disabled (the default).
 - Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
+
+**Internal DOM Structure Changes**
+
+Due to the structural changes required to support floating labels with slotted start and end content, this change has the potential to introduce breaking changes for developers who rely on the component's internal DOM structure or apply custom styling to internal elements.
+
+The following internal elements have been added:
+- Added: `<div class="input-start">` wrapper for the start slot
+- Added: `<div class="input-control">` wrapper for the label and native control
+- Added: `<div class="input-end">` wrapper for the end slot and clear button
+
+While the public API has not changed, selectors or style overrides targeting the previous markup may need to be updated to use the new class names. If you have custom CSS targeting the internal structure of input, update your selectors to reference the new element names.
 
 <h4 id="version-9x-legacy-picker">Legacy Picker</h4>
 
