@@ -287,11 +287,107 @@
           </div>
         </div>
 
+        <h1>Async Slot Content</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Outline / Async Label</h2>
+            <ion-select id="solid-async" label-placement="floating" fill="outline" interface="action-sheet">
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Async Decorations</h2>
+            <ion-select
+              id="async-decorations"
+              label-placement="floating"
+              fill="outline"
+              label="Favorite Pizza"
+              interface="action-sheet"
+            >
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+        <ion-button onclick="addSlot()">Add Slotted Content</ion-button>
+        <ion-button onclick="updateSlot()">Update Slotted Content</ion-button>
+        <ion-button onclick="removeSlot()">Remove Slotted Content</ion-button>
         <ion-button onclick="addValueToAll()">Add Value to All</ion-button>
       </ion-content>
     </ion-app>
 
     <script>
+      const solidAsync = document.querySelector('#solid-async');
+      const asyncDecos = document.querySelector('#async-decorations');
+
+      const getSlottedLabel = () => {
+        return solidAsync.querySelector('[slot="label"]');
+      };
+
+      const getSlottedStartDeco = () => {
+        return asyncDecos.querySelector('[slot="start"]');
+      };
+
+      const getSlottedEndDeco = () => {
+        return asyncDecos.querySelector('[slot="end"]');
+      };
+
+      const addSlot = () => {
+        if (getSlottedLabel() === null) {
+          const labelEl = document.createElement('div');
+          labelEl.slot = 'label';
+          labelEl.innerHTML = 'Email <span class="required">*</span>';
+
+          solidAsync.appendChild(labelEl);
+        }
+
+        if (getSlottedStartDeco() === null) {
+          const startEl = document.createElement('div');
+          startEl.slot = 'start';
+          startEl.innerHTML = 'Start';
+
+          asyncDecos.insertAdjacentElement('afterbegin', startEl);
+        }
+
+        if (getSlottedEndDeco() === null) {
+          const endEl = document.createElement('div');
+          endEl.slot = 'end';
+          endEl.innerHTML = 'End';
+
+          asyncDecos.insertAdjacentElement('beforeend', endEl);
+        }
+      };
+
+      const removeSlot = () => {
+        const slottedLabel = getSlottedLabel();
+        if (slottedLabel !== null) {
+          slottedLabel.remove();
+        }
+
+        const slottedStartDeco = getSlottedStartDeco();
+        if (slottedStartDeco !== null) {
+          slottedStartDeco.remove();
+        }
+
+        const slottedEndDeco = getSlottedEndDeco();
+        if (slottedEndDeco !== null) {
+          slottedEndDeco.remove();
+        }
+      };
+
+      const updateSlot = () => {
+        const slottedContent = getSlottedLabel();
+
+        if (slottedContent !== null) {
+          slottedContent.textContent = 'This is my really really really long text';
+        }
+      };
+
       const addValueToAll = () => {
         const selects = document.querySelectorAll('ion-select');
         selects.forEach((select) => {
