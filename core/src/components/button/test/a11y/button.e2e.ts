@@ -152,13 +152,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('button: aria attribute sync'), () => {
-    // Mirrors the ignoreList passed to inheritAriaAttributes/watchForAriaAttributeChanges
-    // in button.tsx. aria-disabled is excluded because button.tsx manages it internally
-    // via the `disabled` prop.
+    // aria-disabled is excluded because button.tsx manages it internally via the `disabled` prop.
     const watchedAriaAttributes = ariaAttributes.filter((attr) => attr !== 'aria-disabled');
 
     for (const attr of watchedAriaAttributes) {
       test(`native button updates ${attr} when host attribute changes`, async ({ page }) => {
+        test.info().annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
+        });
+
         await page.setContent(`<ion-button ${attr}="initial">Button</ion-button>`, config);
 
         const host = page.locator('ion-button');
@@ -173,12 +176,81 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
     }
 
     test('does not sync aria-disabled, since button.tsx manages it internally', async ({ page }) => {
+      test
+        .info()
+        .annotations.push({ type: 'issue', description: 'https://github.com/ionic-team/ionic-framework/issues/30626' });
+
       await page.setContent(`<ion-button aria-disabled="true">Button</ion-button>`, config);
 
       const host = page.locator('ion-button');
       const nativeButton = host.locator('button');
 
       await expect(nativeButton).not.toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('aria sync survives detach and reattach', async ({ page }) => {
+      await page.setContent(
+        `
+          <div id="container">
+            <ion-button aria-label="label">Button</ion-button>
+          </div>
+        `,
+        config
+      );
+
+      const host = page.locator('ion-button');
+      const nativeButton = host.locator('button');
+
+      await expect(nativeButton).toHaveAttribute('aria-label', 'label');
+
+      // Detach and reattach
+      await host.evaluate((buttonEl) => {
+        const parent = buttonEl.parentElement!;
+        parent.removeChild(buttonEl);
+        parent.appendChild(buttonEl);
+      });
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+      await expect(nativeButton).toHaveAttribute('aria-label', 'updated');
+    });
+
+    test('helper strips host attribute and syncs native element through set, empty, and remove', async ({ page }) => {
+      page.on('console', (msg) => {
+        console.log(`[browser] ${msg.type()}: ${msg.text()}`);
+      });
+
+      await page.setContent(
+        `
+          <ion-button aria-label="initial">Button</ion-button>
+        `,
+        config
+      );
+
+      const host = page.locator('ion-button');
+      const nativeButton = host.locator('button');
+
+      // Initial load: inheritAriaAttributes should have stripped aria-label
+      // from the host and copied it onto the native button.
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).toHaveAttribute('aria-label', 'initial');
+
+      // Setting a new value on the host: watcher should capture it, sync it
+      // to native, and re-strip it from the host.
+      await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).toHaveAttribute('aria-label', 'second');
+
+      // Setting to empty string: empty string is a valid, non-null value.
+      await host.evaluate((el) => el.setAttribute('aria-label', ''));
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).toHaveAttribute('aria-label', '');
+
+      // Removing the attribute directly: the patched removeAttribute should
+      // fire onChange with null, which should remove aria-label from native
+      // and host.
+      await host.evaluate((el) => el.removeAttribute('aria-label'));
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).not.toHaveAttribute('aria-label');
     });
   });
 });
