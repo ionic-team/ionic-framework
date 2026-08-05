@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { applyKeyboardFocus, configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('toggle: item'), () => {
@@ -106,6 +106,104 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       );
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`toggle-stacked-label-in-item`));
+    });
+  });
+});
+
+/**
+ * The focus indicator differs between iOS and MD, so these run in both modes.
+ * This behavior does not vary across directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toggle: focus in item'), () => {
+    test('should render focus indicator in an item', async ({ page }) => {
+      // The item gets `ion-focused` too, which is what suppresses the toggle's indicator.
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-toggle>Unchecked</ion-toggle>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+
+      await applyKeyboardFocus(page, toggle);
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`toggle-in-item-focus`));
+    });
+
+    test('should render focus indicator for a checked toggle with a color in an item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-toggle color="danger" checked>Checked</ion-toggle>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+
+      await applyKeyboardFocus(page, toggle);
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`toggle-color-checked-in-item-focus`));
+    });
+
+    test('should render focus indicator for a toggle in a clickable item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item button>
+            <ion-toggle>Unchecked</ion-toggle>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+
+      await applyKeyboardFocus(page, toggle);
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`toggle-in-clickable-item-focus`));
+    });
+
+    test('should render focus indicator for a toggle in a multi-input item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-toggle justify="start">Toggle 1</ion-toggle>
+            <ion-toggle justify="start">Toggle 2</ion-toggle>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      // The item adds this after its controls render, and the toggles re-render off
+      // it, so waiting avoids capturing the pre-settle state.
+      await expect(item).toHaveClass(/item-multiple-inputs/);
+
+      const toggle = page.locator('ion-toggle').first();
+
+      await applyKeyboardFocus(page, toggle);
+
+      await expect(item).toHaveScreenshot(screenshot(`toggle-multiple-in-item-focus`));
     });
   });
 });
