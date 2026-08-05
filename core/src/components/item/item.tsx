@@ -1,8 +1,8 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAttributes, raf } from '@utils/helpers';
+import type { Attributes, AttributeWatcher } from '@utils/helpers';
+import { inheritAttributes, watchAttributes, raf } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
@@ -34,6 +34,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
   private inheritedAriaAttributes: Attributes = {};
+  private ariaWatcher?: AttributeWatcher;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -164,12 +165,26 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
+  componentWillLoad() {}
+
   connectedCallback() {
     this.hasStartEl();
+
+    // Must run before watchForAriaAttributeChanges: it calls removeAttribute
+    // internally to strip the host's initial values, and that call must
+    // happen before removeAttribute is patched below — otherwise this
+    // strip would itself be treated as an external removal.
+    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+
+    this.ariaWatcher = watchAttributes(this.el, ['aria-label'], (changed) => {
+      this.inheritedAriaAttributes = { ...this.inheritedAriaAttributes, ...changed };
+      forceUpdate(this);
+    });
   }
 
-  componentWillLoad() {
-    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+  disconnectedCallback() {
+    this.ariaWatcher?.destroy();
+    this.ariaWatcher = undefined;
   }
 
   componentDidLoad() {
