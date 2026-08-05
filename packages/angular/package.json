@@ -24,7 +24,7 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "build": "npm run clean && npm run build.ng && npm run build.css && npm run build.schematics",
+    "build": "npm run clean && npm run build.ng && npm run build.css && npm run build.schematics && npm run validate.package",
     "build.css": "node scripts/build-css.js",
     "build.schematics": "node scripts/build-schematics.js",
     "build.ng": "ngc",
@@ -40,9 +40,11 @@
     "local.sync.and.pack": "./scripts/sync-and-pack.sh",
     "test": "echo 'angular no tests yet'",
     "tsc": "tsc -p .",
-    "validate": "npm i && npm run lint && npm run test && npm run build"
+    "validate": "npm i && npm run lint && npm run test && npm run build",
+    "validate.package": "node scripts/verify-exports.js"
   },
   "exports": {
+    "./package.json": "./package.json",
     "./lazy": "./dist/lazy/index.js",
     "./common": "./dist/common/index.js",
     "./css/*": {
@@ -54,12 +56,12 @@
     "./ion-popover": "./dist/standalone/overlays/popover.js",
     "./ion-router-outlet": "./dist/standalone/navigation/router-outlet.js",
     "./ion-router-link": "./dist/standalone/navigation/router-link-delegate.js",
-    "./ion-Tabs": "./dist/standalone/navigation/tabs",
-    "./ion-Nav": "./dist/standalone/navigation/nav.js",
+    "./ion-tabs": "./dist/standalone/navigation/tabs.js",
+    "./ion-nav": "./dist/standalone/navigation/nav.js",
     "./ion-checkbox": "./dist/standalone/directives/checkbox.js",
     "./ion-datetime": "./dist/standalone/directives/datetime.js",
     "./ion-input": "./dist/standalone/directives/input.js",
-    "./ion-input-otp": "./dist/standalone/directives/inputOtp.js",
+    "./ion-input-otp": "./dist/standalone/directives/input-otp.js",
     "./ion-icon": "./dist/standalone/directives/icon.js",
     "./ion-radio-group": "./dist/standalone/directives/radio-group.js",
     "./ion-range": "./dist/standalone/directives/range.js",
@@ -205,6 +207,7 @@
     "zone.js": "~0.16.0"
   },
   "prettier": "@ionic/prettier-config",
-  "schematics": "./schematics/collection.json",
+  "schematics": "./dist/schematics/collection.json",
+  "typings": "./dist/standalone/index.d.ts",
   "sideEffects": false
 }

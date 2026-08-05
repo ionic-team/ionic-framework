@@ -64,6 +64,7 @@ const getAngularOutputTargets = () => {
 
       ],
       outputType: 'standalone',
+      // Emit each component in a separate file rather than putting them all in one large file.
       esModules: true,
     })
   ];
