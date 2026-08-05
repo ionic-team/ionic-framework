@@ -130,7 +130,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const select = page.locator('ion-select');
-      await expect(select).toHaveScreenshot(screenshot(`select-slot-label-floating`));
+      await expect(select).toHaveScreenshot(screenshot(`select-slot-label-floating-value`));
     });
   });
 });
