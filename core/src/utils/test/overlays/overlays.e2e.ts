@@ -473,6 +473,32 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(wrapper).toBeFocused();
     });
 
+    test('should focus the sheet modal wrapper on present when handleBehavior is cycle', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-7611',
+      });
+      // present()'s wrapper focus must survive the cycle-handle focus redirect.
+      await page.setContent(
+        `
+        <ion-modal initial-breakpoint="0.5" breakpoints="[0, 0.5, 1]" handle-behavior="cycle">
+          <ion-content>Sheet Modal Content</ion-content>
+        </ion-modal>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const modal = page.locator('ion-modal');
+      const wrapper = page.locator('ion-modal .modal-wrapper');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+
+      await expect(wrapper).toHaveAttribute('role', 'dialog');
+      await expect(wrapper).toBeFocused();
+    });
+
     test('should focus the card modal wrapper on present', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',

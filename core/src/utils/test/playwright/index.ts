@@ -3,6 +3,7 @@ export * from './playwright-declarations';
 export * from './page/event-spy';
 export * from './page/utils';
 export * from './drag-element';
+export * from './apply-keyboard-focus';
 export * from './matchers';
 export * from './viewports';
 export * from './generator';
