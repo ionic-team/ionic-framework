@@ -301,8 +301,19 @@ export class Refresher implements ComponentInterface {
 
     this.scrollEl!.addEventListener('scroll', this.scrollListenerCallback);
 
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.scrollEl!,
+    const { createGesture } = await import('../../utils/gesture');
+
+    /**
+     * Awaiting the dynamic import yields to the event loop, so the component can
+     * disconnect before it resolves. disconnectedCallback clears scrollEl, so a
+     * missing scrollEl here means there is nothing left to attach a gesture to.
+     */
+    if (!this.scrollEl) {
+      return;
+    }
+
+    this.gesture = createGesture({
+      el: this.scrollEl,
       gestureName: 'refresher',
       gesturePriority: 31,
       direction: 'y',
@@ -371,8 +382,19 @@ export class Refresher implements ComponentInterface {
       });
     }
 
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.scrollEl!,
+    const { createGesture } = await import('../../utils/gesture');
+
+    /**
+     * Awaiting the dynamic import yields to the event loop, so the component can
+     * disconnect before it resolves. disconnectedCallback clears scrollEl, so a
+     * missing scrollEl here means there is nothing left to attach a gesture to.
+     */
+    if (!this.scrollEl) {
+      return;
+    }
+
+    this.gesture = createGesture({
+      el: this.scrollEl,
       gestureName: 'refresher',
       gesturePriority: 31,
       direction: 'y',
@@ -528,7 +550,18 @@ export class Refresher implements ComponentInterface {
       if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
         this.setupNativeRefresher(contentEl);
       } else {
-        this.gesture = (await import('../../utils/gesture')).createGesture({
+        const { createGesture } = await import('../../utils/gesture');
+
+        /**
+         * Awaiting the dynamic import yields to the event loop, so the component can
+         * disconnect before it resolves. A disconnected contentEl means there is
+         * nothing left to attach a gesture to.
+         */
+        if (!contentEl.isConnected) {
+          return;
+        }
+
+        this.gesture = createGesture({
           el: contentEl,
           gestureName: 'refresher',
           gesturePriority: 31,

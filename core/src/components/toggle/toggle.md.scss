@@ -15,7 +15,8 @@
   --handle-width: #{$toggle-md-handle-width};
   --handle-height: #{$toggle-md-handle-height};
   --handle-max-height: #{$toggle-md-handle-max-height};
-  --handle-spacing: 0;
+  // A length, not a bare 0, so it composes in `calc()`.
+  --handle-spacing: 0px;
   --handle-transition: #{$toggle-md-transition};
 }
 
@@ -65,6 +66,73 @@
 
   width: 100%;
   height: 100%;
+}
+
+// Material Design Toggle: Keyboard Focus
+// ----------------------------------------------------------
+// The indicator is drawn on the wrapper because the handle uses
+// `contain: strict`, which would clip it. The wrapper travels with the handle.
+//
+// `toggle-defers-indicator` is excluded rather than overridden so the indicator
+// is never created, leaving the rules that position and color it nothing to act on.
+
+:host(.ion-focused:not(.toggle-defers-indicator)) .toggle-icon-wrapper::after {
+  @include border-radius(50%);
+
+  display: block;
+  position: absolute;
+
+  width: $toggle-md-focus-ring-size;
+  height: $toggle-md-focus-ring-size;
+
+  transform: translateY(-50%);
+
+  background: $toggle-focus-ring-color-off;
+
+  content: "";
+
+  // The indicator overhangs the handle, so it must not take pointer events;
+  // otherwise it widens the hit area and swallows clicks aimed past the toggle.
+  pointer-events: none;
+
+  // Drawn behind the handle so the translucent indicator does not tint it. The
+  // wrapper is its own stacking context, so it stays above the track.
+  z-index: -1;
+
+  inset-block-start: 50%;
+}
+
+// Positioned the same way as `.toggle-inner`, offset by half the size difference
+// so it centers on the handle. Anchored physically to mirror the handle, which
+// uses `left` in LTR and `right` in RTL.
+
+:host(.toggle-ltr.ion-focused) .toggle-icon-wrapper::after {
+  // stylelint-disable-next-line property-disallowed-list
+  left: calc(var(--handle-spacing) + (var(--handle-width) - #{$toggle-md-focus-ring-size}) / 2);
+}
+
+:host(.toggle-rtl.ion-focused) .toggle-icon-wrapper::after {
+  // stylelint-disable-next-line property-disallowed-list
+  right: calc(var(--handle-spacing) + (var(--handle-width) - #{$toggle-md-focus-ring-size}) / 2);
+}
+
+// Matches the checked shift `.toggle-inner` applies, so the indicator stays on
+// the handle. The Y component repeats the centering from the base rule.
+
+:host(.toggle-ltr.ion-focused.toggle-checked) .toggle-icon-wrapper::after {
+  transform: translate(calc(var(--handle-spacing) * -2), -50%);
+}
+
+:host(.toggle-rtl.ion-focused.toggle-checked) .toggle-icon-wrapper::after {
+  transform: translate(calc(var(--handle-spacing) * 2), -50%);
+}
+
+:host(.ion-focused.toggle-checked) .toggle-icon-wrapper::after {
+  background: $toggle-focus-ring-color;
+}
+
+:host(.ion-color.ion-focused.toggle-checked) .toggle-icon-wrapper::after {
+  background: current-color(base, $toggle-focus-ring-color-alpha);
 }
 
 // Material Design Toggle: Disabled

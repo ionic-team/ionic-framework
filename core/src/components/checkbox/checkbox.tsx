@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
-import { checkInvalidState } from '@utils/forms';
+import { Build, Component, Element, Event, Host, Method, Prop, State, forceUpdate, h } from '@stencil/core';
+import { checkInvalidState, createItemMultipleInputsObserver } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -39,6 +39,7 @@ export class Checkbox implements ComponentInterface {
   private errorTextId = `${this.inputId}-error-text`;
   private inheritedAttributes: Attributes = {};
   private validationObserver?: MutationObserver;
+  private itemFocusObserver?: MutationObserver;
 
   @Element() el!: HTMLIonCheckboxElement;
 
@@ -212,6 +213,8 @@ export class Checkbox implements ComponentInterface {
     // Always set initial state
     this.isInvalid = checkInvalidState(el);
     this.hasLabelContent = this.el.textContent !== '';
+
+    this.itemFocusObserver = createItemMultipleInputsObserver(el, () => forceUpdate(this));
   }
 
   componentWillLoad() {
@@ -223,10 +226,13 @@ export class Checkbox implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    // Clean up validation observer to prevent memory leaks.
     if (this.validationObserver) {
       this.validationObserver.disconnect();
       this.validationObserver = undefined;
+    }
+    if (this.itemFocusObserver) {
+      this.itemFocusObserver.disconnect();
+      this.itemFocusObserver = undefined;
     }
   }
 
@@ -354,6 +360,7 @@ export class Checkbox implements ComponentInterface {
     const theme = getIonTheme(this);
     const path = getSVGPath(theme, indeterminate);
     const inItem = hostContext('ion-item', el);
+    const inMultipleInputsItem = hostContext('ion-item.item-multiple-inputs', el);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -379,10 +386,11 @@ export class Checkbox implements ComponentInterface {
           'in-item': inItem,
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
-          // Focus styling should not apply when the checkbox is in an item
-          'ion-focusable': !inItem,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
+          // A single-input item has the input cover and draws the indicator itself.
+          // A multi-input item has no cover, so each control draws its own.
+          'ion-focusable': !inItem || inMultipleInputsItem,
           [`checkbox-justify-${justify}`]: justify !== undefined,
           [`checkbox-alignment-${alignment}`]: alignment !== undefined,
           [`checkbox-label-placement-${labelPlacement}`]: true,
