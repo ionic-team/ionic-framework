@@ -10,11 +10,11 @@ function buildSchematics(){
       path.join(__dirname, '..', 'tsconfig.schematics.json'),
     ];
 
-    const typescriptPath = path.join(__dirname, '..', 'node_modules', '.bin');
-    const p = spawn(cmd, args, { cwd: typescriptPath, stdio: 'inherit'});
+    const tsc = require.resolve('typescript/bin/tsc');
+    const p = spawn(process.execPath, [tsc, ...args], { stdio: 'inherit' });
     p.on('close', (code) => {
       if (code > 0) {
-        console.log(`ng-add build exited with ${code}`);
+        console.log(`schematics build exited with ${code}`);
         reject();
       } else {
         resolve();
