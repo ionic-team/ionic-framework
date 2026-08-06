@@ -1,6 +1,6 @@
 import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
-import type { EventSpy } from '@utils/test/playwright';
+import type { E2EPage, EventSpy } from '@utils/test/playwright';
 import { configs, test } from '@utils/test/playwright';
 
 /**
@@ -204,6 +204,112 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionModalDidDismiss.next();
 
       await openAndInteract();
+    });
+  });
+});
+
+/**
+ * The tested behavior does not
+ * vary across modes/directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime-button: reopening modal'), () => {
+    let datetime: Locator;
+    let modal: Locator;
+    let monthYear: Locator;
+    let ionModalDidPresent: EventSpy;
+    let ionModalDidDismiss: EventSpy;
+
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+        <ion-modal>
+          <ion-datetime id="datetime" locale="en-US" value="2022-03-15T16:30:00"></ion-datetime>
+        </ion-modal>
+      `,
+        config
+      );
+
+      datetime = page.locator('ion-datetime');
+      modal = page.locator('ion-modal');
+      monthYear = datetime.locator('.calendar-month-year');
+      ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+    });
+
+    const openModal = async (page: E2EPage) => {
+      await page.click('#date-button');
+      await ionModalDidPresent.next();
+      await page.locator('ion-datetime.datetime-ready').waitFor();
+      await page.waitForChanges();
+    };
+
+    const dismissModal = async () => {
+      await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
+      await ionModalDidDismiss.next();
+    };
+
+    test('should keep the selected day in view when reopened', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31155',
+      });
+
+      const selectedDay = datetime.locator('.calendar-day-active');
+
+      await openModal(page);
+      await expect(selectedDay).toBeInViewport();
+
+      await dismissModal();
+      await openModal(page);
+
+      await expect(selectedDay).toBeInViewport();
+    });
+
+    test('should navigate to the previous month when reopened', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31155',
+      });
+
+      await openModal(page);
+      await dismissModal();
+      await openModal(page);
+
+      await expect(monthYear).toHaveText('March 2022');
+
+      await datetime.locator('.calendar-next-prev ion-button').first().click();
+
+      await expect(monthYear).toHaveText('February 2022');
+    });
+
+    test('should select a day from the month shown in the header when reopened', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31155',
+      });
+
+      await openModal(page);
+      await dismissModal();
+      await openModal(page);
+
+      await expect(monthYear).toHaveText('March 2022');
+
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      /**
+       * Click the middle of the calendar instead of a day by name so Playwright
+       * doesn't scroll the target into view and hide a wrong scroll position.
+       */
+      const calendarBody = (await datetime.locator('.calendar-body').boundingBox())!;
+      await page.mouse.click(calendarBody.x + calendarBody.width / 2, calendarBody.y + calendarBody.height / 2);
+      await ionChange.next();
+
+      const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value as string);
+      expect(value).toMatch(/^2022-03-/);
+      await expect(monthYear).toHaveText('March 2022');
     });
   });
 });
