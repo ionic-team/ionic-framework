@@ -313,12 +313,12 @@ export const createSwipeToCloseGesture = (
     }
 
     /**
-     * `shouldComplete` is always `false` when canDismiss blocks the
-     * gesture, since it only describes a dismiss that happens right
-     * away. In that case the modal dismisses through `handleCanDismiss`
-     * instead, which only dismisses when canDismiss is a function.
-     * A canDismiss function can still cancel the dismiss after this
-     * event is emitted.
+     * `shouldComplete` is not enough on its own, since it is always `false`
+     * when canDismiss blocks the gesture. `canDismiss: false` blocks it and
+     * never dismisses, because `handleCanDismiss` returns early when
+     * canDismiss is not a function. A canDismiss function dismisses through
+     * `handleCanDismiss`, which awaits the callback, so the outcome is not
+     * known when this event is emitted.
      */
     const isDismissing = isAttemptingDismissWithCanDismiss
       ? isAttemptingCanDismiss && typeof el.canDismiss === 'function'

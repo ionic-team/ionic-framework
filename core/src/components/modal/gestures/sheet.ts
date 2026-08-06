@@ -453,11 +453,11 @@ export const createSheetGesture = (
     const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY);
 
     /**
-     * `moveSheetToBreakpoint` only dismisses when the sheet snaps to
-     * breakpoint 0. When canDismiss blocks the gesture it keeps the sheet
-     * from snapping there and dismisses through `handleCanDismiss` instead,
-     * which only dismisses when canDismiss is a function. A canDismiss
-     * function can still cancel the dismiss after this event is emitted.
+     * `snapBreakpoint === 0` is not enough on its own. `canDismiss: false`
+     * snaps to 0 but never dismisses, since `handleCanDismiss` returns early
+     * when canDismiss is not a function. A canDismiss function dismisses
+     * through `handleCanDismiss`, which awaits the callback, so the outcome
+     * is not known when this event is emitted.
      */
     const shouldPreventDismiss = canDismissBlocksGesture && snapBreakpoint === 0;
     const isDismissing = shouldPreventDismiss ? typeof baseEl.canDismiss === 'function' : snapBreakpoint === 0;
