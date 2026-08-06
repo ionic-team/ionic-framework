@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonFabButton } from '@ionic/core/component
 
 @ProxyCmp({
   defineCustomElementFn: defineIonFabButton,
-  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type']
+  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type']
 })
 @Component({
   selector: 'ion-fab-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type'],
+  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type'],
   outputs: ['ionFocus', 'ionBlur'],
 })
 export class IonFabButton {

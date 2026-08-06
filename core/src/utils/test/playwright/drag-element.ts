@@ -35,6 +35,21 @@ export const dragElementBy = async (
 
   await page.mouse.down();
 
+  // Firefox treats focusable elements (tabindex="-1") as draggable text and
+  // initiates text selection on mouse.down(). In Playwright, this selection
+  // locks in before the gesture detector fires, blocking pointer events.
+  // Clearing it here allows the drag gesture to proceed normally.
+  //
+  // This is scoped to Firefox because the extra page.evaluate() is an awaited
+  // round-trip that adds variable latency between mouse.down() and the first
+  // mouse.move(). Chromium and WebKit don't need the selection clear, and on
+  // WebKit that latency perturbs the timing-derived gesture velocity, causing
+  // the item to settle a few pixels off and flaking screenshot comparisons
+  // (e.g. item-sliding safe-area tests).
+  if (page.context().browser()?.browserType().name() === 'firefox') {
+    await page.evaluate(() => window.getSelection()?.removeAllRanges());
+  }
+
   // Drag the element.
   await moveElement(page, startX, startY, dragByX, dragByY);
 

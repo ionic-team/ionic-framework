@@ -2,6 +2,10 @@
 
 Ionic Framework supports multiple versions of React. As a result, we need to verify that Ionic works correctly with each of these React versions.
 
+## Type Checking
+
+Run `npm run typecheck` in `packages/react` to check types. The rollup build only reports type errors as warnings, so a passing build does not mean the types are clean.
+
 ## Syncing Local Changes
 
 The React test app supports syncing your locally built changes for validation.

@@ -59,7 +59,8 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     const ionRouter: any = inject("navManager");
     const viewStacks: any = inject("viewStacks");
 
-    const components = shallowRef([]);
+    // TODO(FW-2969): type
+    const components = shallowRef<any[]>([]);
 
     let skipTransition = false;
 

@@ -116,7 +116,6 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   tagName: string,
   opts: object | undefined
 ): Promise<T> => {
-  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
   if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
     return window.customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
@@ -609,7 +608,29 @@ export const present = async <OverlayPresentOptions>(
    * to the overlay container.
    */
   if (overlay.keyboardClose && (document.activeElement === null || !overlay.el.contains(document.activeElement))) {
-    overlay.el.focus();
+    /**
+     * Some overlays (e.g. modal) put the dialog role and accessible label
+     * on the `.ion-overlay-wrapper` instead of the host. Screen readers
+     * need focus on the element with `role="dialog"` to properly announce
+     * and navigate the dialog.
+     *
+     * We only target wrappers with `tabindex`, since `role="dialog"` alone
+     * does not make an element focusable. If no focusable dialog wrapper
+     * exists (e.g. picker-legacy), we fall back to the host.
+     */
+    const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('[role="dialog"][tabindex]');
+    const focusTarget = overlayWrapper ?? overlay.el;
+    /**
+     * `preventScroll` keeps this a pure focus move so the viewport does not
+     * jump when the wrapper is partially off-screen (e.g. a sheet modal).
+     * Guard the options call so an older engine that mishandles it can never
+     * reject present(); we fall back to a plain focus() in that case.
+     */
+    try {
+      focusTarget.focus({ preventScroll: true });
+    } catch {
+      focusTarget.focus();
+    }
   }
 
   /**

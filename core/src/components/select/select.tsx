@@ -733,7 +733,9 @@ export class Select implements ComponentInterface {
     }
 
     const options = this.createOverlaySelectOptions(this.childOpts, value);
-    const hasRichContent = options.some((opt) => opt.startContent || opt.endContent || opt.description);
+    const hasRichContent = options.some(
+      (opt) => Boolean(opt.startContent) || Boolean(opt.endContent) || Boolean(opt.description)
+    );
 
     const popoverOpts: PopoverOptions = {
       mode,
@@ -764,9 +766,8 @@ export class Select implements ComponentInterface {
      * ion-select-popover and ion-popover when
      * using Custom Elements build.
      */
-    // eslint-disable-next-line
+
     if (false) {
-      // eslint-disable-next-line
       // @ts-ignore
       document.createElement('ion-select-popover');
       document.createElement('ion-popover');
@@ -791,9 +792,8 @@ export class Select implements ComponentInterface {
      * ion-action-sheet when
      * using Custom Elements build.
      */
-    // eslint-disable-next-line
+
     if (false) {
-      // eslint-disable-next-line
       // @ts-ignore
       document.createElement('ion-action-sheet');
     }
@@ -839,9 +839,8 @@ export class Select implements ComponentInterface {
      * ion-alert when
      * using Custom Elements build.
      */
-    // eslint-disable-next-line
+
     if (false) {
-      // eslint-disable-next-line
       // @ts-ignore
       document.createElement('ion-alert');
     }
@@ -873,9 +872,8 @@ export class Select implements ComponentInterface {
      * ion-select-modal and ion-modal when
      * using Custom Elements build.
      */
-    // eslint-disable-next-line
+
     if (false) {
-      // eslint-disable-next-line
       // @ts-ignore
       document.createElement('ion-select-modal');
       document.createElement('ion-modal');
@@ -1353,7 +1351,8 @@ export class Select implements ComponentInterface {
      * TODO(FW-5592): Remove hasStartEndSlots condition
      */
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded || hasStartEndSlots));
+      labelPlacement === 'stacked' ||
+      (labelPlacement === 'floating' && (hasValue || hasFocus || isExpanded || hasStartEndSlots));
 
     return (
       <Host

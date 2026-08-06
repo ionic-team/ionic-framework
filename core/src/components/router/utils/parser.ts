@@ -44,7 +44,7 @@ export const readRoutes = (root: Element): RouteChain[] => {
  */
 export const readRouteNodes = (node: Element): RouteTree => {
   return (Array.from(node.children) as HTMLIonRouteElement[])
-    .filter((el) => el.tagName === 'ION-ROUTE' && el.component)
+    .filter((el) => el.tagName === 'ION-ROUTE' && Boolean(el.component))
     .map((el) => {
       const component = readProp(el, 'component') as string;
       return {
