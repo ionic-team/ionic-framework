@@ -10,6 +10,8 @@ import { actionSheetController, alertController, popoverController, modalControl
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
 import { reflectPropertiesToAttributes, sanitizeDOMTree } from '@utils/sanitization';
+import { createSlotMutationController } from '@utils/slot-mutation-controller';
+import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
@@ -74,6 +76,7 @@ export class Select implements ComponentInterface {
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
   private inheritedAttributes: Attributes = {};
+  private slotMutationController?: SlotMutationController;
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
   private validationObserver?: MutationObserver;
@@ -98,6 +101,13 @@ export class Select implements ComponentInterface {
    * Track validation state for proper aria-live announcements.
    */
   @State() isInvalid = false;
+
+  /**
+   * Temporarily disables the floating label transition while
+   * start/end slots are added or removed. This prevents the
+   * label from animating as its position is adjusted.
+   */
+  @State() skipLabelTransition = false;
 
   @State() private hintTextId?: string;
 
@@ -331,6 +341,21 @@ export class Select implements ComponentInterface {
   async connectedCallback() {
     const { el } = this;
 
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
+      forceUpdate(this);
+
+      /**
+       * Temporarily disable the label transition until the
+       * next frame so any slot updates don't cause the
+       * label to animate.
+       */
+      this.skipLabelTransition = true;
+
+      requestAnimationFrame(() => {
+        this.skipLabelTransition = false;
+      });
+    });
+
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
@@ -416,6 +441,11 @@ export class Select implements ComponentInterface {
     if (this.mutationO) {
       this.mutationO.disconnect();
       this.mutationO = undefined;
+    }
+
+    if (this.slotMutationController) {
+      this.slotMutationController.destroy();
+      this.slotMutationController = undefined;
     }
 
     if (this.notchController) {
@@ -1315,6 +1345,7 @@ export class Select implements ComponentInterface {
       name,
       value,
       hasFocus,
+      skipLabelTransition,
     } = this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
@@ -1352,6 +1383,7 @@ export class Select implements ComponentInterface {
           [`select-justify-${justify}`]: justifyEnabled,
           [`select-shape-${shape}`]: shape !== undefined,
           [`select-label-placement-${labelPlacement}`]: true,
+          'skip-label-transition': skipLabelTransition,
         })}
         style={{ '--start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
