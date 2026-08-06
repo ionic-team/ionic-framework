@@ -50,6 +50,12 @@ export class Searchbar implements ComponentInterface {
   @State() noAnimate = true;
 
   /**
+   * Keeps the clear button mounted while it is being pressed, so a blur
+   * landing mid-press cannot unmount it before the click resolves.
+   */
+  @State() isClearButtonPressed = false;
+
+  /**
    * lang and dir are globally enumerated attributes.
    * As a result, creating these as properties
    * can have unintended side effects. Instead, we
@@ -320,6 +326,8 @@ export class Searchbar implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    document.removeEventListener('click', this.releaseClearButtonPress);
+
     if (this.loadTimeout) {
       clearTimeout(this.loadTimeout);
     }
@@ -390,10 +398,16 @@ export class Searchbar implements ComponentInterface {
     this.ionInput.emit({ value, event });
   }
 
+  private releaseClearButtonPress = () => {
+    this.isClearButtonPressed = false;
+  };
+
   /**
    * Clears the input field and triggers the control change.
    */
   private onClearInput = async (shouldFocus?: boolean) => {
+    this.isClearButtonPressed = false;
+
     if (this.clearTimeout) {
       clearTimeout(this.clearTimeout);
     }
@@ -661,13 +675,17 @@ export class Searchbar implements ComponentInterface {
    * Determines whether or not the clear button should be visible onscreen.
    * Clear button should be shown if one of two conditions applies:
    * 1. `showClearButton` is set to `always`.
-   * 2. `showClearButton` is set to `focus`, and the searchbar has been focused.
+   * 2. `showClearButton` is set to `focus`, and the searchbar has been
+   *    focused or a clear button press is still in flight.
    * Unless the `theme` is `ionic` and the searchbar is disabled.
    */
   private shouldShowClearButton(): boolean {
     const theme = getIonTheme(this);
 
-    if (this.showClearButton === 'never' || (this.showClearButton === 'focus' && !this.focused)) {
+    if (
+      this.showClearButton === 'never' ||
+      (this.showClearButton === 'focus' && !this.focused && !this.isClearButtonPressed)
+    ) {
       return false;
     }
 
@@ -887,10 +905,21 @@ export class Searchbar implements ComponentInterface {
                 /**
                  * This prevents mobile browsers from
                  * blurring the input when the clear
-                 * button is activated.
+                 * button is activated. Not all browsers
+                 * honor it, so the press is tracked too.
                  */
                 ev.preventDefault();
+
+                // Only a primary press produces a click.
+                if (ev.button !== 0) {
+                  return;
+                }
+
+                this.isClearButtonPressed = true;
+                // Cleared on click, not pointerup, so the button survives until the click dispatches.
+                document.addEventListener('click', this.releaseClearButtonPress, { once: true });
               }}
+              onPointerCancel={this.releaseClearButtonPress}
               onClick={() => this.onClearInput(true)}
             >
               <ion-icon
