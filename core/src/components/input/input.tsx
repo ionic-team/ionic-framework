@@ -85,6 +85,13 @@ export class Input implements ComponentInterface {
    */
   @State() isInvalid = false;
 
+  /**
+   * Temporarily disables the floating label transition while
+   * start/end slots are added or removed. This prevents the
+   * label from animating as its position is adjusted.
+   */
+  @State() skipLabelTransition = false;
+
   @Element() el!: HTMLIonInputElement;
 
   private validationObserver?: MutationObserver;
@@ -410,6 +417,17 @@ export class Input implements ComponentInterface {
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
       this.setSlottedLabelId();
       forceUpdate(this);
+
+      /**
+       * Temporarily disable the label transition until the
+       * next frame so any slot updates don't cause the
+       * label to animate.
+       */
+      this.skipLabelTransition = true;
+
+      requestAnimationFrame(() => {
+        this.skipLabelTransition = false;
+      });
     });
 
     this.setSlottedLabelId();
@@ -844,7 +862,8 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, hasFocus, clearInputIcon } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, hasFocus, clearInputIcon, skipLabelTransition } =
+      this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -875,6 +894,7 @@ export class Input implements ComponentInterface {
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,
+          'skip-label-transition': skipLabelTransition,
         })}
         style={{ '--start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
