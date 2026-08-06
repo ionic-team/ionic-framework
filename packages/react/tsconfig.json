@@ -13,6 +13,13 @@
      */
     "rootDir": "src",
     "types": ["node", "jest", "@testing-library/jest-dom"],
+    /*
+     * @types/node is pinned to v14 here, which predates AbortSignal.any() in
+     * lib.dom.d.ts, so the two global declarations of AbortSignal conflict
+     * (TS2403). skipLibCheck keeps tsc from checking declaration files we do
+     * not own; errors in this package's own source are still reported.
+     */
+    "skipLibCheck": true,
     "inlineSources": true,
     "sourceMap": true,
     "jsx": "react-jsx",
