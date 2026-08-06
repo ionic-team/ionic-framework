@@ -1,19 +1,10 @@
 {
+  "extends": "../../core/tsconfig.base.json",
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "strictPropertyInitialization": false,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "importHelpers": true,
-    "declaration": true,
     "sourceMap": true,
     "declarationMap": true,
     "outDir": "dist",
     "rootDir": "src",
-    "target": "es2022",
-    "module": "es2022",
-    "moduleResolution": "bundler",
     "paths": {
       "@ionic/angular/common": ["./src/common/index.ts"]
     },
