@@ -470,6 +470,15 @@
 }
 
 /**
+ * When start/end slots are added or removed, we temporarily
+ * disable the label transition to prevent the floating label
+ * from animating as its position is adjusted.
+ */
+:host(.skip-label-transition) .label-text-wrapper {
+  transition: none;
+}
+
+/**
  * We need to use two elements instead of
  * one. The .label-text-wrapper is responsible
  * for centering the label text vertically regardless

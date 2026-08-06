@@ -86,6 +86,13 @@ export class Textarea implements ComponentInterface {
    */
   @State() isInvalid = false;
 
+  /**
+   * Temporarily disables the floating label transition while
+   * start/end slots are added or removed. This prevents the
+   * label from animating as its position is adjusted.
+   */
+  @State() skipLabelTransition = false;
+
   private validationObserver?: MutationObserver;
 
   /**
@@ -337,7 +344,22 @@ export class Textarea implements ComponentInterface {
 
   connectedCallback() {
     const { el } = this;
-    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
+
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
+      forceUpdate(this);
+
+      /**
+       * Temporarily disable the label transition until the
+       * next frame so any slot updates don't cause the
+       * label to animate.
+       */
+      this.skipLabelTransition = true;
+
+      requestAnimationFrame(() => {
+        this.skipLabelTransition = false;
+      });
+    });
+
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
@@ -718,7 +740,7 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, fill, shape, labelPlacement, hasFocus } = this;
+    const { inputId, disabled, fill, shape, labelPlacement, hasFocus, skipLabelTransition } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -745,6 +767,7 @@ export class Textarea implements ComponentInterface {
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
+          'skip-label-transition': skipLabelTransition,
         })}
         style={{ '--start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
