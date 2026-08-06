@@ -2,6 +2,10 @@
 
 Ionic Framework supports multiple versions of Vue. As a result, we need to verify that Ionic works correctly with each of these Vue versions.
 
+## Type Checking
+
+Run `npm run typecheck` in `packages/vue` to check types. The rollup build only reports type errors as warnings, so a passing build does not mean the types are clean.
+
 ## Syncing Local Changes
 
 The Vue test app supports syncing your locally built changes for validation.
