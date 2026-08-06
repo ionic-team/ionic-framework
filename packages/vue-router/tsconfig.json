@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "outDir": "dist-transpiled",
     "declarationDir": "dist/types",
+    "rootDir": "src",
     "sourceMap": true,
     "jsx": "react"
   },

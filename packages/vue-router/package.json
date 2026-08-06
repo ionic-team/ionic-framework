@@ -7,6 +7,7 @@
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "typecheck": "tsc --noEmit",
     "bundle": "rollup --config rollup.config.mjs",
     "build": "npm run clean && npm run bundle",
     "build.watch": "npm run bundle -- --watch",
