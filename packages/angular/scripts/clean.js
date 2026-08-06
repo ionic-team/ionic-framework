@@ -1,4 +1,7 @@
 const fs = require('fs-extra');
+const path = require('path');
 
-fs.remove('css');
-fs.remove('dist');
+const ROOT_DIR = path.join(__dirname, '..');
+
+fs.removeSync(path.join(ROOT_DIR, 'css'));
+fs.removeSync(path.join(ROOT_DIR, 'dist'));
