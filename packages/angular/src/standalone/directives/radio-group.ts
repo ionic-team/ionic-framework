@@ -18,20 +18,6 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'compareWith', 'errorText', 'helperText', 'name', 'value'];
 
-/**
- * Pulling the provider into an object and using PURE  works
- * around an ng-packagr issue that causes
- * components with multiple decorators and
- * a provider to be re-assigned. This re-assignment
- * is not supported by Webpack and causes treeshaking
- * to not work on these kinds of components.
- */
-const accessorProvider = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: /*@__PURE__*/ forwardRef(() => IonRadioGroup),
-  multi: true,
-};
-
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: RADIO_GROUP_INPUTS,
@@ -42,7 +28,13 @@ const accessorProvider = {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: RADIO_GROUP_INPUTS,
-  providers: [accessorProvider],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => IonRadioGroup),
+      multi: true,
+    }
+  ],
   standalone: true,
 })
 export class IonRadioGroup extends ValueAccessor {

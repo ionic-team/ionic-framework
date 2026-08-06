@@ -41,20 +41,6 @@ const SELECT_INPUTS = [
   'value',
 ];
 
-/**
- * Pulling the provider into an object and using PURE works
- * around an ng-packagr issue that causes
- * components with multiple decorators and
- * a provider to be re-assigned. This re-assignment
- * is not supported by Webpack and causes treeshaking
- * to not work on these kinds of components.
- */
-const accessorProvider = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: /*@__PURE__*/ forwardRef(() => IonSelect),
-  multi: true,
-};
-
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: SELECT_INPUTS,
@@ -66,7 +52,13 @@ const accessorProvider = {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: SELECT_INPUTS,
-  providers: [accessorProvider],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => IonSelect),
+      multi: true,
+    }
+  ],
   standalone: true,
 })
 export class IonSelect extends ValueAccessor {
