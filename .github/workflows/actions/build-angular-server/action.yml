@@ -23,6 +23,9 @@ runs:
       run: npm run lint
       shell: bash
       working-directory: ./packages/angular-server
+    # No Typecheck step here. Unlike the rollup-built packages, which report
+    # type errors as warnings and still exit 0, ng-packagr fails the build on
+    # them, so the Build step below already covers this.
     - name: 🏗️ Build
       run: npm run build.prod
       shell: bash
