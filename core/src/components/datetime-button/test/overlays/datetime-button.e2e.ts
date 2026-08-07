@@ -209,8 +209,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 /**
- * The tested behavior does not
- * vary across modes/directions
+ * This behavior does not vary across modes/directions
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime-button: reopening modal'), () => {
