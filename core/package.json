@@ -88,7 +88,7 @@
     "@stencil/sass": "^3.0.9",
     "@stencil/vue-output-target": "0.13.1",
     "@types/jest": "^29.5.6",
-    "@types/node": "^16.18.126",
+    "@types/node": "^24.13.3",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "chalk": "^6.0.0",
