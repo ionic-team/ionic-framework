@@ -7,7 +7,7 @@ import type { Animation, ModalDragEventDetail } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
 import { getBackdropValueForSheet } from '../utils';
 
-import { calculateSpringStep, handleCanDismiss } from './utils';
+import { calculateSpringStep, canSwipeOnContent, handleCanDismiss } from './utils';
 
 export interface MoveSheetToBreakpointOptions {
   /**
@@ -261,9 +261,6 @@ export const createSheetGesture = (
 
   const canStart = (detail: GestureDetail) => {
     /**
-     * If we are swiping on the content, swiping should only be possible if the content
-     * is scrolled all the way to the top so that we do not interfere with scrolling.
-     *
      * We cannot assume that the `ion-content` target will remain consistent between swipes.
      * For example, when using ion-nav within a modal it is possible to swipe, push a view,
      * and then swipe again. The target content will not be the same between swipes.
@@ -272,27 +269,11 @@ export const createSheetGesture = (
     currentBreakpoint = getCurrentBreakpoint();
 
     /**
-     * If `expandToScroll` is disabled, we should not allow the swipe gesture
-     * to start if the content is not scrolled to the top.
+     * Upwards swipes on the content cannot move the sheet anyway, so this only
+     * blocks swiping the sheet down from the content.
      */
-    if (!expandToScroll && contentEl) {
-      const scrollEl = isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
-      return scrollEl!.scrollTop === 0;
-    }
-
-    if (currentBreakpoint === 1 && contentEl) {
-      /**
-       * The modal should never swipe to close on the content with a refresher.
-       * Note 1: We cannot solve this by making this gesture have a higher priority than
-       * the refresher gesture as the iOS native refresh gesture uses a scroll listener in
-       * addition to a gesture.
-       *
-       * Note 2: Do not use getScrollElement here because we need this to be a synchronous
-       * operation, and getScrollElement is asynchronous.
-       */
-      const scrollEl = isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
-      const hasRefresherInContent = !!contentEl.querySelector('ion-refresher');
-      return !hasRefresherInContent && scrollEl!.scrollTop === 0;
+    if (contentEl && (!expandToScroll || currentBreakpoint === 1)) {
+      return canSwipeOnContent(contentEl);
     }
 
     return true;

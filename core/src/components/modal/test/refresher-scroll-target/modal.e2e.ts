@@ -1,0 +1,110 @@
+import { expect } from '@playwright/test';
+import type { E2EPage } from '@utils/test/playwright';
+import { configs, dragElementByYAxis, test } from '@utils/test/playwright';
+
+const pullDownOnScrollHost = async (page: E2EPage) => {
+  // The refresher creates its gesture asynchronously, so wait for it to hydrate.
+  await page.locator('ion-modal ion-refresher.hydrated').waitFor({ state: 'attached' });
+
+  const scrollHost = page.locator('ion-modal .ion-content-scroll-host');
+  const box = (await scrollHost.boundingBox())!;
+
+  // Start near the top of the host so the pull stays within smaller viewports.
+  await dragElementByYAxis(scrollHost, page, 250, box.y + 5);
+};
+
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('sheet modal: refresher with custom scroll target'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/modal/test/refresher-scroll-target', config);
+    });
+
+    test('should refresh instead of dismissing when pulling down on the custom scroll target', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31332',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+      const ionRefresh = await page.spyOnEvent('ionRefresh');
+
+      await page.click('#sheet');
+      await ionModalDidPresent.next();
+
+      await pullDownOnScrollHost(page);
+
+      await ionRefresh.next();
+      expect(ionModalDidDismiss).toHaveReceivedEventTimes(0);
+    });
+
+    test('should refresh instead of dismissing when expandToScroll is disabled', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31332',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+      const ionRefresh = await page.spyOnEvent('ionRefresh');
+
+      await page.click('#sheet-no-expand');
+      await ionModalDidPresent.next();
+
+      await pullDownOnScrollHost(page);
+
+      await ionRefresh.next();
+      expect(ionModalDidDismiss).toHaveReceivedEventTimes(0);
+    });
+
+    test('should still dismiss when dragging the handle', async ({ page }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      await page.click('#sheet-no-expand');
+      await ionModalDidPresent.next();
+
+      await dragElementByYAxis(page.locator('ion-modal .modal-handle'), page, 500);
+
+      await ionModalDidDismiss.next();
+    });
+  });
+});
+
+/**
+ * Card modals are only available in iOS mode.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('card modal: refresher with custom scroll target'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/modal/test/refresher-scroll-target', config);
+    });
+
+    test('should refresh instead of dismissing when pulling down on the custom scroll target', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31332',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+      const ionRefresh = await page.spyOnEvent('ionRefresh');
+
+      await page.click('#card');
+      await ionModalDidPresent.next();
+
+      await pullDownOnScrollHost(page);
+
+      await ionRefresh.next();
+      expect(ionModalDidDismiss).toHaveReceivedEventTimes(0);
+    });
+  });
+});

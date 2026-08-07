@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Refresher with Custom Scroll Target</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      #content {
+        position: relative;
+
+        display: block;
+        flex: 1;
+
+        height: 100%;
+        overflow-y: auto;
+
+        contain: size style;
+      }
+    </style>
+  </head>
+
+  <script type="module">
+    import { modalController } from '../../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Refresher with Custom Scroll Target</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <button class="expand" id="card" onclick="presentCardModal()">Card Modal</button>
+          <button class="expand" id="sheet" onclick="presentSheetModal()">Sheet Modal</button>
+          <button class="expand" id="sheet-no-expand" onclick="presentSheetModal(false)">
+            Sheet Modal (expandToScroll false)
+          </button>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      // The refresher is a child of ion-content while the scroll host is a
+      // sibling of it, matching how virtual scroll viewports are set up.
+      function createModalContent() {
+        const element = document.createElement('div');
+        element.innerHTML = `
+      <ion-header id="modal-header">
+        <ion-toolbar>
+          <ion-title>Modal</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content scroll-y="false">
+        <ion-refresher id="refresher" slot="fixed">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+        <div id="content" class="ion-padding ion-content-scroll-host">
+          <ion-list id="list"></ion-list>
+        </div>
+      </ion-content>
+      `;
+
+        const list = element.querySelector('#list');
+        for (let i = 0; i < 30; i++) {
+          const item = document.createElement('ion-item');
+          item.textContent = `Item ${i}`;
+          list.appendChild(item);
+        }
+
+        const refresher = element.querySelector('#refresher');
+        refresher.addEventListener('ionRefresh', () => {
+          refresher.complete();
+        });
+
+        return element;
+      }
+
+      async function presentCardModal() {
+        const modal = await modalController.create({
+          // ion-app also carries the ion-page class, so the page is the second match.
+          presentingElement: document.querySelectorAll('.ion-page')[1],
+          component: createModalContent(),
+        });
+        await modal.present();
+      }
+
+      async function presentSheetModal(expandToScroll = true) {
+        const modal = await modalController.create({
+          component: createModalContent(),
+          breakpoints: [0, 1],
+          initialBreakpoint: 1,
+          expandToScroll,
+        });
+        await modal.present();
+      }
+    </script>
+  </body>
+</html>
