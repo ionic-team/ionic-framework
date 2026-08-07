@@ -545,9 +545,9 @@ button {
   flex-direction: column;
 
   /**
-   * When using a stacked/floating label, the inner wrapper is
+   * When using a stacked/floating label, the control is
    * stacked vertically under the label container. This line
-   * ensures that the inner wrapper fills all the remaining height
+   * ensures that the control fills all the remaining height
    * of the component.
    */
   flex-grow: 1;
