@@ -908,7 +908,7 @@ export class Input implements ComponentInterface {
           'input-disabled': disabled,
           'skip-label-transition': skipLabelTransition,
         })}
-        style={{ '--start-slot-adjustment': this.getStartSlotAdjustment() }}
+        style={{ '--internal-start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses

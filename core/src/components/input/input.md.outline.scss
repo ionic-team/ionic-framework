@@ -8,7 +8,7 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
-  --start-slot-adjustment: 0px;
+  --internal-start-slot-adjustment: 0px;
 
   min-height: 56px;
 }
@@ -91,7 +91,7 @@
  * This makes the label sit above the input.
  */
 :host(.label-floating.input-fill-outline) .label-text-wrapper {
-  @include transform(translate(var(--start-slot-adjustment), -32%), scale(#{$form-control-label-stacked-scale}));
+  @include transform(translate(var(--internal-start-slot-adjustment, 0px), -32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
