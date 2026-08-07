@@ -834,11 +834,17 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * Stops propagation when the label is clicked,
-   * otherwise, two clicks will be triggered.
+   * Stops propagation for clicks on the input's own content (label text,
+   * input field) to prevent double-click events. Allows clicks on slotted
+   * content to propagate so event delegation works for parent handlers.
    */
   private onLabelClick = (ev: MouseEvent) => {
-    ev.stopPropagation();
+    const target = ev.target as HTMLElement;
+    const control = this.el.querySelector('.input-control');
+
+    if (control?.contains(target)) {
+      ev.stopPropagation();
+    }
   };
 
   /**
