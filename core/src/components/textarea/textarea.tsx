@@ -629,11 +629,17 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Stops propagation when the label is clicked,
-   * otherwise, two clicks will be triggered.
+   * Stops propagation for clicks on the textarea's own content (label text,
+   * textarea field) to prevent double-click events. Allows clicks on slotted
+   * content to propagate so event delegation works for parent handlers.
    */
   private onLabelClick = (ev: MouseEvent) => {
-    ev.stopPropagation();
+    const target = ev.target as HTMLElement;
+    const control = this.el.querySelector('.textarea-control');
+
+    if (control?.contains(target)) {
+      ev.stopPropagation();
+    }
   };
 
   /**
