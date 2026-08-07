@@ -3,7 +3,7 @@ import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, 
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected, checkInvalidState } from '@utils/forms';
-import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import { focusVisibleElement, renderHiddenInput, inheritAttributes, raf } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
@@ -79,6 +79,7 @@ export class Select implements ComponentInterface {
   private slotMutationController?: SlotMutationController;
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
+  private skipLabelTransitionRaf?: number;
   private validationObserver?: MutationObserver;
   private notchController?: NotchController;
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
@@ -351,7 +352,7 @@ export class Select implements ComponentInterface {
        */
       this.skipLabelTransition = true;
 
-      requestAnimationFrame(() => {
+      this.skipLabelTransitionRaf = raf(() => {
         this.skipLabelTransition = false;
       });
     });
@@ -457,6 +458,11 @@ export class Select implements ComponentInterface {
     if (this.validationObserver) {
       this.validationObserver.disconnect();
       this.validationObserver = undefined;
+    }
+
+    if (this.skipLabelTransitionRaf !== undefined) {
+      cancelAnimationFrame(this.skipLabelTransitionRaf);
+      this.skipLabelTransitionRaf = undefined;
     }
   }
 
