@@ -16,7 +16,7 @@ import {
 import type { NotchController } from '@utils/forms';
 import { createNotchController, checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
+import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady, raf } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -54,6 +54,7 @@ export class Input implements ComponentInterface {
   private slotMutationController?: SlotMutationController;
   private notchController?: NotchController;
   private notchSpacerEl: HTMLElement | undefined;
+  private skipLabelTransitionRaf?: number;
 
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
@@ -425,7 +426,7 @@ export class Input implements ComponentInterface {
        */
       this.skipLabelTransition = true;
 
-      requestAnimationFrame(() => {
+      this.skipLabelTransitionRaf = raf(() => {
         this.skipLabelTransition = false;
       });
     });
@@ -527,6 +528,11 @@ export class Input implements ComponentInterface {
     if (this.validationObserver) {
       this.validationObserver.disconnect();
       this.validationObserver = undefined;
+    }
+
+    if (this.skipLabelTransitionRaf !== undefined) {
+      cancelAnimationFrame(this.skipLabelTransitionRaf);
+      this.skipLabelTransitionRaf = undefined;
     }
   }
 
