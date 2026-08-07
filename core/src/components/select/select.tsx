@@ -1383,7 +1383,7 @@ export class Select implements ComponentInterface {
           [`select-label-placement-${labelPlacement}`]: true,
           'skip-label-transition': skipLabelTransition,
         })}
-        style={{ '--start-slot-adjustment': this.getStartSlotAdjustment() }}
+        style={{ '--internal-start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
         <label class="select-wrapper" id="select-label" onClick={this.onLabelClick} part="wrapper">
           {hasOutlineFill && <div class="select-outline-container">{this.renderOutlineDecorations()}</div>}
