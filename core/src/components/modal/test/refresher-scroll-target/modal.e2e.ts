@@ -2,15 +2,15 @@ import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { configs, dragElementByYAxis, test } from '@utils/test/playwright';
 
-const pullDownOnScrollHost = async (page: E2EPage) => {
+const dragDownOnScrollHost = async (page: E2EPage, dragByY = 250) => {
   // The refresher creates its gesture asynchronously, so wait for it to hydrate.
   await page.locator('ion-modal ion-refresher.hydrated').waitFor({ state: 'attached' });
 
   const scrollHost = page.locator('ion-modal .ion-content-scroll-host');
   const box = (await scrollHost.boundingBox())!;
 
-  // Start near the top of the host so the pull stays within smaller viewports.
-  await dragElementByYAxis(scrollHost, page, 250, box.y + 5);
+  // Start near the top of the host so the drag stays within smaller viewports.
+  await dragElementByYAxis(scrollHost, page, dragByY, box.y + 5);
 };
 
 /**
@@ -37,7 +37,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.click('#sheet');
       await ionModalDidPresent.next();
 
-      await pullDownOnScrollHost(page);
+      await dragDownOnScrollHost(page);
 
       await ionRefresh.next();
       expect(ionModalDidDismiss).toHaveReceivedEventTimes(0);
@@ -56,10 +56,42 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.click('#sheet-no-expand');
       await ionModalDidPresent.next();
 
-      await pullDownOnScrollHost(page);
+      await dragDownOnScrollHost(page);
 
       await ionRefresh.next();
       expect(ionModalDidDismiss).toHaveReceivedEventTimes(0);
+    });
+
+    test('should move the sheet rather than refresh when dragging the content at a partial breakpoint', async ({
+      page,
+    }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+      const ionRefresh = await page.spyOnEvent('ionRefresh');
+
+      await page.click('#sheet-breakpoints');
+      await ionModalDidPresent.next();
+
+      await dragDownOnScrollHost(page);
+
+      await ionBreakpointDidChange.next();
+      expect(ionRefresh).toHaveReceivedEventTimes(0);
+    });
+
+    test('should refresh rather than move the sheet at a partial breakpoint when expandToScroll is disabled', async ({
+      page,
+    }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+      const ionRefresh = await page.spyOnEvent('ionRefresh');
+
+      await page.click('#sheet-breakpoints-no-expand');
+      await ionModalDidPresent.next();
+
+      await dragDownOnScrollHost(page);
+
+      await ionRefresh.next();
+      expect(ionBreakpointDidChange).toHaveReceivedEventTimes(0);
     });
 
     test('should still dismiss when dragging the handle', async ({ page }) => {
@@ -101,7 +133,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.click('#card');
       await ionModalDidPresent.next();
 
-      await pullDownOnScrollHost(page);
+      await dragDownOnScrollHost(page);
 
       await ionRefresh.next();
       expect(ionModalDidDismiss).toHaveReceivedEventTimes(0);

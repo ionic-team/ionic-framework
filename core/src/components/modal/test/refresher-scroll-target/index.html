@@ -46,14 +46,26 @@
         <ion-content class="ion-padding">
           <button class="expand" id="card" onclick="presentCardModal()">Card Modal</button>
           <button class="expand" id="sheet" onclick="presentSheetModal()">Sheet Modal</button>
-          <button class="expand" id="sheet-no-expand" onclick="presentSheetModal(false)">
+          <button class="expand" id="sheet-no-expand" onclick="presentSheetModal({ expandToScroll: false })">
             Sheet Modal (expandToScroll false)
+          </button>
+          <button class="expand" id="sheet-breakpoints" onclick="presentSheetModal(MULTIPLE_BREAKPOINTS)">
+            Sheet Modal (breakpoints)
+          </button>
+          <button
+            class="expand"
+            id="sheet-breakpoints-no-expand"
+            onclick="presentSheetModal({ ...MULTIPLE_BREAKPOINTS, expandToScroll: false })"
+          >
+            Sheet Modal (breakpoints, expandToScroll false)
           </button>
         </ion-content>
       </div>
     </ion-app>
 
     <script>
+      const MULTIPLE_BREAKPOINTS = { breakpoints: [0, 0.25, 0.5, 1], initialBreakpoint: 0.5 };
+
       // The refresher is a child of ion-content while the scroll host is a
       // sibling of it, matching how virtual scroll viewports are set up.
       function createModalContent() {
@@ -66,7 +78,7 @@
       </ion-header>
       <ion-content scroll-y="false">
         <ion-refresher id="refresher" slot="fixed">
-          <ion-refresher-content></ion-refresher-content>
+          <ion-refresher-content pulling-text="Pull to refresh" refreshing-text="Refreshing..."></ion-refresher-content>
         </ion-refresher>
         <div id="content" class="ion-padding ion-content-scroll-host">
           <ion-list id="list"></ion-list>
@@ -81,9 +93,21 @@
           list.appendChild(item);
         }
 
+        let refreshCount = 0;
         const refresher = element.querySelector('#refresher');
         refresher.addEventListener('ionRefresh', () => {
-          refresher.complete();
+          // Hold the refreshing state so the spinner is visible when testing by
+          // hand, then prepend an item so the refresh leaves something behind.
+          setTimeout(() => {
+            refreshCount++;
+
+            const item = document.createElement('ion-item');
+            item.setAttribute('color', 'success');
+            item.textContent = `Refreshed ${refreshCount}`;
+            list.prepend(item);
+
+            refresher.complete();
+          }, 1500);
         });
 
         return element;
@@ -98,12 +122,12 @@
         await modal.present();
       }
 
-      async function presentSheetModal(expandToScroll = true) {
+      async function presentSheetModal(opts = {}) {
         const modal = await modalController.create({
           component: createModalContent(),
           breakpoints: [0, 1],
           initialBreakpoint: 1,
-          expandToScroll,
+          ...opts,
         });
         await modal.present();
       }
