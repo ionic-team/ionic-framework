@@ -140,6 +140,10 @@ export class Datetime implements ComponentInterface {
    * Set true only by `visibleCallback`. Lets `hiddenCallback` ignore the
    * synthetic "not intersecting" entry IntersectionObserver fires on
    * `observe()` when the host mounts offscreen.
+   *
+   * Don't reset this in `disconnectedCallback`. Overlays disconnect and
+   * reconnect the host without re-creating the observers, so a reset there
+   * makes `hiddenCallback` miss the dismissal.
    */
   private hasBeenIntersecting = false;
 
@@ -179,7 +183,7 @@ export class Datetime implements ComponentInterface {
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
+   * For more information on colors, refer to [theming](/docs/theming/basics).
    */
   @Prop() color?: Color = 'primary';
 
@@ -1116,7 +1120,6 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible = undefined;
     }
     this.loadTimeoutCleanup();
-    this.hasBeenIntersecting = false;
   }
 
   /**
