@@ -291,7 +291,7 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Outline / Async Label</h2>
-            <ion-select id="solid-async" label-placement="floating" fill="outline" interface="action-sheet">
+            <ion-select id="outline-async" label-placement="floating" fill="outline" interface="action-sheet">
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
               <ion-select-option value="supreme">Supreme</ion-select-option>
               <ion-select-option value="chicken">Chicken</ion-select-option>
@@ -322,11 +322,11 @@
     </ion-app>
 
     <script>
-      const solidAsync = document.querySelector('#solid-async');
+      const outlineAsync = document.querySelector('#outline-async');
       const asyncDecos = document.querySelector('#async-decorations');
 
       const getSlottedLabel = () => {
-        return solidAsync.querySelector('[slot="label"]');
+        return outlineAsync.querySelector('[slot="label"]');
       };
 
       const getSlottedStartDeco = () => {
@@ -343,7 +343,7 @@
           labelEl.slot = 'label';
           labelEl.innerHTML = 'Email <span class="required">*</span>';
 
-          solidAsync.appendChild(labelEl);
+          outlineAsync.appendChild(labelEl);
         }
 
         if (getSlottedStartDeco() === null) {
