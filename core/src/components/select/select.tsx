@@ -1075,15 +1075,13 @@ export class Select implements ComponentInterface {
   }
 
   /**
-   * Stops propagation when the label is clicked, otherwise,
-   * two clicks will be triggered. Allows clicks on the native
-   * wrapper to propagate so the select can open.
+   * Stops propagation for re-dispatched clicks (when already expanded) to
+   * prevent double-click events. Allows initial button clicks (from keyboard
+   * or mouse) and slotted content clicks to propagate so event delegation
+   * works for parent handlers.
    */
   private onLabelClick = (ev: MouseEvent) => {
-    const target = ev.target as HTMLElement;
-    const nativeWrapper = this.el.shadowRoot?.querySelector('.native-wrapper');
-
-    if (!nativeWrapper?.contains(target)) {
+    if (ev.target === this.focusEl && this.isExpanded) {
       ev.stopPropagation();
     }
   };
