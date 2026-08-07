@@ -89,12 +89,19 @@ export const createViewStacks = (router: Router) => {
   };
 
   const findViewItemByPath = (
-    path: string,
+    path: string | undefined,
     outletId?: number,
     mustBeIonRoute = false
   ): ViewItem | undefined => {
+    /**
+     * An empty or missing pathname cannot identify a view item.
+     */
+    if (!path) {
+      return undefined;
+    }
+
     const matchView = (viewItem: ViewItem) => {
-      if ((mustBeIonRoute && !viewItem.ionRoute) || path === "") {
+      if (mustBeIonRoute && !viewItem.ionRoute) {
         return false;
       }
 
@@ -155,7 +162,7 @@ export const createViewStacks = (router: Router) => {
   ): ViewItem => {
     return {
       id: generateId("viewItem"),
-      pathname: routeInfo.pathname,
+      pathname: routeInfo.pathname!,
       outletId,
       matchedRoute,
       ionPageElement: ionPage,

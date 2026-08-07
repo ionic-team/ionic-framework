@@ -1,12 +1,13 @@
 {
   "name": "@ionic/vue-router",
-  "version": "8.8.15",
+  "version": "8.8.17",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "typecheck": "tsc --noEmit",
     "bundle": "rollup --config rollup.config.mjs",
     "build": "npm run clean && npm run bundle",
     "build.watch": "npm run bundle -- --watch",
@@ -43,7 +44,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic-framework#readme",
   "dependencies": {
-    "@ionic/vue": "^8.8.15"
+    "@ionic/vue": "^8.8.17"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

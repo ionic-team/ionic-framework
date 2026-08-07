@@ -20,8 +20,7 @@ export class IonicServerModule {}
 export function hydrateIonicComponents(doc: any, appId: any) {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   return () => {
-    const supportsNativeAttachShadow =
-      typeof doc?.createElement?.('div')?.attachShadow === 'function';
+    const supportsNativeAttachShadow = typeof doc?.createElement?.('div')?.attachShadow === 'function';
 
     return hydrateDocument(doc, {
       // Fallback for SSR DOMs (e.g. Domino) that do not implement attachShadow.

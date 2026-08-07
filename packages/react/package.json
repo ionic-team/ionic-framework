@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "8.8.15",
+  "version": "8.8.17",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -28,6 +28,7 @@
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "typecheck": "tsc --noEmit",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
     "sync": "sh ./scripts/sync.sh",
@@ -40,7 +41,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^8.8.15",
+    "@ionic/core": "^8.8.17",
     "@stencil/react-output-target": "^1.5.2",
     "ionicons": "^8.0.13",
     "tslib": "*"
