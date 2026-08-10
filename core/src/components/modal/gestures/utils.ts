@@ -1,6 +1,25 @@
+import { findRefresherInContent, isIonContent } from '@utils/content';
+import { getElementRoot } from '@utils/helpers';
 import { GESTURE } from '@utils/overlays';
 
 import type { Animation } from '../../../interface';
+
+/**
+ * Swiping is only possible when the content is scrolled to the top, so that we
+ * do not interfere with scrolling, and never on content with a refresher.
+ *
+ * Note: We cannot solve the refresher case with gesture priority as the iOS
+ * native refresh gesture uses a scroll listener in addition to a gesture.
+ *
+ * Note: Do not use `getScrollElement` here because we need this to be a
+ * synchronous operation, and `getScrollElement` is asynchronous.
+ */
+export const canSwipeOnContent = (contentEl: HTMLElement) => {
+  const scrollEl = isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
+  const hasRefresherInContent = !!findRefresherInContent(contentEl);
+
+  return !hasRefresherInContent && scrollEl!.scrollTop === 0;
+};
 
 export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Animation) => {
   /**
