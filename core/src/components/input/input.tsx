@@ -15,7 +15,7 @@ import {
   h,
 } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
-import { createNotchController, checkInvalidState } from '@utils/forms';
+import { createClearButtonPressController, createNotchController, checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -89,6 +89,13 @@ export class Input implements ComponentInterface {
    * Track validation state for proper aria-live announcements
    */
   @State() isInvalid = false;
+
+  /** Keeps the clear button visible for the duration of a press. */
+  @State() isClearButtonPressed = false;
+
+  private readonly clearButtonPressController = createClearButtonPressController(
+    (isPressed) => (this.isClearButtonPressed = isPressed)
+  );
 
   @Element() el!: HTMLIonInputElement;
 
@@ -497,6 +504,8 @@ export class Input implements ComponentInterface {
       );
     }
 
+    this.clearButtonPressController.destroy();
+
     if (this.slotMutationController) {
       this.slotMutationController.destroy();
       this.slotMutationController = undefined;
@@ -729,6 +738,8 @@ export class Input implements ComponentInterface {
   };
 
   private clearTextInput = (ev?: Event) => {
+    this.clearButtonPressController.release();
+
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
       ev.stopPropagation();
@@ -1075,15 +1086,12 @@ export class Input implements ComponentInterface {
               <button
                 aria-label="reset"
                 type="button"
-                class="input-clear-icon"
-                onPointerDown={(ev) => {
-                  /**
-                   * This prevents mobile browsers from
-                   * blurring the input when the clear
-                   * button is activated.
-                   */
-                  ev.preventDefault();
+                class={{
+                  'input-clear-icon': true,
+                  'input-clear-button-pressed': this.isClearButtonPressed,
                 }}
+                onPointerDown={this.clearButtonPressController.onPointerDown}
+                onPointerCancel={this.clearButtonPressController.release}
                 onClick={this.clearTextInput}
               >
                 <ion-icon aria-hidden="true" icon={inputClearIcon}></ion-icon>

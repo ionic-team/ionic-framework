@@ -347,5 +347,85 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
       await expect(clearButton).toBeFocused();
       await expect(clearButton).toBeVisible();
     });
+
+    test('should clear the value when the input blurs between pointerdown and click', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="abc"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      const nativeInput = input.locator('input');
+      const clearButton = input.locator('.input-clear-icon');
+
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
+      await expect(clearButton).toBeVisible();
+
+      const box = (await clearButton.boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+
+      // Some browsers blur anyway, despite the `preventDefault` on `pointerdown`.
+      await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+      await page.waitForChanges();
+
+      await page.mouse.up();
+      await page.waitForChanges();
+
+      await expect(input).toHaveJSProperty('value', '');
+      await expect(nativeInput).toBeFocused();
+
+      // Clearing stops the click from bubbling, so it has to end the press itself.
+      await input.evaluate((el: HTMLIonInputElement) => (el.value = 'abc'));
+      await page.waitForChanges();
+      await expect(clearButton).toBeVisible();
+
+      await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+      await page.waitForChanges();
+
+      await expect(clearButton).not.toBeVisible();
+    });
+
+    test('should hide the clear button when the press is abandoned', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="abc"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      const nativeInput = input.locator('input');
+      const clearButton = input.locator('.input-clear-icon');
+
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
+      await expect(clearButton).toBeVisible();
+
+      const box = (await clearButton.boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+      await page.waitForChanges();
+
+      // Releasing off the button sends the click to an ancestor, not the button.
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2 + 200);
+      await page.mouse.up();
+      await page.waitForChanges();
+
+      await expect(input).toHaveJSProperty('value', 'abc');
+      await expect(clearButton).not.toBeVisible();
+    });
   });
 });

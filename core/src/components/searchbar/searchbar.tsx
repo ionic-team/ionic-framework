@@ -3,6 +3,7 @@ import magnifyingGlassRegular from '@phosphor-icons/core/assets/regular/magnifyi
 import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { createClearButtonPressController } from '@utils/forms';
 import { debounceEvent, raf, componentOnReady, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
@@ -48,6 +49,13 @@ export class Searchbar implements ComponentInterface {
 
   @State() focused = false;
   @State() noAnimate = true;
+
+  /** Keeps the clear button mounted for the duration of a press. */
+  @State() isClearButtonPressed = false;
+
+  private readonly clearButtonPressController = createClearButtonPressController(
+    (isPressed) => (this.isClearButtonPressed = isPressed)
+  );
 
   /**
    * lang and dir are globally enumerated attributes.
@@ -320,6 +328,8 @@ export class Searchbar implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    this.clearButtonPressController.destroy();
+
     if (this.loadTimeout) {
       clearTimeout(this.loadTimeout);
     }
@@ -394,6 +404,8 @@ export class Searchbar implements ComponentInterface {
    * Clears the input field and triggers the control change.
    */
   private onClearInput = async (shouldFocus?: boolean) => {
+    this.clearButtonPressController.release();
+
     if (this.clearTimeout) {
       clearTimeout(this.clearTimeout);
     }
@@ -661,13 +673,17 @@ export class Searchbar implements ComponentInterface {
    * Determines whether or not the clear button should be visible onscreen.
    * Clear button should be shown if one of two conditions applies:
    * 1. `showClearButton` is set to `always`.
-   * 2. `showClearButton` is set to `focus`, and the searchbar has been focused.
+   * 2. `showClearButton` is set to `focus`, and the searchbar has been
+   *    focused or a clear button press is still in flight.
    * Unless the `theme` is `ionic` and the searchbar is disabled.
    */
   private shouldShowClearButton(): boolean {
     const theme = getIonTheme(this);
 
-    if (this.showClearButton === 'never' || (this.showClearButton === 'focus' && !this.focused)) {
+    if (
+      this.showClearButton === 'never' ||
+      (this.showClearButton === 'focus' && !this.focused && !this.isClearButtonPressed)
+    ) {
       return false;
     }
 
@@ -883,14 +899,8 @@ export class Searchbar implements ComponentInterface {
               type="button"
               no-blur
               class="searchbar-clear-button"
-              onPointerDown={(ev) => {
-                /**
-                 * This prevents mobile browsers from
-                 * blurring the input when the clear
-                 * button is activated.
-                 */
-                ev.preventDefault();
-              }}
+              onPointerDown={this.clearButtonPressController.onPointerDown}
+              onPointerCancel={this.clearButtonPressController.release}
               onClick={() => this.onClearInput(true)}
             >
               <ion-icon
