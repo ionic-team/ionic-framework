@@ -1,8 +1,14 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
-import type { NotchController } from '@utils/forms';
-import { compareOptions, createNotchController, isOptionSelected, checkInvalidState } from '@utils/forms';
+import type { NotchController, StartContainerController } from '@utils/forms';
+import {
+  compareOptions,
+  createNotchController,
+  createStartContainerController,
+  isOptionSelected,
+  checkInvalidState,
+} from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes, raf } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -82,6 +88,8 @@ export class Select implements ComponentInterface {
   private skipLabelTransitionRaf?: number;
   private validationObserver?: MutationObserver;
   private notchController?: NotchController;
+  private startContainerController?: StartContainerController;
+  private startContainerEl: HTMLElement | undefined;
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
 
   @Element() el!: HTMLIonSelectElement;
@@ -343,6 +351,8 @@ export class Select implements ComponentInterface {
     const { el } = this;
 
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
+      this.startContainerController?.calculateStartContainerWidth();
+
       forceUpdate(this);
 
       /**
@@ -362,6 +372,16 @@ export class Select implements ComponentInterface {
       () => this.notchSpacerEl,
       () => this.labelSlot
     );
+
+    this.startContainerController = createStartContainerController(
+      el,
+      () => this.startContainerEl,
+      () => {
+        return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
+      }
+    );
+
+    this.startContainerController.calculateStartContainerWidth();
 
     this.updateOverlayOptions();
     this.emitStyle();
@@ -452,6 +472,11 @@ export class Select implements ComponentInterface {
     if (this.notchController) {
       this.notchController.destroy();
       this.notchController = undefined;
+    }
+
+    if (this.startContainerController) {
+      this.startContainerController.destroy();
+      this.startContainerController = undefined;
     }
 
     // Clean up validation observer to prevent memory leaks.
@@ -1322,19 +1347,6 @@ export class Select implements ComponentInterface {
     );
   }
 
-  private getStartSlotAdjustment(): string {
-    const startSlot = this.el.shadowRoot?.querySelector('.select-start') as HTMLElement | null;
-    if (!startSlot || !Build.isBrowser || getIonMode(this) !== 'md' || this.fill !== 'outline') {
-      return '';
-    }
-
-    const startSlotWidth = startSlot.getBoundingClientRect().width;
-    const roundedWidth = Math.round(startSlotWidth * 10) / 10;
-    const isRTL = document.dir === 'rtl';
-    const sign = isRTL ? '' : '-';
-    return roundedWidth ? `${sign}${roundedWidth}px` : '0px';
-  }
-
   render() {
     const {
       disabled,
@@ -1389,11 +1401,10 @@ export class Select implements ComponentInterface {
           [`select-label-placement-${labelPlacement}`]: true,
           'skip-label-transition': skipLabelTransition,
         })}
-        style={{ '--internal-start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
         <label class="select-wrapper" id="select-label" onClick={this.onLabelClick} part="wrapper">
           {hasOutlineFill && <div class="select-outline-container">{this.renderOutlineDecorations()}</div>}
-          <div class="select-start" part="start">
+          <div class="select-start" part="start" ref={(el) => (this.startContainerEl = el)}>
             <slot name="start"></slot>
           </div>
           <div class="select-control" part="control">
