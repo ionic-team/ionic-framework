@@ -90,6 +90,10 @@ Tests for lazy loaded Ionic UI components should only be added under the `/lazy`
 
 Tests for standalone Ionic UI components should only be added under the `/standalone` route. This allows for an isolated environment where the lazy loaded `IonicModule` is not initialized. The standalone components use Stencil's custom element bundle instead of the lazy loaded bundle. If `IonicModule` is initialized then the Stencil components will fall back to using the lazy loaded implementation instead of the custom elements bundle implementation.
 
+### Waiting for Ionic Components
+
+Use the `componentOnReady` helper exported from `@ionic/core` rather than calling `el.componentOnReady()` directly. That method only exists on lazy loaded elements, so a direct call throws under the `/standalone` route. The helper covers both: under `/lazy` it awaits the element's own `componentOnReady()` promise, and under `/standalone` it waits one animation frame, giving the component's inner contents a chance to render.
+
 ## Adding New Test Apps
 
 As we add support for new versions of Angular, we will also need to update this directory to test against new applications. The following steps can serve as a guide for adding new apps:
