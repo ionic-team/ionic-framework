@@ -372,7 +372,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
       await page.mouse.down();
 
-      // Some browsers blur anyway, despite the preventDefault on pointerdown.
+      // Some browsers blur anyway, despite the `preventDefault` on `pointerdown`.
       await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
       await page.waitForChanges();
 
@@ -381,6 +381,16 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
 
       await expect(input).toHaveJSProperty('value', '');
       await expect(nativeInput).toBeFocused();
+
+      // Clearing stops the click from bubbling, so it has to end the press itself.
+      await input.evaluate((el: HTMLIonInputElement) => (el.value = 'abc'));
+      await page.waitForChanges();
+      await expect(clearButton).toBeVisible();
+
+      await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+      await page.waitForChanges();
+
+      await expect(clearButton).not.toBeVisible();
     });
 
     test('should hide the clear button when the press is abandoned', async ({ page }) => {

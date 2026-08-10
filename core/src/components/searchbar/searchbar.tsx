@@ -3,6 +3,7 @@ import magnifyingGlassRegular from '@phosphor-icons/core/assets/regular/magnifyi
 import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { createClearButtonPressController } from '@utils/forms';
 import { debounceEvent, raf, componentOnReady, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
@@ -49,11 +50,12 @@ export class Searchbar implements ComponentInterface {
   @State() focused = false;
   @State() noAnimate = true;
 
-  /**
-   * Keeps the clear button mounted while it is being pressed, so a blur
-   * landing mid-press cannot unmount it before the click resolves.
-   */
+  /** Keeps the clear button mounted for the duration of a press. */
   @State() isClearButtonPressed = false;
+
+  private readonly clearButtonPressController = createClearButtonPressController(
+    (isPressed) => (this.isClearButtonPressed = isPressed)
+  );
 
   /**
    * lang and dir are globally enumerated attributes.
@@ -326,7 +328,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    document.removeEventListener('click', this.releaseClearButtonPress);
+    this.clearButtonPressController.destroy();
 
     if (this.loadTimeout) {
       clearTimeout(this.loadTimeout);
@@ -398,15 +400,11 @@ export class Searchbar implements ComponentInterface {
     this.ionInput.emit({ value, event });
   }
 
-  private releaseClearButtonPress = () => {
-    this.isClearButtonPressed = false;
-  };
-
   /**
    * Clears the input field and triggers the control change.
    */
   private onClearInput = async (shouldFocus?: boolean) => {
-    this.isClearButtonPressed = false;
+    this.clearButtonPressController.release();
 
     if (this.clearTimeout) {
       clearTimeout(this.clearTimeout);
@@ -901,25 +899,8 @@ export class Searchbar implements ComponentInterface {
               type="button"
               no-blur
               class="searchbar-clear-button"
-              onPointerDown={(ev) => {
-                /**
-                 * This prevents mobile browsers from
-                 * blurring the input when the clear
-                 * button is activated. Not all browsers
-                 * honor it, so the press is tracked too.
-                 */
-                ev.preventDefault();
-
-                // Only a primary press produces a click.
-                if (ev.button !== 0) {
-                  return;
-                }
-
-                this.isClearButtonPressed = true;
-                // Cleared on click, not pointerup, so the button survives until the click dispatches.
-                document.addEventListener('click', this.releaseClearButtonPress, { once: true });
-              }}
-              onPointerCancel={this.releaseClearButtonPress}
+              onPointerDown={this.clearButtonPressController.onPointerDown}
+              onPointerCancel={this.clearButtonPressController.release}
               onClick={() => this.onClearInput(true)}
             >
               <ion-icon

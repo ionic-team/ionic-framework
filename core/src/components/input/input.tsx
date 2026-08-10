@@ -15,7 +15,7 @@ import {
   h,
 } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
-import { createNotchController, checkInvalidState } from '@utils/forms';
+import { createClearButtonPressController, createNotchController, checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -90,11 +90,12 @@ export class Input implements ComponentInterface {
    */
   @State() isInvalid = false;
 
-  /**
-   * Keeps the clear button in the layout while it is being pressed, so a blur
-   * landing mid-press cannot hide it before the click resolves.
-   */
+  /** Keeps the clear button visible for the duration of a press. */
   @State() isClearButtonPressed = false;
+
+  private readonly clearButtonPressController = createClearButtonPressController(
+    (isPressed) => (this.isClearButtonPressed = isPressed)
+  );
 
   @Element() el!: HTMLIonInputElement;
 
@@ -503,7 +504,7 @@ export class Input implements ComponentInterface {
       );
     }
 
-    document.removeEventListener('click', this.releaseClearButtonPress);
+    this.clearButtonPressController.destroy();
 
     if (this.slotMutationController) {
       this.slotMutationController.destroy();
@@ -736,12 +737,8 @@ export class Input implements ComponentInterface {
     this.isComposing = false;
   };
 
-  private releaseClearButtonPress = () => {
-    this.isClearButtonPressed = false;
-  };
-
   private clearTextInput = (ev?: Event) => {
-    this.isClearButtonPressed = false;
+    this.clearButtonPressController.release();
 
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
@@ -1093,25 +1090,8 @@ export class Input implements ComponentInterface {
                   'input-clear-icon': true,
                   'input-clear-button-pressed': this.isClearButtonPressed,
                 }}
-                onPointerDown={(ev) => {
-                  /**
-                   * This prevents mobile browsers from
-                   * blurring the input when the clear
-                   * button is activated. Not all browsers
-                   * honor it, so the press is tracked too.
-                   */
-                  ev.preventDefault();
-
-                  // Only a primary press produces a click.
-                  if (ev.button !== 0) {
-                    return;
-                  }
-
-                  this.isClearButtonPressed = true;
-                  // Cleared on click, not pointerup, so the button survives until the click dispatches.
-                  document.addEventListener('click', this.releaseClearButtonPress, { once: true });
-                }}
-                onPointerCancel={this.releaseClearButtonPress}
+                onPointerDown={this.clearButtonPressController.onPointerDown}
+                onPointerCancel={this.clearButtonPressController.release}
                 onClick={this.clearTextInput}
               >
                 <ion-icon aria-hidden="true" icon={inputClearIcon}></ion-icon>

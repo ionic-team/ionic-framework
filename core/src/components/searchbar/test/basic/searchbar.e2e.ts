@@ -93,7 +93,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
       await page.mouse.down();
 
-      // Some browsers blur anyway, despite the preventDefault on pointerdown.
+      // Some browsers blur anyway, despite the `preventDefault` on `pointerdown`.
       await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
       await page.waitForChanges();
 
