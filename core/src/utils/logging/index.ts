@@ -4,7 +4,25 @@ export enum LogLevel {
   OFF = 'OFF',
   ERROR = 'ERROR',
   WARN = 'WARN',
+  DEBUG = 'DEBUG',
 }
+
+/** Each level logs everything below it. */
+const LOG_LEVEL_RANK: Record<LogLevel, number> = {
+  [LogLevel.OFF]: 0,
+  [LogLevel.ERROR]: 1,
+  [LogLevel.WARN]: 2,
+  [LogLevel.DEBUG]: 3,
+};
+
+/**
+ * Whether the configured level is verbose enough to log `minimum`. Levels set
+ * through a query parameter arrive as raw strings, hence the uppercasing.
+ */
+const isLogLevelEnabled = (minimum: LogLevel): boolean => {
+  const configured = String(config.get('logLevel', LogLevel.WARN)).toUpperCase() as LogLevel;
+  return LOG_LEVEL_RANK[configured] >= LOG_LEVEL_RANK[minimum];
+};
 
 /**
  * Logs a warning to the console with an Ionic prefix
@@ -13,8 +31,7 @@ export enum LogLevel {
  * @param message - The string message to be logged to the console.
  */
 export const printIonWarning = (message: string, ...params: any[]) => {
-  const logLevel = config.get('logLevel', LogLevel.WARN);
-  if ([LogLevel.WARN].includes(logLevel)) {
+  if (isLogLevelEnabled(LogLevel.WARN)) {
     return console.warn(`[Ionic Warning]: ${message}`, ...params);
   }
 };
@@ -27,8 +44,7 @@ export const printIonWarning = (message: string, ...params: any[]) => {
  * @param params - Additional arguments to supply to the console.error.
  */
 export const printIonError = (message: string, ...params: any[]) => {
-  const logLevel = config.get('logLevel', LogLevel.ERROR);
-  if ([LogLevel.ERROR, LogLevel.WARN].includes(logLevel)) {
+  if (isLogLevelEnabled(LogLevel.ERROR)) {
     return console.error(`[Ionic Error]: ${message}`, ...params);
   }
 };
