@@ -53,7 +53,7 @@ const INPUT_OTP_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonInputOtp),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

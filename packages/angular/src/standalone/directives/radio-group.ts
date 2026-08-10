@@ -33,7 +33,7 @@ const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'compareWith', 'errorText', '
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonRadioGroup),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

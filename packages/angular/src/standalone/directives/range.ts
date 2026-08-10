@@ -56,7 +56,7 @@ const RANGE_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonRange),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

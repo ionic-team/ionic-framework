@@ -64,7 +64,7 @@ const TEXTAREA_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonTextarea),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

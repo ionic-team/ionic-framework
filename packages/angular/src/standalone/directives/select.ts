@@ -57,7 +57,7 @@ const SELECT_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonSelect),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

@@ -45,7 +45,7 @@ const CHECKBOX_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonCheckbox),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

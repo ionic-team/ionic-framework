@@ -75,7 +75,7 @@ const INPUT_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonInput),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

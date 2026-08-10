@@ -67,7 +67,7 @@ const DATETIME_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonDatetime),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

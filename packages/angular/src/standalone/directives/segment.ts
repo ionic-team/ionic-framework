@@ -33,7 +33,7 @@ const SEGMENT_INPUTS = ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocu
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonSegment),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

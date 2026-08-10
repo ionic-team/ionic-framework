@@ -55,7 +55,7 @@ const SEARCHBAR_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonSearchbar),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })

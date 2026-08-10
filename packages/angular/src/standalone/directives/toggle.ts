@@ -45,7 +45,7 @@ const TOGGLE_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonToggle),
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })
