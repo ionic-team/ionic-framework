@@ -13,10 +13,10 @@ import {
   forceUpdate,
   h,
 } from '@stencil/core';
-import type { NotchController } from '@utils/forms';
-import { createNotchController, checkInvalidState } from '@utils/forms';
+import type { NotchController, StartContainerController } from '@utils/forms';
+import { createNotchController, createStartContainerController, checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady, raf } from '@utils/helpers';
+import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -54,7 +54,8 @@ export class Input implements ComponentInterface {
   private slotMutationController?: SlotMutationController;
   private notchController?: NotchController;
   private notchSpacerEl: HTMLElement | undefined;
-  private skipLabelTransitionRaf?: number;
+  private startContainerController?: StartContainerController;
+  private startContainerEl: HTMLElement | undefined;
 
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
@@ -85,13 +86,6 @@ export class Input implements ComponentInterface {
    * Track validation state for proper aria-live announcements
    */
   @State() isInvalid = false;
-
-  /**
-   * Temporarily disables the floating label transition while
-   * start/end slots are added or removed. This prevents the
-   * label from animating as its position is adjusted.
-   */
-  @State() skipLabelTransition = false;
 
   @Element() el!: HTMLIonInputElement;
 
@@ -416,19 +410,10 @@ export class Input implements ComponentInterface {
     const { el } = this;
 
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
+      this.startContainerController?.calculateStartContainerWidth();
+
       this.setSlottedLabelId();
       forceUpdate(this);
-
-      /**
-       * Temporarily disable the label transition until the
-       * next frame so any slot updates don't cause the
-       * label to animate.
-       */
-      this.skipLabelTransition = true;
-
-      this.skipLabelTransitionRaf = raf(() => {
-        this.skipLabelTransition = false;
-      });
     });
 
     this.setSlottedLabelId();
@@ -437,6 +422,16 @@ export class Input implements ComponentInterface {
       () => this.notchSpacerEl,
       () => this.labelSlot
     );
+
+    this.startContainerController = createStartContainerController(
+      el,
+      () => this.startContainerEl,
+      () => {
+        return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
+      }
+    );
+
+    this.startContainerController.calculateStartContainerWidth();
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
@@ -485,26 +480,6 @@ export class Input implements ComponentInterface {
     this.notchController?.calculateNotchWidth();
   }
 
-  /**
-   * Gets the width of the start slot, rounded to 1 decimal place.
-   * Only applies to inputs with `md` mode and `fill="outline"`.
-   * In RTL mode, the adjustment is positive; in LTR mode, it's negative.
-   */
-  private getStartSlotAdjustment(): string {
-    const startSlot = this.el.querySelector('.input-start') as HTMLElement | null;
-    if (!startSlot || !Build.isBrowser || getIonMode(this) !== 'md' || this.fill !== 'outline') {
-      return '';
-    }
-
-    // Round the width to a half pixel to ensure the label is
-    // placed properly when a start slot is added or removed.
-    const startSlotWidth = startSlot.getBoundingClientRect().width;
-    const roundedWidth = Math.round(startSlotWidth * 10) / 10;
-    const isRTL = document.dir === 'rtl';
-    const sign = isRTL ? '' : '-';
-    return roundedWidth ? `${sign}${roundedWidth}px` : '0px';
-  }
-
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(
@@ -524,15 +499,15 @@ export class Input implements ComponentInterface {
       this.notchController = undefined;
     }
 
+    if (this.startContainerController) {
+      this.startContainerController.destroy();
+      this.startContainerController = undefined;
+    }
+
     // Clean up validation observer to prevent memory leaks
     if (this.validationObserver) {
       this.validationObserver.disconnect();
       this.validationObserver = undefined;
-    }
-
-    if (this.skipLabelTransitionRaf !== undefined) {
-      cancelAnimationFrame(this.skipLabelTransitionRaf);
-      this.skipLabelTransitionRaf = undefined;
     }
   }
 
@@ -874,8 +849,7 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, hasFocus, clearInputIcon, skipLabelTransition } =
-      this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, hasFocus, clearInputIcon } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -906,9 +880,7 @@ export class Input implements ComponentInterface {
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,
-          'skip-label-transition': skipLabelTransition,
         })}
-        style={{ '--internal-start-slot-adjustment': this.getStartSlotAdjustment() }}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
@@ -918,7 +890,7 @@ export class Input implements ComponentInterface {
          */}
         <label class="input-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
           {hasOutlineFill && <div class="input-outline-container">{this.renderOutlineDecorations()}</div>}
-          <div class="input-start">
+          <div class="input-start" ref={(el) => (this.startContainerEl = el)}>
             <slot name="start"></slot>
           </div>
           <div class="input-control">

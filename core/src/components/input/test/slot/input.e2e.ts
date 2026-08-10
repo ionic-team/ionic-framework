@@ -219,5 +219,62 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         });
       });
     });
+
+    test.describe('start container adjustment', () => {
+      test('should set CSS variable for outline fill with start slot', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input fill="outline" label="Test" label-placement="floating">
+              <ion-icon slot="start" name="search" aria-hidden="true"></ion-icon>
+            </ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        const adjustment = await input.evaluate((el: any) => {
+          const computedStyle = window.getComputedStyle(el);
+          return computedStyle.getPropertyValue('--internal-start-container-adjustment');
+        });
+
+        expect(adjustment).toMatch(/-?\d+\.?\d*px/);
+      });
+
+      test('should update CSS variable when start slot width changes', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input fill="outline" label="Test" label-placement="floating">
+              <div id="start-slot" slot="start" style="width: 32px; height: 40px; background: #f0f0f0;"></div>
+            </ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+
+        // Get initial adjustment value
+        const initialValue = await input.evaluate((el: any) => {
+          const computedStyle = window.getComputedStyle(el);
+          return computedStyle.getPropertyValue('--internal-start-container-adjustment');
+        });
+
+        // Change the width of the start slot
+        await page.evaluate(() => {
+          const slot = document.getElementById('start-slot') as HTMLElement;
+          slot.style.width = '64px';
+        });
+
+        // Wait for ResizeObserver to trigger the measurement
+        await page.waitForTimeout(300);
+
+        const updatedValue = await input.evaluate((el: any) => {
+          const computedStyle = window.getComputedStyle(el);
+          return computedStyle.getPropertyValue('--internal-start-container-adjustment');
+        });
+
+        // Values should be different (64px adjustment vs 32px adjustment)
+        expect(initialValue).not.toBe(updatedValue);
+      });
+    });
   });
 });
