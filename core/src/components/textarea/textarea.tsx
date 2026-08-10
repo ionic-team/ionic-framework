@@ -14,10 +14,10 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { NotchController } from '@utils/forms';
-import { createNotchController, checkInvalidState } from '@utils/forms';
+import type { NotchController, StartContainerController } from '@utils/forms';
+import { createNotchController, createStartContainerController, checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady, raf } from '@utils/helpers';
+import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -58,12 +58,13 @@ export class Textarea implements ComponentInterface {
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
   private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
-  private notchSpacerEl: HTMLElement | undefined;
-  private skipLabelTransitionRaf?: number;
 
   private slotMutationController?: SlotMutationController;
 
   private notchController?: NotchController;
+  private notchSpacerEl: HTMLElement | undefined;
+  private startContainerController?: StartContainerController;
+  private startContainerEl: HTMLElement | undefined;
 
   /**
    * The value of the textarea when the textarea is focused.
@@ -347,18 +348,9 @@ export class Textarea implements ComponentInterface {
     const { el } = this;
 
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
+      this.startContainerController?.calculateStartContainerWidth();
+
       forceUpdate(this);
-
-      /**
-       * Temporarily disable the label transition until the
-       * next frame so any slot updates don't cause the
-       * label to animate.
-       */
-      this.skipLabelTransition = true;
-
-      this.skipLabelTransitionRaf = raf(() => {
-        this.skipLabelTransition = false;
-      });
     });
 
     this.notchController = createNotchController(
@@ -366,6 +358,16 @@ export class Textarea implements ComponentInterface {
       () => this.notchSpacerEl,
       () => this.labelSlot
     );
+
+    this.startContainerController = createStartContainerController(
+      el,
+      () => this.startContainerEl,
+      () => {
+        return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
+      }
+    );
+
+    this.startContainerController.calculateStartContainerWidth();
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
@@ -416,15 +418,15 @@ export class Textarea implements ComponentInterface {
       this.notchController = undefined;
     }
 
+    if (this.startContainerController) {
+      this.startContainerController.destroy();
+      this.startContainerController = undefined;
+    }
+
     // Clean up validation observer to prevent memory leaks
     if (this.validationObserver) {
       this.validationObserver.disconnect();
       this.validationObserver = undefined;
-    }
-
-    if (this.skipLabelTransitionRaf !== undefined) {
-      cancelAnimationFrame(this.skipLabelTransitionRaf);
-      this.skipLabelTransitionRaf = undefined;
     }
   }
 
@@ -781,7 +783,7 @@ export class Textarea implements ComponentInterface {
           'textarea-disabled': disabled,
           'skip-label-transition': skipLabelTransition,
         })}
-        style={{ '--internal-start-slot-adjustment': this.getStartSlotAdjustment() }}
+        style={{ '--internal-start-container-adjustment': this.getStartSlotAdjustment() }}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
@@ -791,7 +793,7 @@ export class Textarea implements ComponentInterface {
          */}
         <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
           {hasOutlineFill && <div class="textarea-outline-container">{this.renderOutlineDecorations()}</div>}
-          <div class="textarea-start">
+          <div class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
             <slot name="start"></slot>
           </div>
           <div class="textarea-control">
