@@ -94,6 +94,53 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(ionBreakpointDidChange).toHaveReceivedEventTimes(0);
     });
 
+    test('should keep the content opted out of scrolling after the sheet snaps back', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31332',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+      const ionRefresh = await page.spyOnEvent('ionRefresh');
+
+      await page.click('#sheet-breakpoints');
+      await ionModalDidPresent.next();
+
+      const content = page.locator('ion-modal ion-content');
+      await expect(content).toHaveJSProperty('scrollY', false);
+
+      /**
+       * Expanding to the top breakpoint is what used to force scrolling back on.
+       * Waiting on the breakpoint change also proves the drag moved the sheet, so
+       * this cannot pass by leaving the content untouched.
+       */
+      const wrapper = (await page.locator('ion-modal .modal-wrapper').boundingBox())!;
+      await dragElementByYAxis(page.locator('ion-modal .modal-handle'), page, -Math.round(wrapper.height * 0.3));
+      await ionBreakpointDidChange.next();
+
+      await expect(content).toHaveJSProperty('scrollY', false);
+
+      await dragDownOnScrollHost(page);
+
+      await ionRefresh.next();
+    });
+
+    test('should keep the content opted out of scrolling when expandToScroll is disabled', async ({ page }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#sheet-breakpoints-no-expand');
+      await ionModalDidPresent.next();
+
+      const content = page.locator('ion-modal ion-content');
+      await expect(content).toHaveJSProperty('scrollY', false);
+
+      // With expandToScroll disabled the sheet restores scrolling at every breakpoint.
+      await dragElementByYAxis(page.locator('ion-modal .modal-handle'), page, 60);
+
+      await expect(content).toHaveJSProperty('scrollY', false);
+    });
+
     test('should still dismiss when dragging the handle', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');

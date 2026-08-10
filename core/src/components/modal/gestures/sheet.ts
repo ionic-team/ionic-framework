@@ -82,6 +82,8 @@ export const createSheetGesture = (
   };
 
   const contentEl = baseEl.querySelector('ion-content');
+  // Cache the initial value so the gesture restores it instead of forcing scrolling on.
+  const initialContentScrollY = contentEl?.scrollY ?? true;
   const height = wrapperEl.clientHeight;
   let currentBreakpoint = initialBreakpoint;
   let offset = 0;
@@ -543,14 +545,14 @@ export const createSheetGesture = (
     }
 
     /**
-     * Enables scrolling immediately if the sheet is about to fully expand
-     * or if it allows scrolling at any breakpoint. Without this, there would
+     * Restores the content's scroll setting immediately if the sheet is about to
+     * fully expand or if it allows scrolling at any breakpoint. Without this, there would
      * be a ~500ms delay while the modal animation completes, causing a
      * noticeable lag. Native iOS allows scrolling as soon as the gesture is
      * released, so we align with that behavior.
      */
     if (contentEl && (snapToBreakpoint === breakpoints[breakpoints.length - 1] || !expandToScroll)) {
-      contentEl.scrollY = true;
+      contentEl.scrollY = initialContentScrollY;
     }
 
     /**
@@ -749,8 +751,20 @@ export const createSheetGesture = (
     onEnd,
   });
 
+  /**
+   * Puts the content back the way the app declared it. A sheet can dismiss
+   * without going through moveSheetToBreakpoint, and an inline modal reuses
+   * the same element on the next present.
+   */
+  const resetContentScroll = () => {
+    if (contentEl) {
+      contentEl.scrollY = initialContentScrollY;
+    }
+  };
+
   return {
     gesture,
     moveSheetToBreakpoint,
+    resetContentScroll,
   };
 };
