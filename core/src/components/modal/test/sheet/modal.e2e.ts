@@ -127,6 +127,20 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(breakpoint).toBe(0.5);
       });
 
+      test('should give scrolling back to the content when expanded to the top breakpoint', async ({ page }) => {
+        const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+        const modal = page.locator('.modal-sheet');
+        const content = modal.locator('ion-content');
+
+        // The sheet starts partially open, so the content doesn't scroll yet.
+        await expect(content).toHaveJSProperty('scrollY', false);
+
+        await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(1));
+        await ionBreakpointDidChange.next();
+
+        await expect(content).toHaveJSProperty('scrollY', true);
+      });
+
       test('should emit ionBreakpointDidChange', async ({ page }) => {
         const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
         const modal = page.locator('.modal-sheet');
@@ -155,6 +169,61 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         expect(ionBreakpointDidChange.events.length).toBe(1);
       });
+    });
+
+    test('it should restore content scrolling on dismiss so a reused modal still scrolls', async ({ page }) => {
+      await page.goto('/src/components/modal/test/sheet', config);
+
+      await page.setContent(
+        `
+        <ion-content>
+          <ion-button id="open-modal">Open</ion-button>
+          <ion-modal trigger="open-modal" initial-breakpoint="0.25">
+            <ion-content>
+              <ion-button id="dismiss" onclick="modal.dismiss();">Dismiss</ion-button>
+            </ion-content>
+          </ion-modal>
+        </ion-content>
+        <script>
+          const modal = document.querySelector('ion-modal');
+          modal.breakpoints = [0, 0.25, 0.5, 1];
+        </script>
+      `,
+        config
+      );
+
+      const modal = page.locator('ion-modal');
+      const content = modal.locator('ion-content');
+      const openButton = page.locator('#open-modal');
+      const dismissButton = page.locator('#dismiss');
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+      const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+
+      await openButton.click();
+      await ionModalDidPresent.next();
+
+      // Below the top breakpoint, so the sheet has turned content scrolling off.
+      await expect(content).toHaveJSProperty('scrollY', false);
+
+      await dismissButton.click();
+      await ionModalDidDismiss.next();
+
+      /**
+       * An inline modal reuses this content on the next present. Leaving it
+       * switched off means the re-presented sheet reads that as the app's own
+       * setting and never scrolls again.
+       */
+      await expect(content).toHaveJSProperty('scrollY', true);
+
+      await openButton.click();
+      await ionModalDidPresent.next();
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(1));
+      await ionBreakpointDidChange.next();
+
+      await expect(content).toHaveJSProperty('scrollY', true);
     });
 
     test('it should reset the breakpoint value on dismiss', async ({ page }) => {

@@ -93,6 +93,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
+  private resetSheetContentScroll?: () => void;
   private inheritedAttributes: Attributes = {};
   private statusBarStyle?: StatusBarStyle;
 
@@ -779,7 +780,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     ani.progressStart(true, 1);
 
-    const { gesture, moveSheetToBreakpoint } = createSheetGesture(
+    const { gesture, moveSheetToBreakpoint, resetContentScroll } = createSheetGesture(
       this.el,
       this.backdropEl!,
       wrapperEl,
@@ -803,6 +804,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.gesture = gesture;
     this.moveSheetToBreakpoint = moveSheetToBreakpoint;
+    this.resetSheetContentScroll = resetContentScroll;
 
     this.gesture.enable(true);
 
@@ -1029,6 +1031,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.gesture) {
         this.gesture.destroy();
       }
+      /**
+       * The sheet gesture turns content scrolling off while the sheet sits below
+       * the top breakpoint. Inline modals reuse the same content on the next
+       * present, so hand it back before the gesture goes away.
+       */
+      this.resetSheetContentScroll?.();
+      this.resetSheetContentScroll = undefined;
       this.cleanupViewTransitionListener();
       this.cleanupParentRemovalObserver();
       this.cleanupSafeAreaOverrides();
