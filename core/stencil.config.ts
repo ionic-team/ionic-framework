@@ -274,5 +274,11 @@ export const config: Config = {
      * the default behavior (slated for a future Stencil major version).
      */
     experimentalScopedSlotChanges: true,
+    /**
+     * Vite 8 / Rolldown honors the `@vite-ignore` comment on the lazy loader's dynamic import
+     * and never emits the `.entry.js` chunks, so requests for them 404. This flag prepends a
+     * switch of literal import paths those bundlers can resolve.
+     */
+    enableImportInjection: true,
   }
 };
