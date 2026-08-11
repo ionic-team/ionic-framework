@@ -437,6 +437,30 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
  * Functional checks do not vary by mode or direction.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: slotted interactive elements'), () => {
+    test('should not open select when slotted buttons are clicked', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select label="Favorite Pizza" placeholder="Select a pizza">
+            <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+            <ion-select-option value="supreme">Supreme</ion-select-option>
+            <ion-select-option value="chicken">Chicken</ion-select-option>
+            <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+              <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+            </ion-button>
+          </ion-select>
+        `,
+        config
+      );
+
+      await page.click('ion-select ion-button[slot="end"]');
+      await page.waitForChanges();
+
+      const select = page.locator('ion-select');
+      await expect(select).not.toHaveClass(/select-expanded/);
+    });
+  });
+
   test.describe(title('select: label floating behavior with slots'), () => {
     test.describe('label-placement: floating', () => {
       test('should not raise floating label when unfocused with no value and no slots', async ({ page }) => {
