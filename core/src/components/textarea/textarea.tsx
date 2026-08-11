@@ -88,13 +88,6 @@ export class Textarea implements ComponentInterface {
    */
   @State() isInvalid = false;
 
-  /**
-   * Temporarily disables the floating label transition while
-   * start/end slots are added or removed. This prevents the
-   * label from animating as its position is adjusted.
-   */
-  @State() skipLabelTransition = false;
-
   private validationObserver?: MutationObserver;
 
   /**
@@ -754,7 +747,7 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, fill, shape, labelPlacement, hasFocus, skipLabelTransition } = this;
+    const { inputId, disabled, fill, shape, labelPlacement, hasFocus } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -781,7 +774,6 @@ export class Textarea implements ComponentInterface {
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
-          'skip-label-transition': skipLabelTransition,
         })}
         style={{ '--internal-start-container-adjustment': this.getStartSlotAdjustment() }}
       >
