@@ -1,4 +1,4 @@
-import type { Config as CoreConfig, Platforms } from '@ionic/core/components';
+import type { Platforms } from '@ionic/core/components';
 import { getPlatforms as getPlatformsCore, isPlatform as isPlatformCore } from '@ionic/core/components';
 import React from 'react';
 
@@ -38,14 +38,4 @@ export const isPlatform = (platform: Platforms) => {
 
 export const getPlatforms = () => {
   return getPlatformsCore(window);
-};
-
-export const getConfig = (): CoreConfig | null => {
-  if (typeof (window as any) !== 'undefined') {
-    const Ionic = (window as any).Ionic;
-    if (Ionic && Ionic.config) {
-      return Ionic.config;
-    }
-  }
-  return null;
 };

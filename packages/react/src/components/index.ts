@@ -11,6 +11,7 @@ export {
   getTimeGivenProgression,
   getIonPageElement,
   openURL,
+  LogLevel,
 
   // TYPES
   Animation,
@@ -124,7 +125,8 @@ export * from './IonRoute';
 export * from './IonRouterContext';
 
 // Utils
-export { isPlatform, getPlatforms, getConfig } from './utils';
+export { isPlatform, getPlatforms } from './utils';
+export { getConfig } from '../utils/config';
 export * from './hrefprops';
 
 // Ionic Animations
