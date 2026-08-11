@@ -7,7 +7,12 @@ export enum LogLevel {
   DEBUG = 'DEBUG',
 }
 
-/** Each level logs everything below it. */
+/**
+ * Ranks each level so an enabled check is a numeric comparison. A configured
+ * level logs anything whose rank is less than or equal to its own: `OFF` (0)
+ * logs nothing, `ERROR` (1) logs errors, `WARN` (2) logs errors and warnings,
+ * `DEBUG` (3) logs all of the above plus internal diagnostics.
+ */
 const LOG_LEVEL_RANK: Record<LogLevel, number> = {
   [LogLevel.OFF]: 0,
   [LogLevel.ERROR]: 1,

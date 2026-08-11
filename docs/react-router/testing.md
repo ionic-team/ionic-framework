@@ -49,7 +49,7 @@ The test app starts with `setupIonicReact({ logLevel: LogLevel.DEBUG })`, so the
 - Cypress prints the browser console to the terminal on failure, via `cypress-terminal-report`.
 - Playwright records a trace on the first retry, so CI failures come with one. Open it with `npx playwright show-trace <path>` and read the console tab. Retries are off locally, so pass `--trace on` when you want the same thing from a local run. Don't turn tracing on by default: the recording overhead is enough to destabilize the tab lifecycle specs on React 19.
 
-A passing run collects the same logs in the browser and throws them away, so nothing reaches your terminal. See [Debug Logging](./README.md#debug-logging) for turning them on in your own app.
+A passing run collects the same logs in the browser and throws them away, so nothing reaches your terminal. Refer to [Debug Logging](./README.md#debug-logging) for turning them on in your own app.
 
 ## Test App Build Structure
 

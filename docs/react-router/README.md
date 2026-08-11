@@ -26,4 +26,4 @@ import { LogLevel, setupIonicReact } from '@ionic/react';
 setupIonicReact({ logLevel: LogLevel.DEBUG });
 ```
 
-See [the testing docs](./testing.md#debug-logging-in-e2e-runs) for how to read them in a failing e2e run.
+Refer to [the testing docs](./testing.md#debug-logging-in-e2e-runs) for how to read them in a failing e2e run.
