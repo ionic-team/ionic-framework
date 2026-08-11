@@ -1096,21 +1096,23 @@ export class Select implements ComponentInterface {
   /**
    * Renders the outline border with a notch for the label.
    */
-  private renderOutlineDecorations() {
-    return [
-      <div class="select-outline-start"></div>,
-      <div
-        class={{
-          'select-outline-notch': true,
-          'select-outline-notch-hidden': !this.hasLabel,
-        }}
-      >
-        <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
-          {this.label}
+  private renderOutlineContainer() {
+    return (
+      <div class="select-outline-container">
+        <div class="select-outline-start"></div>
+        <div
+          class={{
+            'select-outline-notch': true,
+            'select-outline-notch-hidden': !this.hasLabel,
+          }}
+        >
+          <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+            {this.label}
+          </div>
         </div>
-      </div>,
-      <div class="select-outline-end"></div>,
-    ];
+        <div class="select-outline-end"></div>
+      </div>
+    );
   }
 
   /**
@@ -1377,7 +1379,7 @@ export class Select implements ComponentInterface {
         })}
       >
         <label class="select-wrapper" id="select-label" onClick={this.onLabelClick} part="wrapper">
-          {hasOutlineFill && <div class="select-outline-container">{this.renderOutlineDecorations()}</div>}
+          {hasOutlineFill && this.renderOutlineContainer()}
           <div class="select-start" part="start" ref={(el) => (this.startContainerEl = el)}>
             <slot name="start"></slot>
           </div>
