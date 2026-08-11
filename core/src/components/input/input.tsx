@@ -831,21 +831,23 @@ export class Input implements ComponentInterface {
   /**
    * Renders the outline border with a notch for the label.
    */
-  private renderOutlineDecorations() {
-    return [
-      <div class="input-outline-start"></div>,
-      <div
-        class={{
-          'input-outline-notch': true,
-          'input-outline-notch-hidden': !this.hasLabel,
-        }}
-      >
-        <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
-          {this.label}
+  private renderOutlineContainer() {
+    return (
+      <div class="input-outline-container">
+        <div class="input-outline-start"></div>
+        <div
+          class={{
+            'input-outline-notch': true,
+            'input-outline-notch-hidden': !this.hasLabel,
+          }}
+        >
+          <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+            {this.label}
+          </div>
         </div>
-      </div>,
-      <div class="input-outline-end"></div>,
-    ];
+        <div class="input-outline-end"></div>
+      </div>
+    );
   }
 
   render() {
@@ -889,7 +891,7 @@ export class Input implements ComponentInterface {
          * since it comes before the input in the DOM.
          */}
         <label class="input-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
-          {hasOutlineFill && <div class="input-outline-container">{this.renderOutlineDecorations()}</div>}
+          {hasOutlineFill && this.renderOutlineContainer()}
           <div class="input-start" ref={(el) => (this.startContainerEl = el)}>
             <slot name="start"></slot>
           </div>
