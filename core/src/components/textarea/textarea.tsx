@@ -644,41 +644,25 @@ export class Textarea implements ComponentInterface {
   };
 
   /**
-   * Gets the width of the start slot, rounded to 1 decimal place.
-   * Only applies to textareas with `md` mode and `fill="outline"`.
-   * In RTL mode, the adjustment is positive; in LTR mode, it's negative.
-   */
-  private getStartSlotAdjustment(): string {
-    const startSlot = this.el.querySelector('.textarea-start') as HTMLElement | null;
-    if (!startSlot || !Build.isBrowser || getIonMode(this) !== 'md' || this.fill !== 'outline') {
-      return '';
-    }
-
-    const startSlotWidth = startSlot.getBoundingClientRect().width;
-    const roundedWidth = Math.round(startSlotWidth * 10) / 10;
-    const isRTL = document.dir === 'rtl';
-    const sign = isRTL ? '' : '-';
-    return roundedWidth ? `${sign}${roundedWidth}px` : '0px';
-  }
-
-  /**
    * Renders the outline border with a notch for the label.
    */
-  private renderOutlineDecorations() {
-    return [
-      <div class="textarea-outline-start"></div>,
-      <div
-        class={{
-          'textarea-outline-notch': true,
-          'textarea-outline-notch-hidden': !this.hasLabel,
-        }}
-      >
-        <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
-          {this.label}
+  private renderOutlineContainer() {
+    return (
+      <div class="textarea-outline-container">
+        <div class="textarea-outline-start"></div>
+        <div
+          class={{
+            'textarea-outline-notch': true,
+            'textarea-outline-notch-hidden': !this.hasLabel,
+          }}
+        >
+          <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+            {this.label}
+          </div>
         </div>
-      </div>,
-      <div class="textarea-outline-end"></div>,
-    ];
+        <div class="textarea-outline-end"></div>
+      </div>
+    );
   }
 
   /**
@@ -775,7 +759,6 @@ export class Textarea implements ComponentInterface {
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
         })}
-        style={{ '--internal-start-container-adjustment': this.getStartSlotAdjustment() }}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
@@ -784,7 +767,7 @@ export class Textarea implements ComponentInterface {
          * since it comes before the textarea in the DOM.
          */}
         <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
-          {hasOutlineFill && <div class="textarea-outline-container">{this.renderOutlineDecorations()}</div>}
+          {hasOutlineFill && this.renderOutlineContainer()}
           <div class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
             <slot name="start"></slot>
           </div>
