@@ -260,6 +260,7 @@
   flex-grow: 1;
 
   align-items: start;
+  align-self: stretch;
 
   width: 100%;
 }
@@ -588,8 +589,8 @@
  * down when the textarea is focused or has a value.
  *
  */
-:host(.textarea-label-placement-floating),
-:host(.textarea-label-placement-stacked) {
+:host(.textarea-label-placement-stacked),
+:host(.textarea-label-placement-floating) {
   --padding-top: 20px;
   --padding-bottom: 6px;
 }

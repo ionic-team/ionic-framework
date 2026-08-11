@@ -1,6 +1,37 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('textarea: basic'), () => {
+    test('should stretch to fill height when min-height is set on the host', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Label" label-placement="floating" style="min-height: 150px"></ion-textarea>
+      `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      const control = page.locator('ion-textarea .textarea-control');
+
+      // Get the height of the host
+      const textareaHeight = await textarea.evaluate((el) => el.clientHeight);
+
+      // Get the height of the textarea control
+      const controlHeight = await control.boundingBox().then((el) => el?.height);
+
+      // The height of the host and control should be the same
+      expect(textareaHeight).toBe(controlHeight);
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions
+ */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('textarea: click'), () => {
     test('should trigger onclick only once when clicking the label', async ({ page }, testInfo) => {
