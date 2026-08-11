@@ -225,7 +225,7 @@
 // ----------------------------------------------------------------
 
 .textarea-wrapper {
-  @include padding(0px, var(--padding-end), 0px, var(--padding-start));
+  @include padding(0, var(--padding-end), 0, var(--padding-start));
   @include border-radius(var(--border-radius));
 
   display: flex;
@@ -251,7 +251,7 @@
 // ----------------------------------------------------------------
 
 .textarea-control {
-  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
+  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
 
   display: flex;
 
@@ -262,11 +262,6 @@
   align-items: start;
 
   width: 100%;
-}
-
-:host(.textarea-label-placement-floating) .textarea-control,
-:host(.textarea-label-placement-stacked) .textarea-control {
-  --padding-top: 0px;
 }
 
 // Textarea Native Wrapper
@@ -318,7 +313,7 @@
 }
 
 .native-wrapper::after {
-  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
+  @include padding(0);
   @include margin(0, 0, 0, 0);
   @include border-radius(var(--border-radius));
 
@@ -593,8 +588,16 @@
  * down when the textarea is focused or has a value.
  *
  */
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  --padding-top: 20px;
+  --padding-bottom: 6px;
+}
+
 :host(.textarea-label-placement-stacked) .textarea-control,
 :host(.textarea-label-placement-floating) .textarea-control {
+  @include padding(0, null, null);
+
   flex-direction: column;
   align-items: start;
 }
@@ -607,7 +610,7 @@
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.textarea-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
-  @include padding(0px);
+  @include padding(0);
 
   max-width: 100%;
 

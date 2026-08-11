@@ -26,15 +26,6 @@
   opacity: #{$textarea-ios-disabled-opacity};
 }
 
-// Textarea Label Placement - Stacked and Floating
-// ----------------------------------------------------------------
-
-:host(.textarea-label-placement-floating),
-:host(.textarea-label-placement-stacked) {
-  --padding-top: 20px;
-  --padding-bottom: 6px;
-}
-
 // Start/End Slots
 // ----------------------------------------------------------------
 

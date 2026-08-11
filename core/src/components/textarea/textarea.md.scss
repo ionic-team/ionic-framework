@@ -49,15 +49,6 @@
   color: var(--highlight-color);
 }
 
-// Textarea Label Placement - Stacked and Floating
-// ----------------------------------------------------------------
-
-:host(.textarea-label-placement-floating),
-:host(.textarea-label-placement-stacked) {
-  --padding-top: 20px;
-  --padding-bottom: 6px;
-}
-
 // Textarea - Disabled
 // ----------------------------------------------------------------
 // The textarea, label, helper text, char counter and placeholder
