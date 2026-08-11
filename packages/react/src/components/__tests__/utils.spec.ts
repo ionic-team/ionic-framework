@@ -50,4 +50,22 @@ describe('attachProps', () => {
     expect(div).toHaveStyle(`display: block;`);
     expect(Object.keys((div as any).__events)).toEqual(['ionClick']);
   });
+
+  it('should not write undefined props to a dom node', () => {
+    var div = document.createElement('div');
+    utils.attachProps(div, { id: undefined, title: undefined, testprop: undefined });
+
+    expect(div.hasAttribute('id')).toEqual(false);
+    expect(div.hasAttribute('title')).toEqual(false);
+    expect((div as any).testprop).toEqual(undefined);
+  });
+
+  it('should clear a prop that no longer has a value', () => {
+    var div = document.createElement('div');
+    utils.attachProps(div, { id: 'my-id', testprop: ['red'] });
+    utils.attachProps(div, { id: undefined, testprop: undefined }, { id: 'my-id', testprop: ['red'] });
+
+    expect(div.hasAttribute('id')).toEqual(false);
+    expect((div as any).testprop).toEqual(undefined);
+  });
 });

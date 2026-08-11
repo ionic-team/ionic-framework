@@ -28,10 +28,30 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
           syncEvent(node, eventNameLc, newProps[name]);
         }
       } else {
-        (node as any)[name] = newProps[name];
-        const propType = typeof newProps[name];
+        const value = newProps[name];
+        if (value === undefined) {
+          /**
+           * An undefined prop must never be assigned to the element. Reflected
+           * properties such as `id`, `title` and `slot` stringify whatever they
+           * are given, so `node.id = undefined` leaves the element with the
+           * literal attribute `id="undefined"`. `render()` already omits
+           * undefined props for the same reason.
+           *
+           * A prop that had a value and no longer does is a removal, so clear
+           * it the way React clears a removed attribute: reset the property
+           * first, for props with no attribute to mirror, then drop the
+           * attribute that a reflected property left behind.
+           */
+          if (oldProps[name] !== undefined) {
+            (node as any)[name] = undefined;
+            node.removeAttribute(camelToDashCase(name));
+          }
+          return;
+        }
+        (node as any)[name] = value;
+        const propType = typeof value;
         if (propType === 'string') {
-          node.setAttribute(camelToDashCase(name), newProps[name]);
+          node.setAttribute(camelToDashCase(name), value);
         }
       }
     });
