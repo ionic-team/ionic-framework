@@ -265,7 +265,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         });
 
         // Wait for ResizeObserver to trigger the measurement
-        await page.waitForTimeout(300);
+        await page.waitForChanges();
 
         const updatedValue = await input.evaluate((el: any) => {
           const computedStyle = window.getComputedStyle(el);
@@ -274,6 +274,218 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
         // Values should be different (64px adjustment vs 32px adjustment)
         expect(initialValue).not.toBe(updatedValue);
+      });
+
+      test('should update CSS variable when slot is dynamically added', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="floating" value="100" label="Weight" fill="outline"></ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+
+        // Get initial CSS variable value
+        const initialValue = await input.evaluate((el: any) => {
+          const computedStyle = window.getComputedStyle(el);
+          return computedStyle.getPropertyValue('--internal-start-container-adjustment');
+        });
+
+        // Dynamically add a start slot with content
+        await page.evaluate(() => {
+          const inputEl = document.querySelector('ion-input') as any;
+          const icon = document.createElement('ion-icon');
+          icon.setAttribute('slot', 'start');
+          icon.setAttribute('name', 'search');
+          icon.style.width = '40px';
+          inputEl.appendChild(icon);
+        });
+
+        // Wait for skip-label-transition class to be removed
+        // to verify the label animation is no longer disabled
+        await page.waitForFunction(
+          () => {
+            const el = document.querySelector('ion-input') as any;
+            return !el?.classList.contains('skip-label-transition');
+          },
+          { timeout: 2000 }
+        );
+
+        // Get updated CSS variable value
+        const updatedValue = await input.evaluate((el: any) => {
+          const computedStyle = window.getComputedStyle(el);
+          return computedStyle.getPropertyValue('--internal-start-container-adjustment');
+        });
+
+        // CSS variable should be updated after slot addition
+        expect(initialValue).not.toBe(updatedValue);
+
+        // Updated value should reflect the start slot width
+        expect(updatedValue).toMatch(/-?\d+\.?\d*px/);
+      });
+    });
+  });
+});
+
+/**
+ * Functional checks do not vary by mode or direction.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: label floating behavior with slots'), () => {
+    test.describe('label-placement: floating', () => {
+      test('should not raise floating label when unfocused with no value and no slots', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="floating" label="Weight"></ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).not.toHaveClass(/label-floating/);
+      });
+
+      test('should not raise floating label when unfocused with no value and only a start slot', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="floating" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+            </ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).not.toHaveClass(/label-floating/);
+      });
+
+      test('should not raise floating label when unfocused with no value and only an end slot', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="floating" label="Weight">
+              <ion-icon slot="end" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).not.toHaveClass(/label-floating/);
+      });
+
+      test('should raise floating label when value is present', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="floating" value="100" label="Weight"></ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveClass(/label-floating/);
+      });
+
+      test('should raise floating label when value and start slot are present', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="floating" value="100" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+            </ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveClass(/label-floating/);
+      });
+
+      test('should raise floating label when value and end slot are present', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="floating" value="100" label="Weight">
+              <ion-icon slot="end" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveClass(/label-floating/);
+      });
+
+      test('should raise floating label when focused with no value', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="floating" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+            </ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        const nativeInput = page.locator('input');
+
+        // Label should not float by default
+        await expect(input).not.toHaveClass(/label-floating/);
+
+        // Focus the input and check that label is now floating
+        await nativeInput.focus();
+        await expect(input).toHaveClass(/label-floating/);
+      });
+    });
+
+    test.describe('label-placement: stacked', () => {
+      test('should always have floating label regardless of value or focus', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="stacked" label="Weight" id="test-input"></ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        const nativeInput = page.locator('input');
+
+        // Stacked label should always float, even when empty and unfocused
+        await expect(input).toHaveClass(/label-floating/);
+
+        // Focus shouldn't change it (still floats)
+        await nativeInput.focus();
+        await expect(input).toHaveClass(/label-floating/);
+
+        // Blur shouldn't change it (still floats)
+        await nativeInput.blur();
+        await expect(input).toHaveClass(/label-floating/);
+      });
+
+      test('should always have floating label with start slot', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="stacked" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+            </ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveClass(/label-floating/);
+      });
+
+      test('should always have floating label with end slot', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-input label-placement="stacked" label="Weight">
+              <ion-icon slot="end" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveClass(/label-floating/);
       });
     });
   });
