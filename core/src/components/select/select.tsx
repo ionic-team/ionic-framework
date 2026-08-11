@@ -9,7 +9,7 @@ import {
   isOptionSelected,
   checkInvalidState,
 } from '@utils/forms';
-import { focusVisibleElement, renderHiddenInput, inheritAttributes, raf } from '@utils/helpers';
+import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
@@ -85,7 +85,6 @@ export class Select implements ComponentInterface {
   private slotMutationController?: SlotMutationController;
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
-  private skipLabelTransitionRaf?: number;
   private validationObserver?: MutationObserver;
   private notchController?: NotchController;
   private startContainerController?: StartContainerController;
@@ -110,13 +109,6 @@ export class Select implements ComponentInterface {
    * Track validation state for proper aria-live announcements.
    */
   @State() isInvalid = false;
-
-  /**
-   * Temporarily disables the floating label transition while
-   * start/end slots are added or removed. This prevents the
-   * label from animating as its position is adjusted.
-   */
-  @State() skipLabelTransition = false;
 
   @State() private hintTextId?: string;
 
@@ -354,17 +346,6 @@ export class Select implements ComponentInterface {
       this.startContainerController?.calculateStartContainerWidth();
 
       forceUpdate(this);
-
-      /**
-       * Temporarily disable the label transition until the
-       * next frame so any slot updates don't cause the
-       * label to animate.
-       */
-      this.skipLabelTransition = true;
-
-      this.skipLabelTransitionRaf = raf(() => {
-        this.skipLabelTransition = false;
-      });
     });
 
     this.notchController = createNotchController(
@@ -483,11 +464,6 @@ export class Select implements ComponentInterface {
     if (this.validationObserver) {
       this.validationObserver.disconnect();
       this.validationObserver = undefined;
-    }
-
-    if (this.skipLabelTransitionRaf !== undefined) {
-      cancelAnimationFrame(this.skipLabelTransitionRaf);
-      this.skipLabelTransitionRaf = undefined;
     }
   }
 
@@ -1361,7 +1337,6 @@ export class Select implements ComponentInterface {
       name,
       value,
       hasFocus,
-      skipLabelTransition,
     } = this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
@@ -1399,7 +1374,6 @@ export class Select implements ComponentInterface {
           [`select-justify-${justify}`]: justifyEnabled,
           [`select-shape-${shape}`]: shape !== undefined,
           [`select-label-placement-${labelPlacement}`]: true,
-          'skip-label-transition': skipLabelTransition,
         })}
       >
         <label class="select-wrapper" id="select-label" onClick={this.onLabelClick} part="wrapper">
