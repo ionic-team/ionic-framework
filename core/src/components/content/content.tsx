@@ -1,5 +1,18 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Host,
+  Listen,
+  Method,
+  Prop,
+  Watch,
+  forceUpdate,
+  h,
+  readTask,
+} from '@stencil/core';
 import { componentOnReady, hasLazyBuild, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isPlatform } from '@utils/platform';
@@ -38,6 +51,7 @@ export class Content implements ComponentInterface {
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private fullscreenResizeObserver?: ResizeObserver;
   private inheritedAttributes: Attributes = {};
 
   private tabsElement: HTMLElement | null = null;
@@ -80,6 +94,11 @@ export class Content implements ComponentInterface {
    * to transparent.
    */
   @Prop() fullscreen = false;
+
+  @Watch('fullscreen')
+  fullscreenChanged() {
+    this.setupFullscreenResizeObserver();
+  }
 
   /**
    * Controls where the fixed content is placed relative to the main content
@@ -172,6 +191,14 @@ export class Content implements ComponentInterface {
         closestTabs.addEventListener('ionTabBarLoaded', this.tabsLoadCallback);
       }
     }
+
+    // Re-observe on reattach, since componentDidLoad only fires once.
+    this.setupFullscreenResizeObserver();
+  }
+
+  componentDidLoad() {
+    // The custom elements build assigns fullscreen after connectedCallback.
+    this.setupFullscreenResizeObserver();
   }
 
   disconnectedCallback() {
@@ -196,6 +223,49 @@ export class Content implements ComponentInterface {
     if (this.resizeTimeout) {
       clearTimeout(this.resizeTimeout);
       this.resizeTimeout = null;
+    }
+
+    this.destroyFullscreenResizeObserver();
+  }
+
+  /**
+   * Header and footer sizes can change after load without a window resize
+   * firing, so the `resize` listener alone misses those changes.
+   *
+   * Popover content is excluded because `contain: none` lets its offsets drive
+   * the host's own height, which would feed back into the observer.
+   */
+  private setupFullscreenResizeObserver() {
+    if (!Build.isBrowser || typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    if (!this.fullscreen || hostContext('ion-popover', this.el)) {
+      this.destroyFullscreenResizeObserver();
+      return;
+    }
+
+    if (this.fullscreenResizeObserver !== undefined) {
+      return;
+    }
+
+    this.fullscreenResizeObserver = new ResizeObserver(() => {
+      // A hidden page reports a 0x0 box, which would zero the offsets. Same
+      // reasoning as the guard in onResize, minus its debounce so the
+      // correction lands in the next frame instead of 100ms later.
+      if (this.el.offsetParent === null) {
+        return;
+      }
+
+      this.resize();
+    });
+    this.fullscreenResizeObserver.observe(this.el);
+  }
+
+  private destroyFullscreenResizeObserver() {
+    if (this.fullscreenResizeObserver !== undefined) {
+      this.fullscreenResizeObserver.disconnect();
+      this.fullscreenResizeObserver = undefined;
     }
   }
 
