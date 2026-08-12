@@ -4,7 +4,6 @@ const spawn = require('child_process').spawn;
 
 function buildSchematics(){
   return new Promise((resolve, reject) => {
-    const cmd = 'tsc';
     const args = [
       '--project',
       path.join(__dirname, '..', 'tsconfig.schematics.json'),

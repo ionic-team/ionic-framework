@@ -2,7 +2,7 @@
   "extends": "../../core/tsconfig.base.json",
   "compilerOptions": {
     "sourceMap": true,
-    "declarationMap": true,
+    "inlineSources": true,
     "outDir": "dist",
     "rootDir": "src",
     "paths": {

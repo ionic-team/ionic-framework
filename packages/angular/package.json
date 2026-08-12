@@ -29,7 +29,6 @@
     "build.schematics": "node scripts/build-schematics.js",
     "build.ng": "ngc",
     "clean": "node scripts/clean.js",
-    "clean-generated": "node ./scripts/clean-generated.js",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix",
     "fmt": "npm run eslint -- --fix && npm run prettier -- --write --cache",

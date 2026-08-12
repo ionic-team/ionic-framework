@@ -19,6 +19,7 @@ const KNOWN_EXCLUDED_COMPONENTS = [
 
 function getComponentsFromCore() {
   const componentsList = fs.readdirSync(CORE_COMPONENTS_DIR, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
     .map(entry => `ion-${entry.name}`)
     .sort();
   return new Set(componentsList);
@@ -59,7 +60,7 @@ function verify() {
   // Check for exports that don't have a corresponding component in core
   for (const exportName of Object.keys(packageJsonExports)) {
     if (!coreComponents.has(exportName)) {
-      console.log(`${exportName} is exported without a maching component in core.`);
+      console.log(`${exportName} is exported without a matching component in core.`);
       hasErrors = true;
     }
   }
