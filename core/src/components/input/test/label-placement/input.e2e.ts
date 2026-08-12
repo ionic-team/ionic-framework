@@ -130,7 +130,7 @@ configs().forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * This style only appears on MD
+ * The solid and outline fills are only supported by `md` mode.
  */
 configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: label with fill'), () => {
@@ -144,6 +144,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
       const input = page.locator('ion-input');
       await expect(input).toHaveScreenshot(screenshot(`input-placement-floating-long-label-outline`));
     });
+
     test('long label should truncate with solid', async ({ page }) => {
       await page.setContent(
         `
@@ -153,6 +154,61 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
       );
       const input = page.locator('ion-input');
       await expect(input).toHaveScreenshot(screenshot(`input-placement-floating-long-label-solid`));
+    });
+
+    /**
+     * The floating label must be positioned relative to `.input-wrapper` so its
+     * width is not constrained when the input width collapses. These tests cover
+     * both cases: a long label should retain the same available width despite
+     * wide start content, and a short label should not collapse when the start
+     * content takes up most of the input's width.
+     */
+    test('start slot content should not shrink the label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-input id="plain" fill="outline" label-placement="floating" value="x" label="Email Email Email Email Email Email"></ion-input>
+          <ion-input id="wide-start" fill="outline" label-placement="floating" value="x" label="Email Email Email Email Email Email">
+            <div slot="start" style="width: 120px; height: 24px"></div>
+          </ion-input>
+        </div>
+      `,
+        config
+      );
+
+      const labelWidth = (id: string) =>
+        page.locator(`${id} .label-text`).evaluate((el: HTMLElement) => ({
+          available: el.clientWidth,
+          wanted: el.scrollWidth,
+        }));
+
+      const plain = await labelWidth('#plain');
+      const wideStart = await labelWidth('#wide-start');
+
+      // The label is long enough that it has to truncate in both cases
+      expect(plain.wanted).toBeGreaterThan(plain.available);
+
+      expect(wideStart.available).toBe(plain.available);
+    });
+
+    test('start slot content should not collapse a short label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-input fill="outline" label-placement="floating" value="x" label="Email">
+            <div slot="start" style="width: 170px; height: 24px"></div>
+          </ion-input>
+        </div>
+      `,
+        config
+      );
+
+      const label = await page.locator('.label-text').evaluate((el: HTMLElement) => ({
+        available: el.clientWidth,
+        wanted: el.scrollWidth,
+      }));
+
+      expect(label.available).toBe(label.wanted);
     });
   });
 });
