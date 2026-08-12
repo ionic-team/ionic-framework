@@ -110,7 +110,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('should propagate clicks from start slot button to parent', async ({ page }) => {
-      page.setContent(
+      await page.setContent(
         `
         <div id="parent" onclick="window.parentClicks = (window.parentClicks || 0) + 1">
           Parent Container
@@ -149,7 +149,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('should propagate clicks from end slot button to parent', async ({ page }) => {
-      page.setContent(
+      await page.setContent(
         `
         <div id="parent" onclick="window.parentClicks = (window.parentClicks || 0) + 1">
           Parent Container
