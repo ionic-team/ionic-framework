@@ -91,16 +91,42 @@ The string form no longer behaves the same way. Because an HTML attribute coerce
 - Remove the attribute to keep autocorrect disabled (the default).
 - Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
 
+**Floating Label Behavior**
+
+Floating labels no longer automatically float when the input contains slotted content. Labels float only when the input is focused or has a value.
+
 **Internal DOM Structure Changes**
 
-New wrapper elements have been added to the component's internal DOM structure to support floating labels with slotted start and end content. Additionally, the structure of the component has been reorganized, with some elements now grouped differently than before. This may introduce breaking changes for developers who rely on the component's internal DOM structure or apply custom styling to internal elements.
+The internal DOM structure has been reorganized to support floating labels with slotted content.
 
-The following internal wrapper elements have been added:
-- Added: `<div class="input-start">` wrapper for the start slot
-- Added: `<div class="input-control">` wrapper for the label and native control
-- Added: `<div class="input-end">` wrapper for the end slot and clear button
+Added:
+- `.input-start`
+- `.input-control`
+- `.input-end`
 
-While the public API has not changed, selectors or style overrides targeting the previous markup may need to be updated to reference the new wrapper elements and their organization. If you have custom CSS targeting the internal structure of input, update your selectors to account for these structural changes.
+Restructured:
+- `.label-text-wrapper` moved from `.input-wrapper` into `.input-control`
+- `.native-wrapper` moved from `.input-wrapper` into `.input-control`
+- Start slot moved from `.native-wrapper` into `.input-start`
+- Clear button icon moved from `.native-wrapper` into `.input-end`
+- End slot moved from `.native-wrapper` into `.input-end`
+- `.input-control` now contains the label text and native `input`, while start/end content is separated into dedicated wrappers
+
+Update your selectors to account for these structural changes:
+
+```diff
+-ion-input .input-wrapper .native-wrapper { }
++ion-input .input-control .native-wrapper { }
+
+-ion-input .input-wrapper .native-wrapper [slot="start"] { }
++ion-input .input-start [slot="start"] { }
+
+-ion-input .input-wrapper .native-wrapper .input-clear-icon { }
++ion-input .input-end .input-clear-icon { }
+
+-ion-input .input-wrapper .native-wrapper [slot="end"] { }
++ion-input .input-end [slot="end"] { }
+```
 
 <h4 id="version-9x-legacy-picker">Legacy Picker</h4>
 
