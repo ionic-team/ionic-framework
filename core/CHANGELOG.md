@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.18](https://github.com/ionic-team/ionic-framework/compare/v8.8.17...v8.8.18) (2026-08-12)
+
+
+### Bug Fixes
+
+* **core:** resolve lazy component chunks under Vite 8 ([#31341](https://github.com/ionic-team/ionic-framework/issues/31341)) ([a73e183](https://github.com/ionic-team/ionic-framework/commit/a73e1831d389e6dc968f646c0322b3984c1d3224)), closes [#31333](https://github.com/ionic-team/ionic-framework/issues/31333)
+* **core:** update offsets when safe-area insets arrive late ([#31343](https://github.com/ionic-team/ionic-framework/issues/31343)) ([bc4fce2](https://github.com/ionic-team/ionic-framework/commit/bc4fce218d6c3aaac69f11d416b9fc8c8dacdfa4)), closes [#31337](https://github.com/ionic-team/ionic-framework/issues/31337)
+* **datetime:** tear down ready state when an overlay dismisses ([#31335](https://github.com/ionic-team/ionic-framework/issues/31335)) ([d59e341](https://github.com/ionic-team/ionic-framework/commit/d59e3415df06cb26a7dea688f6720ba228b775d5)), closes [#31155](https://github.com/ionic-team/ionic-framework/issues/31155) [#31143](https://github.com/ionic-team/ionic-framework/issues/31143)
+* **modal:** allow pull-to-refresh with a custom scroll host ([#31339](https://github.com/ionic-team/ionic-framework/issues/31339)) ([d6202a8](https://github.com/ionic-team/ionic-framework/commit/d6202a8933ad77735fceca05cb4b0fe6b33bfb55)), closes [#31332](https://github.com/ionic-team/ionic-framework/issues/31332)
+
+
+
+
+
 ## [8.8.17](https://github.com/ionic-team/ionic-framework/compare/v8.8.16...v8.8.17) (2026-08-05)
 
 
