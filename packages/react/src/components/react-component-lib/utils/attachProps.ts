@@ -25,6 +25,16 @@ const NON_BOOLEAN_FALSE_ATTRIBUTES = new Set(['draggable', 'translate', 'spell-c
 const isStaleFalseBooleanAttribute = (attribute: string) =>
   !attribute.startsWith('aria-') && !attribute.startsWith('data-') && !NON_BOOLEAN_FALSE_ATTRIBUTES.has(attribute);
 
+/**
+ * A prop that every element already has is a native property: it mirrors an
+ * attribute the element owns, and assigning to it stringifies the value, so
+ * `node.id = undefined` leaves `id="undefined"` and `node.tabIndex = undefined`
+ * leaves `tabindex="0"`. Anything else is a component prop, where `null` can be
+ * a real value (`ion-input` declares `value?: string | number | null`), so it
+ * must still be assigned.
+ */
+const isNativeElementProperty = (name: string) => name in HTMLElement.prototype;
+
 export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // some test frameworks don't render DOM elements, so we test here to make sure we are dealing with DOM first
   if (node instanceof Element) {
@@ -53,11 +63,46 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
           syncEvent(node, eventNameLc, newProps[name]);
         }
       } else {
-        (node as any)[name] = newProps[name];
-        const propType = typeof newProps[name];
+        const value = newProps[name];
+        const isNativeProperty = isNativeElementProperty(name);
+        if (value === undefined || (value === null && isNativeProperty)) {
+          /**
+           * Reflected properties such as `id`, `title` and `slot` stringify
+           * whatever they are given, so `node.id = undefined` leaves the element
+           * with the literal attribute `id="undefined"`. Never assign an
+           * undefined value. `null` stringifies the same way, but only a native
+           * property is treated as empty here, since a component prop may take
+           * `null` as a value.
+           *
+           * A prop that had a value and no longer does is a removal. A native
+           * property is cleared by dropping its attributes rather than by
+           * assigning, which would only coerce again, and it can carry two: the
+           * one it reflects to (`accesskey`) and the dash-cased one `render()`
+           * emits (`access-key`). Any other prop resets the property, which
+           * covers props with no attribute to mirror, then drops the attribute
+           * the string branch left behind.
+           */
+          const oldValue = oldProps[name];
+          if (oldValue !== undefined && oldValue !== null) {
+            const dashCasedName = camelToDashCase(name);
+            if (isNativeProperty) {
+              const reflectedName = name.toLowerCase();
+              node.removeAttribute(reflectedName);
+              if (dashCasedName !== reflectedName) {
+                node.removeAttribute(dashCasedName);
+              }
+            } else {
+              (node as any)[name] = undefined;
+              node.removeAttribute(dashCasedName);
+            }
+          }
+          return;
+        }
+        (node as any)[name] = value;
+        const propType = typeof value;
         if (propType === 'string') {
-          node.setAttribute(camelToDashCase(name), newProps[name]);
-        } else if (newProps[name] === false) {
+          node.setAttribute(camelToDashCase(name), value);
+        } else if (value === false) {
           const attribute = camelToDashCase(name);
           if (isStaleFalseBooleanAttribute(attribute)) {
             node.removeAttribute(attribute);

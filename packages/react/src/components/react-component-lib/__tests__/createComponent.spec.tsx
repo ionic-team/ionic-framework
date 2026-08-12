@@ -44,3 +44,56 @@ describe('createReactComponent boolean attributes', () => {
     expect(el.hasAttribute('disabled')).toBe(false);
   });
 });
+
+/**
+ * These only fail at the wrapper level: render() omits a nullish prop, so React
+ * emits no attribute, and componentDidUpdate then writes one back through
+ * attachProps. A direct attachProps call cannot see that interaction.
+ */
+describe('createReactComponent nullish props', () => {
+  it('should not render an attribute for a prop passed as undefined', () => {
+    const { container } = render(
+      <ReactEl id={undefined} title={undefined}>
+        x
+      </ReactEl>
+    );
+    const el = container.querySelector('fake-react-el')!;
+
+    expect(el.hasAttribute('id')).toBe(false);
+    expect(el.hasAttribute('title')).toBe(false);
+  });
+
+  it('should not render an attribute for a prop passed as null', () => {
+    const { container } = render(
+      <ReactEl id={null} title={null}>
+        x
+      </ReactEl>
+    );
+    const el = container.querySelector('fake-react-el')!;
+
+    expect(el.hasAttribute('id')).toBe(false);
+    expect(el.hasAttribute('title')).toBe(false);
+  });
+
+  it('should drop the attribute when a prop becomes undefined', () => {
+    const { container, rerender } = render(<ReactEl id="my-id">x</ReactEl>);
+    const el = container.querySelector('fake-react-el')!;
+
+    act(() => {
+      rerender(<ReactEl id={undefined}>x</ReactEl>);
+    });
+
+    expect(el.hasAttribute('id')).toBe(false);
+  });
+
+  it('should drop the attribute when a prop becomes null', () => {
+    const { container, rerender } = render(<ReactEl id="my-id">x</ReactEl>);
+    const el = container.querySelector('fake-react-el')!;
+
+    act(() => {
+      rerender(<ReactEl id={null}>x</ReactEl>);
+    });
+
+    expect(el.hasAttribute('id')).toBe(false);
+  });
+});

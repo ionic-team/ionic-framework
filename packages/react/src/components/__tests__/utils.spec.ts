@@ -52,6 +52,69 @@ describe('attachProps', () => {
   });
 });
 
+describe('attachProps nullish props', () => {
+  it('should not write undefined props to a dom node', () => {
+    const div = document.createElement('div');
+
+    utils.attachProps(div, { id: undefined, title: undefined, testprop: undefined });
+
+    expect(div.hasAttribute('id')).toBe(false);
+    expect(div.hasAttribute('title')).toBe(false);
+    expect('testprop' in div).toBe(false);
+  });
+
+  it('should not write null native props to a dom node', () => {
+    const div = document.createElement('div');
+
+    utils.attachProps(div, { id: null, title: null, slot: null });
+
+    expect(div.hasAttribute('id')).toBe(false);
+    expect(div.hasAttribute('title')).toBe(false);
+    expect(div.hasAttribute('slot')).toBe(false);
+  });
+
+  it('should clear a prop that no longer has a value', () => {
+    const div = document.createElement('div');
+    utils.attachProps(div, { id: 'my-id', testprop: ['red'] });
+
+    utils.attachProps(div, { id: undefined, testprop: undefined }, { id: 'my-id', testprop: ['red'] });
+
+    expect(div.hasAttribute('id')).toBe(false);
+    expect((div as any).testprop).toBe(undefined);
+  });
+
+  it('should clear a native prop set to null', () => {
+    const div = document.createElement('div');
+    utils.attachProps(div, { id: 'my-id' });
+
+    utils.attachProps(div, { id: null }, { id: 'my-id' });
+
+    expect(div.hasAttribute('id')).toBe(false);
+  });
+
+  it('should treat null as a value for a prop the element does not natively have', () => {
+    const div = document.createElement('div');
+    utils.attachProps(div, { value: 'my-value' });
+
+    utils.attachProps(div, { value: null }, { value: 'my-value' });
+
+    expect((div as any).value).toBe(null);
+  });
+
+  it('should clear both attribute spellings of a camel cased native prop', () => {
+    const div = document.createElement('div');
+    // The property write reflects to `accesskey` while the dash-cased write
+    // adds `access-key`, so both attributes end up on the element.
+    utils.attachProps(div, { accessKey: 'k', tabIndex: 2 });
+
+    utils.attachProps(div, { accessKey: undefined, tabIndex: undefined }, { accessKey: 'k', tabIndex: 2 });
+
+    expect(div.hasAttribute('accesskey')).toBe(false);
+    expect(div.hasAttribute('access-key')).toBe(false);
+    expect(div.hasAttribute('tabindex')).toBe(false);
+  });
+});
+
 describe('attachProps boolean attributes', () => {
   it('should strip a stray disabled="false" attribute when the prop is false', () => {
     const div = document.createElement('div');
