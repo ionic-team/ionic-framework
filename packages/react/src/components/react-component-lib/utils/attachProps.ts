@@ -1,5 +1,24 @@
 import { camelToDashCase } from './case';
 
+/**
+ * A prop name that already exists on a plain element is a native property: it
+ * mirrors an attribute the element owns, and assigning to it stringifies
+ * (`node.id = undefined` leaves `id="undefined"`, `node.tabIndex = undefined`
+ * leaves `tabindex="0"`). Anything else is a component prop, where `null` can be
+ * a real value — `ion-input` declares `value?: string | number | null` — so it
+ * must still be assigned.
+ */
+let nativePropertyProbe: HTMLElement | undefined;
+const isNativeElementProperty = (name: string) => {
+  if (typeof document === 'undefined') {
+    return false;
+  }
+  if (nativePropertyProbe === undefined) {
+    nativePropertyProbe = document.createElement('div');
+  }
+  return name in nativePropertyProbe;
+};
+
 export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // some test frameworks don't render DOM elements, so we test here to make sure we are dealing with DOM first
   if (node instanceof Element) {
@@ -29,20 +48,38 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
         }
       } else {
         const value = newProps[name];
-        if (value === undefined) {
+        const isNativeProperty = isNativeElementProperty(name);
+        if (value === undefined || (value === null && isNativeProperty)) {
           /**
            * Reflected properties such as `id`, `title` and `slot` stringify
            * whatever they are given, so `node.id = undefined` leaves the element
            * with the literal attribute `id="undefined"`. Never assign an
-           * undefined value.
+           * undefined value. `null` stringifies the same way, but only native
+           * properties are treated as empty here: a component prop may accept
+           * `null` as a value.
            *
-           * A prop that had a value and no longer does is a removal: reset the
-           * property, which covers props with no attribute to mirror, then drop
-           * the attribute a reflected property left behind.
+           * A prop that had a value and no longer does is a removal. For a
+           * native property that means dropping the attribute, never assigning,
+           * since assigning coerces again (`node.tabIndex = undefined` leaves
+           * `tabindex="0"`). Both spellings have to go: the one the property
+           * reflects to (`accesskey`) and the dash-cased one `render()` emits
+           * (`access-key`). Other props are reset on the property, which covers
+           * props with no attribute to mirror, then have the attribute the
+           * string branch set removed.
            */
-          if (oldProps[name] !== undefined) {
-            (node as any)[name] = undefined;
-            node.removeAttribute(camelToDashCase(name));
+          const oldValue = oldProps[name];
+          if (oldValue !== undefined && oldValue !== null) {
+            const dashCasedName = camelToDashCase(name);
+            if (isNativeProperty) {
+              const reflectedName = name.toLowerCase();
+              node.removeAttribute(reflectedName);
+              if (dashCasedName !== reflectedName) {
+                node.removeAttribute(dashCasedName);
+              }
+            } else {
+              (node as any)[name] = undefined;
+              node.removeAttribute(dashCasedName);
+            }
           }
           return;
         }

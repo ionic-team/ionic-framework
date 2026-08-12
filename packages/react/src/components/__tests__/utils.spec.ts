@@ -68,4 +68,41 @@ describe('attachProps', () => {
     expect(div.hasAttribute('id')).toEqual(false);
     expect((div as any).testprop).toEqual(undefined);
   });
+
+  it('should not write null native props to a dom node', () => {
+    var div = document.createElement('div');
+    utils.attachProps(div, { id: null, title: null, slot: null });
+
+    expect(div.hasAttribute('id')).toEqual(false);
+    expect(div.hasAttribute('title')).toEqual(false);
+    expect(div.hasAttribute('slot')).toEqual(false);
+  });
+
+  it('should clear a native prop set to null', () => {
+    var div = document.createElement('div');
+    utils.attachProps(div, { id: 'my-id' });
+    utils.attachProps(div, { id: null }, { id: 'my-id' });
+
+    expect(div.hasAttribute('id')).toEqual(false);
+  });
+
+  it('should treat null as a value for a prop the element does not natively have', () => {
+    var div = document.createElement('div');
+    utils.attachProps(div, { value: 'my-value' });
+    utils.attachProps(div, { value: null }, { value: 'my-value' });
+
+    expect((div as any).value).toEqual(null);
+  });
+
+  it('should clear both attribute spellings of a camel cased native prop', () => {
+    var div = document.createElement('div');
+    // The property write reflects to `accesskey` while the dash-cased write
+    // adds `access-key`, so both attributes end up on the element.
+    utils.attachProps(div, { accessKey: 'k', tabIndex: 2 });
+    utils.attachProps(div, { accessKey: undefined, tabIndex: undefined }, { accessKey: 'k', tabIndex: 2 });
+
+    expect(div.hasAttribute('accesskey')).toEqual(false);
+    expect(div.hasAttribute('access-key')).toEqual(false);
+    expect(div.hasAttribute('tabindex')).toEqual(false);
+  });
 });
