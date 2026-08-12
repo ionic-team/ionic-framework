@@ -257,6 +257,62 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(offsetTop).toBe(`${TEST_SAFE_AREA_TOP}px`);
     });
 
+    test('sheet modal should update --ion-modal-offset-top when the safe area top changes after present', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31337',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#sheet-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const offsetTop = () =>
+        modal.evaluate((el: HTMLIonModalElement) => el.style.getPropertyValue('--ion-modal-offset-top'));
+
+      expect(await offsetTop()).toBe(`${TEST_SAFE_AREA_TOP}px`);
+
+      await page.evaluate(() => document.documentElement.style.setProperty('--ion-safe-area-top', '24px'));
+
+      await expect(async () => {
+        expect(await offsetTop()).toBe('24px');
+      }).toPass({ timeout: 5000 });
+    });
+
+    /**
+     * Covers a sheet presented before the inset is known, which is the Android
+     * edge-to-edge startup order rather than the 47px the test page declares.
+     */
+    test('sheet modal should pick up the safe area top when it starts at zero', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31337',
+      });
+
+      await page.evaluate(() => document.documentElement.style.setProperty('--ion-safe-area-top', '0px'));
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#sheet-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const offsetTop = () =>
+        modal.evaluate((el: HTMLIonModalElement) => el.style.getPropertyValue('--ion-modal-offset-top'));
+
+      expect(await offsetTop()).toBe('0px');
+
+      await page.evaluate(() => document.documentElement.style.setProperty('--ion-safe-area-top', '24px'));
+
+      await expect(async () => {
+        expect(await offsetTop()).toBe('24px');
+      }).toPass({ timeout: 5000 });
+    });
+
     test('fullscreen modal safe-area should update on resize from phone to tablet', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',

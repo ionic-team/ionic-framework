@@ -50,6 +50,7 @@ import {
   applySafeAreaOverrides,
   clearSafeAreaOverrides,
   getRootSafeAreaTop,
+  onRootSafeAreaTopChange,
   hasCustomModalDimensions,
   type ModalSafeAreaContext,
 } from './safe-area-utils';
@@ -110,6 +111,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentViewIsPortrait?: boolean;
   private viewTransitionAnimation?: Animation;
   private resizeTimeout?: any;
+  private unsubscribeRootSafeAreaTop?: () => void;
 
   // Mutation observer to watch for parent removal
   private parentRemovalObserver?: MutationObserver;
@@ -1480,17 +1482,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // Set the internal offset property with the resolved root safe-area-top value
     if (context.isSheetModal) {
       this.updateSheetOffsetTop();
+      this.unsubscribeRootSafeAreaTop = onRootSafeAreaTopChange((safeAreaTop) =>
+        this.updateSheetOffsetTop(safeAreaTop)
+      );
     }
   }
 
   /**
-   * Resolves the current root --ion-safe-area-top value and sets the
-   * internal --ion-modal-offset-top property on the host element.
-   * Called on present and on resize (e.g., device rotation changes safe-area).
+   * Sets the internal --ion-modal-offset-top property on the host element,
+   * resolving the current root --ion-safe-area-top when no value is given.
+   * Called on present, on resize (e.g., device rotation changes safe-area),
+   * and whenever the root safe-area value itself changes.
    */
-  private updateSheetOffsetTop(): void {
-    const safeAreaTop = getRootSafeAreaTop();
-    this.el.style.setProperty('--ion-modal-offset-top', `${safeAreaTop}px`);
+  private updateSheetOffsetTop(safeAreaTop?: number): void {
+    const value = safeAreaTop ?? getRootSafeAreaTop();
+    this.el.style.setProperty('--ion-modal-offset-top', `${value}px`);
   }
 
   /**
@@ -1592,6 +1598,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   private cleanupSafeAreaOverrides(): void {
     clearSafeAreaOverrides(this.el);
+
+    this.unsubscribeRootSafeAreaTop?.();
+    this.unsubscribeRootSafeAreaTop = undefined;
 
     // Remove internal sheet offset property
     this.el.style.removeProperty('--ion-modal-offset-top');
