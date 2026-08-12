@@ -1,4 +1,3 @@
-import { win } from '@utils/browser';
 import { raf } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 
@@ -26,7 +25,10 @@ export const createStartContainerController = (
   shouldApplyAdjustment: () => boolean
 ): StartContainerController => {
   let resizeObserver: ResizeObserver | undefined;
+  let observedContainer: HTMLElement | undefined;
   let measurementRaf: number | undefined;
+  let transitionRaf: number | undefined;
+  let appliedAdjustment: string | undefined;
 
   const calculateAdjustment = (): string => {
     const startSlot = getStartContainer();
@@ -44,10 +46,10 @@ export const createStartContainerController = (
     return roundedWidth ? `${sign}${roundedWidth}px` : '0px';
   };
 
-  const scheduleAdjustmentUpdate = (onComplete?: () => void) => {
-    // Cancel any pending measurement to avoid applying a stale adjustment
+  const scheduleAdjustmentUpdate = () => {
+    // Return if there is already a measurement queued to avoid a flicker
     if (measurementRaf !== undefined) {
-      cancelAnimationFrame(measurementRaf);
+      return;
     }
 
     /*
@@ -55,59 +57,85 @@ export const createStartContainerController = (
      * is measured after the current update has been applied.
      */
     measurementRaf = raf(() => {
-      const adjustment = calculateAdjustment();
-      el.style.setProperty(START_CONTAINER_ADJUSTMENT_VAR, adjustment);
       measurementRaf = undefined;
-      onComplete?.();
-    });
-  };
 
-  const setupResizeObserver = () => {
-    const startSlot = getStartContainer();
-    if (!startSlot || !shouldApplyAdjustment() || !win || typeof ResizeObserver !== 'function') {
-      return;
-    }
+      const adjustment = calculateAdjustment();
 
-    // Disconnect any existing observer before creating a new one
-    if (resizeObserver) {
-      resizeObserver.disconnect();
-    }
+      // Only suppress the label transition when the label has to move
+      if (adjustment !== appliedAdjustment) {
+        // Discard a removal queued by an earlier change
+        if (transitionRaf !== undefined) {
+          cancelAnimationFrame(transitionRaf);
+        }
 
-    resizeObserver = new ResizeObserver(() => {
-      // Prevent the label transition while responding to a size change
-      el.classList.add(SKIP_LABEL_TRANSITION_CLASS);
+        el.classList.add(SKIP_LABEL_TRANSITION_CLASS);
+        el.style.setProperty(START_CONTAINER_ADJUSTMENT_VAR, adjustment);
+        appliedAdjustment = adjustment;
 
-      scheduleAdjustmentUpdate(() => {
-        el.classList.remove(SKIP_LABEL_TRANSITION_CLASS);
-      });
-    });
+        // Re-enable the transition once the new offset has been painted
+        transitionRaf = raf(() => {
+          transitionRaf = undefined;
+          el.classList.remove(SKIP_LABEL_TRANSITION_CLASS);
+        });
+      }
 
-    resizeObserver.observe(startSlot);
-  };
-
-  const calculateStartContainerWidth = () => {
-    // Disable transitions while measuring to avoid visual flicker
-    el.classList.add(SKIP_LABEL_TRANSITION_CLASS);
-
-    scheduleAdjustmentUpdate(() => {
-      // Re-enable the label transition after the adjustment has been applied
-      el.classList.remove(SKIP_LABEL_TRANSITION_CLASS);
-
-      // Start observing the container for future size changes
       setupResizeObserver();
     });
   };
 
-  const destroy = () => {
+  const disconnectResizeObserver = () => {
     if (resizeObserver) {
       resizeObserver.disconnect();
       resizeObserver = undefined;
+      observedContainer = undefined;
     }
+  };
+
+  const setupResizeObserver = () => {
+    const startSlot = getStartContainer();
+
+    // Stop watching once the adjustment no longer applies
+    if (!startSlot || !shouldApplyAdjustment()) {
+      disconnectResizeObserver();
+      return;
+    }
+
+    // Return when prerendering or already watching this container
+    if (typeof ResizeObserver !== 'function' || (resizeObserver && observedContainer === startSlot)) {
+      return;
+    }
+
+    disconnectResizeObserver();
+
+    resizeObserver = new ResizeObserver(() => {
+      scheduleAdjustmentUpdate();
+    });
+
+    observedContainer = startSlot;
+    resizeObserver.observe(startSlot);
+  };
+
+  const calculateStartContainerWidth = () => {
+    scheduleAdjustmentUpdate();
+  };
+
+  const destroy = () => {
+    disconnectResizeObserver();
 
     if (measurementRaf !== undefined) {
       cancelAnimationFrame(measurementRaf);
       measurementRaf = undefined;
     }
+
+    // Tearing down mid-toggle would leave the transition disabled
+    if (transitionRaf !== undefined) {
+      cancelAnimationFrame(transitionRaf);
+      transitionRaf = undefined;
+      el.classList.remove(SKIP_LABEL_TRANSITION_CLASS);
+    }
+
+    // Re-apply from scratch if the element is connected again
+    appliedAdjustment = undefined;
   };
 
   return {
