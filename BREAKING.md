@@ -229,14 +229,38 @@ When using `interface="action-sheet"`, `ion-select` no longer assigns the `selec
 
 Previously, the `selected` role was assigned only to the option matching the select's current value. Because the dismiss role mirrors the tapped button, this surfaced in just one case: re-selecting the already-selected option dismissed the action sheet with `role: "selected"` in `ionActionSheetDidDismiss`. Tapping any other option changed the value and dismissed with `role: ""`. Now that the role is no longer assigned, both cases dismiss with `role: undefined`. Apps that inspected this role to detect that a value was chosen, such as reading `role` from the underlying action sheet's `onDidDismiss` result, should listen for `ion-select`'s `ionChange` event instead, which emits the selected value when the selection changes.
 
+**Floating Label Behavior**
+
+Floating labels no longer automatically float when the select contains slotted content. Labels float only when the select is focused or has a value. Additionally, when using a floating label, the placeholder is only visible when the select is focused.
+
 **Internal DOM Structure Changes**
 
-The component's internal DOM structure has been restructured to support floating labels with slotted start and end content. Additionally, the structure of the component has been reorganized, with some elements now grouped differently than before. The `inner` wrapper element has been removed, and its content has been split across separate wrapper elements for the start slot, control, and end slot. This may introduce breaking changes for developers who rely on the component's internal DOM structure or apply custom styling to internal elements.
+The internal DOM structure has been reorganized to support floating labels with slotted content. This changes the structure and location of several exposed shadow parts.
 
-Developers who previously styled `ion-select::part(inner)` should migrate to targeting the updated component structure using the following CSS parts instead:
-- `ion-select::part(start)` - Target the start slot wrapper
-- `ion-select::part(control)` - Target the control wrapper containing the label and native select. When the label is not floating or stacked, this part also contains the dropdown icon.
-- `ion-select::part(end)` - Target the end slot wrapper. When the label is floating or stacked, this part also contains the dropdown icon.
+Added:
+- `.select-start` — `part="start"`
+- `.select-control` — `part="control"`
+- `.select-end` — `part="end"`
+
+Removed:
+- `.select-wrapper-inner` — `part="inner"`
+
+Restructured:
+- `.label-text-wrapper` remains `part="label"` but moved from `.select-wrapper` into `.select-control`
+- `.native-wrapper` remains `part="container"` but moved from `.select-wrapper-inner` into `.select-control`
+- Start slot moved from `.select-wrapper-inner` into `.select-start` (`part="start"`)
+- End slot moved from `.select-wrapper-inner` into `.select-end` (`part="end"`)
+- `.select-icon` remains `part="icon"` but its location depends on the label state:
+    - With a start/end label, the icon is inside `.select-control`
+    - With a floating/stacked label, the icon is inside `.select-end`
+
+Update selectors that target the exposed shadow parts to account for the new structure:
+
+If you currently target `part="inner"`, that part has been removed. Update those styles to target the new parts as appropriate.
+
+If you target `part="label"`, `part="container"`, or `part="icon"`, the part names remain unchanged, but their position in the shadow DOM has changed. This may affect styles that depend on the relationship or layout of these parts.
+
+Use the new `part="start"`, `part="control"`, and `part="end"` parts to target the new structural wrappers.
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
