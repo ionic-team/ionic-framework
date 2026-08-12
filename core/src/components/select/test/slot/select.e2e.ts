@@ -1,3 +1,4 @@
+import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
@@ -320,68 +321,99 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         });
       });
     });
+  });
+});
 
-    test.describe('start container adjustment', () => {
-      test('should set CSS variable for outline fill with start slot', async ({ page }) => {
-        await page.setContent(
-          `
-            <ion-select fill="outline" label="Test" label-placement="floating">
-              <ion-icon slot="start" name="search" aria-hidden="true"></ion-icon>
-            </ion-select>
-          `,
-          config
-        );
+/**
+ * The outline fill is only supported by `md` mode.
+ */
+configs({ modes: ['md'] }).forEach(({ title, config }) => {
+  test.describe(title('select: slot: start container adjustment'), () => {
+    /**
+     * The label is shifted back over the outline notch by the start
+     * container width, so the offset is negative in LTR and positive in RTL.
+     */
+    const sign = config.direction === 'rtl' ? '' : '-';
 
-        const select = page.locator('ion-select');
-        const adjustment = await select.evaluate((el: any) => {
-          const computedStyle = window.getComputedStyle(el);
-          return computedStyle.getPropertyValue('--internal-start-container-adjustment');
-        });
+    /**
+     * Returns the value of the --internal-start-container-adjustment
+     * CSS property as a CSS length string (e.g. `-48px`).
+     */
+    const getCssAdjustmentValue = (select: Locator) =>
+      select.evaluate((el: HTMLIonSelectElement) =>
+        window.getComputedStyle(el).getPropertyValue('--internal-start-container-adjustment')
+      );
 
-        expect(adjustment).toMatch(/-?\d+\.?\d*px/);
-      });
+    /**
+     * Gets the width of the `.select-start` container, mirroring the
+     * rounding the controller applies so that fractional widths do
+     * not produce a mismatch.
+     */
+    const getStartWidth = (select: Locator) =>
+      select
+        .locator('.select-start')
+        .evaluate((el: HTMLElement) => Math.round(el.getBoundingClientRect().width * 10) / 10);
 
-      test('should update CSS variable when start slot width changes', async ({ page }) => {
-        await page.setContent(
-          `
-            <ion-select fill="outline" label="Test" label-placement="floating">
-              <div id="start-slot" slot="start" style="width: 32px; height: 40px; background: #f0f0f0;"></div>
-            </ion-select>
-          `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-
-        // Get initial adjustment value
-        const initialValue = await select.evaluate((el: any) => {
-          const computedStyle = window.getComputedStyle(el);
-          return computedStyle.getPropertyValue('--internal-start-container-adjustment');
-        });
-
-        // Change the width of the start slot
-        await page.evaluate(() => {
-          const slot = document.getElementById('start-slot') as HTMLElement;
-          slot.style.width = '64px';
-        });
-
-        // Wait for ResizeObserver to trigger the measurement
-        await page.waitForChanges();
-
-        const updatedValue = await select.evaluate((el: any) => {
-          const computedStyle = window.getComputedStyle(el);
-          return computedStyle.getPropertyValue('--internal-start-container-adjustment');
-        });
-
-        // Values should be different (64px adjustment vs 32px adjustment)
-        expect(initialValue).not.toBe(updatedValue);
-      });
-    });
-
-    test('should update CSS variable when slot is dynamically added', async ({ page }) => {
+    test('should match the measured start container width', async ({ page }) => {
       await page.setContent(
         `
-          <ion-select label-placement="floating" value="100" label="Weight" fill="outline">
+          <ion-select label-placement="floating" fill="outline" label="Weight">
+            <div slot="start" style="width: 32px; height: 40px;"></div>
+            <ion-select-option value="100">100</ion-select-option>
+            <ion-select-option value="200">200</ion-select-option>
+            <ion-select-option value="300">300</ion-select-option>
+          </ion-select>
+        `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const startWidth = await getStartWidth(select);
+
+      /**
+       * The stylesheet declares the property as 0px, so a zero-width container
+       * could cause the CSS assertion below to pass even if the measurement
+       * never ran.
+       */
+      expect(startWidth).toBeGreaterThan(0);
+
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe(`${sign}${startWidth}px`);
+    });
+
+    test('should update when the start slot width changes', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select label-placement="floating" fill="outline" label="Weight">
+            <div id="start-slot" slot="start" style="width: 32px; height: 40px;"></div>
+            <ion-select-option value="100">100</ion-select-option>
+            <ion-select-option value="200">200</ion-select-option>
+            <ion-select-option value="300">300</ion-select-option>
+          </ion-select>
+        `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const initialWidth = await getStartWidth(select);
+
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe(`${sign}${initialWidth}px`);
+
+      // Change the width of the start slot
+      await page.evaluate(() => {
+        const slot = document.getElementById('start-slot')!;
+        slot.style.width = '64px';
+      });
+
+      const updatedWidth = await getStartWidth(select);
+      expect(updatedWidth).toBe(initialWidth + 32);
+
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe(`${sign}${updatedWidth}px`);
+    });
+
+    test('should update when a start slot is added dynamically', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select label-placement="floating" fill="outline" value="100" label="Weight">
             <ion-select-option value="100">100</ion-select-option>
             <ion-select-option value="200">200</ion-select-option>
             <ion-select-option value="300">300</ion-select-option>
@@ -392,43 +424,41 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
       const select = page.locator('ion-select');
 
-      // Get initial CSS variable value
-      const initialValue = await select.evaluate((el: any) => {
-        const computedStyle = window.getComputedStyle(el);
-        return computedStyle.getPropertyValue('--internal-start-container-adjustment');
-      });
+      // Nothing is slotted yet, so there is no width to offset the label by
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe('0px');
 
       // Dynamically add a start slot with content
       await page.evaluate(() => {
-        const selectEl = document.querySelector('ion-select') as any;
-        const icon = document.createElement('ion-icon');
-        icon.setAttribute('slot', 'start');
-        icon.setAttribute('name', 'search');
-        icon.style.width = '40px';
-        selectEl.appendChild(icon);
+        const selectEl = document.querySelector('ion-select')!;
+        const startSlot = document.createElement('div');
+        startSlot.setAttribute('slot', 'start');
+        startSlot.style.width = '32px';
+        startSlot.style.height = '40px';
+        selectEl.appendChild(startSlot);
       });
 
-      // Wait for skip-label-transition class to be removed
-      // to verify the label animation is no longer disabled
+      /**
+       * Wait for the skip-label-transition class to be removed to verify
+       * the label animation is no longer disabled.
+       */
       await page.waitForFunction(
         () => {
-          const el = document.querySelector('ion-select') as any;
+          const el = document.querySelector('ion-select');
           return !el?.classList.contains('skip-label-transition');
         },
         { timeout: 2000 }
       );
 
-      // Get updated CSS variable value
-      const updatedValue = await select.evaluate((el: any) => {
-        const computedStyle = window.getComputedStyle(el);
-        return computedStyle.getPropertyValue('--internal-start-container-adjustment');
-      });
+      const startWidth = await getStartWidth(select);
 
-      // CSS variable should be updated after slot addition
-      expect(initialValue).not.toBe(updatedValue);
+      /**
+       * The stylesheet declares the property as 0px, so a zero-width container
+       * could cause the CSS assertion below to pass even if the measurement
+       * never ran.
+       */
+      expect(startWidth).toBeGreaterThan(0);
 
-      // Updated value should reflect the start slot width
-      expect(updatedValue).toMatch(/-?\d+\.?\d*px/);
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe(`${sign}${startWidth}px`);
     });
   });
 });
@@ -437,7 +467,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
  * Functional checks do not vary by mode or direction.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('select: slotted interactive elements'), () => {
+  test.describe(title('select: slot: interactive elements'), () => {
     test('should not open select when slotted buttons are clicked', async ({ page }) => {
       await page.setContent(
         `
@@ -461,7 +491,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 
-  test.describe(title('select: label floating behavior with slots'), () => {
+  test.describe(title('select: slot: label floating'), () => {
     test.describe('label-placement: floating', () => {
       test('should not raise floating label when unfocused with no value and no slots', async ({ page }) => {
         await page.setContent(
