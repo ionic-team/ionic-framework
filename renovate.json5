@@ -41,18 +41,41 @@
       matchPackageNames: ["@playwright/test", "@axe-core/playwright", "playwright-core"],
       groupName: "playwright",
       matchFileNames: [
-        "core/package.json"
+        "core/package.json",
+        "core/Dockerfile"
       ],
-      "rangeStrategy": "bump"
+      "rangeStrategy": "bump",
+      /**
+       * The mcr.microsoft.com/playwright Docker image is usually published
+       * about a day after the npm release. Waiting a few days before opening
+       * the PR gives the image time to appear, so the Dockerfile bump has a
+       * valid tag to point at. Both files are driven by the npm datasource
+       * (refer to customManagers below), so they always bump together.
+       *
+       * If the Docker build still fails because the tag does not exist yet,
+       * the image has not been published for this release. To fix it, confirm
+       * the image is available, then re-run the failed CI job. No code change
+       * is needed because the tag is already correct; the registry just needs
+       * time to catch up.
+       */
+      minimumReleaseAge: "3 days"
     },
     {
+      /**
+       * The built-in Docker manager tracks the mcr.microsoft.com/playwright tag
+       * against the container registry, which lags the npm release by about a day.
+       * That lag decouples the Dockerfile from the npm bump: the update either
+       * arrives as its own PR or has to be folded into the grouped PR with a
+       * manual rebase. Disable it and drive the tag from the npm datasource
+       * instead (refer to customManagers below) so the Dockerfile and
+       * core/package.json bump together.
+       */
       matchDatasources: ["docker"],
       matchPackageNames: ["mcr.microsoft.com/playwright"],
-      groupName: "playwright",
       matchFileNames: [
         "core/Dockerfile"
       ],
-      versioning: "semver"
+      enabled: false
     },
     {
       matchPackagePatterns: ["ionicons"],
@@ -105,6 +128,22 @@
       matchDatasources: ["node-version"],
       matchPackagePatterns: ["node"],
       groupName: "node-version-updates"
+    }
+  ],
+  customManagers: [
+    {
+      /**
+       * Bump the Playwright Docker image tag in core/Dockerfile from the npm
+       * @playwright/test release instead of the container registry. The image
+       * tag mirrors the npm version (for example v1.62.0), so this keeps the
+       * Dockerfile and core/package.json in lockstep within a single PR.
+       */
+      customType: "regex",
+      managerFilePatterns: ["core/Dockerfile"],
+      matchStrings: ["mcr\\.microsoft\\.com/playwright:v(?<currentValue>\\S+)"],
+      depNameTemplate: "@playwright/test",
+      datasourceTemplate: "npm",
+      versioningTemplate: "npm"
     }
   ],
   dependencyDashboard: false,
