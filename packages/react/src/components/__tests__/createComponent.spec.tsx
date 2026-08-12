@@ -1,13 +1,15 @@
+/**
+ * `createReactComponent` reaches nothing in `@ionic/core`, so the generated
+ * wrapper can be driven directly, with no module to mock. These cases only fail
+ * at the wrapper level: `render()` omits a nullish prop, so React emits no
+ * attribute, and `componentDidUpdate` then writes one back through
+ * `attachProps`.
+ */
 import { render } from '@testing-library/react';
 
 import { createReactComponent } from '../react-component-lib/createComponent';
 
-/**
- * `createReactComponent` pulls nothing from `@ionic/core`, so the generated
- * wrapper can be driven directly. The bug these tests cover only appears at this
- * level: `render()` omits an undefined prop, so React emits no attribute, and
- * `componentDidUpdate` then writes it back through `attachProps`.
- */
+// Mirror how IonToggle is generated: a plain wrapper with no context or delegate.
 const IonToggle = createReactComponent<any, any>('ion-toggle') as any;
 
 const getToggle = () => document.querySelector('ion-toggle') as HTMLElement;

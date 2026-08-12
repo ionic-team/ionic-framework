@@ -1,23 +1,14 @@
 import { camelToDashCase } from './case';
 
 /**
- * A prop name that already exists on a plain element is a native property: it
- * mirrors an attribute the element owns, and assigning to it stringifies
- * (`node.id = undefined` leaves `id="undefined"`, `node.tabIndex = undefined`
- * leaves `tabindex="0"`). Anything else is a component prop, where `null` can be
- * a real value — `ion-input` declares `value?: string | number | null` — so it
+ * A prop that every element already has is a native property: it mirrors an
+ * attribute the element owns, and assigning to it stringifies the value, so
+ * `node.id = undefined` leaves `id="undefined"` and `node.tabIndex = undefined`
+ * leaves `tabindex="0"`. Anything else is a component prop, where `null` can be
+ * a real value (`ion-input` declares `value?: string | number | null`), so it
  * must still be assigned.
  */
-let nativePropertyProbe: HTMLElement | undefined;
-const isNativeElementProperty = (name: string) => {
-  if (typeof document === 'undefined') {
-    return false;
-  }
-  if (nativePropertyProbe === undefined) {
-    nativePropertyProbe = document.createElement('div');
-  }
-  return name in nativePropertyProbe;
-};
+const isNativeElementProperty = (name: string) => name in HTMLElement.prototype;
 
 export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // some test frameworks don't render DOM elements, so we test here to make sure we are dealing with DOM first
@@ -54,18 +45,17 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
            * Reflected properties such as `id`, `title` and `slot` stringify
            * whatever they are given, so `node.id = undefined` leaves the element
            * with the literal attribute `id="undefined"`. Never assign an
-           * undefined value. `null` stringifies the same way, but only native
-           * properties are treated as empty here: a component prop may accept
+           * undefined value. `null` stringifies the same way, but only a native
+           * property is treated as empty here, since a component prop may take
            * `null` as a value.
            *
-           * A prop that had a value and no longer does is a removal. For a
-           * native property that means dropping the attribute, never assigning,
-           * since assigning coerces again (`node.tabIndex = undefined` leaves
-           * `tabindex="0"`). Both spellings have to go: the one the property
-           * reflects to (`accesskey`) and the dash-cased one `render()` emits
-           * (`access-key`). Other props are reset on the property, which covers
-           * props with no attribute to mirror, then have the attribute the
-           * string branch set removed.
+           * A prop that had a value and no longer does is a removal. A native
+           * property is cleared by dropping its attributes rather than by
+           * assigning, which would only coerce again, and it can carry two: the
+           * one it reflects to (`accesskey`) and the dash-cased one `render()`
+           * emits (`access-key`). Any other prop resets the property, which
+           * covers props with no attribute to mirror, then drops the attribute
+           * the string branch left behind.
            */
           const oldValue = oldProps[name];
           if (oldValue !== undefined && oldValue !== null) {
