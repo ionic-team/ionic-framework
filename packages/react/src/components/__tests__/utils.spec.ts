@@ -57,7 +57,7 @@ describe('attachProps', () => {
 
     expect(div.hasAttribute('id')).toEqual(false);
     expect(div.hasAttribute('title')).toEqual(false);
-    expect((div as any).testprop).toEqual(undefined);
+    expect('testprop' in div).toBe(false);
   });
 
   it('should clear a prop that no longer has a value', () => {
