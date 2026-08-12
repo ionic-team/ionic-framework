@@ -437,6 +437,7 @@ export class Textarea implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
+    this.startContainerController?.calculateStartContainerWidth();
   }
 
   /**

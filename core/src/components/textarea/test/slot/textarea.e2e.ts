@@ -276,6 +276,80 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
       await expect.poll(() => getCssAdjustmentValue(textarea)).toBe(`${sign}${startWidth}px`);
     });
 
+    test('should measure when the fill resolves after the component connects', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-textarea label-placement="floating" label="Weight">
+            <div slot="start" style="width: 32px; height: 40px;"></div>
+          </ion-textarea>
+        `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+
+      await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        el.fill = 'outline';
+      });
+
+      const startWidth = await getStartWidth(textarea);
+      expect(startWidth).toBeGreaterThan(0);
+
+      await expect.poll(() => getCssAdjustmentValue(textarea)).toBe(`${sign}${startWidth}px`);
+    });
+
+    test('should observe the start slot when the fill resolves after the component connects', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-textarea label-placement="floating" label="Weight">
+            <div id="start-slot" slot="start" style="width: 32px; height: 40px;"></div>
+          </ion-textarea>
+        `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+
+      await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        el.fill = 'outline';
+      });
+
+      const initialWidth = await getStartWidth(textarea);
+      await expect.poll(() => getCssAdjustmentValue(textarea)).toBe(`${sign}${initialWidth}px`);
+
+      await page.evaluate(() => {
+        const slot = document.getElementById('start-slot')!;
+        slot.style.width = '64px';
+      });
+
+      const updatedWidth = await getStartWidth(textarea);
+      expect(updatedWidth).toBe(initialWidth + 32);
+
+      await expect.poll(() => getCssAdjustmentValue(textarea)).toBe(`${sign}${updatedWidth}px`);
+    });
+
+    test('should clear the adjustment when the fill stops being outline', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-textarea label-placement="floating" fill="outline" label="Weight">
+            <div slot="start" style="width: 32px; height: 40px;"></div>
+          </ion-textarea>
+        `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      const startWidth = await getStartWidth(textarea);
+
+      await expect.poll(() => getCssAdjustmentValue(textarea)).toBe(`${sign}${startWidth}px`);
+
+      await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        el.fill = 'solid';
+      });
+
+      await expect.poll(() => getCssAdjustmentValue(textarea)).toBe('');
+    });
+
     test('should update when the start slot width changes', async ({ page }) => {
       await page.setContent(
         `
