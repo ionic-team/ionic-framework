@@ -380,6 +380,89 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
       await expect.poll(() => getCssAdjustmentValue(select)).toBe(`${sign}${startWidth}px`);
     });
 
+    test('should measure when the fill resolves after the component connects', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select label-placement="floating" label="Weight">
+            <div slot="start" style="width: 32px; height: 40px;"></div>
+            <ion-select-option value="100">100</ion-select-option>
+            <ion-select-option value="200">200</ion-select-option>
+            <ion-select-option value="300">300</ion-select-option>
+          </ion-select>
+        `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+
+      await select.evaluate((el: HTMLIonSelectElement) => {
+        el.fill = 'outline';
+      });
+
+      const startWidth = await getStartWidth(select);
+      expect(startWidth).toBeGreaterThan(0);
+
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe(`${sign}${startWidth}px`);
+    });
+
+    test('should observe the start slot when the fill resolves after the component connects', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select label-placement="floating" label="Weight">
+            <div id="start-slot" slot="start" style="width: 32px; height: 40px;"></div>
+            <ion-select-option value="100">100</ion-select-option>
+            <ion-select-option value="200">200</ion-select-option>
+            <ion-select-option value="300">300</ion-select-option>
+          </ion-select>
+        `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+
+      await select.evaluate((el: HTMLIonSelectElement) => {
+        el.fill = 'outline';
+      });
+
+      const initialWidth = await getStartWidth(select);
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe(`${sign}${initialWidth}px`);
+
+      await page.evaluate(() => {
+        const slot = document.getElementById('start-slot')!;
+        slot.style.width = '64px';
+      });
+
+      const updatedWidth = await getStartWidth(select);
+      expect(updatedWidth).toBe(initialWidth + 32);
+
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe(`${sign}${updatedWidth}px`);
+    });
+
+    test('should clear the adjustment when the fill stops being outline', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select label-placement="floating" fill="outline" label="Weight">
+            <div slot="start" style="width: 32px; height: 40px;"></div>
+            <ion-select-option value="100">100</ion-select-option>
+            <ion-select-option value="200">200</ion-select-option>
+            <ion-select-option value="300">300</ion-select-option>
+          </ion-select>
+        `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const startWidth = await getStartWidth(select);
+
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe(`${sign}${startWidth}px`);
+
+      await select.evaluate((el: HTMLIonSelectElement) => {
+        el.fill = 'solid';
+      });
+
+      await expect.poll(() => getCssAdjustmentValue(select)).toBe('');
+    });
+
     test('should update when the start slot width changes', async ({ page }) => {
       await page.setContent(
         `

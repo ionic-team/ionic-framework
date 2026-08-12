@@ -1061,6 +1061,7 @@ export class Select implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
+    this.startContainerController?.calculateStartContainerWidth();
   }
 
   /**
