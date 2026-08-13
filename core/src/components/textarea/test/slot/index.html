@@ -240,6 +240,99 @@
           </div>
         </div>
 
+        <h1>Overflowing Slots</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Fill / Start Label / No Slot</h2>
+            <ion-textarea label-placement="start" label="Email Email Email Email Email Email" style="width: 260px">
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Start Label / Start Slot</h2>
+            <ion-textarea label-placement="start" label="Email Email Email Email Email Email" style="width: 260px">
+              <div slot="start" style="height: 10px; width: 150px; background: lightpink"></div>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Start Label / End Slot</h2>
+            <ion-textarea label-placement="start" label="Email Email Email Email Email Email" style="width: 260px">
+              <div slot="end" style="height: 10px; width: 150px; background: lightblue"></div>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / No Slot</h2>
+            <ion-textarea
+              label-placement="start"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / Start Slot</h2>
+            <ion-textarea
+              label-placement="start"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="start" style="height: 10px; width: 150px; background: lightpink"></div>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / End Slot</h2>
+            <ion-textarea
+              label-placement="start"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="end" style="height: 10px; width: 150px; background: lightblue"></div>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label / No Slot</h2>
+            <ion-textarea
+              label-placement="floating"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label / Start Slot</h2>
+            <ion-textarea
+              label-placement="floating"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="start" style="height: 10px; width: 150px; background: lightpink"></div>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label / End Slot</h2>
+            <ion-textarea
+              label-placement="floating"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="end" style="height: 10px; width: 150px; background: lightblue"></div>
+            </ion-textarea>
+          </div>
+        </div>
+
         <h1>Click Propagation</h1>
         <p class="hint">
           Each click on the host is counted, and the target of each is logged to the console. One physical click should
