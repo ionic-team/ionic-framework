@@ -822,9 +822,8 @@ export class Input implements ComponentInterface {
    */
   private onLabelClick = (ev: MouseEvent) => {
     const target = ev.target as HTMLElement;
-    const control = this.el.querySelector('.input-control');
 
-    if (control?.contains(target)) {
+    if (target.closest('[slot="start"], [slot="end"]') === null) {
       ev.stopPropagation();
     }
   };
