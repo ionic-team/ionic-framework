@@ -300,7 +300,7 @@
 :host(.input-label-placement-start) .native-wrapper,
 :host(.input-label-placement-end) .native-wrapper,
 :host(.input-label-placement-fixed) .native-wrapper {
-  flex-basis: 0;
+  flex: 1 1 0;
 }
 
 // Input Start/End Containers
@@ -443,6 +443,13 @@
   align-items: center;
 
   /**
+  * Allows the label to shrink below its intrinsic content width.
+  * Without this the label keeps its full width and can push the
+  * input and end slot outside the wrapper.
+  */
+  min-width: 0;
+
+  /**
    * Label text should not extend
    * beyond the bounds of the input.
    * However, we do not set the max
@@ -460,13 +467,6 @@
    * when a screen reader is enabled.
    */
   pointer-events: none;
-
-  /**
-  * Allows the label to shrink below its intrinsic content width.
-  * Without this the label keeps its full width and can push the
-  * input and end slot outside the wrapper.
-  */
-  overflow: hidden;
 }
 
 /**
