@@ -38,7 +38,6 @@
     "sync": "./scripts/sync.sh",
     "local.sync.and.pack": "./scripts/sync-and-pack.sh",
     "test": "echo 'angular no tests yet'",
-    "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build",
     "validate.package": "node scripts/verify-exports.js"
   },
