@@ -530,6 +530,31 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-select');
     });
 
+    test('should trigger onclick only once when the select is itself slotted', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-select slot="end" label="Fruit" interface="alert">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-item>
+      `,
+        config
+      );
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('label.select-wrapper').click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+
     test('should propagate clicks from start slot button to parent', async ({ page }) => {
       await page.setContent(
         `
