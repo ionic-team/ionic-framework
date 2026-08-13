@@ -366,6 +366,13 @@ button {
   align-items: center;
 
   /**
+  * Allows the label to shrink below its intrinsic content width.
+  * Without this the label keeps its full width and can push the
+  * select and end slot outside the wrapper.
+  */
+  min-width: 0;
+
+  /**
    * Label text should not extend
    * beyond the bounds of the select.
    * However, we do not set the max
@@ -447,6 +454,19 @@ button {
    * too long for the screen.
    */
   overflow: hidden;
+}
+
+/**
+ * When the label sits beside the select, the label should size to its content
+ * and the select should take the remaining space. A zero flex basis prevents
+ * the select from requesting its full width and forcing the label to shrink.
+ * Stacked and floating placements use a column layout, so their flex basis
+ * controls height instead and does not need to be overridden.
+ */
+:host(.select-label-placement-start) .native-wrapper,
+:host(.select-label-placement-end) .native-wrapper,
+:host(.select-label-placement-fixed) .native-wrapper {
+  flex: 1 1 0;
 }
 
 // Select Justify
