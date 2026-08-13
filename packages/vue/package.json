@@ -79,7 +79,7 @@
   },
   "dependencies": {
     "@ionic/core": "^8.8.18",
-    "@stencil/vue-output-target": "0.13.1",
+    "@stencil/vue-output-target": "0.14.1",
     "ionicons": "^8.0.13"
   },
   "vetur": {
