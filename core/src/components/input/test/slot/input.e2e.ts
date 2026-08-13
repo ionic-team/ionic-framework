@@ -1,5 +1,6 @@
 import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
+import type { E2EPage } from '@utils/test/playwright';
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
@@ -218,6 +219,85 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
           const container = page.locator('.container');
           await expect(container).toHaveScreenshot(screenshot(`input-slot-fill-${fill}-label-floating-value`));
         });
+      });
+    });
+  });
+});
+
+/**
+ * The outline fill is only supported by `md` mode.
+ * The overflow behavior is the same regardless of direction.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: slot: overflow'), () => {
+    /**
+     * Wide enough that the label cannot fit beside it, and given a
+     * background so that a slot pushed outside of the border is visible
+     * in the screenshot.
+     */
+    const startSlot = `<div slot="start" style="width: 150px; height: 10px; background: lightpink"></div>`;
+    const endSlot = `<div slot="end" style="width: 150px; height: 10px; background: lightblue"></div>`;
+
+    const setContent = async (page: E2EPage, props: string, slot: string) => {
+      await page.setContent(
+        `
+          <!-- Apply container styles to capture the entire input -->
+          <style>
+            .container {
+              padding: 8px;
+            }
+          </style>
+
+          <div class="container">
+            <ion-input
+              fill="outline"
+              label="Email Address"
+              style="width: 260px"
+              ${props}
+            >
+              ${slot}
+            </ion-input>
+          </div>
+        `,
+        config
+      );
+    };
+
+    (
+      [
+        ['start', startSlot],
+        ['end', endSlot],
+      ] as const
+    ).forEach(([slotName, slot]) => {
+      test(`should not have visual regressions with a start-positioned label and a wide ${slotName} slot`, async ({
+        page,
+      }) => {
+        await setContent(page, 'label-placement="start"', slot);
+
+        const container = page.locator('.container');
+        await expect(container).toHaveScreenshot(screenshot(`input-slot-overflow-label-start-${slotName}-slot`));
+      });
+
+      test(`should not have visual regressions with a floating label and a wide ${slotName} slot`, async ({ page }) => {
+        await setContent(page, 'label-placement="floating"', slot);
+
+        const container = page.locator('.container');
+        await expect(container).toHaveScreenshot(screenshot(`input-slot-overflow-label-floating-${slotName}-slot`));
+      });
+
+      /**
+       * Once the label floats it moves into the notch, where it is sized
+       * against the wrapper instead of the space left by the slots.
+       */
+      test(`should not have visual regressions with a raised floating label and a wide ${slotName} slot`, async ({
+        page,
+      }) => {
+        await setContent(page, 'label-placement="floating" value="100"', slot);
+
+        const container = page.locator('.container');
+        await expect(container).toHaveScreenshot(
+          screenshot(`input-slot-overflow-label-floating-value-${slotName}-slot`)
+        );
       });
     });
   });
