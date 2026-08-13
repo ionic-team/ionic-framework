@@ -63,6 +63,15 @@
   border-bottom: none;
 }
 
+/**
+ * The resting label is positioned relative to the control so it can size to
+ * the space between the start and end slots. When floating, the label needs
+ * to escape the control and position itself relative to the wrapper instead.
+ */
+:host(.textarea-fill-outline:not(.label-floating)) .textarea-control {
+  position: relative;
+}
+
 :host(.textarea-fill-outline.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
@@ -70,10 +79,11 @@
   position: absolute;
 
   /**
-   * Label text should not extend
-   * beyond the bounds of the textarea.
+   * While resting this is the width of the textarea, which already
+   * excludes the start and end slots. Once the label floats the
+   * containing block becomes the wrapper and the rule below takes over.
    */
-  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+  max-width: 100%;
 }
 
 /**
