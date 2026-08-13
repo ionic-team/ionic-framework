@@ -615,6 +615,48 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 /**
+ * The solid and outline fills are only supported by `md` mode. These
+ * are the only fills that get padding which can cause a double click.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: click'), () => {
+    ['solid', 'outline'].forEach((fill) => {
+      test(`should trigger onclick only once when clicking the ${fill} wrapper padding`, async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-select
+            label="Fruit"
+            label-placement="floating"
+            value="apple"
+            fill="${fill}"
+          >
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        `,
+          config
+        );
+
+        const clickEvent = await page.spyOnEvent('click');
+        const wrapper = page.locator('label.select-wrapper');
+
+        await wrapper.click({
+          position: {
+            x: 5,
+            y: 5,
+          },
+        });
+
+        expect(clickEvent).toHaveReceivedEventTimes(1);
+
+        const event = clickEvent.events[0];
+        expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-select');
+      });
+    });
+  });
+});
+
+/**
  * ionChange has a consistent behavior across modes
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
