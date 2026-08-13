@@ -47,6 +47,12 @@ If you want to add a version-specific change, add the change inside of the appro
 
 If you need to add E2E tests that are only run on a specific version of the JS Framework, replicate the `VersionTest` component on each partial application. This ensures that tests for framework version X do not get run for framework version Y.
 
+### Testing Ionic Components
+
+`@ionic/react` imports every component through `defineCustomElement` from `@ionic/core/components`, so every test runs against the custom elements build.
+
+These test apps are Cypress only, and Cypress retries assertions until they pass, so there is nothing to wait on manually today. If we add unit tests that assert against rendered DOM, use the `componentOnReady` helper exported from `@ionic/core` rather than calling `el.componentOnReady()` directly. That method does not exist on custom elements, so the direct call throws. The helper waits one animation frame instead, giving the component's inner contents a chance to render.
+
 ## Adding New Test Apps
 
 As we add support for new versions of React, we will also need to update this directory to test against new applications. The following steps can serve as a guide for adding new apps:

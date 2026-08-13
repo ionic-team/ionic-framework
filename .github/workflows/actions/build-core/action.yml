@@ -27,6 +27,10 @@ runs:
       run: npm run build -- --ci
       working-directory: ./core
       shell: bash
+    - name: 🔍 Verify Lazy Imports
+      run: npm run test.lazy-imports
+      working-directory: ./core
+      shell: bash
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-core
