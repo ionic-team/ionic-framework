@@ -634,11 +634,16 @@ export class Textarea implements ComponentInterface {
    * Stops propagation for clicks on the textarea's own content (label text,
    * textarea field) to prevent double-click events. Allows clicks on slotted
    * content to propagate so event delegation works for parent handlers.
+   *
+   * Only slots belonging directly to this textarea should be considered.
+   * The textarea itself may have a slot attribute when placed in an item
+   * or toolbar, which does not make its content slotted content.
    */
   private onLabelClick = (ev: MouseEvent) => {
     const target = ev.target as HTMLElement;
+    const slotted = target.closest('[slot="start"], [slot="end"]');
 
-    if (target.closest('[slot="start"], [slot="end"]') === null) {
+    if (slotted === null || slotted === this.el || !this.el.contains(slotted)) {
       ev.stopPropagation();
     }
   };

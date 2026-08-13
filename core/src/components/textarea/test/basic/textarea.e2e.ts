@@ -109,6 +109,28 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-textarea');
     });
 
+    test('should trigger onclick only once when the textarea is itself slotted', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-textarea slot="end" label="Click Me" value="Test Value"></ion-textarea>
+        </ion-item>
+      `,
+        config
+      );
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('label.textarea-wrapper').click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+
     test('should propagate clicks from start slot button to parent', async ({ page }) => {
       await page.setContent(
         `
