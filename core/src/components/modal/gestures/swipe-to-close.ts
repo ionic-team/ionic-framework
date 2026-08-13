@@ -1,7 +1,7 @@
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { isIonContent, findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { createGesture } from '@utils/gesture';
-import { clamp, getElementRoot } from '@utils/helpers';
+import { clamp } from '@utils/helpers';
 import { OVERLAY_GESTURE_PRIORITY } from '@utils/overlays';
 
 import type { Animation, ModalDragEventDetail } from '../../../interface';
@@ -9,7 +9,7 @@ import type { GestureDetail } from '../../../utils/gesture';
 import type { Style as StatusBarStyle } from '../../../utils/native/status-bar';
 import { setCardStatusBarDark, setCardStatusBarDefault } from '../utils';
 
-import { calculateSpringStep, handleCanDismiss } from './utils';
+import { calculateSpringStep, canSwipeOnContent, handleCanDismiss } from './utils';
 
 // Defaults for the card swipe animation
 export const SwipeToCloseDefaults = {
@@ -35,7 +35,6 @@ export const createSwipeToCloseGesture = (
   let isOpen = false;
   let canDismissBlocksGesture = false;
   let contentEl: HTMLElement | null = null;
-  let scrollEl: HTMLElement | null = null;
   const canDismissMaxStep = 0.2;
   let initialScrollY = true;
   let lastStep = 0;
@@ -60,12 +59,6 @@ export const createSwipeToCloseGesture = (
     }
 
     /**
-     * If we are swiping on the content,
-     * swiping should only be possible if
-     * the content is scrolled all the way
-     * to the top so that we do not interfere
-     * with scrolling.
-     *
      * We cannot assume that the `ion-content`
      * target will remain consistent between
      * swipes. For example, when using
@@ -76,29 +69,7 @@ export const createSwipeToCloseGesture = (
      */
     contentEl = findClosestIonContent(target);
     if (contentEl) {
-      /**
-       * The card should never swipe to close
-       * on the content with a refresher.
-       * Note: We cannot solve this by making the
-       * swipeToClose gesture have a higher priority
-       * than the refresher gesture as the iOS native
-       * refresh gesture uses a scroll listener in
-       * addition to a gesture.
-       *
-       * Note: Do not use getScrollElement here
-       * because we need this to be a synchronous
-       * operation, and getScrollElement is
-       * asynchronous.
-       */
-      if (isIonContent(contentEl)) {
-        const root = getElementRoot(contentEl);
-        scrollEl = root.querySelector('.inner-scroll');
-      } else {
-        scrollEl = contentEl;
-      }
-
-      const hasRefresherInContent = !!contentEl.querySelector('ion-refresher');
-      return !hasRefresherInContent && scrollEl!.scrollTop === 0;
+      return canSwipeOnContent(contentEl);
     }
 
     /**
