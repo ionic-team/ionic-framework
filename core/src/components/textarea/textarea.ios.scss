@@ -17,6 +17,15 @@
   font-size: $textarea-ios-font-size;
 }
 
+/**
+ * Give stacked and floating textareas a taller minimum height to
+ * accommodate the label and textarea content.
+ */
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  min-height: 56px;
+}
+
 // Textarea - Disabled
 // ----------------------------------------------------------------
 // The textarea, label, helper text, char counter and placeholder
