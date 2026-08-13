@@ -269,7 +269,26 @@ Update your selectors to account for these structural changes:
 
 **Minimum Height Change**
 
-The minimum height of textarea in Material Design (`md` mode) has been increased from `56px` to `72px`. Textareas are now the same height regardless of the `fill` property or `labelPlacement`. If you were relying on textareas being `56px` tall or had custom CSS based on that value, update your styles for the new `72px` height or override it back to `56px`.
+The minimum height of textarea in Material Design (`md` mode) is now `72px`. At the default number of rows this makes textareas the same height regardless of the `fill` property or `labelPlacement`. Previously the minimum height was:
+
+| Fill | Label placement | Previous minimum height |
+| --- | --- | --- |
+| default | `start`, `end`, `fixed` | `44px` |
+| default | `floating`, `stacked` | `56px` |
+| `solid`, `outline` | any | `56px` |
+
+These were minimums, not the heights textareas actually rendered at. A textarea with content in the `start` or `end` slots was already taller than its minimum, so the change affects it differently. For example, a `fill="solid"` textarea with slotted icons and buttons previously rendered at `72px` with a `start` label and `81px` with a `floating` label. Both are now `72px`, so that floating label case is `9px` shorter than before rather than taller.
+
+Because `72px` is taller than two rows of text, `rows` values below `3` no longer change the height of the textarea in `md` mode: `rows="1"` and `rows="2"` both render at `72px`.
+
+If you were relying on the previous heights, or you need `rows` to control the height, override the minimum height back. The override has to be more specific than the component's own style, so a bare `ion-textarea` selector will not apply. Add a custom class to the textarea to increase specificity:
+
+```css
+/* Add a custom class to the textarea */
+ion-textarea.custom {
+  min-height: 44px;
+}
+```
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
