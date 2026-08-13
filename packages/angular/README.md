@@ -57,7 +57,6 @@ This guide shows you how to test the local Ionic Framework build with a new Angu
 
 5. Create a tarball:
     ```sh
-    cd dist
     npm pack
     ```
 
