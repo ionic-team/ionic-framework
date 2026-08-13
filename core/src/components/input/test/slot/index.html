@@ -402,13 +402,13 @@
           solidAsync.appendChild(labelEl);
         }
 
-        // if (getSlottedStartDeco() === null) {
-        const startEl = document.createElement('div');
-        startEl.slot = 'start';
-        startEl.innerHTML = 'Start';
+        if (getSlottedStartDeco() === null) {
+          const startEl = document.createElement('div');
+          startEl.slot = 'start';
+          startEl.innerHTML = 'Start';
 
-        asyncDecos.insertAdjacentElement('afterbegin', startEl);
-        // }
+          asyncDecos.insertAdjacentElement('afterbegin', startEl);
+        }
 
         if (getSlottedEndDeco() === null) {
           const endEl = document.createElement('div');
