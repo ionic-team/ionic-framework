@@ -159,7 +159,12 @@ button {
 .select-text {
   flex: 1;
 
-  min-width: 16px;
+  /**
+   * The select text should shrink when the label and
+   * the slots leave very little room so that the label
+   * and icon take priority.
+   */
+  min-width: 0;
 
   font-size: inherit;
 
@@ -442,6 +447,14 @@ button {
   align-items: center;
 
   /**
+   * The dropdown icon does not shrink, so without a floor the wrapper
+   * can end up narrower than the icon and the overflow below clips it.
+   * Reserving the content width keeps the icon visible and lets the
+   * label absorb the difference instead.
+   */
+  min-width: min-content;
+
+  /**
    * When the floating label appears on top of the
    * input, we need to fade the input out so that the
    * label does not overlap with the placeholder.
@@ -454,19 +467,6 @@ button {
    * too long for the screen.
    */
   overflow: hidden;
-}
-
-/**
- * When the label sits beside the select, the label should size to its content
- * and the select should take the remaining space. A zero flex basis prevents
- * the select from requesting its full width and forcing the label to shrink.
- * Stacked and floating placements use a column layout, so their flex basis
- * controls height instead and does not need to be overridden.
- */
-:host(.select-label-placement-start) .native-wrapper,
-:host(.select-label-placement-end) .native-wrapper,
-:host(.select-label-placement-fixed) .native-wrapper {
-  flex: 1 1 0;
 }
 
 // Select Justify
