@@ -637,9 +637,8 @@ export class Textarea implements ComponentInterface {
    */
   private onLabelClick = (ev: MouseEvent) => {
     const target = ev.target as HTMLElement;
-    const control = this.el.querySelector('.textarea-control');
 
-    if (control?.contains(target)) {
+    if (target.closest('[slot="start"], [slot="end"]') === null) {
       ev.stopPropagation();
     }
   };

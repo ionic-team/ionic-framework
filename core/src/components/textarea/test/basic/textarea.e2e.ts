@@ -188,3 +188,42 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
+
+/**
+ * The solid and outline fills are only supported by `md` mode. These
+ * are the only fills that get padding which can cause a double click.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('textarea: click'), () => {
+    ['solid', 'outline'].forEach((fill) => {
+      test(`should trigger onclick only once when clicking the ${fill} wrapper padding`, async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-textarea
+            label="Click Me"
+            value="Test Value"
+            label-placement="floating"
+            fill="${fill}"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const clickEvent = await page.spyOnEvent('click');
+        const wrapper = page.locator('label.textarea-wrapper');
+
+        await wrapper.click({
+          position: {
+            x: 5,
+            y: 5,
+          },
+        });
+
+        expect(clickEvent).toHaveReceivedEventTimes(1);
+
+        const event = clickEvent.events[0];
+        expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-textarea');
+      });
+    });
+  });
+});

@@ -37,6 +37,19 @@
       .required {
         color: red;
       }
+
+      .hint {
+        font-size: 12px;
+        color: #6f7378;
+        max-width: 60ch;
+      }
+
+      .counts {
+        font-size: 12px;
+        color: #6f7378;
+
+        margin-top: 6px;
+      }
     </style>
   </head>
 
@@ -227,6 +240,49 @@
           </div>
         </div>
 
+        <h1>Click Propagation</h1>
+        <p class="hint">
+          Each click on the host is counted, and the target of each is logged to the console. One physical click should
+          count once. Click the padding strip (the gap between the border and the text), the label, the textarea text,
+          and the slotted button, and compare.
+        </p>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Fill</h2>
+            <ion-textarea class="propagation" label-placement="floating" label="Email">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-textarea>
+            <div class="counts">host: <b class="host-count">0</b></div>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid (16px padding)</h2>
+            <ion-textarea class="propagation" label-placement="floating" fill="solid" label="Email">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-textarea>
+            <div class="counts">host: <b class="host-count">0</b></div>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline (16px padding)</h2>
+            <ion-textarea class="propagation" label-placement="floating" fill="outline" label="Email">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-textarea>
+            <div class="counts">host: <b class="host-count">0</b></div>
+          </div>
+        </div>
+
+        <ion-button onclick="resetClickCounts()">Reset Counts</ion-button>
+
         <h1>Async Slot Content</h1>
         <div class="grid">
           <div class="grid-item">
@@ -313,6 +369,22 @@
         if (slottedContent !== null) {
           slottedContent.textContent = 'This is my really really really long text';
         }
+      };
+
+      document.querySelectorAll('ion-textarea.propagation').forEach((textarea) => {
+        const count = textarea.closest('.grid-item').querySelector('.host-count');
+
+        textarea.addEventListener('click', (ev) => {
+          count.textContent = Number(count.textContent) + 1;
+
+          // The deepest target crosses shadow boundaries, so log it from the composed path
+          console.log(`host (${textarea.getAttribute('fill') ?? 'none'})`, ev.composedPath()[0]);
+        });
+      });
+
+      const resetClickCounts = () => {
+        document.querySelectorAll('.host-count').forEach((el) => (el.textContent = '0'));
+        console.clear();
       };
 
       const addValueToAll = () => {
