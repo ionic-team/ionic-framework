@@ -159,12 +159,7 @@ button {
 .select-text {
   flex: 1;
 
-  /**
-   * The select text should shrink when the label and
-   * the slots leave very little room so that the label
-   * and icon take priority.
-   */
-  min-width: 0;
+  min-width: 16px;
 
   font-size: inherit;
 
@@ -371,10 +366,10 @@ button {
   align-items: center;
 
   /**
-  * Allows the label to shrink below its intrinsic content width.
-  * Without this the label keeps its full width and can push the
-  * select and end slot outside the wrapper.
-  */
+   * Allows the label to shrink below its intrinsic content width.
+   * Without this the label keeps its full width and can push the
+   * select and end slot outside the wrapper.
+   */
   min-width: 0;
 
   /**
@@ -444,15 +439,15 @@ button {
 .native-wrapper {
   display: flex;
 
-  align-items: center;
-
   /**
-   * The dropdown icon does not shrink, so without a floor the wrapper
-   * can end up narrower than the icon and the overflow below clips it.
-   * Reserving the content width keeps the icon visible and lets the
-   * label absorb the difference instead.
+   * Give up space before the label does. Flexbox would otherwise take
+   * from both in proportion to their size and truncate the shorter
+   * label first. The factor is this large because the label truncates
+   * as soon as it loses any width at all, even a fraction of a pixel.
    */
-  min-width: min-content;
+  flex-shrink: 100000;
+
+  align-items: center;
 
   /**
    * When the floating label appears on top of the
