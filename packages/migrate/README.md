@@ -47,38 +47,48 @@ Every breaking change is one of two kinds:
 | --- | --- | --- |
 | `@ionic/angular` -> `@ionic/angular/lazy`, `/standalone` -> `@ionic/angular` | Angular | auto |
 | `@ionic/angular` package bump | Angular | auto |
+| `moduleResolution: "node"` -> `"bundler"` in `tsconfig*.json` | Angular | auto |
+| TypeScript raised to the 5.4 floor | Angular | auto |
 | CSS `~` prefix removal in `@ionic/angular` imports | Angular | auto |
 | Add `provideZoneChangeDetection()` to a standalone bootstrap (keep Zone.js) | Angular | auto |
 | NgModule bootstrap zone provider | Angular | report |
-| `@ionic/react` + React Router v6 bumps, drop `@types/react-router*` | React | auto |
+| `IonicModule` deprecation (`provideIonicAngular()`) | Angular | report |
+| Angular below the 18 floor | Angular | report |
+| Angular 22's `OnPush` default and its Node floor | Angular | report |
+| `@ionic/angular-toolkit` version bump | Angular | report |
+| `@ionic/react` + React 18 + React Router v6 bumps, drop `@types/react-router*` | React | auto |
 | `<Route exact>` removal, `component={X}` -> `element={<X />}` | React | auto |
-| React Router v6: removed imports, `IonRedirect`, `render`/non-identifier `component`, `history` prop, regex paths | React | report |
+| React Router v6: removed imports, `IonRedirect`, `render`/non-identifier `component`, route children, `history` prop, regex paths | React | report |
 | `@ionic/vue` + Vue Router 5 + Vue 3.5 bumps | Vue | auto |
 | `next()` in navigation guards | Vue | report |
+| `@ionic/core` package bump | all | auto |
 | `autocorrect="off"` on `ion-input`/`ion-searchbar` | all | auto |
+| `browserslist` entries raised to the v9 browser floors | all | auto |
 | Legacy picker (`ion-picker-legacy`, `pickerController`, removed types) | all | report |
 | `ion-img` deprecation | all | report |
 | `ion-nav` router removal (`setRouteId`/`getRouteId`/`updateURL`) | all | report |
+| `@ionic/core` imports outside the new `exports` allowlist | all | report |
+| Capacitor 2 no longer detected as a native platform | all | report |
+| `ion-input`/`ion-textarea`/`ion-select` internal DOM and shadow part changes | all | report |
+| `label-placement="floating"` with slotted start/end content | all | report |
+| `ion-textarea` md min-height `56px` -> `72px` | all | report |
+| `ion-modal` `handleBehavior` default (`"none"` -> `"cycle"`) | all | report |
+| `ion-select` `ionChange` firing and the action sheet `selected` role | all | report |
+| `swipeBackEnabled` config, now read once at outlet mount | all | report |
 
-### What it can't detect
+### What you check by hand
 
-Some v9 breaks are runtime behavior changes with no reliable source signal, so
-the tool leaves them out rather than guess. Check these by hand against the
-[migration guide](https://ionicframework.com/docs/updating/9-0):
+The tool can't point at the code these changes affect, so check them against the
+[migration guide](https://ionicframework.com/docs/updating/9-0) yourself:
 
-- `ion-modal`'s `handleBehavior` now defaults to `"cycle"`. A sheet modal with a
-  handle becomes focusable and cycles its breakpoints. Set `handleBehavior="none"`
-  to keep the handle inert.
-- `ion-select`'s `ionChange` only fires on an actual change now, and the action
-  sheet's `selected` role is gone. Code that ran on every confirmation, or read
-  that role, needs a look.
-- Platform detection no longer honors Capacitor 2's `isNative` flag, so a
-  Capacitor 2 app reports web from `isPlatform('capacitor')` and `'hybrid'`.
-  Upgrade to Capacitor 7 or later.
-- In React and Vue the `swipeBackEnabled` config is read once when the outlet
-  mounts. If you toggle it at runtime, move to the `swipeGesture` prop on
-  `ion-router-outlet`. Setting it once at startup still works, so most apps need
-  no change, which is why we don't flag it.
+- React Router v6 needs a `/*` suffix on any route whose element contains nested
+  routes or a child `IonRouterOutlet` (`path="/tabs"` -> `path="/tabs/*"`).
+  Knowing which routes those are means resolving each `element` back to what it
+  renders, so flagging every route without a suffix would be noise.
+- Angular 22 defaults components to `OnPush`, so state mutated as a plain field
+  in an Ionic lifecycle hook stops re-rendering. The report flags Angular 22 in
+  `package.json`, but it doesn't find the affected components - `ng update` has a
+  migration for that.
 
 ## How it works
 
@@ -88,7 +98,7 @@ the tool leaves them out rather than guess. Check these by hand against the
 3. Apply the auto-fixes and collect the report-only findings.
 4. Print a grouped summary of what was fixed and what's left for you.
 5. Format the changed files with the project's own Prettier, so the AST-based
-   edits come out as clean diffs. Pass `--no-format` to skip it.
+   edits match the surrounding style. Pass `--no-format` to skip it.
 6. Reinstall dependencies (using the lockfile's package manager) so
    `node_modules` matches the bumped `package.json`. Pass `--no-install` to skip
    it, then reinstall yourself before starting the app.
@@ -107,8 +117,19 @@ literals, comments, or unrelated code.
 - Angular inline templates (a `template:` string in a decorator) and `.js`/`.jsx`
   files are report-only for template changes. The auto-fix covers external
   `.html`, `.vue`, and `.tsx`.
-- `ion-img` is report-only. It's a deprecation, not a v9 break.
+- The `ion-img` deprecation is report-only.
 - The template scanner is best-effort, not a full HTML parser.
+- The component DOM/shadow-part changes are report-only. The right replacement
+  depends on what the CSS rule was doing, and `ion-select`'s `part="inner"` has
+  none at all.
+- Stylesheet scanning covers `.css` and `.scss` files. Styles inlined in a
+  component decorator's `styles` array aren't read.
+- Only a `.browserslistrc` or `browserslist` file is read, so an app that keeps
+  the list in `package.json` (the CRA and Vite starters do) needs its browser
+  floors raised by hand.
+- Angular's `moduleResolution` fix skips a tsconfig whose `module` is CommonJS.
+  TypeScript rejects `bundler` resolution there, and a Node-side config doesn't
+  resolve `@ionic/angular` subpaths anyway.
 
 ## Extending
 

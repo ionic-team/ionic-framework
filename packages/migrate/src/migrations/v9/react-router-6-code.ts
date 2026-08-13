@@ -1,5 +1,5 @@
 import { Node, SyntaxKind } from 'ts-morph';
-import type { JsxAttribute } from 'ts-morph';
+import type { JsxAttribute, JsxOpeningElement, JsxSelfClosingElement } from 'ts-morph';
 
 import type { Finding, Migration } from '../../types.js';
 import { isAutoFixableComponent, ROUTE_TAGS } from './react-router-6-routes.js';
@@ -47,6 +47,10 @@ const COMPONENT_REMOVED: ReportedChange = {
   detail: `Route "component" prop removed. Use "element" with JSX`,
   docsUrl: `${V9_DOCS}#route-definition-changes`,
 };
+const CHILDREN_REMOVED: ReportedChange = {
+  detail: `Route content passed as children no longer renders. Move it into the "element" prop`,
+  docsUrl: `${V9_DOCS}#route-definition-changes`,
+};
 const PATH_REGEX_REMOVED: ReportedChange = {
   detail: 'regex path constraints removed. Use a literal path and match in the component',
   docsUrl: `${V9_DOCS}#path-regex-constraints-removed`,
@@ -59,6 +63,24 @@ const HISTORY_PROP_REMOVED: ReportedChange = {
   detail: 'history prop removed. v6 routers reject a custom history (use initialEntries for IonReactMemoryRouter)',
   docsUrl: `${V9_DOCS}#custom-history-prop-removed`,
 };
+
+/**
+ * Whether `el` is the opening tag of a `<Route>` that wraps content in its
+ * children, e.g. `<Route path="/"><Home /></Route>`. v6 renders a route solely
+ * through `element`, so children silently stop rendering rather than failing to
+ * compile.
+ *
+ * Every element inside `<Route>...</Route>` has that JsxElement as its parent,
+ * so the identity check against the opening element keeps a nested route from
+ * reporting its wrapper's children.
+ */
+function hasContentChildren(el: JsxOpeningElement | JsxSelfClosingElement): boolean {
+  const parent = el.getParent();
+  if (!Node.isJsxElement(parent) || parent.getOpeningElement() !== el) return false;
+  return parent
+    .getJsxChildren()
+    .some((child) => !Node.isJsxText(child) || child.getText().trim() !== '');
+}
 
 /** The static string value of an attribute, or undefined if it isn't a plain string. */
 function stringAttrValue(attr: JsxAttribute): string | undefined {
@@ -107,6 +129,11 @@ export const reactRouter6Code: Migration = {
           const isRoute = ROUTE_TAGS.has(tag);
           const isRouter = ROUTER_COMPONENTS.has(tag);
           if (!isRoute && !isRouter) continue;
+
+          if (isRoute && hasContentChildren(el)) {
+            findings.push({ filePath, line: el.getStartLineNumber(), ...CHILDREN_REMOVED });
+          }
+
           for (const attr of el.getAttributes()) {
             if (attr.getKind() !== SyntaxKind.JsxAttribute) continue;
             const jsxAttr = attr as JsxAttribute;

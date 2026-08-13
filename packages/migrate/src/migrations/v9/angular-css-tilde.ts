@@ -1,4 +1,5 @@
 import type { Finding, Migration } from '../../types.js';
+import { STYLE_GLOBS } from '../../ast/text-scan.js';
 
 /**
  * Angular's build pipeline no longer supports the webpack-loader `~` prefix when
@@ -23,7 +24,7 @@ export const angularCssTilde: Migration = {
 
   detect(ctx) {
     const findings: Finding[] = [];
-    for (const filePath of ctx.glob(['**/*.css', '**/*.scss'])) {
+    for (const filePath of ctx.glob(STYLE_GLOBS)) {
       const text = ctx.readFile(filePath);
       if (text === undefined) continue;
       text.split('\n').forEach((line, i) => {
@@ -39,7 +40,7 @@ export const angularCssTilde: Migration = {
   },
 
   fix(ctx) {
-    for (const filePath of ctx.glob(['**/*.css', '**/*.scss'])) {
+    for (const filePath of ctx.glob(STYLE_GLOBS)) {
       const text = ctx.readFile(filePath);
       if (text === undefined) continue;
       const next = text.replace(TILDE_IONIC_IMPORT, '$1$2');

@@ -31,7 +31,9 @@ import { V9_DOCS } from './docs.js';
  *
  * See https://ionicframework.com/docs/updating/9-0#input
  */
-const TEMPLATE_GLOBS = ['**/*.html', '**/*.vue'];
+// Not the shared `TEMPLATE_GLOBS`: that includes `.tsx`, which
+// `jsxAutocorrectAttrs` already covers, so scanning it here would double-report.
+const NON_JSX_TEMPLATE_GLOBS = ['**/*.html', '**/*.vue'];
 const TEMPLATE_TAGS = ['ion-input', 'ion-searchbar'];
 const JSX_TAGS = new Set(['IonInput', 'IonSearchbar']);
 export const OFF_ATTR = /\s+autocorrect\s*=\s*["']off["']/;
@@ -98,7 +100,7 @@ export const coreAutocorrect: Migration = {
     const findings: Finding[] = [];
     const isAngular = detectFrameworks(ctx).some((f) => f.framework === 'angular');
 
-    for (const filePath of ctx.glob(TEMPLATE_GLOBS)) {
+    for (const filePath of ctx.glob(NON_JSX_TEMPLATE_GLOBS)) {
       const text = ctx.readFile(filePath);
       if (text === undefined) continue;
       // `on` is only convertible where the binding dialect is known: Vue SFCs,
@@ -129,7 +131,7 @@ export const coreAutocorrect: Migration = {
   fix(ctx) {
     const isAngular = detectFrameworks(ctx).some((f) => f.framework === 'angular');
 
-    for (const filePath of ctx.glob(TEMPLATE_GLOBS)) {
+    for (const filePath of ctx.glob(NON_JSX_TEMPLATE_GLOBS)) {
       const text = ctx.readFile(filePath);
       if (text === undefined) continue;
       // Vue binds with `:attr`, Angular with `[attr]`. Anything else (a vanilla
