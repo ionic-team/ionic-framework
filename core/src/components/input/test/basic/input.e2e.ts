@@ -207,6 +207,28 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-input');
     });
 
+    test('should trigger onclick only once when the input is itself slotted', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-input slot="end" label="Click Me" value="Test Value"></ion-input>
+        </ion-item>
+      `,
+        config
+      );
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('label.input-wrapper').click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+
     test('should propagate clicks from start slot button to parent', async ({ page }) => {
       await page.setContent(
         `
