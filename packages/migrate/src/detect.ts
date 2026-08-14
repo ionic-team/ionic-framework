@@ -1,6 +1,5 @@
 import type { MigrationContext } from './context.js';
 import type { Framework } from './types.js';
-import { IONIC_V9_VERSION } from './versions.js';
 
 /** An Ionic framework binding found in the project, with its installed major. */
 export interface DetectedFramework {
@@ -61,14 +60,6 @@ export function detectFrameworks(ctx: MigrationContext): DetectedFramework[] {
   ][]) {
     const range = deps[pkgName];
     if (range === undefined) continue;
-    // A project already pinned to the v9 dev build reads as major 8 via semver
-    // (the pin is versioned `8.8.x-dev`), so recognize it explicitly as v9.
-    // This closes the re-run gate: a migrated project detects as v9 and selects
-    // no v8->v9 migrations. Remove once the pin becomes `^9.0.0` at GA.
-    if (range === IONIC_V9_VERSION) {
-      detected.push({ framework, major: 9 });
-      continue;
-    }
     // Only a plain, bumpable semver range gates re-runs correctly. angular-deps
     // won't rewrite a protocol/alias range (npm:, git+, workspace:, ...), so if
     // we migrated one the version gate would never close and single-shot

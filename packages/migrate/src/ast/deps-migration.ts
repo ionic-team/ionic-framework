@@ -4,9 +4,8 @@ import type { Finding, Framework, Migration } from '../types.js';
 import { findDependency, readPackageJson, setRange, writePackageJson } from './package-json.js';
 
 /**
- * A bump target: either a major number (raised to `^{major}.0.0`) for normal
- * published packages, or an explicit version string (used verbatim) for
- * unpublished `@ionic/*` dev builds.
+ * A bump target: either a major number (raised to `^{major}.0.0`) or an
+ * explicit range used verbatim (e.g. `^3.5.0`).
  */
 export type BumpTarget = number | string;
 
@@ -46,14 +45,11 @@ function isBelow(a: [number, number, number], b: [number, number, number]): bool
 }
 
 /**
- * Whether a dependency needs changing:
+ * Whether a dependency needs changing. Both target shapes compare a floor, so a
+ * range already at or above the target is never rewritten or downgraded:
  *  - numeric target: the installed major must be below it.
- *  - caret/tilde range target (a minimum floor, e.g. `^3.5.0`): bump only when
- *    the installed version is below the floor, so a higher pin is never
- *    downgraded.
- *  - explicit version string (an unpublished dev build): the range must simply
- *    differ - a major comparison won't work because a `8.8.x-dev` build of v9
- *    still reads as major 8.
+ *  - range target (a minimum floor, e.g. `^3.5.0`): the installed version must
+ *    be below the floor.
  */
 function needsChange(pkg: PackageJson, name: string, target: BumpTarget): boolean {
   const dep = findDependency(pkg, name);
@@ -63,11 +59,9 @@ function needsChange(pkg: PackageJson, name: string, target: BumpTarget): boolea
   if (typeof target === 'number') {
     return (parseMajor(dep.range) ?? Infinity) < target;
   }
-  if (target.startsWith('^') || target.startsWith('~')) {
-    const current = parseVersion(dep.range);
-    return current !== undefined && isBelow(current, parseVersion(target)!);
-  }
-  return dep.range !== target;
+  const floor = parseVersion(target);
+  const current = parseVersion(dep.range);
+  return floor !== undefined && current !== undefined && isBelow(current, floor);
 }
 
 /**

@@ -1,5 +1,4 @@
 import { createDepsMigration } from '../../ast/deps-migration.js';
-import { IONIC_V9_VERSION } from '../../versions.js';
 
 /**
  * Raise the Vue Ionic packages to v9, Vue Router to v5, and Vue to 3.5+ (the
@@ -14,8 +13,8 @@ export const vueDeps = createDepsMigration({
   framework: 'vue',
   docsUrl: 'https://ionicframework.com/docs/updating/9-0#vue',
   bumps: [
-    ['@ionic/vue', IONIC_V9_VERSION],
-    ['@ionic/vue-router', IONIC_V9_VERSION],
+    ['@ionic/vue', 9],
+    ['@ionic/vue-router', 9],
     ['vue', '^3.5.0'],
     ['vue-router', 5],
   ],
