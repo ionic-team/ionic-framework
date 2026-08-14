@@ -1,7 +1,20 @@
 import { raf } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 
+/**
+ * Applied to the host while the label is being repositioned. The
+ * component stylesheets style this class, so it must stay in sync with
+ * the `skip-label-transition` selector in those files. Renaming it here
+ * requires renaming it there too.
+ */
 export const SKIP_LABEL_TRANSITION_CLASS = 'skip-label-transition';
+
+/**
+ * Set on the host as an inline style. The component stylesheets declare
+ * this property and read it with `var()`, so it must stay in sync with
+ * the `--internal-start-container-adjustment` references in those files.
+ * Renaming it here requires renaming it there too.
+ */
 export const START_CONTAINER_ADJUSTMENT_VAR = '--internal-start-container-adjustment';
 
 /**

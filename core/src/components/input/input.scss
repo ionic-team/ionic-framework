@@ -473,6 +473,9 @@
  * When start/end slots are added or removed, we temporarily
  * disable the label transition to prevent the floating label
  * from animating as its position is adjusted.
+ *
+ * This class is applied by the start container controller, so
+ * renaming it here requires renaming it there too.
  */
 :host(.skip-label-transition) .label-text-wrapper {
   transition: none;
