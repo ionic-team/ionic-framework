@@ -251,7 +251,7 @@ Restructured:
 - Start slot moved from `.select-wrapper-inner` into `.select-start` (`part="start"`)
 - End slot moved from `.select-wrapper-inner` into `.select-end` (`part="end"`)
 - `.select-icon` remains `part="icon"` but its location depends on the label state:
-    - With a start/end label, the icon is inside `.select-control`
+    - With a start/end label, the icon is inside `.native-wrapper`
     - With a floating/stacked label, the icon is inside `.select-end`
 
 Update selectors that target the exposed shadow parts to account for the new structure:
