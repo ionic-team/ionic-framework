@@ -33,15 +33,15 @@ Unlike other test applications, these test apps are broken up into multiple dire
 Usage:
 
 ```shell
-# Build a test app using apps/react17 as a reference
-./build.sh react17
+# Build a test app using apps/react18 as a reference
+./build.sh react18
 ```
 
 ## How to modify test apps
 
 To add new tests, components, or pages, modify the `base` project. This ensures that tests are run for every tested version.
 
-If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.e2e.ts` in `apps/react17`, make sure you place the file in `apps/react17/tests/e2e/test.e2e.ts`.
+If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.e2e.ts` in `apps/react18`, make sure you place the file in `apps/react18/tests/e2e/test.e2e.ts`.
 
 ### Version-specific tests
 
