@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
+import { getConfig } from '../utils/config';
 
 import type { IonicReactProps } from './IonicReactProps';
 import { IonIconInner } from './inner-proxies';
-import { createForwardRef, getConfig } from './utils';
+import { createForwardRef } from './utils';
 
 interface IonIconProps {
   color?: string;

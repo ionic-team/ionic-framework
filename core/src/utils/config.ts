@@ -217,6 +217,7 @@ export interface IonicConfig {
    * - `'OFF'`: No errors or warnings are logged.
    * - `'ERROR'`: Logs only errors.
    * - `'WARN'`: Logs errors and warnings.
+   * - `'DEBUG'`: Logs errors, warnings, and Ionic's internal diagnostics.
    */
   logLevel?: LogLevel;
 

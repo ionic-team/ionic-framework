@@ -1,0 +1,72 @@
+name: 'Release @ionic/migrate'
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        description: 'Which npm tag should this be published to?'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  release-migrate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/migrate
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: 🟢 Configure Node for Publish
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.x
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@ionic'
+          cache: 'npm'
+          cache-dependency-path: packages/migrate/package-lock.json
+      - name: 📦 Install latest npm
+        run: npm install -g npm@latest
+        shell: bash
+      - name: 🕸️ Install Dependencies
+        run: npm ci
+        shell: bash
+      - name: 🔎 Resolve Version
+        id: resolve-version
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Releasing @ionic/migrate@$version to the '${{ inputs.tag }}' tag"
+        shell: bash
+      - name: 🚧 Ensure Version Is Unpublished
+        run: |
+          set -euo pipefail
+          version="${{ steps.resolve-version.outputs.version }}"
+          # `npm view` exits non-zero both for an unpublished version and for a
+          # package that does not exist yet, and the latter is the expected state
+          # on the very first release. So inspect stdout rather than the exit
+          # code: empty output means the version is free to publish.
+          if [ -n "$(npm view "@ionic/migrate@$version" version 2>/dev/null || true)" ]; then
+            echo "::error::@ionic/migrate@$version is already published. Bump the version in packages/migrate/package.json."
+            exit 1
+          fi
+        shell: bash
+      - name: 🔍 Lint
+        run: npm run lint
+        shell: bash
+      - name: 🧪 Test
+        run: npm test
+        shell: bash
+      - name: 🏗️ Run Build
+        run: npm run build
+        shell: bash
+      # `--access public` is not passed here because publishConfig.access in
+      # package.json already sets it; a scoped package would otherwise default to
+      # restricted on its first publish.
+      - name: 🚀 Publish to NPM
+        run: npm publish --tag ${{ inputs.tag }} --provenance
+        shell: bash

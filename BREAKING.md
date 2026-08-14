@@ -46,7 +46,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | Framework | Supported Version     |
 | --------- | --------------------- |
 | Angular   | 18+                   |
-| React     | 18+                   |
+| React     | 18 or 19              |
 | Vue       | 3.5+                  |
 
 **Minimum Mobile Platform Versions**
@@ -83,12 +83,51 @@ Apps on `moduleResolution: "node"` (classic) and webpack 4 keep resolving throug
 
 <h4 id="version-9x-input">Input</h4>
 
+**`autocorrect` Property Type Changed to Boolean**
+
 The `autocorrect` property on `ion-input` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
 
 The string form no longer behaves the same way. Because an HTML attribute coerces to `true` for any non-empty string, `autocorrect="off"` now evaluates to `true` (autocorrect enabled). Migrate to the boolean property:
 
 - Remove the attribute to keep autocorrect disabled (the default).
 - Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
+
+**Floating Label Behavior**
+
+Floating labels no longer automatically float when the input contains slotted content. Labels float only when the input is focused or has a value.
+
+**Internal DOM Structure Changes**
+
+The internal DOM structure has been reorganized to support floating labels with slotted content.
+
+Added:
+- `.input-start`
+- `.input-control`
+- `.input-end`
+
+Restructured:
+- `.label-text-wrapper` moved from `.input-wrapper` into `.input-control`
+- `.native-wrapper` moved from `.input-wrapper` into `.input-control`
+- Start slot moved from `.native-wrapper` into `.input-start`
+- Clear button icon moved from `.native-wrapper` into `.input-end`
+- End slot moved from `.native-wrapper` into `.input-end`
+- `.input-control` now contains the label text and native `input`, while start/end content is separated into dedicated wrappers
+
+Update your selectors to account for these structural changes:
+
+```diff
+-ion-input .input-wrapper .native-wrapper { }
++ion-input .input-control .native-wrapper { }
+
+-ion-input .input-wrapper .native-wrapper [slot="start"] { }
++ion-input .input-start [slot="start"] { }
+
+-ion-input .input-wrapper .native-wrapper .input-clear-icon { }
++ion-input .input-end .input-clear-icon { }
+
+-ion-input .input-wrapper .native-wrapper [slot="end"] { }
++ion-input .input-end [slot="end"] { }
+```
 
 <h4 id="version-9x-legacy-picker">Legacy Picker</h4>
 
@@ -382,13 +421,17 @@ Angular's current build pipeline no longer supports the webpack-loader `~` prefi
 
 <h4 id="version-9x-react">React</h4>
 
+The `@ionic/react` and `@ionic/react-router` packages now require React 18 or 19. React 17 is no longer supported.
+
 The `@ionic/react-router` package now requires React Router v6. React Router v5 is no longer supported.
 
 **Minimum Version Requirements**
 | Package | Supported Version |
 | ---------------- | ----------------- |
-| react-router     | 6.0.0+            |
-| react-router-dom | 6.0.0+            |
+| react            | 18 or 19          |
+| react-dom        | 18 or 19          |
+| react-router     | 6.4.0+            |
+| react-router-dom | 6.4.0+            |
 
 React Router v6 introduces several API changes that will require updates to your application's routing configuration:
 

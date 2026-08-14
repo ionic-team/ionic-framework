@@ -5,7 +5,7 @@
  */
 
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
-import { IonRoute, RouteManagerContext, StackContext, generateId } from '@ionic/react';
+import { IonRoute, RouteManagerContext, StackContext, createDebugLogger, generateId } from '@ionic/react';
 import React from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { Route, UNSAFE_RouteContext as RouteContext, matchRoutes } from 'react-router-dom';
@@ -35,7 +35,11 @@ const VIEW_UNMOUNT_DELAY_MS = 250;
  */
 const ION_PAGE_WAIT_TIMEOUT_MS = 300;
 
+/** Off unless the app sets `logLevel: 'DEBUG'`. */
+const debug = createDebugLogger('react-router');
+
 interface StackManagerProps {
+  children: React.ReactNode;
   routeInfo: RouteInfo;
   id?: string;
 }
@@ -47,19 +51,6 @@ const isViewVisible = (el: HTMLElement) =>
 
 const hideIonPageElement = (element: HTMLElement | undefined): void => {
   if (element) {
-    if (element.id === 'section-a' || element.id === 'section-b') {
-      // eslint-disable-next-line no-console
-      console.log(
-        '[HideIonPageElement]',
-        JSON.stringify({
-          id: element.id,
-          stack: new Error().stack
-            ?.split('\n')
-            .slice(1, 6)
-            .map((s) => s.trim()),
-        })
-      );
-    }
     element.classList.add('ion-page-hidden');
     element.setAttribute('aria-hidden', 'true');
   }
@@ -91,32 +82,9 @@ const showIonPageElement = (element: HTMLElement | undefined): void => {
  */
 const revealIonPageForSwipeBack = (element: HTMLElement | undefined): void => {
   if (element) {
-    const before = {
-      id: element.id,
-      inlineDisplay: element.style.display,
-      hasHiddenClass: element.classList.contains('ion-page-hidden'),
-      ariaHidden: element.getAttribute('aria-hidden'),
-      computedDisplay: getComputedStyle(element).display,
-    };
     element.style.removeProperty('display');
     element.classList.remove('ion-page-hidden');
     element.removeAttribute('aria-hidden');
-    // eslint-disable-next-line no-console
-    console.log(
-      '[SwipeBackReveal]',
-      JSON.stringify({
-        before,
-        after: {
-          inlineDisplay: element.style.display,
-          hasHiddenClass: element.classList.contains('ion-page-hidden'),
-          ariaHidden: element.getAttribute('aria-hidden'),
-          computedDisplay: getComputedStyle(element).display,
-        },
-      })
-    );
-  } else {
-    // eslint-disable-next-line no-console
-    console.log('[SwipeBackReveal] element is undefined');
   }
 };
 
@@ -1433,20 +1401,16 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         enteringViewItem.routeData.match.pattern.path !== routeInfo.pathname &&
         enteringViewItem.routeData.match.pathname !== routeInfo.pathname;
 
-      // eslint-disable-next-line no-console
-      console.log(
-        '[SwipeBackCanStart]',
-        JSON.stringify({
-          outletId: this.id,
-          routePathname: routeInfo.pathname,
-          swipeBackPathname: swipeBackRouteInfo?.pathname,
-          enteringViewId: enteringViewItem?.id,
-          enteringViewPath: enteringViewItem?.reactElement?.props?.path,
-          enteringMount: enteringViewItem?.mount,
-          ionPageInDocument,
-          canStartSwipe,
-        })
-      );
+      debug('SwipeBackCanStart', () => ({
+        outletId: this.id,
+        routePathname: routeInfo.pathname,
+        swipeBackPathname: swipeBackRouteInfo?.pathname,
+        enteringViewId: enteringViewItem?.id,
+        enteringViewPath: enteringViewItem?.reactElement?.props?.path,
+        enteringMount: enteringViewItem?.mount,
+        ionPageInDocument,
+        canStartSwipe,
+      }));
 
       return canStartSwipe;
     };
@@ -1457,20 +1421,16 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
-      // eslint-disable-next-line no-console
-      console.log(
-        '[SwipeBackOnStart:entry]',
-        JSON.stringify({
-          outletId: this.id,
-          routePathname: routeInfo.pathname,
-          swipeBackPathname: swipeBackRouteInfo?.pathname,
-          enteringViewId: enteringViewItem?.id,
-          enteringViewPath: enteringViewItem?.reactElement?.props?.path,
-          enteringMount: enteringViewItem?.mount,
-          hasEnteringIonPageElement: !!enteringViewItem?.ionPageElement,
-          leavingViewId: leavingViewItem?.id,
-        })
-      );
+      debug('SwipeBackOnStart:entry', () => ({
+        outletId: this.id,
+        routePathname: routeInfo.pathname,
+        swipeBackPathname: swipeBackRouteInfo?.pathname,
+        enteringViewId: enteringViewItem?.id,
+        enteringViewPath: enteringViewItem?.reactElement?.props?.path,
+        enteringMount: enteringViewItem?.mount,
+        hasEnteringIonPageElement: !!enteringViewItem?.ionPageElement,
+        leavingViewId: leavingViewItem?.id,
+      }));
 
       // Ensure the entering view is mounted so React keeps rendering it during the gesture.
       // This is important when the view was previously marked for unmount but its
@@ -1489,18 +1449,14 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         await this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back', true);
       }
 
-      // eslint-disable-next-line no-console
-      console.log(
-        '[SwipeBackOnStart:exit]',
-        JSON.stringify({
-          outletId: this.id,
-          enteringFinalComputedDisplay: enteringViewItem?.ionPageElement
-            ? getComputedStyle(enteringViewItem.ionPageElement).display
-            : null,
-          enteringFinalInlineDisplay: enteringViewItem?.ionPageElement?.style.display ?? null,
-          enteringFinalHiddenClass: enteringViewItem?.ionPageElement?.classList.contains('ion-page-hidden') ?? null,
-        })
-      );
+      debug('SwipeBackOnStart:exit', () => ({
+        outletId: this.id,
+        enteringFinalComputedDisplay: enteringViewItem?.ionPageElement
+          ? getComputedStyle(enteringViewItem.ionPageElement).display
+          : null,
+        enteringFinalInlineDisplay: enteringViewItem?.ionPageElement?.style.display ?? null,
+        enteringFinalHiddenClass: enteringViewItem?.ionPageElement?.classList.contains('ion-page-hidden') ?? null,
+      }));
 
       return Promise.resolve();
     };

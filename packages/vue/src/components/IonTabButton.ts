@@ -42,7 +42,7 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
       const { tab, href, _getTabState } = props;
       const tabState = _getTabState();
       const hasRouterOutlet = tabState.hasRouterOutlet;
-      const tappedTab = tabState.tabs[tab] || {};
+      const tappedTab = tabState.tabs[String(tab)] || {};
       const originalHref = tappedTab.originalHref || href;
       /**
        * If the router outlet is not defined, then the tabs is being used

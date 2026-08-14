@@ -6,6 +6,7 @@
     "noImplicitReturns": false,
     "outDir": "dist",
     "declarationDir": "dist/types",
+    "rootDir": "src",
     "sourceMap": true,
     "jsx": "react"
   },

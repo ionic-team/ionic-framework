@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "8.8.17",
+  "version": "8.8.18",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -47,7 +47,7 @@
     }
   },
   "dependencies": {
-    "@ionic/core": "^8.8.17",
+    "@ionic/core": "^8.8.18",
     "ionicons": "^8.0.13",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"
@@ -81,7 +81,7 @@
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@schematics/angular": "^22.0.0",
-    "@types/node": "^22.9.3",
+    "@types/node": "^24.13.3",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "angular-eslint": "^22.0.0",
