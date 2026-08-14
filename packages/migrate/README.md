@@ -41,44 +41,13 @@ Every breaking change is one of two kinds:
 - Report-only: a change that needs judgement (semantic rework, a dialect
   choice). The tool finds it and explains it, but won't rewrite it.
 
-### Coverage (v8 to v9)
+### Coverage
 
-| Change | Framework | Mode |
-| --- | --- | --- |
-| `@ionic/angular` -> `@ionic/angular/lazy`, `/standalone` -> `@ionic/angular` | Angular | auto |
-| `@ionic/angular` package bump | Angular | auto |
-| CSS `~` prefix removal in `@ionic/angular` imports | Angular | auto |
-| Add `provideZoneChangeDetection()` to a standalone bootstrap (keep Zone.js) | Angular | auto |
-| NgModule bootstrap zone provider | Angular | report |
-| `@ionic/react` + React Router v6 bumps, drop `@types/react-router*` | React | auto |
-| `<Route exact>` removal, `component={X}` -> `element={<X />}` | React | auto |
-| React Router v6: removed imports, `IonRedirect`, `render`/non-identifier `component`, `history` prop, regex paths | React | report |
-| `@ionic/vue` + Vue Router 5 + Vue 3.5 bumps | Vue | auto |
-| `next()` in navigation guards | Vue | report |
-| `autocorrect="off"` on `ion-input`/`ion-searchbar` | all | auto |
-| Legacy picker (`ion-picker-legacy`, `pickerController`, removed types) | all | report |
-| `ion-img` deprecation | all | report |
-| `ion-nav` router removal (`setRouteId`/`getRouteId`/`updateURL`) | all | report |
+Each major upgrade has its own page, listing every change the tool covers,
+whether it is auto-fixed or report-only, and the changes left for you to make by
+hand:
 
-### What it can't detect
-
-Some v9 breaks are runtime behavior changes with no reliable source signal, so
-the tool leaves them out rather than guess. Check these by hand against the
-[migration guide](https://ionicframework.com/docs/updating/9-0):
-
-- `ion-modal`'s `handleBehavior` now defaults to `"cycle"`. A sheet modal with a
-  handle becomes focusable and cycles its breakpoints. Set `handleBehavior="none"`
-  to keep the handle inert.
-- `ion-select`'s `ionChange` only fires on an actual change now, and the action
-  sheet's `selected` role is gone. Code that ran on every confirmation, or read
-  that role, needs a look.
-- Platform detection no longer honors Capacitor 2's `isNative` flag, so a
-  Capacitor 2 app reports web from `isPlatform('capacitor')` and `'hybrid'`.
-  Upgrade to Capacitor 7 or later.
-- In React and Vue the `swipeBackEnabled` config is read once when the outlet
-  mounts. If you toggle it at runtime, move to the `swipeGesture` prop on
-  `ion-router-outlet`. Setting it once at startup still works, so most apps need
-  no change, which is why we don't flag it.
+- [v8 to v9](./docs/v9.md)
 
 ## How it works
 
@@ -88,7 +57,7 @@ the tool leaves them out rather than guess. Check these by hand against the
 3. Apply the auto-fixes and collect the report-only findings.
 4. Print a grouped summary of what was fixed and what's left for you.
 5. Format the changed files with the project's own Prettier, so the AST-based
-   edits come out as clean diffs. Pass `--no-format` to skip it.
+   edits match the surrounding style. Pass `--no-format` to skip it.
 6. Reinstall dependencies (using the lockfile's package manager) so
    `node_modules` matches the bumped `package.json`. Pass `--no-install` to skip
    it, then reinstall yourself before starting the app.
@@ -99,16 +68,18 @@ literals, comments, or unrelated code.
 
 ## Limitations
 
-- Single-shot. A project migrator isn't idempotent, and the standalone import
-  swap in particular will corrupt already-migrated code if you re-run it. The
-  version gate prevents that once the `@ionic/*` bump has landed.
-- Angular zoneless is auto-fixed only for the standalone `bootstrapApplication`
-  shape. NgModule apps are flagged for manual migration instead.
-- Angular inline templates (a `template:` string in a decorator) and `.js`/`.jsx`
-  files are report-only for template changes. The auto-fix covers external
-  `.html`, `.vue`, and `.tsx`.
-- `ion-img` is report-only. It's a deprecation, not a v9 break.
+These hold for every major. What a given upgrade can't reach is on its own page
+under [`docs/`](./docs).
+
+- Single-shot. A project migrator isn't idempotent, and an import rewrite in
+  particular will corrupt already-migrated code if you re-run it. The version
+  gate prevents that once the `@ionic/*` bump has landed.
+- Only `.ts` and `.tsx` are loaded into `ts-morph`, so `.js`/`.jsx` files and
+  Angular inline templates (a `template:` string in a decorator) get the
+  text-scan migrations but not the AST-based ones.
 - The template scanner is best-effort, not a full HTML parser.
+- Stylesheet scanning covers `.css` and `.scss` files. Styles inlined in a
+  component decorator's `styles` array aren't read.
 
 ## Extending
 
@@ -118,6 +89,11 @@ a `Migration` (see `src/types.ts`) and registering it in
 automate, a `fix()`, plus `fromMajor`/`toMajor` for version scoping and a
 fixture-backed test. The engine handles selection, ordering, git safety,
 formatting, and reporting.
+
+Then add a row to that major's page under [`docs/`](./docs), creating
+`docs/v<major>.md` if it's the first migration for a new one. That page is what
+tells someone whether an upgrade is covered, so it's part of the migration, not
+an afterthought.
 
 ## Development
 

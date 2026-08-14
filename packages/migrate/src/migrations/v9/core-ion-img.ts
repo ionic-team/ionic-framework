@@ -6,7 +6,7 @@ import { scanLines, SOURCE_GLOBS } from '../../ast/text-scan.js';
  * `<img loading="lazy" decoding="async">`. Report-only: event handlers
  * (`ionImgDidLoad` etc.) and `::part(image)` styling need per-usage rework.
  *
- * See https://ionicframework.com/docs/updating/9-0#img
+ * Refer to https://ionicframework.com/docs/updating/9-0#img
  */
 export const coreIonImg: Migration = {
   id: 'core-ion-img',

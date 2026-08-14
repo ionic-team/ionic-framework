@@ -7,7 +7,7 @@ import { scanLines } from '../../ast/text-scan.js';
  * so the developer can migrate the callback style. The dep bump itself is
  * handled by `vue-deps`.
  *
- * See https://ionicframework.com/docs/updating/9-0#deprecation-warning-for-next-in-navigation-guards
+ * Refer to https://ionicframework.com/docs/updating/9-0#deprecation-warning-for-next-in-navigation-guards
  */
 // The global `beforeEach`/`beforeResolve` guards must be called on a router
 // instance (`router.beforeEach(...)`); requiring a router-suffixed receiver

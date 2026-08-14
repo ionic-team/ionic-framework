@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { createInMemoryContext } from '../src/context.js';
 import { angularDeps } from '../src/migrations/v9/angular-deps.js';
+import { coreDeps } from '../src/migrations/v9/core-deps.js';
 import { reactDeps } from '../src/migrations/v9/react-deps.js';
 import { reactRouter6Code } from '../src/migrations/v9/react-router-6-code.js';
 import { V9_DOCS } from '../src/migrations/v9/docs.js';
@@ -38,6 +39,55 @@ describe('react-deps', () => {
     expect(pkg.devDependencies['@types/react-router-dom']).toBeUndefined();
   });
 
+  it('raises React itself to the 18 floor Ionic 9 requires', () => {
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify(
+        { dependencies: { '@ionic/react': '^8.4.0', react: '^17.0.2', 'react-dom': '^17.0.2' } },
+        null,
+        2
+      ),
+    });
+
+    reactDeps.fix!(ctx);
+    const pkg = JSON.parse(ctx.readFile('package.json')!);
+
+    expect(pkg.dependencies['react']).toBe('^18.0.0');
+    expect(pkg.dependencies['react-dom']).toBe('^18.0.0');
+  });
+
+  it('carries the React types along with the runtime bump', () => {
+    // Bumping react without its @types leaves React 18 against React 17 types,
+    // and the run reinstalls straight after, so the app stops type-checking.
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify(
+        {
+          dependencies: { '@ionic/react': '^8.4.0', react: '^17.0.2' },
+          devDependencies: { '@types/react': '^17.0.39', '@types/react-dom': '^17.0.11' },
+        },
+        null,
+        2
+      ),
+    });
+
+    reactDeps.fix!(ctx);
+    const pkg = JSON.parse(ctx.readFile('package.json')!);
+
+    expect(pkg.devDependencies['@types/react']).toBe('^18.0.0');
+    expect(pkg.devDependencies['@types/react-dom']).toBe('^18.0.0');
+  });
+
+  it('does not downgrade a React already above the floor', () => {
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify(
+        { dependencies: { '@ionic/react': '^9.0.0', react: '^19.0.0', 'react-dom': '^19.0.0' } },
+        null,
+        2
+      ),
+    });
+
+    expect(reactDeps.detect(ctx)).toEqual([]);
+  });
+
   it('does nothing when already on v9/v6 (version gate is closed)', () => {
     const ctx = createInMemoryContext({
       'package.json': JSON.stringify(
@@ -61,6 +111,41 @@ describe('angular-deps', () => {
     const pkg = JSON.parse(ctx.readFile('package.json')!);
 
     expect(pkg.dependencies['@ionic/angular']).toBe('^9.0.0');
+  });
+});
+
+describe('core-deps', () => {
+  it('bumps a vanilla app @ionic/core pin to v9', () => {
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify({ dependencies: { '@ionic/core': '^8.4.0' } }, null, 2),
+    });
+
+    coreDeps.fix!(ctx);
+    const pkg = JSON.parse(ctx.readFile('package.json')!);
+
+    expect(pkg.dependencies['@ionic/core']).toBe('^9.0.0');
+  });
+
+  it('bumps a directly pinned @ionic/core alongside a framework binding', () => {
+    // A framework app that also declares @ionic/core would otherwise keep a v8
+    // core next to a v9 binding.
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify(
+        { dependencies: { '@ionic/angular': '^8.4.0', '@ionic/core': '^8.4.0' } },
+        null,
+        2
+      ),
+    });
+
+    expect(coreDeps.detect(ctx)).toHaveLength(1);
+  });
+
+  it('does nothing when @ionic/core is not a declared dependency', () => {
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify({ dependencies: { '@ionic/angular': '^8.4.0' } }, null, 2),
+    });
+
+    expect(coreDeps.detect(ctx)).toEqual([]);
   });
 });
 
@@ -176,6 +261,49 @@ describe('react-router-6-code (report-only)', () => {
     const details = reactRouter6Code.detect(ctx).map((f) => f.detail);
 
     expect(details.filter((d) => d.includes('regex path constraints removed'))).toHaveLength(1);
+  });
+
+  it('reports a Route that renders its content as children', () => {
+    const ctx = createInMemoryContext({
+      'App.tsx': `export const App = () => (\n  <Route path="/">\n    <Home />\n  </Route>\n);\n`,
+    });
+
+    const findings = reactRouter6Code.detect(ctx);
+
+    expect(findings.some((f) => f.detail.includes('children'))).toBe(true);
+    expect(findings.find((f) => f.detail.includes('children'))?.docsUrl).toBe(
+      `${V9_DOCS}#route-definition-changes`
+    );
+  });
+
+  it('does not report a Route that already renders through element', () => {
+    const ctx = createInMemoryContext({
+      'App.tsx': `export const App = () => <Route path="/" element={<Home />} />;\n`,
+    });
+
+    expect(reactRouter6Code.detect(ctx)).toEqual([]);
+  });
+
+  it('reports a nested route wrapper once, not once per route inside it', () => {
+    // The inner Route's parent node is the outer JsxElement, so a naive parent
+    // check attributes the outer element's children to the inner route too.
+    const ctx = createInMemoryContext({
+      'App.tsx':
+        `export const App = () => (\n  <Route path="/tabs">\n    <Route path="/tabs/a" element={<A />} />\n  </Route>\n);\n`,
+    });
+
+    const children = reactRouter6Code.detect(ctx).filter((f) => f.detail.includes('children'));
+
+    expect(children).toHaveLength(1);
+    expect(children[0].line).toBe(2);
+  });
+
+  it('does not mistake whitespace between tags for route children', () => {
+    const ctx = createInMemoryContext({
+      'App.tsx': `export const App = () => (\n  <Route path="/" element={<Home />}>\n  </Route>\n);\n`,
+    });
+
+    expect(reactRouter6Code.detect(ctx)).toEqual([]);
   });
 
   it('ignores non-router imports and non-Route elements', () => {

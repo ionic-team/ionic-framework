@@ -2,7 +2,7 @@ import { execSync } from 'node:child_process';
 import { resolve } from 'node:path';
 
 import { createDiskContext } from './context.js';
-import { detectFrameworks } from './detect.js';
+import { detectFrameworks, sourceMajor } from './detect.js';
 import { resolveTarget, selectMigrations } from './registry.js';
 import { run } from './runner.js';
 import { buildReport } from './report.js';
@@ -116,11 +116,11 @@ export function main(argv: string[]): number {
 
   const detected = detectFrameworks(ctx);
   if (detected.length === 0) {
-    console.log(`No @ionic/{angular,react,vue} dependency found in ${rootDir}. Nothing to do.`);
+    console.log(`No @ionic/{angular,react,vue,core} dependency found in ${rootDir}. Nothing to do.`);
     return 0;
   }
 
-  const detectedMajor = Math.min(...detected.map((d) => d.major));
+  const detectedMajor = sourceMajor(detected)!;
   // A `--from` below the detected major re-selects migrations the project has
   // already had applied. Some (e.g. angular-standalone-imports) are single-shot
   // and corrupt already-migrated code if re-run, so require --force to override

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { createInMemoryContext } from '../src/context.js';
-import { detectFrameworks, parseMajor } from '../src/detect.js';
+import { detectFrameworks, parseMajor, sourceMajor } from '../src/detect.js';
 import { resolveTarget, selectMigrations } from '../src/registry.js';
 import { allMigrations } from '../src/migrations/index.js';
 import { run } from '../src/runner.js';
@@ -42,6 +42,33 @@ describe('detectFrameworks', () => {
       { framework: 'react', major: 8 },
       { framework: 'vue', major: 8 },
     ]);
+  });
+
+  it('detects a vanilla @ionic/core app, which has no framework binding', () => {
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify({ dependencies: { '@ionic/core': '^8.4.1' } }),
+    });
+
+    expect(detectFrameworks(ctx)).toEqual([{ framework: 'core', major: 8 }]);
+  });
+
+  it('gates on the binding, not a stale @ionic/core pin beside it', () => {
+    // Taking the lowest major would re-select the single-shot migrations.
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify({
+        dependencies: { '@ionic/angular': '^9.0.0', '@ionic/core': '^8.4.1' },
+      }),
+    });
+
+    expect(sourceMajor(detectFrameworks(ctx))).toBe(9);
+  });
+
+  it('falls back to @ionic/core for a vanilla app with no binding', () => {
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify({ dependencies: { '@ionic/core': '^8.4.1' } }),
+    });
+
+    expect(sourceMajor(detectFrameworks(ctx))).toBe(8);
   });
 
   it('parses the major from assorted range syntaxes', () => {
@@ -134,6 +161,21 @@ describe('the shipped registry', () => {
     // `resolveTarget`'s ceiling gate relies on this, and `fromMajor`/`toMajor` are
     // bare numbers, so nothing else enforces it.
     expect(allMigrations.every((m) => m.toMajor > m.fromMajor)).toBe(true);
+  });
+
+  it('gives every migration a unique id', () => {
+    // A duplicate id makes a finding ambiguous in the report.
+    const ids = allMigrations.map((m) => m.id);
+
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('points every migration at a section of the upgrade guide', () => {
+    for (const migration of allMigrations) {
+      expect(migration.docsUrl, migration.id).toMatch(
+        /^https:\/\/ionicframework\.com\/docs\/updating\/9-0#[\w-]+$/
+      );
+    }
   });
 });
 

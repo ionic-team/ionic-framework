@@ -32,7 +32,7 @@ function groupByDocs(entry: RunEntry): DocsGroup[] {
  * Render one entry's findings, grouped by docs section with a link per group.
  *
  * `review` is for work the developer still owes, `docs` for a change the tool
- * handles itself. Color is off when piped (see {@link ./style.js}), so the label
+ * handles itself. Color is off when piped (refer to {@link ./style.js}), so the label
  * is all that separates the two buckets line by line in CI.
  */
 function findingLines(entry: RunEntry, linkLabel: 'docs' | 'review'): string[] {

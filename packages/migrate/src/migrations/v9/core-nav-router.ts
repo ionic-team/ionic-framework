@@ -8,7 +8,7 @@ import { scanLines, SOURCE_GLOBS } from '../../ast/text-scan.js';
  * not a compile error, so it's flagged for manual rework: URL-driven stacks
  * should move to `ion-router-outlet`.
  *
- * See https://ionicframework.com/docs/updating/9-0#nav
+ * Refer to https://ionicframework.com/docs/updating/9-0#nav
  */
 export const coreNavRouter: Migration = {
   id: 'core-nav-router',

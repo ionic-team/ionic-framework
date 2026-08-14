@@ -8,7 +8,7 @@ import { ZONE_PROVIDER } from './angular-zoneless.js';
  * `bootstrapModule`, which the auto-fix can't edit, so flag them for a manual
  * zone-provider migration rather than dropping the warning they previously got.
  *
- * See https://ionicframework.com/docs/updating/9-0#zoneless-change-detection
+ * Refer to https://ionicframework.com/docs/updating/9-0#zoneless-change-detection
  */
 const DETAIL =
   'NgModule bootstrap: pass provideZoneChangeDetection() as applicationProviders on bootstrapModule to keep Zone.js';

@@ -7,10 +7,17 @@ export interface DetectedFramework {
   major: number;
 }
 
-const FRAMEWORK_PACKAGES: Record<Exclude<Framework, 'core'>, string> = {
+/**
+ * The package that identifies each framework. `core` is listed too: a vanilla
+ * app has no binding package, so without it the run exits before any `core`
+ * migration runs against the project. A framework app that pins `@ionic/core`
+ * directly detects both, and that pin has to reach v9 too.
+ */
+const FRAMEWORK_PACKAGES: Record<Framework, string> = {
   angular: '@ionic/angular',
   react: '@ionic/react',
   vue: '@ionic/vue',
+  core: '@ionic/core',
 };
 
 /** Extract the major version from a semver range like `^8.4.1` or `~9.0.0-rc.1`. */
@@ -35,6 +42,18 @@ export function isPlainSemverRange(range: string): boolean {
 }
 
 /**
+ * The major to migrate from. A binding package wins over `@ionic/core` when both
+ * are declared: the single-shot migrations key off the binding, so an app on a
+ * v9 binding that never bumped its own `@ionic/core` pin is already migrated,
+ * and taking the lowest major would re-select them and corrupt its imports.
+ */
+export function sourceMajor(detected: DetectedFramework[]): number | undefined {
+  const bindings = detected.filter((d) => d.framework !== 'core');
+  const gating = bindings.length > 0 ? bindings : detected;
+  return gating.length > 0 ? Math.min(...gating.map((d) => d.major)) : undefined;
+}
+
+/**
  * Determine which Ionic framework binding(s) a project depends on and the major
  * version installed for each, by reading its `package.json`.
  */
@@ -54,10 +73,7 @@ export function detectFrameworks(ctx: MigrationContext): DetectedFramework[] {
   const deps = { ...pkg.dependencies, ...pkg.devDependencies };
 
   const detected: DetectedFramework[] = [];
-  for (const [framework, pkgName] of Object.entries(FRAMEWORK_PACKAGES) as [
-    Exclude<Framework, 'core'>,
-    string,
-  ][]) {
+  for (const [framework, pkgName] of Object.entries(FRAMEWORK_PACKAGES) as [Framework, string][]) {
     const range = deps[pkgName];
     if (range === undefined) continue;
     // Only a plain, bumpable semver range gates re-runs correctly. angular-deps
