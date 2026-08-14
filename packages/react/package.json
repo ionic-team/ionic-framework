@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "8.8.17",
+  "version": "8.8.18",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -28,6 +28,7 @@
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "typecheck": "tsc --noEmit",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
     "sync": "sh ./scripts/sync.sh",
@@ -40,14 +41,14 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^8.8.17",
-    "@stencil/react-output-target": "^1.5.2",
+    "@ionic/core": "^8.8.18",
+    "@stencil/react-output-target": "^1.6.2",
     "ionicons": "^8.0.13",
     "tslib": "*"
   },
   "peerDependencies": {
-    "react": ">=16.8.6",
-    "react-dom": ">=16.8.6"
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -59,7 +60,7 @@
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@types/jest": "^26.0.15",
-    "@types/node": "^14.0.14",
+    "@types/node": "^24.13.3",
     "@types/react": "^18.3.28",
     "@types/react-dom": "^18.3.7",
     "@typescript-eslint/eslint-plugin": "^8.0.0",

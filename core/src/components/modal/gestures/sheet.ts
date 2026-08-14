@@ -7,7 +7,7 @@ import type { Animation, ModalDragEventDetail } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
 import { getBackdropValueForSheet } from '../utils';
 
-import { calculateSpringStep, handleCanDismiss } from './utils';
+import { calculateSpringStep, canSwipeOnContent, handleCanDismiss } from './utils';
 
 export interface MoveSheetToBreakpointOptions {
   /**
@@ -82,6 +82,8 @@ export const createSheetGesture = (
   };
 
   const contentEl = baseEl.querySelector('ion-content');
+  // Cache the initial value so the gesture restores it instead of forcing scrolling on.
+  const initialContentScrollY = contentEl?.scrollY ?? true;
   const height = wrapperEl.clientHeight;
   let currentBreakpoint = initialBreakpoint;
   let offset = 0;
@@ -261,9 +263,6 @@ export const createSheetGesture = (
 
   const canStart = (detail: GestureDetail) => {
     /**
-     * If we are swiping on the content, swiping should only be possible if the content
-     * is scrolled all the way to the top so that we do not interfere with scrolling.
-     *
      * We cannot assume that the `ion-content` target will remain consistent between swipes.
      * For example, when using ion-nav within a modal it is possible to swipe, push a view,
      * and then swipe again. The target content will not be the same between swipes.
@@ -272,27 +271,11 @@ export const createSheetGesture = (
     currentBreakpoint = getCurrentBreakpoint();
 
     /**
-     * If `expandToScroll` is disabled, we should not allow the swipe gesture
-     * to start if the content is not scrolled to the top.
+     * Upwards swipes on the content cannot move the sheet anyway, so this only
+     * blocks swiping the sheet down from the content.
      */
-    if (!expandToScroll && contentEl) {
-      const scrollEl = isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
-      return scrollEl!.scrollTop === 0;
-    }
-
-    if (currentBreakpoint === 1 && contentEl) {
-      /**
-       * The modal should never swipe to close on the content with a refresher.
-       * Note 1: We cannot solve this by making this gesture have a higher priority than
-       * the refresher gesture as the iOS native refresh gesture uses a scroll listener in
-       * addition to a gesture.
-       *
-       * Note 2: Do not use getScrollElement here because we need this to be a synchronous
-       * operation, and getScrollElement is asynchronous.
-       */
-      const scrollEl = isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
-      const hasRefresherInContent = !!contentEl.querySelector('ion-refresher');
-      return !hasRefresherInContent && scrollEl!.scrollTop === 0;
+    if (contentEl && (!expandToScroll || currentBreakpoint === 1)) {
+      return canSwipeOnContent(contentEl);
     }
 
     return true;
@@ -452,12 +435,23 @@ export const createSheetGesture = (
   const onEnd = (detail: GestureDetail) => {
     const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY);
 
+    /**
+     * `snapBreakpoint === 0` is not enough on its own. `canDismiss: false`
+     * snaps to 0 but never dismisses, since `handleCanDismiss` returns early
+     * when canDismiss is not a function. A canDismiss function dismisses
+     * through `handleCanDismiss`, which awaits the callback, so the outcome
+     * is not known when this event is emitted.
+     */
+    const shouldPreventDismiss = canDismissBlocksGesture && snapBreakpoint === 0;
+    const isDismissing = shouldPreventDismiss ? typeof baseEl.canDismiss === 'function' : snapBreakpoint === 0;
+
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
       progress: calculateProgress(detail.currentY),
       snapBreakpoint,
+      isDismissing,
     };
 
     /**
@@ -474,7 +468,12 @@ export const createSheetGesture = (
        * swap to moving on drag and if we don't swap back here then the footer will get stuck.
        */
       swapFooterPosition('stationary');
-      onDragEnd(eventDetail);
+
+      /**
+       * The sheet does not move in this case, so the gesture
+       * never dismisses the modal.
+       */
+      onDragEnd({ ...eventDetail, isDismissing: false });
 
       return;
     }
@@ -562,14 +561,14 @@ export const createSheetGesture = (
     }
 
     /**
-     * Enables scrolling immediately if the sheet is about to fully expand
-     * or if it allows scrolling at any breakpoint. Without this, there would
+     * Restores the content's scroll setting immediately if the sheet is about to
+     * fully expand or if it allows scrolling at any breakpoint. Without this, there would
      * be a ~500ms delay while the modal animation completes, causing a
      * noticeable lag. Native iOS allows scrolling as soon as the gesture is
      * released, so we align with that behavior.
      */
     if (contentEl && (snapToBreakpoint === breakpoints[breakpoints.length - 1] || !expandToScroll)) {
-      contentEl.scrollY = true;
+      contentEl.scrollY = initialContentScrollY;
     }
 
     /**
@@ -768,8 +767,20 @@ export const createSheetGesture = (
     onEnd,
   });
 
+  /**
+   * Puts the content back the way the app declared it. A sheet can dismiss
+   * without going through moveSheetToBreakpoint, and an inline modal reuses
+   * the same element on the next present.
+   */
+  const resetContentScroll = () => {
+    if (contentEl) {
+      contentEl.scrollY = initialContentScrollY;
+    }
+  };
+
   return {
     gesture,
     moveSheetToBreakpoint,
+    resetContentScroll,
   };
 };

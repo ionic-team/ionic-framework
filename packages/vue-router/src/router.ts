@@ -44,7 +44,7 @@ export const createIonRouter = (
     (
       to: RouteLocationNormalized,
       _: RouteLocationNormalized,
-      failure?: NavigationFailure
+      failure?: NavigationFailure | void
     ) => {
       if (failure) return;
 
@@ -84,7 +84,11 @@ export const createIonRouter = (
   let currentHistoryPosition = opts.history.state.position as number;
 
   let currentRouteInfo: RouteInfo;
-  let incomingRouteParams: RouteParams;
+  /**
+   * Params staged by a navigation helper for the upcoming route change.
+   * Cleared once `handleHistoryChange` has consumed them.
+   */
+  let incomingRouteParams: RouteParams | undefined;
 
   const historyChangeListeners: any[] = [];
 
@@ -130,6 +134,11 @@ export const createIonRouter = (
       initialHistoryPosition,
       currentHistoryPosition
     );
+    /**
+     * The fallback branches below only navigate when `defaultHref` is set,
+     * matching @ionic/react-router. Without one there is nowhere to go, so
+     * they no-op.
+     */
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
@@ -198,9 +207,9 @@ export const createIonRouter = (
              */
             router.replace({
               path: prevInfo.pathname,
-              query: parseQuery(prevInfo.search),
+              query: parseQuery(prevInfo.search ?? ""),
             });
-          } else {
+          } else if (defaultHref) {
             /**
              * prevInfo has no pathname (synthesized root entry). Route
              * to `defaultHref` so the pop/back `incomingRouteParams`
@@ -208,12 +217,18 @@ export const createIonRouter = (
              * navigation.
              */
             handleNavigate(defaultHref, "pop", "back", routerAnimation);
+          } else {
+            /**
+             * There is nowhere to navigate, so drop the params rather than
+             * letting them leak into the next navigation.
+             */
+            incomingRouteParams = undefined;
           }
         }
-      } else {
+      } else if (defaultHref) {
         handleNavigate(defaultHref, "pop", "back", routerAnimation);
       }
-    } else {
+    } else if (defaultHref) {
       handleNavigate(defaultHref, "pop", "back", routerAnimation);
     }
   };
@@ -332,7 +347,7 @@ export const createIonRouter = (
     }
 
     const leavingUrl =
-      leavingLocationInfo.pathname + leavingLocationInfo.search;
+      (leavingLocationInfo.pathname ?? "") + (leavingLocationInfo.search ?? "");
     if (leavingUrl !== location.fullPath) {
       if (!incomingRouteParams) {
         if (action === "replace") {
@@ -341,10 +356,17 @@ export const createIonRouter = (
             routerDirection: "none",
           };
         } else if (action === "pop") {
-          const routeInfo = locationHistory.current(
-            initialHistoryPosition,
-            currentHistoryPosition - delta
-          );
+          /**
+           * Without a delta there is no target position to compute, so fall
+           * back to the latest entry, which is what `current()` resolves to.
+           */
+          const routeInfo =
+            delta === undefined
+              ? locationHistory.last()
+              : locationHistory.current(
+                  initialHistoryPosition,
+                  currentHistoryPosition - delta
+                );
 
           if (routeInfo && routeInfo.pushedByRoute) {
             const prevRouteInfo = locationHistory.findLastLocation(
@@ -599,7 +621,7 @@ export const createIonRouter = (
      */
     const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
-      const delta = routeInfo.position - currentHistoryPosition;
+      const delta = routeInfo.position! - currentHistoryPosition;
       if (delta !== 0) {
         router.go(delta);
         return;
@@ -661,7 +683,7 @@ export const createIonRouter = (
        * the previously-saved search so query params on the tab button href
        * are honored when re-selecting the tab.
        */
-      const effectiveSearch = hrefSearch || routeInfo.search;
+      const effectiveSearch = hrefSearch || routeInfo.search || "";
       const push = {
         query: parseQuery(effectiveSearch),
         ...(hrefHash ? { hash: hrefHash } : {}),

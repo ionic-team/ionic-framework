@@ -943,7 +943,7 @@ export const IonSplitPane: StencilReactComponent<IonSplitPaneElement, IonSplitPa
 
 export type IonTabEvents = NonNullable<unknown>;
 
-export const IonTab: StencilReactComponent<IonTabElement, IonTabEvents, Components.IonTab> = /*@__PURE__*/ createComponent<IonTabElement, IonTabEvents, Components.IonTab>({
+export const IonTab: StencilReactComponent<IonTabElement, IonTabEvents, Components.IonTab, 'tab'> = /*@__PURE__*/ createComponent<IonTabElement, IonTabEvents, Components.IonTab, 'tab'>({
     tagName: 'ion-tab',
     elementClass: IonTabElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.

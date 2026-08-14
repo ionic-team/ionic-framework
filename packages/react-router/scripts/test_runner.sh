@@ -86,7 +86,7 @@ if [ "$SKIP_BUILD" = "0" ]; then
   sh ./build.sh "$APP_NAME"
   cd "build/$APP_NAME"
   echo "Installing dependencies..."
-  npm install --legacy-peer-deps > npm_install.log 2>&1
+  npm install > npm_install.log 2>&1
   npm run sync
 else
   echo "Skipping build (--skip-build)."

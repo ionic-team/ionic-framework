@@ -1,5 +1,4 @@
 import { createDepsMigration } from '../../ast/deps-migration.js';
-import { IONIC_V9_VERSION } from '../../versions.js';
 
 /**
  * Raise the React Ionic packages to v9 and React Router to v6, and drop the
@@ -13,8 +12,8 @@ export const reactDeps = createDepsMigration({
   framework: 'react',
   docsUrl: 'https://ionicframework.com/docs/updating/9-0#react',
   bumps: [
-    ['@ionic/react', IONIC_V9_VERSION],
-    ['@ionic/react-router', IONIC_V9_VERSION],
+    ['@ionic/react', 9],
+    ['@ionic/react-router', 9],
     ['react-router', 6],
     ['react-router-dom', 6],
   ],

@@ -1,7 +1,14 @@
 {
+  "//": "packages/migrate is deliberately omitted: @ionic/migrate is versioned independently of the framework and is published by .github/workflows/release-migrate.yml, so `lerna version` must not rewrite it. Listing the packages explicitly is what keeps it out -- lerna 5 ignores negated globs like \"!packages/migrate\". Add new publishable packages here.",
   "packages": [
     "core",
-    "packages/*"
+    "packages/angular",
+    "packages/angular-server",
+    "packages/docs",
+    "packages/react",
+    "packages/react-router",
+    "packages/vue",
+    "packages/vue-router"
   ],
-  "version": "8.8.17"
+  "version": "8.8.18"
 }

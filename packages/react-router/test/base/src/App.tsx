@@ -1,4 +1,4 @@
-import { IonApp, setupIonicReact, IonRouterOutlet } from '@ionic/react';
+import { IonApp, setupIonicReact, LogLevel, IonRouterOutlet } from '@ionic/react';
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
 
@@ -72,7 +72,8 @@ import SuspenseOutlet from './pages/suspense-outlet/SuspenseOutlet';
 import { PropsUpdateDirect, PropsUpdateRoutesWrapper } from './pages/props-update/PropsUpdate';
 import DisabledButton from './pages/disabled-button/DisabledButton';
 
-setupIonicReact();
+// Debug logs on so failing specs include the navigation diagnostics.
+setupIonicReact({ logLevel: LogLevel.DEBUG });
 
 const App: React.FC = () => {
   return (

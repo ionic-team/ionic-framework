@@ -33,6 +33,10 @@ runs:
       run: npm run build -- --ci --debug --verbose
       working-directory: ./core
       shell: bash
+    - name: 🔍 Verify Lazy Imports
+      run: npm run test.lazy-imports
+      working-directory: ./core
+      shell: bash
     - name: 🕸️ Install React Package Dependencies
       run: npm ci
       working-directory: ./packages/react

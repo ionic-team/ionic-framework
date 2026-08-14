@@ -2,6 +2,10 @@
 
 Ionic Framework supports multiple versions of Vue. As a result, we need to verify that Ionic works correctly with each of these Vue versions.
 
+## Type Checking
+
+Run `npm run typecheck` in `packages/vue` to check types. The rollup build only reports type errors as warnings, so a passing build does not mean the types are clean.
+
 ## Syncing Local Changes
 
 The Vue test app supports syncing your locally built changes for validation.
@@ -76,6 +80,14 @@ If you want to add a version-specific change, add the change inside of the appro
 ### Version-specific tests
 
 If you need to add E2E tests that are only run on a specific version of the JS Framework, replicate the `VersionTest` component on each partial application. This ensures that tests for framework version X do not get run for framework version Y.
+
+### Testing Ionic Components
+
+`@ionic/vue` imports every component through `defineCustomElement` from `@ionic/core/components`, so every test runs against the custom elements build.
+
+These test apps are Cypress only, and Cypress retries assertions until they pass, so there is nothing to wait on manually today. If we add unit tests that assert against rendered DOM, use the `componentOnReady` helper exported from `@ionic/core` rather than calling `el.componentOnReady()` directly. That method does not exist on custom elements, so the direct call throws. The helper waits one animation frame instead, giving the component's inner contents a chance to render.
+
+When testing Ionic components, use the exported `componentOnReady` helper from `@ionic/core` instead of calling `el.componentOnReady()` directly. The helper works with both lazy-loaded and custom-element builds, making it more likely the component has finished rendering before making assertions against its rendered DOM or running accessibility tests.
 
 ## Adding New Test Apps
 

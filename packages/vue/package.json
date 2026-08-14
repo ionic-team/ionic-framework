@@ -1,12 +1,13 @@
 {
   "name": "@ionic/vue",
-  "version": "8.8.17",
+  "version": "8.8.18",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "build": "npm run clean && npm run copy && npm run copy.overlays && npm run bundle && npm run build.vetur && npm run build.web-types",
     "build.watch": "npm run bundle -- --watch",
@@ -77,8 +78,8 @@
     }
   },
   "dependencies": {
-    "@ionic/core": "^8.8.17",
-    "@stencil/vue-output-target": "0.13.1",
+    "@ionic/core": "^8.8.18",
+    "@stencil/vue-output-target": "0.14.1",
     "ionicons": "^8.0.13"
   },
   "vetur": {
