@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 
-function copyCSS() {
+function copyCoreCSS() {
   const src = path.join(__dirname, '..', '..', '..', 'core', 'css');
   const dst = path.join(__dirname, '..', 'css');
 
@@ -9,4 +9,4 @@ function copyCSS() {
   fs.copySync(src, dst);
 }
 
-copyCSS();
+copyCoreCSS();

@@ -16,6 +16,18 @@ const KNOWN_EXCLUDED_COMPONENTS = [
   'ion-select-popover',
   'ion-slides',
 ];
+const PROVIDER_EXPORTS = [
+  "./action-sheet-controller",
+  "./alert-controller",
+  "./animation-controller",
+  "./gesture-controller",
+  "./loading-controller",
+  "./menu-controller",
+  "./modal-controller",
+  "./popover-controller",
+  "./toast-controller",
+  "./provide",
+];
 
 function getComponentsFromCore() {
   const componentsList = fs.readdirSync(CORE_COMPONENTS_DIR, { withFileTypes: true })
@@ -25,31 +37,32 @@ function getComponentsFromCore() {
   return new Set(componentsList);
 }
 
-function getIonExportsFromPackageJson() {
-  const packageJsonPath = ANGULAR_PACKAGE_JSON;
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
+function getPackageExports() {
+  const packageJson = JSON.parse(fs.readFileSync(ANGULAR_PACKAGE_JSON));
+  return packageJson.exports;
+}
 
+function getIonExports(packageExports) {
   const ionComponentExports = {};
-
-  for (const [exportPath, exportValue] of Object.entries(packageJson.exports)) {
+  for (const [exportPath, exportValue] of Object.entries(packageExports)) {
     if (exportPath.startsWith('./ion-')) {
       const componentName = exportPath.slice(2); // Remove "./"
       ionComponentExports[componentName] = exportValue;
     }
   }
-
   return ionComponentExports;
 }
 
 function verify() {
   const coreComponents = getComponentsFromCore();
-  const packageJsonExports = getIonExportsFromPackageJson();
+  const packageExports = getPackageExports();
+  const ionExports = getIonExports(packageExports);
   let hasErrors = false;
 
   // Check for components in core that are missing from exports
   const missingFromExports = [];
   for (const component of coreComponents) {
-    if (!packageJsonExports[component]) {
+    if (!ionExports[component]) {
       if (!KNOWN_EXCLUDED_COMPONENTS.includes(component)) {
         console.log(`missing ${component} export in package.json`);
         hasErrors = true;
@@ -58,15 +71,15 @@ function verify() {
   }
 
   // Check for exports that don't have a corresponding component in core
-  for (const exportName of Object.keys(packageJsonExports)) {
+  for (const exportName of Object.keys(ionExports)) {
     if (!coreComponents.has(exportName)) {
       console.log(`${exportName} is exported without a matching component in core.`);
       hasErrors = true;
     }
   }
 
-  // Check if exported files exist
-  for (const [exportName, relativePath] of Object.entries(packageJsonExports)) {
+  // Check if exported ion files exist
+  for (const [exportName, relativePath] of Object.entries(ionExports)) {
     const fullPath = path.join(ANGULAR_ROOT, relativePath);
     if (!fs.existsSync(fullPath)) {
       console.log(`${exportName} points to a path that does not exist (${relativePath})`);
@@ -74,11 +87,26 @@ function verify() {
     }
   }
 
+  // Check if exported provider files exist
+  for (const exportName of PROVIDER_EXPORTS) {
+    const relativePath = packageExports[exportName];
+    if (relativePath) {
+      const fullPath = path.join(ANGULAR_ROOT, relativePath);
+      if (!fs.existsSync(fullPath)) {
+        console.log(`${exportName} points to a path that does not exist (${relativePath})`);
+        hasErrors = true;
+      }
+    } else {
+      console.log(`Missing export for ${exportName}`);
+      hasErrors = true;
+    }
+    
+  }
+
   if (hasErrors) {
-    process.exit(1);
+    process.exitCode = 1;
   } else {
     console.log('✅ verified package.json');
-    process.exit(0);
   }
 }
 
