@@ -20,7 +20,7 @@ const tsConfigs = [...compat.extends('@ionic/eslint-config/recommended'), ...ang
 
 module.exports = [
   {
-    ignores: ['dist/**', 'build/**', 'scripts/**', '**/proxies.ts', 'test/**'],
+    ignores: ['dist/**', 'build/**', 'scripts/**', '**/proxies.ts', 'test/**', 'src/standalone/directives/ion-*.ts'],
   },
   ...tsConfigs,
   {
@@ -32,7 +32,7 @@ module.exports = [
         // inferred project for them (the ts-eslint 8 equivalent of the old
         // createDefaultProgram option).
         projectService: {
-          allowDefaultProject: ['lazy/src/ionic-core.ts', 'schematics/add/*.ts', 'schematics/utils/*.ts'],
+          allowDefaultProject: ['src/lazy/ionic-core.ts', 'schematics/add/*.ts', 'schematics/utils/*.ts'],
         },
         tsconfigRootDir: __dirname,
       },
