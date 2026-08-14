@@ -1,3 +1,5 @@
+import { createRequire } from 'node:module';
+
 import { Project, QuoteKind } from 'ts-morph';
 
 /** ts-morph should emit single-quoted strings to match Ionic/Angular style. */
@@ -48,18 +50,34 @@ function EXCLUDE_GLOBS(root: string): string[] {
  * after the ts-morph save, so writing a `.ts`/`.tsx` file ts-morph also holds
  * would override its edits. Today no migration edits a loaded file both ways, so
  * a given file is only ever touched through one view.
+ *
+ * {@link requireFromProject}/{@link resolveFromProject} are the exception: they
+ * reach the real module graph rather than that filesystem, so a migration can
+ * read a tool's own config from the version the project builds with. Tests hand
+ * over stubs instead.
  */
 export interface MigrationContext {
   /** Project root; all relative paths resolve against it. */
   readonly rootDir: string;
   /** ts-morph project holding the loaded `.ts`/`.tsx` source files. */
   readonly project: Project;
-  /** Read a file's text, or `undefined` if it does not exist. */
-  readFile(relPath: string): string | undefined;
+  /** Read a file's text by project-relative or absolute path, or `undefined`. */
+  readFile(path: string): string | undefined;
   /** Buffer a file's text (creating it if needed); persisted by {@link save}. */
   writeFile(relPath: string, content: string): void;
   /** Return paths (relative to {@link rootDir}) matching the given glob patterns. */
   glob(patterns: string[]): string[];
+  /**
+   * Load a package from the project's own `node_modules`, or `undefined` when it
+   * is not installed. A fresh clone has none, so callers need a report-only path.
+   */
+  requireFromProject<T = unknown>(specifier: string): T | undefined;
+  /**
+   * Absolute path a specifier resolves to in the project, or `undefined` when it
+   * is not installed. Locates a package whose layout differs per package manager
+   * (pnpm links, hoisting) instead of guessing at `node_modules` paths.
+   */
+  resolveFromProject(specifier: string): string | undefined;
   /** Convert an absolute path to one relative to {@link rootDir}. */
   relative(absPath: string): string;
   /**
@@ -71,7 +89,13 @@ export interface MigrationContext {
   save(): void;
 }
 
-function buildContext(rootDir: string, project: Project): MigrationContext {
+/** How a context reaches the packages the project has installed. */
+interface ProjectModules {
+  require<T>(specifier: string): T | undefined;
+  resolve(specifier: string): string | undefined;
+}
+
+function buildContext(rootDir: string, project: Project, modules: ProjectModules): MigrationContext {
   const fs = project.getFileSystem();
   const touched = new Set<string>();
   // Text writes are buffered here and flushed only by `save()`. A run that
@@ -88,9 +112,13 @@ function buildContext(rootDir: string, project: Project): MigrationContext {
     rootDir,
     project,
     touchedFiles: touched,
-    readFile(relPath) {
-      if (pendingWrites.has(relPath)) return pendingWrites.get(relPath);
-      const abs = join(rootDir, relPath);
+    readFile(path) {
+      if (pendingWrites.has(path)) return pendingWrites.get(path);
+      // Absolute paths pass through, so a caller can read a file located by
+      // `resolveFromProject`, which can land outside `rootDir` entirely (a
+      // hoisted workspace, a pnpm store). Windows keeps its drive letter through
+      // that normalization, so it counts as absolute too.
+      const abs = /^(\/|[A-Za-z]:\/)/.test(path) ? path : join(rootDir, path);
       return fs.fileExistsSync(abs) ? fs.readFileSync(abs) : undefined;
     },
     writeFile(relPath, content) {
@@ -109,6 +137,8 @@ function buildContext(rootDir: string, project: Project): MigrationContext {
         .filter((rel) => !EXCLUDE_RE.test(rel));
     },
     relative: toRelative,
+    requireFromProject: modules.require,
+    resolveFromProject: modules.resolve,
     save() {
       // Record files ts-morph is about to write so the formatter can find them.
       for (const file of project.getSourceFiles()) {
@@ -130,7 +160,11 @@ function buildContext(rootDir: string, project: Project): MigrationContext {
  * entries are loaded as ts-morph source files. Everything else is written as a
  * plain file. Used by tests.
  */
-export function createInMemoryContext(files: Record<string, string>, rootDir = '/app'): MigrationContext {
+export function createInMemoryContext(
+  files: Record<string, string>,
+  rootDir = '/app',
+  modules: Record<string, unknown> = {}
+): MigrationContext {
   const project = new Project({
     useInMemoryFileSystem: true,
     manipulationSettings: MANIPULATION_SETTINGS,
@@ -146,7 +180,16 @@ export function createInMemoryContext(files: Record<string, string>, rootDir = '
     join(rootDir, '**/*.tsx'),
     ...EXCLUDE_GLOBS(rootDir),
   ]);
-  return buildContext(rootDir, project);
+  // Nothing is installed in memory, so only what a test hands over is loadable.
+  return buildContext(rootDir, project, {
+    require: <T,>(specifier: string) => modules[specifier] as T | undefined,
+    // Resolved against the in-memory `node_modules` so a test can lay out a
+    // package the way the real one is installed.
+    resolve: (specifier: string) => {
+      const path = join(rootDir, `node_modules/${specifier}`);
+      return fs.fileExistsSync(path) ? path : undefined;
+    },
+  });
 }
 
 /**
@@ -169,5 +212,20 @@ export function createDiskContext(rootDir: string): MigrationContext {
     join(rootDir, '**/*.tsx'),
     ...EXCLUDE_GLOBS(rootDir),
   ]);
-  return buildContext(rootDir, project);
+  // Resolved from the project root, not this package, so a migration reads the
+  // project's installed copy.
+  const projectRequire = createRequire(join(rootDir, 'package.json'));
+  const attempt = <T,>(load: () => T): T | undefined => {
+    try {
+      return load();
+    } catch {
+      return undefined;
+    }
+  };
+  return buildContext(rootDir, project, {
+    require: <T,>(specifier: string) => attempt(() => projectRequire(specifier) as T),
+    // Normalized to posix separators: callers slice these paths and hand them to
+    // `readFile`, which is posix-relative.
+    resolve: (specifier: string) => attempt(() => projectRequire.resolve(specifier).replace(/\\/g, '/')),
+  });
 }

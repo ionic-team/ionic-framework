@@ -12,7 +12,8 @@ import { main } from '../src/main.js';
  * `return 1` once left the type-checker and the whole suite green while CI
  * reported an unmigrated app as clean.
  *
- * `--check` writes nothing and skips the git gate, so these need no repo.
+ * `--check` writes nothing and skips the git gate, so most need no repo. The
+ * formatter case writes, and passes `--force` to get past the gate instead.
  */
 const dirs: string[] = [];
 
@@ -97,6 +98,14 @@ describe('main', () => {
 
     expect(code).toBe(0);
     expect(out).toContain('Nothing to do.');
+  });
+
+  it('says the changed files went unformatted when the project has no Prettier', () => {
+    // The guide promises a Prettier pass, and a project without Prettier gets none.
+    const { code, out } = runCli(project('^8.4.0'), '--force', '--no-install');
+
+    expect(code).toBe(0);
+    expect(out).toContain('no Prettier');
   });
 
   it('throws on an unparseable --to rather than migrating to a guessed target', () => {

@@ -24,8 +24,8 @@ export type Framework = 'angular' | 'react' | 'vue' | 'core';
 
 /**
  * Status of a migration. `experimental` migrations are skipped unless the user
- * explicitly opts in, letting us ship transforms for changes that are not yet
- * settled.
+ * explicitly opts in. Used for a transform that is not yet settled, or one whose
+ * consequence is the developer's call.
  */
 export type MigrationStatus = 'stable' | 'experimental';
 
