@@ -24,6 +24,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Router Outlet](#version-9x-router-outlet)
   - [Searchbar](#version-9x-searchbar)
   - [Select](#version-9x-select)
+  - [Textarea](#version-9x-textarea)
 - [Framework Specific](#version-9x-framework-specific)
   - [Angular](#version-9x-angular)
   - [React](#version-9x-react)
@@ -267,6 +268,66 @@ Apps that relied on `ionChange` firing on every confirmation (for example, to de
 When using `interface="action-sheet"`, `ion-select` no longer assigns the `selected` role to the action sheet button for the currently selected option. This aligns the `action-sheet` interface with the `alert`, `popover`, and `modal` interfaces, none of which assign this role. This does not change the selected option's styling.
 
 Previously, the `selected` role was assigned only to the option matching the select's current value. Because the dismiss role mirrors the tapped button, this surfaced in just one case: re-selecting the already-selected option dismissed the action sheet with `role: "selected"` in `ionActionSheetDidDismiss`. Tapping any other option changed the value and dismissed with `role: ""`. Now that the role is no longer assigned, both cases dismiss with `role: undefined`. Apps that inspected this role to detect that a value was chosen, such as reading `role` from the underlying action sheet's `onDidDismiss` result, should listen for `ion-select`'s `ionChange` event instead, which emits the selected value when the selection changes.
+
+<h4 id="version-9x-textarea">Textarea</h4>
+
+**Floating Label Behavior**
+
+Floating labels no longer automatically float when the textarea contains slotted content. Labels float only when the textarea is focused or has a value.
+
+**Internal DOM Structure Changes**
+
+The internal DOM structure has been reorganized to support floating labels with slotted content.
+
+Removed: `.textarea-wrapper-inner`
+
+Added: `.textarea-control`
+
+Renamed:
+- `.start-slot-wrapper` → `.textarea-start`
+- `.end-slot-wrapper` → `.textarea-end`
+
+Restructured:
+- `.label-text-wrapper` moved from `.textarea-wrapper-inner` into `.textarea-control`
+- `.native-wrapper` moved from `.textarea-wrapper-inner` into `.textarea-control`
+- `.start-slot-wrapper` moved from `.textarea-wrapper-inner` to `.textarea-wrapper` and was renamed `.textarea-start`
+- `.end-slot-wrapper` moved from `.textarea-wrapper-inner` to `.textarea-wrapper` and was renamed `.textarea-end`
+
+Update your selectors to account for these structural changes:
+
+```diff
+-ion-textarea .textarea-wrapper-inner .native-wrapper { }
++ion-textarea .textarea-control .native-wrapper { }
+
+-ion-textarea .start-slot-wrapper [slot="start"] { }
++ion-textarea .textarea-start [slot="start"] { }
+
+-ion-textarea .end-slot-wrapper [slot="end"] { }
++ion-textarea .textarea-end [slot="end"] { }
+```
+
+**Minimum Height Change**
+
+The minimum height of textarea in Material Design (`md` mode) is now `72px`. At the default number of rows this makes textareas the same height regardless of the `fill` property or `labelPlacement`. Previously the minimum height was:
+
+| Fill | Label placement | Previous minimum height |
+| --- | --- | --- |
+| default | `start`, `end`, `fixed` | `44px` |
+| default | `floating`, `stacked` | `56px` |
+| `solid`, `outline` | any | `56px` |
+
+These were minimums, not the heights textareas actually rendered at. A textarea with content in the `start` or `end` slots was already taller than its minimum, so the change affects it differently. For example, a `fill="solid"` textarea with slotted icons and buttons previously rendered at `72px` with a `start` label and `81px` with a `floating` label. Both are now `72px`, so that floating label case is `9px` shorter than before rather than taller.
+
+Because `72px` is taller than two rows of text, `rows` values below `3` no longer change the height of the textarea in `md` mode: `rows="1"` and `rows="2"` both render at `72px`.
+
+If you were relying on the previous heights, or you need `rows` to control the height, override the minimum height back. The override has to be more specific than the component's own style, so a bare `ion-textarea` selector will not apply. Add a custom class to the textarea to increase specificity:
+
+```css
+/* Add a custom class to the textarea */
+ion-textarea.custom {
+  min-height: 44px;
+}
+```
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
