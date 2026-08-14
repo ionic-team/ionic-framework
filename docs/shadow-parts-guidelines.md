@@ -35,6 +35,7 @@ This document establishes a standardized naming convention for CSS Shadow Parts 
 | `inner` | Is it the inner layout wrapper around the main content? It may wrap only the default slot (e.g. `ion-list-header`), or a container plus slot(s) (e.g. `ion-item`, `ion-item-divider`, `ion-item-option`) when present. |
 | `container` | Does it wrap the main content itself (default slot or native control)? |
 | `content` | Is it the main user-content area of an overlay or primary content region? |
+| `control` | Is it the group of the label and the native control, laid out together inside a form control? |
 
 The following examples show the correct usage for the standard parts.
 
@@ -43,7 +44,7 @@ The following examples show the correct usage for the standard parts.
 **What it does:** The element the user directly interacts with - the native button, anchor, or form control (e.g. `<button>`, `<a>`, `<textarea>`, `<input>`).
 
 - **Use when**: The element receives click/focus/input from the user.
-- **Examples**: `ion-item`, `ion-button`, `ion-textarea`.
+- **Examples**: `ion-item`, `ion-button`, `ion-back-button`, `ion-segment-button`.
 
 **ion-item** - the interactive element is the `<button>`, `<a>`, or `<div>` (`TagType`):
 
@@ -65,55 +66,39 @@ return (
 );
 ```
 
-**ion-textarea** - the interactive element is the native `<textarea>`:
-
-```tsx
-<div class="native-wrapper" part="container">
-  <textarea class="native-textarea" part="native">
-    {value}
-  </textarea>
-</div>
-```
-
 ### `wrapper`
 
 **What it does:** The HTML `<label>` element that wraps the entire form control. Clicking anywhere on it focuses the control.
 
 - **Use when**: The element is the `<label>` that wraps the form control.
-- **Examples**: `ion-select`, `ion-textarea`, `ion-input`, `ion-checkbox`, `ion-toggle`, `ion-radio`, `ion-range`.
+- **Examples**: `ion-select`.
 
 **ion-select** - the `<label>` has `part="wrapper"`:
 
 ```tsx
 <label class="select-wrapper" part="wrapper">
-  {this.renderLabelContainer()}
-  <div class="select-wrapper-inner" part="inner">
+  <div class="select-start" part="start">
     <slot name="start"></slot>
+  </div>
+  <div class="select-control" part="control">
+    {this.renderLabel()}
     <div class="native-wrapper" part="container">...</div>
+  </div>
+  <div class="select-end" part="end">
     <slot name="end"></slot>
   </div>
 </label>
 ```
 
-**ion-textarea** - the `<label>` has `part="wrapper"`:
-
-```tsx
-<label class="textarea-wrapper" part="wrapper">
-  {this.renderLabelContainer()}
-  <div class="textarea-wrapper-inner" part="inner">
-    <slot name="start"></slot>
-    <div class="native-wrapper" part="container">...</div>
-    <slot name="end"></slot>
-  </div>
-</label>
-```
+The `start` and `end` slots are wrapped in their own containers rather than sitting directly
+inside the label, so they can be styled and measured independently of the control.
 
 ### `inner`
 
-**What it does:** The inner layout wrapper around the main content. It may wrap only the default slot (e.g. `ion-list-header`), or it may wrap a container and the slot(s) (e.g. `start`, `end`) that sit alongside the main content. In `ion-item`, and `ion-item-divider`, the `start` slot is a sibling of this element. In `ion-select`, both `start` and `end` slots are inside this element.
+**What it does:** The inner layout wrapper around the main content. It may wrap only the default slot (e.g. `ion-list-header`), or it may wrap a container and the slot(s) (e.g. `start`, `end`) that sit alongside the main content. In `ion-item` and `ion-item-divider`, the `start` slot is a sibling of this element.
 
 - **Use when**: The element is the inner layout wrapper (with or without a separate container and `start`/`end` slots).
-- **Examples**: `ion-list-header` (`.list-header-inner` wraps only the default slot), `ion-item` (`.item-inner`), `ion-item-divider` (`.item-divider-inner`), `ion-select` (`.select-wrapper-inner`).
+- **Examples**: `ion-list-header` (`.list-header-inner` wraps only the default slot), `ion-item` (`.item-inner`), `ion-item-divider` (`.item-divider-inner`), `ion-item-option` (`.item-option-inner`).
 
 **ion-list-header** - `.list-header-inner` wraps only the default slot (no container, no `start`/`end` slots):
 
@@ -147,23 +132,13 @@ return (
 </div>
 ```
 
-**ion-select** - `.select-wrapper-inner` arranges `start` slot, container, `end` slot:
-
-```tsx
-<div class="select-wrapper-inner" part="inner">
-  <slot name="start"></slot>
-  <div class="native-wrapper" part="container"></div>
-  <slot name="end"></slot>
-</div>
-```
-
 ### `container`
 
 **What it does:** Wraps the main content - either the default slot (for item-like components) or the native control and its immediate content (for form controls like select, textarea).
 
 - **Use when**: The element wraps the default slot, or wraps the native control (and any immediate content like listbox or slots inside it).
 - **Don’t use when**: The element is the main content area of an overlay (use `content` instead).
-- **Examples**: `ion-item` (`.input-wrapper` around default slot), `ion-item-divider` (`.item-divider-wrapper`), `ion-select` (`.native-wrapper` around select text + listbox), `ion-textarea` (`.native-wrapper` around `<textarea>`).
+- **Examples**: `ion-item` (`.input-wrapper` around default slot), `ion-item-divider` (`.item-divider-wrapper`), `ion-select` (`.native-wrapper` around select text + listbox).
 
 From the examples above:
 
@@ -182,31 +157,36 @@ From the examples above:
 **ion-select** - `.native-wrapper` wraps the select text and listbox:
 
 ```tsx
-<div class="select-wrapper-inner" part="inner">
-  <slot name="start"></slot>
+<div class="select-control" part="control">
+  {this.renderLabel()}
   <div class="native-wrapper" part="container">
     {this.renderSelectText()}
     {this.renderListbox()}
   </div>
-  <slot name="end"></slot>
 </div>
 ```
 
-**ion-textarea** - `.native-wrapper` wraps the `<textarea>`:
+### `control`
+
+**What it does:** Groups the label and the native control so they lay out together, separately from the `start` and `end` slot containers on either side of them.
+
+- **Use when**: A form control needs the label and the native control positioned as a unit, for example so that `label-placement` can switch between a row and a column without moving the slots.
+- **Don't use when**: The element also wraps the `start`/`end` slots (use `inner` instead).
+- **Examples**: `ion-select` (`.select-control`).
+
+**ion-select** - `.select-control` groups the label and the native wrapper, with the slots as siblings:
 
 ```tsx
-<label class="textarea-wrapper" part="wrapper">
-  {this.renderLabelContainer()}
-  <div class="textarea-wrapper-inner" part="inner">
-    <slot name="start"></slot>
-    <div class="native-wrapper" part="container">
-      <textarea class="native-textarea" part="native">
-        {value}
-      </textarea>
-    </div>
-    <slot name="end"></slot>
-  </div>
-</label>
+<div class="select-start" part="start">
+  <slot name="start"></slot>
+</div>
+<div class="select-control" part="control">
+  {this.renderLabel()}
+  <div class="native-wrapper" part="container">...</div>
+</div>
+<div class="select-end" part="end">
+  <slot name="end"></slot>
+</div>
 ```
 
 ### `content`
@@ -254,6 +234,9 @@ Components may also expose specialized parts for specific elements. The followin
 | `handle` | Handle elements (e.g., `ion-modal`, `ion-toggle`) |
 | `track` | Track elements (e.g., `ion-toggle`, `ion-progress-bar`) |
 | `mark` | Checkmark or indicator marks (e.g., `ion-checkbox`, `ion-radio`) |
+| `start` | The container holding the `start` slot, when the slot is wrapped so it can be styled or measured on its own (e.g., `ion-select`) |
+| `end` | The container holding the `end` slot, under the same conditions as `start` (e.g., `ion-select`) |
+| `bottom` | The area below the control that holds supporting text and counters (e.g., `ion-select`) |
 
 **When to create new specialized parts:**
 - Use standard parts (`native`, `wrapper`, `inner`, `container`, `content`) when they apply
