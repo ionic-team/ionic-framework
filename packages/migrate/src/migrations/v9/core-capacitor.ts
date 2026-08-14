@@ -3,13 +3,19 @@ import { findDependency, readPackageJson } from '../../ast/package-json.js';
 import type { Migration } from '../../types.js';
 
 /**
- * Ionic 9's `isCapacitorNative` relies solely on `Capacitor.isNativePlatform()`,
- * added in Capacitor 3. Report-only: the fix is a Capacitor upgrade.
+ * Ionic 9 supports Capacitor 7 and later, and its `isCapacitorNative` relies
+ * solely on `Capacitor.isNativePlatform()`, added in Capacitor 3. Report-only:
+ * the fix is a Capacitor upgrade, which touches the native projects too.
+ *
+ * Below 3 the app stops being detected as native at all, which is the sharper of
+ * the two cases.
  *
  * Refer to https://ionicframework.com/docs/updating/9-0#capacitor
  */
+/** The oldest Capacitor Ionic 9 supports. */
+const MIN_CAPACITOR = 7;
 /** The first Capacitor with `isNativePlatform()`. */
-const MIN_CAPACITOR = 3;
+const NATIVE_DETECTION_CAPACITOR = 3;
 const CAPACITOR_CORE = '@capacitor/core';
 
 export const coreCapacitor: Migration = {
@@ -31,14 +37,12 @@ export const coreCapacitor: Migration = {
     const major = parseMajor(dep.range);
     if (major === undefined || major >= MIN_CAPACITOR) return [];
 
-    return [
-      {
-        filePath: 'package.json',
-        line: 1,
-        detail:
-          `Capacitor ${major} is no longer detected as a native platform. ` +
-          `isPlatform('capacitor'), isPlatform('hybrid'), and getPlatforms() will report web. Upgrade to Capacitor 7 or later`,
-      },
-    ];
+    const detail =
+      major < NATIVE_DETECTION_CAPACITOR
+        ? `Capacitor ${major} is no longer detected as a native platform. ` +
+          `isPlatform('capacitor'), isPlatform('hybrid'), and getPlatforms() will report web. Upgrade to Capacitor ${MIN_CAPACITOR} or later`
+        : `Capacitor ${major} is not supported by Ionic 9. Upgrade to Capacitor ${MIN_CAPACITOR} or later`;
+
+    return [{ filePath: 'package.json', line: 1, detail }];
   },
 };

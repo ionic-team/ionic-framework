@@ -35,17 +35,20 @@ tree, so git is your undo. Then review the diff and the checklist it prints.
 
 ## What it does
 
-Every breaking change is one of two kinds:
+Every breaking change is one of three kinds:
 
 - Auto-fix: a deterministic edit that preserves behavior, applied for you.
 - Report-only: a change that needs judgement (semantic rework, a dialect
   choice). The tool finds it and explains it, but won't rewrite it.
+- Experimental: an edit that is correct but whose consequence is a judgement
+  call, so it only runs with `--experimental`. A report-only migration covers
+  the same change by default.
 
 ### Coverage
 
 Each major upgrade has its own page, listing every change the tool covers,
-whether it is auto-fixed or report-only, and the changes left for you to make by
-hand:
+whether it is auto-fixed, report-only, or experimental, and the changes left for
+you to make by hand:
 
 - [v8 to v9](./docs/v9.md)
 

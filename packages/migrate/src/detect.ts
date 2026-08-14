@@ -27,6 +27,17 @@ export function parseMajor(range: string | undefined): number | undefined {
   return match ? Number(match[1]) : undefined;
 }
 
+/** Compare dotted numeric versions, so `16.10` sorts above `16.4`. */
+export function compareVersions(a: string, b: string): number {
+  const left = a.split('.').map(Number);
+  const right = b.split('.').map(Number);
+  for (let i = 0; i < Math.max(left.length, right.length); i++) {
+    const diff = (left[i] ?? 0) - (right[i] ?? 0);
+    if (diff !== 0) return diff;
+  }
+  return 0;
+}
+
 /**
  * Whether a range is a plain, comparable semver range rather than a
  * protocol/alias reference (`workspace:`, `catalog:`, `npm:`, `file:`, `link:`,

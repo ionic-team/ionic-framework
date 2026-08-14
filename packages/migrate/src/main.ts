@@ -201,6 +201,11 @@ export function main(argv: string[]): number {
       const formatted = formatTouched(ctx, prettierFormatter);
       if (formatted.length > 0) {
         console.log(dim(`\nFormatted ${formatted.length} changed file(s) with Prettier.`));
+      } else if (ctx.touchedFiles.size > 0) {
+        // Silence here reads as "formatted", so say the project has no Prettier.
+        console.log(
+          dim(`\nLeft ${ctx.touchedFiles.size} changed file(s) as written: no Prettier installed in this project.`)
+        );
       }
     } catch (e) {
       // Formatting is cosmetic and runs after the edits are already on disk, so

@@ -9,12 +9,15 @@ import { angularIonicModule } from './v9/angular-ionic-module.js';
 import { angularModuleResolution } from './v9/angular-module-resolution.js';
 import { angularTypescript } from './v9/angular-typescript.js';
 import { angularVersion } from './v9/angular-version.js';
+import { angularBrowserPolicy } from './v9/angular-browser-policy.js';
+import { angularBrowserPolicyManual } from './v9/angular-browser-policy-manual.js';
 import { reactDeps } from './v9/react-deps.js';
 import { reactRouter6Routes } from './v9/react-router-6-routes.js';
 import { reactRouter6Code } from './v9/react-router-6-code.js';
 import { vueDeps } from './v9/vue-deps.js';
 import { vueRouterNextGuard } from './v9/vue-router-next-guard.js';
 import { coreBrowserslist } from './v9/core-browserslist.js';
+import { coreBrowserslistManual } from './v9/core-browserslist-manual.js';
 import { coreCapacitor } from './v9/core-capacitor.js';
 import { coreDeps } from './v9/core-deps.js';
 import { coreFloatingLabel } from './v9/core-floating-label.js';
@@ -45,12 +48,15 @@ export const allMigrations: Migration[] = [
   angularModuleResolution,
   angularTypescript,
   angularVersion,
+  angularBrowserPolicy,
+  angularBrowserPolicyManual,
   reactDeps,
   reactRouter6Routes,
   reactRouter6Code,
   vueDeps,
   vueRouterNextGuard,
   coreBrowserslist,
+  coreBrowserslistManual,
   coreCapacitor,
   coreDeps,
   coreFloatingLabel,

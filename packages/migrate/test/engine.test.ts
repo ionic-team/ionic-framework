@@ -200,7 +200,7 @@ describe('resolveTarget', () => {
   });
 
   it('clamps a target above the newest known major instead of skipping the run', () => {
-    // Why clamp rather than refuse: see resolveTarget in registry.ts.
+    // Why clamp rather than refuse: refer to resolveTarget in registry.ts.
     expect(resolveTarget(all, 8, 10)).toEqual({ kind: 'run', toMajor: 9, clampedFrom: 10 });
   });
 

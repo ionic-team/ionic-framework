@@ -64,6 +64,55 @@ describe('core-browserslist', () => {
     expect(ctx.readFile('.browserslistrc')).toBe(source);
   });
 
+  it('raises a stale entry declared in package.json', () => {
+    const ctx = createInMemoryContext({
+      'package.json': `${JSON.stringify(
+        { name: 'app', devDependencies: { browserslist: '^4.24.0' }, browserslist: ['Chrome >=79', 'Safari >=14'] },
+        null,
+        2
+      )}\n`,
+    });
+
+    // located at their own lines, not at the same-named devDependency above them
+    expect(migration.detect(ctx).map((f) => `${f.filePath}:${f.line}`)).toEqual(['package.json:7', 'package.json:8']);
+
+    migration.fix!(ctx);
+
+    expect(JSON.parse(ctx.readFile('package.json')!).browserslist).toEqual(['Chrome >=89', 'Safari >=16']);
+  });
+
+  it('raises the same entry under two environment keys, reporting each line', () => {
+    const ctx = createInMemoryContext({
+      'package.json': `${JSON.stringify(
+        { name: 'app', browserslist: { production: ['Chrome >=79'], development: ['Chrome >=79'] } },
+        null,
+        2
+      )}\n`,
+    });
+
+    expect(migration.detect(ctx).map((f) => f.line)).toEqual([5, 8]);
+
+    migration.fix!(ctx);
+
+    expect(JSON.parse(ctx.readFile('package.json')!).browserslist).toEqual({
+      production: ['Chrome >=89'],
+      development: ['Chrome >=89'],
+    });
+  });
+
+  it('raises a workspace app manifest, not just the root one', () => {
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify({ name: 'workspace' }, null, 2),
+      'apps/web/package.json': `${JSON.stringify({ name: 'web', browserslist: ['Chrome >=79'] }, null, 2)}\n`,
+    });
+
+    expect(migration.detect(ctx).map((f) => f.filePath)).toEqual(['apps/web/package.json']);
+
+    migration.fix!(ctx);
+
+    expect(JSON.parse(ctx.readFile('apps/web/package.json')!).browserslist).toEqual(['Chrome >=89']);
+  });
+
   it('reports the file and line of each stale entry', () => {
     const ctx = createInMemoryContext({ '.browserslistrc': `# browsers\nChrome >=79\nSafari >=14\n` });
 

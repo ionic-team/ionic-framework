@@ -17,9 +17,12 @@ export function readPackageJson(ctx: MigrationContext): { pkg: PackageJson } | u
   }
 }
 
-/** Serialize and write `package.json`, keeping 2-space indent and a trailing newline. */
-export function writePackageJson(ctx: MigrationContext, pkg: PackageJson): void {
-  ctx.writeFile('package.json', `${JSON.stringify(pkg, null, 2)}\n`);
+/**
+ * Serialize and write a `package.json`, keeping 2-space indent and a trailing
+ * newline. Defaults to the project's own; `filePath` targets a workspace manifest.
+ */
+export function writePackageJson(ctx: MigrationContext, pkg: PackageJson, filePath = 'package.json'): void {
+  ctx.writeFile(filePath, `${JSON.stringify(pkg, null, 2)}\n`);
 }
 
 /** Which dependency block a package lives in. */

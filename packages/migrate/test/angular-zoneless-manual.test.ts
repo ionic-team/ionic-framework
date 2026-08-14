@@ -9,6 +9,7 @@ describe('angular-zoneless-manual', () => {
       'src/main.ts':
         `import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';\n` +
         `platformBrowserDynamic().bootstrapModule(AppModule).catch((e) => console.log(e));\n`,
+      'src/polyfills.ts': `import 'zone.js';\n`,
     });
 
     const findings = migration.detect(ctx);
@@ -16,6 +17,16 @@ describe('angular-zoneless-manual', () => {
     expect(findings).toHaveLength(1);
     expect(findings[0].filePath).toBe('src/main.ts');
     expect(findings[0].detail).toContain('applicationProviders');
+  });
+
+  it('does not flag an NgModule app that never loaded Zone.js', () => {
+    const ctx = createInMemoryContext({
+      'src/main.ts':
+        `import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';\n` +
+        `platformBrowserDynamic().bootstrapModule(AppModule).catch((e) => console.log(e));\n`,
+    });
+
+    expect(migration.detect(ctx)).toEqual([]);
   });
 
   it('does not flag a standalone bootstrap (handled by the auto-fix)', () => {
