@@ -39,6 +39,7 @@ const ION_PAGE_WAIT_TIMEOUT_MS = 300;
 const debug = createDebugLogger('react-router');
 
 interface StackManagerProps {
+  children: React.ReactNode;
   routeInfo: RouteInfo;
   id?: string;
 }

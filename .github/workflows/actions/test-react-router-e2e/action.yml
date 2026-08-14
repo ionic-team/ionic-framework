@@ -29,7 +29,7 @@ runs:
       shell: bash
       working-directory: ./packages/react-router/test
     - name: 🕸️ Install Dependencies
-      run: npm install --legacy-peer-deps
+      run: npm install
       shell: bash
       working-directory: ./packages/react-router/test/build/${{ inputs.app }}
     - name: 📦 Install Playwright Browsers

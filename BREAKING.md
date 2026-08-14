@@ -45,7 +45,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | Framework | Supported Version     |
 | --------- | --------------------- |
 | Angular   | 18+                   |
-| React     | 18+                   |
+| React     | 18 or 19              |
 | Vue       | 3.5+                  |
 
 **Minimum Mobile Platform Versions**
@@ -321,13 +321,17 @@ Angular's current build pipeline no longer supports the webpack-loader `~` prefi
 
 <h4 id="version-9x-react">React</h4>
 
+The `@ionic/react` and `@ionic/react-router` packages now require React 18 or 19. React 17 is no longer supported.
+
 The `@ionic/react-router` package now requires React Router v6. React Router v5 is no longer supported.
 
 **Minimum Version Requirements**
 | Package | Supported Version |
 | ---------------- | ----------------- |
-| react-router     | 6.0.0+            |
-| react-router-dom | 6.0.0+            |
+| react            | 18 or 19          |
+| react-dom        | 18 or 19          |
+| react-router     | 6.4.0+            |
+| react-router-dom | 6.4.0+            |
 
 React Router v6 introduces several API changes that will require updates to your application's routing configuration:
 
