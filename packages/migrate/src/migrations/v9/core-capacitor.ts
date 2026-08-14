@@ -6,7 +6,7 @@ import type { Migration } from '../../types.js';
  * Ionic 9's `isCapacitorNative` relies solely on `Capacitor.isNativePlatform()`,
  * added in Capacitor 3. Report-only: the fix is a Capacitor upgrade.
  *
- * See https://ionicframework.com/docs/updating/9-0#capacitor
+ * Refer to https://ionicframework.com/docs/updating/9-0#capacitor
  */
 /** The first Capacitor with `isNativePlatform()`. */
 const MIN_CAPACITOR = 3;

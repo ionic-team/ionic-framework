@@ -9,7 +9,7 @@ import { scanLines, SOURCE_GLOBS } from '../../ast/text-scan.js';
  * Reported for every usage: telling the dynamic ones apart means proving the
  * value never changes after mount, which a source scan cannot do.
  *
- * See https://ionicframework.com/docs/updating/9-0#swipebackenabled-config-behavior-change
+ * Refer to https://ionicframework.com/docs/updating/9-0#swipebackenabled-config-behavior-change
  */
 const SWIPE_BACK = /\bswipeBackEnabled\b/;
 

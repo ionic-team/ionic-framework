@@ -14,7 +14,7 @@ import { V9_DOCS } from './docs.js';
  *
  * Report-only - whether the old look mattered is a design call.
  *
- * See https://ionicframework.com/docs/updating/9-0#input-floating-label-behavior
+ * Refer to https://ionicframework.com/docs/updating/9-0#input-floating-label-behavior
  */
 /**
  * A floating `labelPlacement`, in every dialect: the plain attribute, an Angular

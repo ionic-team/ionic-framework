@@ -7,7 +7,7 @@ import { createDepsMigration } from '../../ast/deps-migration.js';
  * `package.json` asks for v9, `detectFrameworks` reports v9 on a re-run and
  * applies nothing.
  *
- * See https://ionicframework.com/docs/updating/9-0#angular
+ * Refer to https://ionicframework.com/docs/updating/9-0#angular
  */
 export const angularDeps = createDepsMigration({
   id: 'angular-deps',

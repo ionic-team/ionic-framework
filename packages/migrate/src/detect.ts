@@ -10,8 +10,8 @@ export interface DetectedFramework {
 /**
  * The package that identifies each framework. `core` is listed too: a vanilla
  * app has no binding package, so without it the run exits before any `core`
- * migration sees the project. A framework app that pins `@ionic/core` directly
- * detects both, and that pin has to reach v9 too.
+ * migration runs against the project. A framework app that pins `@ionic/core`
+ * directly detects both, and that pin has to reach v9 too.
  */
 const FRAMEWORK_PACKAGES: Record<Framework, string> = {
   angular: '@ionic/angular',

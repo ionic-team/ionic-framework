@@ -8,7 +8,7 @@ import type { Finding, Migration } from '../../types.js';
  * Only entries this owns are touched - a named browser with a `>=` floor below
  * Ionic 9's.
  *
- * See https://ionicframework.com/docs/updating/9-0#browser-support
+ * Refer to https://ionicframework.com/docs/updating/9-0#browser-support
  */
 /** Minimum version Ionic 9 supports, by browserslist browser name. */
 const FLOORS: Record<string, number> = {

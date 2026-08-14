@@ -98,7 +98,7 @@ function routeActions(ctx: MigrationContext): RouteAction[] {
  * The semantic changes that need developer judgement (`render` prop, removed
  * hooks/props) stay report-only in `react-router-6-code`.
  *
- * See https://ionicframework.com/docs/updating/9-0#react-router
+ * Refer to https://ionicframework.com/docs/updating/9-0#react-router
  */
 export const reactRouter6Routes: Migration = {
   id: 'react-router-6-routes',

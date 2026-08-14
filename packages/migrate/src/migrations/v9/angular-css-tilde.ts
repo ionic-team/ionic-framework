@@ -10,7 +10,7 @@ import { STYLE_GLOBS } from '../../ast/text-scan.js';
  * `@use` and `@forward` are covered too: webpack's sass-loader honored the `~`
  * prefix on all three, so a Sass app may write it on any of them.
  *
- * See https://ionicframework.com/docs/updating/9-0#css-imports
+ * Refer to https://ionicframework.com/docs/updating/9-0#css-imports
  */
 const TILDE_IONIC_IMPORT = /((?:@import|@use|@forward)\s+['"])~(@ionic\/angular\/)/g;
 

@@ -9,7 +9,7 @@ import { V9_DOCS } from './docs.js';
  * `@ionic/angular-toolkit` versions on its own release line, so there is no
  * major this tool could safely write for it.
  *
- * See https://ionicframework.com/docs/updating/9-0#angular
+ * Refer to https://ionicframework.com/docs/updating/9-0#angular
  */
 /** The oldest Angular Ionic 9 supports. 16 and 17 were dropped. */
 const MIN_ANGULAR = 18;

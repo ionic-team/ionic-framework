@@ -12,7 +12,7 @@ import type { Finding, Migration } from '../../types.js';
  * `tsconfig.json` carries `//` comments, which are valid JSONC but not JSON, and
  * round-tripping through `JSON.parse`/`stringify` would silently drop them.
  *
- * See https://ionicframework.com/docs/updating/9-0#module-resolution
+ * Refer to https://ionicframework.com/docs/updating/9-0#module-resolution
  */
 /** A `"moduleResolution"` entry set to a classic, non-`exports`-aware value. */
 const CLASSIC_RESOLUTION = /("moduleResolution"\s*:\s*")(node|node10|classic)(")/gi;

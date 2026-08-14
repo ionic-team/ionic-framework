@@ -7,7 +7,7 @@ import { scanLines, SOURCE_GLOBS } from '../../ast/text-scan.js';
  * inline `ion-picker` replacement has a different API, so the rewrite needs
  * developer judgement.
  *
- * See https://ionicframework.com/docs/updating/9-0#legacy-picker
+ * Refer to https://ionicframework.com/docs/updating/9-0#legacy-picker
  */
 export const coreLegacyPicker: Migration = {
   id: 'core-legacy-picker',

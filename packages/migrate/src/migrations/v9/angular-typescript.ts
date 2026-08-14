@@ -7,7 +7,7 @@ import { createDepsMigration } from '../../ast/deps-migration.js';
  * Pinned with a tilde: Angular's peer ranges are narrow (18 accepts `>=5.4 <5.6`),
  * and `^5.4.0` resolves to 5.9.x, which nothing below Angular 20 accepts.
  *
- * See https://ionicframework.com/docs/updating/9-0#typescript
+ * Refer to https://ionicframework.com/docs/updating/9-0#typescript
  */
 export const angularTypescript = createDepsMigration({
   id: 'angular-typescript',
