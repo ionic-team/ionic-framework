@@ -7,7 +7,7 @@ import { createDepsMigration } from '../../ast/deps-migration.js';
  * transitive dependency, since `createDepsMigration` skips packages the
  * manifest does not declare.
  *
- * See https://ionicframework.com/docs/updating/9-0#core
+ * Refer to https://ionicframework.com/docs/updating/9-0#core
  */
 export const coreDeps = createDepsMigration({
   id: 'core-deps',

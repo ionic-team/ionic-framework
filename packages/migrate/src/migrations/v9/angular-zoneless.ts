@@ -14,7 +14,7 @@ import type { Migration } from '../../types.js';
  * Scoped to the standalone `bootstrapApplication` shape. NgModule bootstraps
  * are handled report-only by the companion `angular-zoneless-manual`.
  *
- * See https://ionicframework.com/docs/updating/9-0#zoneless-change-detection
+ * Refer to https://ionicframework.com/docs/updating/9-0#zoneless-change-detection
  */
 /** Matches any zone or zoneless change-detection provider already in place. */
 export const ZONE_PROVIDER = /provide(Experimental)?Zone(less)?ChangeDetection/;

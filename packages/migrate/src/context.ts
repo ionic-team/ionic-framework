@@ -170,7 +170,7 @@ export function createInMemoryContext(
     manipulationSettings: MANIPULATION_SETTINGS,
   });
   const fs = project.getFileSystem();
-  // Write everything to the filesystem so glob/readFile see it, mirroring how
+  // Write everything to the filesystem so glob/readFile find it, mirroring how
   // the disk context works, then load TS sources into ts-morph.
   for (const [relPath, content] of Object.entries(files)) {
     fs.writeFileSync(join(rootDir, relPath), content);

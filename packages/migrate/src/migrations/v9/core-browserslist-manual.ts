@@ -11,7 +11,7 @@ import { BROWSERS } from './core-browserslist.js';
  * one widens the support matrix, which changes the build's output. That is the
  * developer's call, so the tool prints the entry to add rather than adding it.
  *
- * See https://ionicframework.com/docs/updating/9-0#browser-support
+ * Refer to https://ionicframework.com/docs/updating/9-0#browser-support
  */
 /**
  * Ionic browsers these entries never name, as `Name >=Floor` strings.

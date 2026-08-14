@@ -10,7 +10,7 @@ import type { Migration } from '../../types.js';
  * Below 3 the app stops being detected as native at all, which is the sharper of
  * the two cases.
  *
- * See https://ionicframework.com/docs/updating/9-0#capacitor
+ * Refer to https://ionicframework.com/docs/updating/9-0#capacitor
  */
 /** The oldest Capacitor Ionic 9 supports. */
 const MIN_CAPACITOR = 7;

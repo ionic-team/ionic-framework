@@ -10,7 +10,7 @@ import { V9_DOCS } from './docs.js';
  * Report-only: which replacement is right depends on what the rule was for, and
  * `part="inner"` on `ion-select` has no replacement at all.
  *
- * See https://ionicframework.com/docs/updating/9-0#input-internal-dom-structure-changes
+ * Refer to https://ionicframework.com/docs/updating/9-0#input-internal-dom-structure-changes
  */
 /** One old-structure signal, and what to tell the developer about it. */
 interface StructureRule {

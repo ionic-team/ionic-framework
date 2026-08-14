@@ -6,7 +6,7 @@ import type { Finding, Migration } from '../../types.js';
  * works, and the rewrite is structural (the entry moves from a module's
  * `imports` to its `providers`, with any `forRoot()` config).
  *
- * See https://ionicframework.com/docs/updating/9-0#ionicmodule-deprecation
+ * Refer to https://ionicframework.com/docs/updating/9-0#ionicmodule-deprecation
  */
 // Word-bounded so an app's own `MyIonicModuleHelper` is not mistaken for it.
 const IONIC_MODULE = /\bIonicModule\b/;

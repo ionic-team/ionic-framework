@@ -11,7 +11,7 @@ import { loadsZoneJs, ZONE_PROVIDER } from './angular-zoneless.js';
  * Gated on Zone.js actually being loaded, for the same reason the auto-fix is:
  * an app already running zoneless has no Zone.js behavior to preserve.
  *
- * See https://ionicframework.com/docs/updating/9-0#zoneless-change-detection
+ * Refer to https://ionicframework.com/docs/updating/9-0#zoneless-change-detection
  */
 const DETAIL =
   'NgModule bootstrap: pass provideZoneChangeDetection() as applicationProviders on bootstrapModule to keep Zone.js';

@@ -29,7 +29,7 @@ import { V9_DOCS } from './docs.js';
  * `<input autocorrect="off">` (valid Safari HTML) is never touched. Surfaces
  * this can't auto-edit are reported by the companion `core-autocorrect-manual`.
  *
- * See https://ionicframework.com/docs/updating/9-0#input
+ * Refer to https://ionicframework.com/docs/updating/9-0#input
  */
 // Not the shared `TEMPLATE_GLOBS`: that includes `.tsx`, which
 // `jsxAutocorrectAttrs` already covers, so scanning it here would double-report.
@@ -135,7 +135,7 @@ export const coreAutocorrect: Migration = {
       const text = ctx.readFile(filePath);
       if (text === undefined) continue;
       // Vue binds with `:attr`, Angular with `[attr]`. Anything else (a vanilla
-      // `.html`) keeps `on` as-is (see the header comment).
+      // `.html`) keeps `on` as-is (refer to the header comment).
       const onReplacement = filePath.endsWith('.vue')
         ? '$1:autocorrect="true"'
         : isAngular

@@ -15,7 +15,7 @@ import { browserslistSources, raiseEntry, rewriteBrowserslists } from '../../ast
  * a rolling `baseline widely available on <date>` query whose resolved versions
  * depend on the project's `caniuse-lite`, so a table would drift.
  *
- * See https://ionicframework.com/docs/updating/9-0#browser-support
+ * Refer to https://ionicframework.com/docs/updating/9-0#browser-support
  */
 /** The first Angular whose CLI enforces a browser support policy of its own. */
 export const BROWSER_POLICY_ANGULAR = 20;

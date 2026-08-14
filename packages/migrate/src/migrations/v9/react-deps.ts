@@ -9,7 +9,7 @@ import { createDepsMigration } from '../../ast/deps-migration.js';
  * React is raised only to the 18 floor v9 requires; a newer major is the app's
  * call.
  *
- * See https://ionicframework.com/docs/updating/9-0#react
+ * Refer to https://ionicframework.com/docs/updating/9-0#react
  */
 export const reactDeps = createDepsMigration({
   id: 'react-deps',

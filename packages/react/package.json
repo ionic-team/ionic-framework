@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "@ionic/core": "^8.8.18",
-    "@stencil/react-output-target": "^1.5.2",
+    "@stencil/react-output-target": "^1.6.2",
     "ionicons": "^8.0.13",
     "tslib": "*"
   },

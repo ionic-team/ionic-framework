@@ -16,7 +16,7 @@ const REWRITES: Record<string, string> = {
  * already-migrated imports. The engine's version gate blocks re-application once
  * the project reads as v9.
  *
- * See https://ionicframework.com/docs/updating/9-0#component-imports
+ * Refer to https://ionicframework.com/docs/updating/9-0#component-imports
  */
 export const angularStandaloneImports: Migration = {
   id: 'angular-standalone-imports',

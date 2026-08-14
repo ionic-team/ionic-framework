@@ -13,7 +13,7 @@ import { scanLines, SOURCE_GLOBS } from '../../ast/text-scan.js';
  * Report-only: which supported subpath replaces an internal path depends on
  * what was being imported.
  *
- * See https://ionicframework.com/docs/updating/9-0#package-exports
+ * Refer to https://ionicframework.com/docs/updating/9-0#package-exports
  */
 /**
  * A quoted `@ionic/core` specifier. The closing quote is required so a package

@@ -98,7 +98,7 @@ function stringAttrValue(attr: JsxAttribute): string | undefined {
  * are auto-fixed by `react-router-6-routes`, so a `component` prop it can't
  * auto-fix (a non-identifier initializer) is reported here instead of dropped.
  *
- * See https://ionicframework.com/docs/updating/9-0#react-router
+ * Refer to https://ionicframework.com/docs/updating/9-0#react-router
  */
 export const reactRouter6Code: Migration = {
   id: 'react-router-6-code',

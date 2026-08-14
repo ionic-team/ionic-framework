@@ -10,7 +10,7 @@ import { STYLE_GLOBS } from '../../ast/text-scan.js';
  * common enough that flagging it everywhere would be noise. A stylesheet that
  * never names the element is missed.
  *
- * See https://ionicframework.com/docs/updating/9-0#minimum-height-change
+ * Refer to https://ionicframework.com/docs/updating/9-0#minimum-height-change
  */
 const OLD_HEIGHT = /\b56px\b/;
 const TEXTAREA = /ion-textarea/;

@@ -118,14 +118,6 @@
   --border-radius: 16px;
 }
 
-// Select Inner Wrapper
-// ----------------------------------------------------------------
-
-:host(.select-label-placement-stacked) .select-wrapper-inner,
-:host(.select-label-placement-floating) .select-wrapper-inner {
-  width: calc(100% - $select-md-icon-size - $select-icon-margin-start);
-}
-
 // Select: Disabled
 // ----------------------------------------------------------------
 // The select and label should use the

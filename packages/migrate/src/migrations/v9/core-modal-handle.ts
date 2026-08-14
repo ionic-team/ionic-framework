@@ -13,7 +13,7 @@ import { TEMPLATE_GLOBS } from '../../ast/text-scan.js';
  *
  * Report-only: whether the old inert handle was intentional is the app's call.
  *
- * See https://ionicframework.com/docs/updating/9-0#modal
+ * Refer to https://ionicframework.com/docs/updating/9-0#modal
  */
 const MODAL_TAGS = ['ion-modal', 'IonModal'];
 /** A sheet modal declares breakpoints, in any binding dialect. */

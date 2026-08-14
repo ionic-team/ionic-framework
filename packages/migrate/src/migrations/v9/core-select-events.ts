@@ -10,14 +10,14 @@ import { V9_DOCS } from './docs.js';
  *     `action-sheet` interfaces used to emit on every confirmation, so a handler
  *     doing work on re-confirmation of the same value stops running.
  *   - The `action-sheet` interface no longer assigns the `selected` role, so
- *     code reading that role off `ionActionSheetDidDismiss` now sees
+ *     code that pulls that role off `ionActionSheetDidDismiss` now gets
  *     `undefined`.
  *
  * Scoped to `ion-select` itself, so `ionChange` on the many other components
  * that emit it is not reported. Report-only: only the handler's body says
  * whether it depended on the old firing pattern.
  *
- * See https://ionicframework.com/docs/updating/9-0#select
+ * Refer to https://ionicframework.com/docs/updating/9-0#select
  */
 const SELECT_TAGS = ['ion-select', 'IonSelect'];
 /** An `ionChange` binding in any dialect: `(ionChange)`, `@ionChange`, `onIonChange`, `v-on:ionChange`. */

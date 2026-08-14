@@ -46,8 +46,9 @@ Every breaking change is one of three kinds:
 
 ### Coverage
 
-Each major upgrade has its own page, listing every change the tool covers, which
-kind it is, and what it leaves to you:
+Each major upgrade has its own page, listing every change the tool covers,
+whether it is auto-fixed, report-only, or experimental, and the changes left for
+you to make by hand:
 
 - [v8 to v9](./docs/v9.md)
 

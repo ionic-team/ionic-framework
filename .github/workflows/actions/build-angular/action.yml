@@ -42,4 +42,4 @@ runs:
       with:
         name: ionic-angular
         output: ./packages/angular/AngularBuild.zip
-        paths: ./packages/angular/dist
+        paths: ./packages/angular/dist ./packages/angular/css

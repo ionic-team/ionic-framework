@@ -10,7 +10,7 @@ import type { Finding, Migration } from '../../types.js';
  * Only entries this owns are touched - a named browser with a `>=` floor below
  * Ionic 9's.
  *
- * See https://ionicframework.com/docs/updating/9-0#browser-support
+ * Refer to https://ionicframework.com/docs/updating/9-0#browser-support
  */
 /** The browsers Ionic 9 supports and their minimum versions, in guide order. */
 export const BROWSERS: { name: string; floor: number }[] = [

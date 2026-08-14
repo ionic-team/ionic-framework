@@ -1,27 +1,22 @@
 {
   "extends": "../../core/tsconfig.base.json",
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": true,
-    "skipTemplateCodegen": true,
-    "fullTemplateTypeCheck": false,
-    "enableResourceInlining": true,
-    "compilationMode": "partial"
-  },
   "compilerOptions": {
-    "declarationDir": "dist",
-    "module": "es2022",
-    "rootDir": "./",
-    "target": "es2022",
+    "sourceMap": true,
+    "inlineSources": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "paths": {
+      "@ionic/angular/common": ["./src/common/index.ts"]
+    },
     "plugins": [
       {
         "name": "typescript-eslint-language-service"
       }
-    ],
-    "paths": {
-      "@ionic/angular/common": ["./common/src/index.ts"]
-    }
+    ]
   },
-  "exclude": ["node_modules", "schematics"],
-  "files": ["lazy/src/index.ts", "common/src/index.ts", "standalone/src/index.ts"]
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "compilationMode": "partial"
+  },
+  "files": ["src/standalone/index.ts", "src/lazy/index.ts"]
 }

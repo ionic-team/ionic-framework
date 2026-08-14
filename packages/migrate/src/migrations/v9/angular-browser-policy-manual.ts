@@ -14,7 +14,7 @@ import { browserslistSources, raiseEntry } from '../../ast/browserslist.js';
  * Report-only by default. `--experimental` applies it, and `angular-browser-policy`
  * says why.
  *
- * See https://ionicframework.com/docs/updating/9-0#browser-support
+ * Refer to https://ionicframework.com/docs/updating/9-0#browser-support
  */
 export const angularBrowserPolicyManual: Migration = {
   id: 'angular-browser-policy-manual',
