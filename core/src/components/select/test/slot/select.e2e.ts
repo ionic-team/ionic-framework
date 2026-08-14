@@ -53,6 +53,30 @@ configs().forEach(({ title, screenshot, config }) => {
       await expect(select).toHaveScreenshot(screenshot(`select-slot-label-start-value`));
     });
 
+    test('should not have visual regressions with an end-positioned label', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select label-placement="end" placeholder="Select weight" value="100" label="Weight">
+            <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+            <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+            <ion-select-option value="100">100</ion-select-option>
+            <ion-select-option value="200">200</ion-select-option>
+            <ion-select-option value="300">300</ion-select-option>
+            <ion-button slot="end" aria-label="Show/hide password">
+              <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-button slot="end">
+              <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+            </ion-button>
+          </ion-select>
+        `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      await expect(select).toHaveScreenshot(screenshot(`select-slot-label-end-value`));
+    });
+
     test('should not have visual regressions with a floating label', async ({ page }) => {
       await page.setContent(
         `
@@ -133,6 +157,57 @@ configs().forEach(({ title, screenshot, config }) => {
 
       const select = page.locator('ion-select');
       await expect(select).toHaveScreenshot(screenshot(`select-slot-label-floating-value`));
+    });
+
+    /**
+     * Stacked and floating share their layout rules, so the floating
+     * screenshots cover both. The exception is the placeholder: floating
+     * keeps it hidden until the label raises, while stacked always shows
+     * it alongside the raised label.
+     */
+    test('should not have visual regressions with a stacked label and a placeholder', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select label-placement="stacked" placeholder="Select weight" label="Weight">
+            <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+            <ion-select-option value="100">100</ion-select-option>
+            <ion-select-option value="200">200</ion-select-option>
+            <ion-select-option value="300">300</ion-select-option>
+            <ion-button slot="end" aria-label="Show/hide password">
+              <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
+          </ion-select>
+        `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      await expect(select).toHaveScreenshot(screenshot(`select-slot-label-stacked-placeholder`));
+    });
+
+    /**
+     * The select text and icon are packed next to the label rather than
+     * stretched across the control, so this catches the native wrapper
+     * growing to fill the row and leaving justify with nothing to place.
+     */
+    test('should not have visual regressions with justify', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select label-placement="start" justify="start" value="100" label="Weight">
+            <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+            <ion-select-option value="100">100</ion-select-option>
+            <ion-select-option value="200">200</ion-select-option>
+            <ion-select-option value="300">300</ion-select-option>
+            <ion-button slot="end" aria-label="Show/hide password">
+              <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
+          </ion-select>
+        `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      await expect(select).toHaveScreenshot(screenshot(`select-slot-justify-start`));
     });
   });
 });
