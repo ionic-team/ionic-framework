@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
 import { createInMemoryContext } from '../src/context.js';
-import { IONIC_V9_VERSION } from '../src/versions.js';
 import { angularDeps } from '../src/migrations/v9/angular-deps.js';
 import { coreDeps } from '../src/migrations/v9/core-deps.js';
 import { reactDeps } from '../src/migrations/v9/react-deps.js';
@@ -34,7 +33,7 @@ describe('react-deps', () => {
     reactDeps.fix!(ctx);
     const pkg = JSON.parse(ctx.readFile('package.json')!);
 
-    expect(pkg.dependencies['@ionic/react']).toBe(IONIC_V9_VERSION);
+    expect(pkg.dependencies['@ionic/react']).toBe('^9.0.0');
     expect(pkg.dependencies['react-router']).toBe('^6.0.0');
     expect(pkg.dependencies['react-router-dom']).toBe('^6.0.0');
     expect(pkg.devDependencies['@types/react-router-dom']).toBeUndefined();
@@ -80,7 +79,7 @@ describe('react-deps', () => {
   it('does not downgrade a React already above the floor', () => {
     const ctx = createInMemoryContext({
       'package.json': JSON.stringify(
-        { dependencies: { '@ionic/react': IONIC_V9_VERSION, react: '^19.0.0', 'react-dom': '^19.0.0' } },
+        { dependencies: { '@ionic/react': '^9.0.0', react: '^19.0.0', 'react-dom': '^19.0.0' } },
         null,
         2
       ),
@@ -92,7 +91,7 @@ describe('react-deps', () => {
   it('does nothing when already on v9/v6 (version gate is closed)', () => {
     const ctx = createInMemoryContext({
       'package.json': JSON.stringify(
-        { dependencies: { '@ionic/react': IONIC_V9_VERSION, 'react-router-dom': '^6.4.0' } },
+        { dependencies: { '@ionic/react': '^9.0.0', 'react-router-dom': '^6.4.0' } },
         null,
         2
       ),
@@ -111,7 +110,7 @@ describe('angular-deps', () => {
     angularDeps.fix!(ctx);
     const pkg = JSON.parse(ctx.readFile('package.json')!);
 
-    expect(pkg.dependencies['@ionic/angular']).toBe(IONIC_V9_VERSION);
+    expect(pkg.dependencies['@ionic/angular']).toBe('^9.0.0');
   });
 });
 
@@ -124,7 +123,7 @@ describe('core-deps', () => {
     coreDeps.fix!(ctx);
     const pkg = JSON.parse(ctx.readFile('package.json')!);
 
-    expect(pkg.dependencies['@ionic/core']).toBe(IONIC_V9_VERSION);
+    expect(pkg.dependencies['@ionic/core']).toBe('^9.0.0');
   });
 
   it('bumps a directly pinned @ionic/core alongside a framework binding', () => {
@@ -163,7 +162,7 @@ describe('vue-deps', () => {
     vueDeps.fix!(ctx);
     const pkg = JSON.parse(ctx.readFile('package.json')!);
 
-    expect(pkg.dependencies['@ionic/vue']).toBe(IONIC_V9_VERSION);
+    expect(pkg.dependencies['@ionic/vue']).toBe('^9.0.0');
     expect(pkg.dependencies['vue-router']).toBe('^5.0.0');
     // Vue must be raised to the 3.5+ floor v9 requires; a 3.4 pin is below it.
     expect(pkg.dependencies['vue']).toBe('^3.5.0');
@@ -172,7 +171,7 @@ describe('vue-deps', () => {
   it('does not downgrade a Vue pin already at or above the 3.5 floor', () => {
     const ctx = createInMemoryContext({
       'package.json': JSON.stringify(
-        { dependencies: { '@ionic/vue': IONIC_V9_VERSION, vue: '^3.6.0', 'vue-router': '^5.0.0' } },
+        { dependencies: { '@ionic/vue': '^9.0.0', vue: '^3.6.0', 'vue-router': '^5.0.0' } },
         null,
         2
       ),

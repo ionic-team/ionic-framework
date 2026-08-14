@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 
 import { createInMemoryContext } from '../src/context.js';
 import { detectFrameworks, parseMajor, sourceMajor } from '../src/detect.js';
-import { IONIC_V9_VERSION } from '../src/versions.js';
 import { resolveTarget, selectMigrations } from '../src/registry.js';
 import { allMigrations } from '../src/migrations/index.js';
 import { run } from '../src/runner.js';
@@ -78,11 +77,11 @@ describe('detectFrameworks', () => {
     expect(parseMajor(undefined)).toBeUndefined();
   });
 
-  it('treats the v9 dev pin as major 9, closing the re-run gate', () => {
-    // The pin is versioned `8.8.x-dev`, so a naive semver read reports major 8
-    // and would re-select every v8->v9 migration on a second run.
+  it('treats a project already on v9 as major 9, closing the re-run gate', () => {
+    // Single-shot transforms corrupt already-migrated code, so a second run
+    // must select nothing.
     const ctx = createInMemoryContext({
-      'package.json': JSON.stringify({ dependencies: { '@ionic/angular': IONIC_V9_VERSION } }),
+      'package.json': JSON.stringify({ dependencies: { '@ionic/angular': '^9.0.0' } }),
     });
 
     expect(detectFrameworks(ctx)).toEqual([{ framework: 'angular', major: 9 }]);

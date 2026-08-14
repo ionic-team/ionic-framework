@@ -47,8 +47,8 @@
     "tslib": "*"
   },
   "peerDependencies": {
-    "react": ">=16.8.6",
-    "react-dom": ">=16.8.6"
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

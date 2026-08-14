@@ -1,5 +1,4 @@
 import { createDepsMigration } from '../../ast/deps-migration.js';
-import { IONIC_V9_VERSION } from '../../versions.js';
 
 /**
  * Raise a directly declared `@ionic/core` to v9, for a vanilla app and for a
@@ -14,5 +13,5 @@ export const coreDeps = createDepsMigration({
   id: 'core-deps',
   framework: 'core',
   docsUrl: 'https://ionicframework.com/docs/updating/9-0#core',
-  bumps: [['@ionic/core', IONIC_V9_VERSION]],
+  bumps: [['@ionic/core', 9]],
 });

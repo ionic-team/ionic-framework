@@ -274,9 +274,7 @@ build_react_router_test() {
   cd "${REPO_ROOT}/packages/react-router/test"
   ./build.sh "${APP}"
   cd "build/${APP}"
-  # The react-router test apps require --legacy-peer-deps (mixed react versions
-  # across @ionic/react peer ranges).
-  npm install --legacy-peer-deps
+  npm install
   npm run sync
   # IonReactRouter basename is derived from import.meta.env.BASE_URL which Vite
   # sets from --base, so routing works under the /react-router/ sub-path.

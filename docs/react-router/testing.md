@@ -1,6 +1,6 @@
 # React Router Testing
 
-Ionic Framework supports multiple versions of React Router. As a result, we need to verify that Ionic works correctly with each of these React Router versions.
+Ionic Framework supports React Router v6 across multiple versions of React. As a result, we need to verify that Ionic routing works correctly with each of these React versions.
 
 ## Type Checking
 
@@ -70,15 +70,15 @@ Unlike other test applications, these test apps are broken up into multiple dire
 Usage:
 
 ```shell
-# Build a test app using apps/reactrouter5 as a reference
-./build.sh reactrouter5
+# Build a test app using apps/reactrouter6-react18 as a reference
+./build.sh reactrouter6-react18
 ```
 
 ## How to modify test apps
 
 To add new tests, components, or pages, modify the `base` project. This ensures that tests are run for every tested version.
 
-If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.e2e.ts` in `apps/reactrouter5`, make sure you place the file in `apps/react17/tests/e2e/test.e2e.ts`.
+If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.e2e.ts` in `apps/reactrouter6-react18`, make sure you place the file in `apps/reactrouter6-react18/tests/e2e/test.e2e.ts`.
 
 ### Version-specific tests
 
@@ -86,10 +86,10 @@ If you need to add E2E tests that are only run on a specific version of the JS F
 
 ## Adding New Test Apps
 
-As we add support for new versions of React Router, we will also need to update this directory to test against new applications. The following steps can serve as a guide for adding new apps:
+As we add support for new versions of React, we will also need to update this directory to test against new applications. The following steps can serve as a guide for adding new apps:
 
-1. Navigate to the built app for the most recent version of React Router that Ionic tests.
-2. Update the application to the latest version of React Router.
+1. Navigate to the built app for the most recent version of React that Ionic tests.
+2. Update the application to the latest version of React.
 3. Make note of any files that changed during the upgrade (`package.json`, `package-lock.json`, etc).
 4. Copy the changed files to a new directory in `apps`.
 5. Add a new entry to the matrix for `test-react-router-e2e` in `./github/workflows/build.yml`. This will allow the new test app to run against all PRs.
