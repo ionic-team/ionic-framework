@@ -8,6 +8,14 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
+
+  /**
+   * The measured width of the start container, as a negative offset
+   * in LTR and a positive one in RTL. Written to the host by the
+   * start container controller, so renaming it here requires renaming
+   * it there too. Declared with a default so the label is positioned
+   * correctly before the first measurement runs.
+   */
   --internal-start-container-adjustment: 0px;
 }
 
