@@ -466,6 +466,30 @@ The `@ionic/react-router` package now requires React Router v6. React Router v5 
 | react-router     | 6.4.0+            |
 | react-router-dom | 6.4.0+            |
 
+**TypeScript**
+
+The `@ionic/react` package now requires TypeScript 5.4 or later. Its type definitions use `NoInfer`, which TypeScript added in 5.4. This matches the minimum that `@ionic/angular` already requires.
+
+**Typed Overlay Hook Props**
+
+The `useIonModal` and `useIonPopover` hooks type `componentProps` against the component they are given, instead of accepting `any`. Props that do not match the component are a compile error, and `componentProps` is required when the component declares required props. Applications passing incorrect props will see new type errors at build time rather than failing at runtime.
+
+```diff
+  const Modal: React.FC<{ title: string }> = ({ title }) => <IonContent>{title}</IonContent>;
+
+- const [present, dismiss] = useIonModal(Modal, { subtitle: 'Wrong' });
++ const [present, dismiss] = useIonModal(Modal, { title: 'Hello' });
+```
+
+Props are read from the component rather than from `componentProps`, so a component declared inline needs its props annotated:
+
+```diff
+- const [present, dismiss] = useIonModal(({ name }) => <div>Hello {name}.</div>, { name: 'Dave' });
++ const [present, dismiss] = useIonModal(({ name }: { name: string }) => <div>Hello {name}.</div>, { name: 'Dave' });
+```
+
+Passing a JSX element rather than a component is unchanged, and `componentProps` is not type checked in that case.
+
 React Router v6 introduces several API changes that will require updates to your application's routing configuration:
 
 **Route Definition Changes**

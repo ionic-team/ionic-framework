@@ -7,7 +7,7 @@ import { createDepsMigration } from '../../ast/deps-migration.js';
  * `react-router-6-code`.
  *
  * React is raised only to the 18 floor v9 requires; a newer major is the app's
- * call.
+ * call. TypeScript is handled by `react-typescript`.
  *
  * Refer to https://ionicframework.com/docs/updating/9-0#react
  */
