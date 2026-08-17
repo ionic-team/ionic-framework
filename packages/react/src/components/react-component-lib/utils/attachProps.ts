@@ -24,6 +24,14 @@ const NON_BOOLEAN_FALSE_ATTRIBUTES = new Set(['draggable', 'translate', 'spell-c
 const isStaleFalseBooleanAttribute = (attribute: string) =>
   !attribute.startsWith('aria-') && !attribute.startsWith('data-') && !NON_BOOLEAN_FALSE_ATTRIBUTES.has(attribute);
 
+/**
+ * Assigning `undefined` or `null` to a reflected prop like `id` writes the stringified value, so
+ * the element ends up with `id="undefined"` or `id="null"`. Only native properties are cleaned up
+ * here: a nullish component prop still has to reach the component, and Stencil clears the
+ * attribute for props declared `reflect: true`.
+ */
+const isNativeElementProperty = (name: string) => name in HTMLElement.prototype;
+
 export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // some test frameworks don't render DOM elements, so we test here to make sure we are dealing with DOM first
   if (node instanceof Element) {
@@ -52,11 +60,18 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
           syncEvent(node, eventNameLc, newProps[name]);
         }
       } else {
-        (node as any)[name] = newProps[name];
-        const propType = typeof newProps[name];
+        const value = newProps[name];
+        (node as any)[name] = value;
+        if ((value === undefined || value === null) && isNativeElementProperty(name)) {
+          // Remove both spellings: the property reflects `accesskey`, and dash-casing writes `access-key`.
+          node.removeAttribute(name);
+          node.removeAttribute(camelToDashCase(name));
+          return;
+        }
+        const propType = typeof value;
         if (propType === 'string') {
-          node.setAttribute(camelToDashCase(name), newProps[name]);
-        } else if (newProps[name] === false) {
+          node.setAttribute(camelToDashCase(name), value);
+        } else if (value === false) {
           const attribute = camelToDashCase(name);
           if (isStaleFalseBooleanAttribute(attribute)) {
             node.removeAttribute(attribute);

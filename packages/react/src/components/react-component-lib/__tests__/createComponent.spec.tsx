@@ -44,3 +44,28 @@ describe('createReactComponent boolean attributes', () => {
     expect(el.hasAttribute('disabled')).toBe(false);
   });
 });
+
+// Fixes https://github.com/ionic-team/ionic-framework/issues/31344
+describe('createReactComponent nullish reflected props', () => {
+  it('should not render an attribute for an unset optional prop', () => {
+    const Wrapper = ({ id }: { id?: string }) => <ReactEl id={id}>x</ReactEl>;
+    const { container } = render(<Wrapper />);
+    const el = container.querySelector('fake-react-el')!;
+
+    expect(el.hasAttribute('id')).toBe(false);
+    expect(el.outerHTML).not.toContain('undefined');
+  });
+
+  it('should remove the attribute when the prop goes back to undefined', () => {
+    const Wrapper = ({ id }: { id?: string }) => <ReactEl id={id}>x</ReactEl>;
+    const { container, rerender } = render(<Wrapper id="real-id" />);
+    const el = container.querySelector('fake-react-el')!;
+    expect(el.getAttribute('id')).toBe('real-id');
+
+    act(() => {
+      rerender(<Wrapper />);
+    });
+
+    expect(el.hasAttribute('id')).toBe(false);
+  });
+});
