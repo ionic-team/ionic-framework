@@ -929,7 +929,7 @@ export namespace Components {
          */
         "clearText": string;
         /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, refer to [theming](/docs/theming/basics).
           * @default 'primary'
          */
         "color"?: Color;
@@ -1151,6 +1151,10 @@ export namespace Components {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download": string | undefined;
+        /**
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+         */
+        "form"?: string | HTMLFormElement;
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -6194,7 +6198,7 @@ declare namespace LocalJSX {
          */
         "clearText"?: string;
         /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, refer to [theming](/docs/theming/basics).
           * @default 'primary'
          */
         "color"?: Color;
@@ -6422,6 +6426,10 @@ declare namespace LocalJSX {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download"?: string | undefined;
+        /**
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+         */
+        "form"?: string | HTMLFormElement;
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -9397,6 +9405,7 @@ declare namespace LocalJSX {
         "show": boolean;
         "translucent": boolean;
         "type": 'submit' | 'reset' | 'button';
+        "form": string | HTMLFormElement;
         "size": 'small';
         "closeIcon": string;
     }

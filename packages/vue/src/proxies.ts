@@ -382,6 +382,7 @@ export const IonFabButton: StencilVueComponent<JSX.IonFabButton> = /*@__PURE__*/
   'show',
   'translucent',
   'type',
+  'form',
   'size',
   'closeIcon',
   'ionFocus',

@@ -6,13 +6,17 @@ Ionic Framework supports multiple versions of Angular. As a result, we need to v
 
 The Angular test app supports syncing your locally built changes for validation. This allows you to test local changes like `core` without having to publish a new version of the package.
 
+> [!TIP]
+> In the root directory, run `npm unlink *` to remove any previous links you have built.
+
 1. Build the `core` directory.
 2. Navigate to `packages/angular` and run `npm run sync`.
 3. Build `packages/angular` using `npm run build`.
-4. [Build the Angular test app](#test-app-build-structure).
-5. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
-6. Install dependencies using `npm install`.
-7. Sync your local changes using `npm run sync`.
+4. Navigate to `packages/angular-server` and run `npm install && npm run build`.
+5. [Build the Angular test app](#test-app-build-structure).
+6. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
+7. Install dependencies using `npm install`.
+8. Sync your local changes using `npm run sync`.
 
 From here you can either build the application or start a local dev server. When re-syncing changes, you will need to [wipe or disable the application cache](#application-cache).
 
@@ -85,6 +89,10 @@ Tests for lazy loaded Ionic UI components should only be added under the `/lazy`
 ### Testing Standalone Ionic Components
 
 Tests for standalone Ionic UI components should only be added under the `/standalone` route. This allows for an isolated environment where the lazy loaded `IonicModule` is not initialized. The standalone components use Stencil's custom element bundle instead of the lazy loaded bundle. If `IonicModule` is initialized then the Stencil components will fall back to using the lazy loaded implementation instead of the custom elements bundle implementation.
+
+### Waiting for Ionic Components
+
+Use the `componentOnReady` helper exported from `@ionic/core` rather than calling `el.componentOnReady()` directly. That method only exists on lazy loaded elements, so a direct call throws under the `/standalone` route. The helper covers both: under `/lazy` it awaits the element's own `componentOnReady()` promise, and under `/standalone` it waits one animation frame, giving the component's inner contents a chance to render.
 
 ## Adding New Test Apps
 
