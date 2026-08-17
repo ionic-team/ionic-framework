@@ -24,6 +24,10 @@ runs:
         name: ionic-angular-server
         path: ./packages/angular-server
         filename: AngularServerBuild.zip
+    - name: 📐 Test Schematics
+      run: npm run test.schematics
+      shell: bash
+      working-directory: ./packages/angular
     - name: 🧪 Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
