@@ -37,7 +37,8 @@
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "sync": "./scripts/sync.sh",
     "local.sync.and.pack": "./scripts/sync-and-pack.sh",
-    "test": "echo 'angular no tests yet'",
+    "test": "npm run test.schematics",
+    "test.schematics": "node ./scripts/verify-schematics.js",
     "validate": "npm i && npm run lint && npm run test && npm run build",
     "validate.package": "node scripts/verify-exports.js"
   },
