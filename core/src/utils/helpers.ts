@@ -317,14 +317,16 @@ export const pointerCoord = (ev: any): { x: number; y: number } => {
 
 /**
  * @hidden
- * Given a side, return if it should be on the end
- * based on the value of dir
- * @param side the side
- * @param hostElement the host element used to resolve the nearest ancestor `dir`
+ * Given a side, returns whether it resolves to the end side for the current
+ * direction. In RTL `start` is the end side, and in LTR `end` is.
+ *
+ * @param side The current side before being redefined based on the direction.
+ * @param hostEl The component's host element. The direction is resolved from
+ * it or its nearest ancestor that declares one. When omitted, the direction
+ * is resolved from the document.
  */
-export const isEndSide = (side: Side, hostElement?: Element): boolean => {
-  const dirHost = hostElement?.closest('[dir]') as HTMLElement | undefined;
-  const rtl = isRTL(dirHost);
+export const isEndSide = (side: Side, hostEl?: HTMLElement): boolean => {
+  const rtl = isRTL(hostEl);
 
   switch (side) {
     case 'start':
