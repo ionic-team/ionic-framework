@@ -1,4 +1,11 @@
-import type { ComponentClass, FC, ForwardRefExoticComponent, MemoExoticComponent, RefAttributes } from 'react';
+import type {
+  ComponentClass,
+  FC,
+  ForwardRefExoticComponent,
+  MemoExoticComponent,
+  ReactElement,
+  RefAttributes,
+} from 'react';
 
 import type { useIonModal } from '../useIonModal';
 import type { useIonPopover } from '../useIonPopover';
@@ -25,7 +32,7 @@ declare const OptionalPropsComponent: FC<OptionalProps>;
 declare const NoPropsComponent: FC;
 declare const DismissableComponent: FC<{ dismiss: (data: string, role: string) => void }>;
 declare const UntypedComponent: FC<any>;
-declare const overlayElement: JSX.Element;
+declare const overlayElement: ReactElement;
 
 // None of these functions are invoked. They exist so `npm run typecheck` checks the
 // calls inside them.

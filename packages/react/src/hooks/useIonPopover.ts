@@ -1,7 +1,7 @@
 import type { PopoverOptions } from '@ionic/core/components';
 import { popoverController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-popover.js';
-import type { ComponentType } from 'react';
+import type { ComponentType, ReactElement } from 'react';
 import { useCallback } from 'react';
 
 import type { ReactComponentOrElement } from '../models/ReactComponentOrElement';
@@ -30,7 +30,7 @@ export function useIonPopover<Props extends object>(
  * @param componentProps The props that will be passed to the component, if required
  * @returns Returns the present and dismiss methods in an array
  */
-export function useIonPopover(component: JSX.Element, componentProps?: any): UseIonPopoverResult;
+export function useIonPopover(component: ReactElement, componentProps?: any): UseIonPopoverResult;
 export function useIonPopover(component: ReactComponentOrElement, componentProps?: any): UseIonPopoverResult {
   const controller = useOverlay<PopoverOptions, HTMLIonPopoverElement>(
     'IonPopover',
