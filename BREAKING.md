@@ -490,6 +490,8 @@ Props are read from the component rather than from `componentProps`, so a compon
 
 Passing a JSX element rather than a component is unchanged, and `componentProps` is not type checked in that case.
 
+`npx @ionic/migrate` reports the calls this affects and names what is wrong with each, but does not rewrite them, since the right fix depends on what the call was meant to do. For the inline case above, `--experimental` can annotate the parameter from the `componentProps` object literal being passed.
+
 React Router v6 introduces several API changes that will require updates to your application's routing configuration:
 
 **Route Definition Changes**
