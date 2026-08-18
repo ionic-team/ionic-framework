@@ -36,7 +36,7 @@ import type { PickerButton, PickerColumn } from './picker-interface';
     ios: 'picker.ios.scss',
     md: 'picker.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class Picker implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);

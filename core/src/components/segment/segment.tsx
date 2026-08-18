@@ -20,7 +20,7 @@ import type { SegmentChangeEventDetail, SegmentValue } from './segment-interface
     ios: 'segment.ios.scss',
     md: 'segment.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;

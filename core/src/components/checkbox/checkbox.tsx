@@ -28,7 +28,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;

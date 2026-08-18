@@ -9,7 +9,7 @@ import type { StyleEventDetail } from '../../interface';
 @Component({
   tag: 'ion-skeleton-text',
   styleUrl: 'skeleton-text.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class SkeletonText implements ComponentInterface {
   @Element() el!: HTMLElement;

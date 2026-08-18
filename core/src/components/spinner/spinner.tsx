@@ -13,7 +13,7 @@ import type { SpinnerConfig } from './spinner-interface';
 @Component({
   tag: 'ion-spinner',
   styleUrl: 'spinner.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Spinner implements ComponentInterface {
   /**

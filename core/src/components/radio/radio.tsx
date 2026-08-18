@@ -22,7 +22,7 @@ import type { Color } from '../../interface';
     ios: 'radio.ios.scss',
     md: 'radio.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Radio implements ComponentInterface {
   private inputId = `ion-rb-${radioButtonIds++}`;

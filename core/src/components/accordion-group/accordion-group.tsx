@@ -15,7 +15,7 @@ import type { AccordionGroupChangeEventDetail } from './accordion-group-interfac
     ios: 'accordion-group.ios.scss',
     md: 'accordion-group.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class AccordionGroup implements ComponentInterface {
   @Element() el!: HTMLIonAccordionGroupElement;

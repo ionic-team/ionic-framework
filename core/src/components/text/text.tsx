@@ -11,7 +11,7 @@ import type { Color } from '../../interface';
 @Component({
   tag: 'ion-text',
   styleUrl: 'text.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Text implements ComponentInterface {
   /**

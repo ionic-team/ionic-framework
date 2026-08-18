@@ -4,7 +4,7 @@ import { Component, Host, h } from '@stencil/core';
 @Component({
   tag: 'ion-segment-content',
   styleUrl: 'segment-content.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class SegmentContent implements ComponentInterface {
   render() {

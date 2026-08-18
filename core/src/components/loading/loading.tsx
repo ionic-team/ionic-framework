@@ -39,7 +39,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
     ios: 'loading.ios.scss',
     md: 'loading.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class Loading implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);

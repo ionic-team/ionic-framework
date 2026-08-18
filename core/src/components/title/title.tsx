@@ -11,7 +11,7 @@ import type { Color, StyleEventDetail } from '../../interface';
     ios: 'title.ios.scss',
     md: 'title.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class ToolbarTitle implements ComponentInterface {
   @Element() el!: HTMLElement;

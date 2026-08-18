@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-select-option',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
   styleUrl: 'select-option.scss',
 })
 export class SelectOption implements ComponentInterface {

@@ -73,7 +73,7 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
     ios: 'modal.ios.scss',
     md: 'modal.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Modal implements ComponentInterface, OverlayInterface {
   private readonly lockController = createLockController();

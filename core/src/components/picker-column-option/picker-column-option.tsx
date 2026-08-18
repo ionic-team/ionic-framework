@@ -12,7 +12,7 @@ import type { Color } from '../../interface';
     ios: 'picker-column-option.ios.scss',
     md: 'picker-column-option.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class PickerColumnOption implements ComponentInterface {
   /**

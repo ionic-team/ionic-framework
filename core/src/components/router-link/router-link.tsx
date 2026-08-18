@@ -9,7 +9,7 @@ import type { RouterDirection } from '../router/utils/interface';
 @Component({
   tag: 'ion-router-link',
   styleUrl: 'router-link.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class RouterLink implements ComponentInterface {
   /**

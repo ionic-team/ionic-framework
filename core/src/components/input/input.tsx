@@ -41,7 +41,7 @@ import { getCounterText } from './input.utils';
     ios: 'input.ios.scss',
     md: 'input.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;

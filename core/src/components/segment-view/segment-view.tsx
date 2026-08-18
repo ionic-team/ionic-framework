@@ -10,7 +10,7 @@ import type { SegmentViewScrollEvent } from './segment-view-interface';
     ios: 'segment-view.ios.scss',
     md: 'segment-view.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class SegmentView implements ComponentInterface {
   private scrollEndTimeout: ReturnType<typeof setTimeout> | null = null;

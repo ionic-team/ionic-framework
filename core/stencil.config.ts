@@ -14,7 +14,6 @@ const getAngularOutputTargets = () => {
     // overlays that accept user components
     'ion-modal',
     'ion-popover',
-
     // navigation
     'ion-router',
     'ion-route',
@@ -23,10 +22,8 @@ const getAngularOutputTargets = () => {
     'ion-router-outlet',
     'ion-nav',
     'ion-back-button',
-
     // tabs
     'ion-tabs',
-
     // auxiliar
     'ion-picker-legacy-column',
   ]
@@ -147,7 +144,6 @@ export const config: Config = {
         'ion-fab-button',
         'ion-item',
         'ion-item-option',
-
         // Overlays
         'ion-action-sheet',
         'ion-alert',
@@ -156,7 +152,6 @@ export const config: Config = {
         'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
-
         'ion-app',
         'ion-icon'
       ]
@@ -178,7 +173,6 @@ export const config: Config = {
         'ion-tab-button',
         'ion-tabs',
         'ion-tab-bar',
-
         // Overlays
         'ion-action-sheet',
         'ion-alert',
@@ -187,7 +181,6 @@ export const config: Config = {
         'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
-
         'ion-app',
         'ion-icon'
       ],
@@ -215,11 +208,11 @@ export const config: Config = {
       sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic-framework/tree/main/core/',
     },
     {
-      type: 'dist',
-      esmLoaderPath: '../loader',
+      type: 'loader-bundle',
+      loaderPath: '../../loader',
     },
     {
-      type: 'dist-custom-elements',
+      type: 'standalone',
       dir: 'components',
       copy: [{
         src: '../scripts/custom-elements',
@@ -227,19 +220,13 @@ export const config: Config = {
         warn: true
       }],
       includeGlobalScripts: false,
-      /**
-       * External Runtime uses default runtime settings instead of this file's definitions. Disabling it enables
-       * `experimentalSlotFixes` to be applied and prevents `@stencil/core/internal/client` from being imported, which
-       * contains a dynamic import that caused a warning in Angular.
-      */
-      externalRuntime: false,
     },
     {
       type: 'docs-json',
       file: '../packages/docs/core.json'
     },
     {
-      type: 'dist-hydrate-script'
+      type: 'ssr'
     },
     apiSpecGenerator({
       file: 'api.txt'
@@ -261,13 +248,13 @@ export const config: Config = {
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,
   transformAliasedImportPaths: true,
-  extras: {
+  compat: {
     /**
      * `experimentalSlotFixes` is necessary in Stencil v4 until the fixes described in
      * {@link https://stenciljs.com/docs/config-extras#experimentalslotfixes the Stencil docs for the flag} are the
      * default behavior (slated for a future Stencil major version).
      */
-    experimentalSlotFixes: true,
+    
     /**
      * `experimentalScopedSlotChanges` is necessary in Stencil v4 until the fixes described in
      * {@link https://stenciljs.com/docs/config-extras#experimentalscopedslotchanges the Stencil docs for the flag} are

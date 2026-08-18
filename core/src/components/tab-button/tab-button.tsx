@@ -23,7 +23,7 @@ import type {
     ios: 'tab-button.ios.scss',
     md: 'tab-button.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class TabButton implements ComponentInterface, AnchorInterface {
   private inheritedAttributes: Attributes = {};

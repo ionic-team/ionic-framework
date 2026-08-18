@@ -11,7 +11,7 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Img implements ComponentInterface {
   private io?: IntersectionObserver;

@@ -34,7 +34,7 @@ import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
 @Component({
   tag: 'ion-content',
   styleUrl: 'content.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Content implements ComponentInterface {
   private watchDog: ReturnType<typeof setInterval> | null = null;

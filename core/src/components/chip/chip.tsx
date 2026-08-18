@@ -14,7 +14,7 @@ import type { Color } from '../../interface';
     ios: 'chip.ios.scss',
     md: 'chip.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Chip implements ComponentInterface {
   /**

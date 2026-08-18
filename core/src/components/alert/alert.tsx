@@ -44,7 +44,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
     ios: 'alert.ios.scss',
     md: 'alert.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class Alert implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);

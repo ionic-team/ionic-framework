@@ -37,7 +37,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
     ios: 'action-sheet.ios.scss',
     md: 'action-sheet.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class ActionSheet implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);

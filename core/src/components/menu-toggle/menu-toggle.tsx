@@ -12,7 +12,7 @@ import { updateVisibility } from './menu-toggle-util';
 @Component({
   tag: 'ion-menu-toggle',
   styleUrl: 'menu-toggle.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class MenuToggle implements ComponentInterface {
   @State() visible = false;

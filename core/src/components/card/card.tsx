@@ -20,7 +20,7 @@ import type { RouterDirection } from '../router/utils/interface';
     ios: 'card.ios.scss',
     md: 'card.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
   private inheritedAriaAttributes: Attributes = {};

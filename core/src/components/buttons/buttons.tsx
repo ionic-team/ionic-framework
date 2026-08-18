@@ -9,7 +9,7 @@ import { getIonMode } from '../../global/ionic-global';
     ios: 'buttons.ios.scss',
     md: 'buttons.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class Buttons implements ComponentInterface {
   /**

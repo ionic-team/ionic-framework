@@ -20,7 +20,6 @@
       "esnext"
     ],
     "module": "esnext",
-    "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -29,11 +28,10 @@
     "pretty": true,
     "removeComments": false,
     "target": "es2017",
-    "baseUrl": ".",
     "paths": {
-      "@utils/*": ["src/utils/*"],
-      "@utils/test": ["src/utils/test/utils"],
-      "@global/*": ["src/global/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@utils/test": ["./src/utils/test/utils"],
+      "@global/*": ["./src/global/*"]
     }
   },
   "include": [

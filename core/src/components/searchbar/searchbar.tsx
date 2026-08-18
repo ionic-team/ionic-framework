@@ -21,7 +21,7 @@ import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './se
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class Searchbar implements ComponentInterface {
   private nativeInput?: HTMLInputElement;

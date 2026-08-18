@@ -24,7 +24,7 @@ import { parseDate } from '../datetime/utils/parse';
     ios: 'datetime-button.ios.scss',
     md: 'datetime-button.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class DatetimeButton implements ComponentInterface {
   private datetimeEl: HTMLIonDatetimeElement | null = null;

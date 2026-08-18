@@ -21,7 +21,7 @@ import type { PickerColumnChangeEventDetail, PickerColumnValue } from './picker-
 @Component({
   tag: 'ion-picker-column',
   styleUrl: 'picker-column.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class PickerColumn implements ComponentInterface {
   private scrollEl?: HTMLDivElement | null;
