@@ -2,15 +2,21 @@ import { inheritAriaAttributes, isEndSide } from './helpers';
 
 describe('isEndSide', () => {
   afterEach(() => {
-    document.dir = 'ltr';
+    document.dir = '';
+    document.body.innerHTML = '';
   });
 
   it('should use document direction when no host element is provided', () => {
+    document.dir = 'ltr';
+    expect(isEndSide('start')).toBe(false);
+    expect(isEndSide('end')).toBe(true);
+
     document.dir = 'rtl';
     expect(isEndSide('start')).toBe(true);
     expect(isEndSide('end')).toBe(false);
   });
 
+  // https://github.com/ionic-team/ionic-framework/issues/30226
   it('should use the nearest ancestor dir attribute', () => {
     document.dir = 'ltr';
 
@@ -23,20 +29,6 @@ describe('isEndSide', () => {
 
     expect(isEndSide('start', menu)).toBe(true);
     expect(isEndSide('end', menu)).toBe(false);
-
-    document.body.removeChild(app);
-  });
-
-  it('should fall back to document direction when no ancestor has dir', () => {
-    document.dir = 'rtl';
-
-    const menu = document.createElement('ion-menu');
-    document.body.appendChild(menu);
-
-    expect(isEndSide('start', menu)).toBe(true);
-    expect(isEndSide('end', menu)).toBe(false);
-
-    document.body.removeChild(menu);
   });
 });
 
