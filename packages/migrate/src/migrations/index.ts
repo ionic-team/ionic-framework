@@ -12,6 +12,9 @@ import { angularVersion } from './v9/angular-version.js';
 import { angularBrowserPolicy } from './v9/angular-browser-policy.js';
 import { angularBrowserPolicyManual } from './v9/angular-browser-policy-manual.js';
 import { reactDeps } from './v9/react-deps.js';
+import { reactTypescript } from './v9/react-typescript.js';
+import { reactOverlayHookProps } from './v9/react-overlay-hook-props.js';
+import { reactOverlayHookPropsManual } from './v9/react-overlay-hook-props-manual.js';
 import { reactRouter6Routes } from './v9/react-router-6-routes.js';
 import { reactRouter6Code } from './v9/react-router-6-code.js';
 import { vueDeps } from './v9/vue-deps.js';
@@ -51,6 +54,9 @@ export const allMigrations: Migration[] = [
   angularBrowserPolicy,
   angularBrowserPolicyManual,
   reactDeps,
+  reactTypescript,
+  reactOverlayHookProps,
+  reactOverlayHookPropsManual,
   reactRouter6Routes,
   reactRouter6Code,
   vueDeps,

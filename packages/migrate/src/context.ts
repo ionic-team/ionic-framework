@@ -5,6 +5,22 @@ import { Project, QuoteKind } from 'ts-morph';
 /** ts-morph should emit single-quoted strings to match Ionic/Angular style. */
 const MANIPULATION_SETTINGS = { quoteKind: QuoteKind.Single } as const;
 
+/**
+ * Compiler options every context shares. No `tsconfig.json` is read (see
+ * {@link createDiskContext}), so this is the whole configuration the type checker
+ * gets: a project's `paths` aliases stay unresolvable, and a migration reading
+ * types has to treat that as "unknown", never as "no problem here".
+ *
+ * Setting `allowJs: false` scopes the AST migrations to `.ts`/`.tsx`.
+ *
+ * Adding `esModuleInterop` is what lets a type-aware migration resolve anything:
+ * React publishes its types as `export = React`, so without it every
+ * `React.FC<Props>` degrades to `any` and prop analysis silently finds nothing.
+ * Nothing here emits or reads diagnostics, so the flag only widens type
+ * resolution.
+ */
+const COMPILER_OPTIONS = { allowJs: false, esModuleInterop: true } as const;
+
 /** Join a root dir and a relative path using posix separators. */
 function join(root: string, rel: string): string {
   return `${root.replace(/\/$/, '')}/${rel.replace(/^\//, '')}`;
@@ -167,6 +183,7 @@ export function createInMemoryContext(
 ): MigrationContext {
   const project = new Project({
     useInMemoryFileSystem: true,
+    compilerOptions: COMPILER_OPTIONS,
     manipulationSettings: MANIPULATION_SETTINGS,
   });
   const fs = project.getFileSystem();
@@ -199,7 +216,7 @@ export function createInMemoryContext(
 export function createDiskContext(rootDir: string): MigrationContext {
   const project = new Project({
     skipAddingFilesFromTsConfig: true,
-    compilerOptions: { allowJs: false },
+    compilerOptions: COMPILER_OPTIONS,
     manipulationSettings: MANIPULATION_SETTINGS,
   });
   // Load the whole tree (minus build/vendor dirs), not just `src/`, so AST

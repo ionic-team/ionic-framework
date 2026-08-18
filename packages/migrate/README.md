@@ -80,6 +80,9 @@ under [`docs/`](./docs).
 - Only `.ts` and `.tsx` are loaded into `ts-morph`, so `.js`/`.jsx` files and
   Angular inline templates (a `template:` string in a decorator) get the
   text-scan migrations but not the AST-based ones.
+- No `tsconfig.json` is read. The type checker gets a fixed configuration, so a
+  `paths` alias doesn't resolve, and a migration reading types treats what it
+  can't reach as unknown rather than as nothing to report.
 - The template scanner is best-effort, not a full HTML parser.
 - Stylesheet scanning covers `.css` and `.scss` files. Styles inlined in a
   component decorator's `styles` array aren't read.
