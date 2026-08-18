@@ -5,11 +5,7 @@ import type {
   NavigationFailure,
   RouteLocationRaw,
 } from "vue-router";
-import {
-  isNavigationFailure,
-  NavigationFailureType,
-  parseQuery,
-} from "vue-router";
+import { parseQuery } from "vue-router";
 
 import { createLocationHistory } from "./locationHistory";
 import type {
@@ -62,24 +58,23 @@ export const createIonRouter = (
          * are left behind by handleNavigateBack and apply the previous route's
          * id and pop action to whatever is navigated to next.
          *
-         * A cancelled navigation is superseded by another one and keeps its
-         * history entry, so its state is still accurate and stays in place for
-         * the superseding navigation to consume.
+         * This applies to cancelled navigations too. Their history entry is
+         * not reverted, but the state describes the navigation that was
+         * replaced rather than the one that replaced it, so leaving it in
+         * place hands a back navigation's delta to an unrelated push.
          *
          * This only covers navigations that fail. A guard that returns a
          * location redirects rather than fails, so vue-router neither reverts
          * the history entry nor calls afterEach for the original navigation,
          * and the staged state still reaches the redirect target.
          */
-        if (!isNavigationFailure(failure, NavigationFailureType.cancelled)) {
-          currentNavigationInfo = {
-            direction: undefined,
-            action: undefined,
-            delta: undefined,
-          };
+        currentNavigationInfo = {
+          direction: undefined,
+          action: undefined,
+          delta: undefined,
+        };
 
-          incomingRouteParams = undefined;
-        }
+        incomingRouteParams = undefined;
 
         return;
       }
