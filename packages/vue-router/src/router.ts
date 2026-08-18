@@ -53,13 +53,17 @@ export const createIonRouter = (
       if (failure) {
         /*
          * vue-router reverts the history entry for aborted and duplicated
-         * navigations, so the staged navigation info describes a history event
-         * that no longer happened. Clearing it prevents a stale delta from
-         * leaking into the next navigation, where it would be mistaken for
-         * history traversal and stop the incoming route from being added.
+         * navigations, so any state staged for that navigation describes
+         * something that no longer happened. Both pieces are normally consumed
+         * by handleHistoryChange, which does not run when the navigation fails.
+         *
+         * A stale delta makes the next navigation look like history traversal,
+         * which stops the incoming route from being added. Stale route params
+         * are left behind by handleNavigateBack and apply the previous route's
+         * id and pop action to whatever is navigated to next.
          *
          * A cancelled navigation is superseded by another one and keeps its
-         * history entry, so its info is still accurate and stays in place for
+         * history entry, so its state is still accurate and stays in place for
          * the superseding navigation to consume.
          */
         if (!isNavigationFailure(failure, NavigationFailureType.cancelled)) {
@@ -68,6 +72,8 @@ export const createIonRouter = (
             action: undefined,
             delta: undefined,
           };
+
+          incomingRouteParams = undefined;
         }
 
         return;

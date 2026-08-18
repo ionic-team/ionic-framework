@@ -792,4 +792,82 @@ describe('Routing', () => {
       { id: 'profile', hidden: false }
     ]);
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should keep canGoBack accurate after a guard blocks a back button navigation', async () => {
+    const createPage = (id: string) => ({
+      components: { IonPage },
+      name: id,
+      template: `<ion-page data-page="${id}"></ion-page>`
+    });
+
+    const Home = createPage('home');
+    const Profile = createPage('profile');
+    const Settings = createPage('settings');
+
+    const AppWithInject = {
+      components: { IonApp, IonRouterOutlet },
+      name: 'AppWithInject',
+      template: '<ion-app><ion-router-outlet /></ion-app>',
+      setup() {
+        const ionRouter = useIonRouter();
+        return { ionRouter };
+      }
+    };
+
+    let isLoggedIn = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/profile', component: Profile },
+        { path: '/settings', component: Settings }
+      ]
+    });
+
+    router.beforeEach((to, from) => {
+      if (from.path === '/profile' && to.path !== '/profile' && isLoggedIn) {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/home');
+    await router.isReady();
+    const wrapper = mount(AppWithInject, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const ionRouter = wrapper.vm.ionRouter;
+
+    router.push('/profile');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    /*
+     * Going back through the back button stages route params before handing off
+     * to the router. The guard blocks the navigation, so those params used to be
+     * left behind and then applied to the next route instead.
+     */
+    isLoggedIn = true;
+    ionRouter.back();
+    await waitForRouter();
+
+    /*
+     * Navigating with vue-router rather than useIonRouter matters here. The
+     * useIonRouter helpers stage their own route params, which would overwrite
+     * the leftovers and hide the problem.
+     */
+    isLoggedIn = false;
+    router.push('/settings');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+  });
 });
