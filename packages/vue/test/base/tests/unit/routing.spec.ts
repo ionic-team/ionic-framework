@@ -699,7 +699,7 @@ describe('Routing', () => {
     const createPage = (id: string) => ({
       components: { IonPage },
       name: id,
-      template: `<ion-page data-page="${id}"></ion-page>`
+      template: `<ion-page data-pageid="${id}"></ion-page>`
     });
 
     const Home = createPage('home');
@@ -748,7 +748,7 @@ describe('Routing', () => {
      */
     const viewStack = () =>
       wrapper.findAll('.ion-page').map((page) => ({
-        id: page.attributes('data-page'),
+        id: page.attributes('data-pageid'),
         hidden: page.classes('ion-page-hidden')
       }));
 
@@ -822,7 +822,7 @@ describe('Routing', () => {
     const createPage = (id: string) => ({
       components: { IonPage },
       name: id,
-      template: `<ion-page data-page="${id}"></ion-page>`
+      template: `<ion-page data-pageid="${id}"></ion-page>`
     });
 
     const Home = createPage('home');
@@ -900,7 +900,7 @@ describe('Routing', () => {
     const createPage = (id: string) => ({
       components: { IonPage },
       name: id,
-      template: `<ion-page data-page="${id}"></ion-page>`
+      template: `<ion-page data-pageid="${id}"></ion-page>`
     });
 
     const Home = createPage('home');
@@ -995,7 +995,7 @@ describe('Routing', () => {
     const routeInfo = navManager.getCurrentRouteInfo();
 
     expect(
-      wrapper.findAll('.ion-page').map((page) => page.attributes('data-page'))
+      wrapper.findAll('.ion-page').map((page) => page.attributes('data-pageid'))
     ).toEqual(['home', 'profile', 'settings']);
     expect(routeInfo.pathname).toEqual('/settings');
     expect(routeInfo.routerAction).toEqual('push');
