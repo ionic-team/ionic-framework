@@ -732,7 +732,7 @@ describe('Routing', () => {
       return true;
     });
 
-    router.push('/home');
+    router.push('/');
     await router.isReady();
     const wrapper = mount(IonRouterOutlet, {
       global: {
@@ -859,7 +859,7 @@ describe('Routing', () => {
       return true;
     });
 
-    router.push('/home');
+    router.push('/');
     await router.isReady();
     const wrapper = mount(AppWithInject, {
       global: {
