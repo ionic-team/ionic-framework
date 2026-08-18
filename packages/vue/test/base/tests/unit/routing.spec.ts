@@ -807,7 +807,6 @@ describe('Routing', () => {
       routerDirection: 'forward'
     });
 
-    isLoggedIn = true;
     router.push('/profile');
     await waitForRouter();
 
