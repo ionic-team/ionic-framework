@@ -5,7 +5,11 @@ import type {
   NavigationFailure,
   RouteLocationRaw,
 } from "vue-router";
-import { parseQuery } from "vue-router";
+import {
+  isNavigationFailure,
+  NavigationFailureType,
+  parseQuery,
+} from "vue-router";
 
 import { createLocationHistory } from "./locationHistory";
 import type {
@@ -46,7 +50,28 @@ export const createIonRouter = (
       _: RouteLocationNormalized,
       failure?: NavigationFailure
     ) => {
-      if (failure) return;
+      if (failure) {
+        /*
+         * vue-router reverts the history entry for aborted and duplicated
+         * navigations, so the staged navigation info describes a history event
+         * that no longer happened. Clearing it prevents a stale delta from
+         * leaking into the next navigation, where it would be mistaken for
+         * history traversal and stop the incoming route from being added.
+         *
+         * A cancelled navigation is superseded by another one and keeps its
+         * history entry, so its info is still accurate and stays in place for
+         * the superseding navigation to consume.
+         */
+        if (!isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+          currentNavigationInfo = {
+            direction: undefined,
+            action: undefined,
+            delta: undefined,
+          };
+        }
+
+        return;
+      }
 
       const { direction, action, delta } = currentNavigationInfo;
 

@@ -689,4 +689,107 @@ describe('Routing', () => {
     expect(wrapper.findComponent(Page2).exists()).toBe(false);
     expect(wrapper.findComponent(Page3).exists()).toBe(false);
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should keep the view stack intact after a navigation guard blocks going back', async () => {
+    const createPage = (id: string) => ({
+      components: { IonPage },
+      name: id,
+      template: `<ion-page data-page="${id}"></ion-page>`
+    });
+
+    const Home = createPage('home');
+    const Register = createPage('register');
+    const Profile = createPage('profile');
+
+    let isLoggedIn = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/register', component: Register },
+        { path: '/profile', component: Profile }
+      ]
+    });
+
+    /*
+     * Leaving the authenticated route while still logged in is blocked, which
+     * aborts the navigation. An aborted back navigation used to leave stale
+     * navigation info behind, which then made the next navigation look like
+     * history traversal.
+     */
+    router.beforeEach((to, from) => {
+      if (from.path === '/profile' && to.path !== '/profile' && isLoggedIn) {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/home');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /*
+     * Ionic keeps previously visited pages mounted so they can be animated back
+     * to, hiding the inactive ones with `ion-page-hidden`. Asserting on the
+     * whole stack therefore catches both a wrong visible page and a page that
+     * was destroyed when it should have been kept.
+     */
+    const viewStack = () =>
+      wrapper.findAll('.ion-page').map((page) => ({
+        id: page.attributes('data-page'),
+        hidden: page.classes('ion-page-hidden')
+      }));
+
+    router.push('/register');
+    await waitForRouter();
+
+    isLoggedIn = true;
+    router.replace('/profile');
+    await waitForRouter();
+
+    expect(viewStack()).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: false }
+    ]);
+
+    // The guard blocks this, so the stack should be untouched.
+    router.back();
+    await waitForRouter();
+
+    expect(viewStack()).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: false }
+    ]);
+
+    /*
+     * Logging out is a push, so Profile stays in the stack behind Home. Before
+     * the fix the stale delta from the blocked back navigation made this look
+     * like history traversal, which destroyed the Profile view.
+     */
+    isLoggedIn = false;
+    router.push('/home');
+    await waitForRouter();
+
+    expect(viewStack()).toEqual([
+      { id: 'home', hidden: false },
+      { id: 'profile', hidden: true }
+    ]);
+
+    isLoggedIn = true;
+    router.push('/profile');
+    await waitForRouter();
+
+    expect(viewStack()).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: false }
+    ]);
+  });
 });
