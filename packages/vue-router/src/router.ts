@@ -65,6 +65,11 @@ export const createIonRouter = (
          * A cancelled navigation is superseded by another one and keeps its
          * history entry, so its state is still accurate and stays in place for
          * the superseding navigation to consume.
+         *
+         * This only covers navigations that fail. A guard that returns a
+         * location redirects rather than fails, so vue-router neither reverts
+         * the history entry nor calls afterEach for the original navigation,
+         * and the staged state still reaches the redirect target.
          */
         if (!isNavigationFailure(failure, NavigationFailureType.cancelled)) {
           currentNavigationInfo = {
