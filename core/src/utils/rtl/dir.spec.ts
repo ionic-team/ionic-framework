@@ -71,7 +71,7 @@ describe('rtl: dir', () => {
     });
 
     it('should default to ltr when no dir is set anywhere', () => {
-      // Ensure the default is actually being tested rather than a 
+      // Ensure the default is actually being tested rather than a
       // value left behind by another test.
       expect(document.dir).toBe('');
 
