@@ -138,6 +138,13 @@ export class Range implements ComponentInterface {
    */
   @Prop() dualKnobs = false;
 
+  @Watch('dualKnobs')
+  protected dualKnobsChanged() {
+    if (!this.noUpdate) {
+      this.updateRatio();
+    }
+  }
+
   /**
    * Minimum integer value of the range.
    */
