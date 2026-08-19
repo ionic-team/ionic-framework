@@ -5,27 +5,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
 
-### Features
+**Full Changelog**: https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0
 
-* **angular:** allow per-component standalone import paths for better code-splitting ([#31303](https://github.com/ionic-team/ionic-framework/issues/31303)) ([c7a9336](https://github.com/ionic-team/ionic-framework/commit/c7a93369bb134cf67a8b6a4f0ec7b9d3d099835a)), closes [#30114](https://github.com/ionic-team/ionic-framework/issues/30114)
-* **angular:** default to zoneless change detection ([#31196](https://github.com/ionic-team/ionic-framework/issues/31196)) ([a1eb6a1](https://github.com/ionic-team/ionic-framework/commit/a1eb6a185f4b06d703b8e171b5e6cb960723b2b4)), closes [#30804](https://github.com/ionic-team/ionic-framework/issues/30804)
-* **angular:** deprecate IonicModule ([#31270](https://github.com/ionic-team/ionic-framework/issues/31270)) ([1116afc](https://github.com/ionic-team/ionic-framework/commit/1116afc7d4325b435df88a960cb435e1183ab2b9))
-* **angular:** make standalone imports default ([#31217](https://github.com/ionic-team/ionic-framework/issues/31217))
-* **angular:** support Angular 21, drop Angular 16 and 17 ([#31185](https://github.com/ionic-team/ionic-framework/issues/31185)) ([ba27083](https://github.com/ionic-team/ionic-framework/commit/ba270833e441e0bcf3682d4f0096d729575d3eab)), closes [#30907](https://github.com/ionic-team/ionic-framework/issues/30907)
-* **angular:** support Angular 22 ([#31205](https://github.com/ionic-team/ionic-framework/issues/31205)) ([bd21e00](https://github.com/ionic-team/ionic-framework/commit/bd21e0074da6ca47d772e96bd45778501209e3cd)), closes [#31204](https://github.com/ionic-team/ionic-framework/issues/31204)
-* **picker-legacy, picker-legacy-column:** remove legacy components ([#31078](https://github.com/ionic-team/ionic-framework/issues/31078)) ([346048b](https://github.com/ionic-team/ionic-framework/commit/346048b0ad620a89ac17f8fd40d54305c41b7079))
-* **router-outlet:** add swipeGesture prop to control swipe-to-go-back per outlet ([#31055](https://github.com/ionic-team/ionic-framework/issues/31055)) ([66a3e8a](https://github.com/ionic-team/ionic-framework/commit/66a3e8ab3bb79523a515942fc770bb9bdbf6e14c))
-* **select:** add labelPlacement prop, justify prop, and rich content for select options ([#31241](https://github.com/ionic-team/ionic-framework/issues/31241)) ([a35e13d](https://github.com/ionic-team/ionic-framework/commit/a35e13d59872c2136a3f44871fbb0146d0007c19)), closes [#29890](https://github.com/ionic-team/ionic-framework/issues/29890)
+**Migration guide**: https://ionicframework.com/docs/updating/9-0
 
-### BREAKING CHANGES
-
-* **angular:** Public import paths have changed.
-  Applications that use lazy-loaded angular components will need to update
-  their import paths from `@ionic/angular` to `@ionic/angular/lazy`.
-  Applications that use standalone angular components will need to update
-  their import paths from `@ionic/angular/standalone` to `@ionic/angular`.
-
-  ---------
+**Breaking changes**: https://github.com/ionic-team/ionic-framework/blob/main/BREAKING.md#version-9x
 
 
 ## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
