@@ -43,10 +43,15 @@ const EXCLUDE_DIRS = ['node_modules', 'dist', 'www', '.angular', '.git'];
  */
 const ROOT_EXCLUDE_DIRS = ['ios', 'android', 'build'];
 
+/** Escape regex metacharacters so a directory name matches literally. */
+function escapeForRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 /** Matches a path under any excluded directory, derived from the lists above. */
 const EXCLUDE_RE = new RegExp(
-  `(^|/)(${EXCLUDE_DIRS.map((d) => d.replace(/\./g, '\\.')).join('|')})/` +
-    `|^(${ROOT_EXCLUDE_DIRS.map((d) => d.replace(/\./g, '\\.')).join('|')})/`
+  `(^|/)(${EXCLUDE_DIRS.map(escapeForRegExp).join('|')})/` +
+    `|^(${ROOT_EXCLUDE_DIRS.map(escapeForRegExp).join('|')})/`
 );
 
 /** Negative glob patterns (one per excluded directory) rooted at `root`. */
