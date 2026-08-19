@@ -17,7 +17,6 @@ import type {
   LoadingOptions,
   ModalOptions,
   OverlayInterface,
-  PickerOptions,
   PopoverOptions,
   ToastOptions,
 } from '../interface';
@@ -72,12 +71,6 @@ export const actionSheetController = /*@__PURE__*/ createController<ActionSheetO
 );
 export const loadingController = /*@__PURE__*/ createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading');
 export const modalController = /*@__PURE__*/ createController<ModalOptions, HTMLIonModalElement>('ion-modal');
-/**
- * @deprecated Use the inline ion-picker component instead.
- */
-export const pickerController = /*@__PURE__*/ createController<PickerOptions, HTMLIonPickerLegacyElement>(
-  'ion-picker-legacy'
-);
 export const popoverController = /*@__PURE__*/ createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
 export const toastController = /*@__PURE__*/ createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
@@ -123,7 +116,6 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   tagName: string,
   opts: object | undefined
 ): Promise<T> => {
-  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
   if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
     return window.customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
@@ -184,10 +176,7 @@ const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, over
  * Should NOT include: Toast
  */
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
-  const lastOverlay = getPresentedOverlay(
-    doc,
-    'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover'
-  );
+  const lastOverlay = getPresentedOverlay(doc, 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-popover');
   const target = ev.target as HTMLElement | null;
 
   /**
@@ -444,7 +433,7 @@ export const dismissOverlay = (
  */
 export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayElement[] => {
   if (selector === undefined) {
-    selector = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover,ion-toast';
+    selector = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-popover,ion-toast';
   }
   return (Array.from(doc.querySelectorAll(selector)) as HTMLIonOverlayElement[]).filter((c) => c.overlayIndex > 0);
 };
@@ -512,6 +501,32 @@ export const setRootAriaHidden = (hidden = false) => {
     viewContainer.setAttribute('aria-hidden', 'true');
   } else {
     viewContainer.removeAttribute('aria-hidden');
+  }
+};
+
+/**
+ * Cleans up root `aria-hidden` and `backdrop-no-scroll` when
+ * an overlay is removed from the DOM without going through
+ * the `dismiss()` flow (e.g., when a framework unmounts the
+ * overlay during a route change).
+ *
+ * Should be called from an overlay's `disconnectedCallback`
+ * when the overlay was still presented at the time of removal.
+ */
+export const cleanupRootFocusTrapAccessibility = () => {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  const remainingOverlays = getPresentedOverlays(document);
+  const hasRemainingLocking = remainingOverlays.some((o) => {
+    const el = o as OverlayWithFocusTrapProps;
+    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && isBackdropAlwaysBlocking(el);
+  });
+
+  if (!hasRemainingLocking) {
+    setRootAriaHidden(false);
+    document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 };
 

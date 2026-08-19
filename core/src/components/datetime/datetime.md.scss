@@ -4,6 +4,10 @@
 
 :host {
   --background: var(--ion-color-step-100, var(--ion-background-color-step-100, #ffffff));
+  --title-color: #{ion-color(primary, contrast)};
+}
+
+:host(.ion-color) {
   --title-color: #{current-color(contrast)};
 }
 
@@ -12,8 +16,12 @@
 :host .datetime-header {
   @include padding($datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding);
 
-  background: current-color(base);
+  background: ion-color(primary, base);
   color: var(--title-color);
+}
+
+:host(.ion-color) .datetime-header {
+  background: current-color(base);
 }
 
 :host .datetime-header .datetime-title {
@@ -107,6 +115,12 @@
  * should have ion-color for text color.
  */
 :host .calendar-day.calendar-day-today {
+  border: 1px solid ion-color(primary, base);
+
+  color: ion-color(primary, base);
+}
+
+:host(.ion-color) .calendar-day.calendar-day-today {
   border: 1px solid current-color(base);
 
   color: current-color(base);
@@ -119,11 +133,23 @@
  */
 :host .calendar-day.calendar-day-active,
 :host .calendar-day.calendar-day-adjacent-day.calendar-day-active {
+  color: ion-color(primary, contrast);
+}
+
+:host(.ion-color) .calendar-day.calendar-day-active,
+:host(.ion-color) .calendar-day.calendar-day-adjacent-day.calendar-day-active {
   color: current-color(contrast);
 }
 
 .calendar-day.calendar-day-active,
 .calendar-day.calendar-day-active:focus {
+  border: 1px solid ion-color(primary, base);
+
+  background: ion-color(primary, base);
+}
+
+:host(.ion-color) .calendar-day.calendar-day-active,
+:host(.ion-color) .calendar-day.calendar-day-active:focus {
   border: 1px solid current-color(base);
 
   background: current-color(base);

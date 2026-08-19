@@ -1,3 +1,4 @@
+@use "../select-option/select-option.md.overlay";
 @import "./alert";
 @import "./alert.md.vars";
 
@@ -140,24 +141,46 @@
 // --------------------------------------------------
 
 .alert-radio-label {
-  @include padding($alert-md-radio-label-padding-top, $alert-md-radio-label-padding-end, $alert-md-radio-label-padding-bottom, $alert-md-radio-label-padding-start);
+  @include padding($alert-md-radio-label-padding-top, null, $alert-md-radio-label-padding-bottom, null);
 
-  flex: 1;
+  // Required for the radio icon to stay on the screen without
+  // being squished when the font size scales up.
+  max-width: calc(100% - $alert-md-radio-width);
 
   color: $alert-md-radio-label-text-color;
 
   font-size: $alert-md-radio-label-font-size;
 }
 
+.radio-label-placement-end .alert-radio-label {
+  /**
+   * The label's inline padding clears space for the icon on the icon's side.
+   * When the label is placed at the end, the icon is at the start, so the
+   * larger padding clears it on the start side.
+   */
+  @include padding-horizontal($alert-md-radio-label-padding-start, $alert-md-radio-label-padding-end);
+}
+
+.radio-label-placement-start .alert-radio-label {
+  /**
+   * The label's inline padding clears space for the icon on the icon's side.
+   * When the label is placed at the start, the icon is at the end, so the
+   * larger padding clears it on the end side.
+   */
+  @include padding-horizontal($alert-md-radio-label-padding-end, $alert-md-radio-label-padding-start);
+}
+
 // Material Design Alert Radio Unchecked Circle
 // ---------------------------------------------------
 
 .alert-radio-icon {
-  @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
+  @include position($alert-md-radio-top, null, null, null);
   @include border-radius($alert-md-radio-border-radius);
 
   display: block;
   position: relative;
+
+  flex-shrink: 0;
 
   width: $alert-md-radio-width;
   height: $alert-md-radio-height;
@@ -165,6 +188,16 @@
   border-width: $alert-md-radio-border-width;
   border-style: $alert-md-radio-border-style;
   border-color: $alert-md-radio-border-color-off;
+}
+
+// The icon's inline offset gives it a gap from whichever edge the icon
+// sits on, which depends on label placement
+.radio-label-placement-end .alert-radio-icon {
+  @include position-horizontal($alert-md-radio-left, null);
+}
+
+.radio-label-placement-start .alert-radio-icon {
+  @include position-horizontal(null, $alert-md-radio-left);
 }
 
 // Material Design Alert Radio Checked Dot
@@ -207,28 +240,45 @@
 // --------------------------------------------------
 
 .alert-checkbox-label {
-  @include padding($alert-md-checkbox-label-padding-top, $alert-md-checkbox-label-padding-end, $alert-md-checkbox-label-padding-bottom, $alert-md-checkbox-label-padding-start);
-
-  flex: 1;
+  @include padding($alert-md-checkbox-label-padding-top, null, $alert-md-checkbox-label-padding-bottom, null);
 
   // Required for the checkbox icon to stay on the screen without
   // being squished when the font size scales up.
-  width: calc(100% - $alert-md-checkbox-label-padding-start);
+  max-width: calc(100% - $alert-md-checkbox-width);
 
   color: $alert-md-checkbox-label-text-color;
 
   font-size: $alert-md-checkbox-label-font-size;
 }
 
+.checkbox-label-placement-end .alert-checkbox-label {
+  /**
+   * The label's inline padding clears space for the icon on the icon's side.
+   * When the label is placed at the end, the icon is at the start, so the
+   * larger padding clears it on the start side.
+   */
+  @include padding-horizontal($alert-md-checkbox-label-padding-start, $alert-md-checkbox-label-padding-end);
+}
+
+.checkbox-label-placement-start .alert-checkbox-label {
+  /**
+   * The label's inline padding clears space for the icon on the icon's side.
+   * When the label is placed at the start, the icon is at the end, so the
+   * larger padding clears it on the end side.
+   */
+  @include padding-horizontal($alert-md-checkbox-label-padding-end, $alert-md-checkbox-label-padding-start);
+}
 
 // Material Design Alert Checkbox Outline: Unchecked
 // --------------------------------------------------
 
 .alert-checkbox-icon {
-  @include position($alert-md-checkbox-top, null, null, $alert-md-checkbox-left);
+  @include position($alert-md-checkbox-top, null, null, null);
   @include border-radius($alert-md-checkbox-border-radius);
 
   position: relative;
+
+  flex-shrink: 0;
 
   width: $alert-md-checkbox-width;
   height: $alert-md-checkbox-height;
@@ -238,6 +288,16 @@
   border-color: $alert-md-checkbox-border-color-off;
 
   contain: strict;
+}
+
+// The icon's inline offset gives it a gap from whichever edge the icon
+// sits on, which depends on label placement
+.checkbox-label-placement-end .alert-checkbox-icon {
+  @include position-horizontal($alert-md-checkbox-left, null);
+}
+
+.checkbox-label-placement-start .alert-checkbox-icon {
+  @include position-horizontal(null, $alert-md-checkbox-left);
 }
 
 // Material Design Alert Checkbox Checkmark: Checked
@@ -298,7 +358,7 @@
   overflow: hidden;
 }
 
-.alert-button-inner {
+.alert-button-group .alert-button-inner {
   justify-content: $alert-md-button-group-justify-content;
 }
 

@@ -14,6 +14,7 @@ export interface IonRouterContextState {
     animationBuilder?: AnimationBuilder
   ) => void;
   back: (animationBuilder?: AnimationBuilder) => void;
+  navigateRoot: (pathname: string, animationBuilder?: AnimationBuilder) => void;
   canGoBack: () => boolean;
   nativeBack: () => void;
 }
@@ -24,6 +25,9 @@ export const IonRouterContext = React.createContext<IonRouterContextState>({
     throw new Error('An Ionic Router is required for IonRouterContext');
   },
   back: () => {
+    throw new Error('An Ionic Router is required for IonRouterContext');
+  },
+  navigateRoot: () => {
     throw new Error('An Ionic Router is required for IonRouterContext');
   },
   canGoBack: () => {
@@ -45,10 +49,11 @@ export function useIonRouter(): UseIonRouterResult {
       back: context.back,
       push: context.push,
       goBack: context.back,
+      navigateRoot: context.navigateRoot,
       canGoBack: context.canGoBack,
       routeInfo: context.routeInfo,
     }),
-    [context.back, context.push, context.canGoBack, context.routeInfo]
+    [context.back, context.push, context.navigateRoot, context.canGoBack, context.routeInfo]
   );
 }
 
@@ -78,6 +83,13 @@ export type UseIonRouterResult = {
    * @param animationBuilder - Optional - A custom transition animation to use
    */
   goBack(animationBuilder?: AnimationBuilder): void;
+  /**
+   * Navigates to a new root pathname, clearing the navigation history and unmounting all previous views.
+   * After navigation, canGoBack() will return false. Useful for navigating to a new root after login/logout.
+   * @param pathname - The path to navigate to
+   * @param animationBuilder - Optional - A custom transition animation to use
+   */
+  navigateRoot(pathname: string, animationBuilder?: AnimationBuilder): void;
   /**
    * Determines if there are any additional routes in the Router's history. However, routing is not prevented if the browser's history has more entries. Returns true if more entries exist, false if not.
    */

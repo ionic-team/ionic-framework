@@ -1,5 +1,5 @@
 import { Component, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { IonContent } from '@ionic/angular/standalone';
+import { IonContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-dynamic-component-wrapper',

@@ -70,24 +70,6 @@
   box-sizing: border-box;
 }
 
-// Textarea Wrapper
-// ----------------------------------------------------------------
-
-/**
- * Since the label sits on top of the element,
- * the component needs to be taller otherwise the
- * label will appear too close to the textarea text.
- * Also, floating and stacked labels should not
- * push the label down since it it
- * sits on top of the textarea.
- */
-:host(.textarea-label-placement-floating),
-:host(.textarea-label-placement-stacked) {
-  --padding-top: 0px;
-
-  min-height: 56px;
-}
-
 /**
  * When the cols property is set we should
  * respect that width instead of defaulting
@@ -243,7 +225,7 @@
 // ----------------------------------------------------------------
 
 .textarea-wrapper {
-  @include padding(0px, var(--padding-end), 0px, var(--padding-start));
+  @include padding(0, var(--padding-end), 0, var(--padding-start));
   @include border-radius(var(--border-radius));
 
   display: flex;
@@ -265,6 +247,30 @@
   line-height: normal;
 }
 
+// Textarea Control
+// ----------------------------------------------------------------
+
+.textarea-control {
+  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
+
+  display: flex;
+
+  flex-grow: 1;
+
+  align-items: start;
+  align-self: stretch;
+
+  width: 100%;
+
+  /**
+  * Allows the control to shrink below the label and textarea's intrinsic
+  * width, preventing the start and end slots from being pushed outside
+  * the wrapper. The label and textarea truncate independently, so it can
+  * use whatever space remains after accounting for the slots.
+  */
+  min-width: 0;
+}
+
 // Textarea Native Wrapper
 // ----------------------------------------------------------------
 
@@ -276,15 +282,24 @@
   height: 100%;
 }
 
+/**
+ * When the label sits beside the textarea, the label should size to its content
+ * and the textarea should take the remaining space. A zero flex basis prevents
+ * the textarea from requesting its full width and forcing the label to shrink.
+ * Stacked and floating placements use a column layout, so their flex basis
+ * controls height instead and does not need to be overridden.
+ */
+:host(.textarea-label-placement-start) .native-wrapper,
+:host(.textarea-label-placement-end) .native-wrapper,
+:host(.textarea-label-placement-fixed) .native-wrapper {
+  flex: 1 1 0;
+}
+
 // Textarea Native
 // ----------------------------------------------------------------
 
 :host(.has-focus) textarea {
   caret-color: var(--highlight-color);
-}
-
-.native-wrapper textarea {
-  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
 
 .native-wrapper {
@@ -318,7 +333,7 @@
 }
 
 .native-wrapper::after {
-  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
+  @include padding(0);
   @include margin(0, 0, 0, 0);
   @include border-radius(var(--border-radius));
 
@@ -345,13 +360,6 @@
   grid-area: 1 / 1 / 2 / 2;
 
   word-break: break-word;
-}
-
-.textarea-wrapper-inner {
-  display: flex;
-
-  width: 100%;
-  min-height: inherit;
 }
 
 // Textarea Highlight
@@ -456,7 +464,12 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
+  /**
+  * Allows the label to shrink below its intrinsic content width.
+  * Without this the label keeps its full width and can push the
+  * textarea and end slot outside the wrapper.
+  */
+  min-width: 0;
 
   /**
    * Label text should not extend
@@ -476,6 +489,18 @@
    * when a screen reader is enabled.
    */
   pointer-events: none;
+}
+
+/**
+ * When start/end slots are added or removed, we temporarily
+ * disable the label transition to prevent the floating label
+ * from animating as its position is adjusted.
+ *
+ * This class is applied by the start container controller, so
+ * renaming it here requires renaming it there too.
+ */
+:host(.skip-label-transition) .label-text-wrapper {
+  transition: none;
 }
 
 /**
@@ -526,7 +551,7 @@
  * Label is on the left of the textarea in LTR and
  * on the right in RTL.
  */
-:host(.textarea-label-placement-start) .textarea-wrapper {
+:host(.textarea-label-placement-start) .textarea-control {
   flex-direction: row;
 }
 
@@ -546,7 +571,7 @@
  * Label is on the right of the textarea in LTR and
  * on the left in RTL.
  */
-:host(.textarea-label-placement-end) .textarea-wrapper {
+:host(.textarea-label-placement-end) .textarea-control {
   flex-direction: row-reverse;
 }
 
@@ -593,8 +618,16 @@
  * down when the textarea is focused or has a value.
  *
  */
-:host(.textarea-label-placement-stacked) .textarea-wrapper,
-:host(.textarea-label-placement-floating) .textarea-wrapper {
+:host(.textarea-label-placement-stacked),
+:host(.textarea-label-placement-floating) {
+  --padding-top: 20px;
+  --padding-bottom: 6px;
+}
+
+:host(.textarea-label-placement-stacked) .textarea-control,
+:host(.textarea-label-placement-floating) .textarea-control {
+  @include padding(0, null, null);
+
   flex-direction: column;
   align-items: start;
 }
@@ -607,7 +640,7 @@
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.textarea-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
-  @include padding(0px);
+  @include padding(0);
 
   max-width: 100%;
 
@@ -628,13 +661,6 @@
 :host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
 :host(.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
   @include margin(8px, 0px, 0px, 0px);
-}
-
-:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
-:host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
-  margin-top: 8px;
 }
 
 /**
@@ -675,19 +701,22 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-.start-slot-wrapper, .end-slot-wrapper {
-  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
-
+.textarea-start,
+.textarea-end {
   display: flex;
+
+  position: relative;
 
   flex-shrink: 0;
 
   align-self: start;
 }
 
+// Align slotted content with the top of the label by
+// matching the label's top padding
 ::slotted([slot="start"]),
 ::slotted([slot="end"]) {
-  margin-top: 0; // ensure slot content is vertically aligned with label
+  margin-top: var(--padding-top);
 }
 
 ::slotted([slot="start"]:last-of-type) {

@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from "@ionic/angular/lazy";
 import { TabsGlobalRoutingModule } from "./tabs-global-routing.module";
 import { TabsGlobalComponent } from "./tabs-global.component";
 

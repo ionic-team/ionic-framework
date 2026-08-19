@@ -19,8 +19,23 @@ runs:
       run: npm run sync
       shell: bash
       working-directory: ./packages/angular-server
+    - name: 🖌️ Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./packages/angular-server
+    # No Typecheck step here. Unlike the rollup-built packages, which report
+    # type errors as warnings and still exit 0, ng-packagr fails the build on
+    # them, so the Build step below already covers this.
     - name: 🏗️ Build
       run: npm run build.prod
+      shell: bash
+      working-directory: ./packages/angular-server
+    - name: Clean core package.json
+      run: git checkout ./package.json
+      shell: bash
+      working-directory: ./core
+    - name: 🔍 Check Diff
+      run: git diff --exit-code
       shell: bash
       working-directory: ./packages/angular-server
     - uses: ./.github/workflows/actions/upload-archive

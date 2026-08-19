@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
-import { IonInputOtp } from "@ionic/angular/standalone";
+import { IonInputOtp } from "@ionic/angular";
 import { ValueAccessorTestComponent } from "../value-accessor-test/value-accessor-test.component";
 
 function otpRequiredLength(length: number) {
