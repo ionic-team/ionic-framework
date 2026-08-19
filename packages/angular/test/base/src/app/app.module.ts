@@ -4,7 +4,6 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular/lazy';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AppLandingComponent } from './app-landing/app-landing.component';
 import { ModeSwitcherComponent } from './mode-switcher.component';
 
 const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
@@ -15,7 +14,7 @@ export function ionicConfigFactory(): any {
 }
 
 @NgModule({
-  declarations: [AppComponent, AppLandingComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
