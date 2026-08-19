@@ -3190,7 +3190,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Show two knobs.
+          * If `true`, the range shows two knobs and `value` is an object with `lower` and `upper` properties. If `false`, the range shows one knob and `value` is a number.
           * @default false
          */
         "dualKnobs": boolean;
@@ -9277,7 +9277,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Show two knobs.
+          * If `true`, the range shows two knobs and `value` is an object with `lower` and `upper` properties. If `false`, the range shows one knob and `value` is a number.
           * @default false
          */
         "dualKnobs"?: boolean;
