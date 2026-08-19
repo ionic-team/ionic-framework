@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { NgZone, Inject, Injectable } from '@angular/core';
 import type { DestroyRef } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { getPlatforms, isPlatform } from '@ionic/core/components';
 import type { BackButtonEventDetail, KeyboardEventDetail, Platforms } from '@ionic/core/components';
 import { Subscription, Subject } from 'rxjs';
@@ -12,11 +11,6 @@ export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
   subscribeWithPriority(
     priority: number,
     callback: (processNextHandler: () => void) => Promise<any> | void,
-    /**
-     * Pass a component's `DestroyRef` to have the subscription torn down with that
-     * component. Without it the subscription lives for the lifetime of the injector,
-     * which for a root-provided `Platform` means the lifetime of the application.
-     */
     destroyRef?: DestroyRef
   ): Subscription;
 }
@@ -71,11 +65,13 @@ export class Platform {
     zone.run(() => {
       this.win = doc.defaultView;
       this.backButton.subscribeWithPriority = function (priority, callback, destroyRef) {
-        const source$ = destroyRef ? this.pipe(takeUntilDestroyed(destroyRef)) : this;
-
-        return source$.subscribe((ev) => {
+        const subscription = this.subscribe((ev) => {
           return ev.register(priority, (processNextHandler) => zone.run(() => callback(processNextHandler)));
         });
+
+        destroyRef?.onDestroy(() => subscription.unsubscribe());
+
+        return subscription;
       };
 
       proxyEvent(this.pause, doc, 'pause', zone);
