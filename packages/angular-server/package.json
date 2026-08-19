@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular-server",
-  "version": "8.8.19",
+  "version": "9.0.0",
   "description": "Angular SSR Module for Ionic",
   "keywords": [
     "ionic",
@@ -78,6 +78,6 @@
   },
   "prettier": "@ionic/prettier-config",
   "dependencies": {
-    "@ionic/core": "^8.8.19"
+    "@ionic/core": "^9.0.0"
   }
 }

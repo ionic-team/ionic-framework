@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
+
+### Bug Fixes
+
+* **vue-router:** honor caller-provided direction on replace navigation ([#31142](https://github.com/ionic-team/ionic-framework/issues/31142)) ([612ff06](https://github.com/ionic-team/ionic-framework/commit/612ff06f6e2c8b23df744fc59d878de71e5c09a3)), closes [#24995](https://github.com/ionic-team/ionic-framework/issues/24995)
+* **vue-router:** invoke beforeRouteEnter next() callbacks with component instance ([#31150](https://github.com/ionic-team/ionic-framework/issues/31150)) ([ee190ee](https://github.com/ionic-team/ionic-framework/commit/ee190eeb0ef8484310751aaf64112db3c7281dd2)), closes [#25013](https://github.com/ionic-team/ionic-framework/issues/25013)
+* **vue-router:** keep tab back button working after history rewrite ([#31134](https://github.com/ionic-team/ionic-framework/issues/31134)) ([15e062b](https://github.com/ionic-team/ionic-framework/commit/15e062b4dab33b2c1c165c14474bc793d984dfde))
+* **vue-router:** prevent out-of-bounds index when popping across tabs ([#31145](https://github.com/ionic-team/ionic-framework/issues/31145)) ([1f5ef85](https://github.com/ionic-team/ionic-framework/commit/1f5ef852aaa738f6ffdf20792da5195d272d4903)), closes [#29413](https://github.com/ionic-team/ionic-framework/issues/29413)
+* **vue-router:** set pushedByRoute on same-tab push with direction none ([#31137](https://github.com/ionic-team/ionic-framework/issues/31137)) ([9f69f50](https://github.com/ionic-team/ionic-framework/commit/9f69f50b946bef47d9b9c7404bd2b48554db349a)), closes [#24074](https://github.com/ionic-team/ionic-framework/issues/24074)
+* **vue-router:** sync URL with display on browser back after tab switch ([#31139](https://github.com/ionic-team/ionic-framework/issues/31139)) ([8eca177](https://github.com/ionic-team/ionic-framework/commit/8eca177e9fbb3016a9be7e106f9bfb39788a8267)), closes [#25141](https://github.com/ionic-team/ionic-framework/issues/25141)
+* **vue-router:** tab button works on a deep-loaded tab child ([#31144](https://github.com/ionic-team/ionic-framework/issues/31144)) ([9cd57dc](https://github.com/ionic-team/ionic-framework/commit/9cd57dc91232e9b352b9bc3ca06f9ce02cf1ad6e)), closes [#29705](https://github.com/ionic-team/ionic-framework/issues/29705)
+
+### Features
+
+* **vue-router:** upgrade to vue-router 5 ([#31117](https://github.com/ionic-team/ionic-framework/issues/31117)) ([3bc8d8f](https://github.com/ionic-team/ionic-framework/commit/3bc8d8f9d95dfb798e7c2f7b8cfe1abb085398b3))
+
+
 ## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
 
 **Note:** Version bump only for package @ionic/vue-router

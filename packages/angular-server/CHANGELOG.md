@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
+
+### Features
+
+* **angular:** default to zoneless change detection ([#31196](https://github.com/ionic-team/ionic-framework/issues/31196)) ([a1eb6a1](https://github.com/ionic-team/ionic-framework/commit/a1eb6a185f4b06d703b8e171b5e6cb960723b2b4)), closes [#30804](https://github.com/ionic-team/ionic-framework/issues/30804)
+* **angular:** support Angular 21, drop Angular 16 and 17 ([#31185](https://github.com/ionic-team/ionic-framework/issues/31185)) ([ba27083](https://github.com/ionic-team/ionic-framework/commit/ba270833e441e0bcf3682d4f0096d729575d3eab)), closes [#30907](https://github.com/ionic-team/ionic-framework/issues/30907)
+* **angular:** support Angular 22 ([#31205](https://github.com/ionic-team/ionic-framework/issues/31205)) ([bd21e00](https://github.com/ionic-team/ionic-framework/commit/bd21e0074da6ca47d772e96bd45778501209e3cd)), closes [#31204](https://github.com/ionic-team/ionic-framework/issues/31204)
+* **picker-legacy, picker-legacy-column:** remove legacy components ([#31078](https://github.com/ionic-team/ionic-framework/issues/31078)) ([346048b](https://github.com/ionic-team/ionic-framework/commit/346048b0ad620a89ac17f8fd40d54305c41b7079))
+
+
 ## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
 
 **Note:** Version bump only for package @ionic/angular-server

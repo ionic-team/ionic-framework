@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
+
+### Bug Fixes
+
+* **input:** support floating labels with slotted content ([#31309](https://github.com/ionic-team/ionic-framework/issues/31309)) ([a292789](https://github.com/ionic-team/ionic-framework/commit/a29278910f8720f8621da012f2bb3089a3c3bcbc)), closes [#29449](https://github.com/ionic-team/ionic-framework/issues/29449) [#28665](https://github.com/ionic-team/ionic-framework/issues/28665)
+* **many:** gate debug logs behind the DEBUG log level ([#31342](https://github.com/ionic-team/ionic-framework/issues/31342)) ([810268e](https://github.com/ionic-team/ionic-framework/commit/810268ea4678fd31498918bff39c6f100b4e1b60))
+* **migrate:** cover angular's browser policy and gate zoneless on zone.js ([#31360](https://github.com/ionic-team/ionic-framework/issues/31360)) ([a4a1286](https://github.com/ionic-team/ionic-framework/commit/a4a1286128b089c1d31432d7f5b835e00a379423))
+* **modal:** keep dialog focus on present with cycle handle ([8d162d2](https://github.com/ionic-team/ionic-framework/commit/8d162d252caa6ed56e0531fde784df37fb5cf19b)), closes [#31260](https://github.com/ionic-team/ionic-framework/issues/31260)
+* **react-router:** sync child props through Routes wrapper on re-render ([#31226](https://github.com/ionic-team/ionic-framework/issues/31226)) ([7a95d47](https://github.com/ionic-team/ionic-framework/commit/7a95d472de7239940c023f9b95e403887fcdffaa)), closes [#31157](https://github.com/ionic-team/ionic-framework/issues/31157)
+* **react:** clear reflected attributes for nullish props ([#31361](https://github.com/ionic-team/ionic-framework/issues/31361)) ([38d5922](https://github.com/ionic-team/ionic-framework/commit/38d5922bb73b6f44e0c66fa367c60d8ceebbf785)), closes [#31344](https://github.com/ionic-team/ionic-framework/issues/31344) [#31344](https://github.com/ionic-team/ionic-framework/issues/31344)
+* **react:** don't render false boolean props as attributes ([#31294](https://github.com/ionic-team/ionic-framework/issues/31294)) ([d63ecbc](https://github.com/ionic-team/ionic-framework/commit/d63ecbc90f8443ad7123a8471ea5e05f27d71458)), closes [#27930](https://github.com/ionic-team/ionic-framework/issues/27930)
+* **select:** only emit ionChange when value changes ([#31125](https://github.com/ionic-team/ionic-framework/issues/31125)) ([071bf3c](https://github.com/ionic-team/ionic-framework/commit/071bf3c0e6c66c6035a252b497e493dce3aa82be))
+* **select:** support floating labels with slotted content ([#31326](https://github.com/ionic-team/ionic-framework/issues/31326)) ([fad7c0a](https://github.com/ionic-team/ionic-framework/commit/fad7c0a5703ade762ab376d69b3d6a6dff33e41b)), closes [#30402](https://github.com/ionic-team/ionic-framework/issues/30402)
+* **textarea:** support floating labels with slotted content ([#31321](https://github.com/ionic-team/ionic-framework/issues/31321)) ([9dc4ea3](https://github.com/ionic-team/ionic-framework/commit/9dc4ea3532c6bc04098e9fd040095b1afe5633f9))
+* **vue-router:** honor caller-provided direction on replace navigation ([#31142](https://github.com/ionic-team/ionic-framework/issues/31142)) ([612ff06](https://github.com/ionic-team/ionic-framework/commit/612ff06f6e2c8b23df744fc59d878de71e5c09a3)), closes [#24995](https://github.com/ionic-team/ionic-framework/issues/24995)
+* **vue-router:** invoke beforeRouteEnter next() callbacks with component instance ([#31150](https://github.com/ionic-team/ionic-framework/issues/31150)) ([ee190ee](https://github.com/ionic-team/ionic-framework/commit/ee190eeb0ef8484310751aaf64112db3c7281dd2)), closes [#25013](https://github.com/ionic-team/ionic-framework/issues/25013)
+* **vue-router:** keep tab back button working after history rewrite ([#31134](https://github.com/ionic-team/ionic-framework/issues/31134)) ([15e062b](https://github.com/ionic-team/ionic-framework/commit/15e062b4dab33b2c1c165c14474bc793d984dfde))
+* **vue-router:** prevent out-of-bounds index when popping across tabs ([#31145](https://github.com/ionic-team/ionic-framework/issues/31145)) ([1f5ef85](https://github.com/ionic-team/ionic-framework/commit/1f5ef852aaa738f6ffdf20792da5195d272d4903)), closes [#29413](https://github.com/ionic-team/ionic-framework/issues/29413)
+* **vue-router:** set pushedByRoute on same-tab push with direction none ([#31137](https://github.com/ionic-team/ionic-framework/issues/31137)) ([9f69f50](https://github.com/ionic-team/ionic-framework/commit/9f69f50b946bef47d9b9c7404bd2b48554db349a)), closes [#24074](https://github.com/ionic-team/ionic-framework/issues/24074)
+* **vue-router:** sync URL with display on browser back after tab switch ([#31139](https://github.com/ionic-team/ionic-framework/issues/31139)) ([8eca177](https://github.com/ionic-team/ionic-framework/commit/8eca177e9fbb3016a9be7e106f9bfb39788a8267)), closes [#25141](https://github.com/ionic-team/ionic-framework/issues/25141)
+* **vue-router:** tab button works on a deep-loaded tab child ([#31144](https://github.com/ionic-team/ionic-framework/issues/31144)) ([9cd57dc](https://github.com/ionic-team/ionic-framework/commit/9cd57dc91232e9b352b9bc3ca06f9ce02cf1ad6e)), closes [#29705](https://github.com/ionic-team/ionic-framework/issues/29705)
+
+### chore
+
+* **deps:** update react and stencil/react-output-target ([#31063](https://github.com/ionic-team/ionic-framework/issues/31063)) ([2bf8c97](https://github.com/ionic-team/ionic-framework/commit/2bf8c972cc4b75006aadb90590951c9a586c5922))
+
+### Features
+
+* **angular:** allow per-component standalone import paths for better code-splitting ([#31303](https://github.com/ionic-team/ionic-framework/issues/31303)) ([c7a9336](https://github.com/ionic-team/ionic-framework/commit/c7a93369bb134cf67a8b6a4f0ec7b9d3d099835a)), closes [#30114](https://github.com/ionic-team/ionic-framework/issues/30114)
+* **angular:** default to zoneless change detection ([#31196](https://github.com/ionic-team/ionic-framework/issues/31196)) ([a1eb6a1](https://github.com/ionic-team/ionic-framework/commit/a1eb6a185f4b06d703b8e171b5e6cb960723b2b4)), closes [#30804](https://github.com/ionic-team/ionic-framework/issues/30804)
+* **angular:** deprecate IonicModule ([#31270](https://github.com/ionic-team/ionic-framework/issues/31270)) ([1116afc](https://github.com/ionic-team/ionic-framework/commit/1116afc7d4325b435df88a960cb435e1183ab2b9))
+* **angular:** make standalone imports default ([#31217](https://github.com/ionic-team/ionic-framework/issues/31217))
+* **angular:** support Angular 21, drop Angular 16 and 17 ([#31185](https://github.com/ionic-team/ionic-framework/issues/31185)) ([ba27083](https://github.com/ionic-team/ionic-framework/commit/ba270833e441e0bcf3682d4f0096d729575d3eab)), closes [#30907](https://github.com/ionic-team/ionic-framework/issues/30907)
+* **angular:** support Angular 22 ([#31205](https://github.com/ionic-team/ionic-framework/issues/31205)) ([bd21e00](https://github.com/ionic-team/ionic-framework/commit/bd21e0074da6ca47d772e96bd45778501209e3cd)), closes [#31204](https://github.com/ionic-team/ionic-framework/issues/31204)
+* **core:** add package exports map for ESM subpath resolution ([#31180](https://github.com/ionic-team/ionic-framework/issues/31180)) ([312a3a7](https://github.com/ionic-team/ionic-framework/commit/312a3a7443f6b0909b67e0876e1c1bccfc3cbcd6)), closes [#30982](https://github.com/ionic-team/ionic-framework/issues/30982) [#30686](https://github.com/ionic-team/ionic-framework/issues/30686) [#30730](https://github.com/ionic-team/ionic-framework/issues/30730)
+* **datetime, datetime-button, picker-column, picker-column-option:** improve styling flexibility by removing default color prop ([#31261](https://github.com/ionic-team/ionic-framework/issues/31261)) ([17edecb](https://github.com/ionic-team/ionic-framework/commit/17edecbe37e24073160ea0419168a76f34d285bd))
+* **icon:** add font icon support to ion-icon ([#31302](https://github.com/ionic-team/ionic-framework/issues/31302)) ([3edc1c3](https://github.com/ionic-team/ionic-framework/commit/3edc1c3f548c566e00fd2add5d4e223f99523f83))
+* **img:** deprecate ion-img ([#31254](https://github.com/ionic-team/ionic-framework/issues/31254)) ([0eaba06](https://github.com/ionic-team/ionic-framework/commit/0eaba06c71372fc3af39fa524544c889744793e9))
+* **migrate:** add v8-to-v9 migration tool ([#31285](https://github.com/ionic-team/ionic-framework/issues/31285)) ([1a4d194](https://github.com/ionic-team/ionic-framework/commit/1a4d19483fef400bbb90539584307763399b55fa))
+* **migrate:** cover the remaining v9 breaking changes ([#31355](https://github.com/ionic-team/ionic-framework/issues/31355)) ([37525a2](https://github.com/ionic-team/ionic-framework/commit/37525a200bfb70d9040567677b3f699dce7d6218))
+* **modal:** default handleBehavior to "cycle" for sheet modals ([#31222](https://github.com/ionic-team/ionic-framework/issues/31222)) ([5d201bd](https://github.com/ionic-team/ionic-framework/commit/5d201bd81759b9022886df81d3f64bde955d24ca))
+* **modal:** expose isDismissing on ionDragEnd ([#31002](https://github.com/ionic-team/ionic-framework/issues/31002)) ([88661e3](https://github.com/ionic-team/ionic-framework/commit/88661e30266bec9dcb42a29fcd9f3e8f70a207e2)), closes [#31001](https://github.com/ionic-team/ionic-framework/issues/31001)
+* **nav:** remove ion-router integration ([#31266](https://github.com/ionic-team/ionic-framework/issues/31266)) ([d7354b5](https://github.com/ionic-team/ionic-framework/commit/d7354b58da876cc5f81f98d8ccff07a9998a5760)), closes [#24641](https://github.com/ionic-team/ionic-framework/issues/24641)
+* **picker-legacy, picker-legacy-column:** remove legacy components ([#31078](https://github.com/ionic-team/ionic-framework/issues/31078)) ([346048b](https://github.com/ionic-team/ionic-framework/commit/346048b0ad620a89ac17f8fd40d54305c41b7079))
+* **platform:** remove capacitor v2 isNative fallback from native detection ([#31275](https://github.com/ionic-team/ionic-framework/issues/31275)) ([37a903a](https://github.com/ionic-team/ionic-framework/commit/37a903a1660e65c86fbf6a6d871364fe720ac30e))
+* **react-router:** upgrade to react router 6 ([#30831](https://github.com/ionic-team/ionic-framework/issues/30831)) ([150ba3a](https://github.com/ionic-team/ionic-framework/commit/150ba3a09c59971b84391dc1371dc8427fb9e821)), closes [#24177](https://github.com/ionic-team/ionic-framework/issues/24177)
+* **react:** type overlay hook component props ([#31362](https://github.com/ionic-team/ionic-framework/issues/31362)) ([cebd101](https://github.com/ionic-team/ionic-framework/commit/cebd1012de7bee11202fd9d1bbfc0e8b34129c00)), closes [#28680](https://github.com/ionic-team/ionic-framework/issues/28680) [#28685](https://github.com/ionic-team/ionic-framework/issues/28685) [#29058](https://github.com/ionic-team/ionic-framework/issues/29058) [#31183](https://github.com/ionic-team/ionic-framework/issues/31183) [#29158](https://github.com/ionic-team/ionic-framework/issues/29158) [#29058](https://github.com/ionic-team/ionic-framework/issues/29058) [#31183](https://github.com/ionic-team/ionic-framework/issues/31183)
+* **router-outlet:** add swipeGesture prop to control swipe-to-go-back per outlet ([#31055](https://github.com/ionic-team/ionic-framework/issues/31055)) ([66a3e8a](https://github.com/ionic-team/ionic-framework/commit/66a3e8ab3bb79523a515942fc770bb9bdbf6e14c))
+* **select:** add labelPlacement prop, justify prop, and rich content for select options ([#31241](https://github.com/ionic-team/ionic-framework/issues/31241)) ([a35e13d](https://github.com/ionic-team/ionic-framework/commit/a35e13d59872c2136a3f44871fbb0146d0007c19)), closes [#29890](https://github.com/ionic-team/ionic-framework/issues/29890)
+* **select:** remove role from action sheet interface ([#31221](https://github.com/ionic-team/ionic-framework/issues/31221)) ([e6cf649](https://github.com/ionic-team/ionic-framework/commit/e6cf649877b294d47b0a97a1cc9ef974aa69d2c2))
+* **vue-router:** upgrade to vue-router 5 ([#31117](https://github.com/ionic-team/ionic-framework/issues/31117)) ([3bc8d8f](https://github.com/ionic-team/ionic-framework/commit/3bc8d8f9d95dfb798e7c2f7b8cfe1abb085398b3))
+
+### BREAKING CHANGES
+
+* **deps:** Drops support for React 17. Applications will need to update to React 18
+  to be officially supported by Ionic Framework.
+* **angular:** Public import paths have changed.
+  Applications that use lazy-loaded angular components will need to update
+  their import paths from `@ionic/angular` to `@ionic/angular/lazy`.
+  Applications that use standalone angular components will need to update
+  their import paths from `@ionic/angular/standalone` to `@ionic/angular`.
+
+  ---------
+
+
 ## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
 
 ### Bug Fixes

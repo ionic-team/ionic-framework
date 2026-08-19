@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
+
+### Bug Fixes
+
+* **many:** gate debug logs behind the DEBUG log level ([#31342](https://github.com/ionic-team/ionic-framework/issues/31342)) ([810268e](https://github.com/ionic-team/ionic-framework/commit/810268ea4678fd31498918bff39c6f100b4e1b60))
+* **react:** clear reflected attributes for nullish props ([#31361](https://github.com/ionic-team/ionic-framework/issues/31361)) ([38d5922](https://github.com/ionic-team/ionic-framework/commit/38d5922bb73b6f44e0c66fa367c60d8ceebbf785)), closes [#31344](https://github.com/ionic-team/ionic-framework/issues/31344) [#31344](https://github.com/ionic-team/ionic-framework/issues/31344)
+* **react:** don't render false boolean props as attributes ([#31294](https://github.com/ionic-team/ionic-framework/issues/31294)) ([d63ecbc](https://github.com/ionic-team/ionic-framework/commit/d63ecbc90f8443ad7123a8471ea5e05f27d71458)), closes [#27930](https://github.com/ionic-team/ionic-framework/issues/27930)
+
+### chore
+
+* **deps:** update react and stencil/react-output-target ([#31063](https://github.com/ionic-team/ionic-framework/issues/31063)) ([2bf8c97](https://github.com/ionic-team/ionic-framework/commit/2bf8c972cc4b75006aadb90590951c9a586c5922))
+
+### Features
+
+* **angular:** support Angular 21, drop Angular 16 and 17 ([#31185](https://github.com/ionic-team/ionic-framework/issues/31185)) ([ba27083](https://github.com/ionic-team/ionic-framework/commit/ba270833e441e0bcf3682d4f0096d729575d3eab)), closes [#30907](https://github.com/ionic-team/ionic-framework/issues/30907)
+* **picker-legacy, picker-legacy-column:** remove legacy components ([#31078](https://github.com/ionic-team/ionic-framework/issues/31078)) ([346048b](https://github.com/ionic-team/ionic-framework/commit/346048b0ad620a89ac17f8fd40d54305c41b7079))
+* **react-router:** upgrade to react router 6 ([#30831](https://github.com/ionic-team/ionic-framework/issues/30831)) ([150ba3a](https://github.com/ionic-team/ionic-framework/commit/150ba3a09c59971b84391dc1371dc8427fb9e821)), closes [#24177](https://github.com/ionic-team/ionic-framework/issues/24177)
+* **react:** type overlay hook component props ([#31362](https://github.com/ionic-team/ionic-framework/issues/31362)) ([cebd101](https://github.com/ionic-team/ionic-framework/commit/cebd1012de7bee11202fd9d1bbfc0e8b34129c00)), closes [#28680](https://github.com/ionic-team/ionic-framework/issues/28680) [#28685](https://github.com/ionic-team/ionic-framework/issues/28685) [#29058](https://github.com/ionic-team/ionic-framework/issues/29058) [#31183](https://github.com/ionic-team/ionic-framework/issues/31183) [#29158](https://github.com/ionic-team/ionic-framework/issues/29158) [#29058](https://github.com/ionic-team/ionic-framework/issues/29058) [#31183](https://github.com/ionic-team/ionic-framework/issues/31183)
+
+### BREAKING CHANGES
+
+* **deps:** Drops support for React 17. Applications will need to update to React 18
+  to be officially supported by Ionic Framework.
+
+
 ## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
 
 **Note:** Version bump only for package @ionic/react

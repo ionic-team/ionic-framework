@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "8.8.19",
+  "version": "9.0.0",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -37,7 +37,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "^8.8.19",
+    "@ionic/react": "^9.0.0",
     "tslib": "*"
   },
   "peerDependencies": {
@@ -55,11 +55,11 @@
     "@types/node": "^24.13.3",
     "@types/react": "^18.3.28",
     "@types/react-dom": "^18.3.7",
-    "history": "^5.3.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",
     "eslint-plugin-import": "^2.31.0",
+    "history": "^5.3.0",
     "prettier": "^2.8.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

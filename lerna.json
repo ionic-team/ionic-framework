@@ -10,5 +10,5 @@
     "packages/vue",
     "packages/vue-router"
   ],
-  "version": "8.8.19"
+  "version": "9.0.0"
 }

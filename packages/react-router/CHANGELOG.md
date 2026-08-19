@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
+
+### Bug Fixes
+
+* **many:** gate debug logs behind the DEBUG log level ([#31342](https://github.com/ionic-team/ionic-framework/issues/31342)) ([810268e](https://github.com/ionic-team/ionic-framework/commit/810268ea4678fd31498918bff39c6f100b4e1b60))
+* **react-router:** sync child props through Routes wrapper on re-render ([#31226](https://github.com/ionic-team/ionic-framework/issues/31226)) ([7a95d47](https://github.com/ionic-team/ionic-framework/commit/7a95d472de7239940c023f9b95e403887fcdffaa)), closes [#31157](https://github.com/ionic-team/ionic-framework/issues/31157)
+* **react:** don't render false boolean props as attributes ([#31294](https://github.com/ionic-team/ionic-framework/issues/31294)) ([d63ecbc](https://github.com/ionic-team/ionic-framework/commit/d63ecbc90f8443ad7123a8471ea5e05f27d71458)), closes [#27930](https://github.com/ionic-team/ionic-framework/issues/27930)
+
+### Features
+
+* **angular:** support Angular 21, drop Angular 16 and 17 ([#31185](https://github.com/ionic-team/ionic-framework/issues/31185)) ([ba27083](https://github.com/ionic-team/ionic-framework/commit/ba270833e441e0bcf3682d4f0096d729575d3eab)), closes [#30907](https://github.com/ionic-team/ionic-framework/issues/30907)
+* **react-router:** upgrade to react router 6 ([#30831](https://github.com/ionic-team/ionic-framework/issues/30831)) ([150ba3a](https://github.com/ionic-team/ionic-framework/commit/150ba3a09c59971b84391dc1371dc8427fb9e821)), closes [#24177](https://github.com/ionic-team/ionic-framework/issues/24177)
+* **router-outlet:** add swipeGesture prop to control swipe-to-go-back per outlet ([#31055](https://github.com/ionic-team/ionic-framework/issues/31055)) ([66a3e8a](https://github.com/ionic-team/ionic-framework/commit/66a3e8ab3bb79523a515942fc770bb9bdbf6e14c))
+
+
 ## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
 
 **Note:** Version bump only for package @ionic/react-router
