@@ -512,11 +512,19 @@ export class Refresher implements ComponentInterface {
     this.checkNativeRefresher();
   }
 
-  async connectedCallback() {
+  /**
+   * Checked here rather than in `connectedCallback`, which with the custom elements
+   * build runs while the element is being inserted, before frameworks like React
+   * assign the slot. Rendering puts `slot="fixed"` on the host, so this is also the
+   * last point where the developer's own markup is still visible.
+   */
+  componentWillLoad() {
     if (this.el.getAttribute('slot') !== 'fixed') {
       printIonError('[ion-refresher] - Make sure you use: <ion-refresher slot="fixed">');
-      return;
     }
+  }
+
+  async connectedCallback() {
     const contentEl = this.el.closest(ION_CONTENT_ELEMENT_SELECTOR);
     if (!contentEl) {
       printIonContentErrorMsg(this.el);
