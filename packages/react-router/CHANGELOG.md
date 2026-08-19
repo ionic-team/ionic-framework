@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
 ## [8.8.18](https://github.com/ionic-team/ionic-framework/compare/v8.8.17...v8.8.18) (2026-08-12)
 
 **Note:** Version bump only for package @ionic/react-router
