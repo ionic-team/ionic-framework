@@ -233,6 +233,14 @@ export const attachView = (
 
   applicationRef.attachView(componentRef.hostView);
 
+  /**
+   * Run change detection so template bindings (e.g. `<ion-nav [root]="rootPage">`)
+   * apply during this synchronous pass, before the web component runs its load
+   * lifecycle. `createComponent` only runs the creation pass, so without this the
+   * binding lands after the element has loaded, too late for `ion-nav` to read it.
+   */
+  componentRef.changeDetectorRef.detectChanges();
+
   elRefMap.set(hostElement, componentRef);
   elEventsMap.set(hostElement, unbindEvents);
   return hostElement;

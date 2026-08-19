@@ -84,10 +84,15 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
         this.incomingRouteParams.routeOptions = routeOptions;
         this.props.history.push(routeInfo.pathname + (routeInfo.search || ''));
       } else {
+        /**
+         * The recorded search has to match the URL we push, otherwise
+         * handleHistoryChange sees a URL change where there is none.
+         */
+        const normalizedSearch = search ? '?' + search : '';
         this.incomingRouteParams.pathname = pathname;
-        this.incomingRouteParams.search = search ? '?' + search : undefined;
+        this.incomingRouteParams.search = normalizedSearch;
         this.incomingRouteParams.routeOptions = routeOptions;
-        this.props.history.push(pathname + (search ? '?' + search : ''));
+        this.props.history.push(pathname + normalizedSearch);
       }
     } else {
       this.handleNavigate(pathname, 'push', 'none', undefined, routeOptions, tab);
@@ -107,7 +112,8 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     }
 
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
-    if (leavingUrl !== location.pathname) {
+    const currentUrl = location.pathname + (location.search || '');
+    if (leavingUrl !== currentUrl) {
       if (!this.incomingRouteParams) {
         if (action === 'REPLACE') {
           this.incomingRouteParams = {

@@ -601,6 +601,7 @@ ion-fab-button,prop,closeIcon,string,close,false,false
 ion-fab-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-fab-button,prop,disabled,boolean,false,false,false
 ion-fab-button,prop,download,string | undefined,undefined,false,false
+ion-fab-button,prop,form,HTMLFormElement | string | undefined,undefined,false,false
 ion-fab-button,prop,href,string | undefined,undefined,false,false
 ion-fab-button,prop,mode,"ios" | "md",undefined,false,false
 ion-fab-button,prop,rel,string | undefined,undefined,false,false
@@ -1833,7 +1834,7 @@ ion-spinner,css-prop,--color
 ion-split-pane,shadow
 ion-split-pane,prop,contentId,string | undefined,undefined,false,true
 ion-split-pane,prop,disabled,boolean,false,false,false
-ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
+ion-split-pane,prop,when,boolean | string,'(min-width: 992px)',false,false
 ion-split-pane,event,ionSplitPaneVisible,{ visible: boolean; },true
 ion-split-pane,css-prop,--border,ios
 ion-split-pane,css-prop,--border,md

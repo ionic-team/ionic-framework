@@ -28,11 +28,21 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await cardModalPage.openModalByTrigger('#card');
       await cardModalPage.openModalByTrigger('.add');
 
+      // Firefox only: Move the mouse away from the ".add" button
+      // so the button's hover state is not captured in the
+      // screenshot
+      await page.mouse.move(0, 0);
+
       await expect(page).toHaveScreenshot(screenshot(`modal-card-stacked-present-tablet`));
     });
     test('should not have visual regressions with stacked custom cards', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card-custom');
       await cardModalPage.openModalByTrigger('.add');
+
+      // Firefox only: Move the mouse away from the ".add" button
+      // so the button's hover state is not captured in the
+      // screenshot
+      await page.mouse.move(0, 0);
 
       await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-stacked-present-tablet`));
     });

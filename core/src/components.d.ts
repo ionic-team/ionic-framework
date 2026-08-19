@@ -15,7 +15,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -53,7 +53,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -929,7 +929,7 @@ export namespace Components {
          */
         "clearText": string;
         /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, refer to [theming](/docs/theming/basics).
           * @default 'primary'
          */
         "color"?: Color;
@@ -961,6 +961,10 @@ export namespace Components {
           * Formatting options for dates and times. Should include a 'date' and/or 'time' object, each of which is of type [Intl.DateTimeFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options).
          */
         "formatOptions"?: FormatOptions;
+        /**
+          * Returns the default parts the datetime falls back to when no value is set: today's date and time snapped to the closest value allowed by the component's constraints (`min`, `max`, and the `*Values` props).
+         */
+        "getDefaultPart": () => Promise<DatetimeParts>;
         /**
           * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
          */
@@ -1147,6 +1151,10 @@ export namespace Components {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download": string | undefined;
+        /**
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+         */
+        "form"?: string | HTMLFormElement;
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -2654,7 +2662,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Show two knobs.
+          * If `true`, the range shows two knobs and `value` is an object with `lower` and `upper` properties. If `false`, the range shows one knob and `value` is a number.
           * @default false
          */
         "dualKnobs": boolean;
@@ -3313,7 +3321,7 @@ export namespace Components {
         "isVisible": () => Promise<boolean>;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when": string | boolean;
     }
@@ -6190,7 +6198,7 @@ declare namespace LocalJSX {
          */
         "clearText"?: string;
         /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, refer to [theming](/docs/theming/basics).
           * @default 'primary'
          */
         "color"?: Color;
@@ -6418,6 +6426,10 @@ declare namespace LocalJSX {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download"?: string | undefined;
+        /**
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+         */
+        "form"?: string | HTMLFormElement;
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -7927,7 +7939,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Show two knobs.
+          * If `true`, the range shows two knobs and `value` is an object with `lower` and `upper` properties. If `false`, the range shows one knob and `value` is a number.
           * @default false
          */
         "dualKnobs"?: boolean;
@@ -8683,7 +8695,7 @@ declare namespace LocalJSX {
         "onIonSplitPaneVisible"?: (event: IonSplitPaneCustomEvent<{ visible: boolean }>) => void;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when"?: string | boolean;
     }
@@ -9393,6 +9405,7 @@ declare namespace LocalJSX {
         "show": boolean;
         "translucent": boolean;
         "type": 'submit' | 'reset' | 'button';
+        "form": string | HTMLFormElement;
         "size": 'small';
         "closeIcon": string;
     }

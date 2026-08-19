@@ -8,6 +8,7 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
 
@@ -139,6 +140,10 @@ export class Datetime implements ComponentInterface {
    * Set true only by `visibleCallback`. Lets `hiddenCallback` ignore the
    * synthetic "not intersecting" entry IntersectionObserver fires on
    * `observe()` when the host mounts offscreen.
+   *
+   * Don't reset this in `disconnectedCallback`. Overlays disconnect and
+   * reconnect the host without re-creating the observers, so a reset there
+   * makes `hiddenCallback` miss the dismissal.
    */
   private hasBeenIntersecting = false;
 
@@ -178,7 +183,7 @@ export class Datetime implements ComponentInterface {
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
+   * For more information on colors, refer to [theming](/docs/theming/basics).
    */
   @Prop() color?: Color = 'primary';
 
@@ -602,6 +607,18 @@ export class Datetime implements ComponentInterface {
     if (closeOverlay) {
       this.closeParentOverlay(CANCEL_ROLE);
     }
+  }
+
+  /**
+   * Returns the default parts the datetime falls back to when no value is set:
+   * today's date and time snapped to the closest value allowed by the
+   * component's constraints (`min`, `max`, and the `*Values` props).
+   *
+   * @internal
+   */
+  @Method()
+  async getDefaultPart(): Promise<DatetimeParts> {
+    return this.defaultParts;
   }
 
   private warnIfIncorrectValueUsage = () => {
@@ -1103,7 +1120,6 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible = undefined;
     }
     this.loadTimeoutCleanup();
-    this.hasBeenIntersecting = false;
   }
 
   /**
@@ -1555,10 +1571,11 @@ export class Datetime implements ComponentInterface {
 
     const left = (nextMonth as HTMLElement).offsetWidth * 2;
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? -1 : 1),
-      behavior: 'smooth',
+      behavior: scrollMode,
     });
   };
 
@@ -1575,10 +1592,11 @@ export class Datetime implements ComponentInterface {
 
     const left = (prevMonth as HTMLElement).offsetWidth * 2;
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? 1 : -1),
-      behavior: 'smooth',
+      behavior: scrollMode,
     });
   };
 
@@ -1951,10 +1969,13 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            month: ev.detail.value,
-          });
+          // Month wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              month: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
@@ -1995,10 +2016,13 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            year: ev.detail.value,
-          });
+          // Year wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              year: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}

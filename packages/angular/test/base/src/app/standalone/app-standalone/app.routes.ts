@@ -30,6 +30,7 @@ export const routes: Routes = [
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(c => c.NavComponent) },
+      { path: 'nav-modal-root', loadComponent: () => import('../nav-modal-root/nav-modal-root.component').then(c => c.NavModalRootComponent) },
       { path: 'providers', loadComponent: () => import('../providers/providers.component').then(c => c.ProvidersComponent) },
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
@@ -55,6 +56,17 @@ export const routes: Routes = [
         ]
       },
       { path: 'tabs-basic', loadComponent: () => import('../tabs-basic/tabs-basic.component').then(c => c.TabsBasicComponent) },
+      { path: 'tabs-search-params', redirectTo: '/standalone/tabs-search-params/tab1?foo=bar', pathMatch: 'full' },
+      {
+        path: 'tabs-search-params',
+        loadComponent: () => import('../tabs-search-params/tabs-search-params.component').then(c => c.TabsSearchParamsComponent),
+        children: [
+          { path: 'tab1', loadComponent: () => import('../tabs-search-params/tab1.component').then(c => c.TabsSearchParamsTab1Component) },
+          { path: 'tab2', loadComponent: () => import('../tabs-search-params/tab2.component').then(c => c.TabsSearchParamsTab2Component) },
+          { path: 'tab3', loadComponent: () => import('../tabs-search-params/tab3.component').then(c => c.TabsSearchParamsTab3Component) },
+          { path: 'tab4', loadComponent: () => import('../tabs-search-params/tab4.component').then(c => c.TabsSearchParamsTab4Component) }
+        ]
+      },
       {
         path: 'validation',
         children: [
