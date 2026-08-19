@@ -1,6 +1,6 @@
 {
   "name": "@ionic/migrate",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Migration tool to automate and report on breaking changes across Ionic Framework major versions.",
   "keywords": [
     "ionic",
