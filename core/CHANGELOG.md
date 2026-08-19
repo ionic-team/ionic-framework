@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
+
+### Bug Fixes
+
+* **gesture:** remove leaked optsTest listener from passive support check ([#31363](https://github.com/ionic-team/ionic-framework/issues/31363)) ([c689000](https://github.com/ionic-team/ionic-framework/commit/c6890002df0a1ec5ac030626b1694e87022365c0)), closes [#30539](https://github.com/ionic-team/ionic-framework/issues/30539)
+* **menu:** respect ion-app dir attribute for menu animation side ([#31246](https://github.com/ionic-team/ionic-framework/issues/31246)) ([2618a6f](https://github.com/ionic-team/ionic-framework/commit/2618a6f7bd793ad09e38e4868d753189610eff9d)), closes [#30226](https://github.com/ionic-team/ionic-framework/issues/30226)
+* **range:** update knob positions when dualKnobs changes ([#31365](https://github.com/ionic-team/ionic-framework/issues/31365)) ([7d64d62](https://github.com/ionic-team/ionic-framework/commit/7d64d62a31d59078560575ad9c4fc67a8e49e524)), closes [#31026](https://github.com/ionic-team/ionic-framework/issues/31026)
+
+
 ## [8.8.18](https://github.com/ionic-team/ionic-framework/compare/v8.8.17...v8.8.18) (2026-08-12)
 
 
