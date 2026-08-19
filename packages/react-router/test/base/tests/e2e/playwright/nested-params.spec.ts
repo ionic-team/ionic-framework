@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ionPageVisible, withTestingMode } from './utils/test-utils';
+import { ionPageVisible, trackPeakMatchCount, withTestingMode } from './utils/test-utils';
 
 test.describe('Nested Params', () => {
 
@@ -44,4 +44,23 @@ test.describe('Nested Params', () => {
     await expect(page.getByText('Layout sees user: 42')).toBeVisible();
   });
 
+  // A duplicate details page, even briefly, fails this spec's text assertions on
+  // a strict mode violation.
+  test('should not duplicate the details page while switching params', async ({ page }) => {
+    await page.goto(withTestingMode('/nested-params'));
+    await ionPageVisible(page, 'nested-params-landing');
+
+    await page.locator('#go-to-user-99').click();
+    await expect(page.getByText('Details view user: 99')).toBeVisible();
+
+    await page.locator('[data-pageid="nested-params-user-99"]:not(.ion-page-hidden) #back-to-landing').click();
+    await ionPageVisible(page, 'nested-params-landing');
+
+    const peakDetailsPages = await trackPeakMatchCount(page, '[data-testid="user-details-param"]', '42');
+
+    await page.locator('#go-to-user-42').click();
+    await expect(page.getByText('Details view user: 42')).toBeVisible();
+
+    expect(await peakDetailsPages()).toBe(1);
+  });
 });
