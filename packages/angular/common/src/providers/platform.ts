@@ -8,6 +8,14 @@ import { Subscription, Subject } from 'rxjs';
 // TODO(FW-2827): types
 
 export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
+  /**
+   * @param priority  Handlers with a higher priority run first.
+   * @param callback  Called with a function that passes control to the next handler.
+   * @param [destroyRef]  Optionally unsubscribe when this `DestroyRef` is destroyed. For a page
+   * in an `ion-router-outlet` that is when the page is popped off the stack, not when it is
+   * navigated away from.
+   * @returns the subscription, which can also be unsubscribed by hand.
+   */
   subscribeWithPriority(
     priority: number,
     callback: (processNextHandler: () => void) => Promise<any> | void,
