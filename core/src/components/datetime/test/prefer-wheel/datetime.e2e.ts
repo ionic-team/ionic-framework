@@ -688,3 +688,95 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: wheel value'), () => {
+    test('should give an outside click handler the date the wheel is showing', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30449',
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime locale="en-US" presentation="date" prefer-wheel="true" value="2022-06-15"></ion-datetime>
+        <button id="save">Save</button>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await page.evaluate(() => {
+        const datetime = document.querySelector('ion-datetime') as any;
+        const column = datetime.shadowRoot.querySelector('.year-column');
+        const scrollEl = column.shadowRoot.querySelector('.picker-opts');
+        const w = window as any;
+
+        w.lastScrollAt = 0;
+        scrollEl.addEventListener('scroll', () => {
+          w.lastScrollAt = performance.now();
+        });
+
+        /**
+         * Stands in for an application's own Save button, which reads the
+         * datetime's value when it is clicked.
+         */
+        document.querySelector('#save')!.addEventListener('click', () => {
+          w.onSave = {
+            datetimeValue: datetime.value,
+            visibleYear: String(column.querySelector('.option-active')?.value ?? ''),
+            msSinceScroll: performance.now() - w.lastScrollAt,
+          };
+        });
+
+        w.startScroll = () => scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
+      });
+
+      /**
+       * Press the column the way a drag would, so the scroll that follows counts
+       * as the user's. Pressing dead centre lands on the year already selected,
+       * so the press itself does not change the value.
+       */
+      const column = (await page.locator('.year-column').boundingBox())!;
+      await page.mouse.move(column.x + column.width / 2, column.y + column.height / 2);
+      await page.mouse.down();
+      await page.mouse.up();
+
+      await page.evaluate(() => (window as any).startScroll());
+
+      /**
+       * Wait until a different year is under the highlight, while the column is
+       * still scrolling towards its resting place.
+       */
+      await page.waitForFunction(
+        () => {
+          const datetime = document.querySelector('ion-datetime') as any;
+          const highlighted = datetime.shadowRoot.querySelector('.year-column .option-active');
+          const isScrolling = performance.now() - (window as any).lastScrollAt < 100;
+          return highlighted !== null && String(highlighted.value) !== '2022' && isScrolling;
+        },
+        undefined,
+        { timeout: 5000 }
+      );
+
+      await page.locator('#save').click();
+
+      const onSave = await page.evaluate(() => (window as any).onSave);
+
+      /**
+       * Guards against a false pass: if the column had already stopped
+       * scrolling then this test is not exercising the race at all.
+       */
+      expect(onSave.msSinceScroll).toBeLessThan(100);
+
+      expect(onSave.visibleYear).not.toBe('2022');
+
+      // The value the Save button saw is the year the user could see.
+      expect(onSave.datetimeValue).toContain(`${onSave.visibleYear}-`);
+    });
+  });
+});
