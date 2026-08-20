@@ -1000,4 +1000,115 @@ describe('Routing', () => {
     expect(routeInfo.routerAction).toEqual('push');
     expect(routeInfo.routerDirection).toEqual('forward');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should keep the delta of a back navigation that replaced a cancelled one', async () => {
+    const createPage = (id: string) => ({
+      components: { IonPage },
+      name: id,
+      template: `<ion-page data-pageid="${id}"></ion-page>`
+    });
+
+    const Home = createPage('home');
+    const First = createPage('first');
+    const Second = createPage('second');
+
+    let racing = false;
+    let releaseFirstBack: () => void;
+    let releaseSecondBack: () => void;
+    let firstBackReachedGuard: () => void;
+    let secondBackReachedGuard: () => void;
+    let cancelReported: () => void;
+
+    const firstBackStarted = new Promise((resolve) => {
+      firstBackReachedGuard = resolve as () => void;
+    });
+    const secondBackStarted = new Promise((resolve) => {
+      secondBackReachedGuard = resolve as () => void;
+    });
+    const firstBackCancelled = new Promise((resolve) => {
+      cancelReported = resolve as () => void;
+    });
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/first', component: First },
+        { path: '/second', component: Second }
+      ]
+    });
+
+    /*
+     * Both back navigations are held inside their guards so the test controls
+     * which one settles first. The second one stages its own navigation info as
+     * soon as its popstate lands, which is why the first one must not clear it.
+     */
+    router.beforeEach(async (to) => {
+      if (!racing) {
+        return true;
+      }
+
+      if (to.path === '/first') {
+        firstBackReachedGuard();
+        await new Promise((resolve) => {
+          releaseFirstBack = resolve as () => void;
+        });
+      }
+
+      if (to.path === '/home') {
+        secondBackReachedGuard();
+        await new Promise((resolve) => {
+          releaseSecondBack = resolve as () => void;
+        });
+      }
+
+      return true;
+    });
+
+    router.afterEach((_to, _from, failure) => {
+      if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+        cancelReported();
+      }
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/first');
+    await waitForRouter();
+    router.push('/second');
+    await waitForRouter();
+
+    racing = true;
+
+    // First back, held until the second one is also in flight.
+    router.back();
+    await firstBackStarted;
+
+    // Second back, which replaces the first and stages its own info.
+    router.back();
+    await secondBackStarted;
+
+    // Let the first back finish, which reports it as cancelled.
+    releaseFirstBack();
+    await firstBackCancelled;
+
+    // Only now let the second back finish.
+    releaseSecondBack();
+    await waitForRouter();
+
+    const navManager = wrapper.vm.$.appContext.provides.navManager;
+    const routeInfo = navManager.getCurrentRouteInfo();
+
+    expect(routeInfo.pathname).toEqual('/home');
+    expect(routeInfo.routerAction).toEqual('pop');
+    expect(routeInfo.routerDirection).toEqual('back');
+  });
 });

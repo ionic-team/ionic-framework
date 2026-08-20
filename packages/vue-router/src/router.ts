@@ -29,6 +29,7 @@ export const createIonRouter = (
     direction: undefined,
     action: undefined,
     delta: undefined,
+    to: undefined,
   };
 
   /**
@@ -48,33 +49,40 @@ export const createIonRouter = (
     ) => {
       if (failure) {
         /*
-         * vue-router reverts the history entry for aborted and duplicated
-         * navigations, so any state staged for that navigation describes
-         * something that no longer happened. Both pieces are normally consumed
-         * by handleHistoryChange, which does not run when the navigation fails.
+         * State staged for a navigation that failed describes something that
+         * did not happen. handleHistoryChange normally consumes it, but it does
+         * not run when the navigation fails, so it has to be cleared here or
+         * the next navigation picks it up instead.
          *
-         * A stale delta makes the next navigation look like history traversal,
+         * A stale delta makes that navigation look like history traversal,
          * which stops the incoming route from being added. Stale route params
          * are left behind by handleNavigateBack and apply the previous route's
          * id and pop action to whatever is navigated to next.
          *
-         * This applies to cancelled navigations too. Their history entry is
-         * not reverted, but the state describes the navigation that was
-         * replaced rather than the one that replaced it, so leaving it in
-         * place hands a back navigation's delta to an unrelated push.
+         * Only clear state that belongs to this navigation. A second history
+         * navigation can replace this one and stage its own information first,
+         * in which case clearing would strip the delta from the navigation that
+         * is still running.
          *
          * This only covers navigations that fail. A guard that returns a
          * location redirects rather than fails, so vue-router neither reverts
          * the history entry nor calls afterEach for the original navigation,
          * and the staged state still reaches the redirect target.
          */
-        currentNavigationInfo = {
-          direction: undefined,
-          action: undefined,
-          delta: undefined,
-        };
+        const staysWithThisNavigation =
+          currentNavigationInfo.to === undefined ||
+          currentNavigationInfo.to === to.fullPath;
 
-        incomingRouteParams = undefined;
+        if (staysWithThisNavigation) {
+          currentNavigationInfo = {
+            direction: undefined,
+            action: undefined,
+            delta: undefined,
+            to: undefined,
+          };
+
+          incomingRouteParams = undefined;
+        }
 
         return;
       }
@@ -99,6 +107,7 @@ export const createIonRouter = (
         direction: undefined,
         action: undefined,
         delta: undefined,
+        to: undefined,
       };
     }
   );
@@ -128,7 +137,7 @@ export const createIonRouter = (
     });
   }
 
-  opts.history.listen((_: any, _x: any, info: any) => {
+  opts.history.listen((to: any, _x: any, info: any) => {
     /**
      * history.listen only fires on certain
      * event such as when the user clicks the
@@ -150,6 +159,12 @@ export const createIonRouter = (
        */
       action: info.type === "pop" && info.delta >= 1 ? "push" : info.type,
       direction: info.direction === "" ? "forward" : info.direction,
+
+      /**
+       * Recorded so that a failed navigation can tell whether this
+       * information is its own before clearing it.
+       */
+      to,
     };
   });
 
