@@ -1,5 +1,20 @@
 import { expect } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import { configs, dragElementByYAxis, test } from '@utils/test/playwright';
+
+const collectConsoleErrors = (page: Page) => {
+  const logs: string[] = [];
+
+  page.on('console', (msg) => {
+    if (msg.type() === 'error') {
+      logs.push(msg.text());
+    }
+  });
+
+  return logs;
+};
+
+const SLOT_ERROR = '[Ionic Error]: [ion-refresher] - Make sure you use: <ion-refresher slot="fixed">';
 
 /**
  * Rendering puts `slot="fixed"` on the host, so a refresher whose markup omits the
@@ -9,8 +24,8 @@ import { configs, dragElementByYAxis, test } from '@utils/test/playwright';
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('refresher: missing slot'), () => {
-    test('should still set up the pull-to-refresh gesture', async ({ page }, testInfo) => {
+  test.describe(title('refresher: slot validation'), () => {
+    test('should still set up the pull-to-refresh gesture when the slot is missing', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/31376',
@@ -42,13 +57,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('should report an error telling the developer to add the slot', async ({ page }) => {
-      const logs: string[] = [];
-
-      page.on('console', (msg) => {
-        if (msg.type() === 'error') {
-          logs.push(msg.text());
-        }
-      });
+      const logs = collectConsoleErrors(page);
 
       await page.setContent(
         `
@@ -63,7 +72,25 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.locator('ion-refresher.hydrated').waitFor({ state: 'attached' });
 
       expect(logs.length).toBe(1);
-      expect(logs[0]).toContain('[Ionic Error]: [ion-refresher] - Make sure you use: <ion-refresher slot="fixed">');
+      expect(logs[0]).toContain(SLOT_ERROR);
+    });
+
+    test('should not report an error when the slot is set', async ({ page }) => {
+      const logs = collectConsoleErrors(page);
+
+      await page.setContent(
+        `
+        <ion-content>
+          <ion-refresher slot="fixed">
+            <ion-refresher-content></ion-refresher-content>
+          </ion-refresher>
+        </ion-content>
+      `,
+        config
+      );
+      await page.locator('ion-refresher.hydrated').waitFor({ state: 'attached' });
+
+      expect(logs).toEqual([]);
     });
   });
 });
