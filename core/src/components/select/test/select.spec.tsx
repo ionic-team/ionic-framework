@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
+import { alertController } from '@utils/overlays';
 
 import { config } from '../../../global/config';
 import { SelectOption } from '../../select-option/select-option';
@@ -197,6 +198,24 @@ describe('ion-select: option plain text', () => {
     expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('A Star');
   });
 
+  it('should read option text when the whole option content is wrapped in an element', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select value="star"><ion-select-option value="star"><b>Star</b></ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    await page.waitForChanges();
+
+    /**
+     * An option with no text node of its own, such as one whose label comes
+     * from an i18n component, would otherwise render as an empty select with
+     * an empty accessible name.
+     */
+    expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('Star');
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('Star');
+  });
+
   it('should ignore content assigned to the start and end slots', async () => {
     const page = await newSpecPage({
       components: [Select, SelectOption],
@@ -225,6 +244,60 @@ describe('ion-select: option plain text', () => {
     await page.waitForChanges();
 
     expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('Star Option');
+  });
+});
+
+describe('ion-select: overlay option labels', () => {
+  /**
+   * The overlay interfaces build their labels from the same helper that
+   * produces the displayed text, so they need the same coverage. `ion-alert`
+   * is not defined in a spec page, so the created overlay is stubbed and the
+   * options passed to the controller are asserted instead.
+   */
+  const stubAlertController = () =>
+    jest.spyOn(alertController, 'create').mockImplementation(async () => {
+      const overlay = document.createElement('div') as any;
+      overlay.present = () => Promise.resolve();
+      // Never resolves, so the select keeps treating the overlay as open.
+      overlay.onDidDismiss = () => new Promise(() => {});
+      return overlay;
+    });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('should label alert inputs with the text the option renders', async () => {
+    const createAlert = stubAlertController();
+
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `
+        <ion-select>
+          <ion-select-option value="adjacent"></ion-select-option>
+          <ion-select-option value="wrapped"><b>Star</b></ion-select-option>
+        </ion-select>
+      `,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+
+    /**
+     * Frameworks render `{icon}{label}` as two sibling text nodes with no
+     * whitespace between them. The nodes have to be built here rather than in
+     * markup, because a parser collapses adjacent text into a single node.
+     */
+    select
+      .querySelector('ion-select-option[value="adjacent"]')!
+      .append(document.createTextNode('\u2605'), document.createTextNode('Star'));
+
+    await page.waitForChanges();
+
+    await select.open();
+
+    expect(createAlert).toHaveBeenCalledTimes(1);
+    const { inputs } = createAlert.mock.calls[0][0];
+    expect(inputs!.map((input) => input.label)).toEqual(['\u2605Star', 'Star']);
   });
 });
 
