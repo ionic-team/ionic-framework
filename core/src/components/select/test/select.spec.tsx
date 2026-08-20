@@ -226,6 +226,7 @@ describe('ion-select: option plain text', () => {
     await page.waitForChanges();
 
     expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('Star');
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('Star');
   });
 
   it('should collapse whitespace from the source markup around option text', async () => {
