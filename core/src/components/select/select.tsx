@@ -1570,9 +1570,13 @@ const getOptionContent = (
     return null;
   }
 
-  // Return plain text if no elements are found
+  /**
+   * Return plain text if no elements are found. This reads the option the
+   * same way the non-custom-HTML path does, so the two do not disagree
+   * about what an option's text is.
+   */
   if (!slotName && nodes.every((n) => n.nodeType === Node.TEXT_NODE)) {
-    return nodes.map((n) => n.textContent?.trim()).join(' ') || null;
+    return getDefaultSlotPlainText(option) || null;
   }
 
   /**

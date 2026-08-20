@@ -248,22 +248,22 @@ describe('ion-select: option plain text', () => {
   });
 });
 
-describe('ion-select: overlay option labels', () => {
-  /**
-   * The overlay interfaces build their labels from the same helper that
-   * produces the displayed text, so they need the same coverage. `ion-alert`
-   * is not defined in a spec page, so the created overlay is stubbed and the
-   * options passed to the controller are asserted instead.
-   */
-  const stubAlertController = () =>
-    jest.spyOn(alertController, 'create').mockImplementation(async () => {
-      const overlay = document.createElement('div') as any;
-      overlay.present = () => Promise.resolve();
-      // Never resolves, so the select keeps treating the overlay as open.
-      overlay.onDidDismiss = () => new Promise(() => {});
-      return overlay;
-    });
+/**
+ * The overlay interfaces build their labels from the same helper that produces
+ * the displayed text, so they need the same coverage. `ion-alert` is not
+ * defined in a spec page, so the created overlay is stubbed and the options
+ * passed to the controller are asserted instead.
+ */
+const stubAlertController = () =>
+  jest.spyOn(alertController, 'create').mockImplementation(async () => {
+    const overlay = document.createElement('div') as any;
+    overlay.present = () => Promise.resolve();
+    // Never resolves, so the select keeps treating the overlay as open.
+    overlay.onDidDismiss = () => new Promise(() => {});
+    return overlay;
+  });
 
+describe('ion-select: overlay option labels', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -299,6 +299,67 @@ describe('ion-select: overlay option labels', () => {
     expect(createAlert).toHaveBeenCalledTimes(1);
     const { inputs } = createAlert.mock.calls[0][0];
     expect(inputs!.map((input) => input.label)).toEqual(['\u2605Star', 'Star']);
+  });
+});
+
+describe('ion-select: option plain text with custom HTML enabled', () => {
+  /**
+   * With `innerHTMLTemplatesEnabled` on, the option is read through
+   * `getOptionContent` instead. An option that holds only text still has to
+   * produce the same text as the default path.
+   */
+  beforeEach(() => {
+    config.reset({ innerHTMLTemplatesEnabled: true });
+  });
+
+  afterEach(() => {
+    config.reset({});
+    jest.restoreAllMocks();
+  });
+
+  const appendAdjacentTextNodes = (select: HTMLIonSelectElement) => {
+    /**
+     * Frameworks render `{icon}{label}` as two sibling text nodes with no
+     * whitespace between them. The nodes have to be built here rather than in
+     * markup, because a parser collapses adjacent text into a single node.
+     */
+    select
+      .querySelector('ion-select-option')!
+      .append(document.createTextNode('\u2605'), document.createTextNode('Star'));
+  };
+
+  it('should not insert a space between adjacent text nodes in an option', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select><ion-select-option value="star"></ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    appendAdjacentTextNodes(select);
+
+    select.value = 'star';
+    await page.waitForChanges();
+
+    expect(select.shadowRoot!.querySelector('.select-text')!.innerHTML).toBe('\u2605Star');
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('\u2605Star');
+  });
+
+  it('should label alert inputs with the text the option renders', async () => {
+    const createAlert = stubAlertController();
+
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select><ion-select-option value="star"></ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    appendAdjacentTextNodes(select);
+    await page.waitForChanges();
+
+    await select.open();
+
+    const { inputs } = createAlert.mock.calls[0][0];
+    expect(inputs!.map((input) => input.label)).toEqual(['\u2605Star']);
   });
 });
 
