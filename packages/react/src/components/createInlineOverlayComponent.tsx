@@ -57,6 +57,12 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     stableMergedRefs: React.RefCallback<HTMLElement>;
     portalTarget: HTMLElement | null;
     isUnmounted = false;
+    /**
+     * A relocated nested host removed in `componentWillUnmount`, together with
+     * the parent it was removed from, so `componentDidMount` can put it back
+     * when React was only hiding this subtree rather than destroying it.
+     */
+    removedHost: { node: HTMLElement; parent: HTMLElement } | null = null;
 
     constructor(props: InternalProps) {
       super(props);
@@ -86,6 +92,21 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       // re-uses this instance and leaves the flag set from the prior
       // componentWillUnmount.
       this.isUnmounted = false;
+
+      /**
+       * React also calls `componentWillUnmount` when it *hides* a subtree
+       * rather than destroying it - a Suspense boundary falling back, an
+       * Offscreen tree, or the StrictMode dev cycle - and calls
+       * `componentDidMount` again on the same instance when it reveals it.
+       * Put back a nested host removed there: the overlay can still be
+       * mid-`present()`, and React never re-inserts a node it did not remove
+       * itself, so the presenting overlay would be lost for good.
+       */
+      const { removedHost } = this;
+      this.removedHost = null;
+      if (removedHost && !removedHost.node.isConnected && removedHost.parent.isConnected) {
+        removedHost.parent.appendChild(removedHost.node);
+      }
 
       this.componentDidUpdate(this.props);
 
@@ -149,9 +170,13 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
            * Nested overlays render inline inside a `<template>`. If the host
            * has been moved out of that template, React's unmount won't reach
            * it, so remove it directly. A host still in its template is left
-           * for React to remove.
+           * for React to remove. The removal is recorded so `componentDidMount`
+           * can undo it if this turns out to be a hide rather than a real
+           * unmount.
            */
-          if (!(node.parentElement instanceof HTMLTemplateElement)) {
+          const parent = node.parentElement;
+          if (parent && !(parent instanceof HTMLTemplateElement)) {
+            this.removedHost = { node, parent };
             node.remove();
           }
         } else if (this.portalTarget && node.parentNode !== this.portalTarget) {

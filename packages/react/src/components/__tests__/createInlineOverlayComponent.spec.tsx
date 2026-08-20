@@ -131,6 +131,72 @@ describe('createInlineOverlayComponent: unmount cleanup', () => {
     expect(document.querySelector('ion-popover')).toBeNull();
   });
 
+  it('restores a relocated nested overlay when a Suspense boundary hides and reveals it', async () => {
+    /**
+     * React runs `componentWillUnmount` when it *hides* a subtree as well as
+     * when it destroys one: a Suspense boundary falling back after mount runs
+     * it, then runs `componentDidMount` again on the same instance when the
+     * boundary reveals its content. A host removed while hidden has to come
+     * back, since React only re-inserts nodes it removed itself. Otherwise an
+     * overlay that was mid-`present()` is gone for good, with no dismiss
+     * lifecycle ever firing.
+     */
+    let resolveSuspender!: () => void;
+    let hasResolved = false;
+    const suspenderPromise = new Promise<void>((resolve) => {
+      resolveSuspender = () => {
+        hasResolved = true;
+        resolve();
+      };
+    });
+
+    const Suspender = () => {
+      if (!hasResolved) {
+        throw suspenderPromise;
+      }
+      return null;
+    };
+
+    let suspend!: () => void;
+    const Boundary = () => {
+      const [isSuspended, setIsSuspended] = React.useState(false);
+      suspend = () => setIsSuspended(true);
+
+      return (
+        <React.Suspense fallback={<div>loading</div>}>
+          <IonModal keepContentsMounted={true}>
+            <IonPopover />
+          </IonModal>
+          {isSuspended ? <Suspender /> : null}
+        </React.Suspense>
+      );
+    };
+
+    render(<Boundary />);
+
+    const popover = document.body.querySelector('ion-popover') as HTMLElement;
+
+    // CoreDelegate teleports the host out of its `<template>` as `present()`
+    // starts, before the events that flip `isOpen` have fired.
+    teleport(popover);
+    const teleportDestination = popover.parentElement as HTMLElement;
+
+    // A sibling suspends, so React hides the boundary's content: the overlay
+    // wrapper gets componentWillUnmount without actually being unmounted.
+    act(() => {
+      suspend();
+    });
+
+    // The boundary reveals its content again on the same instances.
+    await act(async () => {
+      resolveSuspender();
+      await suspenderPromise;
+    });
+
+    expect(popover.isConnected).toBe(true);
+    expect(popover.parentElement).toBe(teleportDestination);
+  });
+
   it('removes an open, relocated nested overlay on unmount', () => {
     const { unmount } = render(
       <IonModal keepContentsMounted={true}>
