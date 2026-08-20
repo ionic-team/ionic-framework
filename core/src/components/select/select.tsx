@@ -1638,15 +1638,16 @@ const getOptionDefaultSlot = (option: HTMLIonSelectOptionElement): Node[] | null
 
 /**
  * Extracts plain text from only the default slot of an option,
- * excluding content assigned to named slots (start/end).
+ * excluding content assigned to named slots (start/end). Text is
+ * concatenated with no separator and collapsible whitespace is
+ * collapsed, approximating how the browser renders the option.
+ * NBSP is not collapsible, so it is preserved.
  *
- * The nodes are read the way the browser renders them: their text is
- * concatenated with no separator, and collapsible whitespace is collapsed to a
- * single space.
+ * @param option - The `ion-select-option` element to read text from.
+ * @returns The option's default slot text.
  */
 const getDefaultSlotPlainText = (option: HTMLIonSelectOptionElement): string => {
   const text = (getOptionDefaultSlot(option) ?? []).map((node) => node.textContent ?? '').join('');
-  // Only the whitespace characters HTML collapses; NBSP and friends are kept.
   return text.replace(/[ \t\n\r\f]+/g, ' ').trim();
 };
 
