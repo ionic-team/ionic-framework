@@ -513,7 +513,7 @@ ion-content,part,scroll
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false
 ion-datetime,prop,clearText,string,'Clear',false,false
-ion-datetime,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,false
+ion-datetime,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,false
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
@@ -582,7 +582,7 @@ ion-datetime,part,wheel-item
 ion-datetime,part,wheel-item active
 
 ion-datetime-button,shadow
-ion-datetime-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-datetime-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-datetime-button,prop,datetime,string | undefined,undefined,false,false
 ion-datetime-button,prop,disabled,boolean,false,false,true
 ion-datetime-button,prop,mode,"ios" | "md",undefined,false,false
@@ -714,7 +714,7 @@ ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefine
 ion-input,scoped
 ion-input,prop,autocapitalize,string,'off',false,false
 ion-input,prop,autocomplete,"additional-name" | "address-level1" | "address-level2" | "address-level3" | "address-level4" | "address-line1" | "address-line2" | "address-line3" | "bday" | "bday-day" | "bday-month" | "bday-year" | "cc-additional-name" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-family-name" | "cc-given-name" | "cc-name" | "cc-number" | "cc-type" | "country" | "country-name" | "current-password" | "email" | "family-name" | "given-name" | "honorific-prefix" | "honorific-suffix" | "impp" | "language" | "name" | "new-password" | "nickname" | "off" | "on" | "one-time-code" | "organization" | "organization-title" | "photo" | "postal-code" | "sex" | "street-address" | "tel" | "tel-area-code" | "tel-country-code" | "tel-extension" | "tel-local" | "tel-national" | "transaction-amount" | "transaction-currency" | "url" | "username",'off',false,false
-ion-input,prop,autocorrect,"off" | "on",'off',false,false
+ion-input,prop,autocorrect,boolean,false,false,false
 ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
 ion-input,prop,clearInputIcon,string | undefined,undefined,false,false
@@ -1168,7 +1168,7 @@ ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-modal,prop,expandToScroll,boolean,true,false,false
 ion-modal,prop,focusTrap,boolean,true,false,false
 ion-modal,prop,handle,boolean | undefined,undefined,false,false
-ion-modal,prop,handleBehavior,"cycle" | "none" | undefined,'none',false,false
+ion-modal,prop,handleBehavior,"cycle" | "none" | undefined,'cycle',false,false
 ion-modal,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-modal,prop,initialBreakpoint,number | undefined,undefined,false,false
 ion-modal,prop,isOpen,boolean,false,false,false
@@ -1270,7 +1270,7 @@ ion-picker,css-prop,--highlight-border-radius,ios
 ion-picker,css-prop,--highlight-border-radius,md
 
 ion-picker-column,shadow
-ion-picker-column,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-picker-column,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-picker-column,prop,disabled,boolean,false,false,false
 ion-picker-column,prop,mode,"ios" | "md",undefined,false,false
 ion-picker-column,prop,value,number | string | undefined,undefined,false,false
@@ -1278,64 +1278,9 @@ ion-picker-column,method,setFocus,setFocus() => Promise<void>
 ion-picker-column,event,ionChange,PickerColumnChangeEventDetail,true
 
 ion-picker-column-option,shadow
-ion-picker-column-option,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-picker-column-option,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-picker-column-option,prop,disabled,boolean,false,false,false
 ion-picker-column-option,prop,value,any,undefined,false,false
-
-ion-picker-legacy,scoped
-ion-picker-legacy,prop,animated,boolean,true,false,false
-ion-picker-legacy,prop,backdropDismiss,boolean,true,false,false
-ion-picker-legacy,prop,buttons,PickerButton[],[],false,false
-ion-picker-legacy,prop,columns,PickerColumn[],[],false,false
-ion-picker-legacy,prop,cssClass,string | string[] | undefined,undefined,false,false
-ion-picker-legacy,prop,duration,number,0,false,false
-ion-picker-legacy,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-picker-legacy,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
-ion-picker-legacy,prop,isOpen,boolean,false,false,false
-ion-picker-legacy,prop,keyboardClose,boolean,true,false,false
-ion-picker-legacy,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-picker-legacy,prop,mode,"ios" | "md",undefined,false,false
-ion-picker-legacy,prop,showBackdrop,boolean,true,false,false
-ion-picker-legacy,prop,trigger,string | undefined,undefined,false,false
-ion-picker-legacy,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
-ion-picker-legacy,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
-ion-picker-legacy,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
-ion-picker-legacy,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
-ion-picker-legacy,method,present,present() => Promise<void>
-ion-picker-legacy,event,didDismiss,OverlayEventDetail<any>,true
-ion-picker-legacy,event,didPresent,void,true
-ion-picker-legacy,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
-ion-picker-legacy,event,ionPickerDidPresent,void,true
-ion-picker-legacy,event,ionPickerWillDismiss,OverlayEventDetail<any>,true
-ion-picker-legacy,event,ionPickerWillPresent,void,true
-ion-picker-legacy,event,willDismiss,OverlayEventDetail<any>,true
-ion-picker-legacy,event,willPresent,void,true
-ion-picker-legacy,css-prop,--backdrop-opacity,ios
-ion-picker-legacy,css-prop,--backdrop-opacity,md
-ion-picker-legacy,css-prop,--background,ios
-ion-picker-legacy,css-prop,--background,md
-ion-picker-legacy,css-prop,--background-rgb,ios
-ion-picker-legacy,css-prop,--background-rgb,md
-ion-picker-legacy,css-prop,--border-color,ios
-ion-picker-legacy,css-prop,--border-color,md
-ion-picker-legacy,css-prop,--border-radius,ios
-ion-picker-legacy,css-prop,--border-radius,md
-ion-picker-legacy,css-prop,--border-style,ios
-ion-picker-legacy,css-prop,--border-style,md
-ion-picker-legacy,css-prop,--border-width,ios
-ion-picker-legacy,css-prop,--border-width,md
-ion-picker-legacy,css-prop,--height,ios
-ion-picker-legacy,css-prop,--height,md
-ion-picker-legacy,css-prop,--max-height,ios
-ion-picker-legacy,css-prop,--max-height,md
-ion-picker-legacy,css-prop,--max-width,ios
-ion-picker-legacy,css-prop,--max-width,md
-ion-picker-legacy,css-prop,--min-height,ios
-ion-picker-legacy,css-prop,--min-height,md
-ion-picker-legacy,css-prop,--min-width,ios
-ion-picker-legacy,css-prop,--min-width,md
-ion-picker-legacy,css-prop,--width,ios
-ion-picker-legacy,css-prop,--width,md
 
 ion-popover,shadow
 ion-popover,prop,alignment,"center" | "end" | "start" | undefined,undefined,false,false
@@ -1422,7 +1367,7 @@ ion-radio,prop,justify,"end" | "space-between" | "start" | undefined,undefined,f
 ion-radio,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-radio,prop,mode,"ios" | "md",undefined,false,false
 ion-radio,prop,name,string,this.inputId,false,false
-ion-radio,prop,value,any,undefined,false,false
+ion-radio,prop,value,any,undefined,false,true
 ion-radio,event,ionBlur,void,true
 ion-radio,event,ionFocus,void,true
 ion-radio,css-prop,--border-radius,ios
@@ -1590,6 +1535,7 @@ ion-router-outlet,shadow
 ion-router-outlet,prop,animated,boolean,true,false,false
 ion-router-outlet,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-router-outlet,prop,mode,"ios" | "md",getIonMode(this),false,false
+ion-router-outlet,prop,swipeGesture,boolean | undefined,undefined,false,false
 
 ion-row,shadow
 
@@ -1597,7 +1543,7 @@ ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocapitalize,string,'off',false,false
 ion-searchbar,prop,autocomplete,"additional-name" | "address-level1" | "address-level2" | "address-level3" | "address-level4" | "address-line1" | "address-line2" | "address-line3" | "bday" | "bday-day" | "bday-month" | "bday-year" | "cc-additional-name" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-family-name" | "cc-given-name" | "cc-name" | "cc-number" | "cc-type" | "country" | "country-name" | "current-password" | "email" | "family-name" | "given-name" | "honorific-prefix" | "honorific-suffix" | "impp" | "language" | "name" | "new-password" | "nickname" | "off" | "on" | "one-time-code" | "organization" | "organization-title" | "photo" | "postal-code" | "sex" | "street-address" | "tel" | "tel-area-code" | "tel-country-code" | "tel-extension" | "tel-local" | "tel-national" | "transaction-amount" | "transaction-currency" | "url" | "username",'off',false,false
-ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
+ion-searchbar,prop,autocorrect,boolean,false,false,false
 ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
@@ -1796,14 +1742,30 @@ ion-select,css-prop,--placeholder-opacity,ios
 ion-select,css-prop,--placeholder-opacity,md
 ion-select,css-prop,--ripple-color,ios
 ion-select,css-prop,--ripple-color,md
+ion-select,css-prop,--select-text-gap,ios
+ion-select,css-prop,--select-text-gap,md
+ion-select,css-prop,--select-text-media-border-color,ios
+ion-select,css-prop,--select-text-media-border-color,md
+ion-select,css-prop,--select-text-media-border-radius,ios
+ion-select,css-prop,--select-text-media-border-radius,md
+ion-select,css-prop,--select-text-media-border-style,ios
+ion-select,css-prop,--select-text-media-border-style,md
+ion-select,css-prop,--select-text-media-border-width,ios
+ion-select,css-prop,--select-text-media-border-width,md
+ion-select,css-prop,--select-text-media-height,ios
+ion-select,css-prop,--select-text-media-height,md
+ion-select,css-prop,--select-text-media-width,ios
+ion-select,css-prop,--select-text-media-width,md
 ion-select,part,bottom
 ion-select,part,container
+ion-select,part,control
+ion-select,part,end
 ion-select,part,error-text
 ion-select,part,helper-text
 ion-select,part,icon
-ion-select,part,inner
 ion-select,part,label
 ion-select,part,placeholder
+ion-select,part,start
 ion-select,part,supporting-text
 ion-select,part,text
 ion-select,part,wrapper
@@ -1815,7 +1777,11 @@ ion-select-modal,prop,multiple,boolean | undefined,undefined,false,false
 ion-select-modal,prop,options,SelectModalOption[],[],false,false
 
 ion-select-option,shadow
+ion-select-option,prop,description,string | undefined,undefined,false,false
 ion-select-option,prop,disabled,boolean,false,false,false
+ion-select-option,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
+ion-select-option,prop,labelPlacement,"end" | "start" | undefined,undefined,false,false
+ion-select-option,prop,mode,"ios" | "md",undefined,false,false
 ion-select-option,prop,value,any,undefined,false,false
 
 ion-skeleton-text,shadow

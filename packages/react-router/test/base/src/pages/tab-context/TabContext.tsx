@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import {
   IonTabs,
   IonRouterOutlet,
@@ -16,21 +15,22 @@ import {
   IonTabsContext,
   IonButton,
 } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
 import { triangle, square } from 'ionicons/icons';
+import React, { useContext } from 'react';
+import { Route, Navigate } from 'react-router';
 
-interface TabsContextProps {}
+import TestDescription from '../../components/TestDescription';
 
-const TabsContext: React.FC<TabsContextProps> = () => {
+const TabsContext: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
-        <Route path="/tab-context/tab1" component={Tab1} exact />
-        <Route path="/tab-context/tab2" component={Tab2} exact />
-        <Redirect from="/tab-context" to="/tab-context/tab1" exact />
+        <Route index element={<Navigate to="/tab-context/tab1" replace />} />
+        <Route path="tab1" element={<Tab1 />} />
+        <Route path="tab2" element={<Tab2 />} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="tab1" href="/tab-context/tab1" routerOptions={{ unmount: true }}>
+        <IonTabButton tab="tab1" href="/tab-context/tab1">
           <IonIcon icon={triangle} />
           <IonLabel>Tab1</IonLabel>
         </IonTabButton>
@@ -59,6 +59,7 @@ const Tab1 = () => {
       <IonContent>
         <div>Page: {tabContext.activeTab}</div>
         <IonButton onClick={() => tabContext.selectTab('tab2')}>Go to tab2</IonButton>
+        <TestDescription>Verify the "Page:" label shows the correct active tab name (tab1 or tab2). Use the "Go to tab2"/"Go to tab1" buttons to switch tabs programmatically via IonTabsContext.selectTab. The displayed tab name should update to match the selected tab.</TestDescription>
       </IonContent>
     </IonPage>
   );

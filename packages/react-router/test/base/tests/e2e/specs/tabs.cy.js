@@ -21,6 +21,17 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1');
   });
 
+  // Verifies that /tabs outlet uses segment-aware scope checking
+  // so /tabs-secondary is not treated as a prefix match of /tabs
+  it('should hide /tabs views when navigating to /tabs-secondary (segment-aware scope)', () => {
+    cy.visit(`http://localhost:${port}/tabs/tab1`);
+    cy.ionPageVisible('tab1');
+
+    cy.get('#tabs-secondary').click();
+    cy.ionPageVisible('tab1-secondary');
+    cy.ionPageDoesNotExist('tab1');
+  });
+
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23087
   it('should return to correct view and url when going back from child page after switching tabs', () => {
     cy.visit(`http://localhost:${port}/tabs/tab1`);
@@ -38,7 +49,7 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1child1');
 
     cy.ionBackClick('tab1child1');
-    cy.ionPageDoesNotExist('tab1child1');
+    cy.ionPageHidden('tab1child1');
     cy.ionPageVisible('tab1');
 
     cy.url().should('include', '/tabs/tab1');

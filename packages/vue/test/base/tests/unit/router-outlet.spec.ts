@@ -79,7 +79,8 @@ describe('Routing', () => {
       expect.anything(),
       expect.anything(),
       expect.objectContaining({
-        direction: "none",
+        // "root" and "none" both resolve to duration=0 via hasRootDirection.
+        direction: "root",
         duration: 0,
         animationBuilder: undefined
       })
@@ -141,7 +142,7 @@ describe('Routing', () => {
       expect.anything(),
       expect.anything(),
       expect.objectContaining({
-        direction: "none",
+        direction: "root",
         duration: undefined,
         animationBuilder: animation
       })

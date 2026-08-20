@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
-import { IonRadioGroup, IonRadio } from "@ionic/angular/standalone";
+import { IonRadioGroup, IonRadio } from "@ionic/angular";
 import { ValueAccessorTestComponent } from "../value-accessor-test/value-accessor-test.component";
 
 @Component({

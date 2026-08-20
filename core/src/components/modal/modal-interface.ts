@@ -72,4 +72,13 @@ export interface ModalDragEventDetail {
    * the gesture.
    */
   snapBreakpoint?: number;
+  /**
+   * Whether the modal is attempting to dismiss when the drag gesture
+   * ends. A `canDismiss` callback can still cancel the dismiss after
+   * this event is emitted, so use `ionModalDidDismiss` to confirm that
+   * the modal actually closed.
+   *
+   * This is only set on `ionDragEnd`.
+   */
+  isDismissing?: boolean;
 }

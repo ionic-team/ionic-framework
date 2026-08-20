@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alert - Label Placement</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <script type="module">
+    import { alertController } from '../../../../dist/ionic/index.esm.js';
+    window.alertController = alertController;
+  </script>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Alert - Label Placement</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <button class="expand" id="radioStart" onclick="presentAlert('radio', 'start')">Radio — Placement Start</button>
+        <button class="expand" id="radioEnd" onclick="presentAlert('radio', 'end')">Radio — Placement End</button>
+        <button class="expand" id="checkboxStart" onclick="presentAlert('checkbox', 'start')">
+          Checkbox — Placement Start
+        </button>
+        <button class="expand" id="checkboxEnd" onclick="presentAlert('checkbox', 'end')">
+          Checkbox — Placement End
+        </button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const JUSTIFY_VARIANTS = ['start', 'end', 'space-between'];
+
+      function buildInputs(type, labelPlacement) {
+        return JUSTIFY_VARIANTS.flatMap((justify, i) => {
+          const shortLabel = `Justify ${justify}`;
+          const longLabel = `Justify ${justify} — ${'long label '.repeat(8).trim()}`;
+          return [
+            {
+              type,
+              label: shortLabel,
+              value: `${justify}-short`,
+              labelPlacement,
+              justify,
+              checked: i === 0,
+            },
+            {
+              type,
+              label: longLabel,
+              value: `${justify}-long`,
+              labelPlacement,
+              justify,
+            },
+          ];
+        });
+      }
+
+      async function presentAlert(type, labelPlacement) {
+        const alert = await alertController.create({
+          header: `${type} — ${labelPlacement}`,
+          inputs: buildInputs(type, labelPlacement),
+          buttons: [{ text: 'Cancel', role: 'cancel' }, { text: 'Ok' }],
+        });
+        await alert.present();
+      }
+    </script>
+  </body>
+</html>

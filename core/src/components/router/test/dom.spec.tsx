@@ -1,4 +1,4 @@
-import { scrollToFragment } from '../utils/dom';
+import { scrollToFragment, waitUntilNavNode } from '../utils/dom';
 
 describe('scrollToFragment', () => {
   beforeEach(() => {
@@ -95,5 +95,58 @@ describe('scrollToFragment', () => {
     `;
     // Lookup of 'other' must succeed even though a hidden sibling page exists.
     expect(await scrollToFragment('other')).toBe(true);
+  });
+});
+
+describe('waitUntilNavNode', () => {
+  afterEach(() => {
+    document.body.innerHTML = '';
+    jest.useRealTimers();
+  });
+
+  it('should resolve immediately when an outlet is already present', async () => {
+    document.body.innerHTML = '<ion-router-outlet></ion-router-outlet>';
+    await expect(waitUntilNavNode()).resolves.toBeUndefined();
+  });
+
+  it('should resolve when an outlet announces itself via ionNavWillLoad', async () => {
+    document.body.innerHTML = '';
+
+    let resolved = false;
+    const promise = waitUntilNavNode().then(() => {
+      resolved = true;
+    });
+
+    // Nothing to render yet, so the router keeps waiting.
+    await Promise.resolve();
+    expect(resolved).toBe(false);
+
+    // An outlet mounts and fires the load event.
+    document.body.innerHTML = '<ion-router-outlet></ion-router-outlet>';
+    window.dispatchEvent(new Event('ionNavWillLoad'));
+
+    await promise;
+    expect(resolved).toBe(true);
+  });
+
+  it('should resolve after a timeout when no outlet is ever found', async () => {
+    // Regression guard for the router hanging on a page that has no outlet
+    // (e.g. an ion-router with only an ion-nav, which is no longer an outlet as
+    // of Ionic 9). Without the timeout the returned promise would never settle.
+    jest.useFakeTimers();
+    document.body.innerHTML = '';
+
+    let resolved = false;
+    const promise = waitUntilNavNode().then(() => {
+      resolved = true;
+    });
+
+    await Promise.resolve();
+    expect(resolved).toBe(false);
+
+    jest.advanceTimersByTime(500);
+
+    await promise;
+    expect(resolved).toBe(true);
   });
 });

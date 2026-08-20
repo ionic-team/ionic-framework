@@ -13,8 +13,8 @@ import {
   forceUpdate,
   h,
 } from '@stencil/core';
-import type { NotchController } from '@utils/forms';
-import { createNotchController, checkInvalidState } from '@utils/forms';
+import type { NotchController, StartContainerController } from '@utils/forms';
+import { createNotchController, createStartContainerController, checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
@@ -54,6 +54,8 @@ export class Input implements ComponentInterface {
   private slotMutationController?: SlotMutationController;
   private notchController?: NotchController;
   private notchSpacerEl: HTMLElement | undefined;
+  private startContainerController?: StartContainerController;
+  private startContainerEl: HTMLElement | undefined;
 
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
@@ -110,7 +112,7 @@ export class Input implements ComponentInterface {
   /**
    * Whether auto correction should be enabled when the user is entering/editing the text value.
    */
-  @Prop() autocorrect: 'on' | 'off' = 'off';
+  @Prop() autocorrect: boolean = false;
 
   /**
    * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.
@@ -408,6 +410,8 @@ export class Input implements ComponentInterface {
     const { el } = this;
 
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
+      this.startContainerController?.calculateStartContainerWidth();
+
       this.setSlottedLabelId();
       forceUpdate(this);
     });
@@ -418,6 +422,16 @@ export class Input implements ComponentInterface {
       () => this.notchSpacerEl,
       () => this.labelSlot
     );
+
+    this.startContainerController = createStartContainerController(
+      el,
+      () => this.startContainerEl,
+      () => {
+        return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
+      }
+    );
+
+    this.startContainerController.calculateStartContainerWidth();
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
@@ -464,6 +478,7 @@ export class Input implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
+    this.startContainerController?.calculateStartContainerWidth();
   }
 
   disconnectedCallback() {
@@ -483,6 +498,11 @@ export class Input implements ComponentInterface {
     if (this.notchController) {
       this.notchController.destroy();
       this.notchController = undefined;
+    }
+
+    if (this.startContainerController) {
+      this.startContainerController.destroy();
+      this.startContainerController = undefined;
     }
 
     // Clean up validation observer to prevent memory leaks
@@ -796,61 +816,47 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * Stops propagation when the label is clicked,
-   * otherwise, two clicks will be triggered.
+   * Stops propagation for clicks on the input's own content (label text,
+   * input field) to prevent double-click events. Allows clicks on slotted
+   * content to propagate so event delegation works for parent handlers.
+   *
+   * Only slots belonging directly to this input should be considered.
+   * The input itself may have a slot attribute when placed in an item
+   * or toolbar, which does not make its content slotted content.
    */
   private onLabelClick = (ev: MouseEvent) => {
-    // Only stop propagation if the click was directly on the label
-    // and not on the input or other child elements
-    if (ev.target === ev.currentTarget) {
+    const target = ev.target as HTMLElement;
+    const slotted = target.closest('[slot="start"], [slot="end"]');
+
+    if (slotted === null || slotted === this.el || !this.el.contains(slotted)) {
       ev.stopPropagation();
     }
   };
 
   /**
-   * Renders the border container
-   * when fill="outline".
+   * Renders the outline border with a notch for the label.
    */
-  private renderLabelContainer() {
-    const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
-
-    if (hasOutlineFill) {
-      /**
-       * The outline fill has a special outline
-       * that appears around the input and the label.
-       * Certain stacked and floating label placements cause the
-       * label to translate up and create a "cut out"
-       * inside of that border by using the notch-spacer element.
-       */
-      return [
-        <div class="input-outline-container">
-          <div class="input-outline-start"></div>
-          <div
-            class={{
-              'input-outline-notch': true,
-              'input-outline-notch-hidden': !this.hasLabel,
-            }}
-          >
-            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
-              {this.label}
-            </div>
+  private renderOutlineContainer() {
+    return (
+      <div class="input-outline-container">
+        <div class="input-outline-start"></div>
+        <div
+          class={{
+            'input-outline-notch': true,
+            'input-outline-notch-hidden': !this.hasLabel,
+          }}
+        >
+          <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+            {this.label}
           </div>
-          <div class="input-outline-end"></div>
-        </div>,
-        this.renderLabel(),
-      ];
-    }
-
-    /**
-     * If not using the outline style,
-     * we can render just the label.
-     */
-    return this.renderLabel();
+        </div>
+        <div class="input-outline-end"></div>
+      </div>
+    );
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, clearInputIcon } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, hasFocus, clearInputIcon } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -859,27 +865,14 @@ export class Input implements ComponentInterface {
     const clearIconData = clearInputIcon ?? defaultClearIcon;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+    const hasOutlineFill = mode === 'md' && fill === 'outline';
 
     /**
      * If the label is stacked, it should always sit above the input.
      * For floating labels, the label should move above the input if
-     * the input has a value, is focused, or has anything in either
-     * the start or end slot.
-     *
-     * If there is content in the start slot, the label would overlap
-     * it if not forced to float. This is also applied to the end slot
-     * because with the default or solid fills, the input is not
-     * vertically centered in the container, but the label is. This
-     * causes the slots and label to appear vertically offset from each
-     * other when the label isn't floating above the input. This doesn't
-     * apply to the outline fill, but this was not accounted for to keep
-     * things consistent.
-     *
-     * TODO(FW-5592): Remove hasStartEndSlots condition
+     * the input has a value or is focused.
      */
-    const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+    const labelShouldFloat = labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus));
 
     return (
       <Host
@@ -903,46 +896,53 @@ export class Input implements ComponentInterface {
          * since it comes before the input in the DOM.
          */}
         <label class="input-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
-          {this.renderLabelContainer()}
-          <div class="native-wrapper" onClick={this.onLabelClick}>
+          {hasOutlineFill && this.renderOutlineContainer()}
+          <div class="input-start" ref={(el) => (this.startContainerEl = el)}>
             <slot name="start"></slot>
-            <input
-              class="native-input"
-              ref={(input) => (this.nativeInput = input)}
-              id={inputId}
-              disabled={disabled}
-              autoCapitalize={this.autocapitalize}
-              autoComplete={this.autocomplete}
-              autoCorrect={this.autocorrect}
-              autoFocus={this.autofocus}
-              enterKeyHint={this.enterkeyhint}
-              inputMode={this.inputmode}
-              min={this.min}
-              max={this.max}
-              minLength={this.minlength}
-              maxLength={this.maxlength}
-              multiple={this.multiple}
-              name={this.name}
-              pattern={this.pattern}
-              placeholder={this.placeholder || ''}
-              readOnly={readonly}
-              required={this.required}
-              spellcheck={this.spellcheck}
-              step={this.step}
-              type={this.type}
-              value={value}
-              onInput={this.onInput}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-              onFocus={this.onFocus}
-              onKeyDown={this.onKeydown}
-              onCompositionstart={this.onCompositionStart}
-              onCompositionend={this.onCompositionEnd}
-              aria-describedby={this.getHintTextID()}
-              aria-invalid={this.isInvalid ? 'true' : undefined}
-              aria-labelledby={this.getLabelledById()}
-              {...this.inheritedAttributes}
-            />
+          </div>
+          <div class="input-control">
+            {this.renderLabel()}
+            <div class="native-wrapper" onClick={this.onLabelClick}>
+              <input
+                class="native-input"
+                ref={(input) => (this.nativeInput = input)}
+                id={inputId}
+                disabled={disabled}
+                autoCapitalize={this.autocapitalize}
+                autoComplete={this.autocomplete}
+                autoCorrect={this.autocorrect ? 'on' : 'off'}
+                autoFocus={this.autofocus}
+                enterKeyHint={this.enterkeyhint}
+                inputMode={this.inputmode}
+                min={this.min}
+                max={this.max}
+                minLength={this.minlength}
+                maxLength={this.maxlength}
+                multiple={this.multiple}
+                name={this.name}
+                pattern={this.pattern}
+                placeholder={this.placeholder || ''}
+                readOnly={readonly}
+                required={this.required}
+                spellcheck={this.spellcheck}
+                step={this.step}
+                type={this.type}
+                value={value}
+                onInput={this.onInput}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+                onFocus={this.onFocus}
+                onKeyDown={this.onKeydown}
+                onCompositionstart={this.onCompositionStart}
+                onCompositionend={this.onCompositionEnd}
+                aria-describedby={this.getHintTextID()}
+                aria-invalid={this.isInvalid ? 'true' : undefined}
+                aria-labelledby={this.getLabelledById()}
+                {...this.inheritedAttributes}
+              />
+            </div>
+          </div>
+          <div class="input-end">
             {this.clearInput && !readonly && !disabled && (
               <button
                 aria-label="reset"

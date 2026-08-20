@@ -1,6 +1,8 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
+import { config } from '../../../global/config';
+import { SelectOption } from '../../select-option/select-option';
 import { Select } from '../select';
 
 describe('ion-select', () => {
@@ -155,5 +157,58 @@ describe('ion-select: required', () => {
     const nativeButton = select.shadowRoot!.querySelector('button')!;
 
     expect(nativeButton.getAttribute('aria-required')).toBe('false');
+  });
+});
+
+describe('ion-select: option content property reflection', () => {
+  beforeEach(() => {
+    // Cloning rich option content into the select text only happens when
+    // custom HTML rendering is enabled.
+    config.reset({ innerHTMLTemplatesEnabled: true });
+  });
+
+  afterEach(() => {
+    config.reset({});
+  });
+
+  it('should reflect ion-icon DOM properties onto attributes so they survive cloning into the select text', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select><ion-select-option value="star"><ion-icon></ion-icon>Star</ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    const sourceIcon = select.querySelector('ion-icon')!;
+
+    /**
+     * Frameworks such as Vue set `icon` as a DOM property rather than an
+     * attribute. `cloneNode` only copies attributes, so without reflection
+     * the cloned copy in the select text would lose the icon value.
+     */
+    (sourceIcon as any).icon = 'logo-ionic';
+
+    // Selecting the option rebuilds the displayed text from the option content.
+    select.value = 'star';
+    await page.waitForChanges();
+
+    const renderedIcon = select.shadowRoot!.querySelector('.select-text ion-icon');
+    expect(renderedIcon).not.toBeNull();
+    expect(renderedIcon!.getAttribute('icon')).toBe('logo-ionic');
+  });
+
+  it('should preserve an ion-icon attribute that is already set when cloning into the select text', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select><ion-select-option value="star"><ion-icon icon="logo-ionic"></ion-icon>Star</ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+
+    select.value = 'star';
+    await page.waitForChanges();
+
+    const renderedIcon = select.shadowRoot!.querySelector('.select-text ion-icon');
+    expect(renderedIcon).not.toBeNull();
+    expect(renderedIcon!.getAttribute('icon')).toBe('logo-ionic');
   });
 });

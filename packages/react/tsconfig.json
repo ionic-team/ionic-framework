@@ -1,31 +1,22 @@
 {
+  "extends": "../../core/tsconfig.base.json",
   "compilerOptions": {
-    "strict": true,
-    "allowUnreachableCode": false,
-    "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "esModuleInterop": true,
-    "lib": [
-      "dom",
-      "es2020",
-      "dom.iterable"
-    ],
-    "importHelpers": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "outDir": "dist",
     "declarationDir": "dist/types",
-    "removeComments": false,
+    /*
+     * rootDir is set to satisfy @rollup/plugin-typescript (TS5011) so the
+     * output file layout is predictable. Setting rootDir restricts the program
+     * to files under it, which stops @types from being auto-included, so the
+     * ambient type packages must be listed explicitly. jest and jest-dom are
+     * needed because the test files are type-checked as part of the build.
+     */
+    "rootDir": "src",
+    "types": ["node", "jest", "@testing-library/jest-dom"],
     "inlineSources": true,
     "sourceMap": true,
     "jsx": "react-jsx",
-    "target": "es2020",
+    "target": "es2022"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "compileOnSave": false,

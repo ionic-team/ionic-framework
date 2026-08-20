@@ -37,9 +37,6 @@ configs({ directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
       test('should not have visual regressions with menu', async ({ page }) => {
         await testOverlay(page, '#show-menu', 'ionDidOpen', 'menu');
       });
-      test('should not have visual regressions with picker', async ({ page }) => {
-        await testOverlay(page, '#show-picker', 'ionPickerDidPresent', 'picker');
-      });
       test('should not have visual regressions with toast', async ({ page }) => {
         await testOverlay(page, '#show-toast', 'ionToastDidPresent', 'toast');
       });

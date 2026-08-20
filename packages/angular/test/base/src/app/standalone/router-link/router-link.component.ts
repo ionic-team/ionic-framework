@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonItem, IonRouterLink, IonRouterLinkWithHref } from '@ionic/angular/standalone';
+import { IonItem, IonRouterLink, IonRouterLinkWithHref } from '@ionic/angular';
 
 @Component({
   selector: 'app-router-link',

@@ -45,7 +45,7 @@ export const createIonRouter = (
     (
       to: RouteLocationNormalized,
       _: RouteLocationNormalized,
-      failure?: NavigationFailure
+      failure?: NavigationFailure | void
     ) => {
       if (failure) {
         /*
@@ -124,7 +124,11 @@ export const createIonRouter = (
   let currentHistoryPosition = opts.history.state.position as number;
 
   let currentRouteInfo: RouteInfo;
-  let incomingRouteParams: RouteParams;
+  /**
+   * Params staged by a navigation helper for the upcoming route change.
+   * Cleared once `handleHistoryChange` has consumed them.
+   */
+  let incomingRouteParams: RouteParams | undefined;
 
   const historyChangeListeners: any[] = [];
 
@@ -176,6 +180,11 @@ export const createIonRouter = (
       initialHistoryPosition,
       currentHistoryPosition
     );
+    /**
+     * The fallback branches below only navigate when `defaultHref` is set,
+     * matching @ionic/react-router. Without one there is nowhere to go, so
+     * they no-op.
+     */
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
@@ -229,12 +238,43 @@ export const createIonRouter = (
            * is not good because we would have two /tabs/tab1/child1 entries
            * separated by a /tabs/tab1/child2 entry.
            */
-          router.go(prevInfo.position - routeInfo.position);
+          const positionDelta = prevInfo.position! - routeInfo.position!;
+          if (positionDelta < 0) {
+            router.go(positionDelta);
+          } else if (prevInfo.pathname) {
+            /**
+             * prevInfo's history position was wiped when the user went
+             * back then pushed a new route, so router.go can't
+             * reach it. Replace falls through to afterEach with the
+             * pop/back `incomingRouteParams` set above, which preserves
+             * the back animation and consumes the params so they don't
+             * leak into the next navigation. We replace even when
+             * `positionDelta === 0` for the same consumption reason.
+             */
+            router.replace({
+              path: prevInfo.pathname,
+              query: parseQuery(prevInfo.search ?? ""),
+            });
+          } else if (defaultHref) {
+            /**
+             * prevInfo has no pathname (synthesized root entry). Route
+             * to `defaultHref` so the pop/back `incomingRouteParams`
+             * set above gets consumed instead of leaking into the next
+             * navigation.
+             */
+            handleNavigate(defaultHref, "pop", "back", routerAnimation);
+          } else {
+            /**
+             * There is nowhere to navigate, so drop the params rather than
+             * letting them leak into the next navigation.
+             */
+            incomingRouteParams = undefined;
+          }
         }
-      } else {
+      } else if (defaultHref) {
         handleNavigate(defaultHref, "pop", "back", routerAnimation);
       }
-    } else {
+    } else if (defaultHref) {
       handleNavigate(defaultHref, "pop", "back", routerAnimation);
     }
   };
@@ -353,7 +393,7 @@ export const createIonRouter = (
     }
 
     const leavingUrl =
-      leavingLocationInfo.pathname + leavingLocationInfo.search;
+      (leavingLocationInfo.pathname ?? "") + (leavingLocationInfo.search ?? "");
     if (leavingUrl !== location.fullPath) {
       if (!incomingRouteParams) {
         if (action === "replace") {
@@ -362,16 +402,47 @@ export const createIonRouter = (
             routerDirection: "none",
           };
         } else if (action === "pop") {
-          const routeInfo = locationHistory.current(
-            initialHistoryPosition,
-            currentHistoryPosition - delta
-          );
+          /**
+           * Without a delta there is no target position to compute, so fall
+           * back to the latest entry, which is what `current()` resolves to.
+           */
+          const routeInfo =
+            delta === undefined
+              ? locationHistory.last()
+              : locationHistory.current(
+                  initialHistoryPosition,
+                  currentHistoryPosition - delta
+                );
 
           if (routeInfo && routeInfo.pushedByRoute) {
             const prevRouteInfo = locationHistory.findLastLocation(
               routeInfo,
               delta
             );
+            if (
+              prevRouteInfo &&
+              prevRouteInfo.pathname &&
+              prevRouteInfo.pathname !== location.path &&
+              (routeInfo.tab || prevRouteInfo.tab)
+            ) {
+              /**
+               * Browser POP destination differs from the within-tab back
+               * target (e.g. user is on a re-activated tab child and the
+               * browser's linear predecessor is in a different tab). Sync
+               * URL with the displayed page via router.replace so the back
+               * stack stays consistent with what the user sees, matching
+               * handleNavigateBack's non-linear path.
+               */
+              handleNavigate(
+                prevRouteInfo.pathname +
+                  (prevRouteInfo.search ? "?" + prevRouteInfo.search : ""),
+                "pop",
+                "back",
+                undefined,
+                prevRouteInfo.tab
+              );
+              return;
+            }
             incomingRouteParams = {
               ...prevRouteInfo,
               routerAction: "pop",
@@ -429,6 +500,25 @@ export const createIonRouter = (
             routeInfo.tab
           );
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+        } else if (
+          routeInfo.routerAction === "push" &&
+          routeInfo.routerDirection === "none" &&
+          routeInfo.tab === leavingLocationInfo.tab
+        ) {
+          /**
+           * Same-tab push with direction "none" still needs pushedByRoute so
+           * ion-back-button uses history instead of falling back to defaultHref.
+           * Cross-tab pushes hit the branch above.
+           *
+           * Skip when the candidate equals the current pathname (e.g. /a?x=1 ->
+           * /a?x=2) to avoid a self-loop on back. Same guard as the replace
+           * branch below.
+           */
+          const candidate = leavingLocationInfo.pathname;
+          routeInfo.pushedByRoute =
+            candidate !== "" && candidate !== routeInfo.pathname
+              ? candidate
+              : undefined;
         } else if (routeInfo.routerAction === "replace") {
           /**
            * When replacing a route, we want to make sure we select the current route
@@ -461,10 +551,15 @@ export const createIonRouter = (
           routeInfo.lastPathname =
             currentRouteInfo?.pathname || routeInfo.lastPathname;
           routeInfo.pushedByRoute = pushedByRoute;
+          /**
+           * Prefer the direction/animation the caller specified on
+           * the navigate call; fall back to the leaving route's
+           * values only when none was provided.
+           */
           routeInfo.routerDirection =
-            currentRouteInfo?.routerDirection || routeInfo.routerDirection;
+            routeInfo.routerDirection || currentRouteInfo?.routerDirection;
           routeInfo.routerAnimation =
-            currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
+            routeInfo.routerAnimation || currentRouteInfo?.routerAnimation;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
       }
@@ -557,7 +652,7 @@ export const createIonRouter = (
     router.push(routerLink);
   };
 
-  const resetTab = (tab: string) => {
+  const resetTab = (tab: string, originalHref?: string) => {
     /**
      * Resetting the tab should go back
      * to the initial view in the tab stack.
@@ -572,7 +667,29 @@ export const createIonRouter = (
      */
     const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
-      router.go(routeInfo.position - currentHistoryPosition);
+      const delta = routeInfo.position! - currentHistoryPosition;
+      if (delta !== 0) {
+        router.go(delta);
+        return;
+      }
+      /**
+       * The first history entry for this tab is the current entry,
+       * so there's nothing earlier to traverse back to. Happens
+       * after a deep load onto a tab child or an external navigation
+       * that reset the SPA history. Replace with `originalHref` so
+       * no stale child entry stays in browser history.
+       */
+      if (originalHref && routeInfo.pathname !== originalHref) {
+        handleNavigate(originalHref, "pop", "back", undefined, tab);
+      }
+      return;
+    }
+    /**
+     * No routeInfo for this tab yet. Replace the current entry
+     * with `originalHref` so the tab has a root to reset to.
+     */
+    if (originalHref) {
+      handleNavigate(originalHref, "pop", "back", undefined, tab);
     }
   };
 
@@ -612,7 +729,7 @@ export const createIonRouter = (
        * the previously-saved search so query params on the tab button href
        * are honored when re-selecting the tab.
        */
-      const effectiveSearch = hrefSearch || routeInfo.search;
+      const effectiveSearch = hrefSearch || routeInfo.search || "";
       const push = {
         query: parseQuery(effectiveSearch),
         ...(hrefHash ? { hash: hrefHash } : {}),

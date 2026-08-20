@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonButton, IonModalToken } from "@ionic/angular/standalone";
+import { IonButton, IonModalToken } from "@ionic/angular";
 
 @Component({
   selector: 'app-modal',

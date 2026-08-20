@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IonNav } from '@ionic/angular/standalone';
+import { IonNav } from '@ionic/angular';
 
 /**
  * Presented as a modal via `ModalController` with the nav root passed through

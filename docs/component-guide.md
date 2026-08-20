@@ -19,6 +19,7 @@
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
 - [Sass Variables](#sass-variables)
 - [CSS Shadow Parts](#css-shadow-parts)
+- [Icon Styling](#icon-styling)
 - [RTL](#rtl)
 - [Adding New Components with Native Input Support](#adding-new-components-with-native-input-support)
   * [Angular Integration](#angular-integration)
@@ -732,6 +733,28 @@ For guidelines on when to use Sass Variables, see the [Sass Guidelines](./sass-g
 
 For guidelines on adding CSS shadow parts, see the [CSS Shadow Parts Guidelines](./shadow-parts-guidelines.md).
 
+## Icon Styling
+
+When sizing `<ion-icon>` elements, use `font-size` instead of `width` and `height` properties. `<ion-icon>` now supports both SVG icons and font-based icons (web fonts), and font icons only respond to `font-size`, not `width` and `height`.
+
+✅ **Correct**
+
+```scss
+::slotted(ion-icon) {
+  font-size: 24px;
+}
+```
+
+❌ **Incorrect**
+
+```scss
+// Don't do this
+::slotted(ion-icon) {
+  width: 24px;
+  height: 24px;
+}
+```
+
 ## RTL
 
 When you need to support both LTR and RTL modes, try to avoid using values such as `left` and `right`. For certain CSS properties, you can use the appropriate mixin to have this handled for you automatically.
@@ -830,21 +853,21 @@ registerOnChange(fn: (_: number | null) => void): void {
 
 #### Standalone Directive
 
-For standalone components, create a directive in the [standalone package](/packages/angular/standalone/src/directives). Look at the implementation of the most similar existing component as a reference:
+For standalone components, create a directive in the [standalone package](/packages/angular/src/standalone/directives). Look at the implementation of the most similar existing component as a reference:
 
-- For text/numeric inputs: See [ion-input](/packages/angular/standalone/src/directives/input.ts) or [ion-input-otp](/packages/angular/standalone/src/directives/input-otp.ts)
-- For boolean inputs: See [ion-checkbox](/packages/angular/standalone/src/directives/checkbox.ts) or [ion-toggle](/packages/angular/standalone/src/directives/toggle.ts)
-- For select-like inputs: See [ion-select](/packages/angular/standalone/src/directives/select.ts) or [ion-radio-group](/packages/angular/standalone/src/directives/radio-group.ts)
+- For text/numeric inputs: See [ion-input](/packages/angular/src/standalone/directives/input.ts) or [ion-input-otp](/packages/angular/src/standalone/directives/input-otp.ts)
+- For boolean inputs: See [ion-checkbox](/packages/angular/src/standalone/directives/checkbox.ts) or [ion-toggle](/packages/angular/src/standalone/directives/toggle.ts)
+- For select-like inputs: See [ion-select](/packages/angular/src/standalone/directives/select.ts) or [ion-radio-group](/packages/angular/src/standalone/directives/radio-group.ts)
 
 After creating the directive, you need to export it in two places:
 
-1. First, add your component to the directives export group in [`packages/angular/standalone/src/directives/index.ts`](/packages/angular/standalone/src/directives/index.ts):
+1. First, add your component to the directives export group in [`packages/angular/src/standalone/directives/index.ts`](/packages/angular/src/standalone/directives/index.ts):
 
 ```typescript
 export { IonNewComponent } from './new-component';
 ```
 
-2. Then, add it to the main standalone package's index file in [`packages/angular/standalone/src/index.ts`](/packages/angular/standalone/src/index.ts):
+2. Then, add it to the main standalone package's index file in [`packages/angular/src/standalone/index.ts`](/packages/angular/src/standalone/index.ts):
 
 ```typescript
 export {

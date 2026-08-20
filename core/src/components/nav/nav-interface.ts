@@ -42,7 +42,6 @@ export interface RouterOutletOptions {
 
 export interface NavOptions extends RouterOutletOptions {
   progressAnimation?: boolean;
-  updateURL?: boolean;
   delegate?: FrameworkDelegate;
   viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
 }
