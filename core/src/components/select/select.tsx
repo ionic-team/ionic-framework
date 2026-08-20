@@ -1639,19 +1639,15 @@ const getOptionDefaultSlot = (option: HTMLIonSelectOptionElement): Node[] | null
 /**
  * Extracts plain text from only the default slot of an option,
  * excluding content assigned to named slots (start/end).
+ *
+ * The nodes are read the way the browser renders them: their text is
+ * concatenated with no separator, and collapsible whitespace is collapsed to a
+ * single space.
  */
 const getDefaultSlotPlainText = (option: HTMLIonSelectOptionElement): string => {
-  const texts = Array.from(option.childNodes)
-    .filter((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        return !(node as HTMLElement).hasAttribute('slot');
-      }
-      return node.nodeType === Node.TEXT_NODE;
-    })
-    .filter((node) => node.nodeType === Node.TEXT_NODE)
-    .map((n) => n.textContent?.trim())
-    .filter((t) => t);
-  return texts.join(' ');
+  const text = (getOptionDefaultSlot(option) ?? []).map((node) => node.textContent ?? '').join('');
+  // Only the whitespace characters HTML collapses; NBSP and friends are kept.
+  return text.replace(/[ \t\n\r\f]+/g, ' ').trim();
 };
 
 /**

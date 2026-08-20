@@ -160,6 +160,74 @@ describe('ion-select: required', () => {
   });
 });
 
+describe('ion-select: option plain text', () => {
+  it('should not insert a space between adjacent text nodes in an option', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select><ion-select-option value="star"></ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    const option = select.querySelector('ion-select-option')!;
+
+    /**
+     * Frameworks render `{icon}{label}` as two sibling text nodes with no
+     * whitespace between them. The nodes have to be built here rather than in
+     * markup, because a parser collapses adjacent text into a single node.
+     */
+    option.append(document.createTextNode('★'), document.createTextNode('Star'));
+
+    select.value = 'star';
+    await page.waitForChanges();
+
+    expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('★Star');
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('★Star');
+  });
+
+  it('should read option text that is wrapped in an element', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select value="star"><ion-select-option value="star">A <b>Star</b></ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    await page.waitForChanges();
+
+    expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('A Star');
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('A Star');
+  });
+
+  it('should ignore content assigned to the start and end slots', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select value="star"><ion-select-option value="star"><b slot="start">Lead</b>Star<b slot="end">Trail</b></ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    await page.waitForChanges();
+
+    expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('Star');
+  });
+
+  it('should collapse whitespace from the source markup around option text', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `
+        <ion-select value="star">
+          <ion-select-option value="star">
+            Star   Option
+          </ion-select-option>
+        </ion-select>
+      `,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    await page.waitForChanges();
+
+    expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('Star Option');
+  });
+});
+
 describe('ion-select: option content property reflection', () => {
   beforeEach(() => {
     // Cloning rich option content into the select text only happens when
