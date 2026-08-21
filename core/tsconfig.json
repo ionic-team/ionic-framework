@@ -24,10 +24,10 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": ".tmp",
     "pretty": true,
     "removeComments": false,
     "target": "es2017",
+    "types": ["node"],
     "paths": {
       "@utils/*": ["./src/utils/*"],
       "@utils/test": ["./src/utils/test/utils"],
@@ -38,6 +38,9 @@
     "src",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "src/utils/test/platform.utils.ts"
   ]
 }

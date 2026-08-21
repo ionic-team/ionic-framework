@@ -46,7 +46,7 @@ const getAngularOutputTargets = () => {
          * are reliant on the CE build will reference the wrong
          * import location.
          */
-        'ion-icon',
+        // 'ion-icon', temp disable until fixed upstream
         /**
          * Value Accessors are manually implemented in the `@ionic/angular/standalone` package.
          */
@@ -79,7 +79,7 @@ export const config: Config = {
     { components: ['ion-app', 'ion-router-outlet', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
-    { components: ['ion-button', 'ion-icon'] },
+    { components: ['ion-button'] }, // 'ion-icon' - temp disable until fixed upstream
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip'] },
@@ -118,15 +118,14 @@ export const config: Config = {
     { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
   plugins: [
-    sass(),
+    sass({
+      quietDeps: true,
+      silenceDeprecations: ['import'],
+    }),
   ],
   outputTargets: [
     reactOutputTarget({
-      componentCorePackage,
-      includeImportCustomElements: true,
-      includePolyfills: false,
-      includeDefineCustomElements: false,
-      proxiesFile: '../packages/react/src/components/proxies.ts',
+      outDir: '../packages/react/src/components',
       excludeComponents: [
         // Routing
         'ion-router',
@@ -153,7 +152,7 @@ export const config: Config = {
         'ion-popover',
         'ion-toast',
         'ion-app',
-        'ion-icon'
+        // 'ion-icon' temp disable until fixed upstream
       ]
     }),
     vueOutputTarget({
@@ -182,7 +181,7 @@ export const config: Config = {
         'ion-popover',
         'ion-toast',
         'ion-app',
-        'ion-icon'
+        // 'ion-icon' temp disable until fixed upstream
       ],
       componentModels: [
         {
@@ -237,35 +236,8 @@ export const config: Config = {
     // },
     ...getAngularOutputTargets(),
   ],
-  testing: {
-    moduleNameMapper: {
-      "@utils/test": ["<rootDir>/src/utils/test/utils"],
-      "@utils/logging": ["<rootDir>/src/utils/logging"],
-    },
-    setupFilesAfterEnv: ['./setupJest.js']
-  },
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,
   transformAliasedImportPaths: true,
-  compat: {
-    /**
-     * `experimentalSlotFixes` is necessary in Stencil v4 until the fixes described in
-     * {@link https://stenciljs.com/docs/config-extras#experimentalslotfixes the Stencil docs for the flag} are the
-     * default behavior (slated for a future Stencil major version).
-     */
-    
-    /**
-     * `experimentalScopedSlotChanges` is necessary in Stencil v4 until the fixes described in
-     * {@link https://stenciljs.com/docs/config-extras#experimentalscopedslotchanges the Stencil docs for the flag} are
-     * the default behavior (slated for a future Stencil major version).
-     */
-    experimentalScopedSlotChanges: true,
-    /**
-     * Vite 8 / Rolldown honors the `@vite-ignore` comment on the lazy loader's dynamic import
-     * and never emits the `.entry.js` chunks, so requests for them 404. This flag prepends a
-     * switch of literal import paths those bundlers can resolve.
-     */
-    enableImportInjection: true,
-  }
 };

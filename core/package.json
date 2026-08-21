@@ -5,6 +5,7 @@
   "engines": {
     "node": ">= 16"
   },
+  "type": "module",
   "keywords": [
     "ionic",
     "framework",
@@ -18,12 +19,7 @@
     "progressive web app",
     "pwa"
   ],
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.js",
-  "es2015": "dist/esm/index.js",
-  "es2017": "dist/esm/index.js",
-  "jsnext:main": "dist/esm/index.js",
-  "collection:main": "dist/collection/index.js",
+  "module": "dist/loader-bundle/index.js",
   "collection": "dist/collection/collection-manifest.json",
   "types": "dist/types/interface.d.ts",
   "files": [
@@ -34,7 +30,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "5.0.0-alpha.30",
+    "@stencil/core": "5.0.0-alpha.33",
     "ionicons": "^8.0.13",
     "tslib": "^2.1.0"
   },
@@ -80,7 +76,7 @@
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
-    "clean": "node scripts/clean.js",
+    "clean": "node scripts/clean.cjs",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass --embed-sources --style compressed src/css:./css",
     "eslint": "eslint src",

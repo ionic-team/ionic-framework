@@ -132,13 +132,13 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
     registerInput(input);
   }
 
-  doc.addEventListener('ionInputDidLoad', (ev: InputEvent) => {
+  doc.addEventListener('ionInputDidLoad', (ev: IonInputEvent) => {
     registerInput(ev.detail);
   });
 
-  doc.addEventListener('ionInputDidUnload', (ev: InputEvent) => {
+  doc.addEventListener('ionInputDidUnload', (ev: IonInputEvent) => {
     unregisterInput(ev.detail);
   });
 };
 
-type InputEvent = CustomEvent<HTMLElement>;
+type IonInputEvent = CustomEvent<HTMLElement>;

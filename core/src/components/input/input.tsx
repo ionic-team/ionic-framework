@@ -398,16 +398,22 @@ export class Input implements ComponentInterface {
   }
 
   componentWillLoad() {
+    /**
+     * `HTMLIonInputElement`'s `autocorrect` prop ('on' | 'off') conflicts with the
+     * native `HTMLElement.autocorrect` (boolean), so it isn't structurally an
+     * `HTMLElement` per TS. Cast through `unknown` when passing `el` to DOM-only utils.
+     */
+    const hostEl = this.el as unknown as HTMLElement;
     this.inheritedAttributes = {
-      ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type', 'dir']),
+      ...inheritAriaAttributes(hostEl),
+      ...inheritAttributes(hostEl, ['tabindex', 'title', 'data-form-type', 'dir']),
     };
   }
 
   connectedCallback() {
     const { el } = this;
 
-    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
+    this.slotMutationController = createSlotMutationController(el as unknown as HTMLElement, ['label', 'start', 'end'], () => {
       this.setSlottedLabelId();
       forceUpdate(this);
     });
@@ -853,7 +859,7 @@ export class Input implements ComponentInterface {
     const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, clearInputIcon } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
-    const inItem = hostContext('ion-item', this.el);
+    const inItem = hostContext('ion-item', this.el as unknown as HTMLElement);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
     const defaultClearIcon = mode === 'ios' ? closeCircle : closeSharp;
     const clearIconData = clearInputIcon ?? defaultClearIcon;
@@ -892,7 +898,7 @@ export class Input implements ComponentInterface {
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
           'in-item': inItem,
-          'in-item-color': hostContext('ion-item.ion-color', this.el),
+          'in-item-color': hostContext('ion-item.ion-color', this.el as unknown as HTMLElement),
           'input-disabled': disabled,
         })}
       >

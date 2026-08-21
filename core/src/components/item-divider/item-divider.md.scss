@@ -131,7 +131,10 @@
   @include margin(2px, 0);
 }
 
-::slotted(h3, h4, h5, h6) {
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
   @include margin(2px, 0);
 }
 

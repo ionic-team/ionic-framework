@@ -53,16 +53,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const searchbar = page.locator('ion-searchbar');
       const ionChange = await page.spyOnEvent('ionChange');
 
-      await searchbar.evaluate((el: HTMLIonSearchbarElement) => {
-        el.value = 'new value';
+      await searchbar.evaluate((el: HTMLElement) => {
+        (el as unknown as HTMLIonSearchbarElement).value = 'new value';
       });
 
       await page.waitForChanges();
       expect(ionChange).toHaveReceivedEventTimes(0);
 
       // Update the value again to make sure it doesn't emit a second time
-      await searchbar.evaluate((el: HTMLIonSearchbarElement) => {
-        el.value = 'new value 2';
+      await searchbar.evaluate((el: HTMLElement) => {
+        (el as unknown as HTMLIonSearchbarElement).value = 'new value 2';
       });
 
       await page.waitForChanges();

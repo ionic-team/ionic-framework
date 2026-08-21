@@ -195,7 +195,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       const input = page.locator('ion-input');
 
-      await input.evaluate((el: HTMLIonInputElement) => {
+      await input.evaluate((el: HTMLElement) => {
         const labelEl = document.createElement('div');
         labelEl.slot = 'label';
         labelEl.innerHTML = 'Email <span class="required" style="color: red">*</span';

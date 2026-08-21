@@ -14,7 +14,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const searchbar = page.locator('#basic');
       const cancelButton = searchbar.locator('.searchbar-cancel-button');
 
-      await searchbar.evaluate((el: HTMLIonSearchbarElement) => el.setFocus());
+      await searchbar.evaluate((el: HTMLElement) => (el as unknown as HTMLIonSearchbarElement).setFocus());
       await page.waitForChanges();
 
       await expect(searchbar).toHaveClass(/searchbar-has-focus/);
@@ -25,7 +25,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const searchbar = page.locator('#noCancel');
       const cancelButton = searchbar.locator('.searchbar-cancel-button');
 
-      await searchbar.evaluate((el: HTMLIonSearchbarElement) => el.setFocus());
+      await searchbar.evaluate((el: HTMLElement) => (el as unknown as HTMLIonSearchbarElement).setFocus());
       await page.waitForChanges();
 
       await expect(searchbar).toHaveClass(/searchbar-has-focus/);

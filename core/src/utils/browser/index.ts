@@ -42,22 +42,22 @@ type IonicEvents = {
   ): void;
   addEventListener(
     type: 'ionInputDidLoad',
-    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    listener: (ev: CustomEvent<HTMLElement>) => void,
     options?: boolean | AddEventListenerOptions
   ): void;
   removeEventListener(
     type: 'ionInputDidLoad',
-    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    listener: (ev: CustomEvent<HTMLElement>) => void,
     options?: boolean | AddEventListenerOptions
   ): void;
   addEventListener(
     type: 'ionInputDidUnload',
-    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    listener: (ev: CustomEvent<HTMLElement>) => void,
     options?: boolean | AddEventListenerOptions
   ): void;
   removeEventListener(
     type: 'ionInputDidUnload',
-    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    listener: (ev: CustomEvent<HTMLElement>) => void,
     options?: boolean | AddEventListenerOptions
   ): void;
   addEventListener(

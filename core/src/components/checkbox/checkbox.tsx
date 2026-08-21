@@ -1,4 +1,4 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import type { ComponentInterface, EventEmitter, VNode } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, forceUpdate, h } from '@stencil/core';
 import { checkInvalidState, createItemMultipleInputsObserver } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
@@ -417,7 +417,7 @@ export class Checkbox implements ComponentInterface {
     );
   }
 
-  private getSVGPath(mode: Mode, indeterminate: boolean): HTMLElement {
+  private getSVGPath(mode: Mode, indeterminate: boolean): VNode {
     let path = indeterminate ? (
       <path d="M6 12L18 12" part="mark" />
     ) : (
