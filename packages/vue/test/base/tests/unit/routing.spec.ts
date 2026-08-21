@@ -861,7 +861,7 @@ describe('Routing', () => {
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
-  it('should keep canGoBack accurate after a guard blocks a back button navigation', async () => {
+  it('should keep canGoBack accurate after a guard blocks a programmatic back', async () => {
     const createPage = (id: string) => ({
       components: { IonPage },
       name: id,
@@ -918,9 +918,9 @@ describe('Routing', () => {
     expect(ionRouter.canGoBack()).toEqual(true);
 
     /*
-     * Going back through the back button stages route params before handing off
-     * to the router. The guard blocks the navigation, so those params used to be
-     * left behind and then applied to the next route instead.
+     * useIonRouter's back() stages route params before handing off to the
+     * router. The guard blocks the navigation, so those params used to be left
+     * behind and then applied to the next route instead.
      */
     isLoggedIn = true;
     ionRouter.back();
@@ -1040,6 +1040,73 @@ describe('Routing', () => {
     expect(
       wrapper.findAll('.ion-page').map((page) => page.attributes('data-pageid'))
     ).toEqual(['home', 'profile', 'settings']);
+    expect(routeInfo.pathname).toEqual('/settings');
+    expect(routeInfo.routerAction).toEqual('push');
+    expect(routeInfo.routerDirection).toEqual('forward');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should not reuse the previous route after a guard blocks a back button navigation', async () => {
+    const createPage = (id: string) => ({
+      components: { IonPage },
+      name: id,
+      template: `<ion-page data-pageid="${id}"></ion-page>`
+    });
+
+    const Home = createPage('home');
+    const Profile = createPage('profile');
+    const Settings = createPage('settings');
+
+    let isLoggedIn = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/profile', component: Profile },
+        { path: '/settings', component: Settings }
+      ]
+    });
+
+    router.beforeEach((to, from) => {
+      if (from.path === '/profile' && to.path !== '/profile' && isLoggedIn) {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const navManager = wrapper.vm.$.appContext.provides.navManager;
+
+    router.push('/profile');
+    await waitForRouter();
+
+    /*
+     * ion-back-button calls handleNavigateBack, which stages the whole previous
+     * route rather than just an action and direction. Those params carry an id,
+     * and a staged id makes handleHistoryChange reuse the params wholesale, so
+     * a stale set would report the previous route's pathname for whatever is
+     * navigated to next.
+     */
+    isLoggedIn = true;
+    navManager.handleNavigateBack();
+    await waitForRouter();
+
+    isLoggedIn = false;
+    router.push('/settings');
+    await waitForRouter();
+
+    const routeInfo = navManager.getCurrentRouteInfo();
+
     expect(routeInfo.pathname).toEqual('/settings');
     expect(routeInfo.routerAction).toEqual('push');
     expect(routeInfo.routerDirection).toEqual('forward');
