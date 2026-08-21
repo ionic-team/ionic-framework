@@ -15,7 +15,7 @@ import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
-import { reflectPropertiesToAttributes, sanitizeDOMTree } from '@utils/sanitization';
+import { blockedTags, reflectPropertiesToAttributes, sanitizeDOMTree } from '@utils/sanitization';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -1481,33 +1481,14 @@ const textForValue = (
   }
 
   /**
-   * When custom HTML is enabled, extract only the default slot content.
-   * This ensures aria-label and other text-only contexts read only
-   * the relevant option text.
+   * Every text-only context reads only the default slot, so the start
+   * and end slots stay out of the `aria-label` and the overlay labels.
+   * Both config paths derive that text through the same helper, so they
+   * cannot disagree about what an option's text is. `null` marks an
+   * option with no text, which is dropped from the joined text of a
+   * `multiple` select rather than joined in as an empty entry.
    */
-  if (customHTMLEnabled) {
-    const content = getOptionContent(selectOpt);
-
-    if (typeof content === 'string') {
-      return content;
-    }
-
-    /**
-     * Elements were found in the default slot, extract and concatenate
-     * their text content while trimming whitespace.
-     */
-    if (content) {
-      const texts = Array.from(content.childNodes)
-        .map((n) => n.textContent?.trim())
-        .filter((t) => t);
-      return texts.join(' ') || null;
-    }
-
-    // Empty option
-    return null;
-  }
-
-  return getDefaultSlotPlainText(selectOpt);
+  return getDefaultSlotPlainText(selectOpt) || null;
 };
 
 /**
@@ -1570,9 +1551,13 @@ const getOptionContent = (
     return null;
   }
 
-  // Return plain text if no elements are found
+  /**
+   * Return plain text if no elements are found. This reads the option the
+   * same way the non-custom-HTML path does, so the two do not disagree
+   * about what an option's text is.
+   */
   if (!slotName && nodes.every((n) => n.nodeType === Node.TEXT_NODE)) {
-    return nodes.map((n) => n.textContent?.trim()).join(' ') || null;
+    return getDefaultSlotPlainText(option) || null;
   }
 
   /**
@@ -1637,21 +1622,46 @@ const getOptionDefaultSlot = (option: HTMLIonSelectOptionElement): Node[] | null
 };
 
 /**
+ * Concatenates the text a node renders, skipping the subtrees of tags
+ * whose contents the browser never paints (`script`, `style`, and the
+ * rest of `blockedTags`). `textContent` includes those, so reading it
+ * directly would put stylesheet or script source into the select text
+ * and the `aria-label`.
+ *
+ * @param node - The node to read text from.
+ * @returns The node's rendered text.
+ */
+const getRenderedTextContent = (node: Node): string => {
+  if (node.nodeType === Node.TEXT_NODE) {
+    return node.textContent ?? '';
+  }
+
+  if (node.nodeType !== Node.ELEMENT_NODE) {
+    return '';
+  }
+
+  if (blockedTags.includes((node as Element).tagName.toLowerCase())) {
+    return '';
+  }
+
+  return Array.from(node.childNodes)
+    .map((child) => getRenderedTextContent(child))
+    .join('');
+};
+
+/**
  * Extracts plain text from only the default slot of an option,
- * excluding content assigned to named slots (start/end).
+ * excluding content assigned to named slots (start/end). Text is
+ * concatenated with no separator and collapsible whitespace is
+ * collapsed, approximating how the browser renders the option.
+ * NBSP is not collapsible, so it is preserved.
+ *
+ * @param option - The `ion-select-option` element to read text from.
+ * @returns The option's default slot text.
  */
 const getDefaultSlotPlainText = (option: HTMLIonSelectOptionElement): string => {
-  const texts = Array.from(option.childNodes)
-    .filter((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        return !(node as HTMLElement).hasAttribute('slot');
-      }
-      return node.nodeType === Node.TEXT_NODE;
-    })
-    .filter((node) => node.nodeType === Node.TEXT_NODE)
-    .map((n) => n.textContent?.trim())
-    .filter((t) => t);
-  return texts.join(' ');
+  const text = (getOptionDefaultSlot(option) ?? []).map((node) => getRenderedTextContent(node)).join('');
+  return text.replace(/[ \t\n\r\f]+/g, ' ').replace(/^[ \t\n\r\f]+|[ \t\n\r\f]+$/g, '');
 };
 
 /**
