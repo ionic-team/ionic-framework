@@ -258,6 +258,24 @@ describe('ion-select: option plain text', () => {
 
     expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('Star Option');
   });
+
+  it('should preserve a non-breaking space that indents option text', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select value="star"><ion-select-option value="star">&nbsp;&nbsp;Star Option</ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    await page.waitForChanges();
+
+    /**
+     * NBSP is not collapsible, so an option indented with `&nbsp;` to fake a
+     * hierarchy keeps its indentation. Trimming has to leave it alone too,
+     * which rules out `String.prototype.trim`.
+     */
+    expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('\u00a0\u00a0Star Option');
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('\u00a0\u00a0Star Option');
+  });
 });
 
 /**
