@@ -57,12 +57,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     stableMergedRefs: React.RefCallback<HTMLElement>;
     portalTarget: HTMLElement | null;
     isUnmounted = false;
-    /**
-     * A relocated nested host removed in `componentWillUnmount`, together with
-     * the comment left in its place, so `componentDidMount` can put it back
-     * where it was when React was only hiding this subtree rather than
-     * destroying it.
-     */
+    // A nested host removed in `componentWillUnmount`, with the comment left in
+    // its place, so `componentDidMount` can put it back where it was.
     removedHost: { node: HTMLElement; anchor: Comment } | null = null;
 
     constructor(props: InternalProps) {
@@ -94,13 +90,10 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       // componentWillUnmount.
       this.isUnmounted = false;
 
-      /**
-       * React also calls `componentWillUnmount` when it *hides* a subtree
-       * rather than destroying it, and mounts the same instance again on the
-       * reveal. Put back a nested host removed there, at the position it was
-       * removed from: core reads document order to decide which overlay is on
-       * top. See createInlineOverlayComponent.spec.tsx for the full flow.
-       */
+      // React runs `componentWillUnmount` when it only hides a subtree and
+      // mounts the same instance again on the reveal, so a host removed there
+      // goes back at the position it came from - document order decides which
+      // overlay is on top. The spec covers the flow.
       const { removedHost } = this;
       this.removedHost = null;
       if (removedHost) {
@@ -174,11 +167,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
            * Nested overlays render inline inside a `<template>`. If the host
            * has been moved out of that template, React's unmount won't reach
            * it, so remove it directly. A host still in its template is left
-           * for React to remove.
-           *
-           * A comment takes the host's place, the way CoreDelegate marks a
-           * teleport, so `componentDidMount` can put the host back in the same
-           * spot if this turns out to be a hide rather than a real unmount.
+           * for React to remove. A comment marks the spot, the way CoreDelegate
+           * marks a teleport, so a reveal can put the host back where it was.
            */
           const parent = node.parentElement;
           if (parent && !(parent instanceof HTMLTemplateElement)) {
