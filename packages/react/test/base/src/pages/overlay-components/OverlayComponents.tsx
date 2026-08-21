@@ -15,6 +15,7 @@ import LoadingComponent from './LoadingComponent';
 import ModalComponent from './ModalComponent';
 import ModalFocusTrap from './ModalFocusTrap';
 import ModalSheetChildRoute from './ModalSheetChildRoute';
+import ModalSuspense from './ModalSuspense';
 import ModalTeleport from './ModalTeleport';
 import PopoverComponent from './PopoverComponent';
 import ToastComponent from './ToastComponent';
@@ -32,6 +33,7 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
         <Route path="modal-basic" element={<ModalComponent />} />
         <Route path="modal-focus-trap" element={<ModalFocusTrap />} />
         <Route path="modal-sheet-child-route/*" element={<ModalSheetChildRoute />} />
+        <Route path="modal-suspense" element={<ModalSuspense />} />
         <Route path="modal-teleport" element={<ModalTeleport />} />
         <Route path="popover" element={<PopoverComponent />} />
         <Route path="toast" element={<ToastComponent />} />
@@ -56,6 +58,10 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
         <IonTabButton tab="modalFocus" href="/overlay-components/modal-focus-trap">
           <IonIcon icon={star} />
           <IonLabel>Modal Focus</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="modalSuspense" href="/overlay-components/modal-suspense">
+          <IonIcon icon={star} />
+          <IonLabel>Modal Suspense</IonLabel>
         </IonTabButton>
         <IonTabButton tab="modalTeleport" href="/overlay-components/modal-teleport">
           <IonIcon icon={star} />

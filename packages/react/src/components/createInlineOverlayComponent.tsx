@@ -59,10 +59,11 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     isUnmounted = false;
     /**
      * A relocated nested host removed in `componentWillUnmount`, together with
-     * the parent it was removed from, so `componentDidMount` can put it back
-     * when React was only hiding this subtree rather than destroying it.
+     * the comment left in its place, so `componentDidMount` can put it back
+     * where it was when React was only hiding this subtree rather than
+     * destroying it.
      */
-    removedHost: { node: HTMLElement; parent: HTMLElement } | null = null;
+    removedHost: { node: HTMLElement; anchor: Comment } | null = null;
 
     constructor(props: InternalProps) {
       super(props);
@@ -95,17 +96,20 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
       /**
        * React also calls `componentWillUnmount` when it *hides* a subtree
-       * rather than destroying it - a Suspense boundary falling back, an
-       * Offscreen tree, or the StrictMode dev cycle - and calls
-       * `componentDidMount` again on the same instance when it reveals it.
-       * Put back a nested host removed there: the overlay can still be
-       * mid-`present()`, and React never re-inserts a node it did not remove
-       * itself, so the presenting overlay would be lost for good.
+       * rather than destroying it, and mounts the same instance again on the
+       * reveal. Put back a nested host removed there, at the position it was
+       * removed from: core reads document order to decide which overlay is on
+       * top. See createInlineOverlayComponent.spec.tsx for the full flow.
        */
       const { removedHost } = this;
       this.removedHost = null;
-      if (removedHost && !removedHost.node.isConnected && removedHost.parent.isConnected) {
-        removedHost.parent.appendChild(removedHost.node);
+      if (removedHost) {
+        const { node, anchor } = removedHost;
+        if (!node.isConnected && anchor.isConnected) {
+          anchor.replaceWith(node);
+        } else {
+          anchor.remove();
+        }
       }
 
       this.componentDidUpdate(this.props);
@@ -170,13 +174,17 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
            * Nested overlays render inline inside a `<template>`. If the host
            * has been moved out of that template, React's unmount won't reach
            * it, so remove it directly. A host still in its template is left
-           * for React to remove. The removal is recorded so `componentDidMount`
-           * can undo it if this turns out to be a hide rather than a real
-           * unmount.
+           * for React to remove.
+           *
+           * A comment takes the host's place, the way CoreDelegate marks a
+           * teleport, so `componentDidMount` can put the host back in the same
+           * spot if this turns out to be a hide rather than a real unmount.
            */
           const parent = node.parentElement;
           if (parent && !(parent instanceof HTMLTemplateElement)) {
-            this.removedHost = { node, parent };
+            const anchor = document.createComment(RESTORE_ANCHOR);
+            parent.insertBefore(anchor, node);
+            this.removedHost = { node, anchor };
             node.remove();
           }
         } else if (this.portalTarget && node.parentNode !== this.portalTarget) {
@@ -343,3 +351,9 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 };
 
 const DELEGATE_HOST = 'ion-delegate-host';
+
+/**
+ * Marks where a nested overlay host was removed from, so it can be restored to
+ * the same position if React was only hiding the subtree.
+ */
+const RESTORE_ANCHOR = 'ionic hidden overlay';
