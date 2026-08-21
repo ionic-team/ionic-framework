@@ -17,6 +17,7 @@ import {
   NavigationFailureType,
   onBeforeRouteLeave
 } from 'vue-router';
+import { inject } from 'vue';
 import { waitForRouter } from './utils';
 
 enableAutoUnmount(afterEach);
@@ -740,10 +741,19 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should keep the previous page when pushing after a guard blocks going back', async () => {
+    /*
+     * The pages are rendered inside the outlet, so injecting from one of them
+     * reaches the router the same way useIonRouter does, without wrapping the
+     * outlet in another component.
+     */
+    let navManager: any;
     const createPage = (id: string) => ({
       components: { IonPage },
       name: id,
-      template: `<ion-page data-pageid="${id}"></ion-page>`
+      template: `<ion-page data-pageid="${id}"></ion-page>`,
+      setup() {
+        navManager = inject('navManager');
+      }
     });
 
     const Home = createPage('home');
@@ -796,12 +806,8 @@ describe('Routing', () => {
         hidden: page.classes('ion-page-hidden')
       }));
 
-    /*
-     * The router is provided to the app by the Ionic Vue router plugin, so it
-     * can be read without wrapping the outlet in another component.
-     */
     const currentRoute = () => {
-      const routeInfo = wrapper.vm.$.appContext.provides.navManager.getCurrentRouteInfo();
+      const routeInfo = navManager.getCurrentRouteInfo();
 
       return {
         pathname: routeInfo.pathname,
@@ -940,10 +946,14 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should not apply a cancelled back navigation to the navigation that replaced it', async () => {
+    let navManager: any;
     const createPage = (id: string) => ({
       components: { IonPage },
       name: id,
-      template: `<ion-page data-pageid="${id}"></ion-page>`
+      template: `<ion-page data-pageid="${id}"></ion-page>`,
+      setup() {
+        navManager = inject('navManager');
+      }
     });
 
     const Home = createPage('home');
@@ -1034,7 +1044,6 @@ describe('Routing', () => {
     releasePush();
     await waitForRouter();
 
-    const navManager = wrapper.vm.$.appContext.provides.navManager;
     const routeInfo = navManager.getCurrentRouteInfo();
 
     expect(
@@ -1047,10 +1056,14 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should not reuse the previous route after a guard blocks a back button navigation', async () => {
+    let navManager: any;
     const createPage = (id: string) => ({
       components: { IonPage },
       name: id,
-      template: `<ion-page data-pageid="${id}"></ion-page>`
+      template: `<ion-page data-pageid="${id}"></ion-page>`,
+      setup() {
+        navManager = inject('navManager');
+      }
     });
 
     const Home = createPage('home');
@@ -1085,8 +1098,6 @@ describe('Routing', () => {
       }
     });
 
-    const navManager = wrapper.vm.$.appContext.provides.navManager;
-
     router.push('/profile');
     await waitForRouter();
 
@@ -1114,10 +1125,14 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should keep the delta of a back navigation that replaced a cancelled one', async () => {
+    let navManager: any;
     const createPage = (id: string) => ({
       components: { IonPage },
       name: id,
-      template: `<ion-page data-pageid="${id}"></ion-page>`
+      template: `<ion-page data-pageid="${id}"></ion-page>`,
+      setup() {
+        navManager = inject('navManager');
+      }
     });
 
     const Home = createPage('home');
@@ -1215,7 +1230,6 @@ describe('Routing', () => {
     releaseSecondBack();
     await waitForRouter();
 
-    const navManager = wrapper.vm.$.appContext.provides.navManager;
     const routeInfo = navManager.getCurrentRouteInfo();
 
     expect(routeInfo.pathname).toEqual('/home');
