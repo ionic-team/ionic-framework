@@ -27,6 +27,17 @@ const BasePage = {
   components: { IonPage },
 }
 
+/*
+ * Kept separate from BasePage because BasePage binds `:data-pageid="name"`, and
+ * a component's name option is not reachable from its template in Vue 3, so
+ * that attribute renders empty.
+ */
+const createPage = (id: string) => ({
+  components: { IonPage },
+  name: id,
+  template: `<ion-page data-pageid="${id}"></ion-page>`
+});
+
 describe('Routing', () => {
   it('should pass no props', async () => {
     const Page1 = {
@@ -747,16 +758,12 @@ describe('Routing', () => {
      * outlet in another component.
      */
     let navManager: any;
-    const createPage = (id: string) => ({
-      components: { IonPage },
-      name: id,
-      template: `<ion-page data-pageid="${id}"></ion-page>`,
+    const Home = {
+      ...createPage('home'),
       setup() {
         navManager = inject('navManager');
       }
-    });
-
-    const Home = createPage('home');
+    };
     const Register = createPage('register');
     const Profile = createPage('profile');
 
@@ -868,12 +875,6 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should keep canGoBack accurate after a guard blocks a programmatic back', async () => {
-    const createPage = (id: string) => ({
-      components: { IonPage },
-      name: id,
-      template: `<ion-page data-pageid="${id}"></ion-page>`
-    });
-
     const Home = createPage('home');
     const Profile = createPage('profile');
     const Settings = createPage('settings');
@@ -947,16 +948,12 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should not apply a cancelled back navigation to the navigation that replaced it', async () => {
     let navManager: any;
-    const createPage = (id: string) => ({
-      components: { IonPage },
-      name: id,
-      template: `<ion-page data-pageid="${id}"></ion-page>`,
+    const Home = {
+      ...createPage('home'),
       setup() {
         navManager = inject('navManager');
       }
-    });
-
-    const Home = createPage('home');
+    };
     const Profile = createPage('profile');
     const Settings = createPage('settings');
 
@@ -1057,16 +1054,12 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should not reuse the previous route after a guard blocks a back button navigation', async () => {
     let navManager: any;
-    const createPage = (id: string) => ({
-      components: { IonPage },
-      name: id,
-      template: `<ion-page data-pageid="${id}"></ion-page>`,
+    const Home = {
+      ...createPage('home'),
       setup() {
         navManager = inject('navManager');
       }
-    });
-
-    const Home = createPage('home');
+    };
     const Profile = createPage('profile');
     const Settings = createPage('settings');
 
@@ -1126,16 +1119,12 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should keep the delta of a back navigation that replaced a cancelled one', async () => {
     let navManager: any;
-    const createPage = (id: string) => ({
-      components: { IonPage },
-      name: id,
-      template: `<ion-page data-pageid="${id}"></ion-page>`,
+    const Home = {
+      ...createPage('home'),
       setup() {
         navManager = inject('navManager');
       }
-    });
-
-    const Home = createPage('home');
+    };
     const First = createPage('first');
     const Second = createPage('second');
 
