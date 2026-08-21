@@ -961,8 +961,8 @@ describe('Routing', () => {
     const Settings = createPage('settings');
 
     let racing = false;
-    let releaseBack: () => void;
-    let releasePush: () => void;
+    let releaseBack!: () => void;
+    let releasePush!: () => void;
     let backReachedGuard: () => void;
     let cancelReported: () => void;
 
