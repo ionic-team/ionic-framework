@@ -15,7 +15,7 @@ import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
-import { reflectPropertiesToAttributes, sanitizeDOMTree } from '@utils/sanitization';
+import { blockedTags, reflectPropertiesToAttributes, sanitizeDOMTree } from '@utils/sanitization';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -1641,6 +1641,34 @@ const getOptionDefaultSlot = (option: HTMLIonSelectOptionElement): Node[] | null
 };
 
 /**
+ * Concatenates the text a node renders, skipping the subtrees of tags
+ * whose contents the browser never paints (`script`, `style`, and the
+ * rest of `blockedTags`). `textContent` includes those, so reading it
+ * directly would put stylesheet or script source into the select text
+ * and the `aria-label`.
+ *
+ * @param node - The node to read text from.
+ * @returns The node's rendered text.
+ */
+const getRenderedTextContent = (node: Node): string => {
+  if (node.nodeType === Node.TEXT_NODE) {
+    return node.textContent ?? '';
+  }
+
+  if (node.nodeType !== Node.ELEMENT_NODE) {
+    return '';
+  }
+
+  if (blockedTags.includes((node as Element).tagName.toLowerCase())) {
+    return '';
+  }
+
+  return Array.from(node.childNodes)
+    .map((child) => getRenderedTextContent(child))
+    .join('');
+};
+
+/**
  * Extracts plain text from only the default slot of an option,
  * excluding content assigned to named slots (start/end). Text is
  * concatenated with no separator and collapsible whitespace is
@@ -1651,7 +1679,7 @@ const getOptionDefaultSlot = (option: HTMLIonSelectOptionElement): Node[] | null
  * @returns The option's default slot text.
  */
 const getDefaultSlotPlainText = (option: HTMLIonSelectOptionElement): string => {
-  const text = (getOptionDefaultSlot(option) ?? []).map((node) => node.textContent ?? '').join('');
+  const text = (getOptionDefaultSlot(option) ?? []).map((node) => getRenderedTextContent(node)).join('');
   return text.replace(/[ \t\n\r\f]+/g, ' ').replace(/^[ \t\n\r\f]+|[ \t\n\r\f]+$/g, '');
 };
 

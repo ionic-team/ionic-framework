@@ -229,6 +229,24 @@ describe('ion-select: option plain text', () => {
     expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('Star');
   });
 
+  it('should not read text the browser never paints', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select value="star"><ion-select-option value="star"><style>.a{color:red}</style>Star</ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    await page.waitForChanges();
+
+    /**
+     * `textContent` includes the source of tags the browser does not render,
+     * and those tags are the same ones the sanitizer strips from the
+     * custom HTML path, so both paths have to agree to ignore them.
+     */
+    expect(select.shadowRoot!.querySelector('.select-text')!.textContent).toBe('Star');
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('Star');
+  });
+
   it('should collapse whitespace from the source markup around option text', async () => {
     const page = await newSpecPage({
       components: [Select, SelectOption],
