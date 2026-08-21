@@ -1652,7 +1652,7 @@ const getOptionDefaultSlot = (option: HTMLIonSelectOptionElement): Node[] | null
  */
 const getDefaultSlotPlainText = (option: HTMLIonSelectOptionElement): string => {
   const text = (getOptionDefaultSlot(option) ?? []).map((node) => node.textContent ?? '').join('');
-  return text.replace(/[ \t\n\r\f]+/g, ' ').trim();
+  return text.replace(/[ \t\n\r\f]+/g, ' ').replace(/^[ \t\n\r\f]+|[ \t\n\r\f]+$/g, '');
 };
 
 /**
