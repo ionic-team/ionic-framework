@@ -362,6 +362,35 @@ describe('ion-select: option plain text with custom HTML enabled', () => {
     expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('\u2605Star');
   });
 
+  it('should not insert a space between adjacent text nodes in an option that also holds an element', async () => {
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select><ion-select-option value="star"></ion-select-option></ion-select>`,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    appendAdjacentTextNodes(select);
+
+    const badge = document.createElement('ion-badge');
+    badge.textContent = 'NEW';
+    select.querySelector('ion-select-option')!.append(badge);
+
+    select.value = 'star';
+    await page.waitForChanges();
+
+    /**
+     * An element in the default slot reads the option through a different
+     * branch than an option that holds only text. The text nodes render as
+     * one span, so the `aria-label` has to keep them together too. The
+     * visible separation from the badge comes from `--select-text-gap`
+     * rather than from a space in the text.
+     */
+    expect(select.shadowRoot!.querySelector('.select-text')!.innerHTML).toBe(
+      '<span>\u2605Star</span><ion-badge>NEW</ion-badge>'
+    );
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('\u2605StarNEW');
+  });
+
   it('should label alert inputs with the text the option renders', async () => {
     const createAlert = stubAlertController();
 

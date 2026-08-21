@@ -1481,33 +1481,14 @@ const textForValue = (
   }
 
   /**
-   * When custom HTML is enabled, extract only the default slot content.
-   * This ensures aria-label and other text-only contexts read only
-   * the relevant option text.
+   * Every text-only context reads only the default slot, so the start
+   * and end slots stay out of the `aria-label` and the overlay labels.
+   * Both config paths derive that text through the same helper, so they
+   * cannot disagree about what an option's text is. `null` marks an
+   * option with no text, which is dropped from the joined text of a
+   * `multiple` select rather than joined in as an empty entry.
    */
-  if (customHTMLEnabled) {
-    const content = getOptionContent(selectOpt);
-
-    if (typeof content === 'string') {
-      return content;
-    }
-
-    /**
-     * Elements were found in the default slot, extract and concatenate
-     * their text content while trimming whitespace.
-     */
-    if (content) {
-      const texts = Array.from(content.childNodes)
-        .map((n) => n.textContent?.trim())
-        .filter((t) => t);
-      return texts.join(' ') || null;
-    }
-
-    // Empty option
-    return null;
-  }
-
-  return getDefaultSlotPlainText(selectOpt);
+  return getDefaultSlotPlainText(selectOpt) || null;
 };
 
 /**
