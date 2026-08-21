@@ -169,14 +169,8 @@ describe('ion-select: option plain text', () => {
     });
 
     const select = page.body.querySelector('ion-select')!;
-    const option = select.querySelector('ion-select-option')!;
 
-    /**
-     * Frameworks render `{icon}{label}` as two sibling text nodes with no
-     * whitespace between them. The nodes have to be built here rather than in
-     * markup, because a parser collapses adjacent text into a single node.
-     */
-    option.append(document.createTextNode('★'), document.createTextNode('Star'));
+    appendAdjacentTextNodes(select.querySelector('ion-select-option')!);
 
     select.value = 'star';
     await page.waitForChanges();
@@ -267,6 +261,15 @@ describe('ion-select: option plain text', () => {
 });
 
 /**
+ * Frameworks render `{icon}{label}` as two sibling text nodes with no
+ * whitespace between them. The nodes have to be built here rather than in
+ * markup, because a parser collapses adjacent text into a single node.
+ */
+const appendAdjacentTextNodes = (option: Element) => {
+  option.append(document.createTextNode('★'), document.createTextNode('Star'));
+};
+
+/**
  * The overlay interfaces build their labels from the same helper that produces
  * the displayed text, so they need the same coverage. `ion-alert` is not
  * defined in a spec page, so the created overlay is stubbed and the options
@@ -301,14 +304,7 @@ describe('ion-select: overlay option labels', () => {
 
     const select = page.body.querySelector('ion-select')!;
 
-    /**
-     * Frameworks render `{icon}{label}` as two sibling text nodes with no
-     * whitespace between them. The nodes have to be built here rather than in
-     * markup, because a parser collapses adjacent text into a single node.
-     */
-    select
-      .querySelector('ion-select-option[value="adjacent"]')!
-      .append(document.createTextNode('\u2605'), document.createTextNode('Star'));
+    appendAdjacentTextNodes(select.querySelector('ion-select-option[value="adjacent"]')!);
 
     await page.waitForChanges();
 
@@ -316,7 +312,7 @@ describe('ion-select: overlay option labels', () => {
 
     expect(createAlert).toHaveBeenCalledTimes(1);
     const { inputs } = createAlert.mock.calls[0][0];
-    expect(inputs!.map((input) => input.label)).toEqual(['\u2605Star', 'Star']);
+    expect(inputs!.map((input) => input.label)).toEqual(['★Star', 'Star']);
   });
 });
 
@@ -335,17 +331,6 @@ describe('ion-select: option plain text with custom HTML enabled', () => {
     jest.restoreAllMocks();
   });
 
-  const appendAdjacentTextNodes = (select: HTMLIonSelectElement) => {
-    /**
-     * Frameworks render `{icon}{label}` as two sibling text nodes with no
-     * whitespace between them. The nodes have to be built here rather than in
-     * markup, because a parser collapses adjacent text into a single node.
-     */
-    select
-      .querySelector('ion-select-option')!
-      .append(document.createTextNode('\u2605'), document.createTextNode('Star'));
-  };
-
   it('should not insert a space between adjacent text nodes in an option', async () => {
     const page = await newSpecPage({
       components: [Select, SelectOption],
@@ -353,13 +338,13 @@ describe('ion-select: option plain text with custom HTML enabled', () => {
     });
 
     const select = page.body.querySelector('ion-select')!;
-    appendAdjacentTextNodes(select);
+    appendAdjacentTextNodes(select.querySelector('ion-select-option')!);
 
     select.value = 'star';
     await page.waitForChanges();
 
-    expect(select.shadowRoot!.querySelector('.select-text')!.innerHTML).toBe('\u2605Star');
-    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('\u2605Star');
+    expect(select.shadowRoot!.querySelector('.select-text')!.innerHTML).toBe('★Star');
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('★Star');
   });
 
   it('should not insert a space between adjacent text nodes in an option that also holds an element', async () => {
@@ -369,11 +354,12 @@ describe('ion-select: option plain text with custom HTML enabled', () => {
     });
 
     const select = page.body.querySelector('ion-select')!;
-    appendAdjacentTextNodes(select);
+    const option = select.querySelector('ion-select-option')!;
+    appendAdjacentTextNodes(option);
 
     const badge = document.createElement('ion-badge');
     badge.textContent = 'NEW';
-    select.querySelector('ion-select-option')!.append(badge);
+    option.append(badge);
 
     select.value = 'star';
     await page.waitForChanges();
@@ -386,9 +372,9 @@ describe('ion-select: option plain text with custom HTML enabled', () => {
      * rather than from a space in the text.
      */
     expect(select.shadowRoot!.querySelector('.select-text')!.innerHTML).toBe(
-      '<span>\u2605Star</span><ion-badge>NEW</ion-badge>'
+      '<span>★Star</span><ion-badge>NEW</ion-badge>'
     );
-    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('\u2605StarNEW');
+    expect(select.shadowRoot!.querySelector('button')!.getAttribute('aria-label')).toBe('★StarNEW');
   });
 
   it('should label alert inputs with the text the option renders', async () => {
@@ -400,13 +386,13 @@ describe('ion-select: option plain text with custom HTML enabled', () => {
     });
 
     const select = page.body.querySelector('ion-select')!;
-    appendAdjacentTextNodes(select);
+    appendAdjacentTextNodes(select.querySelector('ion-select-option')!);
     await page.waitForChanges();
 
     await select.open();
 
     const { inputs } = createAlert.mock.calls[0][0];
-    expect(inputs!.map((input) => input.label)).toEqual(['\u2605Star']);
+    expect(inputs!.map((input) => input.label)).toEqual(['★Star']);
   });
 });
 
