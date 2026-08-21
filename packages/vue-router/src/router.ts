@@ -29,6 +29,7 @@ export const createIonRouter = (
     direction: undefined,
     action: undefined,
     delta: undefined,
+    to: undefined,
   };
 
   /**
@@ -46,7 +47,47 @@ export const createIonRouter = (
       _: RouteLocationNormalized,
       failure?: NavigationFailure | void
     ) => {
-      if (failure) return;
+      if (failure) {
+        /*
+         * State staged for a navigation that failed describes something that
+         * did not happen. handleHistoryChange normally consumes it, but it does
+         * not run when the navigation fails, so it has to be cleared here or
+         * the next navigation picks it up instead.
+         *
+         * A delta is only staged for a history navigation, and a stale one
+         * makes the next navigation look like traversal, which stops the
+         * incoming route from being added. Route params are staged by any of
+         * the navigation helpers, and a stale set carries a pop action into
+         * whatever runs next. Only handleNavigateBack stages the previous
+         * route's id alongside them.
+         *
+         * Only clear state that belongs to this navigation. A second history
+         * navigation can replace this one and stage its own information first,
+         * in which case clearing would strip the delta from the navigation that
+         * is still running.
+         *
+         * This only covers navigations that fail. A guard that returns a
+         * location redirects rather than fails, so afterEach is never called
+         * for the original navigation and its staged state reaches the redirect
+         * target instead.
+         */
+        const staysWithThisNavigation =
+          currentNavigationInfo.to === undefined ||
+          currentNavigationInfo.to === to.fullPath;
+
+        if (staysWithThisNavigation) {
+          currentNavigationInfo = {
+            direction: undefined,
+            action: undefined,
+            delta: undefined,
+            to: undefined,
+          };
+
+          incomingRouteParams = undefined;
+        }
+
+        return;
+      }
 
       const { direction, action, delta } = currentNavigationInfo;
 
@@ -68,6 +109,7 @@ export const createIonRouter = (
         direction: undefined,
         action: undefined,
         delta: undefined,
+        to: undefined,
       };
     }
   );
@@ -101,7 +143,7 @@ export const createIonRouter = (
     });
   }
 
-  opts.history.listen((_: any, _x: any, info: any) => {
+  opts.history.listen((to: any, _x: any, info: any) => {
     /**
      * history.listen only fires on certain
      * event such as when the user clicks the
@@ -123,6 +165,12 @@ export const createIonRouter = (
        */
       action: info.type === "pop" && info.delta >= 1 ? "push" : info.type,
       direction: info.direction === "" ? "forward" : info.direction,
+
+      /**
+       * Recorded so that a failed navigation can tell whether this
+       * information is its own before clearing it.
+       */
+      to,
     };
   });
 
