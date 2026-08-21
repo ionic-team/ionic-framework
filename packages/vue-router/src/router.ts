@@ -54,10 +54,12 @@ export const createIonRouter = (
          * not run when the navigation fails, so it has to be cleared here or
          * the next navigation picks it up instead.
          *
-         * A stale delta makes that navigation look like history traversal,
-         * which stops the incoming route from being added. Stale route params
-         * are left behind by handleNavigateBack and apply the previous route's
-         * id and pop action to whatever is navigated to next.
+         * A delta is only staged for a history navigation, and a stale one
+         * makes the next navigation look like traversal, which stops the
+         * incoming route from being added. Route params are staged by any of
+         * the navigation helpers, and a stale set carries a pop action into
+         * whatever runs next. Only handleNavigateBack stages the previous
+         * route's id alongside them.
          *
          * Only clear state that belongs to this navigation. A second history
          * navigation can replace this one and stage its own information first,
@@ -65,9 +67,9 @@ export const createIonRouter = (
          * is still running.
          *
          * This only covers navigations that fail. A guard that returns a
-         * location redirects rather than fails, so vue-router neither reverts
-         * the history entry nor calls afterEach for the original navigation,
-         * and the staged state still reaches the redirect target.
+         * location redirects rather than fails, so afterEach is never called
+         * for the original navigation and its staged state reaches the redirect
+         * target instead.
          */
         const staysWithThisNavigation =
           currentNavigationInfo.to === undefined ||
