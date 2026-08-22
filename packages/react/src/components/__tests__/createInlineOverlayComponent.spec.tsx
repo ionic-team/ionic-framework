@@ -40,17 +40,14 @@ const teleport = (el: HTMLElement) => {
   dest.appendChild(el);
 };
 
-/**
- * The unmount teardown is deferred by a microtask so it can check whether
- * React removed the DOM or only hid it. Let that microtask run.
- */
+// The unmount teardown is deferred a microtask so it can check whether React
+// removed the DOM or only hid it. Let that microtask run.
 const flushTeardown = () => act(async () => {});
 
 /**
- * Track `MutationObserver` use. `jest.spyOn` cannot wrap a class constructor
+ * Tracks `MutationObserver` use. `jest.spyOn` cannot wrap a class constructor
  * (its mock is called without `new`), so swap in a subclass. `observersLive`
- * counts observing-minus-disconnected, which is what a missing `disconnect`
- * shows up in; `observersCreated` cannot see that.
+ * counts observing-minus-disconnected, where a missing `disconnect` shows up.
  */
 const countMutationObservers = () => {
   const Original = global.MutationObserver;
@@ -91,10 +88,9 @@ const countMutationObservers = () => {
 };
 
 /**
- * A component that suspends while it holds a pending promise. Rendering it
- * inside a Suspense boundary hides that boundary's content: React runs
- * `componentWillUnmount` on everything in it without unmounting, and brings
- * the same instances back with `componentDidMount` on the reveal.
+ * Suspends while it holds a pending promise. Inside a Suspense boundary that
+ * hides the boundary's content: React runs `componentWillUnmount` on everything
+ * in it without unmounting, then remounts the same instances on the reveal.
  */
 const Suspender = ({ pending }: { pending: Promise<void> | null }) => {
   if (pending) {
@@ -104,12 +100,13 @@ const Suspender = ({ pending }: { pending: Promise<void> | null }) => {
 };
 
 /**
- * Render `children` in a Suspense boundary next to a sibling that suspends on
- * demand. `hide()` is the reported trigger: the overlay renders fine, another
- * child of the boundary does not, and React hides the whole boundary. Each
- * `hide()` takes a fresh promise so a test can drive more than one cycle.
+ * Renders `children` in a Suspense boundary next to a sibling that suspends on
+ * demand, which is the reported trigger: the overlay renders fine, another
+ * child does not, and React hides the whole boundary. Each `hide()` takes a
+ * fresh promise so a test can drive more than one cycle. `container` places
+ * the React root elsewhere, which the shadow-root case needs.
  */
-const renderWithBoundary = (children: React.ReactNode) => {
+const renderWithBoundary = (children: React.ReactNode, container?: HTMLElement) => {
   let setPending!: (pending: Promise<void> | null) => void;
   let resolvePending: (() => void) | null = null;
 
@@ -125,7 +122,7 @@ const renderWithBoundary = (children: React.ReactNode) => {
     );
   };
 
-  const result = render(<Boundary />);
+  const result = render(<Boundary />, container ? { container } : undefined);
 
   return {
     ...result,
@@ -160,12 +157,9 @@ afterEach(async () => {
 
 describe('createInlineOverlayComponent: cachedOriginalParent', () => {
   it('redirects cachedOriginalParent for a portaled overlay but not a nested one', () => {
-    /**
-     * Core walks up from `cachedOriginalParent` to find the enclosing
-     * `.ion-page`. A portaled host is cached against the portal container, so
-     * it has to be pointed back at its JSX position. A nested host already
-     * renders at that position, so the wrapper must leave it alone.
-     */
+    // Core walks up from `cachedOriginalParent` to find the `.ion-page`. A
+    // portaled host is cached against the portal container, so it has to be
+    // pointed back at its JSX position. A nested host is already there.
     const { container } = render(
       <IonModal keepContentsMounted={true}>
         <IonPopover />
@@ -294,8 +288,8 @@ describe('createInlineOverlayComponent: unmount cleanup', () => {
 // Fixes https://github.com/ionic-team/ionic-framework/issues/31389
 describe('createInlineOverlayComponent: hidden subtree', () => {
   it('leaves a relocated nested overlay alone while a Suspense boundary hides it', async () => {
-    // A hide must leave the host exactly where it is: React did not remove it,
-    // so React will not put it back on the reveal.
+    // A hide must leave the host where it is, since React did not remove it
+    // and will not put it back on the reveal.
     const { hide, reveal } = renderWithBoundary(
       <IonModal keepContentsMounted={true}>
         <IonPopover />
@@ -311,8 +305,6 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
 
     await hide();
 
-    // The host is untouched while hidden: same node, same position, still
-    // connected, so nothing has to be restored on the reveal.
     expect(popover.isConnected).toBe(true);
     expect(popover.parentElement).toBe(teleportDestination);
 
@@ -323,7 +315,7 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('keeps a hidden overlay wired up to the app for the rest of that open', async () => {
-    // `present()` was in flight when the hide landed and core finishes it
+    // Core had `present()` in flight when the hide landed and finishes it
     // regardless, so the app's handlers still have to fire while hidden.
     const onDidPresent = jest.fn();
     const onDidDismiss = jest.fn();
@@ -338,7 +330,7 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
 
     const popover = document.body.querySelector('ion-popover') as HTMLElement;
 
-    // `present()` has started, so the wrapper counts the overlay as open.
+    // Presenting has started, so the wrapper counts the overlay as open.
     act(() => {
       popover.dispatchEvent(new CustomEvent('willPresent'));
     });
@@ -346,8 +338,7 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
 
     await hide();
 
-    // Core finishes presenting, then the overlay is dismissed, both while the
-    // subtree is still hidden.
+    // Both of these land while the subtree is still hidden.
     act(() => {
       popover.dispatchEvent(new CustomEvent('ionPopoverDidPresent'));
       popover.dispatchEvent(new CustomEvent('didDismiss'));
@@ -359,8 +350,7 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
     await reveal();
 
     // The dismiss also has to close the wrapper. React nulls the refs for the
-    // whole hidden window, so a close that only runs when they are present
-    // would leave the contents mounted against a dismissed overlay.
+    // hidden window, so a close gated on them would leave the contents mounted.
     expect(document.querySelector('[data-testid="popover-content"]')).toBeNull();
   });
 
@@ -392,11 +382,10 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
 
   it('puts a relocated portaled host back where it was after a hide', async () => {
     /**
-     * A portaled host that user code moved out of `portalTarget` has to go
-     * back into it synchronously, before a hide can be told from a destroy,
-     * or React's portal removal would not find it. That move is wrong for a
-     * hide, so the reveal has to undo it, back to the exact position: the real
-     * destination is ion-app, which holds other overlays whose order matters.
+     * A host moved out of `portalTarget` has to go back synchronously, before a
+     * hide can be told from a destroy, or React's portal removal misses it. The
+     * reveal undoes that to the exact position, since the real destination is
+     * `ion-app` and the overlays in it have an order.
      */
     const { hide, reveal } = renderWithBoundary(<IonModal />);
 
@@ -420,8 +409,6 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('presents and dismisses a nested overlay after the reveal', async () => {
-    // The other tests only assert the node survived; this one drives a full
-    // open and close after the reveal.
     const onWillPresent = jest.fn();
     const onDidPresent = jest.fn();
     const onDidDismiss = jest.fn();
@@ -460,19 +447,13 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('survives a hide of a nested overlay whose own contents suspended while presenting', async () => {
-    /**
-     * The reported flow. Core emits `ionMount` from the middle of `present()`,
-     * which is what first mounts the overlay's children, so a suspension in
-     * those children always lands while `present()` is in flight and the host
-     * has just been teleported out of its `<template>`.
-     */
+    // Core emits `ionMount` from the middle of `present()`, which is what
+    // first mounts the children, so a suspension in them always lands while
+    // `present()` is in flight and the host is already teleported.
     const onDidPresent = jest.fn();
 
-    /**
-     * The latch has to sit outside React here. This suspender is the component
-     * that throws, so React discards its state and re-renders it from scratch
-     * on the retry, unlike the sibling `<Suspender pending>` above.
-     */
+    // The latch sits outside React: this suspender is the component that
+    // throws, so React discards its state and re-renders it on the retry.
     let contentsReady = false;
     let resolveContents!: () => void;
     const contents = new Promise<void>((resolve) => {
@@ -502,7 +483,7 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
     teleport(popover);
     const teleportDestination = popover.parentElement;
 
-    // `present()`: the host is already teleported when `ionMount` mounts the
+    // On `present()` the host is already teleported when `ionMount` mounts the
     // contents, and the contents suspend as they render.
     await act(async () => {
       popover.dispatchEvent(new CustomEvent('ionMount'));
@@ -518,7 +499,7 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
     expect(popover.isConnected).toBe(true);
     expect(popover.parentElement).toBe(teleportDestination);
 
-    // `present()` runs to completion against a host that never moved.
+    // Presenting runs to completion against a host that never moved.
     act(() => {
       popover.dispatchEvent(new CustomEvent('ionPopoverDidPresent'));
     });
@@ -527,11 +508,8 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('removes a relocated nested overlay destroyed while it was hidden', async () => {
-    /**
-     * React does not call `componentWillUnmount` a second time when it
-     * destroys a subtree it had already hidden, so the overlay still has to
-     * be cleaned up when it is destroyed straight out of the hidden state.
-     */
+    // React skips the second `componentWillUnmount` when it destroys an
+    // already-hidden subtree, so cleanup still has to happen.
     const { hide, unmount } = renderWithBoundary(
       <IonModal keepContentsMounted={true}>
         <IonPopover />
@@ -552,11 +530,9 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('detaches an open portaled overlay destroyed while it was hidden', async () => {
-    /**
-     * React's portal removal takes the host, but the listeners and the props
-     * synced onto it are the wrapper's to detach, and the destroy arrives
-     * with no second `componentWillUnmount` to do it in.
-     */
+    // React's portal removal takes the host, but the listeners and props
+    // synced onto it are the wrapper's to detach, with no second
+    // `componentWillUnmount` to do it in.
     const onDidDismiss = jest.fn();
 
     const { hide, unmount } = renderWithBoundary(<IonModal onDidDismiss={onDidDismiss} />);
@@ -579,13 +555,43 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
     expect(onDidDismiss).not.toHaveBeenCalled();
   });
 
+  it('detaches an open overlay when the shadow host holding the React root is destroyed', async () => {
+    // With a React root inside a shadow root, removing the shadow host
+    // disconnects the marker without mutating anything inside it, so a watch
+    // scoped to that root alone never fires.
+    const onDidDismiss = jest.fn();
+
+    const shadowHost = document.createElement('div');
+    document.body.appendChild(shadowHost);
+    const container = document.createElement('div');
+    shadowHost.attachShadow({ mode: 'open' }).appendChild(container);
+
+    const { hide } = renderWithBoundary(<IonModal onDidDismiss={onDidDismiss} />, container);
+
+    // The host portals to `document.body`, so only the marker is in the shadow root.
+    const modal = document.body.querySelector('ion-modal') as HTMLElement;
+
+    act(() => {
+      modal.dispatchEvent(new CustomEvent('willPresent'));
+    });
+
+    await hide();
+
+    // A raw DOM removal, so React runs nothing and the watch is the only
+    // mechanism left to notice the destroy.
+    shadowHost.remove();
+    await flushTeardown();
+
+    act(() => {
+      modal.dispatchEvent(new CustomEvent('didDismiss'));
+    });
+
+    expect(onDidDismiss).not.toHaveBeenCalled();
+  });
+
   it('detaches an overlay that only started presenting after the hide', async () => {
-    /**
-     * The overlay can open while hidden, since core keeps running. Deciding at
-     * hide time whether a destroy will have anything to detach reads an
-     * `isOpen` that is still false, and then the destroy has no second
-     * `componentWillUnmount` to detach in.
-     */
+    // The overlay can open while hidden, since core keeps running. Deciding at
+    // hide time what a destroy has to detach reads an `isOpen` still false.
     const onDidDismiss = jest.fn();
 
     const { hide, unmount } = renderWithBoundary(<IonModal onDidDismiss={onDidDismiss} />);
@@ -594,7 +600,7 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
 
     await hide();
 
-    // `present()` starts while the subtree is still hidden.
+    // Presenting starts while the subtree is still hidden.
     await act(async () => {
       modal.dispatchEvent(new CustomEvent('willPresent'));
     });
@@ -611,11 +617,10 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
 
   it('moves the wrapper back under the host when a dismiss lands while hidden', async () => {
     /**
-     * The wrapper has to be a direct child of the host before flipping
-     * `isOpen` makes React remove it, and Stencil's scoped-slot relocation can
-     * nest it deeper. React nulls the refs for the whole hidden window, so a
-     * dismiss that lands there has to recover the nodes some other way or the
-     * removal throws and takes the tree down with it.
+     * The wrapper has to be a direct child of the host before flipping `isOpen`
+     * makes React remove it, and a scoped overlay's slot relocation can nest it
+     * deeper. React nulls the refs for the hidden window, so a dismiss landing
+     * there has to recover the nodes or the removal throws.
      */
     const { hide, reveal } = renderWithBoundary(
       <IonModal>
@@ -680,12 +685,9 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('leaves the cachedOriginalParent redirect to the reveal when the host is ready while hidden', async () => {
-    /**
-     * `componentOnReady` is async in the real builds, so it can resolve during
-     * the hidden window, where React has nulled the marker ref and there is no
-     * JSX parent to read. That callback has to bail without latching, or the
-     * reveal never gets to redirect.
-     */
+    // The real builds resolve `componentOnReady` asynchronously, so it can land
+    // in the hidden window with the marker ref nulled and no JSX parent to
+    // read. It has to bail without latching, or the reveal cannot redirect.
     let fireReady: (() => void) | null = null;
     mockComponentOnReady = (_el, cb) => {
       fireReady = cb;
@@ -745,9 +747,8 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
 
       await hide();
       await reveal();
-      // The reveal drained the last watch, so the shared observer was
-      // disconnected and the next hide has to build a new one. Without that
-      // release every cycle would add a watch that never leaves the set.
+      // The reveal drained the last watch, so the next hide builds a new
+      // observer. Without that release every cycle would add a watch.
       await hide();
 
       expect(observersCreated()).toBe(2);
@@ -760,11 +761,10 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
 
   it('leaves no destroy watch behind after a StrictMode mount/unmount cycle', async () => {
     /**
-     * The discarded first mount's deferred teardown runs after the remount has
-     * already released its watch, and finds its marker still connected because
-     * StrictMode never removed the DOM. Without the mount-generation check it
-     * registers a watch nothing will ever release, holding the shared observer
-     * and the host open for the life of the page.
+     * The discarded first mount's deferred teardown runs after the remount
+     * released its watch, and finds its marker connected because StrictMode
+     * never removed the DOM. Without the generation check it registers a watch
+     * nothing releases, holding the observer and host for the life of the page.
      */
     const { observersLive, restore } = countMutationObservers();
 
@@ -783,20 +783,17 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('cleans up when an ancestor of the marker is destroyed while hidden', async () => {
-    /**
-     * The destroy the watch exists for: React removes a node above the marker,
-     * not the marker itself, so an observer on the marker's own parent would
-     * never fire for it.
-     */
+    // React removes a node above the marker, so an observer on the marker's
+    // own parent would never fire.
     let removeAncestor!: () => void;
     let suspend!: () => void;
 
     /**
      * The boundary sits inside the modal so only the popover is hidden and
-     * watched: an outer overlay hidden alongside it would share the observer
-     * and mask which node the registration was made against. The `<div>` is
-     * the intervening ancestor, and both pieces of state sit outside the
-     * boundary because React defers updates made inside a hidden subtree.
+     * watched, since an outer overlay hidden alongside it would share the
+     * observer and mask which node was registered. The `<div>` is the
+     * intervening ancestor, and the state sits outside the boundary because
+     * React defers updates made inside a hidden subtree.
      */
     const App = () => {
       const [isPresent, setIsPresent] = React.useState(true);
@@ -838,11 +835,9 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('leaves a host moved elsewhere during the hidden window where it is', async () => {
-    /**
-     * The reveal only undoes the move `componentWillUnmount` made. A host that
-     * something else moved while hidden is no longer in `portalTarget`, so
-     * putting it back at the pre-hide position would be wrong.
-     */
+    // The reveal only undoes the move `componentWillUnmount` made. A host that
+    // something else moved is no longer in `portalTarget`, so the pre-hide
+    // position is wrong.
     const { hide, reveal } = renderWithBoundary(<IonModal />);
 
     const modal = document.body.querySelector('ion-modal') as HTMLElement;
@@ -864,12 +859,9 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('shares one destroy observer across overlays hidden together', async () => {
-    /**
-     * Every hidden overlay asks the same question of the same tree, so they
-     * share one observer rather than each taking a `document`-wide `subtree`
-     * one. At most one construction here: none if a prior watch already built
-     * it, two if the sharing regresses to per-instance.
-     */
+    // Hidden overlays share one observer rather than each taking a
+    // `document`-wide one. At most one construction here: none if a prior
+    // watch built it, two if the sharing regresses to per-instance.
     const { observersCreated, restore } = countMutationObservers();
 
     try {
@@ -901,11 +893,8 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
   });
 
   it('does not orphan a relocated nested overlay across a StrictMode mount/unmount cycle', async () => {
-    /**
-     * A relocated nested host has to survive the StrictMode dev cycle with
-     * exactly one copy of itself left in the DOM, the same one-copy guarantee
-     * the portaled StrictMode test asserts.
-     */
+    // A relocated nested host has to survive the StrictMode cycle with exactly
+    // one copy left in the DOM, same as the portaled StrictMode test.
     // Relocate from a layout effect: `mockComponentOnReady` never fires for a
     // nested overlay, so the host would never leave its `<template>`.
     const Teleporter = () => {
@@ -929,7 +918,6 @@ describe('createInlineOverlayComponent: hidden subtree', () => {
     const popovers = document.querySelectorAll('ion-popover');
     expect(popovers).toHaveLength(1);
     expect(popovers[0].isConnected).toBe(true);
-    // The survivor is the relocated one, not a host left behind in its template.
     expect(popovers[0].parentElement?.id).toBe('teleport-destination');
   });
 });

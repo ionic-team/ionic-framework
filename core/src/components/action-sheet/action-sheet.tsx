@@ -14,6 +14,7 @@ import {
   isCancel,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   safeCall,
   setOverlayId,
 } from '@utils/overlays';
@@ -455,6 +456,15 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   connectedCallback() {
     prepareOverlay(this.el);
     this.triggerChanged();
+
+    // `componentDidLoad` only fires once per instance, so a reconnect has to
+    // rebuild the gesture its disconnect destroyed.
+    this.setupButtonActiveGesture();
+
+    // Re-apply the root lock if moved without dismiss() being called
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(this.el);
+    }
   }
 
   disconnectedCallback() {
@@ -478,26 +488,35 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     this.buttonsChanged();
   }
 
-  componentDidLoad() {
-    /**
-     * Only create gesture if:
-     * 1. A gesture does not already exist
-     * 2. App is running in iOS mode
-     * 3. A wrapper ref exists
-     * 4. A group ref exists
-     */
+  /**
+   * Only create gesture if:
+   * 1. A gesture does not already exist
+   * 2. App is running in iOS mode
+   * 3. A wrapper ref exists
+   * 4. A group ref exists
+   * 5. The host is still connected, since a reconnect can schedule this and
+   *    disconnect again before the task runs
+   */
+  private setupButtonActiveGesture() {
     const { groupEl, wrapperEl } = this;
-    if (!this.gesture && getIonMode(this) === 'ios' && wrapperEl && groupEl) {
-      readTask(() => {
-        const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
-        if (!isScrollable) {
-          this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
-            refEl.classList.contains('action-sheet-button')
-          );
-          this.gesture.enable(true);
-        }
-      });
+    if (getIonMode(this) !== 'ios' || !wrapperEl || !groupEl) {
+      return;
     }
+    readTask(() => {
+      // Two calls before the first flushes would otherwise both create a
+      // gesture, orphaning the first with its listeners still bound.
+      if (this.gesture || !this.el.isConnected || groupEl.scrollHeight > groupEl.clientHeight) {
+        return;
+      }
+      this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
+        refEl.classList.contains('action-sheet-button')
+      );
+      this.gesture.enable(true);
+    });
+  }
+
+  componentDidLoad() {
+    this.setupButtonActiveGesture();
 
     /**
      * If action sheet was rendered with isOpen="true"
