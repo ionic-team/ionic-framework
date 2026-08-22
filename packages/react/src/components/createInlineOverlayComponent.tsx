@@ -28,6 +28,63 @@ type InlineOverlayState = {
  */
 const NestedOverlayContext = React.createContext(false);
 
+type DestroyWatch = { marker: HTMLElement; onDestroy: () => void };
+
+/**
+ * React skips `componentWillUnmount` when it destroys a subtree it had already
+ * hidden, so a hidden overlay watches its own marker leave the document. Every
+ * watcher asks the same question of the same tree, so they share one observer:
+ * a `document`-wide `subtree` observer per overlay is the change-detection cost
+ * core avoids where it can (see modal's `initParentRemovalObserver`).
+ */
+const destroyWatches = new Set<DestroyWatch>();
+let destroyObserver: MutationObserver | undefined;
+
+const stopDestroyObserverIfIdle = () => {
+  if (destroyWatches.size === 0) {
+    destroyObserver?.disconnect();
+    destroyObserver = undefined;
+  }
+};
+
+const watchForDestroy = (marker: HTMLElement, onDestroy: () => void): DestroyWatch | undefined => {
+  // Mirrors core's guard for environments with a DOM but no MutationObserver.
+  if (typeof MutationObserver === 'undefined') {
+    return undefined;
+  }
+  const watch: DestroyWatch = { marker, onDestroy };
+  destroyWatches.add(watch);
+  if (destroyObserver === undefined) {
+    destroyObserver = new MutationObserver(() => {
+      for (const candidate of Array.from(destroyWatches)) {
+        if (candidate.marker.isConnected) {
+          continue;
+        }
+        destroyWatches.delete(candidate);
+        candidate.onDestroy();
+      }
+      stopDestroyObserverIfIdle();
+    });
+  }
+  /**
+   * The node React removes is usually the marker's own parent, and a
+   * `childList` observer never fires for its own removal, so this watches from
+   * the marker's root down rather than from its parent. The root rather than
+   * `document.body` so a React root mounted outside the body, or inside a
+   * shadow root, is still covered.
+   */
+  destroyObserver.observe(marker.getRootNode(), { childList: true, subtree: true });
+  return watch;
+};
+
+const unwatchForDestroy = (watch: DestroyWatch | undefined) => {
+  if (watch === undefined) {
+    return;
+  }
+  destroyWatches.delete(watch);
+  stopDestroyObserverIfIdle();
+};
+
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
   ref?: React.Ref<any>;
@@ -56,7 +113,27 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     markerRef: React.RefObject<HTMLTemplateElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
     portalTarget: HTMLElement | null;
-    isUnmounted = false;
+    // Bumped on every mount, so a deferred teardown can tell it was revealed.
+    private mountCount = 0;
+    private hiddenDestroyWatch?: DestroyWatch;
+    /**
+     * Where a relocated portaled host sat before `componentWillUnmount` moved
+     * it back into `portalTarget`, so a reveal can put it back.
+     */
+    private relocatedPortalHost?: { node: HTMLElement; parent: Node; nextSibling: Node | null };
+    /**
+     * The host and wrapper as of the last `componentWillUnmount`. React nulls
+     * the refs for as long as it keeps this subtree hidden, and a dismiss can
+     * land in that window, so `handleDidDismiss` falls back to these.
+     */
+    private nodesAtUnmount: { host: HTMLElement; wrapper: HTMLElement | null } | null = null;
+    /**
+     * `componentDidMount` runs again on every reveal, but the redirect must
+     * not: core clears `cachedOriginalParent` when the parent is removed, and
+     * re-running would put the reference back. The JSX parent never changes,
+     * so once is enough.
+     */
+    private hasRedirectedOriginalParent = false;
 
     constructor(props: InternalProps) {
       super(props);
@@ -68,8 +145,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       this.state = { isOpen: false };
       // Create a local ref to the inner child element.
       this.wrapperRef = React.createRef();
-      // Marker stays at the JSX location so we can recover the immediate
-      // JSX parent after the overlay has been portaled to ion-app.
+      // Marker stays at the JSX location: portaled overlays recover their JSX
+      // parent from it, and it leaves the document only on a real unmount.
       this.markerRef = React.createRef();
       /**
        * Resolve the portal target to the same container CoreDelegate
@@ -82,10 +159,12 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     }
 
     componentDidMount() {
-      // Reset for React 18 StrictMode: the dev-mode unmount/remount cycle
-      // re-uses this instance and leaves the flag set from the prior
-      // componentWillUnmount.
-      this.isUnmounted = false;
+      this.mountCount++;
+      this.nodesAtUnmount = null;
+      // React is showing this subtree again, so the pending teardown from the
+      // hide is off.
+      this.stopWatchingForDestroy();
+      this.restoreRelocatedPortalHost();
 
       this.componentDidUpdate(this.props);
 
@@ -99,13 +178,28 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * child-route passthrough, parent-removal auto-dismiss) walk up
        * from `cachedOriginalParent` to find the enclosing `.ion-page`,
        * so we redirect it at the marker's JSX parent.
+       *
+       * Nested overlays are excluded: they never portal, so a nested modal
+       * already cached its `<template>`, which sits at the JSX position and
+       * resolves the right `.ion-page`.
        */
       const overlay = this.ref.current;
-      if (overlay) {
+      const generation = this.mountCount;
+      if (overlay && !this.props.isNested && !this.hasRedirectedOriginalParent) {
         componentOnReady(overlay as HTMLElement, () => {
-          if (this.isUnmounted) return;
+          /**
+           * A newer mount owns this now, or React nulled the marker ref
+           * because it unmounted or hid the subtree. Either way the callback
+           * is stale, and leaving the latch open lets the reveal retry.
+           */
           const markerParent = this.markerRef.current?.parentElement ?? null;
-          if (markerParent && markerParent !== this.portalTarget) {
+          if (this.mountCount !== generation || markerParent === null) {
+            return;
+          }
+          // Latch on completion, not on success: either way this instance is
+          // done, so a later reveal must not redirect again.
+          this.hasRedirectedOriginalParent = true;
+          if (markerParent !== this.portalTarget) {
             (overlay as any).cachedOriginalParent = markerParent;
           }
         });
@@ -125,42 +219,94 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     }
 
     componentWillUnmount() {
-      this.isUnmounted = true;
       const node = this.ref.current;
       if (!node) {
         return;
       }
+      this.nodesAtUnmount = { host: node, wrapper: this.wrapperRef.current };
       /**
-       * CoreDelegate (or user code in onWillPresent) can move the overlay out
-       * of where React rendered it. React's unmount only removes the node from
-       * its original React location, so we recover a relocated host here,
-       * regardless of open state.
-       *
-       * We can't gate this on `isOpen`: the overlay can be moved before it
-       * finishes presenting (e.g. the React 18 StrictMode mount/unmount cycle,
-       * where the present events that flip `isOpen` haven't fired yet), which
-       * would orphan the relocated host in the DOM. It also has to run
-       * synchronously here, since React's portal `removeChild` runs after
-       * `componentWillUnmount` returns and needs the host where it expects it.
+       * CoreDelegate (or user code in onWillPresent) can move a portaled
+       * overlay out of `portalTarget`. React's portal `removeChild` runs as
+       * soon as this returns and needs the host where it left it, so this one
+       * has to stay synchronous, before we know whether this is a hide or a
+       * destroy. Record where it came from so a reveal can undo the move.
        */
-      if (node.isConnected) {
-        if (this.props.isNested) {
-          /**
-           * Nested overlays render inline inside a `<template>`. If the host
-           * has been moved out of that template, React's unmount won't reach
-           * it, so remove it directly. A host still in its template is left
-           * for React to remove.
-           */
-          if (!(node.parentElement instanceof HTMLTemplateElement)) {
-            node.remove();
-          }
-        } else if (this.portalTarget && node.parentNode !== this.portalTarget) {
-          /**
-           * Portaled overlays: move the host back into `portalTarget` so
-           * React's portal `removeChild` can find it.
-           */
-          this.portalTarget.appendChild(node);
+      if (node.isConnected && !this.props.isNested && this.portalTarget && node.parentNode !== this.portalTarget) {
+        this.relocatedPortalHost = { node, parent: node.parentNode!, nextSibling: node.nextSibling };
+        this.portalTarget.appendChild(node);
+      }
+      /**
+       * React also calls `componentWillUnmount` when it only *hides* a
+       * subtree - a Suspense boundary falling back, an Offscreen tree, the
+       * StrictMode dev cycle - and then mounts the same instance again on the
+       * reveal. Nothing here tells the two apart, so the teardown waits a
+       * microtask and runs only if the marker really left the document.
+       */
+      const marker = this.markerRef.current;
+      const mountCount = this.mountCount;
+      queueMicrotask(() => {
+        // Already back (the StrictMode cycle remounts before this runs).
+        if (this.mountCount !== mountCount) {
+          return;
         }
+        if (marker?.isConnected) {
+          this.watchForDestroyWhileHidden(marker, node, mountCount);
+          return;
+        }
+        this.cleanupAfterUnmount(node);
+      });
+    }
+
+    /**
+     * `componentWillUnmount` has to move a relocated portaled host back into
+     * `portalTarget` before it knows a hide from a destroy. On a reveal there
+     * was no removal to prepare for, so put the host back where it was.
+     */
+    private restoreRelocatedPortalHost() {
+      const relocated = this.relocatedPortalHost;
+      this.relocatedPortalHost = undefined;
+      if (!relocated || !relocated.parent.isConnected || relocated.node.parentNode !== this.portalTarget) {
+        return;
+      }
+      const { node, parent, nextSibling } = relocated;
+      // The recorded sibling can have moved or been removed while hidden, in
+      // which case appending is the closest we can get.
+      parent.insertBefore(node, nextSibling?.parentNode === parent ? nextSibling : null);
+    }
+
+    /**
+     * `cleanupAfterUnmount` decides what a destroy actually has to undo:
+     * gating here on the state at hide time would miss an overlay that only
+     * starts presenting afterwards.
+     */
+    private watchForDestroyWhileHidden(marker: HTMLElement, node: HTMLElement, mountCount: number) {
+      this.hiddenDestroyWatch = watchForDestroy(marker, () => {
+        this.hiddenDestroyWatch = undefined;
+        // A reveal already happened, so componentDidMount owns the teardown.
+        if (this.mountCount !== mountCount) {
+          return;
+        }
+        this.cleanupAfterUnmount(node);
+      });
+    }
+
+    private stopWatchingForDestroy() {
+      unwatchForDestroy(this.hiddenDestroyWatch);
+      this.hiddenDestroyWatch = undefined;
+    }
+
+    private cleanupAfterUnmount(node: HTMLElement) {
+      // The component is really gone, so nothing is waiting to be put back.
+      this.nodesAtUnmount = null;
+      this.relocatedPortalHost = undefined;
+      /**
+       * Nested overlays render inline inside a `<template>`. If the host has
+       * been moved out of that template, React's unmount won't reach it, so
+       * remove it directly. A host still in its template is left for React to
+       * remove.
+       */
+      if (this.props.isNested && node.isConnected && !(node.parentElement instanceof HTMLTemplateElement)) {
+        node.remove();
       }
       /**
        * If the overlay is being unmounted, but is still
@@ -257,7 +403,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         );
       }
 
-      return createElement('template', {}, overlayElement);
+      return createElement('template', { ref: this.markerRef }, overlayElement);
     }
 
     static get displayName() {
@@ -287,19 +433,28 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     };
 
     private handleDidDismiss = (evt: any) => {
-      const wrapper = this.wrapperRef.current;
-      const el = this.ref.current;
+      // The refs are null for as long as React keeps this subtree hidden, so a
+      // dismiss that lands there falls back to the nodes recorded at hide time.
+      const wrapper = this.wrapperRef.current ?? this.nodesAtUnmount?.wrapper ?? null;
+      const el = this.ref.current ?? this.nodesAtUnmount?.host ?? null;
 
       /**
-       * This component might be unmounted already, if the containing
-       * element was removed while the overlay was still open. (For
-       * example, if an item contains an inline overlay with a button
-       * that removes the item.)
+       * React's `removeChild` needs the wrapper as a direct child of the host,
+       * and Stencil's scoped-slot relocation (ion-alert, ion-action-sheet,
+       * ion-loading) can nest it deeper. So this has to run before the flip
+       * below, which is what triggers that removal. Already a direct child
+       * means leaving it alone: appending would only reorder it against core's
+       * own nodes.
        */
-      if (wrapper && el) {
+      if (wrapper && el && wrapper.parentElement !== el) {
         el.append(wrapper);
-        this.setState({ isOpen: false });
       }
+      /**
+       * Flip either way: a dismiss that lands while hidden would otherwise
+       * leave the contents mounted against a closed overlay on reveal. After a
+       * real unmount this is a no-op.
+       */
+      this.setState({ isOpen: false });
 
       this.props.onDidDismiss && this.props.onDidDismiss(evt);
     };
