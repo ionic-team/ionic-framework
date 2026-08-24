@@ -24,10 +24,6 @@ runs:
         name: ionic-angular-server
         path: ./packages/angular-server
         filename: AngularServerBuild.zip
-    - name: 📐 Run Angular Package Tests 
-      run: npm run test
-      shell: bash
-      working-directory: ./packages/angular
     - name: 🧪 Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash

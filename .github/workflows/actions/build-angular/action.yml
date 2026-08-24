@@ -43,3 +43,7 @@ runs:
         name: ionic-angular
         output: ./packages/angular/AngularBuild.zip
         paths: ./packages/angular/dist ./packages/angular/css
+    - name: 📐 Run Angular Package Tests 
+      run: npm run test
+      shell: bash
+      working-directory: ./packages/angular
