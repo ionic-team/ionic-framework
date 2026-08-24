@@ -13,11 +13,7 @@
     "jsxFragmentFactory": "Fragment",
     "lib": [
       "dom",
-      "dom.iterable",
-      "es2017",
-      "es2020",
-      "es2021",
-      "esnext"
+      "es2022"
     ],
     "module": "esnext",
     "noImplicitAny": true,
@@ -26,8 +22,8 @@
     "noUnusedParameters": true,
     "pretty": true,
     "removeComments": false,
-    "target": "es2017",
-    "types": ["node"],
+    "target": "es2022",
+    "types": ["node", "vitest/globals", "@stencil/vitest"],
     "paths": {
       "@utils/*": ["./src/utils/*"],
       "@utils/test": ["./src/utils/test/utils"],
@@ -38,9 +34,6 @@
     "src",
   ],
   "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "src/utils/test/platform.utils.ts"
+    "node_modules"
   ]
 }

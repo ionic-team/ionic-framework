@@ -5,13 +5,13 @@ import { Datetime } from '../../datetime';
 
 describe('datetime', () => {
   beforeEach(() => {
-    const mockIntersectionObserver = jest.fn();
-    mockIntersectionObserver.mockReturnValue({
-      observe: () => null,
-      unobserve: () => null,
-      disconnect: () => null,
-    });
-    global.IntersectionObserver = mockIntersectionObserver;
+    global.IntersectionObserver = vi.fn().mockImplementation(function () {
+      return {
+        observe: () => null,
+        unobserve: () => null,
+        disconnect: () => null,
+      };
+    }) as any;
   });
 
   describe('month/year toggle', () => {

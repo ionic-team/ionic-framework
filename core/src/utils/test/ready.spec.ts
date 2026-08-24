@@ -1,7 +1,9 @@
+// @vitest-environment stencil
+
 import { componentOnReady } from '../helpers';
 
 describe('componentOnReady()', () => {
-  it('should correctly call callback for a custom element', (done) => {
+  it('should correctly call callback for a custom element', async () => {
     customElements.define(
       'hello-world',
       class extends HTMLElement {
@@ -12,14 +14,12 @@ describe('componentOnReady()', () => {
     );
 
     const component = document.createElement('hello-world');
-    componentOnReady(component, (el: HTMLElement) => {
-      expect(el).toBe(component);
-      done();
-    });
+    const el = await new Promise<HTMLElement>((resolve) => componentOnReady(component, resolve));
+    expect(el).toBe(component);
   });
 
-  it('should correctly call callback for a lazy loaded component', (done) => {
-    const cb = jest.fn((el) => {
+  it('should correctly call callback for a lazy loaded component', async () => {
+    const cb = vi.fn((el) => {
       return new Promise((resolve) => {
         setTimeout(() => resolve(el), 250);
       });
@@ -39,10 +39,8 @@ describe('componentOnReady()', () => {
     );
 
     const component = document.createElement('hello-world');
-    componentOnReady(component, (el: HTMLElement) => {
-      expect(el).toBe(component);
-      expect(cb).toHaveBeenCalledTimes(1);
-      done();
-    });
+    const el = await new Promise<HTMLElement>((resolve) => componentOnReady(component, resolve));
+    expect(el).toBe(component);
+    expect(cb).toHaveBeenCalledTimes(1);
   });
 });

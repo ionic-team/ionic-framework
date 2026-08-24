@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+import type { Mock } from 'vitest';
 
 import type { ComponentProps } from '../../../interface';
 import { Nav } from '../nav';
@@ -8,13 +9,13 @@ import { ViewController } from '../view-controller';
 describe('NavController', () => {
   describe('push and pop', () => {
     it('should push multiple times and pop multiple times', async () => {
-      const push1Done = jest.fn();
-      const push2Done = jest.fn();
-      const push3Done = jest.fn();
-      const push4Done = jest.fn();
-      const pop1Done = jest.fn();
-      const pop2Done = jest.fn();
-      const pop3Done = jest.fn();
+      const push1Done = vi.fn();
+      const push2Done = vi.fn();
+      const push3Done = vi.fn();
+      const push4Done = vi.fn();
+      const pop1Done = vi.fn();
+      const pop2Done = vi.fn();
+      const pop3Done = vi.fn();
 
       // Push 1
       const view1 = mockView(MockView1);
@@ -189,24 +190,17 @@ describe('NavController', () => {
       expect(nav['views'][(await nav.getLength()) - 1].component).toEqual(MockView2);
     }, 10000);
 
-    it('should not insert if null view', (done) => {
+    it('should not insert if null view', async () => {
       mockViews(nav, [mockView(MockView1)]);
 
-      nav
-        .insert(-1, null as any, null, null, trnsDone)
-        .then(() => {
-          fail('it should not succeed');
-        })
-        .catch(async (err: Error) => {
-          const hasCompleted = false;
-          const requiresTransition = false;
-          const rejectReason = new Error('invalid views to insert');
-          expect(err).toEqual(rejectReason);
-          expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
-          expect(await nav.getLength()).toEqual(1);
-          expect(nav['views'][(await nav.getLength()) - 1].component).toEqual(MockView1);
-          done();
-        });
+      const rejectReason = new Error('invalid views to insert');
+      await expect(nav.insert(-1, null as any, null, null, trnsDone)).rejects.toEqual(rejectReason);
+
+      const hasCompleted = false;
+      const requiresTransition = false;
+      expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
+      expect(await nav.getLength()).toEqual(1);
+      expect(nav['views'][(await nav.getLength()) - 1].component).toEqual(MockView1);
     }, 10000);
   });
 
@@ -245,22 +239,15 @@ describe('NavController', () => {
   });
 
   describe('pop', () => {
-    it('should not pop when no views in the stack', (done) => {
-      nav
-        .pop(null, trnsDone)
-        .then(() => {
-          fail('it should not succeed');
-        })
-        .catch(async (err: any) => {
-          const hasCompleted = false;
-          const requiresTransition = false;
-          const rejectReason = new Error('no views in the stack to be removed');
-          expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
-          expect(err).toEqual(rejectReason);
-          expect(await nav.getLength()).toEqual(0);
-          expect(nav['isTransitioning']).toEqual(false);
-          done();
-        });
+    it('should not pop when no views in the stack', async () => {
+      const rejectReason = new Error('no views in the stack to be removed');
+      await expect(nav.pop(null, trnsDone)).rejects.toEqual(rejectReason);
+
+      const hasCompleted = false;
+      const requiresTransition = false;
+      expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
+      expect(await nav.getLength()).toEqual(0);
+      expect(nav['isTransitioning']).toEqual(false);
     }, 10000);
 
     it('should remove the last view and fire lifecycles', async () => {
@@ -782,11 +769,11 @@ describe('NavController', () => {
     });
 
     const instance = {
-      ionViewWillEnter: jest.spyOn(element, 'ionViewWillEnter'),
-      ionViewDidEnter: jest.spyOn(element, 'ionViewDidEnter'),
-      ionViewWillLeave: jest.spyOn(element, 'ionViewWillLeave'),
-      ionViewDidLeave: jest.spyOn(element, 'ionViewDidLeave'),
-      ionViewWillUnload: jest.spyOn(element, 'ionViewWillUnload'),
+      ionViewWillEnter: vi.spyOn(element, 'ionViewWillEnter'),
+      ionViewDidEnter: vi.spyOn(element, 'ionViewDidEnter'),
+      ionViewWillLeave: vi.spyOn(element, 'ionViewWillLeave'),
+      ionViewDidLeave: vi.spyOn(element, 'ionViewDidLeave'),
+      ionViewWillUnload: vi.spyOn(element, 'ionViewWillUnload'),
     };
 
     element.dispatchEvent = (ev: CustomEvent) => {
@@ -811,11 +798,11 @@ describe('NavController', () => {
     return instance;
   }
 
-  let trnsDone: jest.Mock;
+  let trnsDone: Mock;
   let nav: Nav;
 
   beforeEach(async () => {
-    trnsDone = jest.fn();
+    trnsDone = vi.fn();
     const page = await newSpecPage({
       components: [Nav],
       html: `<ion-nav></ion-nav>`,
@@ -832,13 +819,13 @@ describe('NavController', () => {
   const MockView5 = 'mock-view5';
 
   const mockWebAnimation = (el: HTMLElement) => {
-    Element.prototype.animate = jest.fn();
+    Element.prototype.animate = vi.fn();
 
     el.animate = () => {
       const animation = {
-        stop: jest.fn(),
-        pause: jest.fn(),
-        cancel: jest.fn(),
+        stop: vi.fn(),
+        pause: vi.fn(),
+        cancel: vi.fn(),
         onfinish: undefined,
       } as any;
 

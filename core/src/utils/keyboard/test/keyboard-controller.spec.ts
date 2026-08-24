@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { createKeyboardController } from '../keyboard-controller';
 
 describe('Keyboard Controller', () => {
@@ -12,7 +14,7 @@ describe('Keyboard Controller', () => {
   });
 
   it('should run the callback', async () => {
-    const callbackMock = jest.fn();
+    const callbackMock = vi.fn();
     await createKeyboardController(callbackMock);
 
     window.dispatchEvent(new Event('keyboardWillShow'));

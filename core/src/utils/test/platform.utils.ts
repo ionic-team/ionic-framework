@@ -1,4 +1,6 @@
 export const configureBrowser = (config: any, win: any = Object.create(window)) => {
+  win.matchMedia = undefined;
+
   for (const attributeKey in config) {
     // eslint-disable-next-line no-prototype-builtins
     if (config.hasOwnProperty(attributeKey)) {
@@ -10,7 +12,7 @@ export const configureBrowser = (config: any, win: any = Object.create(window)) 
 };
 
 export const mockMatchMedia = (media: string[] = []) => {
-  return jest.fn().mockImplementation((query) => {
+  return vi.fn().mockImplementation((query) => {
     return {
       matches: media.includes(query),
     };

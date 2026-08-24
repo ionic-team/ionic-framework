@@ -413,10 +413,14 @@ export class Input implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
 
-    this.slotMutationController = createSlotMutationController(el as unknown as HTMLElement, ['label', 'start', 'end'], () => {
-      this.setSlottedLabelId();
-      forceUpdate(this);
-    });
+    this.slotMutationController = createSlotMutationController(
+      el as unknown as HTMLElement,
+      ['label', 'start', 'end'],
+      () => {
+        this.setSlottedLabelId();
+        forceUpdate(this);
+      }
+    );
 
     this.setSlottedLabelId();
     this.notchController = createNotchController(

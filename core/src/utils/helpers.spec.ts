@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { inheritAriaAttributes } from './helpers';
 
 describe('inheritAriaAttributes', () => {

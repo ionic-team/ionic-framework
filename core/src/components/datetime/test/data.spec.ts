@@ -483,9 +483,9 @@ describe('generateTime()', () => {
 
 describe('getToday', () => {
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     // System time is zero based, 1 = February
-    jest.setSystemTime(new Date(2022, 1, 21, 18, 30));
+    vi.setSystemTime(new Date(2022, 1, 21, 18, 30));
   });
 
   it('should return today without converting to UTC time', () => {

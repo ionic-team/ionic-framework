@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { scrollToFragment } from '../utils/dom';
 
 describe('scrollToFragment', () => {

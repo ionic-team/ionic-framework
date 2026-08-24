@@ -101,8 +101,8 @@ describe('ion-select', () => {
 describe('select: slot interactivity', () => {
   test('should not prevent click handlers from firing', async () => {
     // https://github.com/ionic-team/ionic-framework/issues/28818
-    const divSpy = jest.fn();
-    const buttonSpy = jest.fn();
+    const divSpy = vi.fn();
+    const buttonSpy = vi.fn();
 
     const page = await newSpecPage({
       components: [Select],

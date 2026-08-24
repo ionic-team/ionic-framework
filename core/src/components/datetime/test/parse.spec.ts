@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { clampDate, getPartsFromCalendarDay, parseAmPm, parseDate, parseMinParts, parseMaxParts } from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {

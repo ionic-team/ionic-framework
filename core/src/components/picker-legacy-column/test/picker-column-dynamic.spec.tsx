@@ -29,7 +29,7 @@ describe('picker-column: dynamic options', () => {
 
     await page.waitForChanges();
 
-    const pickerOpt = pickerCol.querySelector('.picker-opt:nth(2)')!;
+    const pickerOpt = pickerCol.querySelector('.picker-opt:nth-child(3)')!;
     expect(pickerOpt.getAttribute('style')).toContain('transform');
   });
 });
