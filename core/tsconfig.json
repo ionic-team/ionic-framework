@@ -32,6 +32,7 @@
   },
   "include": [
     "src",
+    "vitest.setup.d.ts",
   ],
   "exclude": [
     "node_modules"
