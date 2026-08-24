@@ -1,5 +1,17 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import {
+  AttrDeserialize,
+  Component,
+  Element,
+  Event,
+  Host,
+  Method,
+  Prop,
+  State,
+  Watch,
+  forceUpdate,
+  h,
+} from '@stencil/core';
 import { createItemMultipleInputsObserver, isOptionSelected } from '@utils/forms';
 import { addEventListener, removeEventListener } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -63,6 +75,26 @@ export class Radio implements ComponentInterface {
    * the value of the radio.
    */
   @Prop({ reflect: true }) value?: any | null;
+
+  /**
+   * The runtime reflects `value` and then feeds the attribute back here. The
+   * attribute is lossy, so taking it verbatim turns `true` into `""` and the
+   * radio group reports the wrong value.
+   */
+  @AttrDeserialize('value')
+  deserializeValue(newValue: string | null) {
+    const { value } = this;
+
+    if (value === undefined) {
+      /**
+       * Removing the attribute reports `null`, which would defeat the
+       * auto-generated value in `connectedCallback`.
+       */
+      return newValue === null ? undefined : newValue;
+    }
+
+    return reflectedValue(value) === newValue ? value : newValue;
+  }
 
   @Watch('value')
   valueChanged() {
@@ -265,5 +297,25 @@ export class Radio implements ComponentInterface {
     );
   }
 }
+
+/**
+ * How the runtime writes `value` to the attribute. Values it cannot write return
+ * `undefined`, which no incoming attribute can match.
+ */
+const reflectedValue = (value: any) => {
+  if (value === true) {
+    return '';
+  }
+
+  if (value === false) {
+    return null;
+  }
+
+  if (typeof value === 'object' || typeof value === 'function') {
+    return undefined;
+  }
+
+  return String(value);
+};
 
 let radioButtonIds = 0;
