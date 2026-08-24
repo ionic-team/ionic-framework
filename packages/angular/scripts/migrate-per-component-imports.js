@@ -1,5 +1,5 @@
 /**
- * Rewrites barrel imports from `@ionic/angular` into per-component entryx points
+ * Rewrites barrel imports from `@ionic/angular` into per-component entry points
  * so bundlers can code-split on a per-component basis.
  * Run from the root of an Angular project that depends on `@ionic/angular`.
  * E.g.
@@ -231,7 +231,6 @@ function collectSourceFiles(targets) {
  * import statement per entry point.
  */
 function rewriteSource(source, symbolToEntryPoint) {
-  // Anchored to the start of a line so commented-out examples are left alone.
   const namedImport = new RegExp(
     `^([ \\t]*)import\\s+(type\\s+)?\\{([^}]*)\\}\\s*from\\s*(['"\`])${PACKAGE_NAME}\\4[ \\t]*;?`,
     'gm'
