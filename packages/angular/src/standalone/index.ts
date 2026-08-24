@@ -22,12 +22,15 @@ export {
   NavParams,
   IonModalToken,
   IonicRouteStrategy,
+} from '@ionic/angular/common';
+export type {
   ViewWillEnter,
   ViewDidEnter,
   ViewWillLeave,
   ViewDidLeave,
+  ModalOptions,
+  PopoverOptions,
 } from '@ionic/angular/common';
-export type { ModalOptions, PopoverOptions } from '@ionic/angular/common';
 export { IonNav } from './navigation/nav';
 export {
   IonCheckbox,
@@ -55,7 +58,8 @@ export {
   getPlatforms,
   isPlatform,
   getTimeGivenProgression,
-  // TYPES
+} from '@ionic/core/components';
+export type {
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
