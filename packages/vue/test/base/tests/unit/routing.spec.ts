@@ -1130,8 +1130,8 @@ describe('Routing', () => {
     const Login = createPage('login');
 
     let racing = false;
-    let releaseSlow: () => void;
-    let releaseLogin: () => void;
+    let releaseSlow!: () => void;
+    let releaseLogin!: () => void;
     let slowReachedGuard: () => void;
     let loginReachedGuard: () => void;
     let cancelReported: () => void;
@@ -1237,8 +1237,8 @@ describe('Routing', () => {
     const Second = createPage('second');
 
     let racing = false;
-    let releaseFirstBack: () => void;
-    let releaseSecondBack: () => void;
+    let releaseFirstBack!: () => void;
+    let releaseSecondBack!: () => void;
     let firstBackReachedGuard: () => void;
     let secondBackReachedGuard: () => void;
     let cancelReported: () => void;
