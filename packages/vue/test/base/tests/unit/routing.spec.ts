@@ -1116,7 +1116,7 @@ describe('Routing', () => {
     expect(routeInfo.routerDirection).toEqual('forward');
   });
 
-  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  // Guards against clearing params that belong to another navigation still in flight.
   it('should keep the route params of a navigation that replaced a cancelled one', async () => {
     let navManager: any;
 
@@ -1224,7 +1224,7 @@ describe('Routing', () => {
     expect(routeInfo.routerDirection).toEqual('root');
   });
 
-  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  // Guards against clearing a delta that belongs to another navigation still in flight.
   it('should keep the delta of a back navigation that replaced a cancelled one', async () => {
     let navManager: any;
     const Home = {
