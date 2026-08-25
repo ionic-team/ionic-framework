@@ -48,7 +48,7 @@ export const createIonRouter = (
       failure?: NavigationFailure | void
     ) => {
       if (failure) {
-        /*
+        /**
          * State staged for a navigation that failed describes something that
          * did not happen. handleHistoryChange normally consumes it, but it does
          * not run when the navigation fails, so it has to be cleared here or
