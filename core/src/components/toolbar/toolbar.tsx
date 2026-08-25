@@ -24,7 +24,7 @@ import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
     ios: 'toolbar.ios.scss',
     md: 'toolbar.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();

@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { inheritAriaAttributes, isEndSide } from './helpers';
 
 describe('isEndSide', () => {

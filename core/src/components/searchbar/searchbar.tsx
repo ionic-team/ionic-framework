@@ -21,7 +21,7 @@ import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './se
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class Searchbar implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
@@ -281,8 +281,13 @@ export class Searchbar implements ComponentInterface {
   }
 
   componentWillLoad() {
+    /**
+     * `HTMLIonSearchbarElement`'s `autocorrect` prop ('on' | 'off') conflicts with the
+     * native `HTMLElement.autocorrect` (boolean), so it isn't structurally an
+     * `HTMLElement` per TS. Cast through `unknown` when passing `el` to DOM-only utils.
+     */
     this.inheritedAttributes = {
-      ...inheritAttributes(this.el, ['lang', 'dir']),
+      ...inheritAttributes(this.el as unknown as HTMLElement, ['lang', 'dir']),
     };
   }
 

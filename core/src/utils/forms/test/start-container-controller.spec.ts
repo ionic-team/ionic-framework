@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import type { StartContainerController } from '../start-container-controller';
 import {
   SKIP_LABEL_TRANSITION_CLASS,

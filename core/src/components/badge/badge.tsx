@@ -14,7 +14,7 @@ import type { Color } from '../../interface';
     ios: 'badge.ios.scss',
     md: 'badge.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Badge implements ComponentInterface {
   /**

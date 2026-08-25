@@ -210,6 +210,15 @@
       @if ($useHostContext) {
         $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
         $list: append($list, "#{$addHostSelector} #{$selector}", comma);
+      } @else if (str-contains($selector, "::")) {
+        // A pseudo-class like :dir() must be inserted before any pseudo-element
+        // (::before, ::slotted(), etc.) rather than appended after it.
+        // @include add-root("::slotted(ion-icon)", ":dir(rtl)", false)
+        // --> ::slotted(ion-icon):dir(rtl) is invalid; :dir(rtl) is invalid after a pseudo-element
+        $pseudo-element-index: str-index($selector, "::");
+        $base: str-slice($selector, 1, $pseudo-element-index - 1);
+        $pseudo-element: str-slice($selector, $pseudo-element-index);
+        $list: append($list, "#{$base}#{$addHostSelector}#{$pseudo-element}", comma);
       } @else {
         $list: append($list, "#{$selector}#{$addHostSelector}", comma);
       }

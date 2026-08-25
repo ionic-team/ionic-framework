@@ -33,7 +33,7 @@ const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
     ios: 'menu.ios.scss',
     md: 'menu.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Menu implements ComponentInterface, MenuI {
   private animation?: Animation;

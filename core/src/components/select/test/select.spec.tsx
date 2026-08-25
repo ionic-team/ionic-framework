@@ -2,6 +2,8 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { alertController } from '@utils/overlays';
 
+import type { AlertInput } from '../../alert/alert-interface';
+
 import { config } from '../../../global/config';
 import { SelectOption } from '../../select-option/select-option';
 import { Select } from '../select';
@@ -104,8 +106,8 @@ describe('ion-select', () => {
 describe('select: slot interactivity', () => {
   test('should not prevent click handlers from firing', async () => {
     // https://github.com/ionic-team/ionic-framework/issues/28818
-    const divSpy = jest.fn();
-    const buttonSpy = jest.fn();
+    const divSpy = vi.fn();
+    const buttonSpy = vi.fn();
 
     const page = await newSpecPage({
       components: [Select],
@@ -294,7 +296,7 @@ const appendAdjacentTextNodes = (option: Element) => {
  * passed to the controller are asserted instead.
  */
 const stubAlertController = () =>
-  jest.spyOn(alertController, 'create').mockImplementation(async () => {
+  vi.spyOn(alertController, 'create').mockImplementation(async () => {
     const overlay = document.createElement('div') as any;
     overlay.present = () => Promise.resolve();
     // Never resolves, so the select keeps treating the overlay as open.
@@ -304,7 +306,7 @@ const stubAlertController = () =>
 
 describe('ion-select: overlay option labels', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should label alert inputs with the text the option renders', async () => {
@@ -330,7 +332,7 @@ describe('ion-select: overlay option labels', () => {
 
     expect(createAlert).toHaveBeenCalledTimes(1);
     const { inputs } = createAlert.mock.calls[0][0];
-    expect(inputs!.map((input) => input.label)).toEqual(['★Star', 'Star']);
+    expect(inputs!.map((input: AlertInput) => input.label)).toEqual(['★Star', 'Star']);
   });
 });
 
@@ -346,7 +348,7 @@ describe('ion-select: option plain text with custom HTML enabled', () => {
 
   afterEach(() => {
     config.reset({});
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should not insert a space between adjacent text nodes in an option', async () => {

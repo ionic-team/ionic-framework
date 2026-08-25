@@ -21,7 +21,7 @@ import type {
     ios: 'input-otp.ios.scss',
     md: 'input-otp.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class InputOTP implements ComponentInterface {
   private inheritedAttributes: Attributes = {};

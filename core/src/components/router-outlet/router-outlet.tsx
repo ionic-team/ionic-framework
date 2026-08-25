@@ -23,7 +23,7 @@ import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '../router/
 @Component({
   tag: 'ion-router-outlet',
   styleUrl: 'router-outlet.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class RouterOutlet implements ComponentInterface, NavOutlet {
   private readonly lockController = createLockController();

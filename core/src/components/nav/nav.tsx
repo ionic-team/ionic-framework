@@ -25,7 +25,7 @@ import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToVie
 @Component({
   tag: 'ion-nav',
   styleUrl: 'nav.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Nav implements ComponentInterface {
   private transInstr: TransitionInstruction[] = [];

@@ -23,8 +23,7 @@
       {
         "name": "typescript-eslint-language-service"
       }
-    ],
-    "useDefineForClassFields": false
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

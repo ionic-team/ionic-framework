@@ -14,7 +14,7 @@ import type { Color, StyleEventDetail } from '../../interface';
     ios: 'label.ios.scss',
     md: 'label.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class Label implements ComponentInterface {
   private inRange = false;

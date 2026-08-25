@@ -31,7 +31,6 @@ export const DIRECTIVES = [
   d.IonFooter,
   d.IonGrid,
   d.IonHeader,
-  d.IonIcon,
   d.IonImg,
   d.IonInfiniteScroll,
   d.IonInfiniteScrollContent,

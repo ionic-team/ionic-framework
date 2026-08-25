@@ -1,6 +1,12 @@
+// @vitest-environment stencil
+
 import { blockedTags, IonicSafeString, reflectPropertiesToAttributes, sanitizeDOMString, sanitizeDOMTree } from '..';
 
 describe('sanitizeDOMString', () => {
+  afterEach(() => {
+    delete (window as any).Ionic;
+  });
+
   it('disable sanitizer', () => {
     enableSanitizer(false);
     expect(sanitizeDOMString('<img src="x" onerror="alert(document.cookie);">')).toEqual(

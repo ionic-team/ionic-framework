@@ -26,7 +26,7 @@ import type { Color } from '../../interface';
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class ItemOption implements ComponentInterface, AnchorInterface, ButtonInterface {
   @Element() el!: HTMLElement;

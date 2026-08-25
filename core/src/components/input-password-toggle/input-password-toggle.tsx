@@ -21,7 +21,7 @@ import type { Color, TextFieldTypes } from '../../interface';
     ios: 'input-password-toggle.scss',
     md: 'input-password-toggle.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class InputPasswordToggle implements ComponentInterface {
   private inputElRef!: HTMLIonInputElement | null;

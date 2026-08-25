@@ -26,7 +26,7 @@ import type { RouterDirection } from '../router/utils/interface';
     ios: 'button.ios.scss',
     md: 'button.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
   private inItem = false;

@@ -23,7 +23,7 @@ import type { AnimationBuilder, Color } from '../../interface';
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
   private inheritedAttributes: Attributes = {};

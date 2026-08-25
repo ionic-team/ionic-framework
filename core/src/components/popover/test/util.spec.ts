@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { isTriggerElement, getIndexOfItem, getNextItem, getPrevItem } from '../utils';
 
 describe('isTriggerElement', () => {

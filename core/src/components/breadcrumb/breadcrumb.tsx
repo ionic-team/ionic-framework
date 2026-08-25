@@ -24,7 +24,7 @@ import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface
     ios: 'breadcrumb.ios.scss',
     md: 'breadcrumb.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Breadcrumb implements ComponentInterface {
   private inheritedAttributes: Attributes = {};

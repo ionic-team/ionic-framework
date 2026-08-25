@@ -1,9 +1,18 @@
+// @vitest-environment stencil
+
 import initialize from '../../global/ionic-global';
 import { testUserAgent, getPlatforms, isPlatform } from '../platform';
 
 import { PlatformConfiguration, configureBrowser } from './platform.utils';
 
 describe('Platform Tests', () => {
+  const originalWindow = window;
+
+  afterEach(() => {
+    (global as any).window = originalWindow;
+    delete (window as any).Ionic;
+  });
+
   describe('testUserAgent()', () => {
     it('should return true when testing if user agent is an iPhone', () => {
       const win = configureBrowser(PlatformConfiguration.iPhone);

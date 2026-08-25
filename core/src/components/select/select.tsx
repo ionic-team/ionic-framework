@@ -72,7 +72,7 @@ import type {
     ios: 'select.ios.scss',
     md: 'select.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;

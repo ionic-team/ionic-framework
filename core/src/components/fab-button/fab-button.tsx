@@ -23,7 +23,7 @@ import type { RouterDirection } from '../router/utils/interface';
     ios: 'fab-button.ios.scss',
     md: 'fab-button.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
   private fab: HTMLIonFabElement | null = null;

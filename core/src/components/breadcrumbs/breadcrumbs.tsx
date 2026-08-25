@@ -16,7 +16,7 @@ import type { BreadcrumbCollapsedClickEventDetail } from '../breadcrumb/breadcru
     ios: 'breadcrumbs.ios.scss',
     md: 'breadcrumbs.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Breadcrumbs implements ComponentInterface {
   @State() collapsed!: boolean;

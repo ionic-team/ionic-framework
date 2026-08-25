@@ -30,7 +30,7 @@ const INDICATOR_CONTROL_SELECTOR = 'ion-checkbox, ion-radio, ion-toggle';
     ios: 'item.ios.scss',
     md: 'item.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
   private labelColorStyles = {};

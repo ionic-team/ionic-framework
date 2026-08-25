@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZo
 
 import { ProxyCmp } from './angular-component-lib/utils';
 
-import type { Components } from '@ionic/core/components';
+import type { Components } from '@ionic/core/dist/types/components';
 
 import { defineCustomElement as defineIonLoading } from '@ionic/core/components/ion-loading.js';
 

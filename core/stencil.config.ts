@@ -14,7 +14,6 @@ const getAngularOutputTargets = () => {
     // overlays that accept user components
     'ion-modal',
     'ion-popover',
-
     // navigation
     'ion-router',
     'ion-route',
@@ -23,7 +22,6 @@ const getAngularOutputTargets = () => {
     'ion-router-outlet',
     'ion-nav',
     'ion-back-button',
-
     // tabs
     'ion-tabs',
   ]
@@ -46,7 +44,7 @@ const getAngularOutputTargets = () => {
          * are reliant on the CE build will reference the wrong
          * import location.
          */
-        'ion-icon',
+        // 'ion-icon', temp disable until fixed upstream
         /**
          * Value Accessors are manually implemented in the `@ionic/angular/standalone` package.
          */
@@ -81,7 +79,7 @@ export const config: Config = {
     { components: ['ion-app', 'ion-router-outlet', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
-    { components: ['ion-button', 'ion-icon'] },
+    { components: ['ion-button'] }, // 'ion-icon' - temp disable until fixed upstream
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip'] },
@@ -120,7 +118,10 @@ export const config: Config = {
     { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
   plugins: [
-    sass(),
+    sass({
+      quietDeps: true,
+      silenceDeprecations: ['import'],
+    }),
   ],
   outputTargets: [
     reactOutputTarget({
@@ -142,7 +143,6 @@ export const config: Config = {
         'ion-fab-button',
         'ion-item',
         'ion-item-option',
-
         // Overlays
         'ion-action-sheet',
         'ion-alert',
@@ -150,9 +150,8 @@ export const config: Config = {
         'ion-modal',
         'ion-popover',
         'ion-toast',
-
         'ion-app',
-        'ion-icon'
+        // 'ion-icon' temp disable until fixed upstream
       ]
     }),
     vueOutputTarget({
@@ -172,7 +171,6 @@ export const config: Config = {
         'ion-tab-button',
         'ion-tabs',
         'ion-tab-bar',
-
         // Overlays
         'ion-action-sheet',
         'ion-alert',
@@ -180,9 +178,8 @@ export const config: Config = {
         'ion-modal',
         'ion-popover',
         'ion-toast',
-
         'ion-app',
-        'ion-icon'
+        // 'ion-icon' temp disable until fixed upstream
       ],
       componentModels: [
         {
@@ -208,11 +205,11 @@ export const config: Config = {
       sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic-framework/tree/main/core/',
     },
     {
-      type: 'dist',
-      esmLoaderPath: '../loader',
+      type: 'loader-bundle',
+      loaderPath: '../../loader',
     },
     {
-      type: 'dist-custom-elements',
+      type: 'standalone',
       dir: 'components',
       copy: [{
         src: '../scripts/custom-elements',
@@ -220,19 +217,13 @@ export const config: Config = {
         warn: true
       }],
       includeGlobalScripts: false,
-      /**
-       * External Runtime uses default runtime settings instead of this file's definitions. Disabling it enables
-       * `experimentalSlotFixes` to be applied and prevents `@stencil/core/internal/client` from being imported, which
-       * contains a dynamic import that caused a warning in Angular.
-      */
-      externalRuntime: false,
     },
     {
       type: 'docs-json',
       file: '../packages/docs/core.json'
     },
     {
-      type: 'dist-hydrate-script'
+      type: 'ssr'
     },
     apiSpecGenerator({
       file: 'api.txt'
@@ -243,35 +234,8 @@ export const config: Config = {
     // },
     ...getAngularOutputTargets(),
   ],
-  testing: {
-    moduleNameMapper: {
-      "@utils/test": ["<rootDir>/src/utils/test/utils"],
-      "@utils/logging": ["<rootDir>/src/utils/logging"],
-    },
-    setupFilesAfterEnv: ['./setupJest.js']
-  },
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,
   transformAliasedImportPaths: true,
-  extras: {
-    /**
-     * `experimentalSlotFixes` is necessary in Stencil v4 until the fixes described in
-     * {@link https://stenciljs.com/docs/config-extras#experimentalslotfixes the Stencil docs for the flag} are the
-     * default behavior (slated for a future Stencil major version).
-     */
-    experimentalSlotFixes: true,
-    /**
-     * `experimentalScopedSlotChanges` is necessary in Stencil v4 until the fixes described in
-     * {@link https://stenciljs.com/docs/config-extras#experimentalscopedslotchanges the Stencil docs for the flag} are
-     * the default behavior (slated for a future Stencil major version).
-     */
-    experimentalScopedSlotChanges: true,
-    /**
-     * Vite 8 / Rolldown honors the `@vite-ignore` comment on the lazy loader's dynamic import
-     * and never emits the `.entry.js` chunks, so requests for them 404. This flag prepends a
-     * switch of literal import paths those bundlers can resolve.
-     */
-    enableImportInjection: true,
-  }
 };

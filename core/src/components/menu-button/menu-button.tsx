@@ -24,7 +24,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
     ios: 'menu-button.ios.scss',
     md: 'menu-button.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
   private inheritedAttributes: Attributes = {};

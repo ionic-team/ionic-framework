@@ -3,7 +3,7 @@
 /* auto-generated vue proxies */
 import { defineContainer, type StencilVueComponent } from '@stencil/vue-output-target/runtime';
 
-import type { JSX } from '@ionic/core';
+import type { JSX } from '@ionic/core/dist/types/components';
 
 import { defineCustomElement as defineIonAccordion } from '@ionic/core/components/ion-accordion.js';
 import { defineCustomElement as defineIonAccordionGroup } from '@ionic/core/components/ion-accordion-group.js';

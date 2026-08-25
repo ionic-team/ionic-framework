@@ -5,6 +5,7 @@
   "engines": {
     "node": ">= 16"
   },
+  "type": "module",
   "keywords": [
     "ionic",
     "framework",
@@ -18,12 +19,7 @@
     "progressive web app",
     "pwa"
   ],
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.js",
-  "es2015": "dist/esm/index.js",
-  "es2017": "dist/esm/index.js",
-  "jsnext:main": "dist/esm/index.js",
-  "collection:main": "dist/collection/index.js",
+  "module": "dist/loader-bundle/index.js",
   "collection": "dist/collection/collection-manifest.json",
   "types": "dist/types/interface.d.ts",
   "exports": {
@@ -66,7 +62,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^4.44.1",
+    "@stencil/core": "5.0.0-alpha.35",
     "ionicons": "^8.1.0",
     "tslib": "^2.1.0"
   },
@@ -85,9 +81,10 @@
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^1.4.1",
     "@stencil/react-output-target": "^1.6.2",
-    "@stencil/sass": "^3.0.9",
+    "@stencil/sass": "^3.3.3",
+    "@stencil/unplugin": "5.0.0-alpha.35",
+    "@stencil/vitest": "^1.15.0",
     "@stencil/vue-output-target": "0.14.1",
-    "@types/jest": "^29.5.6",
     "@types/node": "^24.13.3",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
@@ -100,8 +97,6 @@
     "eslint-plugin-import": "^2.31.0",
     "execa": "^8.0.1",
     "fs-extra": "^9.0.1",
-    "jest": "^29.7.0",
-    "jest-cli": "^29.7.0",
     "playwright-core": "^1.62.1",
     "prettier": "^2.6.1",
     "rollup": "^2.26.4",
@@ -109,7 +104,9 @@
     "serve": "^14.0.1",
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0",
-    "typescript": "^6.0.0"
+    "typescript": "^6.0.0",
+    "vitest": "^4.1.11",
+    "vitest-environment-stencil": "^1.15.0"
   },
   "overrides": {
     "@ionic/eslint-config": {
@@ -123,7 +120,7 @@
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
-    "clean": "node scripts/clean.js",
+    "clean": "node scripts/clean.cjs",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass --embed-sources --style compressed src/css:./css",
     "eslint": "eslint src",
@@ -137,10 +134,10 @@
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "start": "npm run build.css && stencil build --dev --watch --serve",
     "test": "npm run test.spec && npm run test.e2e",
-    "test.spec": "stencil test --spec --max-workers=2",
+    "test.spec": "vitest run",
     "test.e2e": "npx playwright test",
     "test.e2e.update-snapshots": "npm run test.e2e -- --update-snapshots='changed'",
-    "test.watch": "jest --watch --no-cache",
+    "test.watch": "vitest",
     "test.treeshake": "node scripts/treeshaking.js dist/index.js",
     "test.lazy-imports": "node scripts/verify/lazy-imports.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.lazy-imports && npm run test.treeshake",
@@ -158,8 +155,5 @@
   "bugs": {
     "url": "https://github.com/ionic-team/ionic-framework/issues"
   },
-  "homepage": "https://ionicframework.com/",
-  "jest": {
-    "preset": "@stencil/core/testing"
-  }
+  "homepage": "https://ionicframework.com/"
 }

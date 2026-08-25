@@ -12,7 +12,6 @@ import { createComponent } from '@stencil/react-output-target/runtime';
 import React from 'react';
 
 import { type AccordionGroupChangeEventDetail, type BreadcrumbCollapsedClickEventDetail, type CheckboxChangeEventDetail, type DatetimeChangeEventDetail, type InputChangeEventDetail, type InputInputEventDetail, type InputOtpChangeEventDetail, type InputOtpCompleteEventDetail, type InputOtpInputEventDetail, type IonAccordionGroupCustomEvent, type IonBackdropCustomEvent, type IonBreadcrumbsCustomEvent, type IonCheckboxCustomEvent, type IonContentCustomEvent, type IonDatetimeCustomEvent, type IonImgCustomEvent, type IonInfiniteScrollCustomEvent, type IonInputCustomEvent, type IonInputOtpCustomEvent, type IonItemOptionsCustomEvent, type IonItemSlidingCustomEvent, type IonMenuCustomEvent, type IonNavCustomEvent, type IonPickerColumnCustomEvent, type IonRadioCustomEvent, type IonRadioGroupCustomEvent, type IonRangeCustomEvent, type IonRefresherCustomEvent, type IonReorderGroupCustomEvent, type IonSearchbarCustomEvent, type IonSegmentCustomEvent, type IonSegmentViewCustomEvent, type IonSelectCustomEvent, type IonSplitPaneCustomEvent, type IonTextareaCustomEvent, type IonToggleCustomEvent, type ItemReorderEventDetail, type MenuCloseEventDetail, type PickerColumnChangeEventDetail, type RadioGroupChangeEventDetail, type RangeChangeEventDetail, type RangeKnobMoveEndEventDetail, type RangeKnobMoveStartEventDetail, type RefresherEventDetail, type RefresherPullEndEventDetail, type ReorderEndEventDetail, type ReorderMoveEventDetail, type ScrollBaseDetail, type ScrollDetail, type SearchbarChangeEventDetail, type SearchbarInputEventDetail, type SegmentChangeEventDetail, type SegmentViewScrollEvent, type SelectChangeEventDetail, type TextareaChangeEventDetail, type TextareaInputEventDetail, type ToggleChangeEventDetail } from "@ionic/core";
-import type { Components } from "@ionic/core/components";
 import { IonAccordionGroup as IonAccordionGroupElement, defineCustomElement as defineIonAccordionGroup } from "@ionic/core/components/ion-accordion-group.js";
 import { IonAccordion as IonAccordionElement, defineCustomElement as defineIonAccordion } from "@ionic/core/components/ion-accordion.js";
 import { IonAvatar as IonAvatarElement, defineCustomElement as defineIonAvatar } from "@ionic/core/components/ion-avatar.js";
@@ -85,6 +84,7 @@ import { IonThumbnail as IonThumbnailElement, defineCustomElement as defineIonTh
 import { IonTitle as IonTitleElement, defineCustomElement as defineIonTitle } from "@ionic/core/components/ion-title.js";
 import { IonToggle as IonToggleElement, defineCustomElement as defineIonToggle } from "@ionic/core/components/ion-toggle.js";
 import { IonToolbar as IonToolbarElement, defineCustomElement as defineIonToolbar } from "@ionic/core/components/ion-toolbar.js";
+import type { Components } from "@ionic/core/dist/types/components";
 
 export type IonAccordionEvents = NonNullable<unknown>;
 

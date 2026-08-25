@@ -32,9 +32,7 @@ const enum AccordionState {
     ios: 'accordion.ios.scss',
     md: 'accordion.md.scss',
   },
-  shadow: {
-    delegatesFocus: true,
-  },
+  encapsulation: { type: 'shadow', delegatesFocus: true },
 })
 export class Accordion implements ComponentInterface {
   private accordionGroupEl?: HTMLIonAccordionGroupElement | null;

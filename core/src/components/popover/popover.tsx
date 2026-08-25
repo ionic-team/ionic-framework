@@ -54,7 +54,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
     ios: 'popover.ios.scss',
     md: 'popover.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Popover implements ComponentInterface, PopoverInterface {
   private usersElement?: HTMLElement;

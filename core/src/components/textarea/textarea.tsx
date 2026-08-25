@@ -41,7 +41,7 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;

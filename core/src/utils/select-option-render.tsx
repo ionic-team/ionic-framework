@@ -116,11 +116,7 @@ const renderClonedContent = (id: string, content: HTMLElement, className: string
  * @param className - The base CSS class for the label element.
  * @param useSpan - Whether to use a span element instead of a div for the label.
  */
-export const renderOptionLabel = (
-  option: RichContentOption,
-  className: string,
-  useSpan = false
-): HTMLElement | string | undefined => {
+export const renderOptionLabel = (option: RichContentOption, className: string, useSpan = false): VNode => {
   const { id, label, startContent, endContent, description } = option;
   const hasRichContent = !!startContent || !!endContent || !!description;
   const Tag = useSpan ? 'span' : 'div';
