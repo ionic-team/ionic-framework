@@ -7,12 +7,13 @@ import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
   BACKDROP,
+  cleanupRootFocusTrapAccessibility,
   dismiss,
   eventMethod,
+  FOCUS_TRAP_DISABLE_CLASS,
   prepareOverlay,
   present,
   setOverlayId,
-  FOCUS_TRAP_DISABLE_CLASS,
 } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
@@ -366,6 +367,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
     if (this.headerResizeObserver) {
       this.headerResizeObserver.disconnect();
       this.headerResizeObserver = undefined;
+    }
+
+    // Clean up aria-hidden if removed without dismiss() being called
+    if (this.presented) {
+      cleanupRootFocusTrapAccessibility();
     }
   }
 

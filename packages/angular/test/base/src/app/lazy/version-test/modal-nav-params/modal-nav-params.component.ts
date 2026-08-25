@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicModule } from "@ionic/angular";  // Only import IonicModule
+import { IonicModule } from "@ionic/angular/lazy";  // Only import IonicModule
 
 import { NavRootComponent } from "./nav-root.component";  // Import the NavRootComponent
 

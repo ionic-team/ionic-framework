@@ -4,290 +4,709 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
-- [Version 8.x](#version-8x)
+- [Version 9.x](#version-9x)
+- [Version 8.x](./BREAKING_ARCHIVE/v8.md)
 - [Version 7.x](./BREAKING_ARCHIVE/v7.md)
 - [Version 6.x](./BREAKING_ARCHIVE/v6.md)
 - [Version 5.x](./BREAKING_ARCHIVE/v5.md)
 - [Version 4.x](./BREAKING_ARCHIVE/v4.md)
 - [Legacy](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md)
 
-## Version 8.x
+## Version 9.x
 
-- [Browser and Platform Support](#version-8x-browser-platform-support)
-- [Dark Mode](#version-8x-dark-mode)
-- [Global Styles](#version-8x-global-styles)
-- [Haptics](#version-8x-haptics)
-- [Components](#version-8x-components)
-  - [Button](#version-8x-button)
-  - [Checkbox](#version-8x-checkbox)
-  - [Content](#version-8x-content)
-  - [Datetime](#version-8x-datetime)
-  - [Input](#version-8x-input)
-  - [Item](#version-8x-item)
-  - [Modal](#version-8x-modal)
-  - [Nav](#version-8x-nav)
-  - [Picker](#version-8x-picker)
-  - [Progress bar](#version-8x-progress-bar)
-  - [Radio](#version-8x-radio)
-  - [Range](#version-8x-range)
-  - [Searchbar](#version-8x-searchbar)
-  - [Select](#version-8x-select)
-  - [Textarea](#version-8x-textarea)
-  - [Toggle](#version-8x-toggle)
-- [Framework Specific](#version-8x-framework-specific)
-  - [Angular](#version-8x-angular)
+- [Browser and Platform Support](#version-9x-browser-platform-support)
+- [Package Exports](#version-9x-package-exports)
+- [Components](#version-9x-components)
+  - [Input](#version-9x-input)
+  - [Legacy Picker](#version-9x-legacy-picker)
+  - [Modal](#version-9x-modal)
+  - [Nav](#version-9x-nav)
+  - [Router Outlet](#version-9x-router-outlet)
+  - [Searchbar](#version-9x-searchbar)
+  - [Select](#version-9x-select)
+  - [Textarea](#version-9x-textarea)
+- [Framework Specific](#version-9x-framework-specific)
+  - [Angular](#version-9x-angular)
+  - [React](#version-9x-react)
+  - [Vue](#version-9x-vue)
 
-<h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
+<h2 id="version-9x-browser-platform-support">Browser and Platform Support</h2>
 
-This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic 8.
+This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic 9.
 
 **Minimum Browser Versions**
 | Desktop Browser | Supported Versions |
-| --------------- | ----------------- |
-| Chrome          | 89+               |
-| Safari          | 15+               |
-| Firefox         | 75+               |
-| Edge            | 89+               |
+| --------------- | ------------------ |
+| Chrome          | 89+                |
+| Safari          | 16+                |
+| Edge            | 89+                |
+| Firefox         | 75+                |
 
 **Minimum JavaScript Framework Versions**
 | Framework | Supported Version     |
 | --------- | --------------------- |
-| Angular   | 16+                   |
-| React     | 17+                   |
-| Vue       | 3.0.6+                |
+| Angular   | 18+                   |
+| React     | 18 or 19              |
+| Vue       | 3.5+                  |
 
 **Minimum Mobile Platform Versions**
 | Platform | Supported Version      |
 | -------- | ---------------------- |
-| iOS      | 15+                    |
+| iOS      | 16+                    |
 | Android  | 5.1+ with Chromium 89+ |
 
-Ionic Framework v8 removes backwards support for CSS Animations in favor of the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API). All minimum browser versions listed above support the Web Animations API.
+**Minimum Native Runtime Versions**
+| Native Runtime | Supported Version |
+| -------------- | ----------------- |
+| Capacitor      | 7+                |
 
-<h2 id="version-8x-dark-mode">Dark Mode</h2>
+Ionic's native platform detection no longer checks the Capacitor 2 `isNative` flag. `isCapacitorNative` now relies solely on `Capacitor.isNativePlatform()`, which was added in Capacitor 3. Apps running Capacitor 2 will no longer be detected as a native/hybrid platform, so `isPlatform('capacitor')`, `isPlatform('hybrid')`, and `getPlatforms()` will report web instead of native. Upgrade to a supported Capacitor version (7 or later).
 
+<h2 id="version-9x-package-exports">Package Exports</h2>
 
-In previous versions, it was recommended to define the dark palette in the following way:
+`@ionic/core`'s `package.json` now declares an `exports` field. Subpaths like `@ionic/core/components` and `@ionic/core/loader` previously failed under Node ESM (Angular 21's default Vitest builder, raw Node, etc.) with `ERR_UNSUPPORTED_DIR_IMPORT`, because the strict ESM resolver doesn't read the nested `package.json` files this package relied on. The new `exports` map declares the documented subpaths explicitly.
 
-```css
-@media (prefers-color-scheme: dark) {
-  body {
-    /* global app variables */
-  }
+`exports` is an allowlist. Apps using Node ESM, webpack 5, or TypeScript `moduleResolution: "bundler"`/`"node16"`/`"nodenext"` that import from undocumented internal paths need to switch to one of the supported subpaths:
 
-  .ios body {
-    /* global ios app variables */
-  }
+| Subpath                            | Use                                                   |
+| ---------------------------------- | ----------------------------------------------------- |
+| `@ionic/core`                      | Root entry, controllers, animation builders           |
+| `@ionic/core/components`           | Custom-element constructors and shared utilities      |
+| `@ionic/core/components/ion-*.js`  | Single-component custom-element constructor           |
+| `@ionic/core/loader`               | `defineCustomElements` lazy loader                    |
+| `@ionic/core/hydrate`              | SSR hydration entry                                   |
+| `@ionic/core/css/*.css`            | Global stylesheets and palettes                       |
 
-  .md body {
-    /* global md app variables */
-  }
-}
-```
+Apps on `moduleResolution: "node"` (classic) and webpack 4 keep resolving through the legacy fields and are unaffected.
 
-In Ionic Framework version 8, the dark palette is being distributed via css files that can be imported. Below is an example of importing a dark palette file in Angular:
+<h2 id="version-9x-components">Components</h2>
 
-```css
-/* @import '@ionic/angular/css/palettes/dark.always.css'; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
-```
+<h4 id="version-9x-input">Input</h4>
 
-By importing the `dark.system.css` file, the dark palette variables will be defined like the following:
+**`autocorrect` Property Type Changed to Boolean**
 
-```css
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* global app variables */
-  }
+The `autocorrect` property on `ion-input` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
 
-  :root.ios {
-    /* global ios app variables */
-  }
+The string form no longer behaves the same way. Because an HTML attribute coerces to `true` for any non-empty string, `autocorrect="off"` now evaluates to `true` (autocorrect enabled). Migrate to the boolean property:
 
-  :root.md {
-    /* global md app variables */
-  }
-}
-```
+- Remove the attribute to keep autocorrect disabled (the default).
+- Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
 
-Notice that the dark palette is now applied to the `:root` selector instead of the `body` selector. The [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/:root) selector represents the `<html>` element and is identical to the selector `html`, except that its specificity is higher.
+**Floating Label Behavior**
 
-While migrating to include the new dark palette files is unlikely to cause breaking changes, these new selectors can lead to unexpected overrides if custom CSS variables are being set on the `body` element. We recommend updating any instances where global application variables are set to target the `:root` selector instead.
+Floating labels no longer automatically float when the input contains slotted content. Labels float only when the input is focused or has a value.
 
-For more information on the new dark palette files, refer to the [Dark Mode documentation](https://ionicframework.com/docs/theming/dark-mode).
+**Internal DOM Structure Changes**
 
-<h2 id="version-8x-global-styles">Global Styles</h2>
+The internal DOM structure has been reorganized to support floating labels with slotted content.
 
-<h4 id="version-8x-text-color">Text Color</h4>
+Added:
+- `.input-start`
+- `.input-control`
+- `.input-end`
 
-The `core.css` file has been updated to set the text color on the `body` element:
+Restructured:
+- `.label-text-wrapper` moved from `.input-wrapper` into `.input-control`
+- `.native-wrapper` moved from `.input-wrapper` into `.input-control`
+- Start slot moved from `.native-wrapper` into `.input-start`
+- Clear button icon moved from `.native-wrapper` into `.input-end`
+- End slot moved from `.native-wrapper` into `.input-end`
+- `.input-control` now contains the label text and native `input`, while start/end content is separated into dedicated wrappers
+
+Update your selectors to account for these structural changes:
 
 ```diff
-body {
-+  color: var(--ion-text-color);
-}
+-ion-input .input-wrapper .native-wrapper { }
++ion-input .input-control .native-wrapper { }
+
+-ion-input .input-wrapper .native-wrapper [slot="start"] { }
++ion-input .input-start [slot="start"] { }
+
+-ion-input .input-wrapper .native-wrapper .input-clear-icon { }
++ion-input .input-end .input-clear-icon { }
+
+-ion-input .input-wrapper .native-wrapper [slot="end"] { }
++ion-input .input-end [slot="end"] { }
 ```
 
-This allows components to inherit the color properly when used outside of Ionic Framework and is required for custom themes to work properly. However, it may have unintentional side effects in apps if the color was not expected to inherit.
+<h4 id="version-9x-legacy-picker">Legacy Picker</h4>
 
-<h4 id="version-8x-dynamic-font">Dynamic Font</h4>
+- `ion-picker-legacy` and `ion-picker-legacy-column` have been removed. The legacy picker component has been replaced with an inline picker component.
+   - Usages such as `ion-picker-legacy` or `IonPickerLegacy` should be changed to `ion-picker` and `IonPicker`, respectively.
+- Remove any usages of `pickerController`. If using React, remove any usages of the `useIonPicker` hook. These controller-based APIs have been removed. Use the inline picker component instead.
+- Remove any usages of the `PickerOptions`, `PickerButton`, `PickerColumn`, and `PickerColumnOption` type exports. These types were associated with the legacy picker and have been removed.
 
-The `core.css` file has been updated to enable dynamic font scaling by default.
+<h4 id="version-9x-modal">Modal</h4>
 
-The `--ion-default-dynamic-font` variable has been removed and replaced with `--ion-dynamic-font`.
+The `handleBehavior` property on `ion-modal` now defaults to `"cycle"` instead of `"none"`. For sheet modals that display a handle, this means the handle is now focusable and activating it (by click, keyboard, or screen reader) cycles the sheet through its available breakpoints. This matches the native iOS sheet behavior and keeps sheet modals operable for assistive technology users by default.
 
-Developers who had previously chosen dynamic font scaling by activating it in their global stylesheets can revert to the default setting by removing their custom CSS. In doing so, their application will seamlessly continue utilizing dynamic font scaling as it did before. It's essential to note that altering the font-size of the html element should be avoided, as it may disrupt the proper functioning of dynamic font scaling.
+Sheet modals that relied on the handle being inert should set `handleBehavior="none"` to restore the previous behavior:
 
-Developers who want to disable dynamic font scaling can set `--ion-dynamic-font: initial;` in their global stylesheets. However, this is not recommended because it may introduce accessibility challenges for users who depend on enlarged font sizes.
+```html
+<ion-modal handle-behavior="none"></ion-modal>
+```
 
-For more information on the dynamic font, refer to the [Dynamic Font Scaling documentation](https://ionicframework.com/docs/layout/dynamic-font-scaling).
+<h4 id="version-9x-nav">Nav</h4>
 
-<h2 id="version-8x-haptics">Haptics</h2>
+`ion-nav` no longer integrates with `ion-router`. It is now a standalone imperative stack navigation component, driven only through its own API (`root`, `push`, `pop`, `setRoot`, etc.) and `ion-nav-link`.
 
-- Support for the Cordova Haptics plugin has been removed. Components that integrate with haptics, such as `ion-picker` and `ion-toggle`, will continue to function but will no longer play haptics in Cordova environments. Developers should migrate to Capacitor to continue to have haptics in these components.
+The following behaviors have been removed:
 
-<h2 id="version-8x-components">Components</h2>
+- The router no longer discovers or drives an `ion-nav`. Placing an `ion-nav` inside an `ion-router` no longer turns it into a routed outlet.
+- Navigating an `ion-nav` (via `push`, `pop`, `ion-nav-link`, or the swipe-to-go-back gesture) no longer updates the URL, and the router's navigation guards no longer run for `ion-nav` transitions.
+- The internal `setRouteId()` and `getRouteId()` methods and the `updateURL` nav option have been removed.
 
-<h4 id="version-8x-button">Button</h4>
+Apps that relied on `ion-nav` to update the URL (for example, pushing components and expecting the browser URL to change) should use `ion-router-outlet` for URL-based routing. Keep the `ion-route` definitions and swap the outlet element:
 
-- Button text now wraps by default. If this behavior is not desired, add the `ion-text-nowrap` class from the [CSS Utilities](https://ionicframework.com/docs/layout/css-utilities).
+```diff
+  <ion-router>
+    <ion-route url="/" component="page-one"></ion-route>
+    <ion-route url="/page-two" component="page-two"></ion-route>
+  </ion-router>
 
-<h4 id="version-8x-checkbox">Checkbox</h4>
+- <ion-nav></ion-nav>
++ <ion-router-outlet></ion-router-outlet>
+```
 
- The `legacy` property and support for the legacy syntax, which involved placing an `ion-checkbox` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy checkbox syntax, refer to the [Checkbox documentation](https://ionicframework.com/docs/api/checkbox#migrating-from-legacy-checkbox-syntax).
+An `ion-nav` can still be used inside a routed page for local, URL-less stack navigation. It manages its own stack via `root` and `ion-nav-link`, and the URL never changes as you push and pop:
 
-<h4 id="version-8x-content">Content</h4>
+```html
+<!-- Inside a routed page, an ion-nav manages a local, URL-less stack -->
+<ion-nav root="page-one"></ion-nav>
 
-- Content no longer sets the `--background` custom property when the `.outer-content` class is set on the host.
-
-<h4 id="version-8x-datetime">Datetime</h4>
-
-- The CSS shadow part for `month-year-button` has been changed to target a `button` element instead of `ion-item`. Developers should verify their UI renders as expected for the month/year toggle button inside of `ion-datetime`.
-   - Developers using the CSS variables available on `ion-item` will need to migrate their CSS to use CSS properties. For example:
-      ```diff
-      ion-datetime::part(month-year-button) {
-      -  --background: red;
-
-      +  background: red;
+<script>
+  // Each view is a standard custom element. Setting `root` renders the first
+  // view, and `ion-nav-link` pushes the next one. The URL never changes.
+  customElements.define(
+    'page-one',
+    class extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar><ion-title>Page One</ion-title></ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-nav-link router-direction="forward" component="page-two">
+              <ion-button>Go to Page Two</ion-button>
+            </ion-nav-link>
+          </ion-content>
+        `;
       }
-      ```
+    }
+  );
 
-<h4 id="version-8x-input">Input</h4>
+  customElements.define(
+    'page-two',
+    class extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+              <ion-title>Page Two</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">Page Two content</ion-content>
+        `;
+      }
+    }
+  );
+</script>
+```
 
-- `size` has been removed from the `ion-input` component. Developers should use CSS to specify the visible width of the input.
-- `accept` has been removed from the `ion-input` component. This was previously used in conjunction with the `type="file"`. However, the `file` value for `type` is not a valid value in Ionic Framework.
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-input` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy input syntax, refer to the [Input documentation](https://ionicframework.com/docs/api/input#migrating-from-legacy-input-syntax).
+<h4 id="version-9x-router-outlet">Router Outlet</h4>
 
-<h4 id="version-8x-item">Item</h4>
+`ion-router-outlet` now exposes a `swipeGesture` property that controls the swipe-to-go-back gesture per outlet. This property defaults to `true` in `"ios"` mode and `false` in `"md"` mode.
 
-- The `helper` slot has been removed. Developers should use the `helperText` property on `ion-input` and `ion-textarea`.
-- The `error` slot has been removed. Developers should use the `errorText` property on `ion-input` and `ion-textarea`.
-- Counter functionality has been removed including the `counter` and `counterFormatter` properties. Developers should use the properties of the same name on `ion-input` and `ion-textarea`.
-- The `fill` property has been removed. Developers should use the property of the same name on `ion-input`, `ion-select`, and `ion-textarea`.
-- The `shape` property has been removed. Developers should use the property of the same name on `ion-input`, `ion-select`, and `ion-textarea`.
-- Item no longer automatically delegates focus to the first focusable element. While most developers should not need to make any changes to account for this update, usages of `ion-item` with interactive elements such as form controls (inputs, textareas, etc) should be evaluated to verify that interactions still work as expected.
+**`swipeBackEnabled` Config Behavior Change**
 
-<h5>CSS variables</h4>
+In React and Vue, the `swipeBackEnabled` config option is now read once when the outlet mounts. Apps that dynamically toggle this config value at runtime should migrate to the `swipeGesture` property instead:
 
-The following deprecated CSS variables have been removed: `--highlight-height`, `--highlight-color-focused`, `--highlight-color-valid`, and `--highlight-color-invalid`. These variables were used on the bottom border highlight of an item when the form control inside of that item was focused. The form control syntax was [simplified in v7](https://ionic.io/blog/ionic-7-is-here#simplified-form-control-syntax) so that inputs, selects, and textareas would no longer be required to be used inside of an item.
+**React:**
 
-If you have not yet migrated to the modern form control syntax, migration guides for each of the form controls that added a highlight to item can be found below:
-- [Input migration documentation](https://ionicframework.com/docs/api/input#migrating-from-legacy-input-syntax)
-- [Select migration documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax)
-- [Textarea migration documentation](https://ionicframework.com/docs/api/textarea#migrating-from-legacy-textarea-syntax)
+```diff
+- setupIonicReact({ swipeBackEnabled: someCondition });
++ <IonRouterOutlet swipeGesture={someCondition} />
+```
 
-Once all form controls are using the modern syntax, the same variables can be used to customize them from the form control itself:
+**Vue:**
 
-| Name                        | Description                             |
-| ----------------------------| ----------------------------------------|
-| `--highlight-color-focused` | The color of the highlight when focused |
-| `--highlight-color-invalid` | The color of the highlight when invalid |
-| `--highlight-color-valid`   | The color of the highlight when valid   |
-| `--highlight-height`        | The height of the highlight indicator   |
+```diff
+- createApp(App).use(IonicVue, { swipeBackEnabled: someCondition })
++ <ion-router-outlet :swipe-gesture="someCondition" />
+```
 
-The following styles for item:
+**Disabling Swipe-to-Go-Back**
+
+To disable the gesture on a specific outlet, set `swipeGesture` to `false`:
+
+```tsx
+<IonRouterOutlet swipeGesture={false} />
+```
+
+The `swipeBackEnabled` config option is still respected as the initial default and does not need to change for apps that set it once at startup.
+
+<h4 id="version-9x-searchbar">Searchbar</h4>
+
+The `autocorrect` property on `ion-searchbar` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
+
+The string form no longer behaves the same way. Because an HTML attribute coerces to `true` for any non-empty string, `autocorrect="off"` now evaluates to `true` (autocorrect enabled). Migrate to the boolean property:
+
+- Remove the attribute to keep autocorrect disabled (the default).
+- Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
+
+<h4 id="version-9x-select">Select</h4>
+
+**`ionChange` Only Fires When the Value Changes**
+
+The `ionChange` event on `ion-select` now only fires when the selected value actually changes. Previously, the `alert` and `action-sheet` interfaces emitted `ionChange` every time the overlay was confirmed, even when the user chose the option that was already selected. This aligns the `alert` and `action-sheet` interfaces with the existing behavior of the `popover` and `modal` interfaces, and with the documented contract of `ionChange`.
+
+Apps that relied on `ionChange` firing on every confirmation (for example, to detect overlay dismissal without a value change) should listen for `ionDismiss` instead, or use the `didDismiss` event on the underlying alert or action sheet.
+
+**Action Sheet Interface `selected` Role Removed**
+
+When using `interface="action-sheet"`, `ion-select` no longer assigns the `selected` role to the action sheet button for the currently selected option. This aligns the `action-sheet` interface with the `alert`, `popover`, and `modal` interfaces, none of which assign this role. This does not change the selected option's styling.
+
+Previously, the `selected` role was assigned only to the option matching the select's current value. Because the dismiss role mirrors the tapped button, this surfaced in just one case: re-selecting the already-selected option dismissed the action sheet with `role: "selected"` in `ionActionSheetDidDismiss`. Tapping any other option changed the value and dismissed with `role: ""`. Now that the role is no longer assigned, both cases dismiss with `role: undefined`. Apps that inspected this role to detect that a value was chosen, such as reading `role` from the underlying action sheet's `onDidDismiss` result, should listen for `ion-select`'s `ionChange` event instead, which emits the selected value when the selection changes.
+
+**Floating Label Behavior**
+
+Floating labels no longer automatically float when the select contains slotted content. Labels float only when the select is focused or has a value. Additionally, when using a floating label, the placeholder is only visible when the select is focused.
+
+**Internal DOM Structure Changes**
+
+The internal DOM structure has been reorganized to support floating labels with slotted content. This changes the structure and location of several exposed shadow parts.
+
+Added:
+- `.select-start` — `part="start"`
+- `.select-control` — `part="control"`
+- `.select-end` — `part="end"`
+
+Removed:
+- `.select-wrapper-inner` — `part="inner"`
+
+Restructured:
+- `.label-text-wrapper` remains `part="label"` but moved from `.select-wrapper` into `.select-control`
+- `.native-wrapper` remains `part="container"` but moved from `.select-wrapper-inner` into `.select-control`
+- Start slot moved from `.select-wrapper-inner` into `.select-start` (`part="start"`)
+- End slot moved from `.select-wrapper-inner` into `.select-end` (`part="end"`)
+- `.select-icon` remains `part="icon"` but its location depends on the label state:
+    - With a start/end label, the icon is inside `.native-wrapper`
+    - With a floating/stacked label, the icon is inside `.select-end`
+
+Update selectors that target the exposed shadow parts to account for the new structure:
+
+If you currently target `part="inner"`, that part has been removed. Update those styles to target the new parts as appropriate.
+
+If you target `part="label"`, `part="container"`, or `part="icon"`, the part names remain unchanged, but their position in the shadow DOM has changed. This may affect styles that depend on the relationship or layout of these parts.
+
+Use the new `part="start"`, `part="control"`, and `part="end"` parts to target the new structural wrappers.
+
+<h4 id="version-9x-textarea">Textarea</h4>
+
+**Floating Label Behavior**
+
+Floating labels no longer automatically float when the textarea contains slotted content. Labels float only when the textarea is focused or has a value.
+
+**Internal DOM Structure Changes**
+
+The internal DOM structure has been reorganized to support floating labels with slotted content.
+
+Removed: `.textarea-wrapper-inner`
+
+Added: `.textarea-control`
+
+Renamed:
+- `.start-slot-wrapper` → `.textarea-start`
+- `.end-slot-wrapper` → `.textarea-end`
+
+Restructured:
+- `.label-text-wrapper` moved from `.textarea-wrapper-inner` into `.textarea-control`
+- `.native-wrapper` moved from `.textarea-wrapper-inner` into `.textarea-control`
+- `.start-slot-wrapper` moved from `.textarea-wrapper-inner` to `.textarea-wrapper` and was renamed `.textarea-start`
+- `.end-slot-wrapper` moved from `.textarea-wrapper-inner` to `.textarea-wrapper` and was renamed `.textarea-end`
+
+Update your selectors to account for these structural changes:
+
+```diff
+-ion-textarea .textarea-wrapper-inner .native-wrapper { }
++ion-textarea .textarea-control .native-wrapper { }
+
+-ion-textarea .start-slot-wrapper [slot="start"] { }
++ion-textarea .textarea-start [slot="start"] { }
+
+-ion-textarea .end-slot-wrapper [slot="end"] { }
++ion-textarea .textarea-end [slot="end"] { }
+```
+
+**Minimum Height Change**
+
+The minimum height of textarea in Material Design (`md` mode) is now `72px`. At the default number of rows this makes textareas the same height regardless of the `fill` property or `labelPlacement`. Previously the minimum height was:
+
+| Fill | Label placement | Previous minimum height |
+| --- | --- | --- |
+| default | `start`, `end`, `fixed` | `44px` |
+| default | `floating`, `stacked` | `56px` |
+| `solid`, `outline` | any | `56px` |
+
+These were minimums, not the heights textareas actually rendered at. A textarea with content in the `start` or `end` slots was already taller than its minimum, so the change affects it differently. For example, a `fill="solid"` textarea with slotted icons and buttons previously rendered at `72px` with a `start` label and `81px` with a `floating` label. Both are now `72px`, so that floating label case is `9px` shorter than before rather than taller.
+
+Because `72px` is taller than two rows of text, `rows` values below `3` no longer change the height of the textarea in `md` mode: `rows="1"` and `rows="2"` both render at `72px`.
+
+If you were relying on the previous heights, or you need `rows` to control the height, override the minimum height back. The override has to be more specific than the component's own style, so a bare `ion-textarea` selector will not apply. Add a custom class to the textarea to increase specificity:
 
 ```css
-ion-item {
-  --highlight-color-focused: purple;
-  --highlight-color-valid: blue;
-  --highlight-color-invalid: orange;
-  --highlight-height: 6px;
+/* Add a custom class to the textarea */
+ion-textarea.custom {
+  min-height: 44px;
 }
 ```
 
-will instead be applied on the form controls:
+<h2 id="version-9x-framework-specific">Framework Specific</h2>
 
-```css
-ion-input,
-ion-textarea,
-ion-select {
-  --highlight-color-focused: purple;
-  --highlight-color-valid: blue;
-  --highlight-color-invalid: orange;
-  --highlight-height: 6px;
-}
+<h4 id="version-9x-angular">Angular</h4>
+
+**Minimum Angular Version**
+
+Ionic 9 requires Angular 18 or later. Angular 16 and 17 are no longer supported.
+
+**Standalone Components Imported by Default**
+
+Following industry standards, Ionic 9 makes standalone components the default import path. Standalone component imports have changed from `@ionic/angular/standalone` to `@ionic/angular`. Lazy-loaded component imports have changed from `@ionic/angular` to `@ionic/angular/lazy`.
+
+**IonicModule Deprecation**
+
+`IonicModule` is deprecated in Ionic 9 and will be removed in a future major version. It remains fully functional in Ionic 9, so existing applications continue to work without changes.
+
+Applications should migrate to `provideIonicAngular()`, which works in both standalone and NgModule-based applications. For an NgModule-based app, replace `IonicModule.forRoot(config)` in the `imports` array with `provideIonicAngular(config)` in the `providers` array. Any config passed to `IonicModule.forRoot()` can be passed as an object to `provideIonicAngular()`. Refer to the [build options guide](https://ionicframework.com/docs/angular/build-options) for migration steps.
+
+**Zoneless Change Detection by Default**
+
+Ionic 9 defaults to zoneless change detection. Angular 21 bootstraps zoneless out of the box, so a new Ionic 9 app on Angular 21 runs without Zone.js and requires no change-detection provider. The `ng add @ionic/angular` schematic no longer registers `provideZoneChangeDetection()`.
+
+Because Zone.js no longer triggers change detection automatically, component state that you update from an asynchronous callback that Angular doesn't wrap (awaiting an overlay result such as `modal.onWillDismiss()`, `setTimeout`, RxJS subscriptions, `Platform` events) no longer re-renders on its own. Update a signal or call `ChangeDetectorRef.markForCheck()` in those callbacks. Template event bindings, `@HostListener`, reactive forms, and Ionic lifecycle hooks (`ionViewWillEnter`, etc.) that set state synchronously are unaffected. Refer to the [Zoneless Change Detection guide](https://ionicframework.com/docs/angular/zoneless) for the patterns.
+
+On Angular 18 through 20, Zone.js remains Angular's default, so those versions are unaffected and require no change. To adopt zoneless there, add `provideZonelessChangeDetection()` (named `provideExperimentalZonelessChangeDetection()` on Angular 18 and 19).
+
+**Keeping Zone.js on Angular 21 (optional)**
+
+To keep using Zone.js on Angular 21, opt back in with `provideZoneChangeDetection()` and keep `zone.js` in your polyfills.
+
+Standalone bootstrap:
+
+```diff
+  import { bootstrapApplication } from '@angular/platform-browser';
++ import { provideZoneChangeDetection } from '@angular/core';
+
+  bootstrapApplication(AppComponent, {
+    providers: [
++     provideZoneChangeDetection(),
+      // ...other providers
+    ],
+  });
 ```
 
-> [!NOTE]
-> The input and textarea components are scoped, which means they will automatically scope their CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector. Targeting the `ion-input` or `ion-textarea` for customization will not work; therefore we recommend adding a class and customizing it that way.
+NgModule bootstrap:
 
-<h4 id="version-8x-modal">Modal</h4>
+```diff
+  import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
++ import { provideZoneChangeDetection } from '@angular/core';
 
-- Detection for Capacitor <= 2 with applying status bar styles has been removed. Developers should ensure they are using Capacitor 3 or later when using the card modal presentation.
+  platformBrowserDynamic()
+-   .bootstrapModule(AppModule)
++   .bootstrapModule(AppModule, {
++     applicationProviders: [provideZoneChangeDetection()],
++   })
+    .catch((err) => console.error(err));
+```
 
-<h4 id="version-8x-nav">Nav</h4>
+Angular forbids `provideZoneChangeDetection()` inside an NgModule's `providers` array, so for NgModule apps it must be passed as `applicationProviders` on the `bootstrapModule()` call. Both paths also require `zone.js` in your polyfills, which Angular 21's default scaffold omits:
 
-- `getLength` returns `Promise<number>` instead of `<number>`. This method was not previously available in Nav's TypeScript interface, but developers could still access it by casting Nav as `any`. Developers should ensure they `await` their `getLength` call before accessing the returned value.
+```ts
+// src/polyfills.ts
+import 'zone.js';
+```
 
-<h4 id="version-8x-picker">Picker</h4>
+**OnPush by Default on Angular 22**
 
-- `ion-picker` and `ion-picker-column` have been renamed to `ion-picker-legacy` and `ion-picker-legacy-column`, respectively. This change was made to accommodate the new inline picker component while allowing developers to continue to use the legacy picker during this migration period.
-  - Only the component names have been changed. Usages such as `ion-picker` or `IonPicker` should be changed to `ion-picker-legacy` and `IonPickerLegacy`, respectively.
-  - Non-component usages such as `pickerController` or `useIonPicker` remain unchanged. The new picker displays inline with your page content and does not have equivalents for these non-component usages.
+Angular 22 changes the default change detection strategy to `OnPush` for components that don't declare one. Combined with the zoneless default above, any component state that you mutate as a plain field from an Ionic lifecycle hook (`ionViewWillEnter`, etc.) no longer re-renders on its own. Run `ng update`, which migrates existing components to eager change detection and preserves the previous behavior, or use a signal (or `ChangeDetectorRef.markForCheck()`) for state set in those hooks. Ionic's own Angular components already declare `OnPush` explicitly and are unaffected. Angular 18 through 21 keep the eager default, so they require no change.
 
-<h4 id="version-8x-progress-bar">Progress bar</h4>
+**TypeScript**
 
-- The `--buffer-background` CSS variable has been removed. Use `--background` instead.
+Ionic 9 supports TypeScript 5.4 or later, matching the minimum for Angular 18. Angular 21 requires TypeScript 5.9 or later, and Angular 22 requires TypeScript 6.0 or later, per Angular's own requirements.
 
-<h4 id="version-8x-toast">Toast</h4>
+**Node.js**
 
-- `cssClass` has been removed from the `ToastButton` interface. This was previously used to apply a custom class to the toast buttons. Developers can use the "button" shadow part to style the buttons.
+Angular 22 raises the minimum Node.js version to `^22.22.3 || ^24.15.0 || ^26.0.0`. Angular 18 through 21 are unaffected.
 
-For more information on styling toast buttons, refer to the [Toast Theming documentation](https://ionicframework.com/docs/api/toast#theming).
+**Module Resolution**
 
-<h4 id="version-8x-radio">Radio</h4>
+`@ionic/angular` is now published with `exports`-based subpath resolution. Apps using TypeScript `moduleResolution: "node"` (classic) can fail to resolve subpaths such as `@ionic/angular/lazy`. Set `moduleResolution` to `"bundler"` (the default for `ng new` on Angular 17 and later). Refer to [Package Exports](#version-9x-package-exports).
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-radio` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy radio syntax, refer to the [Radio documentation](https://ionicframework.com/docs/api/radio#migrating-from-legacy-radio-syntax).
+**CSS Imports No Longer Use the `~` Prefix**
 
-<h4 id="version-8x-range">Range</h4>
+Angular's current build pipeline no longer supports the webpack-loader `~` prefix in CSS `@import` statements:
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. Ionic will also no longer attempt to automatically associate form controls with sibling `<label>` elements as these label elements are now used inside the form control. Developers should provide a label (either visible text or `aria-label`) directly to the form control. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
+```diff
+- @import '~@ionic/angular/css/core.css';
++ @import '@ionic/angular/css/core.css';
+```
 
-<h4 id="version-8x-searchbar">Searchbar</h4>
+<h4 id="version-9x-react">React</h4>
 
-- The `autocapitalize` property now defaults to `'off'`.
+The `@ionic/react` and `@ionic/react-router` packages now require React 18 or 19. React 17 is no longer supported.
 
-<h4 id="version-8x-select">Select</h4>
+The `@ionic/react-router` package now requires React Router v6. React Router v5 is no longer supported.
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. Ionic will also no longer attempt to automatically associate form controls with sibling `<label>` elements as these label elements are now used inside the form control. Developers should provide a label (either visible text or `aria-label`) directly to the form control. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
+**Minimum Version Requirements**
+| Package | Supported Version |
+| ---------------- | ----------------- |
+| react            | 18 or 19          |
+| react-dom        | 18 or 19          |
+| react-router     | 6.4.0+            |
+| react-router-dom | 6.4.0+            |
 
-<h4 id="version-8x-textarea">Textarea</h4>
+**TypeScript**
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-textarea` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy textarea syntax, refer to the [Textarea documentation](https://ionicframework.com/docs/api/textarea#migrating-from-legacy-textarea-syntax).
+The `@ionic/react` package now requires TypeScript 5.4 or later. Its type definitions use `NoInfer`, which TypeScript added in 5.4. This matches the minimum that `@ionic/angular` already requires.
 
-<h4 id="version-8x-toggle">Toggle</h4>
+**Typed Overlay Hook Props**
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-toggle` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy toggle syntax, refer to the [Toggle documentation](https://ionicframework.com/docs/api/toggle#migrating-from-legacy-toggle-syntax).
+The `useIonModal` and `useIonPopover` hooks type `componentProps` against the component they are given, instead of accepting `any`. Props that do not match the component are a compile error, and `componentProps` is required when the component declares required props. Applications passing incorrect props will see new type errors at build time rather than failing at runtime.
 
-<h2 id="version-8x-framework-specific">Framework Specific</h2>
+```diff
+  const Modal: React.FC<{ title: string }> = ({ title }) => <IonContent>{title}</IonContent>;
 
-<h4 id="version-8x-angular">Angular</h4>
+- const [present, dismiss] = useIonModal(Modal, { subtitle: 'Wrong' });
++ const [present, dismiss] = useIonModal(Modal, { title: 'Hello' });
+```
 
-- The `IonBackButtonDelegate` class has been removed in favor of `IonBackButton`.
+Props are read from the component rather than from `componentProps`, so a component declared inline needs its props annotated:
 
-  ```diff
-  - import { IonBackButtonDelegate } from '@ionic/angular';
-  + import { IonBackButton } from '@ionic/angular';
-  ```
+```diff
+- const [present, dismiss] = useIonModal(({ name }) => <div>Hello {name}.</div>, { name: 'Dave' });
++ const [present, dismiss] = useIonModal(({ name }: { name: string }) => <div>Hello {name}.</div>, { name: 'Dave' });
+```
+
+Passing a JSX element rather than a component is unchanged, and `componentProps` is not type checked in that case.
+
+`npx @ionic/migrate` reports the calls this affects and names what is wrong with each, but does not rewrite them, since the right fix depends on what the call was meant to do. For the inline case above, `--experimental` can annotate the parameter from the `componentProps` object literal being passed.
+
+React Router v6 introduces several API changes that will require updates to your application's routing configuration:
+
+**Route Definition Changes**
+
+The `component` prop has been replaced with the `element` prop, which accepts JSX:
+
+```diff
+- <Route path="/home" component={Home} exact />
++ <Route path="/home" element={<Home />} />
+```
+
+**Redirect Changes**
+
+The `<Redirect>` component has been replaced with `<Navigate>`:
+
+```diff
+- import { Redirect } from 'react-router-dom';
++ import { Navigate } from 'react-router-dom';
+
+- <Redirect to="/home" />
++ <Navigate to="/home" replace />
+```
+
+**Nested Route Paths**
+
+Routes that contain nested routes or child `IonRouterOutlet` components need a `/*` suffix to match sub-paths:
+
+```diff
+- <Route path="/tabs" element={<Tabs />} />
++ <Route path="/tabs/*" element={<Tabs />} />
+```
+
+**Accessing Route Parameters**
+
+Route parameters are now accessed via the `useParams` hook instead of props:
+
+```diff
+- import { RouteComponentProps } from 'react-router-dom';
++ import { useParams } from 'react-router-dom';
+
+- const MyComponent: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+-   const id = match.params.id;
++ const MyComponent: React.FC = () => {
++   const { id } = useParams<{ id: string }>();
+```
+
+**RouteComponentProps Removed**
+
+The `RouteComponentProps` type and its `history`, `location`, and `match` props are no longer available in React Router v6. Use the equivalent hooks instead:
+
+- `history` -> `useNavigate` (see below) or `useIonRouter`
+- `match.params` -> `useParams` (covered above)
+- `location` -> `useLocation`
+
+```diff
+- import { RouteComponentProps } from 'react-router-dom';
++ import { useNavigate, useLocation } from 'react-router-dom';
++ import { useIonRouter } from '@ionic/react';
+
+- const MyComponent: React.FC<RouteComponentProps> = ({ history, location }) => {
+-   history.push('/path');
+-   history.replace('/path');
+-   history.goBack();
+-   console.log(location.pathname);
++ const MyComponent: React.FC = () => {
++   const navigate = useNavigate();
++   const router = useIonRouter();
++   const location = useLocation();
++   // In an event handler or useEffect:
++   navigate('/path');
++   navigate('/path', { replace: true });
++   router.goBack();
++   console.log(location.pathname);
+```
+
+**Exact Prop Removed**
+
+The `exact` prop is no longer needed. React Router v6 routes match exactly by default. To match sub-paths, use a `/*` suffix on the path:
+
+```diff
+- <Route path="/home" exact />
++ <Route path="/home" />
+```
+
+**Render Prop Removed**
+
+The `render` prop has been replaced with the `element` prop:
+
+```diff
+- <Route path="/foo" render={(props) => <Foo {...props} />} />
++ <Route path="/foo" element={<Foo />} />
+```
+
+**Programmatic Navigation**
+
+The `useHistory` hook has been replaced with `useNavigate`:
+
+```diff
+- import { useHistory } from 'react-router-dom';
++ import { useNavigate } from 'react-router-dom';
++ import { useIonRouter } from '@ionic/react';
+
+- const history = useHistory();
++ const navigate = useNavigate();
++ const router = useIonRouter();
+
+- history.push('/path');
++ navigate('/path');
+
+- history.replace('/path');
++ navigate('/path', { replace: true });
+
+- history.goBack();
++ router.goBack();
+```
+
+**Custom History Prop Removed**
+
+The `history` prop has been removed from `IonReactRouter`, `IonReactHashRouter`, and `IonReactMemoryRouter`. React Router v6's `BrowserRouter`, `HashRouter`, and `MemoryRouter` no longer accept custom `history` objects.
+
+```diff
+- import { createBrowserHistory } from 'history';
+- const history = createBrowserHistory();
+- <IonReactRouter history={history}>
++ <IonReactRouter>
+```
+
+For `IonReactMemoryRouter` (commonly used in tests), use `initialEntries` instead:
+
+```diff
+- import { createMemoryHistory } from 'history';
+- const history = createMemoryHistory({ initialEntries: ['/start'] });
+- <IonReactMemoryRouter history={history}>
++ <IonReactMemoryRouter initialEntries={['/start']}>
+```
+
+**IonRedirect Removed**
+
+The `IonRedirect` component has been removed. Use React Router's `<Navigate>` component instead:
+
+```diff
+- import { IonRedirect } from '@ionic/react';
+- <IonRedirect path="/old" to="/new" exact />
++ import { Navigate } from 'react-router-dom';
++ <Route path="/old" element={<Navigate to="/new" replace />} />
+```
+
+**Path Regex Constraints Removed**
+
+React Router v6 no longer supports regex constraints in path parameters (e.g., `/:tab(sessions)`). Use literal paths instead:
+
+```diff
+- <Route path="/:tab(sessions)" component={SessionsPage} />
+- <Route path="/:tab(sessions)/:id" component={SessionDetail} />
++ <Route path="/sessions" element={<SessionsPage />} />
++ <Route path="/sessions/:id" element={<SessionDetail />} />
+```
+
+**IonRoute API Changes**
+
+The `IonRoute` component follows the same API changes as React Router's `<Route>`. The `render` prop has been replaced with `element`, and the `exact` prop has been removed:
+
+```diff
+- <IonRoute path="/foo" exact render={(props) => <Foo {...props} />} />
++ <IonRoute path="/foo" element={<Foo />} />
+```
+
+For more information on migrating from React Router v5 to v6, refer to the [React Router v6 Upgrade Guide](https://reactrouter.com/6.28.0/upgrading/v5).
+
+<h4 id="version-9x-vue">Vue</h4>
+
+The `@ionic/vue-router` package now requires Vue Router v5. Vue Router v4 is no longer supported. Vue Router v5 also raises its peer requirement on Vue itself, so the minimum supported Vue version moves to `3.5.0`.
+
+**Minimum Version Requirements**
+| Package    | Supported Version |
+| ---------- | ----------------- |
+| vue-router | 5.0.0+            |
+| vue        | 3.5.0+            |
+
+**Migration**
+
+Vue Router 5 is a transition release that ships no runtime breaking changes for Vue Router 4 consumers, so no application code changes are required for routes, navigation guards, or the `IonRouterOutlet`. Bump the dep ranges in your app's `package.json`:
+
+```diff
+  "dependencies": {
+-   "vue": "^3.4.0",
+-   "vue-router": "^4.0.0"
++   "vue": "^3.5.0",
++   "vue-router": "^5.0.0"
+  }
+```
+
+**Deprecation Warning for `next()` in Navigation Guards**
+
+Vue Router 5 prints a deprecation warning when `next()` is called inside `beforeRouteLeave`, `beforeRouteEnter`, `beforeRouteUpdate`, or `router.beforeEach`. The callback form still works, but Vue Router 6 will remove it. Migrate to the return-value pattern:
+
+```diff
+  // Composition API
+  onBeforeRouteLeave((to, from) => {
+-   if (!confirm('Leave?')) return next(false);
+-   next();
++   if (!confirm('Leave?')) return false;
++   return true;
+  });
+```
+
+```diff
+  // Options API
+  beforeRouteLeave(to, from, next) {
+-   if (!confirm('Leave?')) return next(false);
+-   next();
++ beforeRouteLeave(to, from) {
++   if (!confirm('Leave?')) return false;
++   return true;
+  }
+```
+
+For more information on Vue Router 5, refer to the [Vue Router v4-to-v5 migration guide](https://router.vuejs.org/guide/migration/v4-to-v5.html).

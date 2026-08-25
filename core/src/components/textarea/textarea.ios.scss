@@ -17,6 +17,15 @@
   font-size: $textarea-ios-font-size;
 }
 
+/**
+ * Give stacked and floating textareas a taller minimum height to
+ * accommodate the label and textarea content.
+ */
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  min-height: 56px;
+}
+
 // Textarea - Disabled
 // ----------------------------------------------------------------
 // The textarea, label, helper text, char counter and placeholder
@@ -28,6 +37,22 @@
 
 // Start/End Slots
 // ----------------------------------------------------------------
+
+// Buttons should have a smaller margin top to
+// align them properly with the label
+::slotted(ion-button[slot="start"]),
+::slotted(ion-button[slot="end"]) {
+  margin-top: 2px;
+}
+
+// Slotted buttons in a floating/stacked layout need
+// more margin to align with the label
+:host(.textarea-label-placement-floating) ::slotted(ion-button[slot="start"]),
+:host(.textarea-label-placement-floating) ::slotted(ion-button[slot="end"]),
+:host(.textarea-label-placement-stacked) ::slotted(ion-button[slot="start"]),
+:host(.textarea-label-placement-stacked) ::slotted(ion-button[slot="end"]) {
+  margin-top: 10px;
+}
 
 /**
  * Slotted buttons have a lot of default padding that can

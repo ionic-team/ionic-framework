@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -12,11 +11,12 @@ import {
   IonMenuButton,
   IonButton,
 } from '@ionic/react';
+import React, { useEffect } from 'react';
 import './Tab2.css';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const Tab2: React.FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log('Settings mount');
@@ -51,10 +51,10 @@ const Tab2: React.FC = () => {
         <br />
         <IonButton
           onClick={() => {
-            history.push('/routing/tabs/settings/details/1', { routerOptions: { unmount: true } });
+            navigate('/routing/tabs/settings/details/1');
           }}
         >
-          Details with Unmount via history.push
+          Details via navigate
         </IonButton>
       </IonContent>
     </IonPage>

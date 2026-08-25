@@ -1,6 +1,10 @@
 # React Router Testing
 
-Ionic Framework supports multiple versions of React Router. As a result, we need to verify that Ionic works correctly with each of these React Router versions.
+Ionic Framework supports React Router v6 across multiple versions of React. As a result, we need to verify that Ionic routing works correctly with each of these React versions.
+
+## Type Checking
+
+Run `npm run typecheck` in `packages/react-router` to check types. The rollup build only reports type errors as warnings, so a passing build does not mean the types are clean.
 
 ## Syncing Local Changes
 
@@ -13,6 +17,43 @@ The React test app supports syncing your locally built changes for validation.
 5. Sync your local changes using `npm run sync`.
 
 From here you can either build the application or start a local dev server. When re-syncing changes, you will need to wipe the build cache in `node_modules/.cache` and restart the dev server/re-build.
+
+## Running the Test Suites
+
+`packages/react-router/scripts/test_runner.sh` orchestrates the React Router test suites end to end: it builds `@ionic/core`, `@ionic/react`, and `@ionic/react-router`, builds the test app, syncs local packages, starts the dev server, and runs Cypress and Playwright in sequence. By default it uses the `reactrouter6-react18` app; pass `--app reactrouter6-react19` to test against the latest supported React version.
+
+```shell
+# Full run (build + Cypress + Playwright)
+sh packages/react-router/scripts/test_runner.sh
+
+# Reuse the existing build/<app> directory and run only Playwright
+sh packages/react-router/scripts/test_runner.sh --skip-build --playwright-only
+
+# Filter Playwright to a single spec
+sh packages/react-router/scripts/test_runner.sh --playwright-only --spec swipe
+
+# Build/sync and serve the app for manual testing (no specs run)
+sh packages/react-router/scripts/test_runner.sh --serve
+```
+
+Useful flags:
+
+| Flag | Effect |
+|------|--------|
+| `--skip-build` | Reuse existing `packages/react-router/test/build/<app>/` instead of rebuilding |
+| `--playwright-only` | Run only the Playwright e2e suite |
+| `--spec <pattern>` | Filter Playwright specs by file path |
+| `--app <name>` | Pick a different app variant from `packages/react-router/test/apps/` (default: `reactrouter6-react18`; use `reactrouter6-react19` for the latest supported React version) |
+| `--serve` | Start the dev server only and open the browser |
+
+## Debug Logging in E2E Runs
+
+The test app starts with `setupIonicReact({ logLevel: LogLevel.DEBUG })`, so the `StackManager` swipe-back diagnostics are on for every spec.
+
+- Cypress prints the browser console to the terminal on failure, via `cypress-terminal-report`.
+- Playwright records a trace on the first retry, so CI failures come with one. Open it with `npx playwright show-trace <path>` and read the console tab. Retries are off locally, so pass `--trace on` when you want the same thing from a local run. Don't turn tracing on by default: the recording overhead is enough to destabilize the tab lifecycle specs on React 19.
+
+A passing run collects the same logs in the browser and throws them away, so nothing reaches your terminal. Refer to [Debug Logging](./README.md#debug-logging) for turning them on in your own app.
 
 ## Test App Build Structure
 
@@ -29,15 +70,15 @@ Unlike other test applications, these test apps are broken up into multiple dire
 Usage:
 
 ```shell
-# Build a test app using apps/reactrouter5 as a reference
-./build.sh reactrouter5
+# Build a test app using apps/reactrouter6-react18 as a reference
+./build.sh reactrouter6-react18
 ```
 
 ## How to modify test apps
 
 To add new tests, components, or pages, modify the `base` project. This ensures that tests are run for every tested version.
 
-If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.e2e.ts` in `apps/reactrouter5`, make sure you place the file in `apps/react17/tests/e2e/test.e2e.ts`.
+If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.e2e.ts` in `apps/reactrouter6-react18`, make sure you place the file in `apps/reactrouter6-react18/tests/e2e/test.e2e.ts`.
 
 ### Version-specific tests
 
@@ -45,10 +86,10 @@ If you need to add E2E tests that are only run on a specific version of the JS F
 
 ## Adding New Test Apps
 
-As we add support for new versions of React Router, we will also need to update this directory to test against new applications. The following steps can serve as a guide for adding new apps:
+As we add support for new versions of React, we will also need to update this directory to test against new applications. The following steps can serve as a guide for adding new apps:
 
-1. Navigate to the built app for the most recent version of React Router that Ionic tests.
-2. Update the application to the latest version of React Router.
+1. Navigate to the built app for the most recent version of React that Ionic tests.
+2. Update the application to the latest version of React.
 3. Make note of any files that changed during the upgrade (`package.json`, `package-lock.json`, etc).
 4. Copy the changed files to a new directory in `apps`.
 5. Add a new entry to the matrix for `test-react-router-e2e` in `./github/workflows/build.yml`. This will allow the new test app to run against all PRs.

@@ -37,6 +37,19 @@
       .required {
         color: red;
       }
+
+      .hint {
+        font-size: 12px;
+        color: #6f7378;
+        max-width: 60ch;
+      }
+
+      .counts {
+        font-size: 12px;
+        color: #6f7378;
+
+        margin-top: 6px;
+      }
     </style>
   </head>
 
@@ -53,42 +66,63 @@
         <div class="grid">
           <div class="grid-item">
             <h2>No Fill / Start Label</h2>
-            <ion-input label-placement="start" value="hi@ionic.io">
+            <ion-input label-placement="start">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Solid / Start Label</h2>
-            <ion-input label-placement="start" fill="solid" value="hi@ionic.io">
+            <ion-input label-placement="start" fill="solid">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Outline / Start Label</h2>
-            <ion-input label-placement="start" fill="outline" value="hi@ionic.io">
+            <ion-input label-placement="start" fill="outline">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>No Fill / Floating Label</h2>
-            <ion-input label-placement="floating" value="hi@ionic.io">
+            <ion-input label-placement="floating">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Solid / Floating Label</h2>
-            <ion-input label-placement="floating" fill="solid" value="hi@ionic.io">
+            <ion-input label-placement="floating" fill="solid">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Outline / Floating Label</h2>
-            <ion-input label-placement="floating" fill="outline" value="hi@ionic.io">
+            <ion-input label-placement="floating" fill="outline">
+              <div slot="label">Email <span class="required">*</span></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Stacked Label</h2>
+            <ion-input label-placement="stacked">
+              <div slot="label">Email <span class="required">*</span></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Stacked Label</h2>
+            <ion-input label-placement="stacked" fill="solid">
+              <div slot="label">Email <span class="required">*</span></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Stacked Label</h2>
+            <ion-input label-placement="stacked" fill="outline">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
@@ -98,7 +132,7 @@
         <div class="grid">
           <div class="grid-item">
             <h2>No Fill / Start Label</h2>
-            <ion-input label-placement="start" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="start" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -108,7 +142,7 @@
 
           <div class="grid-item">
             <h2>Solid / Start Label</h2>
-            <ion-input label-placement="start" fill="solid" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="start" fill="solid" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -118,7 +152,7 @@
 
           <div class="grid-item">
             <h2>Outline / Start Label</h2>
-            <ion-input label-placement="start" fill="outline" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="start" fill="outline" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -128,7 +162,7 @@
 
           <div class="grid-item">
             <h2>No Fill / Floating Label</h2>
-            <ion-input label-placement="floating" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="floating" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -138,7 +172,7 @@
 
           <div class="grid-item">
             <h2>Solid / Floating Label</h2>
-            <ion-input label-placement="floating" fill="solid" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="floating" fill="solid" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -148,7 +182,37 @@
 
           <div class="grid-item">
             <h2>Outline / Floating Label</h2>
-            <ion-input label-placement="floating" fill="outline" value="hi@ionic.io" label="Email">
+            <ion-input label-placement="floating" fill="outline" label="Email">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Stacked Label</h2>
+            <ion-input label-placement="stacked" label="Email">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Stacked Label</h2>
+            <ion-input label-placement="stacked" fill="solid" label="Email">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Stacked Label</h2>
+            <ion-input label-placement="stacked" fill="outline" label="Email">
               <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
               <ion-button fill="clear" slot="end" aria-label="Show/hide password">
                 <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
@@ -157,11 +221,147 @@
           </div>
         </div>
 
+        <h1>Overflowing Slots</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Fill / Start Label / No Slot</h2>
+            <ion-input label-placement="start" label="Email Email Email Email Email Email" style="width: 260px">
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Start Label / Start Slot</h2>
+            <ion-input label-placement="start" label="Email Email Email Email Email Email" style="width: 260px">
+              <div slot="start" style="height: 10px; width: 150px; background: lightpink"></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Start Label / End Slot</h2>
+            <ion-input label-placement="start" label="Email Email Email Email Email Email" style="width: 260px">
+              <div slot="end" style="height: 10px; width: 150px; background: lightblue"></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / No Slot</h2>
+            <ion-input
+              label-placement="start"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / Start Slot</h2>
+            <ion-input
+              label-placement="start"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="start" style="height: 10px; width: 150px; background: lightpink"></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / End Slot</h2>
+            <ion-input
+              label-placement="start"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="end" style="height: 10px; width: 150px; background: lightblue"></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label / No Slot</h2>
+            <ion-input
+              label-placement="floating"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label / Start Slot</h2>
+            <ion-input
+              label-placement="floating"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="start" style="height: 10px; width: 150px; background: lightpink"></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label / End Slot</h2>
+            <ion-input
+              label-placement="floating"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="end" style="height: 10px; width: 150px; background: lightblue"></div>
+            </ion-input>
+          </div>
+        </div>
+
+        <h1>Click Propagation</h1>
+        <p class="hint">
+          Each click on the host is counted, and the target of each is logged to the console. One physical click should
+          count once. Click the padding strip (the gap between the border and the text), the label, the input text, and
+          the slotted button, and compare.
+        </p>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Fill</h2>
+            <ion-input class="propagation" label-placement="floating" label="Email">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-input>
+            <div class="counts">host: <b class="host-count">0</b></div>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid (16px padding)</h2>
+            <ion-input class="propagation" label-placement="floating" fill="solid" label="Email">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-input>
+            <div class="counts">host: <b class="host-count">0</b></div>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline (16px padding)</h2>
+            <ion-input class="propagation" label-placement="floating" fill="outline" label="Email">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-input>
+            <div class="counts">host: <b class="host-count">0</b></div>
+          </div>
+        </div>
+
+        <ion-button onclick="resetClickCounts()">Reset Counts</ion-button>
+
         <h1>Async Slot Content</h1>
         <div class="grid">
           <div class="grid-item">
             <h2>Outline / Async Label</h2>
-            <ion-input id="solid-async" label-placement="floating" fill="outline" value="hi@ionic.io"></ion-input>
+            <ion-input id="solid-async" label-placement="floating" fill="outline"></ion-input>
           </div>
 
           <div class="grid-item">
@@ -173,6 +373,7 @@
         <ion-button onclick="addSlot()">Add Slotted Content</ion-button>
         <ion-button onclick="updateSlot()">Update Slotted Content</ion-button>
         <ion-button onclick="removeSlot()">Remove Slotted Content</ion-button>
+        <ion-button onclick="addValueToAll()">Add Value to All</ion-button>
       </ion-content>
     </ion-app>
 
@@ -241,6 +442,29 @@
         if (slottedContent !== null) {
           slottedContent.textContent = 'This is my really really really long text';
         }
+      };
+
+      document.querySelectorAll('ion-input.propagation').forEach((input) => {
+        const count = input.closest('.grid-item').querySelector('.host-count');
+
+        input.addEventListener('click', (ev) => {
+          count.textContent = Number(count.textContent) + 1;
+
+          // The deepest target crosses shadow boundaries, so log it from the composed path
+          console.log(`host (${input.getAttribute('fill') ?? 'none'})`, ev.composedPath()[0]);
+        });
+      });
+
+      const resetClickCounts = () => {
+        document.querySelectorAll('.host-count').forEach((el) => (el.textContent = '0'));
+        console.clear();
+      };
+
+      const addValueToAll = () => {
+        const inputs = document.querySelectorAll('ion-input');
+        inputs.forEach((input) => {
+          input.value = 'hi@ionic.io';
+        });
       };
     </script>
   </body>

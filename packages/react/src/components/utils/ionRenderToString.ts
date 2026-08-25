@@ -12,7 +12,6 @@ export async function ionRenderToString(html: string, userAgent: string, options
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 
@@ -26,9 +25,6 @@ export async function ionRenderToString(html: string, userAgent: string, options
         // tabs
         'ion-tabs',
         'ion-tab',
-
-        // auxiliary
-        'ion-picker-legacy-column',
       ],
       userAgent,
     },

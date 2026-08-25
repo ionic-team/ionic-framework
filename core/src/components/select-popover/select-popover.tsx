@@ -1,11 +1,14 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
 import { safeCall } from '@utils/overlays';
+import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
+import type { SelectOverlayOption } from '../select/select-interface';
 
 import type { SelectPopoverOption } from './select-popover-interface';
 
@@ -121,72 +124,124 @@ export class SelectPopover implements ComponentInterface {
   }
 
   renderCheckboxOptions(options: SelectPopoverOption[]) {
-    return options.map((option) => (
-      <ion-item
-        class={{
+    const mode = getIonMode(this);
+    return options.map((option, index) => {
+      /**
+       * Cast to `SelectOverlayOption` to access rich content
+       * fields (`startContent`, `endContent`, `description`)
+       * that are passed through from `ion-select` but not
+       * part of the public `SelectPopoverOption` interface.
+       */
+      const richOption = option as SelectOverlayOption;
+      const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
+      const optionLabelOptions = {
+        id: `popover-option-${index}`,
+        label: richOption.text,
+        startContent: richOption.startContent,
+        endContent: richOption.endContent,
+        description: richOption.description,
+      };
+      const defaultLabelPlacement = getOverlayLabelPlacement(mode, 'checkbox');
+      const defaultJustify = getOverlayLabelJustify(mode, 'checkbox');
+
+      return (
+        <ion-item
           // TODO FW-4784
-          'item-checkbox-checked': option.checked,
-          ...getClassMap(option.cssClass),
-        }}
-      >
-        <ion-checkbox
-          value={option.value}
           disabled={option.disabled}
-          checked={option.checked}
-          justify="start"
-          labelPlacement="end"
-          onIonChange={(ev) => {
-            this.setChecked(ev);
-            this.callOptionHandler(ev);
+          class={{
             // TODO FW-4784
-            forceUpdate(this);
+            'item-checkbox-checked': option.checked,
+            ...getClassMap(option.cssClass),
           }}
         >
-          {option.text}
-        </ion-checkbox>
-      </ion-item>
-    ));
+          <ion-checkbox
+            class={{
+              'select-option-has-rich-content': hasRichContent,
+            }}
+            value={option.value}
+            disabled={option.disabled}
+            checked={option.checked}
+            justify={richOption.justify ?? defaultJustify}
+            labelPlacement={richOption.labelPlacement ?? defaultLabelPlacement}
+            onIonChange={(ev) => {
+              this.setChecked(ev);
+              this.callOptionHandler(ev);
+              // TODO FW-4784
+              forceUpdate(this);
+            }}
+          >
+            {renderOptionLabel(optionLabelOptions, 'select-option-label')}
+          </ion-checkbox>
+        </ion-item>
+      );
+    });
   }
 
   renderRadioOptions(options: SelectPopoverOption[]) {
+    const mode = getIonMode(this);
     const checked = options.filter((o) => o.checked).map((o) => o.value)[0];
 
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
-        {options.map((option) => (
-          <ion-item
-            class={{
+        {options.map((option, index) => {
+          /**
+           * Cast to `SelectOverlayOption` to access rich content
+           * fields (`startContent`, `endContent`, `description`)
+           * that are passed through from `ion-select` but not
+           * part of the public `SelectPopoverOption` interface.
+           */
+          const richOption = option as SelectOverlayOption;
+          const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
+          const optionLabelOptions = {
+            id: `popover-option-${index}`,
+            label: richOption.text,
+            startContent: richOption.startContent,
+            endContent: richOption.endContent,
+            description: richOption.description,
+          };
+
+          return (
+            <ion-item
               // TODO FW-4784
-              'item-radio-checked': option.value === checked,
-              ...getClassMap(option.cssClass),
-            }}
-          >
-            <ion-radio
-              value={option.value}
               disabled={option.disabled}
-              onClick={() => this.dismissParentPopover()}
-              onKeyDown={(ev) => {
-                if (ev.key === 'Enter' && !ev.repeat) {
-                  this.pendingEnterTarget = ev.currentTarget as HTMLElement;
-                }
-              }}
-              onKeyUp={(ev) => {
-                if (ev.key === ' ') {
-                  // Space selects and dismisses in one press.
-                  this.dismissParentPopover();
-                } else if (ev.key === 'Enter') {
-                  const shouldDismiss = this.pendingEnterTarget === ev.currentTarget;
-                  this.pendingEnterTarget = null;
-                  if (shouldDismiss) {
-                    this.dismissParentPopover();
-                  }
-                }
+              class={{
+                // TODO FW-4784
+                'item-radio-checked': option.value === checked,
+                ...getClassMap(option.cssClass),
               }}
             >
-              {option.text}
-            </ion-radio>
-          </ion-item>
-        ))}
+              <ion-radio
+                class={{
+                  'select-option-has-rich-content': hasRichContent,
+                }}
+                value={option.value}
+                disabled={option.disabled}
+                justify={richOption.justify ?? getOverlayLabelJustify(mode, 'radio')}
+                labelPlacement={richOption.labelPlacement ?? getOverlayLabelPlacement(mode, 'radio')}
+                onClick={() => this.dismissParentPopover()}
+                onKeyDown={(ev) => {
+                  if (ev.key === 'Enter' && !ev.repeat) {
+                    this.pendingEnterTarget = ev.currentTarget as HTMLElement;
+                  }
+                }}
+                onKeyUp={(ev) => {
+                  if (ev.key === ' ') {
+                    // Space selects and dismisses in one press.
+                    this.dismissParentPopover();
+                  } else if (ev.key === 'Enter') {
+                    const shouldDismiss = this.pendingEnterTarget === ev.currentTarget;
+                    this.pendingEnterTarget = null;
+                    if (shouldDismiss) {
+                      this.dismissParentPopover();
+                    }
+                  }
+                }}
+              >
+                {renderOptionLabel(optionLabelOptions, 'select-option-label')}
+              </ion-radio>
+            </ion-item>
+          );
+        })}
       </ion-radio-group>
     );
   }

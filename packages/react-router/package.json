@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "8.8.18",
+  "version": "9.0.0",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -28,6 +28,7 @@
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "typecheck": "tsc --noEmit",
     "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
@@ -36,35 +37,44 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "^8.8.18",
+    "@ionic/react": "^9.0.0",
     "tslib": "*"
   },
   "peerDependencies": {
-    "react": ">=16.8.6",
-    "react-dom": ">=16.8.6",
-    "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1"
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19",
+    "react-router": ">=6.4.0 <7",
+    "react-router-dom": ">=6.4.0 <7"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-typescript": "^11.1.5",
-    "@types/node": "^14.0.14",
-    "@types/react": "^17.0.79",
-    "@types/react-dom": "^17.0.25",
-    "@types/react-router": "^5.0.3",
-    "@types/react-router-dom": "^5.1.5",
-    "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "@typescript-eslint/parser": "^5.48.2",
-    "eslint": "^7.32.0",
+    "@types/node": "^24.13.3",
+    "@types/react": "^18.3.28",
+    "@types/react-dom": "^18.3.7",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "history": "^5.3.0",
     "prettier": "^2.8.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^6.30.0",
+    "react-router-dom": "^6.30.0",
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
-    "typescript": "^4.0.5"
+    "typescript": "^6.0.0"
+  },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
   },
   "prettier": "@ionic/prettier-config"
 }

@@ -55,7 +55,6 @@
           <ion-card-content>
             <button class="expand" id="show-action-sheet" onclick="showActionSheet()">Show Action Sheet</button>
             <button class="expand" id="show-menu" onclick="showMenu()">Show Menu</button>
-            <button class="expand" id="show-picker" onclick="showPicker()">Show Picker</button>
             <button class="expand" id="show-toast" onclick="showToast()">Show Toast</button>
           </ion-card-content>
         </ion-card>
@@ -113,26 +112,6 @@
       async function showMenu() {
         const menu = document.querySelector('ion-menu');
         await menu.open();
-      }
-
-      async function showPicker() {
-        const picker = Object.assign(document.createElement('ion-picker-legacy'), {
-          columns: [
-            {
-              name: 'Picker',
-              selectedIndex: 2,
-              options: [
-                { text: 'First' },
-                { text: 'Second' },
-                { text: 'Third' },
-                { text: 'Fourth' },
-                { text: 'Fifth' },
-              ],
-            },
-          ],
-        });
-        document.body.appendChild(picker);
-        await picker.present();
       }
 
       async function showToast() {

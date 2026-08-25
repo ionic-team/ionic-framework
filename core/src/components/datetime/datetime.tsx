@@ -185,7 +185,7 @@ export class Datetime implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, refer to [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color = 'primary';
+  @Prop() color?: Color;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -1716,8 +1716,6 @@ export class Datetime implements ComponentInterface {
   private renderCombinedDatePickerColumn() {
     const { defaultParts, disabled, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
-    const activePart = this.getActivePartsWithFallback();
-
     /**
      * By default, generate a range of 3 months:
      * Previous month, current month, and next month
@@ -1801,8 +1799,11 @@ export class Datetime implements ComponentInterface {
           const { value } = ev.detail;
           const findPart = parts.find(({ month, day, year }) => value === `${year}-${month}-${day}`);
 
+          // Read live so parts a sibling column just committed are included.
+          const activePart = this.getActivePartsWithFallback();
+
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             ...findPart,
           });
 
@@ -1816,6 +1817,7 @@ export class Datetime implements ComponentInterface {
       >
         {items.map((item) => (
           <ion-picker-column-option
+            color={this.color}
             part={item.value === todayString ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={item.value}
             disabled={item.disabled}
@@ -1907,7 +1909,6 @@ export class Datetime implements ComponentInterface {
 
     const { disabled, workingParts } = this;
 
-    const activePart = this.getActivePartsWithFallback();
     const pickerColumnValue = (workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined;
 
     return (
@@ -1919,8 +1920,11 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={pickerColumnValue}
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
+          const activePart = this.getActivePartsWithFallback();
+
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             day: ev.detail.value,
           });
 
@@ -1934,6 +1938,7 @@ export class Datetime implements ComponentInterface {
       >
         {days.map((day) => (
           <ion-picker-column-option
+            color={this.color}
             part={day.value === pickerColumnValue ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={day.value}
             disabled={day.disabled}
@@ -1953,8 +1958,6 @@ export class Datetime implements ComponentInterface {
 
     const { disabled, workingParts } = this;
 
-    const activePart = this.getActivePartsWithFallback();
-
     return (
       <ion-picker-column
         part={WHEEL_PART}
@@ -1964,8 +1967,11 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={workingParts.month}
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
+          const activePart = this.getActivePartsWithFallback();
+
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             month: ev.detail.value,
           });
 
@@ -1982,6 +1988,7 @@ export class Datetime implements ComponentInterface {
       >
         {months.map((month) => (
           <ion-picker-column-option
+            color={this.color}
             part={month.value === workingParts.month ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={month.value}
             disabled={month.disabled}
@@ -2000,8 +2007,6 @@ export class Datetime implements ComponentInterface {
 
     const { disabled, workingParts } = this;
 
-    const activePart = this.getActivePartsWithFallback();
-
     return (
       <ion-picker-column
         part={WHEEL_PART}
@@ -2011,8 +2016,11 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={workingParts.year}
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
+          const activePart = this.getActivePartsWithFallback();
+
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             year: ev.detail.value,
           });
 
@@ -2029,6 +2037,7 @@ export class Datetime implements ComponentInterface {
       >
         {years.map((year) => (
           <ion-picker-column-option
+            color={this.color}
             part={year.value === workingParts.year ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={year.value}
             disabled={year.disabled}
@@ -2075,7 +2084,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHourPickerColumn(hoursData: WheelColumnOption[]) {
-    const { disabled, workingParts } = this;
+    const { disabled } = this;
     if (hoursData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -2089,8 +2098,9 @@ export class Datetime implements ComponentInterface {
         value={activePart.hour}
         numericInput
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             hour: ev.detail.value,
           });
 
@@ -2104,6 +2114,7 @@ export class Datetime implements ComponentInterface {
       >
         {hoursData.map((hour) => (
           <ion-picker-column-option
+            color={this.color}
             part={hour.value === activePart.hour ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={hour.value}
             disabled={hour.disabled}
@@ -2116,7 +2127,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMinutePickerColumn(minutesData: WheelColumnOption[]) {
-    const { disabled, workingParts } = this;
+    const { disabled } = this;
     if (minutesData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -2130,8 +2141,9 @@ export class Datetime implements ComponentInterface {
         value={activePart.minute}
         numericInput
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             minute: ev.detail.value,
           });
 
@@ -2145,6 +2157,7 @@ export class Datetime implements ComponentInterface {
       >
         {minutesData.map((minute) => (
           <ion-picker-column-option
+            color={this.color}
             part={minute.value === activePart.minute ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={minute.value}
             disabled={minute.disabled}
@@ -2157,7 +2170,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderDayPeriodPickerColumn(dayPeriodData: WheelColumnOption[]) {
-    const { disabled, workingParts } = this;
+    const { disabled } = this;
     if (dayPeriodData.length === 0) {
       return [];
     }
@@ -2174,10 +2187,12 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={activePart.ampm}
         onIonChange={(ev: CustomEvent) => {
-          const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
+          // Read live so parts a sibling column just committed are included.
+          const currentParts = this.workingParts;
+          const hour = calculateHourFromAMPM(currentParts, ev.detail.value);
 
           this.setWorkingParts({
-            ...workingParts,
+            ...currentParts,
             ampm: ev.detail.value,
             hour,
           });
@@ -2193,6 +2208,7 @@ export class Datetime implements ComponentInterface {
       >
         {dayPeriodData.map((dayPeriod) => (
           <ion-picker-column-option
+            color={this.color}
             part={
               dayPeriod.value === activePart.ampm ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART
             }

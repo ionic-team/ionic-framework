@@ -22,7 +22,7 @@ From here you can either build the application or start a local dev server. When
 
 > [!NOTE]
 > Syncing is required to verify that the minimal supported Angular version is still compatible with the latest Ionic Framework changes.
-> For example, Ionic Framework 8 supports Angular 16, but the latest version of Ionic Framework may not be compatible with Angular 16. Syncing allows you to verify that the latest changes are still compatible with the minimal supported version.
+> For example, Ionic Framework 9 supports Angular 18, but the latest version of Ionic Framework may not be compatible with Angular 18. Syncing allows you to verify that the latest changes are still compatible with the minimal supported version.
 >
 > Support for the minimal version and maximum version can be found on the [Support page](https://ionicframework.com/docs/reference/support#ionic-angular) of the Ionic Framework documentation.
 
@@ -85,6 +85,9 @@ If you need to add E2E tests that are only run on a specific version of the JS F
 ### Testing Lazy Loaded Ionic Components
 
 Tests for lazy loaded Ionic UI components should only be added under the `/lazy` route. This ensures the `IonicModule` is added.
+
+> [!CAUTION]
+> The lazy loaded build, including `IonicModule`, is deprecated and will be removed in a future major version. New components should be tested as standalone components (see below). These lazy tests remain to verify that the deprecated build keeps working while it is still supported.
 
 ### Testing Standalone Ionic Components
 

@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from "@ionic/angular/lazy";
 import { VersionTestRoutingModule } from "./version-test-routing.module";
 import { VersionTestComponent } from "./version-test.component";
 

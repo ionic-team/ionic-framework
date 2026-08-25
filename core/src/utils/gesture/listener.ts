@@ -7,14 +7,10 @@ export const addEventListener = (
     capture?: boolean;
   }
 ): (() => void) => {
-  // use event listener options when supported
-  // otherwise it's just a boolean for the "capture" arg
-  const listenerOpts = supportsPassive(el)
-    ? {
-        capture: !!opts.capture,
-        passive: !!opts.passive,
-      }
-    : !!opts.capture;
+  const listenerOpts = {
+    capture: !!opts.capture,
+    passive: !!opts.passive,
+  };
 
   let add: string;
   let remove: string;
@@ -31,27 +27,3 @@ export const addEventListener = (
     el[remove](eventName, callback, listenerOpts);
   };
 };
-
-const supportsPassive = (node: Node) => {
-  if (_sPassive === undefined) {
-    try {
-      const opts = Object.defineProperty({}, 'passive', {
-        get: () => {
-          _sPassive = true;
-        },
-      });
-      node.addEventListener(
-        'optsTest',
-        () => {
-          return;
-        },
-        opts
-      );
-    } catch (e) {
-      _sPassive = false;
-    }
-  }
-  return !!_sPassive;
-};
-
-let _sPassive: boolean | undefined;

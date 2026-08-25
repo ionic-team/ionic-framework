@@ -12,7 +12,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
@@ -23,8 +23,7 @@
       {
         "name": "typescript-eslint-language-service"
       }
-    ],
-    "useDefineForClassFields": false
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

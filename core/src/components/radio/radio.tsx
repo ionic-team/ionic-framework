@@ -62,7 +62,7 @@ export class Radio implements ComponentInterface {
   /**
    * the value of the radio.
    */
-  @Prop() value?: any | null;
+  @Prop({ reflect: true }) value?: any | null;
 
   @Watch('value')
   valueChanged() {

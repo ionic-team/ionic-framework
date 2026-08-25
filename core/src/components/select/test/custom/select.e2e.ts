@@ -86,10 +86,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
               background-color: red;
             }
 
-            ion-select::part(inner) {
-              background-color: orange;
-            }
-
             ion-select::part(bottom) {
               background-color: green;
             }
@@ -104,14 +100,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const select = page.locator('ion-select');
       const wrapper = select.locator('.select-wrapper');
-      const wrapperInner = select.locator('.select-wrapper-inner');
       const bottom = select.locator('.select-bottom');
 
       const wrapperBackgroundColor = await wrapper.evaluate((el) => {
-        return window.getComputedStyle(el).backgroundColor;
-      });
-
-      const wrapperInnerBackgroundColor = await wrapperInner.evaluate((el) => {
         return window.getComputedStyle(el).backgroundColor;
       });
 
@@ -120,8 +111,55 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
 
       expect(wrapperBackgroundColor).toBe('rgb(255, 0, 0)');
-      expect(wrapperInnerBackgroundColor).toBe('rgb(255, 165, 0)');
       expect(bottomBackgroundColor).toBe('rgb(0, 128, 0)');
+    });
+
+    test('should be able to customize start, control and end using css parts', async ({ page }) => {
+      await page.setContent(
+        `
+          <style>
+            ion-select::part(start) {
+              background-color: red;
+            }
+
+            ion-select::part(control) {
+              background-color: green;
+            }
+
+            ion-select::part(end) {
+              background-color: blue;
+            }
+          </style>
+
+          <ion-select label="Select" label-placement="stacked" placeholder="Fruits" helper-text="Helper text">
+            <ion-select-option value="a">Apple</ion-select-option>
+            <span slot="start">Start</span>
+            <span slot="end">End</span>
+          </ion-select>
+      `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const start = select.locator('.select-start');
+      const control = select.locator('.select-control');
+      const end = select.locator('.select-end');
+
+      const startBackgroundColor = await start.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      const controlBackgroundColor = await control.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      const endBackgroundColor = await end.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(startBackgroundColor).toBe('rgb(255, 0, 0)');
+      expect(controlBackgroundColor).toBe('rgb(0, 128, 0)');
+      expect(endBackgroundColor).toBe('rgb(0, 0, 255)');
     });
 
     test('should render custom cancel text when prop is provided with alert interface', async ({ page }) => {

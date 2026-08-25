@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.8.18",
+  "version": "9.0.0",
   "description": "Base components for Ionic",
   "engines": {
     "node": ">= 16"
@@ -22,6 +22,38 @@
   "module": "dist/loader-bundle/index.js",
   "collection": "dist/collection/collection-manifest.json",
   "types": "dist/types/interface.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/interface.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.js"
+    },
+    "./components": {
+      "types": "./components/custom-elements.d.ts",
+      "import": "./components/index.js",
+      "default": "./components/index.js"
+    },
+    "./components/*": "./components/*",
+    "./loader": {
+      "types": "./loader/index.d.ts",
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs.js",
+      "default": "./loader/index.js"
+    },
+    "./loader/*": "./loader/*",
+    "./hydrate": {
+      "types": "./hydrate/index.d.ts",
+      "import": "./hydrate/index.mjs",
+      "require": "./hydrate/index.js",
+      "default": "./hydrate/index.js"
+    },
+    "./hydrate/*": "./hydrate/*",
+    "./css/*.css": "./css/*.css",
+    "./css/*": "./css/*",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "files": [
     "components/",
     "css/",
@@ -31,7 +63,7 @@
   ],
   "dependencies": {
     "@stencil/core": "5.0.0-alpha.35",
-    "ionicons": "^8.0.13",
+    "ionicons": "^8.1.0",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
@@ -40,26 +72,29 @@
     "@capacitor/haptics": "^8.0.0",
     "@capacitor/keyboard": "^8.0.0",
     "@capacitor/status-bar": "^8.0.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@playwright/test": "^1.62.1",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
-    "@stencil/angular-output-target": "latest",
-    "@stencil/react-output-target": "latest",
-    "@stencil/sass": "latest",
+    "@stencil/angular-output-target": "^1.4.1",
+    "@stencil/react-output-target": "^1.6.2",
+    "@stencil/sass": "^3.3.3",
     "@stencil/unplugin": "5.0.0-alpha.35",
-    "@stencil/vitest": "latest",
-    "@stencil/vue-output-target": "latest",
-    "@types/node": "^24.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.2",
+    "@stencil/vitest": "^1.15.0",
+    "@stencil/vue-output-target": "0.14.1",
+    "@types/node": "^24.13.3",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "chalk": "^6.0.0",
     "clean-css-cli": "^5.6.1",
     "domino": "^2.1.6",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-custom-rules": "file:custom-rules",
+    "eslint-plugin-import": "^2.31.0",
     "execa": "^8.0.1",
     "fs-extra": "^9.0.1",
     "playwright-core": "^1.62.1",
@@ -69,8 +104,16 @@
     "serve": "^14.0.1",
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0",
+    "typescript": "^6.0.0",
     "vitest": "^4.1.11",
-    "vitest-environment-stencil": "^1.14.0"
+    "vitest-environment-stencil": "^1.15.0"
+  },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
   },
   "scripts": {
     "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",

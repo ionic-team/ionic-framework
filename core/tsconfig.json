@@ -1,28 +1,10 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "strict": true,
-    "alwaysStrict": true,
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "declaration": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
     "jsx": "react",
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
-    "lib": [
-      "dom",
-      "es2022"
-    ],
-    "module": "esnext",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "pretty": true,
-    "removeComments": false,
-    "target": "es2022",
     "types": ["node", "vitest/globals", "@stencil/vitest"],
     "paths": {
       "@utils/*": ["./src/utils/*"],
@@ -32,7 +14,7 @@
   },
   "include": [
     "src",
-    "vitest.setup.d.ts",
+    "vitest.setup.d.ts"
   ],
   "exclude": [
     "node_modules"
