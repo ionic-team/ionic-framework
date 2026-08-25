@@ -38,6 +38,28 @@ const createPage = (id: string) => ({
   template: `<ion-page data-pageid="${id}"></ion-page>`
 });
 
+/*
+ * Ionic keeps previously visited pages mounted so they can be animated back to,
+ * hiding the inactive ones with `ion-page-hidden`. Asserting on the whole stack
+ * catches both a wrong visible page and a page that was destroyed when it
+ * should have been kept.
+ */
+const viewStack = (wrapper: any) =>
+  wrapper.findAll('.ion-page').map((page: any) => ({
+    id: page.attributes('data-pageid'),
+    hidden: page.classes('ion-page-hidden')
+  }));
+
+const currentRoute = (navManager: any) => {
+  const routeInfo = navManager.getCurrentRouteInfo();
+
+  return {
+    pathname: routeInfo.pathname,
+    routerAction: routeInfo.routerAction,
+    routerDirection: routeInfo.routerDirection
+  };
+};
+
 describe('Routing', () => {
   it('should pass no props', async () => {
     const Page1 = {
@@ -801,28 +823,6 @@ describe('Routing', () => {
       }
     });
 
-    /*
-     * Ionic keeps previously visited pages mounted so they can be animated back
-     * to, hiding the inactive ones with `ion-page-hidden`. Asserting on the
-     * whole stack therefore catches both a wrong visible page and a page that
-     * was destroyed when it should have been kept.
-     */
-    const viewStack = () =>
-      wrapper.findAll('.ion-page').map((page) => ({
-        id: page.attributes('data-pageid'),
-        hidden: page.classes('ion-page-hidden')
-      }));
-
-    const currentRoute = () => {
-      const routeInfo = navManager.getCurrentRouteInfo();
-
-      return {
-        pathname: routeInfo.pathname,
-        routerAction: routeInfo.routerAction,
-        routerDirection: routeInfo.routerDirection
-      };
-    };
-
     router.push('/register');
     await waitForRouter();
 
@@ -830,7 +830,7 @@ describe('Routing', () => {
     router.replace('/profile');
     await waitForRouter();
 
-    expect(viewStack()).toEqual([
+    expect(viewStack(wrapper)).toEqual([
       { id: 'home', hidden: true },
       { id: 'profile', hidden: false }
     ]);
@@ -839,7 +839,7 @@ describe('Routing', () => {
     router.back();
     await waitForRouter();
 
-    expect(viewStack()).toEqual([
+    expect(viewStack(wrapper)).toEqual([
       { id: 'home', hidden: true },
       { id: 'profile', hidden: false }
     ]);
@@ -854,11 +854,11 @@ describe('Routing', () => {
     router.push('/home');
     await waitForRouter();
 
-    expect(viewStack()).toEqual([
+    expect(viewStack(wrapper)).toEqual([
       { id: 'home', hidden: false },
       { id: 'profile', hidden: true }
     ]);
-    expect(currentRoute()).toEqual({
+    expect(currentRoute(navManager)).toEqual({
       pathname: '/home',
       routerAction: 'push',
       routerDirection: 'forward'
@@ -867,7 +867,7 @@ describe('Routing', () => {
     router.push('/profile');
     await waitForRouter();
 
-    expect(viewStack()).toEqual([
+    expect(viewStack(wrapper)).toEqual([
       { id: 'home', hidden: true },
       { id: 'profile', hidden: false }
     ]);
@@ -1041,14 +1041,16 @@ describe('Routing', () => {
     releasePush();
     await waitForRouter();
 
-    const routeInfo = navManager.getCurrentRouteInfo();
-
-    expect(
-      wrapper.findAll('.ion-page').map((page) => page.attributes('data-pageid'))
-    ).toEqual(['home', 'profile', 'settings']);
-    expect(routeInfo.pathname).toEqual('/settings');
-    expect(routeInfo.routerAction).toEqual('push');
-    expect(routeInfo.routerDirection).toEqual('forward');
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'settings', hidden: false }
+    ]);
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/settings',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
@@ -1109,11 +1111,11 @@ describe('Routing', () => {
     router.push('/settings');
     await waitForRouter();
 
-    const routeInfo = navManager.getCurrentRouteInfo();
-
-    expect(routeInfo.pathname).toEqual('/settings');
-    expect(routeInfo.routerAction).toEqual('push');
-    expect(routeInfo.routerDirection).toEqual('forward');
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/settings',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
   });
 
   // Guards against clearing params that belong to another navigation still in flight.
@@ -1191,7 +1193,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    mount(IonRouterOutlet, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -1218,10 +1220,17 @@ describe('Routing', () => {
     releaseLogin();
     await waitForRouter();
 
-    const routeInfo = navManager.getCurrentRouteInfo();
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'replace',
+      routerDirection: 'root'
+    });
 
-    expect(routeInfo.pathname).toEqual('/login');
-    expect(routeInfo.routerDirection).toEqual('root');
+    /*
+     * A root replace clears the history, so Login is the only page left. Losing
+     * the staged params drops the root direction, and the pages behind it stay.
+     */
+    expect(viewStack(wrapper)).toEqual([{ id: 'login', hidden: false }]);
   });
 
   // Guards against clearing a delta that belongs to another navigation still in flight.
@@ -1327,10 +1336,14 @@ describe('Routing', () => {
     releaseSecondBack();
     await waitForRouter();
 
-    const routeInfo = navManager.getCurrentRouteInfo();
-
-    expect(routeInfo.pathname).toEqual('/home');
-    expect(routeInfo.routerAction).toEqual('pop');
-    expect(routeInfo.routerDirection).toEqual('back');
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/home',
+      routerAction: 'pop',
+      routerDirection: 'back'
+    });
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: false },
+      { id: 'first', hidden: true }
+    ]);
   });
 });
