@@ -61,29 +61,41 @@ export const createIonRouter = (
          * whatever runs next. Only handleNavigateBack stages the previous
          * route's id alongside them.
          *
-         * Only clear state that belongs to this navigation. A second history
-         * navigation can replace this one and stage its own information first,
-         * in which case clearing would strip the delta from the navigation that
-         * is still running.
+         * Only clear state that belongs to this navigation, and check the two
+         * slots separately. Another navigation can replace this one and stage
+         * its own state first, in which case clearing would strip that state
+         * from the navigation still running.
+         *
+         * The back and forward helpers cannot record a target, so params they
+         * staged fall back to the delta's target. Those are the helpers that
+         * hand off to history, so a delta is always recorded for them.
          *
          * This only covers navigations that fail. A guard that returns a
          * location redirects rather than fails, so afterEach is never called
          * for the original navigation and its staged state reaches the redirect
          * target instead.
          */
-        const staysWithThisNavigation =
+        const deltaIsForThisNavigation =
           currentNavigationInfo.to === undefined ||
           currentNavigationInfo.to === to.fullPath;
 
-        if (staysWithThisNavigation) {
+        const paramsAreForThisNavigation =
+          incomingRouteParamsTo === undefined
+            ? deltaIsForThisNavigation
+            : incomingRouteParamsTo === to.fullPath;
+
+        if (deltaIsForThisNavigation) {
           currentNavigationInfo = {
             direction: undefined,
             action: undefined,
             delta: undefined,
             to: undefined,
           };
+        }
 
+        if (paramsAreForThisNavigation) {
           incomingRouteParams = undefined;
+          incomingRouteParamsTo = undefined;
         }
 
         return;
@@ -131,6 +143,13 @@ export const createIonRouter = (
    * Cleared once `handleHistoryChange` has consumed them.
    */
   let incomingRouteParams: RouteParams | undefined;
+  /**
+   * The location the staged params were meant for, when the helper that staged
+   * them knew it. Kept beside the params rather than on them so it is never
+   * spread onto a RouteInfo. Left undefined by the back and forward helpers,
+   * which hand off to history and cannot know the target yet.
+   */
+  let incomingRouteParamsTo: string | undefined;
 
   const historyChangeListeners: any[] = [];
 
@@ -271,6 +290,7 @@ export const createIonRouter = (
              * letting them leak into the next navigation.
              */
             incomingRouteParams = undefined;
+            incomingRouteParamsTo = undefined;
           }
         }
       } else if (defaultHref) {
@@ -288,7 +308,13 @@ export const createIonRouter = (
     routerAnimation?: AnimationBuilder,
     tab?: string
   ) => {
-    setIncomingRouteParams(routerAction, routerDirection, routerAnimation, tab);
+    setIncomingRouteParams(
+      routerAction,
+      routerDirection,
+      routerAnimation,
+      tab,
+      path
+    );
 
     if (routerAction === "push") {
       router.push(path);
@@ -634,6 +660,7 @@ export const createIonRouter = (
       currentRouteInfo = routeInfo;
     }
     incomingRouteParams = undefined;
+    incomingRouteParamsTo = undefined;
     historyChangeListeners.forEach((cb) => cb(currentRouteInfo));
   };
 
@@ -649,7 +676,13 @@ export const createIonRouter = (
   const navigate = (navigationOptions: ExternalNavigationOptions) => {
     const { routerAnimation, routerDirection, routerLink } = navigationOptions;
 
-    setIncomingRouteParams("push", routerDirection, routerAnimation);
+    setIncomingRouteParams(
+      "push",
+      routerDirection,
+      routerAnimation,
+      undefined,
+      routerLink
+    );
 
     router.push(routerLink);
   };
@@ -838,7 +871,8 @@ export const createIonRouter = (
     routerAction: RouteAction = "push",
     routerDirection: RouteDirection = "forward",
     routerAnimation?: AnimationBuilder,
-    tab?: string
+    tab?: string,
+    to?: RouteLocationRaw
   ) => {
     incomingRouteParams = {
       routerAction,
@@ -846,6 +880,8 @@ export const createIonRouter = (
       routerAnimation,
       tab,
     };
+
+    incomingRouteParamsTo = to ? router.resolve(to).fullPath : undefined;
   };
 
   const goBack = (routerAnimation?: AnimationBuilder) => {

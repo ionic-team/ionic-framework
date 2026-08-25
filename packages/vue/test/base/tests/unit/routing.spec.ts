@@ -1117,6 +1117,114 @@ describe('Routing', () => {
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should keep the route params of a navigation that replaced a cancelled one', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Slow = createPage('slow');
+    const Login = createPage('login');
+
+    let racing = false;
+    let releaseSlow: () => void;
+    let releaseLogin: () => void;
+    let slowReachedGuard: () => void;
+    let loginReachedGuard: () => void;
+    let cancelReported: () => void;
+
+    const slowStarted = new Promise((resolve) => {
+      slowReachedGuard = resolve as () => void;
+    });
+    const loginStarted = new Promise((resolve) => {
+      loginReachedGuard = resolve as () => void;
+    });
+    const pushCancelled = new Promise((resolve) => {
+      cancelReported = resolve as () => void;
+    });
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/slow', component: Slow },
+        { path: '/login', component: Login }
+      ]
+    });
+
+    /*
+     * Neither navigation here is a history traversal, so no delta is ever
+     * staged. The staged params are the only state in play, which is why they
+     * need a target of their own to be told apart.
+     */
+    router.beforeEach(async (to) => {
+      if (!racing) {
+        return true;
+      }
+
+      if (to.path === '/slow') {
+        slowReachedGuard();
+        await new Promise((resolve) => {
+          releaseSlow = resolve as () => void;
+        });
+      }
+
+      if (to.path === '/login') {
+        loginReachedGuard();
+        await new Promise((resolve) => {
+          releaseLogin = resolve as () => void;
+        });
+      }
+
+      return true;
+    });
+
+    router.afterEach((_to, _from, failure) => {
+      if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+        cancelReported();
+      }
+    });
+
+    router.push('/');
+    await router.isReady();
+    mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    racing = true;
+
+    /*
+     * These are what useIonRouter's push and replace call through to, used
+     * directly so the outlet can stay the mounted component.
+     */
+    navManager.handleNavigate('/slow', 'push', 'forward');
+    await slowStarted;
+
+    // Logging out replaces it, staging its own params on the way.
+    navManager.handleNavigate('/login', 'replace', 'root');
+    await loginStarted;
+
+    // Let the push finish, which reports it as cancelled.
+    releaseSlow();
+    await pushCancelled;
+
+    // Only now let the replace finish, so it is the one reading staged params.
+    releaseLogin();
+    await waitForRouter();
+
+    const routeInfo = navManager.getCurrentRouteInfo();
+
+    expect(routeInfo.pathname).toEqual('/login');
+    expect(routeInfo.routerDirection).toEqual('root');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should keep the delta of a back navigation that replaced a cancelled one', async () => {
     let navManager: any;
     const Home = {
