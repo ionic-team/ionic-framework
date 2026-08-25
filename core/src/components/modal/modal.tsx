@@ -17,6 +17,7 @@ import {
   GESTURE,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   setOverlayId,
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
@@ -113,6 +114,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private viewTransitionAnimation?: Animation;
   private resizeTimeout?: any;
   private unsubscribeRootSafeAreaTop?: () => void;
+  // True from the first safe-area write in `present()` until the enter
+  // animation settles. A position-based read in that window is not the rest position.
+  private isPresenting = false;
 
   // Mutation observer to watch for parent removal
   private parentRemovalObserver?: MutationObserver;
@@ -460,6 +464,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { el } = this;
     prepareOverlay(el);
     this.triggerChanged();
+
+    // A disconnect tears down state this presentation still needs and cannot
+    // tell a re-insert from a removal, so put it back.
+    if (this.presented || this.isPresenting) {
+      this.restoreSafeAreaOverrides();
+    }
+    // A relocation from `willPresent` reaches these before `present()` has
+    // applied the lock, so they apply it instead. Both are idempotent.
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(el);
+      this.initParentRemovalObserver();
+    }
   }
 
   disconnectedCallback() {
@@ -666,28 +682,36 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // bindings (e.g., Angular) may not have been applied when componentWillLoad ran.
     this.isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
 
-    // Set initial safe-area overrides before animation
-    this.setInitialSafeAreaOverrides();
+    this.isPresenting = true;
 
     const hasCardModal = presentingElement !== undefined;
 
-    /**
-     * We need to change the status bar at the
-     * start of the animation so that it completes
-     * by the time the card animation is done.
-     */
-    if (hasCardModal && getIonMode(this) === 'ios') {
-      // Cache the original status bar color before the modal is presented
-      this.statusBarStyle = await StatusBar.getStyle();
-      setCardStatusBarDark();
-    }
+    // Wrapped so a throw cannot strand `isPresenting`, which would suppress
+    // the position-based correction for the life of this instance.
+    try {
+      // Set initial safe-area overrides before animation
+      this.setInitialSafeAreaOverrides();
 
-    await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
-      presentingEl: presentingElement,
-      currentBreakpoint: this.initialBreakpoint,
-      backdropBreakpoint: this.backdropBreakpoint,
-      expandToScroll: this.expandToScroll,
-    });
+      /**
+       * We need to change the status bar at the
+       * start of the animation so that it completes
+       * by the time the card animation is done.
+       */
+      if (hasCardModal && getIonMode(this) === 'ios') {
+        // Cache the original status bar color before the modal is presented
+        this.statusBarStyle = await StatusBar.getStyle();
+        setCardStatusBarDark();
+      }
+
+      await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
+        presentingEl: presentingElement,
+        currentBreakpoint: this.initialBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+        expandToScroll: this.expandToScroll,
+      });
+    } finally {
+      this.isPresenting = false;
+    }
 
     // Update safe-area based on actual position after animation
     this.updateSafeAreaOverrides();
@@ -1407,6 +1431,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
+    // Both `present()` and a reconnect call this, so drop any existing
+    // observer. Below the guards, so a call that bails cannot leave none.
+    this.cleanupParentRemovalObserver();
+
     this.parentRemovalObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
@@ -1495,6 +1523,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // Set the internal offset property with the resolved root safe-area-top value
     if (context.isSheetModal) {
       this.updateSheetOffsetTop();
+      // A restore after a DOM move runs this a second time for the same
+      // modal, so drop the previous subscription rather than stacking one.
+      this.unsubscribeRootSafeAreaTop?.();
       this.unsubscribeRootSafeAreaTop = onRootSafeAreaTopChange((safeAreaTop) =>
         this.updateSheetOffsetTop(safeAreaTop)
       );
@@ -1620,6 +1651,33 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const { contentEl } = this.findContentAndFooter();
     this.clearContentSafeAreaPadding(contentEl);
+  }
+
+  /**
+   * Re-applies what `cleanupSafeAreaOverrides()` removed for a modal moved
+   * while presented. Anything needing no measurement goes on synchronously so
+   * the modal is never painted without safe-area. The position-based
+   * correction waits a frame for the layout pass it reads.
+   */
+  private restoreSafeAreaOverrides(): void {
+    this.setInitialSafeAreaOverrides();
+    this.applyFullscreenSafeArea();
+
+    raf(() => {
+      // A dismiss or another move can land first, and a read before the enter
+      // animation settles is not the rest position. `present()` redoes it.
+      if (!this.presented || !this.el.isConnected || this.isPresenting) {
+        return;
+      }
+      // A hidden subtree carries `display: none`, so there is no box and the
+      // read would write the safe-area for a modal touching no edge. The
+      // prediction applied above holds until the modal is shown again.
+      const { width, height } = this.el.getBoundingClientRect();
+      if (width === 0 && height === 0) {
+        return;
+      }
+      this.updateSafeAreaOverrides();
+    });
   }
 
   render() {

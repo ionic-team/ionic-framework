@@ -7,3 +7,4 @@ export * from './apply-keyboard-focus';
 export * from './matchers';
 export * from './viewports';
 export * from './generator';
+export * from './detach-reattach';
