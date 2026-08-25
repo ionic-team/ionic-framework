@@ -503,8 +503,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       return;
     }
     readTask(() => {
-      // Two calls before the first flushes would otherwise both create a
-      // gesture, orphaning the first with its listeners still bound.
+      // Bail if a call queued ahead of this one already built the gesture
+      // (a second would orphan the first with its listeners still bound), if
+      // the host disconnected while this task waited, or if the group scrolls.
       if (this.gesture || !this.el.isConnected || groupEl.scrollHeight > groupEl.clientHeight) {
         return;
       }

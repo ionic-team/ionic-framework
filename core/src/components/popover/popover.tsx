@@ -585,7 +585,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
     // Both `present()` and a reconnect call this, so drop any existing
     // observer. Below the guards, so a call that bails cannot leave none.
-    this.headerResizeObserver?.disconnect();
+    if (this.headerResizeObserver) {
+      this.headerResizeObserver.disconnect();
+      this.headerResizeObserver = undefined;
+    }
 
     this.headerResizeObserver = new ResizeObserver(async () => {
       if (header.offsetHeight > 0) {

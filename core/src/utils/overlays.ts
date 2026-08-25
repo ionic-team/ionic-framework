@@ -545,7 +545,9 @@ export const cleanupRootFocusTrapAccessibility = () => {
 };
 
 /**
- * Shared by `present()` and the restore below, which have to stay in lockstep.
+ * Applies the root lock itself: `aria-hidden` on the view container, and
+ * `backdrop-no-scroll` on the body. Shared by `present()` and the restore
+ * below, which have to stay in lockstep.
  */
 const applyRootLock = (el: OverlayWithFocusTrapProps) => {
   // Hiding the container the overlay now sits in would hide the overlay too.

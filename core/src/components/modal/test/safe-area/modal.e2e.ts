@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
-import { configs, test, Viewports } from '@utils/test/playwright';
+import { configs, detachAndReattach, test, Viewports } from '@utils/test/playwright';
 
 /**
  * These tests verify that safe-area CSS custom properties are correctly
@@ -446,16 +446,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
     });
 
     test.describe('moving a presented modal', () => {
-      // A single `appendChild` leaves the element connected as far as
-      // `disconnectedCallback` is concerned, so detach across a task instead.
-      const moveModal = (modal: Locator) =>
-        modal.evaluate(async (el: HTMLIonModalElement) => {
-          const holder = document.createElement('div');
-          document.querySelector('ion-app')!.appendChild(holder);
-          el.remove();
-          await new Promise((resolve) => setTimeout(resolve, 0));
-          holder.appendChild(el);
-        });
+      const moveModal = (modal: Locator) => detachAndReattach(modal, 'ion-app');
 
       test('should keep the safe-area overrides', async ({ page }, testInfo) => {
         testInfo.annotations.push({

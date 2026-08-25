@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, detachAndReattach, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: inline'), () => {
@@ -171,15 +171,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionModalDidPresent.next();
       await expect(modal).toBeVisible();
 
-      // Relocate the way a framework binding does: detached and re-inserted
-      // across a task, not a single synchronous appendChild.
-      await modal.evaluate(async (el: HTMLIonModalElement) => {
-        const holder = document.createElement('div');
-        document.body.appendChild(holder);
-        el.remove();
-        await new Promise((resolve) => setTimeout(resolve, 0));
-        holder.appendChild(el);
-      });
+      await detachAndReattach(modal);
 
       await page.click('#remove-modal-container');
 
