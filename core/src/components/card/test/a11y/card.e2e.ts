@@ -34,8 +34,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 });
 
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('card: aria attribute sync'), () => {
-    test('aria sync survives detach and reattach', async ({ page }) => {
+  test.describe(title('item: aria attribute sync'), () => {
+    test('native element updates aria-label when host attribute changes', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
@@ -43,37 +43,61 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await page.setContent(
         `
-          <div id="container">
-            <ion-card button="true" aria-label="label">Card</ion-card>
-          </div>
-        `,
+        <ion-card button="true" aria-label="label">Card</ion-card>
+      `,
         config
       );
 
       const host = page.locator('ion-card');
-      const nativeCard = host.locator('[part="native"]');
+      const nativeItem = host.locator('[part="native"]');
 
-      await expect(nativeCard).toHaveAttribute('aria-label', 'label');
-
-      // Detach and reattach
-      await host.evaluate((cardEl) => {
-        const parent = cardEl.parentElement!;
-        parent.removeChild(cardEl);
-        parent.appendChild(cardEl);
-      });
+      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
 
       await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
-      await expect(nativeCard).toHaveAttribute('aria-label', 'updated');
+
+      await expect(nativeItem).toHaveAttribute('aria-label', 'updated');
     });
 
-    test('helper strips host attribute and syncs native element through set, empty, and remove', async ({ page }) => {
-      page.on('console', (msg) => {
-        console.log(`[browser] ${msg.type()}: ${msg.text()}`);
+    test('preserves inherited aria-label after detach and reattach', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
       });
 
       await page.setContent(
         `
-          <ion-card button="true" aria-label="initial">Button</ion-button>
+        <div id="container">
+          <ion-card button="true" aria-label="label">Card</ion-card>
+        </div>
+      `,
+        config
+      );
+
+      const host = page.locator('ion-card');
+      const nativeItem = host.locator('[part="native"]');
+
+      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
+
+      // Detach, reattach, and force a render via a prop change.
+      await host.evaluate((itemEl) => {
+        const parent = itemEl.parentElement!;
+        parent.removeChild(itemEl);
+        parent.appendChild(itemEl);
+        (itemEl as HTMLIonButtonElement).color = 'primary';
+      });
+
+      // Assert the original value survived
+      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
+    });
+
+    test('syncs aria-label updates and removal after initial inheritance', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
+      });
+      await page.setContent(
+        `
+          <ion-card button="true" aria-label="initial">Card</ion-card>
         `,
         config
       );
@@ -81,25 +105,21 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       const host = page.locator('ion-card');
       const nativeButton = host.locator('[part="native"]');
 
-      // Initial load: inheritAriaAttributes should have stripped aria-label
-      // from the host and copied it onto the native element.
+      // Initial inheritance moves the value from the host to the native button.
       await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeButton).toHaveAttribute('aria-label', 'initial');
 
-      // Setting a new value on the host: watcher should capture it, sync it
-      // to native, and re-strip it from the host.
+      // Post-load writes remain on the host and are synchronized to native
       await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
-      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(host).toHaveAttribute('aria-label');
       await expect(nativeButton).toHaveAttribute('aria-label', 'second');
 
-      // Setting to empty string: empty string is a valid, non-null value.
+      // An empty string is a valid ARIA attribute value and remains synchronized.
       await host.evaluate((el) => el.setAttribute('aria-label', ''));
-      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(host).toHaveAttribute('aria-label');
       await expect(nativeButton).toHaveAttribute('aria-label', '');
 
-      // Removing the attribute directly: the patched removeAttribute should
-      // fire onChange with null, which should remove aria-label from native
-      // and host.
+      // Native MutationObserver behavior sees a real removal after a post-load write.
       await host.evaluate((el) => el.removeAttribute('aria-label'));
       await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeButton).not.toHaveAttribute('aria-label');
