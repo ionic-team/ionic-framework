@@ -41,11 +41,11 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "ts-morph": "^25.0.0"
+    "ts-morph": "^28.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.0"
+    "vitest": "^4.0.0"
   }
 }

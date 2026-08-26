@@ -17,6 +17,52 @@ export function withTestingMode(path: string): string {
   return `${path}${separator}ionic:_testing=true`;
 }
 
+let peakCounterId = 0;
+
+/**
+ * Start recording the largest number of elements matching `selector` (optionally
+ * narrowed to those containing `containsText`) that ever coexist. The returned
+ * function stops recording and resolves with the peak.
+ *
+ * Narrowing by text matters because several parameterized layouts can be in the
+ * DOM at once, so it's what limits the count to the page under test.
+ *
+ * Start tracking after the last navigation. The counter lives on `window`, so a
+ * `page.goto()` in between wipes it and the returned function will throw.
+ */
+export async function trackPeakMatchCount(
+  page: Page,
+  selector: string,
+  containsText?: string
+): Promise<() => Promise<number>> {
+  const key = `__peakMatchCount${peakCounterId++}`;
+
+  await page.evaluate(
+    ({ selector, containsText, key }) => {
+      const state = window as any;
+      const count = () => {
+        const matches = Array.from(document.querySelectorAll(selector));
+        return containsText ? matches.filter((el) => el.textContent?.includes(containsText)).length : matches.length;
+      };
+
+      state[key] = count();
+      const observer = new MutationObserver(() => {
+        state[key] = Math.max(state[key], count());
+      });
+      observer.observe(document.body, { subtree: true, childList: true, characterData: true });
+      state[`${key}Stop`] = () => observer.disconnect();
+    },
+    { selector, containsText, key }
+  );
+
+  return () =>
+    page.evaluate((k) => {
+      const state = window as any;
+      state[`${k}Stop`]();
+      return state[k] as number;
+    }, key);
+}
+
 /**
  * Assert that a page is visible and not hidden or invisible.
  * Equivalent to Cypress `cy.ionPageVisible(pageId)`.

@@ -5,7 +5,7 @@
  */
 
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
-import { IonRoute, RouteManagerContext, StackContext, createDebugLogger, generateId } from '@ionic/react';
+import { IonRoute, RouteManagerContext, StackContext, createDebugLogger, generateId, getConfig } from '@ionic/react';
 import React from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { Route, UNSAFE_RouteContext as RouteContext, matchRoutes } from 'react-router-dom';
@@ -1513,8 +1513,37 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   ) {
     const myGeneration = ++this.transitionGeneration;
 
+    const routerOutlet = this.routerOutletElement!;
+
+    const routeInfoFallbackDirection =
+      routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root' ? undefined : routeInfo.routeDirection;
+    const directionToUse = direction ?? routeInfoFallbackDirection;
+
+    /**
+     * The cases where we pass `commit()` a duration of 0. It's a function so each
+     * caller reads `skipTransition` as of when it runs, since the swipe gesture can
+     * set it after we get here.
+     */
+    const isInstantCommit = () => this.skipTransition || skipAnimation || directionToUse === undefined;
+
+    /**
+     * Whether `commit()` will run an animation. Mirrors the check in core's
+     * `router-outlet.tsx`, so keep the two in sync: an instant commit never
+     * animates, and otherwise the outlet's `animated` prop and the global
+     * `animated` config both have to allow it (`ionic:_testing` turns it off).
+     */
+    const willCommitAnimate = () => {
+      if (isInstantCommit()) {
+        return false;
+      }
+
+      const config = getConfig();
+      return !!routerOutlet.animated && (config ? config.getBoolean('animated', true) : true);
+    };
+
     const runCommit = async (enteringEl: HTMLElement, leavingEl?: HTMLElement) => {
       const skipTransition = this.skipTransition;
+      const commitDuration = isInstantCommit() ? 0 : undefined;
 
       /**
        * If the transition was handled
@@ -1550,8 +1579,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           enteringEl.classList.add('ion-page-invisible');
         }
       }
-
-      const commitDuration = skipTransition || skipAnimation || directionToUse === undefined ? 0 : undefined;
 
       // Race commit against a timeout to recover from hangs
       const commitPromise = routerOutlet.commit(enteringEl, leavingEl, {
@@ -1589,19 +1616,13 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       }
     };
 
-    const routerOutlet = this.routerOutletElement!;
-
-    const routeInfoFallbackDirection =
-      routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root' ? undefined : routeInfo.routeDirection;
-    const directionToUse = direction ?? routeInfoFallbackDirection;
-
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
       this.transitionEnteringElement = enteringViewItem.ionPageElement;
 
       if (leavingViewItem && leavingViewItem.ionPageElement && enteringViewItem === leavingViewItem) {
         // Clone page for same-view transitions (e.g., /user/1 → /user/2)
         const match = matchComponent(leavingViewItem.reactElement, routeInfo.pathname, undefined, this.outletMountPath);
-        if (match) {
+        if (match && willCommitAnimate()) {
           const newLeavingElement = clonePageElement(leavingViewItem.ionPageElement.outerHTML);
           if (newLeavingElement) {
             this.routerOutletElement.appendChild(newLeavingElement);
@@ -1609,7 +1630,11 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
             this.routerOutletElement.removeChild(newLeavingElement);
           }
         } else {
-          // Route no longer matches (e.g., /user/1 → /settings)
+          /**
+           * Either the route no longer matches (e.g., /user/1 → /settings), or
+           * nothing will animate, so the clone would duplicate the page in the
+           * DOM for no benefit.
+           */
           await runCommit(enteringViewItem.ionPageElement, undefined);
         }
       } else {

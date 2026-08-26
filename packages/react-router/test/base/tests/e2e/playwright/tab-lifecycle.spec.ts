@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ionPageVisible, ionTabClick, withTestingMode } from './utils/test-utils';
+import { ionPageVisible, ionTabClick, trackPeakMatchCount, withTestingMode } from './utils/test-utils';
 
 test.describe('Tab Lifecycle Events', () => {
   test.beforeEach(async ({ page }) => {
@@ -69,5 +69,22 @@ test.describe('Tab Lifecycle Events', () => {
     const events = await page.evaluate(() => (window as any).lifecycleEvents as string[]);
     expect(events).toContain('home:ionViewWillEnter');
     expect(events).toContain('home:ionViewDidEnter');
+  });
+
+  // A duplicate tab page, even briefly, fails this spec's page assertions on a
+  // strict mode violation.
+  test('should not duplicate the tab page in the DOM while returning to the tabs', async ({ page }) => {
+    await page.goto(withTestingMode('/tab-lifecycle/home'));
+    await ionPageVisible(page, 'tab-lifecycle-home');
+
+    await page.locator('#go-outside').click();
+    await ionPageVisible(page, 'tab-lifecycle-outside');
+
+    const peakHomePages = await trackPeakMatchCount(page, 'div.ion-page[data-pageid="tab-lifecycle-home"]');
+
+    await page.locator('#go-back-to-tabs').click();
+    await ionPageVisible(page, 'tab-lifecycle-home');
+
+    expect(await peakHomePages()).toBe(1);
   });
 });

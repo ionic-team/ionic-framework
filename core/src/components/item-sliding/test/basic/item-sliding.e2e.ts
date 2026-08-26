@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+import type { E2EPage } from '@utils/test/playwright';
 import { configs, dragElementBy, test } from '@utils/test/playwright';
 
 /**
@@ -187,6 +188,79 @@ configs().forEach(({ title, screenshot, config }) => {
 
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-safe-area-right`));
       });
+    });
+  });
+});
+
+/**
+ * ion-item-sliding reads `side` off each ion-item-options to decide which way the item
+ * can open. Frameworks that assign element props after inserting the element haven't set
+ * it while `connectedCallback` runs.
+ *
+ * The shared harness page is used because it loads the custom elements build, which is
+ * where that ordering applies.
+ *
+ * This behavior does not vary across modes or directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('item-sliding: basic'), () => {
+    const openStartOptions = async (page: E2EPage, lateProps: boolean) => {
+      await page.goto('/src/utils/test/late-props', config);
+      await page.waitForFunction(() => (window as any).harnessReady === true);
+
+      await page.evaluate(
+        (late: boolean) =>
+          (window as any).mountLateProps(
+            ['ion-content', 'ion-list', 'ion-item', 'ion-item-sliding', 'ion-item-options', 'ion-item-option'],
+            {
+              tag: 'ion-content',
+              children: [
+                {
+                  tag: 'ion-list',
+                  children: [
+                    {
+                      tag: 'ion-item-sliding',
+                      children: [
+                        { tag: 'ion-item', children: [{ tag: 'p', children: ['No label'] }] },
+                        {
+                          // Passing `side` as a prop lets `lateProps` control when it can be read.
+                          tag: 'ion-item-options',
+                          props: { side: 'start' },
+                          children: [{ tag: 'ion-item-option', children: ['Favorite'] }],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            late
+          ),
+        lateProps
+      );
+      await page.waitForChanges();
+
+      const slidingItem = page.locator('ion-item-sliding');
+
+      // A positive drag pulls the item to the right, revealing the start options.
+      await dragElementBy(slidingItem, page, 150);
+      await page.waitForChanges();
+
+      await expect(slidingItem).toHaveClass(/item-sliding-active-options-start/);
+      await expect(page.locator('ion-item-options')).toBeVisible();
+    };
+
+    test('should open the start options when side is assigned before connecting', async ({ page }) => {
+      await openStartOptions(page, false);
+    });
+
+    test('should open the start options when side is assigned after connecting', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31388',
+      });
+
+      await openStartOptions(page, true);
     });
   });
 });
