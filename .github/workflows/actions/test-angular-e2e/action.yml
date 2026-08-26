@@ -44,3 +44,11 @@ runs:
       run: npm run test
       shell: bash
       working-directory: ./packages/angular/test/build/${{ inputs.app }}
+    - name: 🔧 Migrate to per-component standalone imports
+      run: node ../../../scripts/migrate-per-component-imports.js
+      shell: bash
+      working-directory: ./packages/angular/test/build/${{ inputs.app }}
+    - name: 🧪 Run Tests
+      run: npm run test
+      shell: bash
+      working-directory: ./packages/angular/test/build/${{ inputs.app }}

@@ -16,9 +16,9 @@ const KNOWN_EXCLUDED_COMPONENTS = [
   'ion-select-popover',
   'ion-slides',
 ];
-const KNOWN_NON_CORE_ION_COMPONENTS  = [
-  'ion-modal-token'
-]
+const KNOWN_NON_CORE_ION_COMPONENTS = [
+  'ion-modal-token',
+];
 
 function getComponentsFromCore() {
   const componentsList = fs.readdirSync(CORE_COMPONENTS_DIR, { withFileTypes: true })

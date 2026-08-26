@@ -40,7 +40,7 @@
     "test": "npm run test.schematics && npm run test.code-split",
     "test.code-split": "node ./scripts/test-code-split.js",
     "test.schematics": "node ./scripts/verify-schematics.js",
-    "validate": "npm i && npm run lint && npm run test && npm run build",
+    "validate": "npm i && npm run lint && npm run build && npm run test && npm run validate.package",
     "validate.package": "node scripts/verify-exports.js"
   },
   "exports": {

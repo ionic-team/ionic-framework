@@ -7,6 +7,9 @@ const packageRootDir = path.join(__dirname, '..');
 const testDir = path.join(packageRootDir, testName);
 
 try {
+  // Delete old packages
+  fs.removeSync(`*.tgz`);
+
   // Pack ionic-angular
   execSync(`npm pack`, {cwd: packageRootDir});
 
@@ -15,6 +18,9 @@ try {
 
   // Install ionic-angular package
   execSync(`npx ng add --skip-confirmation ../ionic-angular-*`, {cwd: testDir});
+
+  // Run build
+  execSync(`npm run build`, {cwd: testDir});
 } catch(error) {
   console.log(error);
   process.exitCode = 1;
