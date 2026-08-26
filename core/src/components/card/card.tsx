@@ -1,8 +1,8 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes, AttributeWatcher } from '@utils/helpers';
-import { inheritAttributes, watchAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
+import { inheritAttributes, watchForAriaAttributeChanges, type AttributeWatcher } from '@utils/helpers';
 import { createColorClasses, openURL } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -24,6 +24,7 @@ import type { RouterDirection } from '../router/utils/interface';
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
   private inheritedAriaAttributes: Attributes = {};
+  private didLoad = false;
   private ariaWatcher?: AttributeWatcher;
 
   @Element() el!: HTMLElement;
@@ -93,15 +94,34 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   connectedCallback() {
-    this.ariaWatcher = watchAttributes(this.el, ['aria-label'], (changed) => {
-      this.inheritedAriaAttributes = { ...this.inheritedAriaAttributes, ...changed };
-      forceUpdate(this);
-    });
+    // Only run the initial snapshot once. On subsequent reconnects the
+    // host has already been stripped, so inheritAriaAttributes would
+    // return {} and overwrite previously captured values.
+
+    if (this.didLoad) {
+      this.startAriaWatcher();
+    }
+  }
+
+  componentDidLoad() {
+    this.didLoad = true;
+    this.startAriaWatcher();
   }
 
   disconnectedCallback() {
     this.ariaWatcher?.destroy();
     this.ariaWatcher = undefined;
+  }
+
+  private startAriaWatcher() {
+    this.ariaWatcher = watchForAriaAttributeChanges(
+      this.el,
+      (changed) => {
+        this.inheritedAriaAttributes = { ...this.inheritedAriaAttributes, ...changed };
+        forceUpdate(this);
+      },
+      ['aria-disabled']
+    );
   }
 
   private isClickable(): boolean {

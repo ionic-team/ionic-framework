@@ -40,6 +40,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
+  private didLoad = false;
   private ariaWatcher?: AttributeWatcher;
 
   @Element() el!: HTMLElement;
@@ -205,24 +206,30 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inToolbar = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   connectedCallback() {
-    /**
-     * Must run before watchForAriaAttributeChanges: it calls removeAttribute
-     * internally to strip the host's initial values, and that call must
-     * happen before removeAttribute is patched below — otherwise this
-     * strip would itself be treated as an external removal.
-     */
-    this.inheritedAttributes = inheritAriaAttributes(this.el, ['aria-disabled']);
+    // Only run the initial snapshot once. On subsequent reconnects the
+    // host has already been stripped, so inheritAriaAttributes would
+    // return {} and overwrite previously captured values.
 
-    /**
-     * Keeps inherited ARIA attributes in sync with the host element for the
-     * lifetime of the component, not just at initial load. `aria-disabled` is excluded here
-     * (and from the initial inheritAriaAttributes call above) because button.tsx sets
-     * it itself on Host based on the `disabled` prop.
-     */
+    if (this.didLoad) {
+      this.startAriaWatcher();
+    }
+  }
 
+  componentDidLoad() {
+    this.didLoad = true;
+    this.startAriaWatcher();
+  }
+
+  disconnectedCallback() {
+    this.ariaWatcher?.destroy();
+    this.ariaWatcher = undefined;
+  }
+
+  private startAriaWatcher() {
     this.ariaWatcher = watchForAriaAttributeChanges(
       this.el,
       (changed) => {
@@ -231,11 +238,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       },
       ['aria-disabled']
     );
-  }
-
-  disconnectedCallback() {
-    this.ariaWatcher?.destroy();
-    this.ariaWatcher = undefined;
   }
 
   private get hasIconOnly() {
