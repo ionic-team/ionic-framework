@@ -48,55 +48,7 @@ export const createIonRouter = (
       failure?: NavigationFailure | void
     ) => {
       if (failure) {
-        /**
-         * State staged for a navigation that failed describes something that
-         * did not happen. handleHistoryChange normally consumes it, but it does
-         * not run when the navigation fails, so it has to be cleared here or
-         * the next navigation picks it up instead.
-         *
-         * A delta is only staged for a history navigation, and a stale one
-         * makes the next navigation look like traversal, which stops the
-         * incoming route from being added. Route params are staged by any of
-         * the navigation helpers, and a stale set carries a pop action into
-         * whatever runs next. Only handleNavigateBack stages the previous
-         * route's id alongside them.
-         *
-         * Only clear state that belongs to this navigation, and check the two
-         * slots separately. Another navigation can replace this one and stage
-         * its own state first, in which case clearing would strip that state
-         * from the navigation still running.
-         *
-         * Params staged without a target fall back to the delta's target.
-         * Those come from the helpers that hand off to history, so a delta is
-         * always recorded for them.
-         *
-         * This only covers navigations that fail. A guard that returns a
-         * location redirects rather than fails, so afterEach is never called
-         * for the original navigation and its staged state reaches the redirect
-         * target instead.
-         */
-        const deltaIsForThisNavigation =
-          currentNavigationInfo.to === undefined ||
-          currentNavigationInfo.to === to.fullPath;
-
-        const paramsAreForThisNavigation =
-          incomingRouteParamsTo === undefined
-            ? deltaIsForThisNavigation
-            : incomingRouteParamsTo === to.fullPath;
-
-        if (deltaIsForThisNavigation) {
-          currentNavigationInfo = {
-            direction: undefined,
-            action: undefined,
-            delta: undefined,
-            to: undefined,
-          };
-        }
-
-        if (paramsAreForThisNavigation) {
-          incomingRouteParams = undefined;
-          incomingRouteParamsTo = undefined;
-        }
+        discardStagedStateFor(to);
 
         return;
       }
@@ -125,6 +77,21 @@ export const createIonRouter = (
       };
     }
   );
+
+  /**
+   * A guard that throws, including an await on a session check that rejects,
+   * never reaches afterEach. vue-router rejects the navigation promise
+   * instead, so there is no failure to inspect there and the staged state
+   * would survive. This does not handle the error, so navigation outcomes are
+   * unchanged.
+   *
+   * A guard that returns a location is still not covered, because that
+   * redirects rather than fails and afterEach is never called for the original
+   * navigation.
+   */
+  router.onError((_error: unknown, to: RouteLocationNormalized) => {
+    discardStagedStateFor(to);
+  });
 
   const locationHistory = createLocationHistory();
 
@@ -160,6 +127,49 @@ export const createIonRouter = (
   const stageRouteParams = (params: RouteParams, to?: RouteLocationRaw) => {
     incomingRouteParams = params;
     incomingRouteParamsTo = to ? router.resolve(to).fullPath : undefined;
+  };
+
+  /**
+   * State staged for a navigation that did not complete describes something
+   * that did not happen. handleHistoryChange normally consumes it, but it does
+   * not run for a navigation that failed, so it has to be discarded here or
+   * the next navigation picks it up instead.
+   *
+   * A delta is only staged for a history navigation, and a stale one makes the
+   * next navigation look like traversal, which stops the incoming route from
+   * being added. A stale set of params carries an action, a direction and
+   * sometimes a tab or a previous route's id into whatever runs next.
+   *
+   * Only discard state belonging to this navigation, and check the two slots
+   * separately. Another navigation can replace this one and stage its own
+   * state first, in which case discarding would strip that state from the
+   * navigation still running. Params staged without a target fall back to the
+   * delta's target, which history always records for the helpers that omit
+   * one.
+   */
+  const discardStagedStateFor = (to: RouteLocationNormalized) => {
+    const deltaIsForThisNavigation =
+      currentNavigationInfo.to === undefined ||
+      currentNavigationInfo.to === to.fullPath;
+
+    const paramsAreForThisNavigation =
+      incomingRouteParamsTo === undefined
+        ? deltaIsForThisNavigation
+        : incomingRouteParamsTo === to.fullPath;
+
+    if (deltaIsForThisNavigation) {
+      currentNavigationInfo = {
+        direction: undefined,
+        action: undefined,
+        delta: undefined,
+        to: undefined,
+      };
+    }
+
+    if (paramsAreForThisNavigation) {
+      incomingRouteParams = undefined;
+      incomingRouteParamsTo = undefined;
+    }
   };
 
   const historyChangeListeners: any[] = [];

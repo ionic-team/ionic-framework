@@ -1233,6 +1233,79 @@ describe('Routing', () => {
     expect(viewStack(wrapper)).toEqual([{ id: 'login', hidden: false }]);
   });
 
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should show the correct view after a guard rejects instead of returning false', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Profile = createPage('profile');
+    const Settings = createPage('settings');
+
+    let sessionValid = true;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/profile', component: Profile },
+        { path: '/settings', component: Settings }
+      ]
+    });
+
+    /*
+     * A session check that rejects rather than returning false. vue-router
+     * rejects the navigation promise for this, so afterEach never runs and the
+     * staged state has to be discarded through onError instead.
+     */
+    router.beforeEach(async (to, from) => {
+      if (from.path === '/profile' && to.path !== '/profile' && !sessionValid) {
+        await Promise.reject(new Error('session check failed'));
+      }
+
+      return true;
+    });
+
+    // Stands in for an app that handles its own navigation errors.
+    router.onError(() => {});
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/profile');
+    await waitForRouter();
+
+    // Going back rejects inside the guard.
+    sessionValid = false;
+    router.back();
+    await waitForRouter();
+
+    sessionValid = true;
+    router.push('/settings');
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/settings',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'settings', hidden: false }
+    ]);
+  });
+
   // Guards against clearing params that belong to another navigation still in flight.
   it('should keep the tab params of a tab change that replaced a cancelled push', async () => {
     let navManager: any;
