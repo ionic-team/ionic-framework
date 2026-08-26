@@ -224,26 +224,26 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       );
 
       const host = page.locator('ion-item');
-      const nativeButton = host.locator('[part="native"]');
+      const nativeItem = host.locator('[part="native"]');
 
       // Initial inheritance moves the value from the host to the native button.
       await expect(host).not.toHaveAttribute('aria-label');
-      await expect(nativeButton).toHaveAttribute('aria-label', 'initial');
+      await expect(nativeItem).toHaveAttribute('aria-label', 'initial');
 
       // Post-load writes remain on the host and are synchronized to native
       await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
       await expect(host).toHaveAttribute('aria-label');
-      await expect(nativeButton).toHaveAttribute('aria-label', 'second');
+      await expect(nativeItem).toHaveAttribute('aria-label', 'second');
 
       // An empty string is a valid ARIA attribute value and remains synchronized.
       await host.evaluate((el) => el.setAttribute('aria-label', ''));
       await expect(host).toHaveAttribute('aria-label');
-      await expect(nativeButton).toHaveAttribute('aria-label', '');
+      await expect(nativeItem).toHaveAttribute('aria-label', '');
 
       // Native MutationObserver behavior sees a real removal after a post-load write.
       await host.evaluate((el) => el.removeAttribute('aria-label'));
       await expect(host).not.toHaveAttribute('aria-label');
-      await expect(nativeButton).not.toHaveAttribute('aria-label');
+      await expect(nativeItem).not.toHaveAttribute('aria-label');
     });
   });
 });

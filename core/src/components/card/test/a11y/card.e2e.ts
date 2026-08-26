@@ -49,13 +49,13 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       );
 
       const host = page.locator('ion-card');
-      const nativeItem = host.locator('[part="native"]');
+      const nativeCard = host.locator('[part="native"]');
 
-      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
+      await expect(nativeCard).toHaveAttribute('aria-label', 'label');
 
       await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
 
-      await expect(nativeItem).toHaveAttribute('aria-label', 'updated');
+      await expect(nativeCard).toHaveAttribute('aria-label', 'updated');
     });
 
     test('preserves inherited aria-label after detach and reattach', async ({ page }) => {
@@ -74,9 +74,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       );
 
       const host = page.locator('ion-card');
-      const nativeItem = host.locator('[part="native"]');
+      const nativeCard = host.locator('[part="native"]');
 
-      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
+      await expect(nativeCard).toHaveAttribute('aria-label', 'label');
 
       // Detach, reattach, and force a render via a prop change.
       await host.evaluate((itemEl) => {
@@ -87,7 +87,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       });
 
       // Assert the original value survived
-      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
+      await expect(nativeCard).toHaveAttribute('aria-label', 'label');
     });
 
     test('syncs aria-label updates and removal after initial inheritance', async ({ page }) => {
@@ -103,26 +103,26 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       );
 
       const host = page.locator('ion-card');
-      const nativeButton = host.locator('[part="native"]');
+      const nativeCard = host.locator('[part="native"]');
 
       // Initial inheritance moves the value from the host to the native button.
       await expect(host).not.toHaveAttribute('aria-label');
-      await expect(nativeButton).toHaveAttribute('aria-label', 'initial');
+      await expect(nativeCard).toHaveAttribute('aria-label', 'initial');
 
       // Post-load writes remain on the host and are synchronized to native
       await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
       await expect(host).toHaveAttribute('aria-label');
-      await expect(nativeButton).toHaveAttribute('aria-label', 'second');
+      await expect(nativeCard).toHaveAttribute('aria-label', 'second');
 
       // An empty string is a valid ARIA attribute value and remains synchronized.
       await host.evaluate((el) => el.setAttribute('aria-label', ''));
       await expect(host).toHaveAttribute('aria-label');
-      await expect(nativeButton).toHaveAttribute('aria-label', '');
+      await expect(nativeCard).toHaveAttribute('aria-label', '');
 
       // Native MutationObserver behavior sees a real removal after a post-load write.
       await host.evaluate((el) => el.removeAttribute('aria-label'));
       await expect(host).not.toHaveAttribute('aria-label');
-      await expect(nativeButton).not.toHaveAttribute('aria-label');
+      await expect(nativeCard).not.toHaveAttribute('aria-label');
     });
   });
 });
