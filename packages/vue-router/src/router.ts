@@ -120,13 +120,29 @@ export const createIonRouter = (
   let incomingRouteParamsTo: string | undefined;
 
   /**
+   * `resolve` encodes a query differently depending on whether it was handed a
+   * string or an object, so a space in a value survives the string form and
+   * becomes a plus in the object form. The location `afterEach` reports always
+   * uses the object form, so resolve a second time to normalize it.
+   */
+  const resolveFullPath = (to: RouteLocationRaw) => {
+    const resolved = router.resolve(to);
+
+    return router.resolve({
+      path: resolved.path,
+      query: resolved.query,
+      hash: resolved.hash,
+    }).fullPath;
+  };
+
+  /**
    * The only place that stages route params, so the recorded location can
    * never be left over from an earlier navigation. Pass the target when it is
    * known, and omit it to fall back to the delta.
    */
   const stageRouteParams = (params: RouteParams, to?: RouteLocationRaw) => {
     incomingRouteParams = params;
-    incomingRouteParamsTo = to ? router.resolve(to).fullPath : undefined;
+    incomingRouteParamsTo = to ? resolveFullPath(to) : undefined;
   };
 
   /**
@@ -146,6 +162,13 @@ export const createIonRouter = (
    * navigation still running. Params staged without a target fall back to the
    * delta's target, which history always records for the helpers that omit
    * one.
+   *
+   * The params were staged from what the caller asked for, so a `redirect:`
+   * record leaves them recorded against the location before the redirect while
+   * `afterEach` reports the one after it. `redirectedFrom` is what the two have
+   * in common. The delta needs no such allowance, since history records the
+   * location the browser actually moved to, which is already the redirected
+   * one.
    */
   const discardStagedStateFor = (to: RouteLocationNormalized) => {
     const deltaIsForThisNavigation =
@@ -155,7 +178,8 @@ export const createIonRouter = (
     const paramsAreForThisNavigation =
       incomingRouteParamsTo === undefined
         ? deltaIsForThisNavigation
-        : incomingRouteParamsTo === to.fullPath;
+        : incomingRouteParamsTo === to.fullPath ||
+          incomingRouteParamsTo === to.redirectedFrom?.fullPath;
 
     if (deltaIsForThisNavigation) {
       currentNavigationInfo = {

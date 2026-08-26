@@ -1300,6 +1300,141 @@ describe('Routing', () => {
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should discard the staged params when the blocked route redirects', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Tab = createPage('tab');
+    const Other = createPage('other');
+
+    let blocking = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/tabs', redirect: '/tabs/tab' },
+        { path: '/tabs/tab', component: Tab },
+        { path: '/other', component: Other }
+      ]
+    });
+
+    router.beforeEach((to) => {
+      if (blocking && to.path === '/tabs/tab') {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /*
+     * The params are staged against the location the caller asked for, so a
+     * `redirect:` record leaves them recorded against `/tabs` while afterEach
+     * reports `/tabs/tab`. Without matching on the location before the
+     * redirect the two never line up, so the root replace survives and clears
+     * the history the next navigation should have kept.
+     */
+    blocking = true;
+    navManager.handleNavigate('/tabs', 'replace', 'root');
+    await waitForRouter();
+
+    router.push('/other');
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/other',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'other', hidden: false }
+    ]);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should discard the staged params when the blocked href has a spaced query', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Search = createPage('search');
+    const Other = createPage('other');
+
+    let blocking = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/search', component: Search },
+        { path: '/other', component: Other }
+      ]
+    });
+
+    router.beforeEach((to) => {
+      if (blocking && to.path === '/search') {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /*
+     * A back button falling through to its default href hands the href along
+     * as a string, and resolving a string leaves the space in the query alone
+     * while afterEach reports it as a plus. Without normalizing the two the
+     * pop/back params survive the block and turn the next push into a
+     * backwards navigation.
+     */
+    blocking = true;
+    navManager.handleNavigate('/search?q=hello world', 'pop', 'back');
+    await waitForRouter();
+
+    router.push('/other');
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/other',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'other', hidden: false }
+    ]);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should show the correct view after a guard rejects instead of returning false', async () => {
     let navManager: any;
 
