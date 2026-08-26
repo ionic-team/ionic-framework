@@ -66,9 +66,9 @@ export const createIonRouter = (
          * its own state first, in which case clearing would strip that state
          * from the navigation still running.
          *
-         * The back and forward helpers cannot record a target, so params they
-         * staged fall back to the delta's target. Those are the helpers that
-         * hand off to history, so a delta is always recorded for them.
+         * Params staged without a target fall back to the delta's target.
+         * Those come from the helpers that hand off to history, so a delta is
+         * always recorded for them.
          *
          * This only covers navigations that fail. A guard that returns a
          * location redirects rather than fails, so afterEach is never called
@@ -144,12 +144,23 @@ export const createIonRouter = (
    */
   let incomingRouteParams: RouteParams | undefined;
   /**
-   * The location the staged params were meant for, when the helper that staged
-   * them knew it. Kept beside the params rather than on them so it is never
-   * spread onto a RouteInfo. Left undefined by the back and forward helpers,
-   * which hand off to history and cannot know the target yet.
+   * The location the staged params were meant for. Kept beside the params
+   * rather than on them so it is never spread onto a RouteInfo. Left undefined
+   * by the helpers that hand off to history and so cannot know the target yet,
+   * which is `goBack`, `goForward` and `handleNavigateBack`. Those fall back to
+   * the delta's target, which history always records for them.
    */
   let incomingRouteParamsTo: string | undefined;
+
+  /**
+   * The only place that stages route params, so the recorded location can
+   * never be left over from an earlier navigation. Pass the target when it is
+   * known, and omit it to fall back to the delta.
+   */
+  const stageRouteParams = (params: RouteParams, to?: RouteLocationRaw) => {
+    incomingRouteParams = params;
+    incomingRouteParamsTo = to ? router.resolve(to).fullPath : undefined;
+  };
 
   const historyChangeListeners: any[] = [];
 
@@ -209,12 +220,12 @@ export const createIonRouter = (
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
-        incomingRouteParams = {
+        stageRouteParams({
           ...prevInfo,
           routerAction: "pop",
           routerDirection: "back",
           routerAnimation: routerAnimation || routeInfo.routerAnimation,
-        };
+        });
         if (
           routeInfo.lastPathname === routeInfo.pushedByRoute ||
           /**
@@ -746,13 +757,6 @@ export const createIonRouter = (
     const hrefSearch = search ? `?${search}` : "";
 
     if (routeInfo) {
-      incomingRouteParams = {
-        ...incomingRouteParams,
-        routerAction: "push",
-        routerDirection: "none",
-        tab,
-      };
-
       /**
        * When going back to a tab
        * you just left, it's possible
@@ -765,15 +769,23 @@ export const createIonRouter = (
        * are honored when re-selecting the tab.
        */
       const effectiveSearch = hrefSearch || routeInfo.search || "";
-      const push = {
+      const target = {
+        path: routeInfo.pathname === pathname ? routeInfo.pathname : pathname,
         query: parseQuery(effectiveSearch),
         ...(hrefHash ? { hash: hrefHash } : {}),
       };
-      if (routeInfo.pathname === pathname) {
-        router.push({ path: routeInfo.pathname, ...push });
-      } else {
-        router.push({ path: pathname, ...push });
-      }
+
+      stageRouteParams(
+        {
+          ...incomingRouteParams,
+          routerAction: "push",
+          routerDirection: "none",
+          tab,
+        },
+        target
+      );
+
+      router.push(target);
     } else {
       handleNavigate(
         pathname + hrefSearch + hrefHash,
@@ -874,14 +886,15 @@ export const createIonRouter = (
     tab?: string,
     to?: RouteLocationRaw
   ) => {
-    incomingRouteParams = {
-      routerAction,
-      routerDirection,
-      routerAnimation,
-      tab,
-    };
-
-    incomingRouteParamsTo = to ? router.resolve(to).fullPath : undefined;
+    stageRouteParams(
+      {
+        routerAction,
+        routerDirection,
+        routerAnimation,
+        tab,
+      },
+      to
+    );
   };
 
   const goBack = (routerAnimation?: AnimationBuilder) => {

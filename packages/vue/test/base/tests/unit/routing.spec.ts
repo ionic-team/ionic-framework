@@ -1233,6 +1233,80 @@ describe('Routing', () => {
     expect(viewStack(wrapper)).toEqual([{ id: 'login', hidden: false }]);
   });
 
+  // Guards against clearing params that belong to another navigation still in flight.
+  it('should keep the tab params of a tab change that replaced a cancelled push', async () => {
+    let navManager: any;
+
+    const TabOne = {
+      ...createPage('tabone'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const TabTwo = createPage('tabtwo');
+    const Details = createPage('details');
+
+    let guardDelay = 0;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/tabs/tab1' },
+        { path: '/tabs/tab1', component: TabOne },
+        { path: '/tabs/tab2', component: TabTwo },
+        { path: '/details', component: Details }
+      ]
+    });
+
+    // A global async guard, the session check kind.
+    router.beforeEach(async () => {
+      if (guardDelay) {
+        await new Promise((resolve) => setTimeout(resolve, guardDelay));
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /*
+     * Both tabs need a routeInfo before changeTab will stage params itself
+     * rather than delegating to handleNavigate.
+     */
+    navManager.changeTab('tab1', '/tabs/tab1');
+    await waitForRouter();
+    navManager.changeTab('tab2', '/tabs/tab2');
+    await waitForRouter();
+    navManager.changeTab('tab1', '/tabs/tab1');
+    await waitForRouter();
+
+    guardDelay = 400;
+
+    /*
+     * Tapping a link and then Tab 2 before the first one finishes. The push
+     * is cancelled, and its params used to be cleared along with the tab's,
+     * which cost the tab its direction and its tab name.
+     */
+    navManager.handleNavigate('/details', 'push', 'forward');
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    navManager.changeTab('tab2', '/tabs/tab2');
+    await new Promise((resolve) => setTimeout(resolve, 1200));
+
+    const routeInfo = navManager.getCurrentRouteInfo();
+
+    expect(routeInfo.pathname).toEqual('/tabs/tab2');
+    expect(routeInfo.routerDirection).toEqual('none');
+    expect(routeInfo.tab).toEqual('tab2');
+    // Losing the tab takes the pushed branch, which borrows the previous tab.
+    expect(routeInfo.pushedByRoute).toEqual(undefined);
+  });
+
   // Guards against clearing a delta that belongs to another navigation still in flight.
   it('should keep the delta of a back navigation that replaced a cancelled one', async () => {
     let navManager: any;
