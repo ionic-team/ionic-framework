@@ -1234,6 +1234,72 @@ describe('Routing', () => {
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should not apply the params of a blocked replace to the next navigation', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Blocked = createPage('blocked');
+    const Other = createPage('other');
+
+    let blocking = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/blocked', component: Blocked },
+        { path: '/other', component: Other }
+      ]
+    });
+
+    router.beforeEach((to) => {
+      if (blocking && to.path === '/blocked') {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /*
+     * A root replace stages its own params and records where they were meant
+     * for, then the guard blocks it. Leaving those behind hands a root replace
+     * to the next navigation, which clears the history it should have kept.
+     */
+    blocking = true;
+    navManager.handleNavigate('/blocked', 'replace', 'root');
+    await waitForRouter();
+
+    router.push('/other');
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/other',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+
+    // A leaked root replace clears the history, which would drop Home.
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'other', hidden: false }
+    ]);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
   it('should show the correct view after a guard rejects instead of returning false', async () => {
     let navManager: any;
 
