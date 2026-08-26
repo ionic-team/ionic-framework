@@ -185,18 +185,21 @@ echo "--- Step 3: Building Framework Test Apps ---"
 
 # Find the best available app version for a given package.
 # Scans the apps/ directory and picks the newest version (reverse version sort).
+# An optional ERE in $2 filters the candidates, so variant apps can be excluded.
 pick_app() {
   local apps_dir="$1/apps"
+  local filter="${2:-.}"
   [ -d "${apps_dir}" ] || return 1
   local app
-  app=$(ls -1d "${apps_dir}"/*/ 2>/dev/null | xargs -n1 basename | sort -V -r | head -1)
+  app=$(ls -1d "${apps_dir}"/*/ 2>/dev/null | xargs -n1 basename | grep -E "${filter}" | sort -V -r | head -1)
   [ -n "${app}" ] && echo "${app}" && return 0
   return 1
 }
 
 build_angular_test() {
+  # Plain ngNN only, since ng22-zone sorts above ng22 and isn't a newer Angular.
   local APP
-  APP=$(pick_app "${REPO_ROOT}/packages/angular/test") || {
+  APP=$(pick_app "${REPO_ROOT}/packages/angular/test" '^ng[0-9]+$') || {
     echo "[angular] No test app found, skipping."
     return 0
   }

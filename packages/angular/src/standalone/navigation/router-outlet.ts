@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   ViewChild,
   ViewContainerRef,
   Component,
@@ -18,8 +19,12 @@ import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js
 })
 @Component({
   selector: 'ion-router-outlet',
-  standalone: true,
+  // Routed pages are created inside this component's own view, so an OnPush
+  // outlet would leave them unreachable from a tick under Zone.js (#31406).
+  // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
+  changeDetection: ChangeDetectionStrategy.Default,
   template: '<ng-container #outletContent><ng-content></ng-content></ng-container>',
+  standalone: true,
 })
 export class IonRouterOutlet extends IonRouterOutletBase {
   /**

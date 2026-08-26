@@ -1,4 +1,4 @@
-import { Component, ContentChild, ContentChildren, ViewChild, QueryList } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ViewChild, QueryList } from '@angular/core';
 import { IonTabs as IonTabsBase } from '@ionic/angular/common';
 
 import { IonTabBar, IonTab } from '../proxies';
@@ -8,6 +8,10 @@ import { IonRouterOutlet } from './ion-router-outlet';
 @Component({
   standalone: false,
   selector: 'ion-tabs',
+  // Renders the ion-router-outlet its tab pages are created into, so an OnPush
+  // strategy here would stop change detection reaching them (#31406).
+  // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
+  changeDetection: ChangeDetectionStrategy.Default,
   template: `
     <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner" #tabsInner>

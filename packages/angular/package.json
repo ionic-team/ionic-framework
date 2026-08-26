@@ -24,10 +24,11 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "build": "npm run clean && npm run build.ng && npm run build.css && npm run build.schematics && npm run validate.package",
+    "build": "npm run clean && npm run build.ng && npm run build.change-detection && npm run build.css && npm run build.schematics && npm run validate.package && npm run validate.change-detection",
     "build.css": "node scripts/build-css.js",
     "build.schematics": "node scripts/build-schematics.js",
     "build.ng": "ngc",
+    "build.change-detection": "node scripts/normalize-change-detection.js",
     "clean": "node scripts/clean.js",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix",
@@ -39,7 +40,8 @@
     "local.sync.and.pack": "./scripts/sync-and-pack.sh",
     "test": "echo 'angular no tests yet'",
     "validate": "npm i && npm run lint && npm run test && npm run build",
-    "validate.package": "node scripts/verify-exports.js"
+    "validate.package": "node scripts/verify-exports.js",
+    "validate.change-detection": "node scripts/verify-change-detection.js"
   },
   "exports": {
     "./package.json": "./package.json",

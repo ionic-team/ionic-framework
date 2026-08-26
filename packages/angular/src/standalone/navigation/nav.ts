@@ -1,4 +1,12 @@
-import { Component, ElementRef, Injector, EnvironmentInjector, NgZone, ChangeDetectorRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Injector,
+  EnvironmentInjector,
+  NgZone,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { IonNav as IonNavBase, ProxyCmp, AngularDelegate } from '@ionic/angular/common';
 import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
 
@@ -7,6 +15,7 @@ import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
 })
 @Component({
   selector: 'ion-nav',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   standalone: true,
 })

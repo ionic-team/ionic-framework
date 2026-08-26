@@ -136,3 +136,21 @@ Note: You may encounter some other peer dependency issues not covered by the Ang
 10. Open `./github/workflows/stencil-nightly.yml` and find the `test-angular-e2e` job.
 11. Repeat steps 8 and 9.
 12. Commit these changes and push.
+
+## Variant Test Apps
+
+Most apps in `apps/` pin a different Angular version. A variant app pins the same version as an existing app and changes how it's configured, so a combination that would otherwise go untested gets covered. The current example is `ng22-zone`: Angular 22 with Zone.js, the combination whose absence let [#31406](https://github.com/ionic-team/ionic-framework/issues/31406) ship.
+
+Adding one differs from adding a version app in three ways:
+
+1. **Name it `ng<NN>-<variant>`.** The Vercel preview app is picked in `core/scripts/vercel-build.sh` with the filter `'^ng[0-9]+$'`, so any suffixed name is excluded. The trap is a bare `ng<NN>` name: calling an Angular 22 variant `ng23` would match the filter and silently become the deployed preview.
+2. **Select change detection through providers, not polyfills.** Angular 22 bootstraps zoneless even when Zone.js is loaded, so the mode is chosen by `base/src/app/change-detection.providers.ts`, which both `app.module.ts` and `main-standalone.ts` spread. Override that file in the variant app. It's empty in `base/`, which leaves Angular's own default. Omit `src/polyfills.ts` if the variant needs base's `import 'zone.js'`.
+3. **Copy only what differs**, as with a version app, and add the directory to the `test-angular-e2e` matrix in both `.github/workflows/build.yml` and `.github/workflows/stencil-nightly.yml`.
+
+Shared pages under `base/` must keep passing in every mode, so use the `assertZoneContext()` helper from `base/src/app/zone-assert.util.ts` rather than asserting an Angular zone unconditionally.
+
+## Change Detection Is Build-Enforced
+
+Every `@Component` in `packages/angular/src` must declare `changeDetection` explicitly. What the Angular partial linker fills in for an undeclared strategy depends on two versions: the one stamped into our own emitted declaration, and the linker the consumer runs. An Angular 22 linker fills in `OnPush` when our declaration says 22 or later, while Angular 18-21 linkers always fill in `Default`. So bumping *our* toolchain to Angular 22 is enough to flip every Angular 22 consumer, which is how `ion-router-outlet` and `ion-tabs` stopped letting change detection reach routed pages in [#31406](https://github.com/ionic-team/ionic-framework/issues/31406).
+
+Running `npm run build` in `packages/angular` fails if any component omits the strategy. Use `OnPush` unless the component creates routed pages inside its own view.
