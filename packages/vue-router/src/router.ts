@@ -146,6 +146,15 @@ export const createIonRouter = (
   };
 
   /**
+   * The only place that clears them, so a target can never outlive the params
+   * it was recorded for and go on to match an unrelated navigation.
+   */
+  const clearStagedParams = () => {
+    incomingRouteParams = undefined;
+    incomingRouteParamsTo = undefined;
+  };
+
+  /**
    * State staged for a navigation that did not complete describes something
    * that did not happen. handleHistoryChange normally consumes it, but it does
    * not run for a navigation that failed, so it has to be discarded here or
@@ -191,8 +200,7 @@ export const createIonRouter = (
     }
 
     if (paramsAreForThisNavigation) {
-      incomingRouteParams = undefined;
-      incomingRouteParamsTo = undefined;
+      clearStagedParams();
     }
   };
 
@@ -334,8 +342,7 @@ export const createIonRouter = (
              * There is nowhere to navigate, so drop the params rather than
              * letting them leak into the next navigation.
              */
-            incomingRouteParams = undefined;
-            incomingRouteParamsTo = undefined;
+            clearStagedParams();
           }
         }
       } else if (defaultHref) {
@@ -704,8 +711,7 @@ export const createIonRouter = (
 
       currentRouteInfo = routeInfo;
     }
-    incomingRouteParams = undefined;
-    incomingRouteParamsTo = undefined;
+    clearStagedParams();
     historyChangeListeners.forEach((cb) => cb(currentRouteInfo));
   };
 
