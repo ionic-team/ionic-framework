@@ -40,6 +40,26 @@ declare module 'react' {
 
 type ChildFunction = (ionTabContext: IonTabsContextState) => React.ReactNode;
 
+const getRouterOutlet = (child: React.ReactNode): React.ReactElement | undefined => {
+  if (!React.isValidElement(child)) {
+    return undefined;
+  }
+
+  const candidate =
+    child.type === Fragment
+      ? React.Children.toArray((child.props as { children?: React.ReactNode }).children)[0]
+      : child;
+
+  if (
+    React.isValidElement(candidate) &&
+    (candidate.type === IonRouterOutlet || (candidate.type as any).isRouterOutlet)
+  ) {
+    return candidate;
+  }
+
+  return undefined;
+};
+
 interface Props extends LocalJSX.IonTabs {
   className?: string;
   children: React.ReactNode;
@@ -96,19 +116,12 @@ export class IonTabs extends React.Component<Props> {
     return (
       <IonTabsInner {...this.props}>
         {React.Children.map(children, (child: React.ReactNode) => {
-          if (React.isValidElement(child)) {
-            const isRouterOutlet =
-              child.type === IonRouterOutlet ||
-              (child.type as any).isRouterOutlet ||
-              (child.type === Fragment && child.props.children[0].type === IonRouterOutlet);
-
-            if (isRouterOutlet) {
-              /**
-               * The modified outlet needs to be returned to include
-               * the ref.
-               */
-              return outlet;
-            }
+          if (getRouterOutlet(child)) {
+            /**
+             * The modified outlet needs to be returned to include
+             * the ref.
+             */
+            return outlet;
           }
           return child;
         })}
@@ -132,10 +145,9 @@ export class IonTabs extends React.Component<Props> {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
         return;
       }
-      if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
-        outlet = React.cloneElement(child);
-      } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
-        outlet = React.cloneElement(child.props.children[0]);
+      const routerOutlet = getRouterOutlet(child);
+      if (routerOutlet) {
+        outlet = React.cloneElement(routerOutlet);
       } else if (child.type === IonTab) {
         /**
          * This indicates that IonTabs will be using a basic tab-based navigation
