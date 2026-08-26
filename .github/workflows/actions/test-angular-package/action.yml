@@ -8,6 +8,11 @@ runs:
         node-version: 24.x
     - uses: ./.github/workflows/actions/download-archive
       with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
         name: ionic-angular
         path: ./packages/angular
         filename: AngularBuild.zip
