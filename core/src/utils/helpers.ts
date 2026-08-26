@@ -122,7 +122,7 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
  * Removed deprecated attributes.
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
  */
-export const ariaAttributes = [
+const ariaAttributes = [
   'role',
   'aria-activedescendant',
   'aria-atomic',
@@ -197,9 +197,8 @@ export interface AttributeWatcher {
 
 /**
  * Watches an element for changes to a given set of attributes and calls
- * onChange whenever one of them is set. Because inheritAttributes() strips
- * the attribute from the host as it reads it, any subsequent mutation is
- * just checked that the new value isn't null.
+ * onChange whenever one changes. Returns null when an attribute is removed.
+ * Call destroy() from disconnectedCallback to stop watching.
  */
 export const watchAttributes = (
   el: HTMLElement,
@@ -213,55 +212,32 @@ export const watchAttributes = (
     return { destroy: () => {} };
   }
 
-  // Keep a reference to the browser's original implementation.
-  // removeAttribute is patched below because MutationObserver cannot
-  // observe removeAttribute() calls once inheritAttributes() has
-  // already stripped the attribute from the host. In that case the
-  // browser performs no DOM mutation and emits no MutationRecord.
-  const originalRemoveAttribute = el.removeAttribute.bind(el);
-
-  // Set up mutation observer to observe attribute changes
   const observer = new MutationObserver((mutations) => {
-    const changed: { [k: string]: string } = {};
+    const changed: { [k: string]: string | null } = {};
+
     for (const mutation of mutations) {
       if (mutation.type !== 'attributes' || !mutation.attributeName) continue;
       const name = mutation.attributeName;
       if (!attributes.includes(name)) continue;
-      const value = el.getAttribute(name);
-      if (value === null) continue;
-      changed[name] = value;
+
+      // getAttribute returns null when the attribute was removed —
+      // passed through to onChange so consumers can clear the value
+      // from the native element.
+      changed[name] = el.getAttribute(name);
     }
+
     if (Object.keys(changed).length > 0) {
-      // Use the original implementation here. Calling the patched
-      // removeAttribute would recursively invoke onChange() with
-      // { [name]: null }, even though we are only stripping the host
-      // after synchronizing a new value.
-      Object.keys(changed).forEach((name) => originalRemoveAttribute(name));
       onChange(changed);
     }
   });
 
-  // Watch for attribute changes on this element
-  observer.observe(el, { attributes: true, attributeFilter: attributes });
+  observer.observe(el, {
+    attributes: true,
+    attributeFilter: attributes,
+    attributeOldValue: true,
+  });
 
-  // Intercept removeAttribute so we can notify consumers when an
-  // already-synced attribute is explicitly cleared.
-  el.removeAttribute = (name: string) => {
-    if (attributes.includes(name)) {
-      originalRemoveAttribute(name);
-      onChange({ [name]: null });
-      return;
-    }
-    originalRemoveAttribute(name);
-  };
-
-  // Stop watching. Call this from `disconnectedCallback`.
-  return {
-    destroy: () => {
-      observer.disconnect();
-      el.removeAttribute = originalRemoveAttribute;
-    },
-  };
+  return { destroy: () => observer.disconnect() };
 };
 
 /**
@@ -269,9 +245,8 @@ export const watchAttributes = (
  * a callback whenever one is set externally, so that inherited ARIA state
  * stays in sync for the lifetime of the component — not just at initial load.
  *
- * This should be called once in componentWillLoad, alongside the initial
- * call to inheritAriaAttributes, and the returned AttributeWatcher must be
- * disconnected in disconnectedCallback to avoid leaking the observer.
+ * Call this in connectedCallback, alongside the initial inheritAriaAttributes
+ * call, and call destroy() on the returned watcher in disconnectedCallback.
  */
 export const watchForAriaAttributeChanges = (
   el: HTMLElement,
