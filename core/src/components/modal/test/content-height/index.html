@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Content Height</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script>
+      /* Page two is taller than page one, to show the modal resize on navigation. */
+      class NavPageOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>Page One</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <p>Short first page.</p>
+              <ion-nav-link router-direction="forward" component="nav-page-two">
+                <ion-button id="go-page-two" expand="block">Go to Page Two</ion-button>
+              </ion-nav-link>
+            </ion-content>
+          `;
+        }
+      }
+
+      class NavPageTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
+                <ion-title>Page Two</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <div id="tall-block" style="height: 320px; background: #d0e6ff"></div>
+            </ion-content>
+          `;
+        }
+      }
+
+      class NavHost extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+            <ion-content>
+              <ion-nav root="nav-page-one"></ion-nav>
+            </ion-content>
+          `;
+        }
+      }
+
+      customElements.define('nav-page-one', NavPageOne);
+      customElements.define('nav-page-two', NavPageTwo);
+      customElements.define('nav-host', NavHost);
+    </script>
+
+    <style>
+      /* 
+       * Shared modal styles. Only the height differs 
+       * between the modal examples. 
+       */
+      ion-modal {
+        --width: fit-content;
+        --min-width: 250px;
+        --border-radius: 6px;
+        --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Each of these sizes the modal from its contents. */
+      ion-modal#fit-content-modal {
+        --height: fit-content;
+      }
+
+      ion-modal#auto-modal {
+        --height: auto;
+      }
+
+      ion-modal#min-content-modal {
+        --height: min-content;
+      }
+
+      ion-modal#max-content-modal {
+        --height: max-content;
+      }
+
+      /**
+       * Controls. A definite height is not content-sized, so `content-sizing`
+       * must not apply: the content fills the 300px and scrolls the overflow
+       * the way it always has.
+       */
+      ion-modal#px-modal {
+        --height: 300px;
+      }
+
+      /**
+       * Taller than the overlay. The default `--max-height: 100%` clamps this,
+       * where before it would run off screen.
+       */
+      ion-modal#px-tall-modal {
+        --height: 2000px;
+      }
+
+      /**
+       * Known gap: `part="content"` is the same element that `--height` sizes,
+       * so this collapses exactly like the others, but the height keyword is
+       * not readable from the custom property and is therefore not detected.
+       * Expect a modal displaying only a header here.
+       */
+      ion-modal#part-modal::part(content) {
+        height: fit-content;
+      }
+
+      /**
+       * A content-sized modal is clamped by the default `--max-height: 100%`,
+       * so a long list scrolls inside the overlay rather than running off
+       * screen.
+       */
+      ion-modal#long-modal {
+        --height: fit-content;
+      }
+
+      /* The same long list with a max height. */
+      ion-modal#long-max-height-modal {
+        --height: fit-content;
+        --max-height: 50%;
+      }
+
+      /**
+       * A content-sized modal containing an `ion-nav` must be handled 
+       * differently because a nav uses `position: absolute` by default.
+       */
+      ion-modal#nav-modal {
+        --height: fit-content;
+      }
+
+      /**
+       * No `ion-content` at all. This does not require any special handling,
+       * but we want to make sure it did not regress.
+       */
+      ion-modal#no-content-modal {
+        --height: fit-content;
+      }
+
+      ion-modal#no-content-modal h1 {
+        margin: 20px 20px 10px 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal - Content Height</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <ion-button id="open-fit-content" expand="block">--height: fit-content</ion-button>
+          <ion-button id="open-auto" expand="block">--height: auto</ion-button>
+          <ion-button id="open-min-content" expand="block">--height: min-content</ion-button>
+          <ion-button id="open-max-content" expand="block">--height: max-content</ion-button>
+          <ion-button id="open-default" expand="block" color="medium">default height</ion-button>
+          <ion-button id="open-px" expand="block" color="medium">--height: 300px</ion-button>
+          <ion-button id="open-px-tall" expand="block" color="medium">--height: 2000px (taller than screen)</ion-button>
+          <ion-button id="open-part" expand="block" color="danger">::part(content) (failing)</ion-button>
+          <ion-button id="open-long" expand="block" color="tertiary">--height: fit-content, overflowing</ion-button>
+          <ion-button id="open-long-max-height" expand="block" color="tertiary"
+            >--height: fit-content, overflowing, max height</ion-button
+          >
+          <ion-button id="open-nav" expand="block" color="tertiary">--height: fit-content, ion-nav</ion-button>
+          <ion-button id="open-no-content" expand="block" color="tertiary"
+            >--height: fit-content, no ion-content</ion-button
+          >
+
+          <ion-modal id="fit-content-modal" trigger="open-fit-content">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>fit-content</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="short" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-modal id="auto-modal" trigger="open-auto">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>auto</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="short" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-modal id="min-content-modal" trigger="open-min-content">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>min-content</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="short" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-modal id="max-content-modal" trigger="open-max-content">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>max-content</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="short" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <!-- Control: the default modal must fill the screen height. -->
+          <ion-modal id="default-modal" trigger="open-default">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>default height</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="short" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-modal id="px-modal" trigger="open-px">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>300px</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="long" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-modal id="px-tall-modal" trigger="open-px-tall">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>2000px</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="long" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-modal id="part-modal" trigger="open-part">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>::part(content)</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="short" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-modal id="long-modal" trigger="open-long">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>fit-content</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="long" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-modal id="long-max-height-modal" trigger="open-long-max-height">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>fit-content, max-height</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <div class="wrapper"><ion-list class="long" lines="none"></ion-list></div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-modal id="nav-modal" trigger="open-nav"></ion-modal>
+
+          <!-- A modal built without ion-content, sized entirely by its markup. -->
+          <ion-modal id="no-content-modal" trigger="open-no-content">
+            <div class="wrapper">
+              <h1>Modal header</h1>
+              <ion-list class="short" lines="none"></ion-list>
+            </div>
+          </ion-modal>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      function fillList(list, count) {
+        for (let i = 0; i < count; i++) {
+          const item = document.createElement('ion-item');
+          item.setAttribute('button', 'true');
+          item.setAttribute('detail', 'false');
+
+          const icon = document.createElement('ion-icon');
+          icon.setAttribute('name', 'person-circle');
+          icon.setAttribute('slot', 'start');
+
+          const label = document.createElement('ion-label');
+          label.textContent = `Item ${i + 1}`;
+
+          item.appendChild(icon);
+          item.appendChild(label);
+          list.appendChild(item);
+        }
+      }
+
+      /**
+       * Passing an element rather than a tag name reuses one nav host. With
+       * `component="nav-host"` the delegate creates another one on every
+       * present and never removes the last, so they pile up.
+       */
+      document.querySelector('ion-modal#nav-modal').component = document.createElement('nav-host');
+
+      document.querySelectorAll('ion-list.short').forEach((list) => fillList(list, 3));
+      document.querySelectorAll('ion-list.long').forEach((list) => fillList(list, 30));
+
+      // Selecting an item dismisses the modal it belongs to.
+      document.querySelectorAll('ion-modal').forEach((modal) => {
+        modal.addEventListener('click', (ev) => {
+          if (ev.target.closest('ion-item') !== null) {
+            modal.dismiss();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
