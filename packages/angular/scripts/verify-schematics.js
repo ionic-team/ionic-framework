@@ -8,7 +8,7 @@ const testDir = path.join(packageRootDir, testName);
 
 try {
   // Delete old packages
-  fs.removeSync(`*.tgz`);
+  execSync(`rm -f *.tgz`, {cwd: packageRootDir});
 
   // Pack ionic-angular
   execSync(`npm pack`, {cwd: packageRootDir});
@@ -27,3 +27,4 @@ try {
 }
 
 fs.removeSync(testDir);
+execSync(`rm -f *.tgz`, {cwd: packageRootDir});
