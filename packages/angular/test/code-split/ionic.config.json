@@ -1,7 +1,0 @@
-{
-  "name": "code-split",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
