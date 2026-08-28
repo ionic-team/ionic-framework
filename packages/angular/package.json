@@ -148,7 +148,7 @@
     "./config": "./dist/common/providers/config.js",
     "./platform": "./dist/common/providers/platform.js",
     "./nav-params": "./dist/common/directives/navigation/nav-params.js",
-    "./ion-modal-token": "./dist/common/providers/angular-delegate.js",
+    "./ion-modal-token": "./dist/standalone/providers/modal-token.js",
     "./ionic-route-strategy": "./dist/common/utils/routing.js",
     "./action-sheet-controller": "./dist/standalone/providers/action-sheet-controller.js",
     "./alert-controller": "./dist/standalone/providers/alert-controller.js",
