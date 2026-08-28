@@ -203,7 +203,44 @@ ion-modal > .ion-page {
 
   contain: layout style;
 
+  /**
+   * Override the minimum height a flex item gets, which defaults to 
+   * use the height of its own content. Without this, a modal sized 
+   * to its content clips its overflow instead of scrolling it.
+   */
+  min-height: 0;
+
   height: 100%;
+}
+
+/**
+ * Position the `ion-nav` and its page relatively when inside of an 
+ * `ion-content` that is sized to its content. This allows the `ion-nav` 
+ * to take its height from its page and size itself correctly. Without 
+ * this, the modal will not appear as the nav will be 0 height.
+ */
+ion-content.content-sizing ion-nav,
+ion-content.content-sizing ion-nav > .ion-page {
+  position: relative;
+
+  contain: layout style;
+
+  height: auto;
+}
+
+/**
+ * Place every page in the same grid cell so they overlap, while still 
+ * letting the nav take its height from the tallest of them. Without 
+ * this, a transition that has two pages in the tree at once would 
+ * render them one below the other.
+ */
+ion-content.content-sizing ion-nav {
+  display: grid;
+}
+
+ion-content.content-sizing ion-nav > .ion-page {
+  grid-row: 1;
+  grid-column: 1;
 }
 
 .split-pane-visible > .ion-page.split-pane-main {

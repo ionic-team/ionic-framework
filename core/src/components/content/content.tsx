@@ -310,6 +310,26 @@ export class Content implements ComponentInterface {
     return forceOverscroll === undefined ? mode === 'ios' && isPlatform('ios') : forceOverscroll;
   }
 
+  /**
+   * Whether this component should size itself to its contents height, which
+   * is the case inside any popover and inside a modal whose `--height` is a
+   * content-based value. Those overlays give the content no definite height
+   * to fill.
+   */
+  private shouldSizeToContent() {
+    if (hostContext('ion-popover', this.el)) {
+      return true;
+    }
+
+    const modal = this.el.closest('ion-modal');
+    if (modal === null) {
+      return false;
+    }
+
+    const height = getComputedStyle(modal).getPropertyValue('--height').trim();
+    return CONTENT_SIZED_HEIGHTS.includes(height);
+  }
+
   private resize() {
     /**
      * Only force update if the component is rendered in a browser context.
@@ -538,7 +558,7 @@ export class Content implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'content-fullscreen': this.fullscreen,
-          'content-sizing': hostContext('ion-popover', this.el),
+          'content-sizing': this.shouldSizeToContent(),
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,
         })}
@@ -578,6 +598,12 @@ export class Content implements ComponentInterface {
     );
   }
 }
+
+/**
+ * `ion-modal` `--height` values that size the modal to its contents, leaving
+ * children an indefinite height to resolve against.
+ */
+const CONTENT_SIZED_HEIGHTS = ['auto', 'fit-content', 'min-content', 'max-content'];
 
 const getParentElement = (el: any) => {
   if (el.parentElement) {
