@@ -46,8 +46,10 @@ export class Content implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
+  private sizeToContent = false;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
   private fullscreenResizeObserver?: ResizeObserver;
+  private sizeToContentObserver?: MutationObserver;
   private inheritedAttributes: Attributes = {};
 
   private tabsElement: HTMLElement | null = null;
@@ -190,6 +192,7 @@ export class Content implements ComponentInterface {
 
     // Re-observe on reattach, since componentDidLoad only fires once.
     this.setupFullscreenResizeObserver();
+    this.setupSizeToContentObserver();
   }
 
   componentDidLoad() {
@@ -222,6 +225,7 @@ export class Content implements ComponentInterface {
     }
 
     this.destroyFullscreenResizeObserver();
+    this.destroySizeToContentObserver();
   }
 
   /**
@@ -256,6 +260,51 @@ export class Content implements ComponentInterface {
       this.resize();
     });
     this.fullscreenResizeObserver.observe(this.el);
+  }
+
+  /**
+   * A modal's `--height` can be changed at runtime with no event to react to,
+   * either by setting the property directly or by toggling a class that changes
+   * which rule wins. Both of those mutate an attribute on the modal, so watch
+   * for that and re-evaluate. Viewport driven changes are already covered by
+   * the `resize` listener.
+   */
+  private setupSizeToContentObserver() {
+    if (!Build.isBrowser || typeof MutationObserver === 'undefined') {
+      return;
+    }
+
+    if (this.sizeToContentObserver !== undefined) {
+      return;
+    }
+
+    const modal = this.el.closest('ion-modal');
+    if (modal === null) {
+      return;
+    }
+
+    this.sizeToContentObserver = new MutationObserver(() => this.updateSizeToContent());
+    this.sizeToContentObserver.observe(modal, { attributes: true, attributeFilter: ['style', 'class'] });
+  }
+
+  private destroySizeToContentObserver() {
+    if (this.sizeToContentObserver !== undefined) {
+      this.sizeToContentObserver.disconnect();
+      this.sizeToContentObserver = undefined;
+    }
+  }
+
+  /**
+   * Re-renders when the overlay is no longer sized the way the last render
+   * assumed. Read in a `readTask` because resolving the custom property forces
+   * a style recalculation.
+   */
+  private updateSizeToContent() {
+    readTask(() => {
+      if (this.shouldSizeToContent() !== this.sizeToContent) {
+        forceUpdate(this);
+      }
+    });
   }
 
   private destroyFullscreenResizeObserver() {
@@ -327,7 +376,15 @@ export class Content implements ComponentInterface {
     }
 
     const height = getComputedStyle(modal).getPropertyValue('--height').trim();
-    return CONTENT_SIZED_HEIGHTS.includes(height);
+
+    /**
+     * Compared as a suffix so a value carrying only a vendor prefix is still
+     * recognized, such as the `-moz-fit-content` that Firefox needs before 94.
+     *
+     * TODO: replace with `CONTENT_SIZED_HEIGHTS.includes(height)` once the
+     * oldest supported Firefox is 94 or higher.
+     */
+    return CONTENT_SIZED_HEIGHTS.some((value) => height.endsWith(value));
   }
 
   private resize() {
@@ -340,6 +397,13 @@ export class Content implements ComponentInterface {
      * TODO: Remove if STENCIL-834 determines Stencil will account for this.
      */
     if (Build.isBrowser) {
+      /**
+       * A window resize can cross a media query that changes the modal's
+       * `--height`. The content's own offsets are unchanged, so neither branch
+       * below re-renders and the class from the last render would go stale.
+       */
+      this.updateSizeToContent();
+
       if (this.fullscreen) {
         readTask(() => this.readDimensions());
       } else if (this.cTop !== 0 || this.cBottom !== 0) {
@@ -558,7 +622,7 @@ export class Content implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'content-fullscreen': this.fullscreen,
-          'content-sizing': this.shouldSizeToContent(),
+          'content-sizing': (this.sizeToContent = this.shouldSizeToContent()),
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,
         })}
