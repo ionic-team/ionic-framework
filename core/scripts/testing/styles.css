@@ -74,6 +74,15 @@ main button:not([class*="sc-ion-"]) {
   margin: 8px 0;
 }
 
+/** 
+ * Danger style for buttons.
+ */
+ion-content button.red:not([class*="sc-ion-"]),
+main button.red:not([class*="sc-ion-"]) {
+  background: #ea445a;
+  border-color: #a82f40;
+}
+
 /**
  * Button styles should only be applied
  * to native buttons that are not part of the
