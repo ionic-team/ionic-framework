@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject } from '@angular/core';
 import { IonButton, IonContent } from '@ionic/angular';
 
 import { isZoneChangeDetection } from '../../zone-assert.util';
@@ -20,15 +20,18 @@ import { isZoneChangeDetection } from '../../zone-assert.util';
 })
 export class AsyncChangeDetectionComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private elementRef = inject(ElementRef<HTMLElement>);
 
   status = 'idle';
 
   readonly changeDetection = isZoneChangeDetection() ? 'zone' : 'zoneless';
 
   async run() {
+    this.elementRef.nativeElement.removeAttribute('data-async-update-complete');
     this.status = 'pending';
     await new Promise((resolve) => setTimeout(resolve, 500));
     this.status = 'settled';
+    this.elementRef.nativeElement.setAttribute('data-async-update-complete', 'true');
   }
 
   markForCheck() {

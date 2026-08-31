@@ -25,9 +25,8 @@ export const expectAsyncUpdateToRender = async (page: Page) => {
   if (changeDetection === 'zone') {
     await expect(status).toHaveText('settled');
   } else {
-    // Twice the 500ms the page waits before settling, so a working tick would
-    // already have landed.
-    await page.waitForTimeout(1000);
+    // The host attribute updates outside change detection, so it signals completion while the view stays stale.
+    await expect(page.locator('app-async-change-detection')).toHaveAttribute('data-async-update-complete', 'true');
     await expect(status).toHaveText('pending');
 
     await page.locator('#mark-for-check').click();

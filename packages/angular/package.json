@@ -202,6 +202,7 @@
     "fs-extra": "^7.0.0",
     "prettier": "^2.4.1",
     "rxjs": "~7.5.0",
+    "source-map": "^0.7.6",
     "typescript": "~6.0.0",
     "typescript-eslint-language-service": "^5.0.0",
     "zone.js": "~0.16.0"
