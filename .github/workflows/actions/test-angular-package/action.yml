@@ -1,5 +1,5 @@
-name: 'Build Ionic Angular'
-description: 'Build Ionic Angular'
+name: 'Test Ionic Angular Package'
+description: 'Test Ionic Angular Package'
 runs:
   using: 'composite'
   steps:
@@ -20,7 +20,7 @@ runs:
       run: npm ci
       shell: bash
       working-directory: ./packages/angular
-    - name: 📐 Run Angular Package Tests 
+    - name: 📐 Run Angular Package Tests
       run: npm run test
       shell: bash
       working-directory: ./packages/angular
