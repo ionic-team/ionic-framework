@@ -14,15 +14,8 @@ export { MenuController } from './providers/menu-controller';
 export { ModalController } from './providers/modal-controller';
 export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
-export {
-  DomController,
-  NavController,
-  Config,
-  Platform,
-  NavParams,
-  IonModalToken,
-  IonicRouteStrategy,
-} from '@ionic/angular/common';
+export { IonModalToken } from './providers/modal-token';
+export { DomController, NavController, Config, Platform, NavParams, IonicRouteStrategy } from '@ionic/angular/common';
 export type {
   ViewWillEnter,
   ViewDidEnter,

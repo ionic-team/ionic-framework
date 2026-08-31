@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --stats-json",
+    "build": "ng build --stats-json --output-hashing=none",
     "watch": "ng build --watch --configuration development",
     "lint": "ng lint"
   },
