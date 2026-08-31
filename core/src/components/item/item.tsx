@@ -1,8 +1,13 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAttributes, raf, watchForAriaAttributeChanges, type AttributeWatcher } from '@utils/helpers';
+import {
+  inheritAttributes,
+  raf,
+  watchForAriaAttributeChanges,
+  type AttributeWatcher,
+  type Attributes,
+} from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 

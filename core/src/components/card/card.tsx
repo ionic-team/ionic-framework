@@ -1,8 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAttributes, watchForAriaAttributeChanges, type AttributeWatcher } from '@utils/helpers';
+import {
+  inheritAttributes,
+  watchForAriaAttributeChanges,
+  type AttributeWatcher,
+  type Attributes,
+} from '@utils/helpers';
 import { createColorClasses, openURL } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
