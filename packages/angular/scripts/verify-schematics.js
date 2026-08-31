@@ -10,14 +10,18 @@ try {
   // Delete old packages
   execSync(`rm -f *.tgz`, {cwd: packageRootDir});
 
+  // Pack ionic-core
+  execSync(`npm pack ../../core`, {cwd: packageRootDir});
+
   // Pack ionic-angular
   execSync(`npm pack`, {cwd: packageRootDir});
 
   // Create new Angular project
   execSync(`npx ng new ${testName} --style css --ssr false --ai-config none`, {cwd: packageRootDir});
 
-  // Install ionic-angular package
+  // Install ionic-angular and core packages
   execSync(`npx ng add --skip-confirmation ../ionic-angular-*`, {cwd: testDir});
+  execSync(`npm install ../*.tgz --no-save`, {cwd: testDir});
 
   // Run build
   execSync(`npm run build`, {cwd: testDir});
