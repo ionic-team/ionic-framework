@@ -114,3 +114,7 @@ Ionic developers can access this by importing from `@ionic/angular/lazy`.
 
 > [!CAUTION]
 > The lazy loaded build, including `IonicModule`, is deprecated and will be removed in a future major version. New code should use the standalone components and `provideIonicAngular()` imported from `@ionic/angular`.
+
+## Change Detection Strategy
+
+Every `@Component` in `src` must declare `changeDetection` explicitly, and the build enforces it. See the [Change Detection guide](https://github.com/ionic-team/ionic-framework/blob/main/docs/angular/change-detection.md).

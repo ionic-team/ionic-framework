@@ -4,12 +4,10 @@ const path = require('path');
 /**
  * Rewrite `ChangeDetectionStrategy.Eager` to `Default` in the compiled output.
  *
- * Angular 22 renamed `Default` to `Eager`, but the Angular 18-20 linkers only
- * know `Default` and fail the consumer's build on anything else. Both names are
- * the same value. Remove once the peer range starts at Angular 21.
- *
- * The replacement is two characters longer and leaves the `.js.map` alone, so
- * mappings drift two columns, but only inside generated Ivy plumbing.
+ * Angular 22 renamed `Default` to `Eager`. Both names are the same value, but a
+ * linker that doesn't know the new one fails the consumer's build on it. The
+ * rename was backported to 21.2, so remove this once the peer range's lowest
+ * version is 21.2 or higher. 21.0 and 21.1 still reject it.
  */
 
 const DIST_DIR = path.join(__dirname, '../dist');
@@ -21,9 +19,10 @@ function listDistJsFiles() {
     throw new Error('dist does not exist. build.ng emitted nothing.');
   }
 
+  // Any JS extension, so an emit that moves to .mjs isn't silently skipped here.
   return fs
     .readdirSync(DIST_DIR, { recursive: true })
-    .filter((entry) => entry.endsWith('.js'))
+    .filter((entry) => /\.(m|c)?js$/.test(entry))
     .map((entry) => path.join(DIST_DIR, entry));
 }
 

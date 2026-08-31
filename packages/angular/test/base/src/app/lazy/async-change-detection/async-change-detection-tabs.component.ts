@@ -6,6 +6,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
  */
 @Component({
   selector: 'app-async-change-detection-tabs',
+  // An OnPush wrapper would stop the tick before the inner page, so the test
+  // would fail even with the outlet fixed.
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './async-change-detection-tabs.component.html',
   standalone: false,

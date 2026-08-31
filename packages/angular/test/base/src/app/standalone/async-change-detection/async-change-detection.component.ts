@@ -11,8 +11,8 @@ import { isZoneChangeDetection } from '../../zone-assert.util';
  */
 @Component({
   selector: 'app-async-change-detection',
-  // An OnPush page wouldn't re-render on a plain field mutation either, so the
-  // test would pass or fail for the wrong reason.
+  // An OnPush page wouldn't re-render on a plain field mutation at all, so the
+  // test would no longer be about the outlet.
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './async-change-detection.component.html',
   standalone: true,

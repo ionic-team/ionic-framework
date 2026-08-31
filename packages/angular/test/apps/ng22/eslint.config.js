@@ -1,6 +1,6 @@
 // @ts-check
 // Angular 22 requires ESLint 9 + angular-eslint 22, which are flat-config only.
-// The ng18-ng21 test apps still use the shared base/.eslintrc.json, which
+// Apps on Angular 21 and below still use the shared base/.eslintrc.json, which
 // ESLint 9 ignores once this flat config is present in the build dir.
 const angular = require('angular-eslint');
 

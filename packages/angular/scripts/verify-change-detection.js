@@ -9,30 +9,34 @@ const path = require('path');
  * version can silently flip a component for every Angular 22 consumer (#31406).
  */
 
-// Shared with the normalize step so both walk the same dist and agree on the name.
 const { DIST_DIR, PORTABLE_NAME, listDistJsFiles } = require('./normalize-change-detection');
 
 /**
- * Names every linker in the peer range understands. Allowlisting rather than
- * blocklisting `Eager` means a future rename fails here instead of as a
- * FatalLinkerError in a consumer's build.
+ * Names every linker in the peer range understands. An allowlist means a future
+ * rename fails here instead of as a FatalLinkerError in a consumer's build.
  */
 const PORTABLE_NAMES = ['OnPush', PORTABLE_NAME.split('.').pop()];
 
 /**
- * The only components allowed to link eager, and how many times each is emitted
- * (once for lazy, once for standalone). Routed pages are created inside these
- * components' own views, so OnPush would strand them (#31406).
+ * The only components allowed to link eager, and every file each is emitted
+ * into. Routed pages are created inside these components' own views, so OnPush
+ * would strand them (#31406). Listing the files rather than counting them
+ * catches one entry point losing eager while an unrelated file gains it.
  */
-const EAGER_COMPONENTS = { IonRouterOutlet: 2, IonTabs: 2 };
+const EAGER_COMPONENTS = {
+  IonRouterOutlet: ['lazy/directives/navigation/ion-router-outlet.js', 'standalone/navigation/router-outlet.js'],
+  IonTabs: ['lazy/directives/navigation/ion-tabs.js', 'standalone/navigation/tabs.js'],
+};
+
+/**
+ * A tripwire for the scan seeing less of dist than it should, which a zero check
+ * alone would miss. Lower it only when the emitted count genuinely drops.
+ */
+const MIN_COMPONENTS = 150;
 
 const DECLARE_FN = 'ɵɵngDeclareComponent(';
 
-/**
- * Returns the source of each `ɵɵngDeclareComponent(...)` call. They embed
- * templates and styles, so brackets are matched while skipping string literals
- * rather than matching a pattern.
- */
+// Declarations embed templates and styles, so match brackets rather than a pattern.
 function findComponentDeclarations(source) {
   const declarations = [];
   let searchFrom = 0;
@@ -73,7 +77,11 @@ function getComponentName(declaration) {
 }
 
 function getStrategyName(declaration) {
-  const match = declaration.match(/\bchangeDetection:\s*[A-Za-z0-9_$]+\.ChangeDetectionStrategy\.([A-Za-z0-9_$]+)/);
+  // The namespace prefix is optional, so a change to it doesn't read every
+  // component as undeclared.
+  const match = declaration.match(
+    /\bchangeDetection:\s*(?:[A-Za-z0-9_$]+\.)?ChangeDetectionStrategy\.([A-Za-z0-9_$]+)/
+  );
   return match ? match[1] : null;
 }
 
@@ -100,21 +108,23 @@ function verify() {
       } else if (!PORTABLE_NAMES.includes(strategy)) {
         unportable.push(`${name} emits ${strategy} (${relativePath})`);
       } else if (strategy !== 'OnPush') {
-        // Distinct files, so two lazy emissions can't mask a missing standalone one.
         eager[name] = eager[name] ?? new Set();
-        eager[name].add(relativePath);
+        eager[name].add(relativePath.split(path.sep).join('/'));
       }
     }
   }
 
-  const eagerCount = (name) => (Object.hasOwn(eager, name) ? eager[name].size : 0);
-  const expectedCount = (name) => (Object.hasOwn(EAGER_COMPONENTS, name) ? EAGER_COMPONENTS[name] : 0);
+  const foundFiles = (name) => (Object.hasOwn(eager, name) ? [...eager[name]].sort() : []);
+  const expectedFiles = (name) => (Object.hasOwn(EAGER_COMPONENTS, name) ? [...EAGER_COMPONENTS[name]].sort() : []);
+  const sameFiles = (a, b) => a.length === b.length && a.every((file, index) => file === b[index]);
   const eagerDrift = Object.keys({ ...EAGER_COMPONENTS, ...eager })
-    .filter((name) => expectedCount(name) !== eagerCount(name))
-    .map((name) => `${name}: expected ${expectedCount(name)} eager, found ${eagerCount(name)}`);
+    .filter((name) => !sameFiles(expectedFiles(name), foundFiles(name)))
+    .map((name) => `${name}: expected eager in [${expectedFiles(name)}], found [${foundFiles(name)}]`);
 
-  if (componentCount === 0) {
-    console.error('No components found in dist. build.ng emitted nothing.');
+  if (componentCount < MIN_COMPONENTS) {
+    console.error(
+      `Found ${componentCount} components in dist, fewer than the ${MIN_COMPONENTS} expected. Either build.ng emitted nothing, or this scan no longer sees the whole output.`
+    );
     process.exitCode = 1;
     return;
   }
@@ -125,7 +135,8 @@ function verify() {
       console.error(`  ${offender}`);
     }
     console.error(
-      '\nAdd `changeDetection: ChangeDetectionStrategy.OnPush` to the @Component decorator, or `.Default` if the component creates routed pages in its own view.'
+      '\nAdd `changeDetection: ChangeDetectionStrategy.OnPush` to the @Component decorator, or `.Default` if the component creates routed pages in its own view.' +
+        '\nFor a generated file (directives/proxies.ts, standalone/directives/ion-*.ts) the generator changed instead: fix or pin @stencil/angular-output-target in core/package.json.'
     );
   }
 
@@ -134,7 +145,13 @@ function verify() {
     for (const offender of unportable) {
       console.error(`  ${offender}`);
     }
-    console.error('\nTeach scripts/normalize-change-detection.js to rewrite the new name.');
+    // Eager is the one name normalize already rewrites, so seeing it here means
+    // that step was skipped.
+    console.error(
+      unportable.some((offender) => offender.includes('emits Eager'))
+        ? '\nRun `npm run build.change-detection` first, which rewrites Eager to Default.'
+        : '\nTeach scripts/normalize-change-detection.js to rewrite the new name.'
+    );
   }
 
   // Skipped when a check above fired: those show as drift too, and the hint would mislead.

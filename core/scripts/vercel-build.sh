@@ -197,8 +197,8 @@ pick_app() {
 }
 
 build_angular_test() {
-  # Plain ngNN only, since ng22-zone sorts above ng22 and isn't a newer Angular.
   local APP
+  # Plain ngNN only, since ng22-zone sorts above ng22 and isn't a newer Angular.
   APP=$(pick_app "${REPO_ROOT}/packages/angular/test" '^ng[0-9]+$') || {
     echo "[angular] No test app found, skipping."
     return 0

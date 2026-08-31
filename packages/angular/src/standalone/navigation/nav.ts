@@ -15,6 +15,8 @@ import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
 })
 @Component({
   selector: 'ion-nav',
+  // Unlike ion-router-outlet, the delegate attaches pages here as root views and
+  // IonNavBase detaches this one, so a tick never descends through it (#31406).
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   standalone: true,
