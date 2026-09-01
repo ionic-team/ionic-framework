@@ -1622,7 +1622,22 @@ describe('Routing', () => {
     const TabTwo = createPage('tabtwo');
     const Details = createPage('details');
 
-    let guardDelay = 0;
+    let racing = false;
+    let releasePush!: () => void;
+    let releaseTabChange!: () => void;
+    let pushReachedGuard!: () => void;
+    let tabChangeReachedGuard!: () => void;
+    let cancelReported!: () => void;
+
+    const pushStarted = new Promise((resolve) => {
+      pushReachedGuard = resolve as () => void;
+    });
+    const tabChangeStarted = new Promise((resolve) => {
+      tabChangeReachedGuard = resolve as () => void;
+    });
+    const pushCancelled = new Promise((resolve) => {
+      cancelReported = resolve as () => void;
+    });
 
     const router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
@@ -1634,13 +1649,37 @@ describe('Routing', () => {
       ]
     });
 
-    // A global async guard, the session check kind.
-    router.beforeEach(async () => {
-      if (guardDelay) {
-        await new Promise((resolve) => setTimeout(resolve, guardDelay));
+    /*
+     * A global async guard, the session check kind. Both navigations are held
+     * inside it so the test controls which one settles first, rather than
+     * relying on one being slower than the other.
+     */
+    router.beforeEach(async (to) => {
+      if (!racing) {
+        return true;
+      }
+
+      if (to.path === '/details') {
+        pushReachedGuard();
+        await new Promise((resolve) => {
+          releasePush = resolve as () => void;
+        });
+      }
+
+      if (to.path === '/tabs/tab2') {
+        tabChangeReachedGuard();
+        await new Promise((resolve) => {
+          releaseTabChange = resolve as () => void;
+        });
       }
 
       return true;
+    });
+
+    router.afterEach((_to, _from, failure) => {
+      if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+        cancelReported();
+      }
     });
 
     router.push('/');
@@ -1662,7 +1701,7 @@ describe('Routing', () => {
     navManager.changeTab('tab1', '/tabs/tab1');
     await waitForRouter();
 
-    guardDelay = 400;
+    racing = true;
 
     /*
      * Tapping a link and then Tab 2 before the first one finishes. The push
@@ -1670,9 +1709,19 @@ describe('Routing', () => {
      * which cost the tab its direction and its tab name.
      */
     navManager.handleNavigate('/details', 'push', 'forward');
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    await pushStarted;
+
+    // The tab change replaces the push and stages its own params.
     navManager.changeTab('tab2', '/tabs/tab2');
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+    await tabChangeStarted;
+
+    // Let the push finish, which reports it as cancelled.
+    releasePush();
+    await pushCancelled;
+
+    // Only now let the tab change finish.
+    releaseTabChange();
+    await waitForRouter();
 
     const routeInfo = navManager.getCurrentRouteInfo();
 
