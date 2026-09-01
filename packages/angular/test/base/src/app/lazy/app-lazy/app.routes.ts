@@ -19,6 +19,8 @@ import { NavigationPage3Component } from '../navigation-page3/navigation-page3.c
 import { AlertComponent } from '../alert/alert.component';
 import { AccordionComponent } from '../accordion/accordion.component';
 import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
+import { AsyncChangeDetectionComponent } from '../async-change-detection/async-change-detection.component';
+import { AsyncChangeDetectionTabsComponent } from '../async-change-detection/async-change-detection-tabs.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +32,13 @@ export const routes: Routes = [
       { path: 'accordions', component: AccordionComponent },
       { path: 'alerts', component: AlertComponent },
       { path: 'inputs', component: InputsComponent },
+      { path: 'async-change-detection', component: AsyncChangeDetectionComponent },
+      { path: 'async-change-detection-tabs', redirectTo: '/lazy/async-change-detection-tabs/tab-one', pathMatch: 'full' },
+      {
+        path: 'async-change-detection-tabs',
+        component: AsyncChangeDetectionTabsComponent,
+        children: [{ path: 'tab-one', component: AsyncChangeDetectionComponent }]
+      },
       { path: 'textarea', loadChildren: () => import('../textarea/textarea.module').then(m => m.TextareaModule) },
       { path: 'searchbar', loadChildren: () => import('../searchbar/searchbar.module').then(m => m.SearchbarModule) },
       { path: 'form', component: FormComponent },

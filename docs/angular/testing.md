@@ -106,7 +106,7 @@ As we add support for new versions of Angular, we will also need to update this 
 3. Make note of any files that changed during the upgrade (`package.json`, `package-lock.json`, `angular.json`, etc).
 4. Copy the changed files to a new directory in `apps`.
   - Do NOT copy the entire directory. The `test/base` directory contains shared files between all major versions. Only files that are different than previous major versions should be copied to the new directory in `apps`.
-5. Add a new entry to the matrix for `test-core-angular` in `./github/workflows/build.yml`. This will allow the new test app to run against all PRs.
+5. Add the new app to the `apps` matrix of the `test-angular-e2e` job in both `./github/workflows/build.yml` and `./github/workflows/stencil-nightly.yml`. This will allow the new test app to run against all PRs.
 6. Commit these changes and push.
 
 Example:
@@ -136,3 +136,16 @@ Note: You may encounter some other peer dependency issues not covered by the Ang
 10. Open `./github/workflows/stencil-nightly.yml` and find the `test-angular-e2e` job.
 11. Repeat steps 8 and 9.
 12. Commit these changes and push.
+
+## Variant Test Apps
+
+Most apps in `apps/` pin a different Angular version. A variant app pins the same version as an existing app and changes how it's configured, covering a combination that would otherwise go untested. The current example is `ng22-zone`: Angular 22 with Zone.js, the combination whose absence let [#31406](https://github.com/ionic-team/ionic-framework/issues/31406) ship.
+
+Follow the steps above for adding a version app, with two differences:
+
+1. **Name it `ng<NN>-<variant>`.** The Vercel preview app is picked in `core/scripts/vercel-build.sh` with the filter `'^ng[0-9]+$'`, so any suffixed name is excluded. A bare `ng<NN>` name is the trap: calling an Angular 22 variant `ng23` would match the filter and silently become the deployed preview.
+2. **Select change detection through providers, not polyfills.** Angular 22 bootstraps zoneless even when Zone.js is loaded, so the mode is chosen by `base/src/app/change-detection.providers.ts`, which both `app.module.ts` and `main-standalone.ts` spread. Override that file in the variant app. It's empty in `base/`, which leaves Angular's own default. Omit `src/polyfills.ts` if the variant needs base's `import 'zone.js'`.
+
+Shared pages under `base/` must keep passing in every mode, so use the `assertZoneContext()` helper from `base/src/app/zone-assert.util.ts` rather than asserting an Angular zone unconditionally.
+
+For the change detection rules that apply to the library itself, see [Change Detection](./change-detection.md).
