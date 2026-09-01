@@ -1131,6 +1131,12 @@ describe('Routing', () => {
       routerAction: 'push',
       routerDirection: 'forward'
     });
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'settings', hidden: false }
+    ]);
   });
 
   // Guards against clearing params that belong to another navigation still in flight.
