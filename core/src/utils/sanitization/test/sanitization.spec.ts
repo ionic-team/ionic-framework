@@ -26,6 +26,21 @@ describe('sanitizeDOMString', () => {
     ).toEqual('<button id="myButton" name="myButton">harmless button</button>');
   });
 
+  it('filter onload regardless of case or whitespace around =', () => {
+    /**
+     * onload is blocked with an upfront string check (rather than the
+     * attribute-stripping pass used for onerror/onclick above) because it
+     * can fire synchronously while the untrusted string is being parsed
+     * into the working document fragment, before that pass runs. HTML
+     * attribute names are case-insensitive and may have whitespace around
+     * `=`, so the check must not be a plain lowercase substring match.
+     */
+    expect(sanitizeDOMString('<svg onload=alert(document.cookie)>')).toEqual('');
+    expect(sanitizeDOMString('<svg onLoad=alert(document.cookie)>')).toEqual('');
+    expect(sanitizeDOMString('<svg ONLOAD=alert(document.cookie)>')).toEqual('');
+    expect(sanitizeDOMString('<svg onload =alert(document.cookie)>')).toEqual('');
+  });
+
   it('filter <a> href JS', () => {
     expect(sanitizeDOMString('<a href="javascript:alert(document.cookie)">harmless link</a>')).toEqual(
       '<a>harmless link</a>'

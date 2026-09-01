@@ -36,8 +36,12 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
      * fragment in Chrome. If a string
      * contains onload then we should not
      * attempt to add this to the fragment.
+     *
+     * HTML attribute names are case-insensitive and may have whitespace
+     * around the `=`, so match those variants too (e.g. `onLoad=`,
+     * `ONLOAD =`) instead of only the exact lowercase `onload=` substring.
      */
-    if (untrustedString.includes('onload=')) {
+    if (/onload\s*=/i.test(untrustedString)) {
       return '';
     }
 
