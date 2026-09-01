@@ -9,7 +9,7 @@ import { IonRouterOutlet } from './router-outlet';
 @Component({
   selector: 'ion-tabs',
   // Renders the ion-router-outlet its tab pages are created into, so an OnPush
-  // strategy here would stop change detection reaching them (#31406).
+  // strategy here would stop change detection reaching them.
   // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
   changeDetection: ChangeDetectionStrategy.Default,
   template: `

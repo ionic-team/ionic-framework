@@ -6,7 +6,7 @@ const path = require('path');
  *
  * An Angular 22 linker fills in an undeclared strategy as OnPush when our own
  * emitted declaration is stamped 22 or later, so bumping this package's Angular
- * version can silently flip a component for every Angular 22 consumer (#31406).
+ * version can silently flip a component for every Angular 22 consumer.
  */
 
 const { DIST_DIR, PORTABLE_NAME, listDistJsFiles } = require('./normalize-change-detection');
@@ -20,7 +20,7 @@ const PORTABLE_NAMES = ['OnPush', PORTABLE_NAME.split('.').pop()];
 /**
  * The only components allowed to link eager, and every file each is emitted
  * into. Routed pages are created inside these components' own views, so OnPush
- * would strand them (#31406). Listing the files rather than counting them
+ * would strand them. Listing the files rather than counting them
  * catches one entry point losing eager while an unrelated file gains it.
  */
 const EAGER_COMPONENTS = {
@@ -161,7 +161,7 @@ function verify() {
       console.error(`  ${offender}`);
     }
     console.error(
-      '\nOnly components that create routed pages in their own view may be eager (#31406).\nUpdate EAGER_COMPONENTS in this script if that set genuinely changed.'
+      '\nOnly components that create routed pages in their own view may be eager.\nUpdate EAGER_COMPONENTS in this script if that set genuinely changed.'
     );
   }
 

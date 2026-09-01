@@ -19,7 +19,7 @@ module.exports = [
       '@angular-eslint/prefer-standalone': 'off',
       '@angular-eslint/prefer-inject': 'off',
       // Test pages declare eager change detection on purpose: they exist to
-      // prove a tick still reaches a routed page (#31406).
+      // prove a tick still reaches a routed page.
       '@angular-eslint/prefer-on-push-component-change-detection': 'off',
       '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'app', style: 'kebab-case' }],
       '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: 'app', style: 'camelCase' }],

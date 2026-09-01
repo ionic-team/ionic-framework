@@ -5,7 +5,7 @@ import { ModeSwitcherComponent } from './mode-switcher.component';
 
 @Component({
   selector: 'app-root',
-  // A tick won't descend past a clean OnPush view, which is Angular 22's default (#31406).
+  // Angular 22 defaults to OnPush, and a tick stops at a clean OnPush view.
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './app.component.html',
   standalone: true,

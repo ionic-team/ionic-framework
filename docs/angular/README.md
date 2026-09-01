@@ -12,4 +12,4 @@ Refer to the [Angular Testing documentation](./testing.md) for testing the Angul
 
 ## Change Detection
 
-Refer to the [Change Detection documentation](./change-detection.md) for the strategy every component must declare.
+Refer to the [Angular Change Detection documentation](./change-detection.md) for the strategy every component must declare.

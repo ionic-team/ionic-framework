@@ -4,7 +4,7 @@ import type { Page } from '@playwright/test';
 /**
  * Under Zone.js a field mutated after an `await` has to reach the DOM on its
  * own, which only happens if the Ionic views above the page let a tick through.
- * That branch is the #31406 regression test.
+ * That branch is the regression test.
  *
  * The zoneless branch only documents zoneless behavior. It passes either way,
  * since marking a view for check walks OnPush ancestors by design.
@@ -14,7 +14,8 @@ export const expectAsyncUpdateToRender = async (page: Page) => {
   const status = page.locator('#status');
 
   // Every app uses zone change detection exactly when Zone.js is loaded, so a
-  // mismatch means the app lost `provideZoneChangeDetection()` and stopped covering #31406.
+  // mismatch means the app's polyfills or change-detection.providers.ts changed
+  // and the zone branch below never runs.
   const zoneLoaded = await page.evaluate(() => typeof (window as any).Zone !== 'undefined');
   expect(changeDetection).toBe(zoneLoaded ? 'zone' : 'zoneless');
 

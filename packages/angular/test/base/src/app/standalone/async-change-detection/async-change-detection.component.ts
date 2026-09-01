@@ -7,7 +7,6 @@ import { isZoneChangeDetection } from '../../zone-assert.util';
  * Mutates a plain field after an `await`. Under Zone.js the DOM catches up on
  * its own, and zoneless it stays stale until the view is marked. Renders inside
  * an `ion-router-outlet`, so it only updates if the outlet lets a tick through.
- * Verifies issue https://github.com/ionic-team/ionic-framework/issues/31406
  */
 @Component({
   selector: 'app-async-change-detection',

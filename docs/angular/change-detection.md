@@ -1,13 +1,46 @@
-# Change Detection
+# Angular Change Detection
 
 Every `@Component` in `packages/angular/src` must declare `changeDetection` explicitly. What the Angular partial linker fills in for an undeclared strategy depends on two versions: the one stamped into our own emitted declaration, and the linker the consumer runs. An Angular 22 linker fills in `OnPush` when our declaration says 22 or later, while Angular 18-21 linkers always fill in `Default`. So bumping *our* toolchain to Angular 22 is enough to flip every Angular 22 consumer, which is how `ion-router-outlet` and `ion-tabs` stopped letting change detection reach routed pages in [#31406](https://github.com/ionic-team/ionic-framework/issues/31406).
 
-Use `OnPush` unless the pages a component hosts are only reached by a tick descending through its own view. Only `ion-router-outlet` and `ion-tabs` qualify today. The `ion-nav` component stays `OnPush` because the delegate attaches its pages as root views instead.
+Use `OnPush` unless the pages a component hosts are only reached by a tick descending through its own view. Only `ion-router-outlet` and `ion-tabs` qualify today. The `ion-nav` component stays `OnPush` because `IonNavBase` detaches its view and the delegate attaches its pages as root views instead.
 
 A component that needs `Default` also needs two things the compiler won't warn about:
 
 - an `// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection` above it, with a comment saying why. That rule is an error here. It only fires on an explicit non-OnPush value, never on a missing one, so it can't enforce the rule above on its own.
 - an entry in `EAGER_COMPONENTS` in `packages/angular/scripts/verify-change-detection.js`, keyed by class name and listing every dist file it is emitted into (one for lazy, one for standalone).
+
+`IonRouterOutlet` carries both. In `packages/angular/src/standalone/navigation/router-outlet.ts`:
+
+```ts
+@ProxyCmp({
+  defineCustomElementFn: defineCustomElement,
+})
+@Component({
+  selector: 'ion-router-outlet',
+  standalone: true,
+  // Routed pages are created inside this component's own view, so an OnPush
+  // outlet would leave them unreachable from a tick under Zone.js.
+  // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
+  changeDetection: ChangeDetectionStrategy.Default,
+  template: '<ng-container #outletContent><ng-content></ng-content></ng-container>',
+})
+export class IonRouterOutlet extends IonRouterOutletBase {
+  // ...
+}
+```
+
+The lazy build declares the same component at `packages/angular/src/lazy/directives/navigation/ion-router-outlet.ts`, with the same comment, eslint-disable and `changeDetection` line. It sets `standalone: false` and has no `@ProxyCmp`.
+
+And in `packages/angular/scripts/verify-change-detection.js`:
+
+```js
+const EAGER_COMPONENTS = {
+  IonRouterOutlet: ['lazy/directives/navigation/ion-router-outlet.js', 'standalone/navigation/router-outlet.js'],
+  IonTabs: ['lazy/directives/navigation/ion-tabs.js', 'standalone/navigation/tabs.js'],
+};
+```
+
+Everything else takes the plain form: `changeDetection: ChangeDetectionStrategy.OnPush`, no eslint-disable, no script entry. See `packages/angular/src/standalone/navigation/nav.ts`, where the comment records why `ion-nav` stays `OnPush` despite hosting pages, and `packages/angular/src/lazy/directives/navigation/ion-nav.ts`, with the same comment.
 
 The `npm run build` script enforces this in two steps:
 

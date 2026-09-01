@@ -5,7 +5,6 @@ import { isZoneChangeDetection } from '../../zone-assert.util';
 /**
  * IonicModule counterpart of the standalone async change detection page, so the
  * lazy `ion-router-outlet` and `ion-tabs` are covered too.
- * Verifies issue https://github.com/ionic-team/ionic-framework/issues/31406
  */
 @Component({
   selector: 'app-async-change-detection',
