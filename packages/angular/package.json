@@ -24,7 +24,7 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "build": "npm run clean && npm run build.ng && npm run build.css && npm run build.schematics && npm run validate.package",
+    "build": "npm run clean && npm run build.ng && npm run build.css && npm run build.schematics",
     "build.css": "node scripts/build-css.js",
     "build.schematics": "node scripts/build-schematics.js",
     "build.ng": "ngc",
@@ -37,11 +37,11 @@
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "sync": "./scripts/sync.sh",
     "local.sync.and.pack": "./scripts/sync-and-pack.sh",
-    "test": "npm run test.schematics && npm run test.code-split",
+    "test": "npm run test.schematics && npm run test.code-split && npm run test.package",
     "test.code-split": "node ./scripts/test-code-split.js",
     "test.schematics": "node ./scripts/verify-schematics.js",
-    "validate": "npm i && npm run lint && npm run build && npm run test && npm run validate.package",
-    "validate.package": "node scripts/verify-exports.js"
+    "test.package": "node scripts/verify-exports.js",
+    "validate": "npm i && npm run lint && npm run build && npm run test"
   },
   "exports": {
     "./package.json": "./package.json",

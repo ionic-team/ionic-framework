@@ -63,7 +63,7 @@ function main() {
     
     const splitComponent = 'ion-toggle.js';
     if (hasComponentAsInput(stats, chunks, splitComponent)) {
-      throw new Error(`${splitComponent} was not split from landing page.`)
+      throw new Error(`${splitComponent} was not split from landing page.`);
     }
 
     console.log('✅ verified code-split');

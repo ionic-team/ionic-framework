@@ -114,3 +114,23 @@ Ionic developers can access this by importing from `@ionic/angular/lazy`.
 
 > [!CAUTION]
 > The lazy loaded build, including `IonicModule`, is deprecated and will be removed in a future major version. New code should use the standalone components and `provideIonicAngular()` imported from `@ionic/angular`.
+
+## Package Validation
+
+`npm run validate` executes several subtasks: installs node modules, lints, builds the package, and runs package tests. `npm run test` can also run the package tests directly. For E2E tests, see [Angular Testing documentation](/docs/angular/testing.md).
+
+### Testing Package Exports
+
+To check that all exports from `package.json` point to files that exist, and that all Ionic components have exports, run `node ./scripts/verify-exports.js` or `npm run test.package`.
+
+### Testing Code Splitting
+
+If an app imports standalone components from `@ionic/angular`, esbuild bundles them together, so a landing page could include components it never uses. If components are instead imported from `@ionic/angular/<component-name>`, esbuild is able to bundle pages with only the components they need. The app in `packages/angular/test/code-split` is used to verify that this code splitting is working.
+
+To run the test, run `node ./scripts/test-code-split.js` or run `npm run test.code-split`. This builds the code-split app and checks if `IonToggle` is excluded from the landing page's bundle.
+
+### Testing Schematics
+
+The schematics files are used when Ionic-Angular is added to a project with `ng add`. The schematics test verifies schematics are included in the package by creating a new starter app and adding the locally built Ionic-Angular package to it.
+
+To run the test, run `node ./scripts/verify-schematics.js` or run `npm run test.schematics`.
