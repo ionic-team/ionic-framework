@@ -60,6 +60,21 @@ const currentRoute = (navManager: any) => {
   };
 };
 
+/*
+ * Waiting a fixed number of microtasks is not enough to know a navigation has
+ * reached a guard, so wait on the condition itself.
+ */
+const waitUntil = async (predicate: () => boolean, label: string) => {
+  for (let i = 0; i < 200; i++) {
+    if (predicate()) {
+      return;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  }
+
+  throw new Error(`timed out waiting for ${label}`);
+};
+
 describe('Routing', () => {
   it('should pass no props', async () => {
     const Page1 = {
@@ -1297,6 +1312,87 @@ describe('Routing', () => {
       { id: 'home', hidden: true },
       { id: 'other', hidden: false }
     ]);
+  });
+
+  // Guards against clearing the params of a later navigation with the same target.
+  it('should not apply a cancelled navigation to a later one with the same target', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const List = createPage('list');
+    const Login = createPage('login');
+
+    const holds: Array<() => void> = [];
+    let holding = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/list', component: List },
+        { path: '/login', component: Login }
+      ]
+    });
+
+    router.beforeEach(async (to) => {
+      if (holding && to.path === '/login') {
+        await new Promise<void>((resolve) => holds.push(resolve));
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/list');
+    await waitForRouter();
+
+    /*
+     * Both navigations head for the same path, so the location they were
+     * staged against cannot tell them apart. Only the identity of the
+     * navigation itself can, otherwise the cancelled push discards the params
+     * of the root replace and it degrades to a plain replace.
+     */
+    holding = true;
+
+    navManager.handleNavigate('/login', 'push', 'forward');
+    await waitUntil(() => holds.length === 1, 'the push to reach the guard');
+
+    navManager.handleNavigate('/login', 'replace', 'root');
+    await waitUntil(() => holds.length === 2, 'the replace to reach the guard');
+
+    holding = false;
+    holds[0]();
+    await waitForRouter();
+
+    holds[1]();
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'replace',
+      routerDirection: 'root'
+    });
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'login', hidden: false }
+    ]);
+
+    // Losing the root direction leaves the back stack in place.
+    expect(navManager.canGoBack()).toBe(false);
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721

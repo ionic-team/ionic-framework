@@ -111,48 +111,52 @@ export const createIonRouter = (
    */
   let incomingRouteParams: RouteParams | undefined;
   /**
-   * The location the staged params were meant for. Kept beside the params
-   * rather than on them so it is never spread onto a RouteInfo. Left undefined
-   * by the helpers that hand off to history and so cannot know the target yet,
-   * which is `goBack`, `goForward` and `handleNavigateBack`. Those fall back to
-   * the delta's target, which history always records for them.
+   * The navigation the staged params belong to. vue-router hands the same
+   * location object to every hook for one navigation and builds a fresh one
+   * per navigation, so it identifies a navigation even when two of them target
+   * the same path. Kept beside the params rather than on them so it is never
+   * spread onto a RouteInfo and stored in `locationHistory`.
    */
-  let incomingRouteParamsTo: string | undefined;
+  let incomingRouteParamsOwner: RouteLocationNormalized | undefined;
+  /**
+   * Set between staging the params and the navigation claiming them below.
+   * A navigation rejected as a duplicate never reaches `beforeEach`, so it
+   * never claims, and this is what tells the gate those params are still its
+   * own rather than a later navigation's.
+   */
+  let incomingRouteParamsUnclaimed = false;
 
   /**
-   * `resolve` encodes a query differently depending on whether it was handed a
-   * string or an object, so a space in a value survives the string form and
-   * becomes a plus in the object form. The location `afterEach` reports always
-   * uses the object form, so resolve a second time to normalize it.
+   * The only place that stages route params, so an owner can never be left
+   * over from an earlier navigation.
    */
-  const resolveFullPath = (to: RouteLocationRaw) => {
-    const resolved = router.resolve(to);
-
-    return router.resolve({
-      path: resolved.path,
-      query: resolved.query,
-      hash: resolved.hash,
-    }).fullPath;
-  };
-
-  /**
-   * The only place that stages route params, so the recorded location can
-   * never be left over from an earlier navigation. Pass the target when it is
-   * known, and omit it to fall back to the delta.
-   */
-  const stageRouteParams = (params: RouteParams, to?: RouteLocationRaw) => {
+  const stageRouteParams = (params: RouteParams) => {
     incomingRouteParams = params;
-    incomingRouteParamsTo = to ? resolveFullPath(to) : undefined;
+    incomingRouteParamsOwner = undefined;
+    incomingRouteParamsUnclaimed = true;
   };
 
   /**
-   * The only place that clears them, so a target can never outlive the params
-   * it was recorded for and go on to match an unrelated navigation.
+   * The only place that clears them, so an owner can never outlive the params
+   * it belongs to and go on to match an unrelated navigation.
    */
   const clearStagedParams = () => {
     incomingRouteParams = undefined;
-    incomingRouteParamsTo = undefined;
+    incomingRouteParamsOwner = undefined;
+    incomingRouteParamsUnclaimed = false;
   };
+
+  /**
+   * The navigation that starts first after params are staged is the one they
+   * were staged for, so it takes ownership of them here. Registered before any
+   * guard the app adds so that it still runs when one of those aborts.
+   */
+  router.beforeEach((to: RouteLocationNormalized) => {
+    if (incomingRouteParamsUnclaimed) {
+      incomingRouteParamsOwner = to;
+      incomingRouteParamsUnclaimed = false;
+    }
+  });
 
   /**
    * State staged for a navigation that did not complete describes something
@@ -168,16 +172,12 @@ export const createIonRouter = (
    * Only discard state belonging to this navigation, and check the two slots
    * separately. Another navigation can replace this one and stage its own
    * state first, in which case discarding would strip that state from the
-   * navigation still running. Params staged without a target fall back to the
-   * delta's target, which history always records for the helpers that omit
-   * one.
+   * navigation still running.
    *
-   * The params were staged from what the caller asked for, so a `redirect:`
-   * record leaves them recorded against the location before the redirect while
-   * `afterEach` reports the one after it. `redirectedFrom` is what the two have
-   * in common. The delta needs no such allowance, since history records the
-   * location the browser actually moved to, which is already the redirected
-   * one.
+   * The params are matched on the navigation that owns them rather than on
+   * where it was heading, because two navigations can head for the same path
+   * and a path cannot tell them apart. Params still unclaimed belong to this
+   * navigation, since nothing has started since they were staged.
    */
   const discardStagedStateFor = (to: RouteLocationNormalized) => {
     const deltaIsForThisNavigation =
@@ -185,10 +185,9 @@ export const createIonRouter = (
       currentNavigationInfo.to === to.fullPath;
 
     const paramsAreForThisNavigation =
-      incomingRouteParamsTo === undefined
-        ? deltaIsForThisNavigation
-        : incomingRouteParamsTo === to.fullPath ||
-          incomingRouteParamsTo === to.redirectedFrom?.fullPath;
+      incomingRouteParamsOwner === undefined
+        ? incomingRouteParamsUnclaimed
+        : incomingRouteParamsOwner === to;
 
     if (deltaIsForThisNavigation) {
       currentNavigationInfo = {
@@ -360,13 +359,7 @@ export const createIonRouter = (
     routerAnimation?: AnimationBuilder,
     tab?: string
   ) => {
-    setIncomingRouteParams(
-      routerAction,
-      routerDirection,
-      routerAnimation,
-      tab,
-      path
-    );
+    setIncomingRouteParams(routerAction, routerDirection, routerAnimation, tab);
 
     if (routerAction === "push") {
       router.push(path);
@@ -727,13 +720,7 @@ export const createIonRouter = (
   const navigate = (navigationOptions: ExternalNavigationOptions) => {
     const { routerAnimation, routerDirection, routerLink } = navigationOptions;
 
-    setIncomingRouteParams(
-      "push",
-      routerDirection,
-      routerAnimation,
-      undefined,
-      routerLink
-    );
+    setIncomingRouteParams("push", routerDirection, routerAnimation);
 
     router.push(routerLink);
   };
@@ -815,15 +802,12 @@ export const createIonRouter = (
         ...(hrefHash ? { hash: hrefHash } : {}),
       };
 
-      stageRouteParams(
-        {
-          ...incomingRouteParams,
-          routerAction: "push",
-          routerDirection: "none",
-          tab,
-        },
-        target
-      );
+      stageRouteParams({
+        ...incomingRouteParams,
+        routerAction: "push",
+        routerDirection: "none",
+        tab,
+      });
 
       router.push(target);
     } else {
@@ -923,18 +907,14 @@ export const createIonRouter = (
     routerAction: RouteAction = "push",
     routerDirection: RouteDirection = "forward",
     routerAnimation?: AnimationBuilder,
-    tab?: string,
-    to?: RouteLocationRaw
+    tab?: string
   ) => {
-    stageRouteParams(
-      {
-        routerAction,
-        routerDirection,
-        routerAnimation,
-        tab,
-      },
-      to
-    );
+    stageRouteParams({
+      routerAction,
+      routerDirection,
+      routerAnimation,
+      tab,
+    });
   };
 
   const goBack = (routerAnimation?: AnimationBuilder) => {
