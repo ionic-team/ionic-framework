@@ -100,8 +100,7 @@ describe('Inputs', () => {
       cy.get('ion-input input').focus().blur();
       cy.get('ion-input').should('have.class', 'ion-invalid');
 
-      cy.get('ion-textarea').shadow().find('textarea').focus();
-      cy.get('ion-textarea').blur();
+      cy.get('ion-textarea').shadow().find('textarea').focus().blur();
       cy.get('ion-textarea').should('have.class', 'ion-invalid');
     });
 
