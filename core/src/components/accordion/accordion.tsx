@@ -1,4 +1,3 @@
-import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '@utils/helpers';
@@ -248,19 +247,8 @@ export class Accordion implements ComponentInterface {
       return this.toggleIcon;
     }
 
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronDown,
-      ionic: caretDownRegular,
-      md: chevronDown,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
     // Return the configured accordion toggle icon or the default icon
-    return config.get('accordionToggleIcon', defaultIcon);
+    return config.get('accordionToggleIcon', chevronDown);
   }
 
   private slotToggleIcon = () => {
