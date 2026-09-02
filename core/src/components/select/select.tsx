@@ -1,6 +1,20 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Host,
+  Listen,
+  Method,
+  Prop,
+  State,
+  Watch,
+  h,
+  forceUpdate,
+} from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import { focusableQueryString } from '@utils/focus-trap';
 import type { NotchController, StartContainerController } from '@utils/forms';
 import {
   compareOptions,
@@ -8,8 +22,9 @@ import {
   createStartContainerController,
   isOptionSelected,
   checkInvalidState,
+  isSlottedClick,
 } from '@utils/forms';
-import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import { focusVisibleElement, renderHiddenInput, inheritAttributes, raf } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
@@ -90,6 +105,14 @@ export class Select implements ComponentInterface {
   private startContainerController?: StartContainerController;
   private startContainerEl: HTMLElement | undefined;
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
+
+  /**
+   * `true` if the click currently being dispatched started on content slotted
+   * into the select. Used to ignore the click the wrapping label forwards to
+   * the internal button so that a single click is not emitted twice and does
+   * not open the select.
+   */
+  private hasSlottedClick = false;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -993,42 +1016,54 @@ export class Select implements ComponentInterface {
     this.ionStyle.emit(style);
   }
 
-  private onClick = (ev: UIEvent) => {
-    const target = ev.target as HTMLElement;
-    const closestSlot = target.closest('[slot="start"], [slot="end"]');
+  /**
+   * Clicking slotted content also clicks the <label> that wraps the slots.
+   * The label has no `for` attribute, so the browser forwards the click to its
+   * first labelable descendant, the internal button. That forwarded click
+   * bubbles back out of the shadow root targeting the host, which would emit a
+   * second click event and open the select.
+   *
+   * The forwarded click is swallowed here, during the capture phase, so it
+   * never reaches listeners on the host. The click on the slotted content
+   * itself is left alone so that slotted links, checkboxes and buttons keep
+   * their default behavior, and so click handlers on slotted content still
+   * fire in React. React attaches a native "click" listener on the root
+   * element and dispatches its synthetic event from there, so calling
+   * stopPropagation() on the slotted click would stop those handlers running.
+   */
+  @Listen('click', { capture: true })
+  onClickCapture(ev: Event) {
+    if (isSlottedClick(ev, this.el)) {
+      this.hasSlottedClick = true;
 
-    if (target === this.el || closestSlot === null) {
-      this.setFocus();
-      this.open(ev);
-    } else {
       /**
-       * Prevent clicks to the start/end slots from opening the select.
-       * We ensure the target isn't this element in case the select is slotted
-       * in, for example, an item. This would prevent the select from ever
-       * being opened since the element itself has slot="start"/"end".
-       *
-       * Clicking a slotted element also causes a click
-       * on the <label> element (since it wraps the slots).
-       * Clicking <label> dispatches another click event on
-       * the native form control that then bubbles up to this
-       * listener. This additional event targets the host
-       * element, so the select overlay is opened.
-       *
-       * When the slotted elements are clicked (and therefore
-       * the ancestor <label> element) we want to prevent the label
-       * from dispatching another click event.
-       *
-       * Do not call stopPropagation() because this will cause
-       * click handlers on the slotted elements to never fire in React.
-       * When developers do onClick in React a native "click" listener
-       * is added on the root element, not the slotted element. When that
-       * native click listener fires, React then dispatches the synthetic
-       * click event on the slotted element. However, if stopPropagation
-       * is called then the native click event will never bubble up
-       * to the root element.
+       * Browsers skip the label forwarding when the click lands on interactive
+       * content, such as a slotted button, so the flag is cleared on the next
+       * frame rather than waiting for a forwarded click that never arrives.
        */
-      ev.preventDefault();
+      raf(() => (this.hasSlottedClick = false));
+      return;
     }
+
+    if (this.hasSlottedClick) {
+      ev.stopPropagation();
+      this.hasSlottedClick = false;
+    }
+  }
+
+  private onClick = (ev: UIEvent) => {
+    /**
+     * Interactive slotted content, such as a button or a link, handles its own
+     * click, so it should not open the select as well. Any other slotted
+     * content is decorative and behaves the same as clicking the select itself.
+     */
+    const deepTarget = ev.composedPath()[0] as HTMLElement;
+    if (isSlottedClick(ev, this.el) && deepTarget.closest(INTERACTIVE_SLOTTED_CONTENT) !== null) {
+      return;
+    }
+
+    this.setFocus();
+    this.open(ev);
   };
 
   private onFocus = () => {
@@ -1692,3 +1727,12 @@ const extractOptionContent = (option: HTMLIonSelectOptionElement, customHTMLEnab
 let selectIds = 0;
 
 const OPTION_CLASS = 'select-interface-option';
+
+/**
+ * Slotted content that the browser focuses or activates on its own when it is
+ * clicked. A <label> skips forwarding a click to its control when the click
+ * lands on content like this, so the select leaves it alone as well.
+ * Anchors are included because they are interactive without being focusable
+ * by the definition `focusableQueryString` uses.
+ */
+const INTERACTIVE_SLOTTED_CONTENT = `${focusableQueryString}, a[href]`;

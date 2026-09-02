@@ -347,3 +347,70 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * Slotted click behavior does not vary by mode or direction.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: slotted click'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input label="Email">
+          <ion-icon id="start-icon" slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+          <ion-button id="end-button" slot="end" aria-label="Show password">
+            <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+          </ion-button>
+        </ion-input>
+      `,
+        config
+      );
+    });
+
+    test('should emit one click when a slotted icon is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('#start-icon').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      const event = clickEvent.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
+    });
+
+    test('should focus the input when a slotted icon is clicked', async ({ page }) => {
+      await page.locator('#start-icon').click();
+
+      await expect(page.locator('ion-input input')).toBeFocused();
+    });
+
+    test('should emit one click when a slotted button is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('#end-button').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+
+    test('should not focus the input when a slotted button is clicked', async ({ page }) => {
+      await page.locator('#end-button').click();
+
+      await expect(page.locator('ion-input input')).not.toBeFocused();
+    });
+
+    test('should emit one click when the input is clicked after slotted content', async ({ page }) => {
+      /**
+       * Clicking a slotted button does not produce a forwarded click for the
+       * input to ignore, so the following click on the input itself must
+       * still be emitted.
+       */
+      await page.locator('#end-button').click();
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-input input').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+  });
+});

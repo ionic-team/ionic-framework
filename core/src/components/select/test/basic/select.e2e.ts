@@ -1339,3 +1339,94 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * Slotted click behavior does not vary by mode or direction.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: slotted click'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select label="Fruit" interface="alert">
+          <ion-icon id="start-icon" slot="start" name="pizza" aria-hidden="true"></ion-icon>
+          <ion-button id="end-button" slot="end" aria-label="Clear selection">
+            <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+          </ion-button>
+          <input id="end-checkbox" slot="end" type="checkbox" aria-label="Favorite" />
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+    });
+
+    test('should emit one click when a slotted icon is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('#start-icon').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      const event = clickEvent.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
+    });
+
+    /**
+     * Decorative slotted content behaves the same as clicking the select
+     * itself, so it opens the overlay.
+     */
+    test('should open when a slotted icon is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('#start-icon').click();
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should emit one click when a slotted button is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('#end-button').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+
+    test('should not open when a slotted button is clicked', async ({ page }) => {
+      await page.locator('#end-button').click();
+
+      await expect(page.locator('ion-alert')).toHaveCount(0);
+    });
+
+    test('should not focus the select when a slotted button is clicked', async ({ page }) => {
+      await page.locator('#end-button').click();
+
+      await expect(page.locator('ion-select')).not.toHaveClass(/has-focus/);
+    });
+
+    test('should activate slotted form controls', async ({ page }) => {
+      const checkbox = page.locator('#end-checkbox');
+
+      await checkbox.click();
+
+      await expect(checkbox).toBeChecked();
+    });
+
+    test('should open when the select is clicked after slotted content', async ({ page }) => {
+      /**
+       * Clicking a slotted button does not produce a forwarded click for the
+       * select to ignore, so the following click on the select itself must
+       * still open it.
+       */
+      await page.locator('#end-button').click();
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-select').click({ position: { x: 5, y: 5 } });
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+  });
+});
