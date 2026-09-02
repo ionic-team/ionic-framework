@@ -109,7 +109,7 @@
     "serve": "^14.0.1",
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0",
-    "typescript": "^6.0.0"
+    "typescript": "^7.0.0"
   },
   "overrides": {
     "@ionic/eslint-config": {
