@@ -440,12 +440,23 @@ export const createSheetGesture = (
       ? calculateVelocitySnapBreakpoint(detail.deltaY, detail.velocityY, detail.currentY)
       : calculatePositionSnapBreakpoint(detail.deltaY);
 
+    /**
+     * `snapBreakpoint === 0` is not enough on its own. `canDismiss: false`
+     * snaps to 0 but never dismisses, since `handleCanDismiss` returns early
+     * when canDismiss is not a function. A canDismiss function dismisses
+     * through `handleCanDismiss`, which awaits the callback, so the outcome
+     * is not known when this event is emitted.
+     */
+    const shouldPreventDismiss = canDismissBlocksGesture && snapBreakpoint === 0;
+    const isDismissing = shouldPreventDismiss ? typeof baseEl.canDismiss === 'function' : snapBreakpoint === 0;
+
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
       progress: calculateProgress(detail.currentY),
       snapBreakpoint,
+      isDismissing,
     };
 
     /**
@@ -462,7 +473,12 @@ export const createSheetGesture = (
        * swap to moving on drag and if we don't swap back here then the footer will get stuck.
        */
       swapFooterPosition('stationary');
-      onDragEnd(eventDetail);
+
+      /**
+       * The sheet does not move in this case, so the gesture
+       * never dismisses the modal.
+       */
+      onDragEnd({ ...eventDetail, isDismissing: false });
 
       return;
     }

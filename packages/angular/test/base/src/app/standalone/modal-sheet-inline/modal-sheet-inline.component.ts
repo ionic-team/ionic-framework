@@ -10,7 +10,7 @@ import {
   IonList,
   IonModal,
   IonSearchbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 interface Contact {
   name: string;

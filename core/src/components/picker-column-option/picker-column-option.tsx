@@ -54,7 +54,7 @@ export class PickerColumnOption implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color = 'primary';
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * The aria-label of the option has changed after the

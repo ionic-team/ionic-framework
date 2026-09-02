@@ -1,5 +1,6 @@
-import React from 'react';
 import { IonMenu, IonContent, IonList, IonItem, IonLabel, IonMenuToggle } from '@ionic/react';
+import React from 'react';
+
 export const Menu: React.FC = () => {
   return (
     <IonMenu contentId="main" menuId="first">

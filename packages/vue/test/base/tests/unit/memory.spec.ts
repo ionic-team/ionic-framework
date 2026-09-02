@@ -71,4 +71,45 @@ describe('createMemoryHistory', () => {
 
     expect(push).toHaveBeenCalledTimes(2);
   });
+
+  // Pins multi-step go(±n) round-trips on memory history. canGoBack() is
+  // intentionally not asserted: with memory history, the wrapper's
+  // currentHistoryPosition tracking lags behind in ways that are out of
+  // scope for the v5 upgrade. useIonRouter()'s back semantics are covered
+  // indirectly by the spy test above.
+  it('round-trips multi-step go() across memory history', async () => {
+    const Page = {
+      components: { IonPage },
+      template: '<ion-page></ion-page>',
+    };
+
+    const router = createRouter({
+      history: createMemoryHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page },
+        { path: '/page2', component: Page },
+        { path: '/page3', component: Page },
+      ],
+    });
+
+    router.push('/');
+    await router.isReady();
+    mount(IonRouterOutlet, {
+      global: { plugins: [router, IonicVue] },
+    });
+
+    router.push('/page2');
+    await waitForRouter();
+    router.push('/page3');
+    await waitForRouter();
+    expect(router.currentRoute.value.path).toBe('/page3');
+
+    router.go(-2);
+    await waitForRouter();
+    expect(router.currentRoute.value.path).toBe('/');
+
+    router.go(2);
+    await waitForRouter();
+    expect(router.currentRoute.value.path).toBe('/page3');
+  });
 })

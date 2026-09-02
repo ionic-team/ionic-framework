@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Picker Column - Scroll</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .log {
+        padding: 8px 16px;
+        font-family: monospace;
+        white-space: pre;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Picker Column - Scroll</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <!--
+          Playwright cannot drive native touch momentum, so this page is for
+          verifying the commit-on-outside-press behavior on a device.
+
+          Flick the wheel hard, then tap Save while it is still coasting. The
+          wheel should stop on the option under the highlight, the saved value
+          should match it, and the flick should record one change.
+        -->
+        <ion-picker>
+          <ion-picker-column value="5" aria-label="Select a number"></ion-picker-column>
+        </ion-picker>
+
+        <ion-button id="save" expand="block">Save</ion-button>
+
+        <div class="log" id="log">Flick the wheel, then tap Save mid-scroll.</div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const column = document.querySelector('ion-picker-column');
+      const log = document.querySelector('#log');
+
+      for (let i = 0; i < 200; i++) {
+        const option = document.createElement('ion-picker-column-option');
+        option.value = `${i}`;
+        option.textContent = `${i}`;
+        column.appendChild(option);
+      }
+
+      let changes = 0;
+      column.addEventListener('ionChange', () => changes++);
+
+      document.querySelector('#save').addEventListener('click', () => {
+        const visible = column.querySelector('.option-active');
+
+        log.textContent = [
+          `saved value:    ${column.value}`,
+          `visible option: ${visible ? visible.value : 'none'}`,
+          `changes:        ${changes}`,
+          '',
+          column.value === (visible && visible.value) ? 'MATCH' : 'MISMATCH',
+        ].join('\n');
+      });
+    </script>
+  </body>
+</html>

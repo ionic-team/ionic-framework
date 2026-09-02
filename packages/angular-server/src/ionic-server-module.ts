@@ -20,8 +20,7 @@ export class IonicServerModule {}
 export function hydrateIonicComponents(doc: any, appId: any) {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   return () => {
-    const supportsNativeAttachShadow =
-      typeof doc?.createElement?.('div')?.attachShadow === 'function';
+    const supportsNativeAttachShadow = typeof doc?.createElement?.('div')?.attachShadow === 'function';
 
     return hydrateDocument(doc, {
       // Fallback for SSR DOMs (e.g. Domino) that do not implement attachShadow.
@@ -37,7 +36,6 @@ export function hydrateIonicComponents(doc: any, appId: any) {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
         'ion-toast',
@@ -52,9 +50,6 @@ export function hydrateIonicComponents(doc: any, appId: any) {
         // tabs
         'ion-tabs',
         'ion-tab',
-
-        // auxiliar
-        'ion-picker-legacy-column',
       ],
     }).then((hydrateResults) => {
       hydrateResults.diagnostics.forEach((d) => {

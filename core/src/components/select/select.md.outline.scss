@@ -9,6 +9,15 @@
   --padding-start: 16px;
   --padding-end: 16px;
 
+  /**
+   * The measured width of the start container, as a negative offset
+   * in LTR and a positive one in RTL. Written to the host by the
+   * start container controller, so renaming it here requires renaming
+   * it there too. Declared with a default so the label is positioned
+   * correctly before the first measurement runs.
+   */
+  --internal-start-container-adjustment: 0px;
+
   min-height: 56px;
 }
 
@@ -82,10 +91,11 @@
   position: absolute;
 
   /**
-   * Label text should not extend
-   * beyond the bounds of the select.
+   * While resting this is the width of the select, which already
+   * excludes the start and end slots. Once the label floats the
+   * containing block becomes the wrapper and the rule below takes over.
    */
-  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+  max-width: 100%;
 }
 
 /**
@@ -100,10 +110,19 @@
 }
 
 /**
+ * The resting label is positioned relative to the control so it can size to
+ * the space between the start and end slots. When floating, the label needs
+ * to escape the control and position itself relative to the wrapper instead.
+ */
+:host(.select-fill-outline:not(.label-floating)) .select-control {
+  position: relative;
+}
+
+/**
  * This makes the label sit above the select.
  */
 :host(.label-floating.select-fill-outline) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
+  @include transform(translate(var(--internal-start-container-adjustment, 0px), -32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
@@ -199,13 +218,8 @@
 
 :host(.select-fill-outline) .select-outline-start {
   @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
-}
-
-:host(.select-fill-outline) .select-outline-start {
   @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
-}
 
-:host(.select-fill-outline) .select-outline-start {
   /**
    * There should be spacing between the translated text
    * and .select-outline-start. However, we can't add this
@@ -219,13 +233,8 @@
 
 :host(.select-fill-outline) .select-outline-end {
   @include border(null, var(--border-width) var(--border-style) var(--border-color), null, null);
-}
-
-:host(.select-fill-outline) .select-outline-end {
   @include border-radius(0px, var(--border-radius), var(--border-radius), 0px);
-}
 
-:host(.select-fill-outline) .select-outline-end {
   /**
    * The ending outline fragment
    * should take up the remaining free space.

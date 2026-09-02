@@ -430,7 +430,7 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('select: rich content options'), () => {
-    test('it should only render text nodes when `innerHTMLTemplatesEnabled` is disabled', async ({ page }) => {
+    test('should not render markup when `innerHTMLTemplatesEnabled` is disabled', async ({ page }) => {
       await page.setContent(
         `
           <ion-select id="alert-select" label="Alert" placeholder="Select one" interface="alert">
@@ -466,6 +466,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(endContainer).toHaveCount(0);
       await expect(span).toHaveCount(0);
 
+      /**
+       * The span is not rendered, but the text it wrapped still reads as
+       * text, so the option is not silently emptied out.
+       */
+      await expect(firstOption).toContainText('Full Content This is a span element');
+
       // Click on the first option
       await firstOption.click();
 
@@ -479,6 +485,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectTextSpan = selectText.locator('.span-style');
 
       await expect(selectTextSpan).toHaveCount(0);
+
+      /**
+       * Only the default slot is read, so the text of the `start` and `end`
+       * slots stays out of the selected text.
+       */
+      await expect(selectText).toHaveText('Full Content This is a span element');
     });
   });
 });

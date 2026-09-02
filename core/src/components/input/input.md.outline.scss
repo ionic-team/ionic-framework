@@ -7,6 +7,15 @@
   --padding-start: 16px;
   --padding-end: 16px;
 
+  /**
+   * The measured width of the start container, as a negative offset
+   * in LTR and a positive one in RTL. Written to the host by the
+   * start container controller, so renaming it here requires renaming
+   * it there too. Declared with a default so the label is positioned
+   * correctly before the first measurement runs.
+   */
+  --internal-start-container-adjustment: 0px;
+
   min-height: 56px;
 }
 
@@ -62,6 +71,15 @@
   border-bottom: none;
 }
 
+/**
+ * The resting label is positioned relative to the control so it can size to
+ * the space between the start and end slots. When floating, the label needs
+ * to escape the control and position itself relative to the wrapper instead.
+ */
+:host(.input-fill-outline:not(.label-floating)) .input-control {
+  position: relative;
+}
+
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper,
 :host(.input-fill-outline.input-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
@@ -69,10 +87,11 @@
   position: absolute;
 
   /**
-   * Label text should not extend
-   * beyond the bounds of the input.
+   * While resting this is the width of the text input, which already
+   * excludes the start and end slots. Once the label floats the
+   * containing block becomes the wrapper and the rule below takes over.
    */
-  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+  max-width: 100%;
 }
 
 /**
@@ -88,7 +107,7 @@
  * This makes the label sit above the input.
  */
 :host(.label-floating.input-fill-outline) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
+  @include transform(translate(var(--internal-start-container-adjustment, 0px), -32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
@@ -98,16 +117,6 @@
   max-width: calc(
     (100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale}
   );
-}
-
-/**
- * This ensures that the input does not
- * overlap the floating label while still
- * remaining visually centered.
- */
-:host(.input-fill-outline.input-label-placement-stacked) input,
-:host(.input-fill-outline.input-label-placement-floating) input {
-  @include margin(6px, 0, 6px, 0);
 }
 
 // Input Fill: Outline Outline Container
