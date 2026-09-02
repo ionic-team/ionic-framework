@@ -763,27 +763,48 @@ export class Textarea implements ComponentInterface {
    * The textarea itself may have a slot attribute when placed in an item
    * or toolbar, which does not make its content slotted content.
    */
+  /**
+   * Whether the click that began the current gesture already reached the
+   * consumer. Clicking the label makes the browser forward a second click to
+   * the native textarea; WebKit forwards it even when the gesture began on
+   * slotted content, where it would arrive as a duplicate.
+   */
+  private clickReachedConsumer = false;
+
+  private onLabelPointerDown = () => {
+    this.clickReachedConsumer = false;
+  };
+
   private onLabelClick = (ev: MouseEvent) => {
     const target = ev.target as HTMLElement;
 
-    /**
-     * Clicking the label makes the browser forward a second click to the
-     * native textarea. That forwarded click is the one consumers should see,
-     * retargeted to the host, so let it through.
-     */
     if (target === this.nativeInput) {
+      /**
+       * Either the click the label forwarded here, or a direct click on the
+       * textarea. Both should reach the consumer as a single click on the host,
+       * so only drop it when something else already did.
+       */
+      if (this.clickReachedConsumer) {
+        ev.stopPropagation();
+      }
+
+      this.clickReachedConsumer = false;
+
       return;
     }
 
     /**
-     * Clicks that originate in slotted content belong to the consumer, so they
-     * have to keep propagating. Everything else is internal chrome (the label,
-     * the start/end containers, the wrapper padding) and would otherwise
-     * duplicate the forwarded click.
+     * Clicks on slotted content belong to the consumer and have to keep
+     * propagating. Everything else is internal chrome (the label, the
+     * start/end containers, the wrapper padding) and is represented by the
+     * click the label forwards to the native textarea.
      */
     const slotted = target.closest('[slot="start"], [slot="end"]');
+    const isSlotted = slotted !== null && slotted !== this.el && this.el.contains(slotted);
 
-    if (slotted === null || slotted === this.el || !this.el.contains(slotted)) {
+    this.clickReachedConsumer = isSlotted;
+
+    if (!isSlotted) {
       ev.stopPropagation();
     }
   };
@@ -921,7 +942,13 @@ export class Textarea implements ComponentInterface {
          * interactable, clicking the label would focus that instead
          * since it comes before the textarea in the DOM.
          */}
-        <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick} part="wrapper">
+        <label
+          class="textarea-wrapper"
+          htmlFor={inputId}
+          onMouseDown={this.onLabelPointerDown}
+          onClick={this.onLabelClick}
+          part="wrapper"
+        >
           {hasOutlineFill && this.renderOutlineContainer()}
           <div class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
             <slot name="start"></slot>
