@@ -378,11 +378,9 @@ export class Content implements ComponentInterface {
     const height = getComputedStyle(modal).getPropertyValue('--height').trim();
 
     /**
-     * Compared as a suffix so a value carrying only a vendor prefix is still
-     * recognized, such as the `-moz-fit-content` that Firefox needs before 94.
-     *
-     * TODO: replace with `CONTENT_SIZED_HEIGHTS.includes(height)` once the
-     * oldest supported Firefox is 94 or higher.
+     * Compared as a suffix so a value carrying a vendor prefix is still
+     * recognized, such as `-webkit-fit-content` or the `-moz-fit-content`
+     * that Firefox needed before 94.
      */
     return CONTENT_SIZED_HEIGHTS.some((value) => height.endsWith(value));
   }
