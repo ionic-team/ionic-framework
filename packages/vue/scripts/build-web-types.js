@@ -75,12 +75,8 @@ for (const component of filteredComponents) {
     "doc-url": docUrl,
     description: component.docs,
     source: {
-      module:
-        "@ionic/core/" +
-        component.filePath
-          .replace("./src/", "dist/types/")
-          .replace(".tsx", ".d.ts"),
-      symbol: componentName.substr(3),
+      module: "@ionic/vue",
+      symbol: componentName,
     },
     attributes,
     slots,
