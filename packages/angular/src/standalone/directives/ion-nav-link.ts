@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/
 
 @ProxyCmp({
   defineCustomElementFn: defineIonNavLink,
-  inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection']
+  inputs: ['component', 'componentProps', 'mode', 'routerAnimation', 'routerDirection', 'theme']
 })
 @Component({
   selector: 'ion-nav-link',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection'],
+  inputs: ['component', 'componentProps', 'mode', 'routerAnimation', 'routerDirection', 'theme'],
 })
 export class IonNavLink {
   protected el: HTMLIonNavLinkElement;

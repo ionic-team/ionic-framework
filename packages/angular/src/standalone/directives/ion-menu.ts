@@ -10,7 +10,7 @@ import { defineCustomElement as defineIonMenu } from '@ionic/core/components/ion
 
 @ProxyCmp({
   defineCustomElementFn: defineIonMenu,
-  inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'side', 'swipeGesture', 'type'],
+  inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'mode', 'side', 'swipeGesture', 'theme', 'type'],
   methods: ['isOpen', 'isActive', 'open', 'close', 'toggle', 'setOpen']
 })
 @Component({
@@ -18,7 +18,7 @@ import { defineCustomElement as defineIonMenu } from '@ionic/core/components/ion
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'side', 'swipeGesture', 'type'],
+  inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'mode', 'side', 'swipeGesture', 'theme', 'type'],
   outputs: ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose'],
 })
 export class IonMenu {

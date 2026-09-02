@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-
 
 @ProxyCmp({
   defineCustomElementFn: defineIonImg,
-  inputs: ['alt', 'src']
+  inputs: ['alt', 'mode', 'src', 'theme']
 })
 @Component({
   selector: 'ion-img',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alt', 'src'],
+  inputs: ['alt', 'mode', 'src', 'theme'],
   outputs: ['ionImgWillLoad', 'ionImgDidLoad', 'ionError'],
 })
 export class IonImg {

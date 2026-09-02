@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/componen
 
 @ProxyCmp({
   defineCustomElementFn: defineIonMenuToggle,
-  inputs: ['autoHide', 'menu']
+  inputs: ['autoHide', 'menu', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-menu-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autoHide', 'menu'],
+  inputs: ['autoHide', 'menu', 'mode', 'theme'],
 })
 export class IonMenuToggle {
   protected el: HTMLIonMenuToggleElement;

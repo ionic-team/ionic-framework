@@ -10,7 +10,7 @@ import { defineCustomElement as defineIonList } from '@ionic/core/components/ion
 
 @ProxyCmp({
   defineCustomElementFn: defineIonList,
-  inputs: ['inset', 'lines', 'mode'],
+  inputs: ['inset', 'lines', 'mode', 'shape', 'theme'],
   methods: ['closeSlidingItems']
 })
 @Component({
@@ -18,7 +18,7 @@ import { defineCustomElement as defineIonList } from '@ionic/core/components/ion
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['inset', 'lines', 'mode'],
+  inputs: ['inset', 'lines', 'mode', 'shape', 'theme'],
 })
 export class IonList {
   protected el: HTMLIonListElement;

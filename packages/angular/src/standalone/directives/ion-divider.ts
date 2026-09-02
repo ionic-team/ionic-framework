@@ -29,3 +29,5 @@ export class IonDivider {
 
 
 export declare interface IonDivider extends Components.IonDivider {}
+
+

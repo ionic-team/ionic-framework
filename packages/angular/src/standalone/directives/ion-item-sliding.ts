@@ -10,7 +10,7 @@ import { defineCustomElement as defineIonItemSliding } from '@ionic/core/compone
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemSliding,
-  inputs: ['disabled'],
+  inputs: ['disabled', 'mode', 'theme'],
   methods: ['getOpenAmount', 'getSlidingRatio', 'open', 'close', 'closeOpened']
 })
 @Component({
@@ -18,7 +18,7 @@ import { defineCustomElement as defineIonItemSliding } from '@ionic/core/compone
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled'],
+  inputs: ['disabled', 'mode', 'theme'],
   outputs: ['ionDrag'],
 })
 export class IonItemSliding {

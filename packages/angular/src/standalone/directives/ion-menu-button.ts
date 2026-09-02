@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonMenuButton } from '@ionic/core/componen
 
 @ProxyCmp({
   defineCustomElementFn: defineIonMenuButton,
-  inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'type']
+  inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'theme', 'type']
 })
 @Component({
   selector: 'ion-menu-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'type'],
+  inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'theme', 'type'],
 })
 export class IonMenuButton {
   protected el: HTMLIonMenuButtonElement;

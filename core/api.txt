@@ -2035,7 +2035,7 @@ ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocapitalize,string,'off',false,false
 ion-searchbar,prop,autocomplete,"additional-name" | "address-level1" | "address-level2" | "address-level3" | "address-level4" | "address-line1" | "address-line2" | "address-line3" | "bday" | "bday-day" | "bday-month" | "bday-year" | "cc-additional-name" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-family-name" | "cc-given-name" | "cc-name" | "cc-number" | "cc-type" | "country" | "country-name" | "current-password" | "email" | "family-name" | "given-name" | "honorific-prefix" | "honorific-suffix" | "impp" | "language" | "name" | "new-password" | "nickname" | "off" | "on" | "one-time-code" | "organization" | "organization-title" | "photo" | "postal-code" | "sex" | "street-address" | "tel" | "tel-area-code" | "tel-country-code" | "tel-extension" | "tel-local" | "tel-national" | "transaction-amount" | "transaction-currency" | "url" | "username",'off',false,false
 ion-searchbar,prop,autocorrect,boolean,false,false,false
-ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
+ion-searchbar,prop,cancelButtonIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true

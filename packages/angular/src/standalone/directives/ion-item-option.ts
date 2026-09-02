@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonItemOption } from '@ionic/core/componen
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemOption,
-  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'type']
+  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'hue', 'mode', 'rel', 'shape', 'target', 'theme', 'type']
 })
 @Component({
   selector: 'ion-item-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'type'],
+  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'hue', 'mode', 'rel', 'shape', 'target', 'theme', 'type'],
 })
 export class IonItemOption {
   protected el: HTMLIonItemOptionElement;

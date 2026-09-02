@@ -10,7 +10,7 @@ import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-
 
 @ProxyCmp({
   defineCustomElementFn: defineIonFab,
-  inputs: ['activated', 'edge', 'horizontal', 'vertical'],
+  inputs: ['activated', 'edge', 'horizontal', 'mode', 'theme', 'vertical'],
   methods: ['close']
 })
 @Component({
@@ -18,7 +18,7 @@ import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activated', 'edge', 'horizontal', 'vertical'],
+  inputs: ['activated', 'edge', 'horizontal', 'mode', 'theme', 'vertical'],
 })
 export class IonFab {
   protected el: HTMLIonFabElement;

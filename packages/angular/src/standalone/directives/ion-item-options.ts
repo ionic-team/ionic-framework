@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonItemOptions } from '@ionic/core/compone
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemOptions,
-  inputs: ['side']
+  inputs: ['mode', 'side', 'theme']
 })
 @Component({
   selector: 'ion-item-options',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['side'],
+  inputs: ['mode', 'side', 'theme'],
   outputs: ['ionSwipe'],
 })
 export class IonItemOptions {

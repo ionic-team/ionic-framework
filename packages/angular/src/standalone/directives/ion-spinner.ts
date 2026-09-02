@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSpinner,
-  inputs: ['color', 'duration', 'name', 'paused']
+  inputs: ['color', 'duration', 'mode', 'name', 'paused', 'size', 'theme']
 })
 @Component({
   selector: 'ion-spinner',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'duration', 'name', 'paused'],
+  inputs: ['color', 'duration', 'mode', 'name', 'paused', 'size', 'theme'],
 })
 export class IonSpinner {
   protected el: HTMLIonSpinnerElement;

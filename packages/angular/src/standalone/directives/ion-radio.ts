@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonRadio } from '@ionic/core/components/io
 
 @ProxyCmp({
   defineCustomElementFn: defineIonRadio,
-  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'value']
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'theme', 'value']
 })
 @Component({
   selector: 'ion-radio',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'value'],
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'theme', 'value'],
   outputs: ['ionFocus', 'ionBlur'],
 })
 export class IonRadio {

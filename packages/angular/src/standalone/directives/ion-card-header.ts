@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonCardHeader } from '@ionic/core/componen
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCardHeader,
-  inputs: ['color', 'mode', 'translucent']
+  inputs: ['color', 'mode', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-card-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'translucent'],
+  inputs: ['color', 'mode', 'theme', 'translucent'],
 })
 export class IonCardHeader {
   protected el: HTMLIonCardHeaderElement;

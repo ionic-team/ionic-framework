@@ -781,6 +781,7 @@ export declare interface IonDatetimeButton extends Components.IonDatetimeButton 
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['inset', 'spacing'],
+  standalone: false
 })
 export class IonDivider {
   protected el: HTMLIonDividerElement;
@@ -910,6 +911,7 @@ export declare interface IonFooter extends Components.IonFooter {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['columns', 'gap', 'layout', 'mode', 'order', 'theme'],
+  standalone: false
 })
 export class IonGallery {
   protected el: HTMLIonGalleryElement;
@@ -932,6 +934,7 @@ export declare interface IonGallery extends Components.IonGallery {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['mode', 'theme'],
+  standalone: false
 })
 export class IonGalleryItem {
   protected el: HTMLIonGalleryItemElement;

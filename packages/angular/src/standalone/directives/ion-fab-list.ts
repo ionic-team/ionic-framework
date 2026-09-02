@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonFabList } from '@ionic/core/components/
 
 @ProxyCmp({
   defineCustomElementFn: defineIonFabList,
-  inputs: ['activated', 'side']
+  inputs: ['activated', 'mode', 'side', 'theme']
 })
 @Component({
   selector: 'ion-fab-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activated', 'side'],
+  inputs: ['activated', 'mode', 'side', 'theme'],
 })
 export class IonFabList {
   protected el: HTMLIonFabListElement;

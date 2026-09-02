@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonHeader } from '@ionic/core/components/i
 
 @ProxyCmp({
   defineCustomElementFn: defineIonHeader,
-  inputs: ['collapse', 'mode', 'translucent']
+  inputs: ['collapse', 'divider', 'mode', 'scrollEffect', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', 'mode', 'translucent'],
+  inputs: ['collapse', 'divider', 'mode', 'scrollEffect', 'theme', 'translucent'],
 })
 export class IonHeader {
   protected el: HTMLIonHeaderElement;

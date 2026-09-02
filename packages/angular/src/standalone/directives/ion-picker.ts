@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonPicker } from '@ionic/core/components/i
 
 @ProxyCmp({
   defineCustomElementFn: defineIonPicker,
-  inputs: ['mode']
+  inputs: ['mode', 'theme']
 })
 @Component({
   selector: 'ion-picker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode'],
+  inputs: ['mode', 'theme'],
 })
 export class IonPicker {
   protected el: HTMLIonPickerElement;

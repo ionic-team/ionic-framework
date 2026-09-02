@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonAccordionGroup } from '@ionic/core/comp
 
 @ProxyCmp({
   defineCustomElementFn: defineIonAccordionGroup,
-  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value']
+  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'shape', 'theme', 'value']
 })
 @Component({
   selector: 'ion-accordion-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value'],
+  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'shape', 'theme', 'value'],
   outputs: ['ionChange'],
 })
 export class IonAccordionGroup {

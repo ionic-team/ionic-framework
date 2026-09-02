@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonListHeader } from '@ionic/core/componen
 
 @ProxyCmp({
   defineCustomElementFn: defineIonListHeader,
-  inputs: ['color', 'lines', 'mode']
+  inputs: ['color', 'lines', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-list-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'lines', 'mode'],
+  inputs: ['color', 'lines', 'mode', 'theme'],
 })
 export class IonListHeader {
   protected el: HTMLIonListHeaderElement;

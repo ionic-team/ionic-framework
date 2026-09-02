@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/
 
 @ProxyCmp({
   defineCustomElementFn: defineIonPickerColumnOption,
-  inputs: ['color', 'disabled', 'value']
+  inputs: ['color', 'disabled', 'mode', 'theme', 'value']
 })
 @Component({
   selector: 'ion-picker-column-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'theme', 'value'],
 })
 export class IonPickerColumnOption {
   protected el: HTMLIonPickerColumnOptionElement;

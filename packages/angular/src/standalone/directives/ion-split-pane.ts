@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonSplitPane } from '@ionic/core/component
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSplitPane,
-  inputs: ['contentId', 'disabled', 'when']
+  inputs: ['contentId', 'disabled', 'mode', 'theme', 'when']
 })
 @Component({
   selector: 'ion-split-pane',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['contentId', 'disabled', 'when'],
+  inputs: ['contentId', 'disabled', 'mode', 'theme', 'when'],
   outputs: ['ionSplitPaneVisible'],
 })
 export class IonSplitPane {

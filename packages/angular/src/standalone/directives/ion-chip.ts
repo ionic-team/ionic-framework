@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonChip } from '@ionic/core/components/ion
 
 @ProxyCmp({
   defineCustomElementFn: defineIonChip,
-  inputs: ['color', 'disabled', 'mode', 'outline']
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme']
 })
 @Component({
   selector: 'ion-chip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'mode', 'outline'],
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme'],
 })
 export class IonChip {
   protected el: HTMLIonChipElement;

@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonBackdrop } from '@ionic/core/components
 
 @ProxyCmp({
   defineCustomElementFn: defineIonBackdrop,
-  inputs: ['stopPropagation', 'tappable', 'visible']
+  inputs: ['mode', 'stopPropagation', 'tappable', 'theme', 'visible']
 })
 @Component({
   selector: 'ion-backdrop',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['stopPropagation', 'tappable', 'visible'],
+  inputs: ['mode', 'stopPropagation', 'tappable', 'theme', 'visible'],
   outputs: ['ionBackdropTap'],
 })
 export class IonBackdrop {

@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonCardTitle } from '@ionic/core/component
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCardTitle,
-  inputs: ['color', 'mode']
+  inputs: ['color', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-card-title',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'mode', 'theme'],
 })
 export class IonCardTitle {
   protected el: HTMLIonCardTitleElement;

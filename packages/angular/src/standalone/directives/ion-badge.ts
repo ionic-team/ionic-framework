@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonBadge } from '@ionic/core/components/io
 
 @ProxyCmp({
   defineCustomElementFn: defineIonBadge,
-  inputs: ['color', 'mode']
+  inputs: ['color', 'hue', 'mode', 'shape', 'size', 'theme', 'vertical']
 })
 @Component({
   selector: 'ion-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'hue', 'mode', 'shape', 'size', 'theme', 'vertical'],
 })
 export class IonBadge {
   protected el: HTMLIonBadgeElement;

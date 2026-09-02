@@ -9,14 +9,15 @@ import type { Components } from '@ionic/core/components';
 import { defineCustomElement as defineIonRow } from '@ionic/core/components/ion-row.js';
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonRow
+  defineCustomElementFn: defineIonRow,
+  inputs: ['mode', 'theme']
 })
 @Component({
   selector: 'ion-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['mode', 'theme'],
 })
 export class IonRow {
   protected el: HTMLIonRowElement;

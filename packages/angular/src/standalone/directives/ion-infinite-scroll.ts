@@ -10,7 +10,7 @@ import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/comp
 
 @ProxyCmp({
   defineCustomElementFn: defineIonInfiniteScroll,
-  inputs: ['disabled', 'position', 'threshold'],
+  inputs: ['disabled', 'mode', 'position', 'preserveRerenderScrollPosition', 'theme', 'threshold'],
   methods: ['complete']
 })
 @Component({
@@ -18,7 +18,7 @@ import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/comp
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'position', 'threshold'],
+  inputs: ['disabled', 'mode', 'position', 'preserveRerenderScrollPosition', 'theme', 'threshold'],
   outputs: ['ionInfinite'],
 })
 export class IonInfiniteScroll {

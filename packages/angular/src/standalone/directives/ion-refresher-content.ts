@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonRefresherContent } from '@ionic/core/co
 
 @ProxyCmp({
   defineCustomElementFn: defineIonRefresherContent,
-  inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText']
+  inputs: ['mode', 'pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText', 'theme']
 })
 @Component({
   selector: 'ion-refresher-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText'],
+  inputs: ['mode', 'pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText', 'theme'],
 })
 export class IonRefresherContent {
   protected el: HTMLIonRefresherContentElement;

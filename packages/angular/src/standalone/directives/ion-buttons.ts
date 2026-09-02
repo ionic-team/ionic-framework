@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonButtons } from '@ionic/core/components/
 
 @ProxyCmp({
   defineCustomElementFn: defineIonButtons,
-  inputs: ['collapse']
+  inputs: ['collapse', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-buttons',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse'],
+  inputs: ['collapse', 'mode', 'theme'],
 })
 export class IonButtons {
   protected el: HTMLIonButtonsElement;

@@ -10,7 +10,7 @@ import { defineCustomElement as defineIonRefresher } from '@ionic/core/component
 
 @ProxyCmp({
   defineCustomElementFn: defineIonRefresher,
-  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
+  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration', 'theme'],
   methods: ['complete', 'cancel', 'getProgress']
 })
 @Component({
@@ -18,7 +18,7 @@ import { defineCustomElement as defineIonRefresher } from '@ionic/core/component
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
+  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration', 'theme'],
   outputs: ['ionRefresh', 'ionPull', 'ionStart', 'ionPullStart', 'ionPullEnd'],
 })
 export class IonRefresher {

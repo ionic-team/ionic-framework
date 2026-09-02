@@ -9,14 +9,15 @@ import type { Components } from '@ionic/core/components';
 import { defineCustomElement as defineIonItemGroup } from '@ionic/core/components/ion-item-group.js';
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonItemGroup
+  defineCustomElementFn: defineIonItemGroup,
+  inputs: ['mode', 'theme']
 })
 @Component({
   selector: 'ion-item-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['mode', 'theme'],
 })
 export class IonItemGroup {
   protected el: HTMLIonItemGroupElement;

@@ -10,6 +10,7 @@ import { defineCustomElement as defineIonApp } from '@ionic/core/components/ion-
 
 @ProxyCmp({
   defineCustomElementFn: defineIonApp,
+  inputs: ['mode', 'theme'],
   methods: ['setFocus']
 })
 @Component({
@@ -17,7 +18,7 @@ import { defineCustomElement as defineIonApp } from '@ionic/core/components/ion-
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['mode', 'theme'],
 })
 export class IonApp {
   protected el: HTMLIonAppElement;

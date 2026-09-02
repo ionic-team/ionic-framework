@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonBreadcrumb } from '@ionic/core/componen
 
 @ProxyCmp({
   defineCustomElementFn: defineIonBreadcrumb,
-  inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target']
+  inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target', 'theme']
 })
 @Component({
   selector: 'ion-breadcrumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target'],
+  inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target', 'theme'],
   outputs: ['ionFocus', 'ionBlur'],
 })
 export class IonBreadcrumb {

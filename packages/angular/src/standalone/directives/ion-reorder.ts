@@ -9,14 +9,15 @@ import type { Components } from '@ionic/core/components';
 import { defineCustomElement as defineIonReorder } from '@ionic/core/components/ion-reorder.js';
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonReorder
+  defineCustomElementFn: defineIonReorder,
+  inputs: ['mode', 'theme']
 })
 @Component({
   selector: 'ion-reorder',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['mode', 'theme'],
 })
 export class IonReorder {
   protected el: HTMLIonReorderElement;

@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonAccordion } from '@ionic/core/component
 
 @ProxyCmp({
   defineCustomElementFn: defineIonAccordion,
-  inputs: ['disabled', 'mode', 'readonly', 'toggleIcon', 'toggleIconSlot', 'value']
+  inputs: ['disabled', 'mode', 'readonly', 'theme', 'toggleIcon', 'toggleIconSlot', 'value']
 })
 @Component({
   selector: 'ion-accordion',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'mode', 'readonly', 'toggleIcon', 'toggleIconSlot', 'value'],
+  inputs: ['disabled', 'mode', 'readonly', 'theme', 'toggleIcon', 'toggleIconSlot', 'value'],
 })
 export class IonAccordion {
   protected el: HTMLIonAccordionElement;

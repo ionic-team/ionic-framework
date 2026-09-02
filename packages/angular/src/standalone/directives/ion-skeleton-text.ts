@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/compon
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSkeletonText,
-  inputs: ['animated']
+  inputs: ['animated', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-skeleton-text',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated'],
+  inputs: ['animated', 'mode', 'theme'],
 })
 export class IonSkeletonText {
   protected el: HTMLIonSkeletonTextElement;

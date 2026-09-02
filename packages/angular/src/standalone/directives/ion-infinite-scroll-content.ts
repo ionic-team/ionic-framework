@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/co
 
 @ProxyCmp({
   defineCustomElementFn: defineIonInfiniteScrollContent,
-  inputs: ['loadingSpinner', 'loadingText']
+  inputs: ['loadingSpinner', 'loadingText', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-infinite-scroll-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['loadingSpinner', 'loadingText'],
+  inputs: ['loadingSpinner', 'loadingText', 'mode', 'theme'],
 })
 export class IonInfiniteScrollContent {
   protected el: HTMLIonInfiniteScrollContentElement;

@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonItemDivider } from '@ionic/core/compone
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemDivider,
-  inputs: ['color', 'mode', 'sticky']
+  inputs: ['color', 'mode', 'sticky', 'theme']
 })
 @Component({
   selector: 'ion-item-divider',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'sticky'],
+  inputs: ['color', 'mode', 'sticky', 'theme'],
 })
 export class IonItemDivider {
   protected el: HTMLIonItemDividerElement;

@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonGrid } from '@ionic/core/components/ion
 
 @ProxyCmp({
   defineCustomElementFn: defineIonGrid,
-  inputs: ['fixed']
+  inputs: ['fixed', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-grid',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['fixed'],
+  inputs: ['fixed', 'mode', 'theme'],
 })
 export class IonGrid {
   protected el: HTMLIonGridElement;

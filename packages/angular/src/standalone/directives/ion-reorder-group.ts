@@ -10,7 +10,7 @@ import { defineCustomElement as defineIonReorderGroup } from '@ionic/core/compon
 
 @ProxyCmp({
   defineCustomElementFn: defineIonReorderGroup,
-  inputs: ['disabled'],
+  inputs: ['disabled', 'mode', 'theme'],
   methods: ['complete']
 })
 @Component({
@@ -18,7 +18,7 @@ import { defineCustomElement as defineIonReorderGroup } from '@ionic/core/compon
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled'],
+  inputs: ['disabled', 'mode', 'theme'],
   outputs: ['ionItemReorder', 'ionReorderStart', 'ionReorderMove', 'ionReorderEnd'],
 })
 export class IonReorderGroup {

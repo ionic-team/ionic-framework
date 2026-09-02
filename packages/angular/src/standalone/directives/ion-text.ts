@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonText } from '@ionic/core/components/ion
 
 @ProxyCmp({
   defineCustomElementFn: defineIonText,
-  inputs: ['color', 'mode']
+  inputs: ['color', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-text',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'mode', 'theme'],
 })
 export class IonText {
   protected el: HTMLIonTextElement;

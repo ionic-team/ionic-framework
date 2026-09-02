@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonCardSubtitle } from '@ionic/core/compon
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCardSubtitle,
-  inputs: ['color', 'mode']
+  inputs: ['color', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-card-subtitle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'mode', 'theme'],
 })
 export class IonCardSubtitle {
   protected el: HTMLIonCardSubtitleElement;

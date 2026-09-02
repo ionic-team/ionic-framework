@@ -9,14 +9,15 @@ import type { Components } from '@ionic/core/components';
 import { defineCustomElement as defineIonThumbnail } from '@ionic/core/components/ion-thumbnail.js';
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonThumbnail
+  defineCustomElementFn: defineIonThumbnail,
+  inputs: ['mode', 'theme']
 })
 @Component({
   selector: 'ion-thumbnail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['mode', 'theme'],
 })
 export class IonThumbnail {
   protected el: HTMLIonThumbnailElement;

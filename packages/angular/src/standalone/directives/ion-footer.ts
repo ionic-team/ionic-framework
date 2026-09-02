@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonFooter } from '@ionic/core/components/i
 
 @ProxyCmp({
   defineCustomElementFn: defineIonFooter,
-  inputs: ['collapse', 'mode', 'translucent']
+  inputs: ['collapse', 'mode', 'scrollEffect', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', 'mode', 'translucent'],
+  inputs: ['collapse', 'mode', 'scrollEffect', 'theme', 'translucent'],
 })
 export class IonFooter {
   protected el: HTMLIonFooterElement;

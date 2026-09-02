@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonBreadcrumbs } from '@ionic/core/compone
 
 @ProxyCmp({
   defineCustomElementFn: defineIonBreadcrumbs,
-  inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode']
+  inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-breadcrumbs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode'],
+  inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode', 'theme'],
   outputs: ['ionCollapsedClick'],
 })
 export class IonBreadcrumbs {

@@ -10,7 +10,7 @@ import { defineCustomElement as defineIonRippleEffect } from '@ionic/core/compon
 
 @ProxyCmp({
   defineCustomElementFn: defineIonRippleEffect,
-  inputs: ['type'],
+  inputs: ['mode', 'theme', 'type'],
   methods: ['addRipple']
 })
 @Component({
@@ -18,7 +18,7 @@ import { defineCustomElement as defineIonRippleEffect } from '@ionic/core/compon
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['type'],
+  inputs: ['mode', 'theme', 'type'],
 })
 export class IonRippleEffect {
   protected el: HTMLIonRippleEffectElement;

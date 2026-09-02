@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonDatetimeButton } from '@ionic/core/comp
 
 @ProxyCmp({
   defineCustomElementFn: defineIonDatetimeButton,
-  inputs: ['color', 'datetime', 'disabled', 'mode']
+  inputs: ['color', 'datetime', 'disabled', 'mode', 'theme']
 })
 @Component({
   selector: 'ion-datetime-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'datetime', 'disabled', 'mode'],
+  inputs: ['color', 'datetime', 'disabled', 'mode', 'theme'],
 })
 export class IonDatetimeButton {
   protected el: HTMLIonDatetimeButtonElement;

@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonLabel } from '@ionic/core/components/io
 
 @ProxyCmp({
   defineCustomElementFn: defineIonLabel,
-  inputs: ['color', 'mode', 'position']
+  inputs: ['color', 'mode', 'position', 'theme']
 })
 @Component({
   selector: 'ion-label',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'position'],
+  inputs: ['color', 'mode', 'position', 'theme'],
 })
 export class IonLabel {
   protected el: HTMLIonLabelElement;

@@ -10,7 +10,7 @@ import { defineCustomElement as defineIonTab } from '@ionic/core/components/ion-
 
 @ProxyCmp({
   defineCustomElementFn: defineIonTab,
-  inputs: ['component', 'tab'],
+  inputs: ['component', 'mode', 'tab', 'theme'],
   methods: ['setActive']
 })
 @Component({
@@ -18,7 +18,7 @@ import { defineCustomElement as defineIonTab } from '@ionic/core/components/ion-
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['component', { name: 'tab', required: true }],
+  inputs: ['component', 'mode', { name: 'tab', required: true }, 'theme'],
 })
 export class IonTab {
   protected el: HTMLIonTabElement;

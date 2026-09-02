@@ -29,3 +29,5 @@ export class IonGalleryItem {
 
 
 export declare interface IonGalleryItem extends Components.IonGalleryItem {}
+
+
