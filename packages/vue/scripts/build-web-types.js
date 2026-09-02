@@ -74,6 +74,7 @@ for (const component of filteredComponents) {
     name: componentName,
     "doc-url": docUrl,
     description: component.docs,
+    priority: "highest",
     source: {
       module:
         "@ionic/core/" +
