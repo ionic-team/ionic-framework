@@ -93,6 +93,9 @@ const presentNavModal = async (page: E2EPage) => {
   await page.locator('ion-modal ion-nav nav-page-one').waitFor();
 };
 
+/**
+ * This behavior does not vary across directions/modes
+ */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: content height'), () => {
     test.describe('content-based heights', () => {
