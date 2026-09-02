@@ -1,5 +1,3 @@
-import eyeSlashRegular from '@phosphor-icons/core/assets/regular/eye-slash.svg';
-import eyeRegular from '@phosphor-icons/core/assets/regular/eye.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, Watch } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
@@ -7,7 +5,7 @@ import { createColorClasses } from '@utils/theme';
 import { eyeOff, eye } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color, TextFieldTypes } from '../../interface';
 
 /**
@@ -115,19 +113,8 @@ export class InputPasswordToggle implements ComponentInterface {
       return this.hideIcon;
     }
 
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: eyeOff,
-      ionic: eyeSlashRegular,
-      md: eyeOff,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
     // Return the configured input password hide icon or the default icon
-    return config.get('inputPasswordHideIcon', defaultIcon);
+    return config.get('inputPasswordHideIcon', eyeOff);
   }
 
   get inputPasswordShowIcon() {
@@ -136,19 +123,8 @@ export class InputPasswordToggle implements ComponentInterface {
       return this.showIcon;
     }
 
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: eye,
-      ionic: eyeRegular,
-      md: eye,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
     // Return the configured input password show icon or the default icon
-    return config.get('inputPasswordShowIcon', defaultIcon);
+    return config.get('inputPasswordShowIcon', eye);
   }
 
   render() {

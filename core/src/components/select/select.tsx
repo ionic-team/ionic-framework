@@ -1,4 +1,3 @@
-import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
@@ -1304,16 +1303,9 @@ export class Select implements ComponentInterface {
       return this.toggleIcon;
     }
 
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronExpand,
-      ionic: caretDownRegular,
-      md: caretDownSharp,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+    const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
 
     // Return the configured select expanded icon or the default icon
     return config.get('selectExpandedIcon', defaultIcon);
@@ -1331,16 +1323,9 @@ export class Select implements ComponentInterface {
       return this.toggleIcon;
     }
 
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronExpand,
-      ionic: caretDownRegular,
-      md: caretDownSharp,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+    const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
 
     return config.get('selectCollapsedIcon', defaultIcon);
   }

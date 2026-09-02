@@ -1,5 +1,3 @@
-import checkRegular from '@phosphor-icons/core/assets/regular/check.svg';
-import minusRegular from '@phosphor-icons/core/assets/regular/minus.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { checkInvalidState, createItemMultipleInputsObserver } from '@utils/forms';
@@ -367,19 +365,9 @@ export class Toggle implements ComponentInterface {
   };
 
   get toggleDefaultCheckedIcon(): string {
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: removeOutline,
-      ionic: checkRegular,
-      md: checkmarkOutline,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the default icon
-    return defaultIcon;
+    return theme === 'ios' ? removeOutline : checkmarkOutline;
   }
 
   /**
@@ -397,16 +385,9 @@ export class Toggle implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get toggleUncheckedIcon(): string {
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: ellipseOutline,
-      ionic: minusRegular,
-      md: removeOutline,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+    const defaultIcon = theme === 'ios' ? ellipseOutline : removeOutline;
 
     // Return the configured toggle unchecked icon or the default icon
     return config.get('toggleUncheckedIcon', defaultIcon);

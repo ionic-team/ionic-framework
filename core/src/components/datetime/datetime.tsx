@@ -1,5 +1,3 @@
-import caretLeftRegular from '@phosphor-icons/core/assets/regular/caret-left.svg';
-import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { startFocusVisible } from '@utils/focus-visible';
@@ -2753,19 +2751,8 @@ export class Datetime implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get datetimeNextIcon(): string {
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronForward,
-      ionic: caretRightRegular,
-      md: chevronForward,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
     // Return the configured datetime next icon or the default icon
-    return config.get('datetimeNextIcon', defaultIcon);
+    return config.get('datetimeNextIcon', chevronForward);
   }
 
   /**
@@ -2774,19 +2761,8 @@ export class Datetime implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get datetimePreviousIcon(): string {
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronBack,
-      ionic: caretLeftRegular,
-      md: chevronBack,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
     // Return the configured datetime previous icon or the default icon
-    return config.get('datetimePreviousIcon', defaultIcon);
+    return config.get('datetimePreviousIcon', chevronBack);
   }
 
   /**
@@ -2795,17 +2771,9 @@ export class Datetime implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get datetimeCollapsedIcon(): string | undefined {
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-
-    const defaultIcons = {
-      ios: chevronForward,
-      ionic: undefined,
-      md: caretDownSharp,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+    const defaultIcon = theme === 'ios' ? chevronForward : caretDownSharp;
 
     // Return the configured datetime show month and year icon or the default icon
     return config.get('datetimeCollapsedIcon', defaultIcon);
@@ -2817,17 +2785,9 @@ export class Datetime implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get datetimeExpandedIcon(): string | undefined {
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-
-    const defaultIcons = {
-      ios: chevronDown,
-      ionic: undefined,
-      md: caretUpSharp,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+    const defaultIcon = theme === 'ios' ? chevronDown : caretUpSharp;
 
     // Return the configured datetime hide month and year icon or the default icon
     return config.get('datetimeExpandedIcon', defaultIcon);

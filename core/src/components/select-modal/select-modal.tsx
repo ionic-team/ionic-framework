@@ -1,5 +1,4 @@
 import { getIonMode, getIonTheme } from '@global/ionic-global';
-import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
 import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
@@ -8,7 +7,6 @@ import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap, hostContext } from '@utils/theme';
 import { closeOutline, closeSharp } from 'ionicons/icons';
 
-import type { Theme } from '../../interface';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 import type { SelectOverlayOption } from '../select/select-interface';
@@ -99,12 +97,7 @@ export class SelectModal implements ComponentInterface {
 
   private get cancelButtonIcon(): string {
     const theme = getIonTheme(this);
-    const icons: Record<Theme, string> = {
-      ios: closeOutline,
-      md: closeSharp,
-      ionic: xRegular,
-    };
-    return icons[theme];
+    return theme === 'ios' ? closeOutline : closeSharp;
   }
 
   private getModalContextClasses() {
