@@ -263,11 +263,11 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * A modal's `--height` can be changed at runtime with no event to react to,
-   * either by setting the property directly or by toggling a class that changes
-   * which rule wins. Both of those mutate an attribute on the modal, so watch
-   * for that and re-evaluate. Viewport driven changes are already covered by
-   * the `resize` listener.
+   * A modal's `--height` can be changed at runtime with no event to react
+   * to, either by setting the property directly or by toggling a class that
+   * changes which rule wins. Both of those mutate an attribute on the modal,
+   * so watch for that and re-evaluate. Viewport driven changes are already
+   * covered by the `resize` listener.
    */
   private setupSizeToContentObserver() {
     if (!Build.isBrowser || typeof MutationObserver === 'undefined') {
@@ -360,10 +360,16 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Whether this component should size itself to its contents height, which
-   * is the case inside any popover and inside a modal whose `--height` is a
-   * content-based value. Those overlays give the content no definite height
+   * Whether to size the component to its content height.
+   *
+   * This applies inside popovers and modals with a content-based `--height`,
+   * where the overlay does not provide the content with a definite height
    * to fill.
+   *
+   * Only `--height` is consulted. Styling the wrapper directly, such as
+   * `ion-modal::part(content) { height: fit-content; }`, does not change
+   * `--height` and therefore cannot be observed. `--height` is the only
+   * supported way to opt into content-based sizing.
    */
   private shouldSizeToContent() {
     if (hostContext('ion-popover', this.el)) {
