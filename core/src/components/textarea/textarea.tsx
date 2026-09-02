@@ -765,6 +765,22 @@ export class Textarea implements ComponentInterface {
    */
   private onLabelClick = (ev: MouseEvent) => {
     const target = ev.target as HTMLElement;
+
+    /**
+     * Clicking the label makes the browser forward a second click to the
+     * native textarea. That forwarded click is the one consumers should see,
+     * retargeted to the host, so let it through.
+     */
+    if (target === this.nativeInput) {
+      return;
+    }
+
+    /**
+     * Clicks that originate in slotted content belong to the consumer, so they
+     * have to keep propagating. Everything else is internal chrome (the label,
+     * the start/end containers, the wrapper padding) and would otherwise
+     * duplicate the forwarded click.
+     */
     const slotted = target.closest('[slot="start"], [slot="end"]');
 
     if (slotted === null || slotted === this.el || !this.el.contains(slotted)) {
@@ -905,14 +921,14 @@ export class Textarea implements ComponentInterface {
          * interactable, clicking the label would focus that instead
          * since it comes before the textarea in the DOM.
          */}
-        <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
+        <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick} part="wrapper">
           {hasOutlineFill && this.renderOutlineContainer()}
           <div class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
             <slot name="start"></slot>
           </div>
           <div class="textarea-control">
             {this.renderLabel()}
-            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
               <textarea
                 class="native-textarea"
                 part="native"
