@@ -38,11 +38,11 @@
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "sync": "./scripts/sync.sh",
     "local.sync.and.pack": "./scripts/sync-and-pack.sh",
-    "test": "npm run test.schematics && npm run test.code-split && npm run test.package",
-    "test.code-split": "node ./scripts/test-code-split.js",
-    "test.schematics": "node ./scripts/verify-schematics.js",
+    "test": "npm run test.package && test.change-detection && npm run test.schematics && npm run test.code-split",
     "test.package": "node scripts/verify-exports.js",
     "test.change-detection": "node scripts/verify-change-detection.js",
+    "test.schematics": "node ./scripts/verify-schematics.js",
+    "test.code-split": "node ./scripts/test-code-split.js",
     "validate": "npm i && npm run lint && npm run build && npm run test"
   },
   "exports": {
