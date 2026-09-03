@@ -30,7 +30,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, TextFieldTypes } from '../../interface';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
@@ -461,7 +461,7 @@ export class Input implements ComponentInterface {
       el,
       () => this.startContainerEl,
       () => {
-        return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
+        return Build.isBrowser && getIonTheme(this) === 'md' && this.fill === 'outline';
       }
     );
 
@@ -953,6 +953,116 @@ export class Input implements ComponentInterface {
     );
   }
 
+  private renderNativeInput() {
+    const { disabled, readonly, inputId } = this;
+
+    return (
+      <input
+        class="native-input"
+        ref={(input) => (this.nativeInput = input)}
+        id={inputId}
+        disabled={disabled}
+        autoCapitalize={this.autocapitalize}
+        autoComplete={this.autocomplete}
+        autoCorrect={this.autocorrect ? 'on' : 'off'}
+        autoFocus={this.autofocus}
+        enterKeyHint={this.enterkeyhint}
+        inputMode={this.inputmode}
+        min={this.min}
+        max={this.max}
+        minLength={this.minlength}
+        maxLength={this.maxlength}
+        multiple={this.multiple}
+        name={this.name}
+        pattern={this.pattern}
+        placeholder={this.placeholder || ''}
+        readOnly={readonly}
+        required={this.required}
+        spellcheck={this.spellcheck}
+        step={this.step}
+        type={this.type}
+        value={this.getValue()}
+        onInput={this.onInput}
+        onChange={this.onChange}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onKeyDown={this.onKeydown}
+        onCompositionstart={this.onCompositionStart}
+        onCompositionend={this.onCompositionEnd}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.isInvalid ? 'true' : undefined}
+        aria-labelledby={this.getLabelledById()}
+        {...this.inheritedAttributes}
+      />
+    );
+  }
+
+  private renderClearButton() {
+    const { clearInput, disabled, readonly } = this;
+
+    if (!clearInput || readonly || disabled) {
+      return undefined;
+    }
+
+    return (
+      <button
+        aria-label="reset"
+        type="button"
+        class={{
+          'input-clear-icon': true,
+          'input-clear-button-pressed': this.isClearButtonPressed,
+        }}
+        onPointerDown={this.clearButtonPressController.onPointerDown}
+        onPointerCancel={this.clearButtonPressController.release}
+        onClick={this.clearTextInput}
+      >
+        <ion-icon aria-hidden="true" icon={this.inputClearIcon}></ion-icon>
+      </button>
+    );
+  }
+
+  /**
+   * The ionic theme keeps the label above a field box that wraps the slots and
+   * the input, so the label can size independently of the slotted content.
+   */
+  private renderIonicField() {
+    return [
+      this.renderLabel(),
+      <div class="native-wrapper" onClick={this.onLabelClick}>
+        <div class="input-outline"></div>
+        <slot name="start"></slot>
+        {this.renderNativeInput()}
+        {this.renderClearButton()}
+        <slot name="end"></slot>
+      </div>,
+    ];
+  }
+
+  /**
+   * The ios and md themes nest the label alongside the input so a floating
+   * label can escape the control and clear the start and end slots.
+   */
+  private renderNativeField() {
+    const hasOutlineFill = getIonTheme(this) === 'md' && this.getFill() === 'outline';
+
+    return [
+      hasOutlineFill && this.renderOutlineContainer(),
+      <div class="input-start" ref={(el) => (this.startContainerEl = el)}>
+        <slot name="start"></slot>
+      </div>,
+      <div class="input-control">
+        {this.renderLabel()}
+        <div class="native-wrapper" onClick={this.onLabelClick}>
+          {this.renderNativeInput()}
+        </div>
+      </div>,
+      <div class="input-end">
+        {this.renderClearButton()}
+        <slot name="end"></slot>
+      </div>,
+    ];
+  }
+
   /**
    * Get the icon to use for the clear icon.
    * If an icon is set on the component, use that.
@@ -983,10 +1093,8 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, readonly, inputId, hasFocus, inputClearIcon } = this;
-    const mode = getIonMode(this);
+    const { disabled, readonly, inputId, hasFocus } = this;
     const theme = getIonTheme(this);
-    const value = this.getValue();
     const fill = this.getFill();
     const size = this.getSize();
     const shape = this.getShape();
@@ -995,7 +1103,6 @@ export class Input implements ComponentInterface {
     const labelPlacement = this.getLabelPlacement();
 
     const hasValue = this.hasValue();
-    const hasOutlineFill = mode === 'md' && fill === 'outline';
 
     /**
      * If the label is stacked, it should always sit above the input.
@@ -1028,70 +1135,7 @@ export class Input implements ComponentInterface {
          * since it comes before the input in the DOM.
          */}
         <label class="input-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
-          {hasOutlineFill && this.renderOutlineContainer()}
-          <div class="input-start" ref={(el) => (this.startContainerEl = el)}>
-            <slot name="start"></slot>
-          </div>
-          <div class="input-control">
-            {this.renderLabel()}
-            <div class="native-wrapper" onClick={this.onLabelClick}>
-              <input
-                class="native-input"
-                ref={(input) => (this.nativeInput = input)}
-                id={inputId}
-                disabled={disabled}
-                autoCapitalize={this.autocapitalize}
-                autoComplete={this.autocomplete}
-                autoCorrect={this.autocorrect ? 'on' : 'off'}
-                autoFocus={this.autofocus}
-                enterKeyHint={this.enterkeyhint}
-                inputMode={this.inputmode}
-                min={this.min}
-                max={this.max}
-                minLength={this.minlength}
-                maxLength={this.maxlength}
-                multiple={this.multiple}
-                name={this.name}
-                pattern={this.pattern}
-                placeholder={this.placeholder || ''}
-                readOnly={readonly}
-                required={this.required}
-                spellcheck={this.spellcheck}
-                step={this.step}
-                type={this.type}
-                value={value}
-                onInput={this.onInput}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-                onFocus={this.onFocus}
-                onKeyDown={this.onKeydown}
-                onCompositionstart={this.onCompositionStart}
-                onCompositionend={this.onCompositionEnd}
-                aria-describedby={this.getHintTextID()}
-                aria-invalid={this.isInvalid ? 'true' : undefined}
-                aria-labelledby={this.getLabelledById()}
-                {...this.inheritedAttributes}
-              />
-            </div>
-          </div>
-          <div class="input-end">
-            {this.clearInput && !readonly && !disabled && (
-              <button
-                aria-label="reset"
-                type="button"
-                class={{
-                  'input-clear-icon': true,
-                  'input-clear-button-pressed': this.isClearButtonPressed,
-                }}
-                onPointerDown={this.clearButtonPressController.onPointerDown}
-                onPointerCancel={this.clearButtonPressController.release}
-                onClick={this.clearTextInput}
-              >
-                <ion-icon aria-hidden="true" icon={inputClearIcon}></ion-icon>
-              </button>
-            )}
-            <slot name="end"></slot>
-          </div>
+          {theme === 'ionic' ? this.renderIonicField() : this.renderNativeField()}
           {shouldRenderHighlight && <div class="input-highlight"></div>}
         </label>
         {this.renderBottomContent()}

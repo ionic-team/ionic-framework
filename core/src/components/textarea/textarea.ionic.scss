@@ -92,8 +92,30 @@
   gap: globals.$ion-space-100;
 }
 
+:host(.textarea-label-placement-start) .textarea-wrapper {
+  flex-direction: row;
+}
+
+:host(.textarea-label-placement-end) .textarea-wrapper {
+  flex-direction: row-reverse;
+}
+
+:host(.textarea-label-placement-stacked) .textarea-wrapper,
+:host(.textarea-label-placement-floating) .textarea-wrapper {
+  flex-direction: column;
+
+  align-items: start;
+}
+
 .textarea-wrapper-inner {
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: flex;
+
+  width: 100%;
+  min-height: inherit;
+
+  box-sizing: border-box;
 }
 
 :host([rows]:not([auto-grow])) .textarea-wrapper-inner {
@@ -161,6 +183,7 @@
 
 .label-text-wrapper {
   @include globals.typography(globals.$ion-body-sm-medium);
+  @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
 
   max-width: globals.$ion-scale-5000;
 
@@ -227,6 +250,12 @@ ion-icon {
 
 .start-slot-wrapper,
 .end-slot-wrapper {
+  display: flex;
+
+  flex-shrink: 0;
+
+  align-self: start;
+
   margin-top: globals.$ion-space-050;
 }
 

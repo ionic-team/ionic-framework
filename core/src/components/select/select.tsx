@@ -24,7 +24,7 @@ import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type {
   ActionSheetOptions,
   AlertOptions,
@@ -64,9 +64,10 @@ import type {
  * @part error-text - Supporting text displayed beneath the select when the select is invalid and touched.
  * @part bottom - The container element for helper text, error text, and counter.
  * @part wrapper - The clickable label element that wraps the entire form field (label text, slots, selected values or placeholder, and toggle icons).
- * @part start - The wrapper element for the content in the start slot.
- * @part control - The wrapper element containing the label and native select control. When the label is not floating or stacked, this part also contains the dropdown icon.
- * @part end - The wrapper element for the content in the end slot. When the label is floating or stacked, this part also contains the dropdown icon.
+ * @part start - The wrapper element for the content in the start slot. Only rendered in the `"ios"` and `"md"` themes.
+ * @part control - The wrapper element containing the label and native select control. When the label is not floating or stacked, this part also contains the dropdown icon. Only rendered in the `"ios"` and `"md"` themes.
+ * @part end - The wrapper element for the content in the end slot. When the label is floating or stacked, this part also contains the dropdown icon. Only rendered in the `"ios"` and `"md"` themes.
+ * @part inner - The wrapper element containing the slots, the native select control and the dropdown icon. Only rendered in the `"ionic"` theme.
  */
 @Component({
   tag: 'ion-select',
@@ -382,7 +383,7 @@ export class Select implements ComponentInterface {
       el,
       () => this.startContainerEl,
       () => {
-        return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
+        return Build.isBrowser && getIonTheme(this) === 'md' && this.fill === 'outline';
       }
     );
 
@@ -1176,6 +1177,66 @@ export class Select implements ComponentInterface {
   }
 
   /**
+   * The ionic theme keeps the label above a field box that wraps the slots and
+   * the control, so the label can size independently of the slotted content.
+   */
+  private renderIonicField() {
+    return [
+      this.renderLabel(),
+      <div class="select-wrapper-inner" part="inner">
+        {this.fill === 'outline' && <div class="select-outline"></div>}
+        <slot name="start"></slot>
+        <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
+          {this.renderSelectText()}
+          {this.renderListbox()}
+        </div>
+        <slot name="end"></slot>
+        {this.renderSelectIcon()}
+      </div>,
+    ];
+  }
+
+  /**
+   * The ios and md themes nest the label alongside the control so a floating
+   * label can escape it and clear the start and end slots.
+   */
+  private renderNativeField() {
+    const { fill, labelPlacement } = this;
+    const hasOutlineFill = getIonTheme(this) === 'md' && fill === 'outline';
+    const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
+
+    return [
+      hasOutlineFill && this.renderOutlineContainer(),
+      <div class="select-start" part="start" ref={(el) => (this.startContainerEl = el)}>
+        <slot name="start"></slot>
+      </div>,
+      <div class="select-control" part="control">
+        {this.renderLabel()}
+        <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
+          {this.renderSelectText()}
+          {this.renderListbox()}
+          {/**
+           * The icon is rendered inside the native wrapper when the
+           * label is not floating or stacked so it stays grouped with
+           * the control. This keeps it positioned correctly when the
+           * justify property is set.
+           */}
+          {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
+        </div>
+      </div>,
+      <div class="select-end" part="end">
+        {/**
+         * The icon is rendered in the end container when the
+         * select has a floating or stacked label so it is
+         * centered vertically relative to the entire select.
+         */}
+        {hasFloatingOrStackedLabel && this.renderSelectIcon()}
+        <slot name="end"></slot>
+      </div>,
+    ];
+  }
+
+  /**
    * Wraps text nodes in the select text with span elements
    * so spacing can be added between elements without
    * changing the display to prevent losing the ellipses
@@ -1462,7 +1523,6 @@ export class Select implements ComponentInterface {
       value,
       hasFocus,
     } = this;
-    const mode = getIonMode(this);
     const theme = getIonTheme(this);
     const shape = this.getShape();
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
@@ -1473,7 +1533,6 @@ export class Select implements ComponentInterface {
     const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
-    const hasOutlineFill = mode === 'md' && fill === 'outline';
 
     renderHiddenInput(true, el, name, parseValue(value), disabled);
 
@@ -1505,33 +1564,7 @@ export class Select implements ComponentInterface {
         })}
       >
         <label class="select-wrapper" id="select-label" onClick={this.onLabelClick} part="wrapper">
-          {hasOutlineFill && this.renderOutlineContainer()}
-          <div class="select-start" part="start" ref={(el) => (this.startContainerEl = el)}>
-            <slot name="start"></slot>
-          </div>
-          <div class="select-control" part="control">
-            {this.renderLabel()}
-            <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
-              {this.renderSelectText()}
-              {this.renderListbox()}
-              {/**
-               * The icon is rendered inside the native wrapper when the
-               * label is not floating or stacked so it stays grouped with
-               * the control. This keeps it positioned correctly when the
-               * justify property is set.
-               */}
-              {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
-            </div>
-          </div>
-          <div class="select-end" part="end">
-            {/**
-             * The icon is rendered in the end container when the
-             * select has a floating or stacked label so it is
-             * centered vertically relative to the entire select.
-             */}
-            {hasFloatingOrStackedLabel && this.renderSelectIcon()}
-            <slot name="end"></slot>
-          </div>
+          {theme === 'ionic' ? this.renderIonicField() : this.renderNativeField()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
         </label>
         {this.renderBottomContent()}

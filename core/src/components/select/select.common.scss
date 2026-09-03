@@ -327,13 +327,6 @@ button {
   align-items: center;
 
   /**
-   * Allows the label to shrink below its intrinsic content width.
-   * Without this the label keeps its full width and can push the
-   * select and end slot outside the wrapper.
-   */
-  min-width: 0;
-
-  /**
    * Label text should not extend
    * beyond the bounds of the select.
    * However, we do not set the max
@@ -402,14 +395,6 @@ button {
 
 .native-wrapper {
   display: flex;
-
-  /**
-   * Give up space before the label does. Flexbox would otherwise take
-   * from both in proportion to their size and truncate the shorter
-   * label first. The factor is this large because the label truncates
-   * as soon as it loses any width at all, even a fraction of a pixel.
-   */
-  flex-shrink: 100000;
 
   align-items: center;
 

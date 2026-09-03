@@ -2322,6 +2322,7 @@ ion-select,part,end
 ion-select,part,error-text
 ion-select,part,helper-text
 ion-select,part,icon
+ion-select,part,inner
 ion-select,part,label
 ion-select,part,placeholder
 ion-select,part,start

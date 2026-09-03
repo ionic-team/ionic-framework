@@ -33,6 +33,30 @@
   border: var(--border-width) var(--border-style) var(--border-color);
 }
 
+// Input Label Placement
+// ----------------------------------------------------------------
+
+:host(.input-label-placement-start) .input-wrapper {
+  flex-direction: row;
+}
+
+:host(.input-label-placement-end) .input-wrapper {
+  flex-direction: row-reverse;
+}
+
+:host(.input-label-placement-stacked) .input-wrapper,
+:host(.input-label-placement-floating) .input-wrapper {
+  flex-direction: column;
+
+  align-items: start;
+}
+
+// Keeps the input clear of the label.
+:host(.input-label-placement-stacked) input,
+:host(.input-label-placement-floating) input {
+  @include globals.margin(1px, 0, 0, 0);
+}
+
 // Input Label Placement: Stacked
 // ----------------------------------------------------------------
 
@@ -95,6 +119,8 @@
 .native-wrapper {
   @include globals.border-radius(inherit);
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  align-items: center;
 
   min-height: globals.$ion-scale-1000;
 
@@ -211,6 +237,8 @@
 // ----------------------------------------------------------------
 
 .input-clear-icon {
+  @include globals.margin(auto);
+
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 

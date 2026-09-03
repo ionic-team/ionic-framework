@@ -28,7 +28,7 @@ import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { getCounterText } from '../input/input.utils';
 
@@ -414,7 +414,7 @@ export class Textarea implements ComponentInterface {
       el,
       () => this.startContainerEl,
       () => {
-        return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
+        return Build.isBrowser && getIonTheme(this) === 'md' && this.fill === 'outline';
       }
     );
 
@@ -831,6 +831,95 @@ export class Textarea implements ComponentInterface {
     );
   }
 
+  private renderNativeTextarea() {
+    const { inputId, disabled } = this;
+
+    return (
+      <textarea
+        class="native-textarea"
+        part="native"
+        ref={(el) => (this.nativeInput = el)}
+        id={inputId}
+        disabled={disabled}
+        autoCapitalize={this.autocapitalize}
+        autoFocus={this.autofocus}
+        enterKeyHint={this.enterkeyhint}
+        inputMode={this.inputmode}
+        minLength={this.minlength}
+        maxLength={this.maxlength}
+        name={this.name}
+        placeholder={this.placeholder || ''}
+        readOnly={this.readonly}
+        required={this.required}
+        spellcheck={this.spellcheck}
+        cols={this.cols}
+        rows={this.rows}
+        wrap={this.wrap}
+        onInput={this.onInput}
+        onChange={this.onChange}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onKeyDown={this.onKeyDown}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.isInvalid ? 'true' : undefined}
+        {...this.inheritedAttributes}
+      >
+        {this.getValue()}
+      </textarea>
+    );
+  }
+
+  /**
+   * The ionic theme keeps the label above a field box that wraps the slots and
+   * the textarea, so the label can size independently of the slotted content.
+   */
+  private renderIonicField() {
+    return [
+      this.renderLabel(),
+      <div class="textarea-wrapper-inner">
+        {this.getFill() === 'outline' && <div class="textarea-outline"></div>}
+        {/**
+         * Slotted content brings its own padding, which throws off alignment
+         * (an icon-only button sets --padding-top to 0). These wrappers own
+         * the vertical padding instead.
+         */}
+        <div class="start-slot-wrapper">
+          <slot name="start"></slot>
+        </div>
+        <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
+          {this.renderNativeTextarea()}
+        </div>
+        <div class="end-slot-wrapper">
+          <slot name="end"></slot>
+        </div>
+      </div>,
+    ];
+  }
+
+  /**
+   * The ios and md themes nest the label alongside the textarea so a floating
+   * label can escape the control and clear the start and end slots.
+   */
+  private renderNativeField() {
+    const hasOutlineFill = getIonTheme(this) === 'md' && this.getFill() === 'outline';
+
+    return [
+      hasOutlineFill && this.renderOutlineContainer(),
+      <div class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
+        <slot name="start"></slot>
+      </div>,
+      <div class="textarea-control">
+        {this.renderLabel()}
+        <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
+          {this.renderNativeTextarea()}
+        </div>
+      </div>,
+      <div class="textarea-end">
+        <slot name="end"></slot>
+      </div>,
+    ];
+  }
+
   /**
    * Renders the helper text or error text values
    */
@@ -902,16 +991,13 @@ export class Textarea implements ComponentInterface {
 
   render() {
     const { inputId, disabled, readonly, size, labelPlacement, hasFocus } = this;
-    const mode = getIonMode(this);
     const theme = getIonTheme(this);
     const fill = this.getFill();
     const shape = this.getShape();
-    const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
-    const hasOutlineFill = mode === 'md' && fill === 'outline';
 
     /**
      * If the label is stacked, it should always sit above the textarea.
@@ -949,49 +1035,7 @@ export class Textarea implements ComponentInterface {
           onClick={this.onLabelClick}
           part="wrapper"
         >
-          {hasOutlineFill && this.renderOutlineContainer()}
-          <div class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
-            <slot name="start"></slot>
-          </div>
-          <div class="textarea-control">
-            {this.renderLabel()}
-            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
-              <textarea
-                class="native-textarea"
-                part="native"
-                ref={(el) => (this.nativeInput = el)}
-                id={inputId}
-                disabled={disabled}
-                autoCapitalize={this.autocapitalize}
-                autoFocus={this.autofocus}
-                enterKeyHint={this.enterkeyhint}
-                inputMode={this.inputmode}
-                minLength={this.minlength}
-                maxLength={this.maxlength}
-                name={this.name}
-                placeholder={this.placeholder || ''}
-                readOnly={this.readonly}
-                required={this.required}
-                spellcheck={this.spellcheck}
-                cols={this.cols}
-                rows={this.rows}
-                wrap={this.wrap}
-                onInput={this.onInput}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-                onFocus={this.onFocus}
-                onKeyDown={this.onKeyDown}
-                aria-describedby={this.getHintTextID()}
-                aria-invalid={this.isInvalid ? 'true' : undefined}
-                {...this.inheritedAttributes}
-              >
-                {value}
-              </textarea>
-            </div>
-          </div>
-          <div class="textarea-end">
-            <slot name="end"></slot>
-          </div>
+          {theme === 'ionic' ? this.renderIonicField() : this.renderNativeField()}
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>
         {this.renderBottomContent()}

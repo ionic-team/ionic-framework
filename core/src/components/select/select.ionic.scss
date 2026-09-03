@@ -125,9 +125,18 @@
 // ----------------------------------------------------------------
 
 .select-wrapper {
+  align-items: center;
+
   min-width: globals.$ion-scale-5000;
 
   background: transparent;
+}
+
+:host(.select-label-placement-stacked) .select-wrapper,
+:host(.select-label-placement-floating) .select-wrapper {
+  flex-direction: column;
+
+  align-items: start;
 }
 
 .select-wrapper .select-placeholder {
@@ -146,13 +155,19 @@
   @include globals.border-radius(var(--border-radius));
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
+  display: flex;
+
   position: relative;
+
+  align-items: center;
 
   background: var(--background);
 
   box-sizing: border-box;
 
   gap: globals.$ion-space-200;
+
+  overflow: hidden;
 }
 
 :host(.select-label-placement-stacked) .select-wrapper-inner,
