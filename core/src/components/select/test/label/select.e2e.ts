@@ -320,6 +320,65 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const select = page.locator('ion-select');
       await expect(select).toHaveScreenshot(screenshot(`select-label-slot-truncate`));
     });
+
+    /**
+     * The floating label must be positioned relative to `.select-wrapper` so its
+     * width is not constrained when the select width collapses. These tests
+     * cover both cases: a long label should retain the same available width
+     * despite wide start content, and a short label should not collapse when
+     * the start content takes up most of the select's width.
+     */
+    test('start slot content should not shrink the label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-select id="plain" fill="outline" label-placement="floating" value="1" label="Email Email Email Email Email Email">
+            <ion-select-option value="1">One</ion-select-option>
+          </ion-select>
+          <ion-select id="wide-start" fill="outline" label-placement="floating" value="1" label="Email Email Email Email Email Email">
+            <div slot="start" style="width: 120px; height: 24px"></div>
+            <ion-select-option value="1">One</ion-select-option>
+          </ion-select>
+        </div>
+      `,
+        config
+      );
+
+      const labelWidth = (id: string) =>
+        page.locator(`${id} .label-text`).evaluate((el: HTMLElement) => ({
+          available: el.clientWidth,
+          wanted: el.scrollWidth,
+        }));
+
+      const plain = await labelWidth('#plain');
+      const wideStart = await labelWidth('#wide-start');
+
+      // The label is long enough that it has to truncate in both cases
+      expect(plain.wanted).toBeGreaterThan(plain.available);
+
+      expect(wideStart.available).toBe(plain.available);
+    });
+
+    test('start slot content should not collapse a short label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-select fill="outline" label-placement="floating" value="1" label="Email">
+            <div slot="start" style="width: 170px; height: 24px"></div>
+            <ion-select-option value="1">One</ion-select-option>
+          </ion-select>
+        </div>
+      `,
+        config
+      );
+
+      const label = await page.locator('.label-text').evaluate((el: HTMLElement) => ({
+        available: el.clientWidth,
+        wanted: el.scrollWidth,
+      }));
+
+      expect(label.available).toBe(label.wanted);
+    });
   });
 });
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {

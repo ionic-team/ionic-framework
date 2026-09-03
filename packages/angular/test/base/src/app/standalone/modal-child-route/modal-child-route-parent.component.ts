@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonButton, IonContent, IonHeader, IonRouterOutlet, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonHeader, IonRouterOutlet, IonTitle, IonToolbar } from '@ionic/angular';
 
 /**
  * Parent with interactive buttons and nested outlet for child route modal.

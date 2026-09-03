@@ -688,3 +688,104 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  /**
+   * The column sits in the datetime's Shadow DOM, so a document-level listener
+   * sees the press retargeted to the datetime host.
+   */
+  test.describe(title('datetime: wheel value'), () => {
+    test('should give an outside click handler the date the wheel is showing', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30449',
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime locale="en-US" presentation="date" prefer-wheel="true" value="2022-06-15"></ion-datetime>
+        <button id="save">Save</button>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await page.evaluate(() => {
+        const datetime = document.querySelector('ion-datetime')!;
+        const column = datetime.shadowRoot!.querySelector('ion-picker-column.year-column')!;
+        const scrollEl = column.shadowRoot!.querySelector('.picker-opts')!;
+        const w = window as any;
+
+        w.lastScrollAt = 0;
+        scrollEl.addEventListener('scroll', () => {
+          w.lastScrollAt = performance.now();
+        });
+
+        /**
+         * Stands in for an application's own Save button, which reads the
+         * datetime's value when it is clicked.
+         */
+        document.querySelector('#save')!.addEventListener('click', () => {
+          w.onSave = {
+            datetimeValue: datetime.value,
+            visibleYear: String(column.querySelector<HTMLIonPickerColumnOptionElement>('.option-active')?.value ?? ''),
+          };
+        });
+
+        w.startScroll = () => scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
+
+        /**
+         * Presses Save in the same frame the wheel is first seen showing a
+         * different year while still scrolling. Done in the page so no round trip
+         * can let the scroll finish first, which would leave nothing to race.
+         */
+        w.pressSaveWhenMidScroll = () =>
+          new Promise<void>((resolve, reject) => {
+            const deadline = performance.now() + 5000;
+
+            const poll = () => {
+              const highlighted = column.querySelector<HTMLIonPickerColumnOptionElement>('.option-active');
+              const isScrolling = performance.now() - w.lastScrollAt < 100;
+
+              if (highlighted !== null && String(highlighted.value) !== '2022' && isScrolling) {
+                const save = document.querySelector('#save')!;
+                save.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, composed: true }));
+                save.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
+                resolve();
+              } else if (performance.now() > deadline) {
+                reject(new Error('the wheel never showed a year other than the one it was reporting'));
+              } else {
+                requestAnimationFrame(poll);
+              }
+            };
+
+            requestAnimationFrame(poll);
+          });
+      });
+
+      /**
+       * Press the column the way a drag would, so the scroll that follows counts
+       * as the user's. Pressing dead center lands on the year already selected,
+       * so the press itself does not change the value.
+       */
+      const column = (await page.locator('.year-column').boundingBox())!;
+      await page.mouse.move(column.x + column.width / 2, column.y + column.height / 2);
+      await page.mouse.down();
+      await page.mouse.up();
+
+      await page.evaluate(() => (window as any).startScroll());
+      await page.evaluate(() => (window as any).pressSaveWhenMidScroll());
+
+      const onSave = await page.evaluate(() => (window as any).onSave);
+
+      expect(onSave.visibleYear).not.toBe('2022');
+
+      // The value the Save button saw is the year the user could see.
+      expect(onSave.datetimeValue.split('-')[0]).toBe(onSave.visibleYear);
+    });
+  });
+});

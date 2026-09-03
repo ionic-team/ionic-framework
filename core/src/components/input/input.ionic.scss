@@ -33,6 +33,30 @@
   border: var(--border-width) var(--border-style) var(--border-color);
 }
 
+// Input Label Placement
+// ----------------------------------------------------------------
+
+:host(.input-label-placement-start) .input-wrapper {
+  flex-direction: row;
+}
+
+:host(.input-label-placement-end) .input-wrapper {
+  flex-direction: row-reverse;
+}
+
+:host(.input-label-placement-stacked) .input-wrapper,
+:host(.input-label-placement-floating) .input-wrapper {
+  flex-direction: column;
+
+  align-items: start;
+}
+
+// Keeps the input clear of the label.
+:host(.input-label-placement-stacked) input,
+:host(.input-label-placement-floating) input {
+  @include globals.margin(1px, 0, 0, 0);
+}
+
 // Input Label Placement: Stacked
 // ----------------------------------------------------------------
 
@@ -92,15 +116,24 @@
   border-top: none;
 }
 
-.native-wrapper {
+.input-wrapper-inner {
   @include globals.border-radius(inherit);
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
+  display: flex;
+
+  position: relative;
+
+  align-items: center;
+
+  width: 100%;
   min-height: globals.$ion-scale-1000;
 
+  box-sizing: border-box;
+
   /**
-  * Apply the background to the native input
-  * wrapper to only style the input.
+  * Apply the background to the inner wrapper so the label
+  * above it stays outside the field.
   */
   background: var(--background);
 }
@@ -123,15 +156,15 @@
   --padding-end: #{globals.$ion-space-500};
 }
 
-:host(.input-size-medium) .native-wrapper {
+:host(.input-size-medium) .input-wrapper-inner {
   min-height: globals.$ion-scale-1000;
 }
 
-:host(.input-size-large) .native-wrapper {
+:host(.input-size-large) .input-wrapper-inner {
   min-height: globals.$ion-scale-1200;
 }
 
-:host(.input-size-xlarge) .native-wrapper {
+:host(.input-size-xlarge) .input-wrapper-inner {
   min-height: globals.$ion-scale-1400;
 }
 
@@ -168,7 +201,7 @@
 // Target area
 // --------------------------------------------------
 
-.native-wrapper::after {
+.input-wrapper-inner::after {
   @include globals.position(50%, 0, null, 0);
 
   position: absolute;
@@ -199,11 +232,11 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-::slotted([slot="start"]) {
+::slotted([slot="start"]:last-of-type) {
   margin-inline-end: globals.$ion-space-200;
 }
 
-::slotted([slot="end"]) {
+::slotted([slot="end"]:first-of-type) {
   margin-inline-start: globals.$ion-space-200;
 }
 
@@ -211,6 +244,8 @@
 // ----------------------------------------------------------------
 
 .input-clear-icon {
+  @include globals.margin(auto);
+
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 

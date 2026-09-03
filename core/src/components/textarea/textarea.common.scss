@@ -212,7 +212,7 @@
 // ----------------------------------------------------------------
 
 .textarea-wrapper {
-  @include padding(0px, var(--padding-end), 0px, var(--padding-start));
+  @include padding(0, var(--padding-end), 0, var(--padding-start));
   @include border-radius(var(--border-radius));
 
   display: flex;
@@ -232,6 +232,30 @@
   background: var(--background);
 
   line-height: normal;
+}
+
+// Textarea Control
+// ----------------------------------------------------------------
+
+.textarea-control {
+  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
+
+  display: flex;
+
+  flex-grow: 1;
+
+  align-items: start;
+  align-self: stretch;
+
+  width: 100%;
+
+  /**
+  * Allows the control to shrink below the label and textarea's intrinsic
+  * width, preventing the start and end slots from being pushed outside
+  * the wrapper. The label and textarea truncate independently, so it can
+  * use whatever space remains after accounting for the slots.
+  */
+  min-width: 0;
 }
 
 // Textarea Native Wrapper
@@ -281,7 +305,7 @@
 }
 
 .native-wrapper::after {
-  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
+  @include padding(0);
   @include margin(0, 0, 0, 0);
   @include border-radius(var(--border-radius));
 
@@ -308,15 +332,6 @@
   grid-area: 1 / 1 / 2 / 2;
 
   word-break: break-word;
-}
-
-.textarea-wrapper-inner {
-  display: flex;
-
-  width: 100%;
-  min-height: inherit;
-
-  box-sizing: border-box;
 }
 
 // Textarea Highlight
@@ -406,14 +421,24 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
-
   /**
    * This ensures that double tapping this text
    * clicks the <label> and focuses the textarea
    * when a screen reader is enabled.
    */
   pointer-events: none;
+}
+
+/**
+ * When start/end slots are added or removed, we temporarily
+ * disable the label transition to prevent the floating label
+ * from animating as its position is adjusted.
+ *
+ * This class is applied by the start container controller, so
+ * renaming it here requires renaming it there too.
+ */
+:host(.skip-label-transition) .label-text-wrapper {
+  transition: none;
 }
 
 /**
@@ -459,7 +484,7 @@
  * Label is on the left of the textarea in LTR and
  * on the right in RTL.
  */
-:host(.textarea-label-placement-start) .textarea-wrapper {
+:host(.textarea-label-placement-start) .textarea-control {
   flex-direction: row;
 }
 
@@ -470,7 +495,7 @@
  * Label is on the right of the textarea in LTR and
  * on the left in RTL.
  */
-:host(.textarea-label-placement-end) .textarea-wrapper {
+:host(.textarea-label-placement-end) .textarea-control {
   flex-direction: row-reverse;
 }
 
@@ -484,8 +509,10 @@
  * down when the textarea is focused or has a value.
  *
  */
-:host(.textarea-label-placement-stacked) .textarea-wrapper,
-:host(.textarea-label-placement-floating) .textarea-wrapper {
+:host(.textarea-label-placement-stacked) .textarea-control,
+:host(.textarea-label-placement-floating) .textarea-control {
+  @include padding(0, null, null);
+
   flex-direction: column;
   align-items: start;
 }
@@ -498,7 +525,7 @@
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.textarea-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
-  @include padding(0px);
+  @include padding(0);
 
   max-width: 100%;
 
@@ -535,9 +562,11 @@
 // Start / End Slots
 // ----------------------------------------------------------------
 
-.start-slot-wrapper,
-.end-slot-wrapper {
+.textarea-start,
+.textarea-end {
   display: flex;
+
+  position: relative;
 
   flex-shrink: 0;
 

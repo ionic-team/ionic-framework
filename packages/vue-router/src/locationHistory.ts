@@ -118,8 +118,7 @@ export const createLocationHistory = () => {
        * tab stack as that means we will lose
        * a reference to the root tab route.
        */
-      const tabHistory = tabsHistory[tab];
-      if (tab && tabHistory) {
+      if (tab && tabsHistory[tab]) {
         clearTabHistory(tab);
         /**
          * If we are not clearing items after
@@ -147,13 +146,20 @@ export const createLocationHistory = () => {
       locationHistory.length = 0;
     }
   };
-  const getTabsHistory = (tab: string): RouteInfo[] => {
-    let history;
-    if (tab) {
-      history = tabsHistory[tab];
-      if (!history) {
-        history = tabsHistory[tab] = [];
-      }
+
+  /**
+   * Returns the history stack for a tab, creating it if it does not
+   * exist yet. Routes outside of a tabs context have no tab, so this
+   * returns undefined rather than an empty stack for them.
+   */
+  const getTabsHistory = (tab?: string): RouteInfo[] | undefined => {
+    if (!tab) {
+      return undefined;
+    }
+
+    let history = tabsHistory[tab];
+    if (!history) {
+      history = tabsHistory[tab] = [];
     }
 
     return history;
@@ -194,7 +200,7 @@ export const createLocationHistory = () => {
     return currentHistory - deep >= initialHistory;
   };
 
-  const getFirstRouteInfoForTab = (tab: string): RouteInfo | undefined => {
+  const getFirstRouteInfoForTab = (tab?: string): RouteInfo | undefined => {
     const tabHistory = getTabsHistory(tab);
     if (tabHistory) {
       return tabHistory[0];
@@ -202,7 +208,7 @@ export const createLocationHistory = () => {
     return undefined;
   };
 
-  const getCurrentRouteInfoForTab = (tab: string): RouteInfo | undefined => {
+  const getCurrentRouteInfoForTab = (tab?: string): RouteInfo | undefined => {
     const tabHistory = getTabsHistory(tab);
     if (tabHistory) {
       return tabHistory[tabHistory.length - 1];
@@ -243,7 +249,7 @@ export const createLocationHistory = () => {
       const ri = locationHistory[i];
       if (ri) {
         if (ri.pathname === routeInfo.pushedByRoute) {
-          return locationHistory[i + 1 + delta]
+          return locationHistory[i + 1 + delta];
         }
       }
     }

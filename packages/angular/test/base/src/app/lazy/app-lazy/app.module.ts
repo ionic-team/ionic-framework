@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { FormsModule } from '@angular/forms';
 import { InputsComponent } from '../inputs/inputs.component';
 import { ModalComponent } from '../modal/modal.component';
@@ -28,6 +28,8 @@ import { AlertComponent } from '../alert/alert.component';
 import { AccordionComponent } from '../accordion/accordion.component';
 import { AccordionModalComponent } from '../accordion/accordion-modal/accordion-modal.component';
 import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
+import { AsyncChangeDetectionComponent } from '../async-change-detection/async-change-detection.component';
+import { AsyncChangeDetectionTabsComponent } from '../async-change-detection/async-change-detection-tabs.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
     AlertComponent,
     AccordionComponent,
     AccordionModalComponent,
-    TabsBasicComponent
+    TabsBasicComponent,
+    AsyncChangeDetectionComponent,
+    AsyncChangeDetectionTabsComponent
   ],
   imports: [
     CommonModule,

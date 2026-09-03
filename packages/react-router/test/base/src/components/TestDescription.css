@@ -1,0 +1,12 @@
+.test-description {
+  margin: 0 16px 16px;
+  margin-top: auto;
+  padding-top: 32px;
+  color: var(--ion-color-step-600);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.test-description strong {
+  color: var(--ion-color-step-750);
+}

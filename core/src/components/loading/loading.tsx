@@ -5,12 +5,14 @@ import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import {
   BACKDROP,
+  cleanupRootFocusTrapAccessibility,
+  createDelegateController,
+  createTriggerController,
   dismiss,
   eventMethod,
   prepareOverlay,
   present,
-  createDelegateController,
-  createTriggerController,
+  restoreRootFocusTrapAccessibility,
   setOverlayId,
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
@@ -209,6 +211,11 @@ export class Loading implements ComponentInterface, OverlayInterface {
   connectedCallback() {
     prepareOverlay(this.el);
     this.triggerChanged();
+
+    // Re-apply the root lock if moved without dismiss() being called
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(this.el);
+    }
   }
 
   componentWillLoad() {
@@ -244,6 +251,11 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   disconnectedCallback() {
     this.triggerController.removeClickListener();
+
+    // Clean up aria-hidden if removed without dismiss() being called
+    if (this.presented) {
+      cleanupRootFocusTrapAccessibility();
+    }
   }
 
   /**

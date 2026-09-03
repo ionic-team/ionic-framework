@@ -1,5 +1,7 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { IonRouterOutlet, ViewDidEnter, ViewDidLeave, ViewWillLeave } from '@ionic/angular';
+import { Component, OnInit, signal } from '@angular/core';
+import { IonRouterOutlet, ViewDidEnter, ViewDidLeave, ViewWillLeave } from '@ionic/angular/lazy';
+
+import { assertZoneContext } from '../../zone-assert.util';
 
 @Component({
     selector: 'app-router-link-page',
@@ -8,46 +10,48 @@ import { IonRouterOutlet, ViewDidEnter, ViewDidLeave, ViewWillLeave } from '@ion
 })
 export class RouterLinkPageComponent implements OnInit, ViewWillLeave, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 
-  onInit = 0;
-  willEnter = 0;
-  didEnter = 0;
-  willLeave = 0;
-  didLeave = 0;
-  canGoBack: boolean | null | undefined = null;
+  // Signals so state set from Ionic lifecycle hooks renders under the
+  // OnPush-by-default change detection introduced in Angular 22.
+  onInit = signal(0);
+  willEnter = signal(0);
+  didEnter = signal(0);
+  willLeave = signal(0);
+  didLeave = signal(0);
+  canGoBack = signal<boolean | null | undefined>(null);
 
   constructor(
     private ionRouterOutlet: IonRouterOutlet
   ) {}
 
   ngOnInit() {
-    NgZone.assertInAngularZone();
-    this.canGoBack = this.ionRouterOutlet.canGoBack();
-    this.onInit++;
+    assertZoneContext();
+    this.canGoBack.set(this.ionRouterOutlet.canGoBack());
+    this.onInit.update((value) => value + 1);
   }
 
   ionViewWillEnter() {
-    if (this.onInit !== 1) {
+    if (this.onInit() !== 1) {
       throw new Error('ngOnInit was not called');
     }
-    if (this.canGoBack !== this.ionRouterOutlet.canGoBack()) {
+    if (this.canGoBack() !== this.ionRouterOutlet.canGoBack()) {
       throw new Error('canGoBack() changed');
     }
-    NgZone.assertInAngularZone();
-    this.willEnter++;
+    assertZoneContext();
+    this.willEnter.update((value) => value + 1);
   }
   ionViewDidEnter() {
-    if (this.canGoBack !== this.ionRouterOutlet.canGoBack()) {
+    if (this.canGoBack() !== this.ionRouterOutlet.canGoBack()) {
       throw new Error('canGoBack() changed');
     }
-    NgZone.assertInAngularZone();
-    this.didEnter++;
+    assertZoneContext();
+    this.didEnter.update((value) => value + 1);
   }
   ionViewWillLeave() {
-    NgZone.assertInAngularZone();
-    this.willLeave++;
+    assertZoneContext();
+    this.willLeave.update((value) => value + 1);
   }
   ionViewDidLeave() {
-    NgZone.assertInAngularZone();
-    this.didLeave++;
+    assertZoneContext();
+    this.didLeave.update((value) => value + 1);
   }
 }

@@ -125,9 +125,18 @@
 // ----------------------------------------------------------------
 
 .select-wrapper {
+  align-items: center;
+
   min-width: globals.$ion-scale-5000;
 
   background: transparent;
+}
+
+:host(.select-label-placement-stacked) .select-wrapper,
+:host(.select-label-placement-floating) .select-wrapper {
+  flex-direction: column;
+
+  align-items: start;
 }
 
 .select-wrapper .select-placeholder {
@@ -146,13 +155,17 @@
   @include globals.border-radius(var(--border-radius));
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
+  display: flex;
+
   position: relative;
+
+  align-items: center;
 
   background: var(--background);
 
   box-sizing: border-box;
 
-  gap: globals.$ion-space-200;
+  overflow: hidden;
 }
 
 :host(.select-label-placement-stacked) .select-wrapper-inner,
@@ -197,6 +210,14 @@
  * clear buttons and the focus/hover state on clear ones
  * don't look too crowded.
  */
+::slotted([slot="start"]:last-of-type) {
+  margin-inline-end: globals.$ion-space-200;
+}
+
+::slotted([slot="end"]:first-of-type) {
+  margin-inline-start: globals.$ion-space-200;
+}
+
 ::slotted(ion-button[slot="start"].button-has-icon-only),
 ::slotted(ion-button[slot="end"].button-has-icon-only) {
   --border-radius: 50%;
@@ -217,6 +238,8 @@
 }
 
 .select-icon {
+  @include globals.margin(0, 0, 0, globals.$ion-space-200);
+
   transition: transform 0.15s globals.$ion-transition-curve-expressive;
 
   color: globals.$ion-text-subtlest;

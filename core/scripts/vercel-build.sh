@@ -3,12 +3,14 @@
 # Vercel preview build script
 #
 # Builds core component tests (same as before) plus framework test apps
-# (Angular, React, Vue) so they're all accessible from a single preview URL.
+# (Angular, React, React Router, Vue + Vue Router) so they're all accessible
+# from a single preview URL.
 #
-# Core tests:        /src/components/{name}/test/{scenario}
-# Angular test app:  /angular/
-# React test app:    /react/
-# Vue test app:      /vue/
+# Core tests:             /src/components/{name}/test/{scenario}
+# Angular test app:       /angular/
+# React test app:         /react/
+# React Router test app:  /react-router/
+# Vue + Vue Router app:   /vue/
 #
 set -e
 
@@ -183,18 +185,21 @@ echo "--- Step 3: Building Framework Test Apps ---"
 
 # Find the best available app version for a given package.
 # Scans the apps/ directory and picks the newest version (reverse version sort).
+# An optional ERE in $2 filters the candidates, so variant apps can be excluded.
 pick_app() {
   local apps_dir="$1/apps"
+  local filter="${2:-.}"
   [ -d "${apps_dir}" ] || return 1
   local app
-  app=$(ls -1d "${apps_dir}"/*/ 2>/dev/null | xargs -n1 basename | sort -V -r | head -1)
+  app=$(ls -1d "${apps_dir}"/*/ 2>/dev/null | xargs -n1 basename | grep -E "${filter}" | sort -V -r | head -1)
   [ -n "${app}" ] && echo "${app}" && return 0
   return 1
 }
 
 build_angular_test() {
   local APP
-  APP=$(pick_app "${REPO_ROOT}/packages/angular/test") || {
+  # Plain ngNN only, since ng22-zone sorts above ng22 and isn't a newer Angular.
+  APP=$(pick_app "${REPO_ROOT}/packages/angular/test" '^ng[0-9]+$') || {
     echo "[angular] No test app found, skipping."
     return 0
   }
@@ -251,8 +256,9 @@ build_vue_test() {
   ./build.sh "${APP}"
   cd "build/${APP}"
   npm install
+  # sync packs the PR's local @ionic/vue and @ionic/vue-router and installs them
   npm run sync
-  # Vue Router already reads import.meta.env.BASE_URL which Vite sets from --base
+  # Vue Router reads import.meta.env.BASE_URL which Vite sets from --base
   npx vite build --base /vue/
 
   mkdir -p "${OUTPUT_DIR}/vue"
@@ -260,8 +266,27 @@ build_vue_test() {
   echo "[vue] Done."
 }
 
-# TODO: Add build_react_router_test() when reactrouter6-* apps are added to
-# packages/react-router/test/apps/
+build_react_router_test() {
+  local APP
+  APP=$(pick_app "${REPO_ROOT}/packages/react-router/test") || {
+    echo "[react-router] No test app found, skipping."
+    return 0
+  }
+  echo "[react-router] Building ${APP}..."
+
+  cd "${REPO_ROOT}/packages/react-router/test"
+  ./build.sh "${APP}"
+  cd "build/${APP}"
+  npm install
+  npm run sync
+  # IonReactRouter basename is derived from import.meta.env.BASE_URL which Vite
+  # sets from --base, so routing works under the /react-router/ sub-path.
+  npx vite build --base /react-router/
+
+  mkdir -p "${OUTPUT_DIR}/react-router"
+  cp -r dist/* "${OUTPUT_DIR}/react-router/"
+  echo "[react-router] Done."
+}
 
 TEST_FAILED=""
 
@@ -272,6 +297,8 @@ fi
 if $REACT_PKG_OK; then
   build_react_test > /tmp/vercel-react-test.log 2>&1 &
   PID_REACT_TEST=$!
+  build_react_router_test > /tmp/vercel-react-router-test.log 2>&1 &
+  PID_REACT_ROUTER_TEST=$!
 fi
 if $VUE_PKG_OK; then
   build_vue_test > /tmp/vercel-vue-test.log 2>&1 &
@@ -282,7 +309,8 @@ if $ANG_PKG_OK; then
   wait $PID_ANG_TEST   || { echo "Angular test app failed:";       tail -30 /tmp/vercel-angular-test.log; TEST_FAILED="${TEST_FAILED} angular"; }
 fi
 if $REACT_PKG_OK; then
-  wait $PID_REACT_TEST || { echo "React test app failed:";         tail -30 /tmp/vercel-react-test.log;   TEST_FAILED="${TEST_FAILED} react"; }
+  wait $PID_REACT_TEST        || { echo "React test app failed:";        tail -30 /tmp/vercel-react-test.log;        TEST_FAILED="${TEST_FAILED} react"; }
+  wait $PID_REACT_ROUTER_TEST || { echo "React Router test app failed:"; tail -30 /tmp/vercel-react-router-test.log; TEST_FAILED="${TEST_FAILED} react-router"; }
 fi
 if $VUE_PKG_OK; then
   wait $PID_VUE_TEST   || { echo "Vue test app failed:";           tail -30 /tmp/vercel-vue-test.log;     TEST_FAILED="${TEST_FAILED} vue"; }
@@ -345,9 +373,13 @@ cat > "${OUTPUT_DIR}/index.html" << 'LANDING_EOF'
         <h2>React</h2>
         <p>@ionic/react overlays, hooks, tabs, form controls</p>
       </a>
+      <a class="card" href="/react-router/">
+        <h2>React Router</h2>
+        <p>@ionic/react-router routing, tabs, swipe-to-go-back, overlays</p>
+      </a>
       <a class="card" href="/vue/">
-        <h2>Vue</h2>
-        <p>@ionic/vue overlays, router, tabs, lifecycle</p>
+        <h2>Vue + Vue Router</h2>
+        <p>@ionic/vue and @ionic/vue-router from this PR: overlays, lifecycle, routing, tabs, nested outlets, swipe-to-go-back</p>
       </a>
     </div>
   </div>

@@ -1,4 +1,3 @@
-import React, { useState, ReactElement } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -7,32 +6,34 @@ import {
   IonToolbar,
   IonRouterOutlet,
 } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
+import React, { useState } from 'react';
+import type { ReactElement } from 'react';
+import { Route, Navigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
-const DynamicRoutes: React.FC = () => {
-  const [routes, setRoutes] = useState<ReactElement[]>([
-    <Route
-      key="sldjflsdj"
-      path="/dynamic-routes/home"
-      render={() => <Home update={addRoute} />}
-      exact={true}
-    />,
-  ]);
+import TestDescription from '../../components/TestDescription';
 
+const DynamicRoutes: React.FC = () => {
   const addRoute = () => {
     const newRoute = (
-      <Route key="lsdjldj" path="/dynamic-routes/newRoute" component={NewRoute} exact={true} />
+      <Route key="lsdjldj" path="/dynamic-routes/newRoute" element={<NewRoute />} />
     );
     setRoutes([...routes, newRoute]);
   };
 
+  const [routes, setRoutes] = useState<ReactElement[]>([
+    <Route
+      key="sldjflsdj"
+      path="/dynamic-routes/home"
+      element={<Home update={addRoute} />}
+    />,
+  ]);
+
   return (
     <IonRouterOutlet>
       {routes}
-      {/* <Route exact path="/home" render={() => <Home update={addRoute} />} /> */}
-      <Route exact path="/dynamic-routes" render={() => <Redirect to="/dynamic-routes/home" />} />
-      <Route render={() => <Failed />} />
+      <Route path="/dynamic-routes" element={<Navigate to="/dynamic-routes/home" replace />} />
+      <Route element={<Failed />} />
     </IonRouterOutlet>
   );
 };
@@ -68,6 +69,7 @@ const Home: React.FC<{
           <br />
           <Link to="/dynamic-routes/newRoute">Take me to the newRoute</Link>
         </div>
+        <TestDescription>Click "Add Route", then click the link to navigate to newRoute. The "New Route" page should render. If the "New Route Failed" page appears instead, the dynamic route was not registered correctly.</TestDescription>
       </IonContent>
     </IonPage>
   );

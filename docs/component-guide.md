@@ -916,21 +916,21 @@ registerOnChange(fn: (_: number | null) => void): void {
 
 #### Standalone Directive
 
-For standalone components, create a directive in the [standalone package](/packages/angular/standalone/src/directives). Look at the implementation of the most similar existing component as a reference:
+For standalone components, create a directive in the [standalone package](/packages/angular/src/standalone/directives). Look at the implementation of the most similar existing component as a reference:
 
-- For text/numeric inputs: See [ion-input](/packages/angular/standalone/src/directives/input.ts) or [ion-input-otp](/packages/angular/standalone/src/directives/input-otp.ts)
-- For boolean inputs: See [ion-checkbox](/packages/angular/standalone/src/directives/checkbox.ts) or [ion-toggle](/packages/angular/standalone/src/directives/toggle.ts)
-- For select-like inputs: See [ion-select](/packages/angular/standalone/src/directives/select.ts) or [ion-radio-group](/packages/angular/standalone/src/directives/radio-group.ts)
+- For text/numeric inputs: See [ion-input](/packages/angular/src/standalone/directives/input.ts) or [ion-input-otp](/packages/angular/src/standalone/directives/input-otp.ts)
+- For boolean inputs: See [ion-checkbox](/packages/angular/src/standalone/directives/checkbox.ts) or [ion-toggle](/packages/angular/src/standalone/directives/toggle.ts)
+- For select-like inputs: See [ion-select](/packages/angular/src/standalone/directives/select.ts) or [ion-radio-group](/packages/angular/src/standalone/directives/radio-group.ts)
 
 After creating the directive, you need to export it in two places:
 
-1. First, add your component to the directives export group in [`packages/angular/standalone/src/directives/index.ts`](/packages/angular/standalone/src/directives/index.ts):
+1. First, add your component to the directives export group in [`packages/angular/src/standalone/directives/index.ts`](/packages/angular/src/standalone/directives/index.ts):
 
 ```typescript
 export { IonNewComponent } from './new-component';
 ```
 
-2. Then, add it to the main standalone package's index file in [`packages/angular/standalone/src/index.ts`](/packages/angular/standalone/src/index.ts):
+2. Then, add it to the main standalone package's index file in [`packages/angular/src/standalone/index.ts`](/packages/angular/src/standalone/index.ts):
 
 ```typescript
 export {

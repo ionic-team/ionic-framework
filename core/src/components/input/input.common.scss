@@ -162,7 +162,6 @@
 // --------------------------------------------------
 
 .input-clear-icon {
-  @include margin(auto);
   @include padding(0);
   @include background-position(center);
 
@@ -216,6 +215,25 @@
   line-height: normal;
 }
 
+// Input Control (Label + Input)
+// ----------------------------------------------------------------
+
+.input-control {
+  display: flex;
+
+  flex-grow: 1;
+
+  width: 100%;
+
+  /**
+  * Allows the control to shrink below the label and input's intrinsic
+  * width, preventing the start and end slots from being pushed outside
+  * the wrapper. The label and input truncate independently, so it can
+  * use whatever space remains after accounting for the slots.
+  */
+  min-width: 0;
+}
+
 // Input Native Wrapper
 // ----------------------------------------------------------------
 
@@ -226,10 +244,22 @@
 
   flex-grow: 1;
 
-  // ensure start/end slot content is vertically centered
-  align-items: center;
-
   width: 100%;
+}
+
+// Input Start/End Containers
+// ----------------------------------------------------------------
+
+.input-start,
+.input-end {
+  display: flex;
+
+  position: relative;
+
+  flex-shrink: 0;
+
+  // Ensure start/end content is vertically centered
+  align-items: center;
 }
 
 // Input Highlight
@@ -362,6 +392,18 @@
 }
 
 /**
+ * When start/end slots are added or removed, we temporarily
+ * disable the label transition to prevent the floating label
+ * from animating as its position is adjusted.
+ *
+ * This class is applied by the start container controller, so
+ * renaming it here requires renaming it there too.
+ */
+:host(.skip-label-transition) .label-text-wrapper {
+  transition: none;
+}
+
+/**
  * We need to use two elements instead of
  * one. The .label-text-wrapper is responsible
  * for centering the label text vertically regardless
@@ -409,7 +451,7 @@
  * Label is on the left of the input in LTR and
  * on the right in RTL.
  */
-:host(.input-label-placement-start) .input-wrapper {
+:host(.input-label-placement-start) .input-control {
   flex-direction: row;
 }
 
@@ -420,7 +462,7 @@
  * Label is on the right of the input in LTR and
  * on the left in RTL.
  */
-:host(.input-label-placement-end) .input-wrapper {
+:host(.input-label-placement-end) .input-control {
   flex-direction: row-reverse;
 }
 
@@ -447,10 +489,9 @@
  * Floating: Label sits over the input when the input has no
  * value and is blurred. Label sits above the input and is scaled
  * down when the input is focused or has a value.
- *
  */
-:host(.input-label-placement-stacked) .input-wrapper,
-:host(.input-label-placement-floating) .input-wrapper {
+:host(.input-label-placement-stacked) .input-control,
+:host(.input-label-placement-floating) .input-control {
   flex-direction: column;
   align-items: start;
 }
@@ -472,15 +513,6 @@
    * autofill background too.
    */
   z-index: 2;
-}
-
-/**
- * Ensures the input does not
- * overlap the label.
- */
-:host(.input-label-placement-stacked) input,
-:host(.input-label-placement-floating) input {
-  @include margin(1px, 0, 0, 0);
 }
 
 /**
