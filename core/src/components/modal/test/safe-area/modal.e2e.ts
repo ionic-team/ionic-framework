@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
-import { configs, test, Viewports } from '@utils/test/playwright';
+import type { Locator } from '@playwright/test';
+import { configs, detachAndReattach, test, Viewports } from '@utils/test/playwright';
 
 /**
  * These tests verify that safe-area CSS custom properties are correctly
@@ -442,6 +443,178 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
 
       // Clean up
       await modal.evaluate((el: HTMLIonModalElement) => el.remove());
+    });
+
+    test.describe('moving a presented modal', () => {
+      const moveModal = (modal: Locator) => detachAndReattach(modal, 'ion-app');
+
+      test('should keep the safe-area overrides', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+        });
+
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#fullscreen-modal');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+        await moveModal(modal);
+
+        const overrides = await modal.evaluate((el: HTMLIonModalElement) => ({
+          top: el.style.getPropertyValue('--ion-safe-area-top'),
+          bottom: el.style.getPropertyValue('--ion-safe-area-bottom'),
+        }));
+
+        expect(overrides.top).toBe('inherit');
+        expect(overrides.bottom).toBe('inherit');
+        // The detach releases the root lock, so the re-insert has to put it back.
+        await expect(page.locator('body')).toHaveClass(/backdrop-no-scroll/);
+      });
+
+      test('should not measure the modal while it has no layout box', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+        });
+
+        // A hidden subtree carries `display: none`, so a move inside that
+        // window reconnects the modal with no box to measure.
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#fullscreen-modal');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+
+        await modal.evaluate((el: HTMLIonModalElement) => el.style.setProperty('display', 'none', 'important'));
+        await moveModal(modal);
+        // The reconnect's read is deferred a frame, so let that frame land
+        // while there is still no box. Clearing `display` from a separate
+        // round trip races it and the test stops guarding anything.
+        await modal.evaluate(async (el: HTMLIonModalElement) => {
+          await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          el.style.removeProperty('display');
+        });
+
+        const overrides = await modal.evaluate((el: HTMLIonModalElement) => ({
+          bottom: el.style.getPropertyValue('--ion-safe-area-bottom'),
+          right: el.style.getPropertyValue('--ion-safe-area-right'),
+        }));
+
+        expect(overrides.bottom).toBe('inherit');
+        expect(overrides.right).toBe('inherit');
+      });
+
+      test('should keep the sheet offset for a sheet modal', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+        });
+
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#sheet-modal');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+        await moveModal(modal);
+
+        // The sheet's `--height` formula reads `--ion-modal-offset-top`, so
+        // losing it grows the sheet by the safe-area-top amount.
+        const offsetTop = await modal.evaluate((el: HTMLIonModalElement) =>
+          el.style.getPropertyValue('--ion-modal-offset-top')
+        );
+        const safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) =>
+          el.style.getPropertyValue('--ion-safe-area-top')
+        );
+
+        expect(offsetTop).toBe(`${TEST_SAFE_AREA_TOP}px`);
+        expect(safeAreaTop).toBe('0px');
+      });
+
+      test('should not read a mid-animation position when moved during willPresent', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+        });
+
+        /**
+         * Relocating from `willPresent` reconnects the overlay just before the
+         * enter animation starts, where a position-based read measures a
+         * mid-animation box. So animations stay on and the value is sampled
+         * every frame: `present()` fixes the end state either way, so only
+         * samples taken during the animation can catch the regression.
+         */
+        await page.goto('/src/components/modal/test/safe-area?ionic:_testing=false', config);
+
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.evaluate(() => {
+          const samples: string[] = [];
+          (window as any).safeAreaTopSamples = samples;
+
+          document.addEventListener(
+            'ionModalWillPresent',
+            (ev) => {
+              const modal = ev.target as HTMLElement;
+              const holder = document.createElement('div');
+              document.querySelector('ion-app')!.appendChild(holder);
+              holder.appendChild(modal);
+
+              const start = performance.now();
+              const sample = () => {
+                samples.push(modal.style.getPropertyValue('--ion-safe-area-top'));
+                (window as any).samplingSpanMs = performance.now() - start;
+                if (!(window as any).stopSampling) {
+                  requestAnimationFrame(sample);
+                }
+              };
+              requestAnimationFrame(sample);
+            },
+            { once: true }
+          );
+
+          document.addEventListener('ionModalDidPresent', () => ((window as any).stopSampling = true), {
+            once: true,
+          });
+        });
+
+        await page.click('#fullscreen-modal');
+        await ionModalDidPresent.next();
+
+        const samples = await page.evaluate(() => (window as any).safeAreaTopSamples as string[]);
+        const samplingSpanMs = await page.evaluate(() => (window as any).samplingSpanMs as number);
+
+        // Elapsed time rather than a frame count, which throttles under CI
+        // load. A starved queue would otherwise leave only samples that pass.
+        expect(samplingSpanMs).toBeGreaterThan(100);
+        // Assert the positive value: an unset override is as wrong as `0px`.
+        expect(samples.every((sample) => sample === 'inherit')).toBe(true);
+      });
+
+      test('should keep the ion-content scroll padding', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+        });
+
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#fullscreen-modal-no-footer');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+        await moveModal(modal);
+
+        const innerScroll = modal.locator('ion-content .inner-scroll');
+        const scrollPaddingBottom = await innerScroll.evaluate((el: Element) =>
+          parseFloat(getComputedStyle(el).paddingBottom)
+        );
+
+        expect(scrollPaddingBottom).toBe(TEST_ION_PADDING + TEST_SAFE_AREA_BOTTOM);
+      });
     });
   });
 });

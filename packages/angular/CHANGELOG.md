@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.2](https://github.com/ionic-team/ionic-framework/compare/v9.0.1...v9.0.2) (2026-09-02)
+
+### Bug Fixes
+
+* **angular:** restore change detection for routed pages ([#31414](https://github.com/ionic-team/ionic-framework/issues/31414)) ([65def73](https://github.com/ionic-team/ionic-framework/commit/65def730d3c762c943fca8df82d9fa312360eeef)), closes [#31406](https://github.com/ionic-team/ionic-framework/issues/31406)
+
+
+## [9.0.1](https://github.com/ionic-team/ionic-framework/compare/v9.0.0...v9.0.1) (2026-08-26)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 # [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
 
 **Full Changelog**: https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.2](https://github.com/ionic-team/ionic-framework/compare/v9.0.1...v9.0.2) (2026-09-02)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [9.0.1](https://github.com/ionic-team/ionic-framework/compare/v9.0.0...v9.0.1) (2026-08-26)
+
+### Bug Fixes
+
+* **react-router:** skip page clone when nothing will animate ([#31387](https://github.com/ionic-team/ionic-framework/issues/31387)) ([898001c](https://github.com/ionic-team/ionic-framework/commit/898001c5c6a92a3269dd8e60c4e79da1c634af9d))
+
+
 # [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
 
 **Full Changelog**: https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0

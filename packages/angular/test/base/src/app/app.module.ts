@@ -4,6 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular/lazy';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { changeDetectionProviders } from './change-detection.providers';
 import { ModeSwitcherComponent } from './mode-switcher.component';
 
 const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
@@ -22,6 +23,7 @@ export function ionicConfigFactory(): any {
     ModeSwitcherComponent,
   ],
   providers: [
+    ...changeDetectionProviders,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: APP_ID, useValue: 'serverApp' },
   ],

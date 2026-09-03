@@ -12,6 +12,7 @@ import {
   eventMethod,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   setOverlayId,
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
@@ -208,6 +209,11 @@ export class Loading implements ComponentInterface, OverlayInterface {
   connectedCallback() {
     prepareOverlay(this.el);
     this.triggerChanged();
+
+    // Re-apply the root lock if moved without dismiss() being called
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(this.el);
+    }
   }
 
   componentWillLoad() {

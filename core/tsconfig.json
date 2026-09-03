@@ -9,6 +9,10 @@
       "dom.iterable",
       "es2022"
     ],
+    // Must stay false. At target es2022 TypeScript defaults it to true, emitting @Prop
+    // defaults as class fields. Consumers that downlevel those hoist the initializers
+    // above Stencil's registerInstance(), so its prop setter drops every default.
+    "useDefineForClassFields": false,
     "jsx": "react",
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",

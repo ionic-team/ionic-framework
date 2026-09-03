@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "9.0.0",
+  "version": "9.0.2",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -24,10 +24,11 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "build": "npm run clean && npm run build.ng && npm run build.css && npm run build.schematics",
+    "build": "npm run clean && npm run build.ng && npm run build.change-detection && npm run build.css && npm run build.schematics",
     "build.css": "node scripts/build-css.js",
     "build.schematics": "node scripts/build-schematics.js",
     "build.ng": "ngc",
+    "build.change-detection": "node scripts/normalize-change-detection.js",
     "clean": "node scripts/clean.js",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix",
@@ -41,6 +42,7 @@
     "test.code-split": "node ./scripts/test-code-split.js",
     "test.schematics": "node ./scripts/verify-schematics.js",
     "test.package": "node scripts/verify-exports.js",
+    "test.change-detection": "node scripts/verify-change-detection.js",
     "validate": "npm i && npm run lint && npm run build && npm run test"
   },
   "exports": {
@@ -166,7 +168,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^9.0.0",
+    "@ionic/core": "^9.0.2",
     "ionicons": "^8.0.13",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"
@@ -209,6 +211,7 @@
     "fs-extra": "^7.0.0",
     "prettier": "^2.4.1",
     "rxjs": "~7.5.0",
+    "source-map": "^0.7.6",
     "typescript": "~6.0.0",
     "typescript-eslint-language-service": "^5.0.0",
     "zone.js": "~0.16.0"
