@@ -251,7 +251,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 /**
- * Slotted click behavior does not vary by mode or direction.
+ * This behavior does not vary across directions/modes
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('textarea: slotted click'), () => {
