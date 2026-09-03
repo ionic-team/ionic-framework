@@ -38,7 +38,7 @@
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "sync": "./scripts/sync.sh",
     "local.sync.and.pack": "./scripts/sync-and-pack.sh",
-    "test": "npm run test.package && test.change-detection && npm run test.schematics && npm run test.code-split",
+    "test": "npm run test.package && npm run test.change-detection && npm run test.schematics && npm run test.code-split",
     "test.package": "node scripts/verify-exports.js",
     "test.change-detection": "node scripts/verify-change-detection.js",
     "test.schematics": "node ./scripts/verify-schematics.js",
