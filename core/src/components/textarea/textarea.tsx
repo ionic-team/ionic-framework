@@ -814,7 +814,7 @@ export class Textarea implements ComponentInterface {
    */
   private renderOutlineContainer() {
     return (
-      <div class="textarea-outline-container">
+      <div key="outline" class="textarea-outline-container">
         <div class="textarea-outline-start"></div>
         <div
           class={{
@@ -875,7 +875,7 @@ export class Textarea implements ComponentInterface {
    */
   private renderStartContainer() {
     return (
-      <div class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
+      <div key="start" class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
         <slot name="start"></slot>
       </div>
     );
@@ -883,7 +883,7 @@ export class Textarea implements ComponentInterface {
 
   private renderEndContainer() {
     return (
-      <div class="textarea-end">
+      <div key="end" class="textarea-end">
         <slot name="end"></slot>
       </div>
     );
@@ -892,10 +892,10 @@ export class Textarea implements ComponentInterface {
   private renderIonicField() {
     return [
       this.renderLabel(),
-      <div class="textarea-wrapper-inner">
-        {this.getFill() === 'outline' && <div class="textarea-outline"></div>}
+      <div key="inner" class="textarea-wrapper-inner">
+        {this.getFill() === 'outline' && <div key="outline" class="textarea-outline"></div>}
         {this.renderStartContainer()}
-        <div class="textarea-control">
+        <div key="control" class="textarea-control">
           <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
             {this.renderNativeTextarea()}
           </div>
@@ -915,7 +915,7 @@ export class Textarea implements ComponentInterface {
     return [
       hasOutlineFill && this.renderOutlineContainer(),
       this.renderStartContainer(),
-      <div class="textarea-control">
+      <div key="control" class="textarea-control">
         {this.renderLabel()}
         <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
           {this.renderNativeTextarea()}

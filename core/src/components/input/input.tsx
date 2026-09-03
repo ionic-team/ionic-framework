@@ -936,7 +936,7 @@ export class Input implements ComponentInterface {
    */
   private renderOutlineContainer() {
     return (
-      <div class="input-outline-container">
+      <div key="outline" class="input-outline-container">
         <div class="input-outline-start"></div>
         <div
           class={{
@@ -1028,10 +1028,10 @@ export class Input implements ComponentInterface {
   private renderIonicField() {
     return [
       this.renderLabel(),
-      <div class="input-wrapper-inner">
-        <div class="input-outline"></div>
+      <div key="inner" class="input-wrapper-inner">
+        <div key="outline" class="input-outline"></div>
         {this.renderStartContainer()}
-        <div class="input-control">
+        <div key="control" class="input-control">
           <div class="native-wrapper" onClick={this.onLabelClick}>
             {this.renderNativeInput()}
           </div>
@@ -1047,7 +1047,7 @@ export class Input implements ComponentInterface {
    */
   private renderStartContainer() {
     return (
-      <div class="input-start" ref={(el) => (this.startContainerEl = el)}>
+      <div key="start" class="input-start" ref={(el) => (this.startContainerEl = el)}>
         <slot name="start"></slot>
       </div>
     );
@@ -1055,7 +1055,7 @@ export class Input implements ComponentInterface {
 
   private renderEndContainer() {
     return (
-      <div class="input-end">
+      <div key="end" class="input-end">
         {this.renderClearButton()}
         <slot name="end"></slot>
       </div>
@@ -1068,7 +1068,7 @@ export class Input implements ComponentInterface {
     return [
       hasOutlineFill && this.renderOutlineContainer(),
       this.renderStartContainer(),
-      <div class="input-control">
+      <div key="control" class="input-control">
         {this.renderLabel()}
         <div class="native-wrapper" onClick={this.onLabelClick}>
           {this.renderNativeInput()}

@@ -1159,7 +1159,7 @@ export class Select implements ComponentInterface {
    */
   private renderOutlineContainer() {
     return (
-      <div class="select-outline-container">
+      <div key="outline" class="select-outline-container">
         <div class="select-outline-start"></div>
         <div
           class={{
@@ -1178,7 +1178,7 @@ export class Select implements ComponentInterface {
 
   private renderStartContainer() {
     return (
-      <div class="select-start" part="start" ref={(el) => (this.startContainerEl = el)}>
+      <div key="start" class="select-start" part="start" ref={(el) => (this.startContainerEl = el)}>
         <slot name="start"></slot>
       </div>
     );
@@ -1200,13 +1200,13 @@ export class Select implements ComponentInterface {
   private renderIonicField() {
     return [
       this.renderLabel(),
-      <div class="select-wrapper-inner" part="inner">
-        {this.fill === 'outline' && <div class="select-outline"></div>}
+      <div key="inner" class="select-wrapper-inner" part="inner">
+        {this.fill === 'outline' && <div key="outline" class="select-outline"></div>}
         {this.renderStartContainer()}
-        <div class="select-control" part="control">
+        <div key="control" class="select-control" part="control">
           {this.renderNativeWrapper()}
         </div>
-        <div class="select-end" part="end">
+        <div key="end" class="select-end" part="end">
           <slot name="end"></slot>
         </div>
         {this.renderSelectIcon()}
@@ -1226,7 +1226,7 @@ export class Select implements ComponentInterface {
     return [
       hasOutlineFill && this.renderOutlineContainer(),
       this.renderStartContainer(),
-      <div class="select-control" part="control">
+      <div key="control" class="select-control" part="control">
         {this.renderLabel()}
         <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
           {this.renderSelectText()}
@@ -1240,7 +1240,7 @@ export class Select implements ComponentInterface {
           {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
         </div>
       </div>,
-      <div class="select-end" part="end">
+      <div key="end" class="select-end" part="end">
         {/**
          * The icon is rendered in the end container when the
          * select has a floating or stacked label so it is
