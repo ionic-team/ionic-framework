@@ -1845,4 +1845,97 @@ describe('Routing', () => {
       { id: 'first', hidden: true }
     ]);
   });
+
+  // Guards against clearing a delta that belongs to another navigation still in flight.
+  it('should keep the delta of a back navigation that a cancelled push shares a path with', async () => {
+    let navManager: any;
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const List = createPage('list');
+    const Detail = createPage('detail');
+
+    const holds: Array<() => void> = [];
+    let holding = false;
+    let cancelReported!: () => void;
+
+    const pushCancelled = new Promise((resolve) => {
+      cancelReported = resolve as () => void;
+    });
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/list', component: List },
+        { path: '/detail', component: Detail }
+      ]
+    });
+
+    router.beforeEach(async (to) => {
+      if (holding && to.path === '/list') {
+        await new Promise<void>((resolve) => holds.push(resolve));
+      }
+
+      return true;
+    });
+
+    router.afterEach((_to, _from, failure) => {
+      if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+        cancelReported();
+      }
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/list');
+    await waitForRouter();
+    router.push('/detail');
+    await waitForRouter();
+
+    /*
+     * The push and the back both target /list, so the location the delta was
+     * staged against cannot tell them apart. Only the identity of the
+     * navigation can, otherwise the cancelled push takes the back's delta and
+     * the back stops being treated as traversal.
+     */
+    holding = true;
+
+    router.push('/list').catch(() => {});
+    await waitUntil(() => holds.length === 1, 'the push to reach the guard');
+
+    router.back();
+    await waitUntil(() => holds.length === 2, 'the back to reach the guard');
+
+    // Let the push finish, which reports it as cancelled.
+    holding = false;
+    holds[0]();
+    await pushCancelled;
+
+    // Only now let the back finish.
+    holds[1]();
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/list',
+      routerAction: 'pop',
+      routerDirection: 'back'
+    });
+
+    // Losing the delta stops the back being traversal, so /detail is kept.
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'list', hidden: false }
+    ]);
+  });
 });

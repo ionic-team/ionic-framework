@@ -29,7 +29,27 @@ export const createIonRouter = (
     direction: undefined,
     action: undefined,
     delta: undefined,
-    to: undefined,
+  };
+  /**
+   * The navigation the staged delta belongs to, matched on identity for the
+   * same reason the params are. Two history navigations can move to the same
+   * path, and a path cannot tell them apart.
+   */
+  let currentNavigationInfoOwner: RouteLocationNormalized | undefined;
+  /**
+   * Set between the history listener staging a delta and the navigation
+   * claiming it below.
+   */
+  let currentNavigationInfoUnclaimed = false;
+
+  const clearNavigationInfo = () => {
+    currentNavigationInfo = {
+      direction: undefined,
+      action: undefined,
+      delta: undefined,
+    };
+    currentNavigationInfoOwner = undefined;
+    currentNavigationInfoUnclaimed = false;
   };
 
   /**
@@ -69,12 +89,7 @@ export const createIonRouter = (
       const replaceAction = opts.history.state.replaced ? "replace" : undefined;
       handleHistoryChange(to, action || replaceAction, direction, delta);
 
-      currentNavigationInfo = {
-        direction: undefined,
-        action: undefined,
-        delta: undefined,
-        to: undefined,
-      };
+      clearNavigationInfo();
     }
   );
 
@@ -156,6 +171,11 @@ export const createIonRouter = (
       incomingRouteParamsOwner = to;
       incomingRouteParamsUnclaimed = false;
     }
+
+    if (currentNavigationInfoUnclaimed) {
+      currentNavigationInfoOwner = to;
+      currentNavigationInfoUnclaimed = false;
+    }
   });
 
   /**
@@ -174,15 +194,16 @@ export const createIonRouter = (
    * state first, in which case discarding would strip that state from the
    * navigation still running.
    *
-   * The params are matched on the navigation that owns them rather than on
-   * where it was heading, because two navigations can head for the same path
-   * and a path cannot tell them apart. Params still unclaimed belong to this
-   * navigation, since nothing has started since they were staged.
+   * Both are matched on the navigation that owns them rather than on where it
+   * was heading, because two navigations can head for the same path and a path
+   * cannot tell them apart. State still unclaimed belongs to this navigation,
+   * since nothing has started since it was staged.
    */
   const discardStagedStateFor = (to: RouteLocationNormalized) => {
     const deltaIsForThisNavigation =
-      currentNavigationInfo.to === undefined ||
-      currentNavigationInfo.to === to.fullPath;
+      currentNavigationInfoOwner === undefined
+        ? currentNavigationInfoUnclaimed
+        : currentNavigationInfoOwner === to;
 
     const paramsAreForThisNavigation =
       incomingRouteParamsOwner === undefined
@@ -190,12 +211,7 @@ export const createIonRouter = (
         : incomingRouteParamsOwner === to;
 
     if (deltaIsForThisNavigation) {
-      currentNavigationInfo = {
-        direction: undefined,
-        action: undefined,
-        delta: undefined,
-        to: undefined,
-      };
+      clearNavigationInfo();
     }
 
     if (paramsAreForThisNavigation) {
@@ -214,7 +230,7 @@ export const createIonRouter = (
     });
   }
 
-  opts.history.listen((to: any, _x: any, info: any) => {
+  opts.history.listen((_to: any, _x: any, info: any) => {
     /**
      * history.listen only fires on certain
      * event such as when the user clicks the
@@ -236,13 +252,10 @@ export const createIonRouter = (
        */
       action: info.type === "pop" && info.delta >= 1 ? "push" : info.type,
       direction: info.direction === "" ? "forward" : info.direction,
-
-      /**
-       * Recorded so that a failed navigation can tell whether this
-       * information is its own before clearing it.
-       */
-      to,
     };
+
+    currentNavigationInfoOwner = undefined;
+    currentNavigationInfoUnclaimed = true;
   });
 
   const handleNavigateBack = (

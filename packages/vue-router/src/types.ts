@@ -91,10 +91,4 @@ export interface NavigationInformation {
   action?: RouteAction;
   direction?: RouteDirection;
   delta?: number;
-  /**
-   * The location the browser moved to when this information was staged. Used to
-   * tell whether the information belongs to a particular navigation, since a
-   * second history navigation can stage its own before the first one settles.
-   */
-  to?: string;
 }
