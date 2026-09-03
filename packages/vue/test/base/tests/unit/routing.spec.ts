@@ -1609,6 +1609,83 @@ describe('Routing', () => {
     ]);
   });
 
+  /*
+   * Registering an error handler stops vue-router logging an uncaught
+   * navigation error itself, so these cover the log still reaching an app that
+   * has not registered one of its own.
+   */
+  const mountThrowingGuard = async () => {
+    const guardError = new Error('session check failed');
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: createPage('home') },
+        { path: '/boom', component: createPage('boom') }
+      ]
+    });
+
+    router.beforeEach((to) => {
+      if (to.path === '/boom') {
+        throw guardError;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const navigateAndCountLogs = async () => {
+      errorSpy.mockClear();
+      router.push('/boom').catch(() => {});
+      await waitForRouter();
+
+      return errorSpy.mock.calls.filter((call) => call[0] === guardError).length;
+    };
+
+    return { router, navigateAndCountLogs, restore: () => errorSpy.mockRestore() };
+  };
+
+  it('should log a guard error when the app has no error handler of its own', async () => {
+    const { navigateAndCountLogs, restore } = await mountThrowingGuard();
+
+    expect(await navigateAndCountLogs()).toEqual(1);
+
+    restore();
+  });
+
+  it('should not log a guard error when the app registers its own handler', async () => {
+    const { router, navigateAndCountLogs, restore } = await mountThrowingGuard();
+    const appHandler = vi.fn();
+    router.onError(appHandler);
+
+    expect(await navigateAndCountLogs()).toEqual(0);
+    expect(appHandler).toHaveBeenCalledTimes(1);
+
+    restore();
+  });
+
+  it('should log a guard error again once the app removes its handler', async () => {
+    const { router, navigateAndCountLogs, restore } = await mountThrowingGuard();
+    const unregister = router.onError(vi.fn());
+
+    await navigateAndCountLogs();
+    unregister();
+
+    expect(await navigateAndCountLogs()).toEqual(1);
+
+    restore();
+  });
+
   // Guards against clearing params that belong to another navigation still in flight.
   it('should keep the tab params of a tab change that replaced a cancelled push', async () => {
     let navManager: any;

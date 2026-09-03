@@ -94,18 +94,40 @@ export const createIonRouter = (
   );
 
   /**
+   * vue-router only logs an uncaught navigation error while no error handler
+   * is registered, so the handler below would silence it for every app that
+   * has not added one of its own. Track whether the app adds one so the log
+   * can be put back when it has not.
+   */
+  let appErrorHandlers = 0;
+  const addErrorHandler = router.onError.bind(router);
+  router.onError = (handler) => {
+    appErrorHandlers++;
+    const removeHandler = addErrorHandler(handler);
+
+    return () => {
+      appErrorHandlers--;
+      removeHandler();
+    };
+  };
+
+  /**
    * A guard that throws, including an await on a session check that rejects,
    * never reaches afterEach. vue-router rejects the navigation promise
    * instead, so there is no failure to inspect there and the staged state
-   * would survive. This does not handle the error, so navigation outcomes are
-   * unchanged.
+   * would survive. The error is re-thrown to the app the same way it was
+   * before, so navigation outcomes are unchanged.
    *
    * A guard that returns a location is still not covered, because that
    * redirects rather than fails and afterEach is never called for the original
    * navigation.
    */
-  router.onError((_error: unknown, to: RouteLocationNormalized) => {
+  addErrorHandler((error: unknown, to: RouteLocationNormalized) => {
     discardStagedStateFor(to);
+
+    if (appErrorHandlers === 0) {
+      console.error(error);
+    }
   });
 
   const locationHistory = createLocationHistory();
