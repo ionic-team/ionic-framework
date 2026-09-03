@@ -59,11 +59,21 @@ function main() {
     execSync(`npm run build`, { cwd: PROJECT_DIR, stdio: 'inherit' });
 
     const stats = fs.readJsonSync(STATS_FILE);
-    const chunks = findChunksForPage(stats, 'landing.page.ts');
-    
-    const splitComponent = 'ion-toggle.js';
-    if (hasComponentAsInput(stats, chunks, splitComponent)) {
-      throw new Error(`${splitComponent} was not split from landing page.`);
+    const landingPageChunks = findChunksForPage(stats, 'landing.page.ts');
+    const homePageChunks = findChunksForPage(stats, 'home.page.ts');
+
+    if (!hasComponentAsInput(stats, landingPageChunks, 'ion-header.js')) {
+      throw new Error(`ion-header was not included in landing page.`);
+    }
+    if (hasComponentAsInput(stats, landingPageChunks, 'ion-toggle.js')) {
+      throw new Error(`ion-toggle was not split from landing page.`);
+    }
+
+    if (!hasComponentAsInput(stats, homePageChunks, 'ion-header.js')) {
+      throw new Error(`ion-header was not included in home page.`);
+    }
+    if (!hasComponentAsInput(stats, homePageChunks, 'ion-toggle.js')) {
+      throw new Error(`ion-toggle was not included in home page.`);
     }
 
     console.log('✅ verified code-split');
