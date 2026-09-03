@@ -1028,12 +1028,15 @@ export class Input implements ComponentInterface {
   private renderIonicField() {
     return [
       this.renderLabel(),
-      <div class="native-wrapper" onClick={this.onLabelClick}>
+      <div class="input-wrapper-inner">
         <div class="input-outline"></div>
-        <slot name="start"></slot>
-        {this.renderNativeInput()}
-        {this.renderClearButton()}
-        <slot name="end"></slot>
+        {this.renderStartContainer()}
+        <div class="input-control">
+          <div class="native-wrapper" onClick={this.onLabelClick}>
+            {this.renderNativeInput()}
+          </div>
+        </div>
+        {this.renderEndContainer()}
       </div>,
     ];
   }
@@ -1042,24 +1045,36 @@ export class Input implements ComponentInterface {
    * The ios and md themes nest the label alongside the input so a floating
    * label can escape the control and clear the start and end slots.
    */
+  private renderStartContainer() {
+    return (
+      <div class="input-start" ref={(el) => (this.startContainerEl = el)}>
+        <slot name="start"></slot>
+      </div>
+    );
+  }
+
+  private renderEndContainer() {
+    return (
+      <div class="input-end">
+        {this.renderClearButton()}
+        <slot name="end"></slot>
+      </div>
+    );
+  }
+
   private renderNativeField() {
     const hasOutlineFill = getIonTheme(this) === 'md' && this.getFill() === 'outline';
 
     return [
       hasOutlineFill && this.renderOutlineContainer(),
-      <div class="input-start" ref={(el) => (this.startContainerEl = el)}>
-        <slot name="start"></slot>
-      </div>,
+      this.renderStartContainer(),
       <div class="input-control">
         {this.renderLabel()}
         <div class="native-wrapper" onClick={this.onLabelClick}>
           {this.renderNativeInput()}
         </div>
       </div>,
-      <div class="input-end">
-        {this.renderClearButton()}
-        <slot name="end"></slot>
-      </div>,
+      this.renderEndContainer(),
     ];
   }
 

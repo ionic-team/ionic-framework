@@ -165,8 +165,6 @@
 
   box-sizing: border-box;
 
-  gap: globals.$ion-space-200;
-
   overflow: hidden;
 }
 
@@ -212,6 +210,14 @@
  * clear buttons and the focus/hover state on clear ones
  * don't look too crowded.
  */
+::slotted([slot="start"]:last-of-type) {
+  margin-inline-end: globals.$ion-space-200;
+}
+
+::slotted([slot="end"]:first-of-type) {
+  margin-inline-start: globals.$ion-space-200;
+}
+
 ::slotted(ion-button[slot="start"].button-has-icon-only),
 ::slotted(ion-button[slot="end"].button-has-icon-only) {
   --border-radius: 50%;
@@ -232,6 +238,8 @@
 }
 
 .select-icon {
+  @include globals.margin(0, 0, 0, globals.$ion-space-200);
+
   transition: transform 0.15s globals.$ion-transition-curve-expressive;
 
   color: globals.$ion-text-subtlest;

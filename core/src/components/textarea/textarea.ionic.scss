@@ -248,20 +248,19 @@ ion-icon {
 // Start / End Slots
 // ----------------------------------------------------------------
 
-.start-slot-wrapper,
-.end-slot-wrapper {
-  display: flex;
-
-  flex-shrink: 0;
-
-  align-self: start;
-
+.textarea-start,
+.textarea-end {
   margin-top: globals.$ion-space-050;
 }
 
-:host([rows]:not([auto-grow])) .start-slot-wrapper,
-:host([rows]:not([auto-grow])) .end-slot-wrapper {
+:host([rows]:not([auto-grow])) .textarea-start,
+:host([rows]:not([auto-grow])) .textarea-end {
   @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
+}
+
+// The inner wrapper owns the padding, so the control must not add its own.
+.textarea-control {
+  @include globals.padding(0);
 }
 
 // Textarea Focus

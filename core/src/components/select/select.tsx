@@ -64,10 +64,10 @@ import type {
  * @part error-text - Supporting text displayed beneath the select when the select is invalid and touched.
  * @part bottom - The container element for helper text, error text, and counter.
  * @part wrapper - The clickable label element that wraps the entire form field (label text, slots, selected values or placeholder, and toggle icons).
- * @part start - The wrapper element for the content in the start slot. Only rendered in the `"ios"` and `"md"` themes.
- * @part control - The wrapper element containing the label and native select control. When the label is not floating or stacked, this part also contains the dropdown icon. Only rendered in the `"ios"` and `"md"` themes.
- * @part end - The wrapper element for the content in the end slot. When the label is floating or stacked, this part also contains the dropdown icon. Only rendered in the `"ios"` and `"md"` themes.
- * @part inner - The wrapper element containing the slots, the native select control and the dropdown icon. Only rendered in the `"ionic"` theme.
+ * @part start - The wrapper element for the content in the start slot.
+ * @part control - The wrapper element containing the native select control. In the `"ios"` and `"md"` themes it also contains the label, and the dropdown icon when the label is not floating or stacked.
+ * @part end - The wrapper element for the content in the end slot. In the `"ios"` and `"md"` themes it also contains the dropdown icon when the label is floating or stacked.
+ * @part inner - The wrapper element containing the start, control and end wrappers and the dropdown icon. Only rendered in the `"ionic"` theme.
  */
 @Component({
   tag: 'ion-select',
@@ -1176,6 +1176,23 @@ export class Select implements ComponentInterface {
     );
   }
 
+  private renderStartContainer() {
+    return (
+      <div class="select-start" part="start" ref={(el) => (this.startContainerEl = el)}>
+        <slot name="start"></slot>
+      </div>
+    );
+  }
+
+  private renderNativeWrapper() {
+    return (
+      <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
+        {this.renderSelectText()}
+        {this.renderListbox()}
+      </div>
+    );
+  }
+
   /**
    * The ionic theme keeps the label above a field box that wraps the slots and
    * the control, so the label can size independently of the slotted content.
@@ -1185,12 +1202,13 @@ export class Select implements ComponentInterface {
       this.renderLabel(),
       <div class="select-wrapper-inner" part="inner">
         {this.fill === 'outline' && <div class="select-outline"></div>}
-        <slot name="start"></slot>
-        <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
-          {this.renderSelectText()}
-          {this.renderListbox()}
+        {this.renderStartContainer()}
+        <div class="select-control" part="control">
+          {this.renderNativeWrapper()}
         </div>
-        <slot name="end"></slot>
+        <div class="select-end" part="end">
+          <slot name="end"></slot>
+        </div>
         {this.renderSelectIcon()}
       </div>,
     ];
@@ -1207,9 +1225,7 @@ export class Select implements ComponentInterface {
 
     return [
       hasOutlineFill && this.renderOutlineContainer(),
-      <div class="select-start" part="start" ref={(el) => (this.startContainerEl = el)}>
-        <slot name="start"></slot>
-      </div>,
+      this.renderStartContainer(),
       <div class="select-control" part="control">
         {this.renderLabel()}
         <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">

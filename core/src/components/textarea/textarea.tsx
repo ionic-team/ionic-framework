@@ -873,25 +873,34 @@ export class Textarea implements ComponentInterface {
    * The ionic theme keeps the label above a field box that wraps the slots and
    * the textarea, so the label can size independently of the slotted content.
    */
+  private renderStartContainer() {
+    return (
+      <div class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
+        <slot name="start"></slot>
+      </div>
+    );
+  }
+
+  private renderEndContainer() {
+    return (
+      <div class="textarea-end">
+        <slot name="end"></slot>
+      </div>
+    );
+  }
+
   private renderIonicField() {
     return [
       this.renderLabel(),
       <div class="textarea-wrapper-inner">
         {this.getFill() === 'outline' && <div class="textarea-outline"></div>}
-        {/**
-         * Slotted content brings its own padding, which throws off alignment
-         * (an icon-only button sets --padding-top to 0). These wrappers own
-         * the vertical padding instead.
-         */}
-        <div class="start-slot-wrapper">
-          <slot name="start"></slot>
+        {this.renderStartContainer()}
+        <div class="textarea-control">
+          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
+            {this.renderNativeTextarea()}
+          </div>
         </div>
-        <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
-          {this.renderNativeTextarea()}
-        </div>
-        <div class="end-slot-wrapper">
-          <slot name="end"></slot>
-        </div>
+        {this.renderEndContainer()}
       </div>,
     ];
   }
@@ -905,18 +914,14 @@ export class Textarea implements ComponentInterface {
 
     return [
       hasOutlineFill && this.renderOutlineContainer(),
-      <div class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
-        <slot name="start"></slot>
-      </div>,
+      this.renderStartContainer(),
       <div class="textarea-control">
         {this.renderLabel()}
         <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
           {this.renderNativeTextarea()}
         </div>
       </div>,
-      <div class="textarea-end">
-        <slot name="end"></slot>
-      </div>,
+      this.renderEndContainer(),
     ];
   }
 
