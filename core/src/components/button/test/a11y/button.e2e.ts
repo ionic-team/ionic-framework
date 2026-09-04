@@ -148,3 +148,114 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('button: aria attribute sync'), () => {
+    const watchedAriaAttributes = ['aria-checked', 'aria-label', 'aria-pressed', 'aria-description'];
+
+    for (const attr of watchedAriaAttributes) {
+      test(`native button updates ${attr} when host attribute changes`, async ({ page }) => {
+        test.info().annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
+        });
+
+        await page.setContent(`<ion-button ${attr}="initial">Button</ion-button>`, config);
+
+        const host = page.locator('ion-button');
+        const nativeButton = host.locator('button');
+
+        await expect(nativeButton).toHaveAttribute(attr, 'initial');
+
+        await host.evaluate((el, attr) => el.setAttribute(attr, 'updated'), attr);
+
+        await expect(nativeButton).toHaveAttribute(attr, 'updated');
+      });
+    }
+
+    test('should not sync aria-disabled from the host', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
+      });
+
+      await page.setContent(`<ion-button aria-disabled="true">Button</ion-button>`, config);
+
+      const host = page.locator('ion-button');
+      const nativeButton = host.locator('button');
+
+      // Initial inheritance moves the developer-provided value to native.
+      // The host's aria-disabled is subsequently owned by the disabled prop.
+      await expect(host).not.toHaveAttribute('aria-disabled');
+      await expect(nativeButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('preserves inherited aria-label after detach and reattach', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
+      });
+
+      await page.setContent(
+        `
+          <div id="container">
+            <ion-button aria-label="label">Button</ion-button>
+          </div>
+        `,
+        config
+      );
+
+      const host = page.locator('ion-button');
+      const nativeButton = host.locator('button');
+
+      await expect(nativeButton).toHaveAttribute('aria-label', 'label');
+
+      // Detach, reattach, and force a render via a prop change.
+      await host.evaluate((el) => {
+        const parent = el.parentElement!;
+        parent.removeChild(el);
+        parent.appendChild(el);
+        (el as HTMLIonButtonElement).color = 'primary';
+      });
+
+      // Assert the original value survived
+      await expect(nativeButton).toHaveAttribute('aria-label', 'label');
+    });
+
+    test('syncs aria-label updates and removal after initial inheritance', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
+      });
+
+      await page.setContent(
+        `
+          <ion-button aria-label="initial">Button</ion-button>
+        `,
+        config
+      );
+
+      const host = page.locator('ion-button');
+      const nativeButton = host.locator('button');
+
+      // Initial inheritance moves the value from the host to the native button.
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).toHaveAttribute('aria-label', 'initial');
+
+      // Post-load writes remain on the host and are synchronized to native
+      await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
+      await expect(host).toHaveAttribute('aria-label');
+      await expect(nativeButton).toHaveAttribute('aria-label', 'second');
+
+      // An empty string is a valid ARIA attribute value and remains synchronized.
+      await host.evaluate((el) => el.setAttribute('aria-label', ''));
+      await expect(host).toHaveAttribute('aria-label');
+      await expect(nativeButton).toHaveAttribute('aria-label', '');
+
+      // Native MutationObserver behavior sees a real removal after a post-load write.
+      await host.evaluate((el) => el.removeAttribute('aria-label'));
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeButton).not.toHaveAttribute('aria-label');
+    });
+  });
+});

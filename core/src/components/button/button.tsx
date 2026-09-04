@@ -1,8 +1,13 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, State, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
+import {
+  inheritAriaAttributes,
+  hasShadowDom,
+  watchForAriaAttributeChanges,
+  type AttributeWatcher,
+  type Attributes,
+} from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 
@@ -35,6 +40,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
+  private didLoad = false;
+  private ariaWatcher?: AttributeWatcher;
 
   @Element() el!: HTMLElement;
 
@@ -159,27 +166,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Event() ionBlur!: EventEmitter<void>;
 
   /**
-   * This component is used within the `ion-input-password-toggle` component
-   * to toggle the visibility of the password input.
-   * These attributes need to update based on the state of the password input.
-   * Otherwise, the values will be stale.
-   *
-   * @param newValue
-   * @param _oldValue
-   * @param propName
-   */
-  @Watch('aria-checked')
-  @Watch('aria-label')
-  @Watch('aria-pressed')
-  onAriaChanged(newValue: string, _oldValue: string, propName: string) {
-    this.inheritedAttributes = {
-      ...this.inheritedAttributes,
-      [propName]: newValue,
-    };
-    forceUpdate(this);
-  }
-
-  /**
    * This is responsible for rendering a hidden native
    * button element inside the associated form. This allows
    * users to submit a form by pressing "Enter" when a text
@@ -221,6 +207,37 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
     this.inheritedAttributes = inheritAriaAttributes(this.el);
+  }
+
+  connectedCallback() {
+    // Only run the initial snapshot once. On subsequent reconnects the
+    // host has already been stripped, so inheritAriaAttributes would
+    // return {} and overwrite previously captured values.
+
+    if (this.didLoad) {
+      this.startAriaWatcher();
+    }
+  }
+
+  componentDidLoad() {
+    this.didLoad = true;
+    this.startAriaWatcher();
+  }
+
+  disconnectedCallback() {
+    this.ariaWatcher?.destroy();
+    this.ariaWatcher = undefined;
+  }
+
+  private startAriaWatcher() {
+    this.ariaWatcher = watchForAriaAttributeChanges(
+      this.el,
+      (changed) => {
+        this.inheritedAttributes = { ...this.inheritedAttributes, ...changed };
+        forceUpdate(this);
+      },
+      ['aria-disabled']
+    );
   }
 
   private get hasIconOnly() {
