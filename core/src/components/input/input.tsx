@@ -13,8 +13,13 @@ import {
   forceUpdate,
   h,
 } from '@stencil/core';
-import type { NotchController, StartContainerController } from '@utils/forms';
-import { createNotchController, createStartContainerController, checkInvalidState } from '@utils/forms';
+import type { NotchController, SlottedClickController, StartContainerController } from '@utils/forms';
+import {
+  createNotchController,
+  createSlottedClickController,
+  createStartContainerController,
+  checkInvalidState,
+} from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
@@ -56,6 +61,7 @@ export class Input implements ComponentInterface {
   private notchSpacerEl: HTMLElement | undefined;
   private startContainerController?: StartContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private slottedClickController?: SlottedClickController;
 
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
@@ -392,11 +398,7 @@ export class Input implements ComponentInterface {
    */
   @Listen('click', { capture: true })
   onClickCapture(ev: Event) {
-    const nativeInput = this.nativeInput;
-    if (nativeInput && ev.target === nativeInput) {
-      ev.stopPropagation();
-      this.el.click();
-    }
+    this.slottedClickController?.handleClickCapture(ev);
   }
 
   componentWillLoad() {
@@ -432,6 +434,8 @@ export class Input implements ComponentInterface {
     );
 
     this.startContainerController.calculateStartContainerWidth();
+
+    this.slottedClickController = createSlottedClickController(el, () => this.nativeInput);
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {

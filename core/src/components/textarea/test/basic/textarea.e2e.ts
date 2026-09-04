@@ -249,3 +249,70 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across directions/modes
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('textarea: slotted click'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Notes">
+          <ion-icon id="start-icon" slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+          <ion-button id="end-button" slot="end" aria-label="Clear notes">
+            <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+          </ion-button>
+        </ion-textarea>
+      `,
+        config
+      );
+    });
+
+    test('should emit one click when a slotted icon is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('#start-icon').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      const event = clickEvent.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
+    });
+
+    test('should focus the textarea when a slotted icon is clicked', async ({ page }) => {
+      await page.locator('#start-icon').click();
+
+      await expect(page.locator('ion-textarea textarea')).toBeFocused();
+    });
+
+    test('should emit one click when a slotted button is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('#end-button').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+
+    test('should not focus the textarea when a slotted button is clicked', async ({ page }) => {
+      await page.locator('#end-button').click();
+
+      await expect(page.locator('ion-textarea textarea')).not.toBeFocused();
+    });
+
+    test('should emit one click when the textarea is clicked after slotted content', async ({ page }) => {
+      /**
+       * Clicking a slotted button does not produce a forwarded click for the
+       * textarea to ignore, so the following click on the textarea itself
+       * must still be emitted.
+       */
+      await page.locator('#end-button').click();
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-textarea textarea').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+  });
+});

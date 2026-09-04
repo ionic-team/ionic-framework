@@ -14,8 +14,13 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { NotchController, StartContainerController } from '@utils/forms';
-import { createNotchController, createStartContainerController, checkInvalidState } from '@utils/forms';
+import type { NotchController, SlottedClickController, StartContainerController } from '@utils/forms';
+import {
+  createNotchController,
+  createSlottedClickController,
+  createStartContainerController,
+  checkInvalidState,
+} from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
@@ -65,6 +70,7 @@ export class Textarea implements ComponentInterface {
   private notchSpacerEl: HTMLElement | undefined;
   private startContainerController?: StartContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private slottedClickController?: SlottedClickController;
 
   /**
    * The value of the textarea when the textarea is focused.
@@ -330,11 +336,7 @@ export class Textarea implements ComponentInterface {
    */
   @Listen('click', { capture: true })
   onClickCapture(ev: Event) {
-    const nativeInput = this.nativeInput;
-    if (nativeInput && ev.target === nativeInput) {
-      ev.stopPropagation();
-      this.el.click();
-    }
+    this.slottedClickController?.handleClickCapture(ev);
   }
 
   connectedCallback() {
@@ -361,6 +363,8 @@ export class Textarea implements ComponentInterface {
     );
 
     this.startContainerController.calculateStartContainerWidth();
+
+    this.slottedClickController = createSlottedClickController(el, () => this.nativeInput);
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
