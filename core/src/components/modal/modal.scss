@@ -27,7 +27,12 @@
   --max-width: auto;
   --height: 100%;
   --min-height: auto;
-  --max-height: auto;
+  /**
+   * Clamps a content-sized `--height` (auto, fit-content, ...) to the 
+   * overlay, giving the wrapper's flex children something to shrink 
+   * toward so `ion-content` scrolls instead of overflowing.
+   */
+  --max-height: 100%;
   --overflow: hidden;
   --border-radius: 0;
   --border-width: 0;
@@ -87,8 +92,16 @@ ion-backdrop {
 /**
  * The wrapper receives programmatic focus for screen readers but should not
  * show a visible focus ring, which is meant only for keyboard navigation.
+ *
+ * A flex layout is required for the wrapper to size itself to its content
+ * when the modal is content-sized (`--height` is auto, fit-content, ...).
+ * This makes it so that the content can scroll when it overflows the wrapper.
  */
 .modal-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
   outline: none;
 }
 
