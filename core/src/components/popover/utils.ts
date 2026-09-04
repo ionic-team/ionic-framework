@@ -106,17 +106,72 @@ export const getSafeAreaInsets = (doc: Document): SafeAreaInsets => {
 };
 
 /**
+ * Largest difference from 1 that the `offsetWidth` based zoom detection below
+ * attributes to integer rounding rather than to an actual CSS `zoom`. The
+ * rounding error is at most half a pixel over the width of the popover, which
+ * is well under this threshold for any realistic popover size.
+ */
+const ZOOM_ROUNDING_TOLERANCE = 0.01;
+
+/**
+ * Returns the cumulative CSS `zoom` factor applied to an element.
+ *
+ * When a CSS `zoom` other than 1 is set on an ancestor (e.g. the `html`
+ * element, as recommended by the docs for dynamic font scaling on Chrome for
+ * Android), `getBoundingClientRect()`, `clientX`/`clientY` and other geometry
+ * APIs report values in the *zoomed* (visual) coordinate space, while inline
+ * `top`/`left`/`--width` styles we set are interpreted in the *unzoomed*
+ * (layout) space and re-scaled by the browser. Dividing the rect-derived
+ * values by this factor converts them back to layout space so the popover is
+ * positioned and sized correctly. Returns 1 when no zoom is applied.
+ */
+export const getElementCSSZoom = (el: HTMLElement | null): number => {
+  if (!el) {
+    return 1;
+  }
+
+  /**
+   * `currentCSSZoom` exposes the exact effective zoom of an element
+   * (Chromium 126+). When available we use it directly.
+   */
+  const currentCSSZoom = (el as unknown as { currentCSSZoom?: number }).currentCSSZoom;
+  if (typeof currentCSSZoom === 'number' && currentCSSZoom > 0) {
+    return currentCSSZoom;
+  }
+
+  /**
+   * Fallback for browsers without `currentCSSZoom`: compare the rendered
+   * (zoomed) width from `getBoundingClientRect()` against the layout width
+   * from `offsetWidth`, which is not affected by CSS `zoom`.
+   */
+  const { width } = el.getBoundingClientRect();
+  const { offsetWidth } = el;
+  if (offsetWidth > 0 && width > 0) {
+    const ratio = width / offsetWidth;
+    /**
+     * `offsetWidth` is rounded to an integer while the bounding rect is not,
+     * so the ratio is rarely exactly 1 even when no zoom is applied. Treat
+     * sub-pixel differences as "no zoom" so that unzoomed popovers are not
+     * shifted by the rounding error. A real zoom deviates far more than this.
+     */
+    return Math.abs(ratio - 1) < ZOOM_ROUNDING_TOLERANCE ? 1 : ratio;
+  }
+
+  return 1;
+};
+
+/**
  * Returns the dimensions of the popover
  * arrow on `ios` mode. If arrow is disabled
  * returns (0, 0).
  */
-export const getArrowDimensions = (arrowEl: HTMLElement | null) => {
+export const getArrowDimensions = (arrowEl: HTMLElement | null, zoom = 1) => {
   if (!arrowEl) {
     return { arrowWidth: 0, arrowHeight: 0 };
   }
   const { width, height } = arrowEl.getBoundingClientRect();
 
-  return { arrowWidth: width, arrowHeight: height };
+  return { arrowWidth: width / zoom, arrowHeight: height / zoom };
 };
 
 /**
@@ -124,14 +179,14 @@ export const getArrowDimensions = (arrowEl: HTMLElement | null) => {
  * that takes into account whether or not the width
  * should match the trigger width.
  */
-export const getPopoverDimensions = (size: PopoverSize, contentEl: HTMLElement, triggerEl?: HTMLElement) => {
+export const getPopoverDimensions = (size: PopoverSize, contentEl: HTMLElement, triggerEl?: HTMLElement, zoom = 1) => {
   const contentDimentions = contentEl.getBoundingClientRect();
-  const contentHeight = contentDimentions.height;
-  let contentWidth = contentDimentions.width;
+  const contentHeight = contentDimentions.height / zoom;
+  let contentWidth = contentDimentions.width / zoom;
 
   if (size === 'cover' && triggerEl) {
     const triggerDimensions = triggerEl.getBoundingClientRect();
-    contentWidth = triggerDimensions.width;
+    contentWidth = triggerDimensions.width / zoom;
   }
 
   return {
@@ -526,7 +581,8 @@ export const getPopoverPosition = (
   align: PositionAlign,
   defaultPosition: PopoverPosition,
   triggerEl?: HTMLElement,
-  event?: MouseEvent | CustomEvent
+  event?: MouseEvent | CustomEvent,
+  zoom = 1
 ): PopoverPosition => {
   let referenceCoordinates = {
     top: 0,
@@ -549,8 +605,8 @@ export const getPopoverPosition = (
       const mouseEv = event as MouseEvent;
 
       referenceCoordinates = {
-        top: mouseEv.clientY,
-        left: mouseEv.clientX,
+        top: mouseEv.clientY / zoom,
+        left: mouseEv.clientX / zoom,
         width: 1,
         height: 1,
       };
@@ -585,10 +641,10 @@ export const getPopoverPosition = (
       }
       const triggerBoundingBox = actualTriggerEl.getBoundingClientRect();
       referenceCoordinates = {
-        top: triggerBoundingBox.top,
-        left: triggerBoundingBox.left,
-        width: triggerBoundingBox.width,
-        height: triggerBoundingBox.height,
+        top: triggerBoundingBox.top / zoom,
+        left: triggerBoundingBox.left / zoom,
+        width: triggerBoundingBox.width / zoom,
+        height: triggerBoundingBox.height / zoom,
       };
 
       break;
