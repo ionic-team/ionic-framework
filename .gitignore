@@ -83,7 +83,6 @@ core/docker-display-volume.txt
 # angular
 packages/angular/css/
 packages/angular/test/build/
-packages/angular/test/code-split-build/
 .angular/
 
 # vue

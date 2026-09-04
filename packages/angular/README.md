@@ -117,7 +117,7 @@ Ionic developers can access this by importing from `@ionic/angular/lazy`.
 
 ## Change Detection Strategy
 
-Every `@Component` in `src` must declare `changeDetection` explicitly, and the build enforces it. See the [Change Detection guide](https://github.com/ionic-team/ionic-framework/blob/main/docs/angular/change-detection.md).
+Every `@Component` in `src` must declare `changeDetection` explicitly, and `npm run test` enforces it. See the [Change Detection guide](https://github.com/ionic-team/ionic-framework/blob/main/docs/angular/change-detection.md).
 
 ## Package Validation
 
