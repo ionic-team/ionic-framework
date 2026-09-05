@@ -100,7 +100,24 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
      */
     connectListeners(document);
   }
-  const overlayIndex = lastOverlayIndex++;
+  let maxIndex = 0;
+
+  if (typeof document !== 'undefined') {
+    const overlays = Array.from(
+      document.querySelectorAll(
+        'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover,ion-toast'
+      )
+    ) as HTMLIonOverlayElement[];
+
+    for (const o of overlays) {
+      if (o !== el && o.overlayIndex !== undefined) {
+        maxIndex = Math.max(maxIndex, o.overlayIndex);
+      }
+    }
+  }
+
+  const overlayIndex = Math.max(lastOverlayIndex, maxIndex + 1);
+  lastOverlayIndex = overlayIndex + 1;
   /**
    * overlayIndex is used in the overlay components to set a zIndex.
    * This ensures that the most recently presented overlay will be
