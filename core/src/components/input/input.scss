@@ -225,7 +225,7 @@
  * being activated, so we never get to that state.
  */
 .input-clear-icon:focus {
-  opacity: 0.5;
+  opacity: 1;
 }
 
 :host(.has-value) .input-clear-icon {
