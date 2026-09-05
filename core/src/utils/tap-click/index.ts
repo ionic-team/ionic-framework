@@ -1,6 +1,7 @@
 import { doc } from '@utils/browser';
 
 import type { Config } from '../../interface';
+import type { GestureCapturedEventDetail } from '../gesture/gesture-controller';
 import { pointerCoord } from '../helpers';
 
 export const startTapClick = (config: Config) => {
@@ -24,6 +25,16 @@ export const startTapClick = (config: Config) => {
       removeActivated(false);
       activatableEle = undefined;
     }
+  };
+
+  const onGestureCaptured = (ev: Event) => {
+    const gestureElement = (ev as CustomEvent<GestureCapturedEventDetail>).detail?.gestureElement;
+
+    if (gestureElement && activatableEle?.contains(gestureElement)) {
+      return;
+    }
+
+    cancelActive();
   };
 
   const pointerDown = (ev: PointerEvent) => {
@@ -119,7 +130,7 @@ export const startTapClick = (config: Config) => {
     }
   };
 
-  doc.addEventListener('ionGestureCaptured', cancelActive);
+  doc.addEventListener('ionGestureCaptured', onGestureCaptured);
 
   doc.addEventListener('pointerdown', pointerDown, true);
   doc.addEventListener('pointerup', pointerUp, true);
