@@ -2,13 +2,20 @@
 @import "./select-modal";
 @import "../../themes/ionic.mixins.scss";
 @import "../item/item.md.vars";
+@import "../list/list.md.vars";
 
-ion-list ion-radio::part(container) {
+ion-radio::part(container) {
   display: none;
 }
 
-ion-list ion-radio::part(label) {
+ion-radio::part(label) {
   @include margin(0);
+}
+
+ion-radio-group {
+  @include padding($list-md-padding-top, null, $list-md-padding-bottom, null);
+
+  display: block;
 }
 
 ion-item {
