@@ -68,6 +68,14 @@
 
     <style>
       /** 
+      * Danger style for buttons.
+      */
+      ion-content button.red {
+        background: #ea445a;
+        border-color: #a82f40;
+      }
+
+      /** 
        * Shared modal styles. Only the height differs 
        * between the modal examples. 
        */
@@ -203,7 +211,7 @@
           <button class="expand" id="open-toggle">--height: toggled at runtime</button>
 
           <h2>Known gaps</h2>
-          <button class="expand red" id="open-part" color="danger">::part(content)</button>
+          <button class="expand red" id="open-part">::part(content)</button>
 
           <ion-modal id="fit-content-modal" trigger="open-fit-content">
             <ion-header>
