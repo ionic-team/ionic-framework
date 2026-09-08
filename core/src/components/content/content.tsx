@@ -193,6 +193,7 @@ export class Content implements ComponentInterface {
     // Re-observe on reattach, since componentDidLoad only fires once.
     this.setupFullscreenResizeObserver();
     this.setupSizeToContentObserver();
+    this.updateSizeToContent();
   }
 
   componentDidLoad() {

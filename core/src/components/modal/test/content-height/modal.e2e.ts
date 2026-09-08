@@ -10,6 +10,12 @@ const CHILD_HEIGHT = 200;
 /** Taller than any viewport under test, to force the overflow cases. */
 const TALL_CHILD_HEIGHT = 2000;
 
+/**
+ * Delays the remount long enough to trigger a fresh evaluation, but not long
+ * enough for the modal's later safe-area write to clear the stale class.
+ */
+const REMOUNT_TIMEOUT = 100;
+
 const contentModal = (style: string, childHeight = CHILD_HEIGHT) => `
   <style>
     ion-modal {
@@ -78,6 +84,29 @@ const getScrollMetrics = (page: E2EPage) => {
     const scrollEl = await el.getScrollElement();
     return { scrollHeight: scrollEl.scrollHeight, clientHeight: scrollEl.clientHeight };
   });
+};
+
+/**
+ * Simulates a framework-driven detach/reattach around a modal height change:
+ * removes the content from the DOM, updates the modal's `--height` while the
+ * content is detached, then restores it to its original parent.
+ *
+ * The same element has to come back for this to reach the reconnect path, the
+ * way a framework moves a subtree it owns instead of rebuilding it, such as
+ * Vue's `<KeepAlive>`. Conditional rendering that discards the element and
+ * creates a new one is sized by that element's first render instead.
+ */
+const setHeightWhileDetached = (page: E2EPage, height: string) => {
+  return page.locator('ion-modal').evaluate(async (el: HTMLElement, height: string) => {
+    const content = el.querySelector('ion-content')!;
+    const parent = content.parentElement!;
+
+    content.remove();
+    el.style.setProperty('--height', height);
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    parent.appendChild(content);
+  }, height);
 };
 
 /** Presents a nav modal through the delegate and waits for its first page. */
@@ -312,6 +341,26 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         // either direction is caught.
         await modal.evaluate((el: HTMLElement) => el.style.removeProperty('--height'));
         await expect(content).not.toHaveClass(/content-sizing/);
+        expect(await getWrapperHeight(page)).toBeCloseTo(viewport.height, 0);
+      });
+
+      test('should respect a --height that changed while the content was detached', async ({ page }) => {
+        await page.setContent(contentModal(''), config);
+        await expect(page.locator('ion-modal')).toBeVisible();
+
+        const viewport = page.viewportSize()!;
+        const content = page.locator('ion-modal ion-content');
+
+        // Coming back to a content-based height should size the content to its
+        // child rather than collapse it.
+        await setHeightWhileDetached(page, 'fit-content');
+        await expect(content).toHaveClass(/content-sizing/, { timeout: REMOUNT_TIMEOUT });
+        expect(await getContentHeight(page)).toBeCloseTo(CHILD_HEIGHT, 0);
+
+        // Coming back to a definite height should fill the modal again, so a
+        // class left behind in either direction is caught.
+        await setHeightWhileDetached(page, '100%');
+        await expect(content).not.toHaveClass(/content-sizing/, { timeout: REMOUNT_TIMEOUT });
         expect(await getWrapperHeight(page)).toBeCloseTo(viewport.height, 0);
       });
     });
