@@ -382,7 +382,7 @@ export class Content implements ComponentInterface {
       return false;
     }
 
-    const height = getComputedStyle(modal).getPropertyValue('--height').trim();
+    const height = getComputedStyle(modal).getPropertyValue('--height').trim().toLowerCase();
 
     /**
      * Compared as a suffix so a value carrying a vendor prefix is still

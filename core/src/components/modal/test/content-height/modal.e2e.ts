@@ -174,6 +174,14 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
          */
         await expectSizedToContent(page, '-moz-fit-content');
       });
+
+      test('should size the content with an uppercase keyword', async ({ page }) => {
+        /**
+         * CSS property values are case-insensitive, so `FIT-CONTENT` should
+         * size the modal to its content just like the lowercase value.
+         */
+        await expectSizedToContent(page, 'FIT-CONTENT');
+      });
     });
 
     test.describe('definite heights', () => {
