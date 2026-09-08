@@ -14,10 +14,10 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { NotchController, SlottedClickController, StartContainerController } from '@utils/forms';
+import type { ClickController, NotchController, StartContainerController } from '@utils/forms';
 import {
+  createClickController,
   createNotchController,
-  createSlottedClickController,
   createStartContainerController,
   checkInvalidState,
 } from '@utils/forms';
@@ -70,7 +70,7 @@ export class Textarea implements ComponentInterface {
   private notchSpacerEl: HTMLElement | undefined;
   private startContainerController?: StartContainerController;
   private startContainerEl: HTMLElement | undefined;
-  private slottedClickController?: SlottedClickController;
+  private clickController?: ClickController;
 
   /**
    * The value of the textarea when the textarea is focused.
@@ -336,7 +336,7 @@ export class Textarea implements ComponentInterface {
    */
   @Listen('click', { capture: true })
   onClickCapture(ev: Event) {
-    this.slottedClickController?.handleClickCapture(ev);
+    this.clickController?.handleClickCapture(ev);
   }
 
   connectedCallback() {
@@ -364,7 +364,7 @@ export class Textarea implements ComponentInterface {
 
     this.startContainerController.calculateStartContainerWidth();
 
-    this.slottedClickController = createSlottedClickController(el, () => this.nativeInput);
+    this.clickController = createClickController(el, () => this.nativeInput);
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {

@@ -1,6 +1,6 @@
 import { raf } from '@utils/helpers';
 
-export interface SlottedClickController {
+export interface ClickController {
   handleClickCapture: (ev: Event) => void;
 }
 
@@ -37,10 +37,10 @@ export const isSlottedClick = (ev: Event, el: HTMLElement): boolean => {
  * @param el - The host element (ion-input or ion-textarea).
  * @param getNativeInput - A callback that returns the native form control.
  */
-export const createSlottedClickController = (
+export const createClickController = (
   el: HTMLElement,
   getNativeInput: () => HTMLInputElement | HTMLTextAreaElement | undefined
-): SlottedClickController => {
+): ClickController => {
   let hasSlottedClick = false;
 
   const handleClickCapture = (ev: Event) => {
