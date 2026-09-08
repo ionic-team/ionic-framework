@@ -1354,6 +1354,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
             <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
           </ion-button>
           <input id="end-checkbox" slot="end" type="checkbox" aria-label="Favorite" />
+          <ion-checkbox id="end-ion-checkbox" slot="end" aria-label="Favorite"></ion-checkbox>
           <ion-select-option value="apple">Apple</ion-select-option>
         </ion-select>
       `,
@@ -1400,6 +1401,15 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await checkbox.click();
 
       await expect(checkbox).toBeChecked();
+      await expect(page.locator('ion-alert')).toHaveCount(0);
+    });
+
+    test('should activate a slotted ion-checkbox without opening the select', async ({ page }) => {
+      const checkbox = page.locator('#end-ion-checkbox');
+
+      await checkbox.click();
+
+      await expect(checkbox).toHaveJSProperty('checked', true);
       await expect(page.locator('ion-alert')).toHaveCount(0);
     });
 

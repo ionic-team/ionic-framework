@@ -15,16 +15,17 @@ import {
 } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { focusableQueryString } from '@utils/focus-trap';
-import type { NotchController, StartContainerController } from '@utils/forms';
+import type { ClickController, NotchController, StartContainerController } from '@utils/forms';
 import {
   compareOptions,
+  createClickController,
   createNotchController,
   createStartContainerController,
+  getSlottedClickContent,
   isOptionSelected,
   checkInvalidState,
-  isSlottedClick,
 } from '@utils/forms';
-import { focusVisibleElement, renderHiddenInput, inheritAttributes, raf } from '@utils/helpers';
+import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
@@ -106,13 +107,7 @@ export class Select implements ComponentInterface {
   private startContainerEl: HTMLElement | undefined;
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
 
-  /**
-   * `true` if the click currently being dispatched started on content slotted
-   * into the select. Used to ignore the click the wrapping label forwards to
-   * the internal button so that a single click is not emitted twice and does
-   * not open the select.
-   */
-  private hasSlottedClick = false;
+  private clickController?: ClickController;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -386,6 +381,8 @@ export class Select implements ComponentInterface {
     );
 
     this.startContainerController.calculateStartContainerWidth();
+
+    this.clickController = createClickController(el);
 
     this.updateOverlayOptions();
     this.emitStyle();
@@ -1017,49 +1014,34 @@ export class Select implements ComponentInterface {
   }
 
   /**
-   * Clicking slotted content also clicks the <label> that wraps the slots.
-   * The label has no `for` attribute, so the browser forwards the click to its
-   * first labelable descendant, the internal button. That forwarded click
-   * bubbles back out of the shadow root targeting the host, which would emit a
-   * second click event and open the select.
-   *
-   * The forwarded click is swallowed here, during the capture phase, so it
-   * never reaches listeners on the host. The click on the slotted content
-   * itself is left alone so that slotted links, checkboxes and buttons keep
-   * their default behavior, and so click handlers on slotted content still
-   * fire in React. React attaches a native "click" listener on the root
-   * element and dispatches its synthetic event from there, so calling
-   * stopPropagation() on the slotted click would stop those handlers running.
+   * The label wrapping the slots has no `for` attribute, so the browser
+   * forwards a click on slotted content to the label's first labelable
+   * descendant, the internal button. That forwarded click bubbles back out of
+   * the shadow root targeting the host, where it would be emitted a second
+   * time and open the select. The controller swallows it during the capture
+   * phase, leaving the click on the slotted content itself alone so slotted
+   * links, checkboxes and buttons keep their default behavior.
    */
   @Listen('click', { capture: true })
   onClickCapture(ev: Event) {
-    if (isSlottedClick(ev, this.el)) {
-      this.hasSlottedClick = true;
-
-      /**
-       * Browsers skip the label forwarding when the click lands on interactive
-       * content, such as a slotted button, so the flag is cleared on the next
-       * frame rather than waiting for a forwarded click that never arrives.
-       */
-      raf(() => (this.hasSlottedClick = false));
-      return;
-    }
-
-    if (this.hasSlottedClick) {
-      ev.stopPropagation();
-      this.hasSlottedClick = false;
-    }
+    this.clickController?.handleClickCapture(ev);
   }
 
   private onClick = (ev: UIEvent) => {
+    const slotted = getSlottedClickContent(ev, this.el);
+
     /**
-     * Interactive slotted content, such as a button or a link, handles its own
-     * click, so it should not open the select as well. Any other slotted
-     * content is decorative and behaves the same as clicking the select itself.
+     * Interactive slotted content, such as a button or a checkbox, handles its
+     * own click, so it should not open the select as well. Any other slotted
+     * content is decorative and behaves the same as clicking the select
+     * itself.
      */
-    const deepTarget = ev.composedPath()[0] as HTMLElement;
-    if (isSlottedClick(ev, this.el) && deepTarget.closest(INTERACTIVE_SLOTTED_CONTENT) !== null) {
-      return;
+    if (slotted !== null) {
+      const interactive = (ev.target as HTMLElement).closest(INTERACTIVE_SLOTTED_CONTENT);
+
+      if (interactive !== null && slotted.contains(interactive)) {
+        return;
+      }
     }
 
     this.setFocus();
