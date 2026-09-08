@@ -23,7 +23,7 @@ export const getSlottedClickContent = (ev: Event, el: HTMLElement): HTMLElement 
  * Whether a click started on content slotted into a form control's start or
  * end slot.
  */
-export const isSlottedClick = (ev: Event, el: HTMLElement): boolean => getSlottedClickContent(ev, el) !== null;
+const isSlottedClick = (ev: Event, el: HTMLElement): boolean => getSlottedClickContent(ev, el) !== null;
 
 /**
  * A utility for form components that wrap their content in a <label>, such as
