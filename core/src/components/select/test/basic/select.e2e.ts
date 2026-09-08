@@ -1405,12 +1405,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('ion-select')).not.toHaveClass(/has-focus/);
     });
 
-    test('should activate slotted form controls', async ({ page }) => {
+    test('should activate slotted form controls without opening the select', async ({ page }) => {
       const checkbox = page.locator('#end-checkbox');
 
       await checkbox.click();
 
       await expect(checkbox).toBeChecked();
+      await expect(page.locator('ion-alert')).toHaveCount(0);
     });
 
     test('should open when the select is clicked after slotted content', async ({ page }) => {
