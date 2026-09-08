@@ -476,6 +476,44 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           screenshot(`select-slot-overflow-label-floating-value-${slotName}-slot`)
         );
       });
+
+      // TODO(FW-7682): unskip once the selected text is no longer clipped away by .native-wrapper
+      test.skip(`should not have visual regressions with a start-positioned label, a value and a wide ${slotName} slot`, async ({
+        page,
+      }) => {
+        await setContent(page, 'label-placement="start" value="100"', slot);
+
+        const container = page.locator('.container');
+        await expect(container).toHaveScreenshot(screenshot(`select-slot-overflow-label-start-value-${slotName}-slot`));
+      });
+
+      // TODO(FW-7682): unskip once the selected text is no longer clipped away by .native-wrapper
+      test.skip(`should keep two characters of the value visible with a start-positioned label and a wide ${slotName} slot`, async ({
+        page,
+      }) => {
+        await setContent(page, 'label-placement="start" value="100"', slot);
+
+        const selectText = page.locator('ion-select .select-text');
+
+        /**
+         * The width of two characters in the selected text's own font, which
+         * is what `$form-control-min-width` reserves for the value.
+         */
+        const twoCharacterWidth = await selectText.evaluate((el) => {
+          const probe = document.createElement('span');
+          probe.style.cssText = `position: absolute; visibility: hidden; white-space: pre; font: ${
+            getComputedStyle(el).font
+          }`;
+          probe.textContent = '00';
+          document.body.append(probe);
+          const { width } = probe.getBoundingClientRect();
+          probe.remove();
+          return width;
+        });
+        const box = await selectText.boundingBox();
+
+        expect(box!.width).toBeGreaterThanOrEqual(twoCharacterWidth);
+      });
     });
   });
 });

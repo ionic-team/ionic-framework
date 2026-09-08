@@ -119,6 +119,13 @@
   flex: 1;
 
   width: 100%;
+
+  /**
+   * The textarea keeps a minimum width so that the value stays visible
+   * when a long label or wide slotted content would otherwise shrink
+   * it to nothing.
+   */
+  min-width: $form-control-min-width;
   max-width: 100%;
   max-height: 100%;
 
@@ -305,7 +312,15 @@
 .native-wrapper {
   display: grid;
 
-  min-width: inherit;
+  /**
+   * The wrapper has to carry the same minimum width as the textarea it holds.
+   * It is the flex item that competes with the label and the slots for space,
+   * so without it the textarea keeps its width but overflows the field.
+   *
+   * The minimum cannot be inherited because .textarea-control sets
+   * `min-width: 0` so that the slots keep their size.
+   */
+  min-width: $form-control-min-width;
   max-width: inherit;
   min-height: inherit;
   max-height: inherit;
