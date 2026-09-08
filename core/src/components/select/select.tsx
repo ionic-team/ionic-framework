@@ -14,7 +14,6 @@ import {
   forceUpdate,
 } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
-import { focusableQueryString } from '@utils/focus-trap';
 import type { ClickController, NotchController, StartContainerController } from '@utils/forms';
 import {
   compareOptions,
@@ -1711,10 +1710,29 @@ let selectIds = 0;
 const OPTION_CLASS = 'select-interface-option';
 
 /**
- * Slotted content that the browser focuses or activates on its own when it is
- * clicked. A <label> skips forwarding a click to its control when the click
- * lands on content like this, so the select leaves it alone as well.
- * Anchors are included because they are interactive without being focusable
- * by the definition `focusableQueryString` uses.
+ * Slotted content that handles its own click, so clicking it should not also
+ * open the select.
+ *
+ * This deliberately does not reuse `focusableQueryString`. That selector
+ * answers whether an element can take focus right now, which is a different
+ * question: an ion-radio outside a radio group carries tabindex="-1" from the
+ * group's roving tabindex, and disabled controls are excluded, yet both still
+ * handle their own clicks.
  */
-const INTERACTIVE_SLOTTED_CONTENT = `${focusableQueryString}, a[href]`;
+const INTERACTIVE_SLOTTED_CONTENT = [
+  'a[href]',
+  'button',
+  'input[type="checkbox"]',
+  'input[type="radio"]',
+  'ion-button',
+  'ion-checkbox',
+  'ion-radio',
+  'ion-toggle',
+  '[tabindex]:not([tabindex^="-"])',
+  /**
+   * Covers the remaining Ionic controls. The tags above are still listed
+   * because ion-checkbox and ion-radio only carry this class when they are
+   * outside an item, so a select inside an item would lose the match.
+   */
+  '.ion-focusable',
+].join(', ');

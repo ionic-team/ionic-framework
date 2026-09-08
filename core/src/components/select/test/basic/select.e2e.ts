@@ -1355,6 +1355,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           </ion-button>
           <input id="end-checkbox" slot="end" type="checkbox" aria-label="Favorite" />
           <ion-checkbox id="end-ion-checkbox" slot="end" aria-label="Favorite"></ion-checkbox>
+          <ion-radio id="end-ion-radio" slot="end" aria-label="Preferred"></ion-radio>
+          <ion-toggle id="end-ion-toggle" slot="end" aria-label="Notify"></ion-toggle>
           <ion-select-option value="apple">Apple</ion-select-option>
         </ion-select>
       `,
@@ -1415,14 +1417,28 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
     });
 
-    test('should activate a slotted ion-checkbox without opening the select', async ({ page }) => {
-      const checkbox = page.locator('#end-ion-checkbox');
+    /**
+     * A radio outside a radio group keeps the tabindex of -1 that the group
+     * would otherwise raise, so it is the control that regressed while the
+     * interactive check relied on a focusability selector.
+     */
+    [
+      { tag: 'ion-checkbox', id: 'end-ion-checkbox', checkable: true },
+      { tag: 'ion-radio', id: 'end-ion-radio', checkable: false },
+      { tag: 'ion-toggle', id: 'end-ion-toggle', checkable: true },
+    ].forEach(({ tag, id, checkable }) => {
+      test(`should not open the select when a slotted ${tag} is clicked`, async ({ page }) => {
+        const control = page.locator(`#${id}`);
 
-      await checkbox.click();
-      await page.waitForChanges();
+        await control.click();
+        await page.waitForChanges();
 
-      await expect(checkbox).toHaveJSProperty('checked', true);
-      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+        if (checkable) {
+          await expect(control).toHaveJSProperty('checked', true);
+        }
+
+        await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+      });
     });
 
     test('should open when the select is clicked after slotted content', async ({ page }) => {
