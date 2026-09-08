@@ -367,7 +367,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
     });
 
-    test('should emit one click when a slotted icon is clicked', async ({ page }) => {
+    test('should emit one click and focus the input when a slotted icon is clicked', async ({ page }) => {
       const clickEvent = await page.spyOnEvent('click');
 
       await page.locator('#start-icon').click();
@@ -376,24 +376,16 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       const event = clickEvent.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
-    });
-
-    test('should focus the input when a slotted icon is clicked', async ({ page }) => {
-      await page.locator('#start-icon').click();
 
       await expect(page.locator('ion-input input')).toBeFocused();
     });
 
-    test('should emit one click when a slotted button is clicked', async ({ page }) => {
+    test('should emit one click without focusing the input when a slotted button is clicked', async ({ page }) => {
       const clickEvent = await page.spyOnEvent('click');
 
       await page.locator('#end-button').click();
 
       expect(clickEvent).toHaveReceivedEventTimes(1);
-    });
-
-    test('should not focus the input when a slotted button is clicked', async ({ page }) => {
-      await page.locator('#end-button').click();
 
       await expect(page.locator('ion-input input')).not.toBeFocused();
     });

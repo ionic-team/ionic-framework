@@ -1361,8 +1361,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
     });
 
-    test('should emit one click when a slotted icon is clicked', async ({ page }) => {
+    /**
+     * Decorative slotted content behaves the same as clicking the select
+     * itself, so it opens the overlay.
+     */
+    test('should emit one click and open the select when a slotted icon is clicked', async ({ page }) => {
       const clickEvent = await page.spyOnEvent('click');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
 
       await page.locator('#start-icon').click();
 
@@ -1370,38 +1375,22 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       const event = clickEvent.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
-    });
 
-    /**
-     * Decorative slotted content behaves the same as clicking the select
-     * itself, so it opens the overlay.
-     */
-    test('should open when a slotted icon is clicked', async ({ page }) => {
-      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
-
-      await page.locator('#start-icon').click();
       await ionAlertDidPresent.next();
 
       await expect(page.locator('ion-alert')).toBeVisible();
     });
 
-    test('should emit one click when a slotted button is clicked', async ({ page }) => {
+    test('should emit one click without opening or focusing the select when a slotted button is clicked', async ({
+      page,
+    }) => {
       const clickEvent = await page.spyOnEvent('click');
 
       await page.locator('#end-button').click();
 
       expect(clickEvent).toHaveReceivedEventTimes(1);
-    });
-
-    test('should not open when a slotted button is clicked', async ({ page }) => {
-      await page.locator('#end-button').click();
 
       await expect(page.locator('ion-alert')).toHaveCount(0);
-    });
-
-    test('should not focus the select when a slotted button is clicked', async ({ page }) => {
-      await page.locator('#end-button').click();
-
       await expect(page.locator('ion-select')).not.toHaveClass(/has-focus/);
     });
 
