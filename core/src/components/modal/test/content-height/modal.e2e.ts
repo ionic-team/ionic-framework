@@ -327,6 +327,44 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(new Set(tops).size).toBe(1);
       });
 
+      /**
+       * Nav pages carried these properties once before, at `height: 100%`, and
+       * it left titles animating to the wrong place (#25677, #25688). Verifying
+       * that pages do not overlap is not enough on its own, so this covers
+       * where the transition ends up.
+       */
+      test('should settle a nav transition with the new page in place', async ({ page }) => {
+        await page.setContent(`<style>ion-modal { --height: fit-content; }</style>${NAV_MODAL}`, config);
+        await presentNavModal(page);
+
+        // Awaiting the push resolves once the transition is done.
+        await page.locator('ion-modal ion-nav').evaluate((nav: HTMLIonNavElement) => nav.push('nav-page-two'));
+
+        const arrived = page.locator('ion-modal nav-page-two');
+        await expect(arrived.locator('ion-title')).toBeVisible();
+        await expect(page.locator('ion-modal nav-page-one')).toBeHidden();
+
+        // A page left mid-slide still has a box, so the box has to line up with
+        // the modal on both axes for the transition to have actually landed.
+        const pageBox = (await arrived.boundingBox())!;
+        const wrapperBox = (await page.locator('ion-modal .modal-wrapper').boundingBox())!;
+        expect(pageBox.x).toBeCloseTo(wrapperBox.x, 0);
+        expect(pageBox.y).toBeCloseTo(wrapperBox.y, 0);
+        expect(pageBox.height).toBeGreaterThan(0);
+
+        // The title drifting down the viewport is the reported symptom, so it
+        // has to come to rest against the top of the modal.
+        const titleBox = (await arrived.locator('ion-title').boundingBox())!;
+        expect(titleBox.y).toBeCloseTo(wrapperBox.y, 0);
+
+        // Going back has to land the same way, since the pop animates too.
+        await page.locator('ion-modal ion-nav').evaluate((nav: HTMLIonNavElement) => nav.pop());
+
+        await expect(page.locator('ion-modal nav-page-one ion-title')).toBeVisible();
+        await expect(arrived).toBeHidden();
+        expect((await page.locator('ion-modal nav-page-one').boundingBox())!.x).toBeCloseTo(wrapperBox.x, 0);
+      });
+
       test('should respect a --height set on the modal at runtime', async ({ page }) => {
         await page.setContent(contentModal(''), config);
         await expect(page.locator('ion-modal')).toBeVisible();

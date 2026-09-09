@@ -219,8 +219,8 @@ ion-modal > .ion-page {
  * to take its height from its page and size itself correctly. Without
  * this, the modal will not appear as the nav will be 0 height.
  */
-ion-content.content-sizing ion-nav,
-ion-content.content-sizing ion-nav > .ion-page {
+ion-modal ion-content.content-sizing ion-nav,
+ion-modal ion-content.content-sizing ion-nav > .ion-page {
   position: relative;
 
   contain: layout style;
@@ -234,11 +234,11 @@ ion-content.content-sizing ion-nav > .ion-page {
  * this, a transition that has two pages in the tree at once would
  * render them one below the other.
  */
-ion-content.content-sizing ion-nav {
+ion-modal ion-content.content-sizing ion-nav {
   display: grid;
 }
 
-ion-content.content-sizing ion-nav > .ion-page {
+ion-modal ion-content.content-sizing ion-nav > .ion-page {
   grid-row: 1;
   grid-column: 1;
 }
