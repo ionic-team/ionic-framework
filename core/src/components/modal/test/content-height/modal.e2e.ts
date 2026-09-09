@@ -16,7 +16,15 @@ const TALL_CHILD_HEIGHT = 2000;
  */
 const REMOUNT_TIMEOUT = 100;
 
+/**
+ * `setContent` has animations enabled by default, so `toBeVisible()` resolves as
+ * the modal starts animating in and everything after it is measured
+ * mid-animation. This turns animations off for each modal.
+ */
+const DISABLE_ANIMATIONS = `<script>window.Ionic.config.animated = false;</script>`;
+
 const contentModal = (style: string, childHeight = CHILD_HEIGHT) => `
+  ${DISABLE_ANIMATIONS}
   <style>
     ion-modal {
       ${style}
@@ -140,7 +148,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await expect(page.locator('ion-modal')).toBeVisible();
 
         await expect(page.locator('ion-modal ion-content')).toHaveClass(/content-sizing/);
-        expect(await getContentHeight(page)).toBeCloseTo(CHILD_HEIGHT, 0);
+        await expect.poll(() => getContentHeight(page)).toBe(CHILD_HEIGHT);
       };
 
       test('should size the content with fit-content', async ({ page }) => {
@@ -193,7 +201,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         // Content sizing should not be applied by default.
         await expect(page.locator('ion-modal ion-content')).not.toHaveClass(/content-sizing/);
-        expect(await getContentHeight(page)).toBeCloseTo(viewport.height, 0);
+        await expect.poll(() => getContentHeight(page)).toBe(viewport.height);
       });
 
       test('should fill and scroll a pixel height', async ({ page }) => {
@@ -203,10 +211,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         // A definite height is not content-sized, so the ion-content
         // should fill the modal the way it always has.
         await expect(page.locator('ion-modal ion-content')).not.toHaveClass(/content-sizing/);
-        expect(await getWrapperHeight(page)).toBeCloseTo(300, 0);
+        await expect.poll(() => getWrapperHeight(page)).toBe(300);
 
         const { scrollHeight, clientHeight } = await getScrollMetrics(page);
-        expect(clientHeight).toBeCloseTo(300, 0);
+        expect(clientHeight).toBe(300);
         expect(scrollHeight).toBeGreaterThan(clientHeight);
       });
 
@@ -218,7 +226,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         // 2000px exceeds the overlay, so the default --max-height: 100% should
         // clamp the height rather than letting it run off screen.
-        expect(await getWrapperHeight(page)).toBeCloseTo(viewport.height, 0);
+        await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
       });
     });
 
@@ -258,6 +266,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       test('should size a modal that has no ion-content', async ({ page }) => {
         await page.setContent(
           `
+          ${DISABLE_ANIMATIONS}
           <style>
             ion-modal {
               --height: fit-content;
@@ -274,7 +283,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         // Sized through `ion-modal > .ion-page` alone, with none of the
         // content-sizing detection involved.
         await expect(page.locator('ion-modal ion-content')).toHaveCount(0);
-        expect(await getWrapperHeight(page)).toBeCloseTo(CHILD_HEIGHT, 0);
+        await expect.poll(() => getWrapperHeight(page)).toBe(CHILD_HEIGHT);
       });
 
       test('should size a modal around an ion-nav and follow it between pages', async ({ page }) => {
@@ -375,19 +384,19 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         // No --height of its own, so the modal is on its default full height.
         await expect(content).not.toHaveClass(/content-sizing/);
-        expect(await getWrapperHeight(page)).toBeCloseTo(viewport.height, 0);
+        await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
 
         // Set the --height and verify the observer is picking it up and
         // adding the content-sizing class to the content.
         await modal.evaluate((el: HTMLElement) => el.style.setProperty('--height', 'fit-content'));
         await expect(content).toHaveClass(/content-sizing/);
-        expect(await getContentHeight(page)).toBeCloseTo(CHILD_HEIGHT, 0);
+        await expect.poll(() => getContentHeight(page)).toBe(CHILD_HEIGHT);
 
         // Removing it falls back to the default, so a class left behind in
         // either direction is caught.
         await modal.evaluate((el: HTMLElement) => el.style.removeProperty('--height'));
         await expect(content).not.toHaveClass(/content-sizing/);
-        expect(await getWrapperHeight(page)).toBeCloseTo(viewport.height, 0);
+        await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
       });
 
       test('should respect a --height that changed while the content was detached', async ({ page }) => {
@@ -401,13 +410,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         // child rather than collapse it.
         await setHeightWhileDetached(page, 'fit-content');
         await expect(content).toHaveClass(/content-sizing/, { timeout: REMOUNT_TIMEOUT });
-        expect(await getContentHeight(page)).toBeCloseTo(CHILD_HEIGHT, 0);
+        await expect.poll(() => getContentHeight(page)).toBe(CHILD_HEIGHT);
 
         // Coming back to a definite height should fill the modal again, so a
         // class left behind in either direction is caught.
         await setHeightWhileDetached(page, '100%');
         await expect(content).not.toHaveClass(/content-sizing/, { timeout: REMOUNT_TIMEOUT });
-        expect(await getWrapperHeight(page)).toBeCloseTo(viewport.height, 0);
+        await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
       });
     });
   });
