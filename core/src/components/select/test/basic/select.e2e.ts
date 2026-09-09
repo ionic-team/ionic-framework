@@ -1357,6 +1357,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           <ion-checkbox id="end-ion-checkbox" slot="end" aria-label="Favorite"></ion-checkbox>
           <ion-radio id="end-ion-radio" slot="end" aria-label="Preferred"></ion-radio>
           <ion-toggle id="end-ion-toggle" slot="end" aria-label="Notify"></ion-toggle>
+          <a id="end-anchor" slot="end" href="#navigated">Details</a>
+          <div slot="end">
+            <button id="nested-button" type="button">Nested</button>
+            <span id="nested-text">Nested</span>
+          </div>
           <ion-select-option value="apple">Apple</ion-select-option>
         </ion-select>
       `,
@@ -1439,6 +1444,36 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
       });
+    });
+
+    test('should follow a slotted link without opening the select', async ({ page }) => {
+      await page.locator('#end-anchor').click();
+      await page.waitForChanges();
+
+      expect(new URL(page.url()).hash).toBe('#navigated');
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    /**
+     * Whether the select opens follows the content that was clicked, not the
+     * slotted wrapper around it, so the same wrapper produces both results.
+     */
+    test('should not open the select when interactive content inside a slotted wrapper is clicked', async ({
+      page,
+    }) => {
+      await page.locator('#nested-button').click();
+      await page.waitForChanges();
+
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    test('should open the select when decorative content inside a slotted wrapper is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('#nested-text').click();
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
     });
 
     test('should open when the select is clicked after slotted content', async ({ page }) => {
