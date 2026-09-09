@@ -304,43 +304,42 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       test('should overlap nav pages mid-transition rather than stack them', async ({ page }) => {
         /**
-         * `setContent` leaves animations enabled, unlike `goto`, so both nav
-         * pages are in the tree at once during the slide. That is the only way
-         * to catch them being laid out one below the other.
+         * The nav fixture keeps animations enabled so both pages are in the
+         * tree at once during the transition, which is what makes it possible
+         * to catch them laid out one below the other.
          */
         await page.setContent(`<style>ion-modal { --height: fit-content; }</style>${NAV_MODAL}`, config);
         await presentNavModal(page);
 
-        const tops = await page.locator('ion-modal ion-nav').evaluate(async (nav: any) => {
-          nav.push('nav-page-two');
+        const tops = await page.locator('ion-modal ion-nav').evaluate(async (nav: HTMLIonNavElement) => {
+          const pushed = nav.push('nav-page-two');
 
           /**
-           * A page that has been hidden reports a zero rect, so only pages with
-           * a real box count. Sampled per frame because the window where both
-           * are laid out lasts only as long as the slide.
+           * Both pages are in the tree from the first frame of the transition,
+           * which runs for around half a second, so one frame is enough to
+           * catch them together. A page that has been hidden reports a zero
+           * rect, so only pages with a real box count.
            */
-          for (let i = 0; i < 60; i++) {
-            await new Promise((resolve) => requestAnimationFrame(resolve));
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          const laidOut = Array.from(nav.children).filter((child) => child.getBoundingClientRect().height > 0);
+          const tops = laidOut.map((child) => Math.round(child.getBoundingClientRect().top));
 
-            const laidOut = Array.from(nav.children).filter((c: any) => c.getBoundingClientRect().height > 0);
-            if (laidOut.length > 1) {
-              return laidOut.map((c: any) => Math.round(c.getBoundingClientRect().top));
-            }
-          }
+          // Awaiting the push surfaces a rejected transition as a test failure.
+          await pushed;
 
-          return [];
+          return tops;
         });
 
         // Both pages are laid out during the slide and must share an origin.
-        expect(tops.length).toBeGreaterThan(1);
+        expect(tops).toHaveLength(2);
         expect(new Set(tops).size).toBe(1);
       });
 
       /**
        * Nav pages carried these properties once before, at `height: 100%`, and
-       * it left titles animating to the wrong place (#25677, #25688). Verifying
-       * that pages do not overlap is not enough on its own, so this covers
-       * where the transition ends up.
+       * it left titles animating to the wrong place (#25677, #25688). This
+       * covers where a transition ends up, with the arriving page and its title
+       * resting against the modal.
        */
       test('should settle a nav transition with the new page in place', async ({ page }) => {
         await page.setContent(`<style>ion-modal { --height: fit-content; }</style>${NAV_MODAL}`, config);
