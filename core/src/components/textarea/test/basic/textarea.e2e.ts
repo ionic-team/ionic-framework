@@ -263,6 +263,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           <ion-button id="end-button" slot="end" aria-label="Clear notes">
             <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
           </ion-button>
+          <ion-checkbox id="end-ion-checkbox" slot="end" aria-label="Remember"></ion-checkbox>
+          <ion-radio id="end-ion-radio" slot="end" aria-label="Preferred"></ion-radio>
+          <ion-toggle id="end-ion-toggle" slot="end" aria-label="Notify"></ion-toggle>
         </ion-textarea>
       `,
         config
@@ -290,6 +293,31 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
       await expect(page.locator('ion-textarea textarea')).not.toBeFocused();
+    });
+
+    /**
+     * Browsers skip the label forwarding when a click lands on interactive
+     * content, so activating a slotted control leaves the textarea alone. A
+     * radio outside a radio group cannot be checked, so only the textarea is
+     * asserted for it.
+     */
+    [
+      { tag: 'ion-checkbox', id: 'end-ion-checkbox', checkable: true },
+      { tag: 'ion-radio', id: 'end-ion-radio', checkable: false },
+      { tag: 'ion-toggle', id: 'end-ion-toggle', checkable: true },
+    ].forEach(({ tag, id, checkable }) => {
+      test(`should not focus the textarea when a slotted ${tag} is clicked`, async ({ page }) => {
+        const control = page.locator(`#${id}`);
+
+        await control.click();
+        await page.waitForChanges();
+
+        if (checkable) {
+          await expect(control).toHaveJSProperty('checked', true);
+        }
+
+        await expect(page.locator('ion-textarea textarea')).not.toBeFocused();
+      });
     });
 
     test('should emit one click when the textarea is clicked after slotted content', async ({ page }) => {

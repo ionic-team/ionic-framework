@@ -361,6 +361,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           <ion-button id="end-button" slot="end" aria-label="Show password">
             <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
           </ion-button>
+          <ion-checkbox id="end-ion-checkbox" slot="end" aria-label="Remember"></ion-checkbox>
+          <ion-radio id="end-ion-radio" slot="end" aria-label="Preferred"></ion-radio>
+          <ion-toggle id="end-ion-toggle" slot="end" aria-label="Notify"></ion-toggle>
         </ion-input>
       `,
         config
@@ -377,7 +380,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const event = clickEvent.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
 
-      await expect(page.locator('ion-input input')).toBeFocused();
+      await expect(page.locator('ion-input input.native-input')).toBeFocused();
     });
 
     test('should emit one click without focusing the input when a slotted button is clicked', async ({ page }) => {
@@ -387,7 +390,32 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
-      await expect(page.locator('ion-input input')).not.toBeFocused();
+      await expect(page.locator('ion-input input.native-input')).not.toBeFocused();
+    });
+
+    /**
+     * Browsers skip the label forwarding when a click lands on interactive
+     * content, so activating a slotted control leaves the input alone. A radio
+     * outside a radio group cannot be checked, so only the input is asserted
+     * for it.
+     */
+    [
+      { tag: 'ion-checkbox', id: 'end-ion-checkbox', checkable: true },
+      { tag: 'ion-radio', id: 'end-ion-radio', checkable: false },
+      { tag: 'ion-toggle', id: 'end-ion-toggle', checkable: true },
+    ].forEach(({ tag, id, checkable }) => {
+      test(`should not focus the input when a slotted ${tag} is clicked`, async ({ page }) => {
+        const control = page.locator(`#${id}`);
+
+        await control.click();
+        await page.waitForChanges();
+
+        if (checkable) {
+          await expect(control).toHaveJSProperty('checked', true);
+        }
+
+        await expect(page.locator('ion-input input.native-input')).not.toBeFocused();
+      });
     });
 
     test('should emit one click when the input is clicked after slotted content', async ({ page }) => {
@@ -400,7 +428,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       const clickEvent = await page.spyOnEvent('click');
 
-      await page.locator('ion-input input').click();
+      await page.locator('ion-input input.native-input').click();
 
       expect(clickEvent).toHaveReceivedEventTimes(1);
     });
