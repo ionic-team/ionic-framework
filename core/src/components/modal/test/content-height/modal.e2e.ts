@@ -31,8 +31,13 @@ const contentModal = (style: string, childHeight = CHILD_HEIGHT) => `
     }
   </style>
   <ion-modal is-open="true">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Modal</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-content>
-      <div style="height: ${childHeight}px"></div>
+      <div style="height: ${childHeight}px" class="ion-padding">height: ${childHeight}px</div>
     </ion-content>
   </ion-modal>
 `;
@@ -48,16 +53,28 @@ const NAV_MODAL = `
     class NavPageOne extends HTMLElement {
       connectedCallback() {
         this.innerHTML = \`
-          <ion-header><ion-toolbar><ion-title>One</ion-title></ion-toolbar></ion-header>
-          <ion-content><div style="height: 120px"></div></ion-content>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Modal - Nav - One</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <div style="height: 120px" class="ion-padding">height: 120px</div>
+          </ion-content>
         \`;
       }
     }
     class NavPageTwo extends HTMLElement {
       connectedCallback() {
         this.innerHTML = \`
-          <ion-header><ion-toolbar><ion-title>Two</ion-title></ion-toolbar></ion-header>
-          <ion-content><div id="tall-block" style="height: 400px"></div></ion-content>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Modal - Nav - Two</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <div id="tall-block" style="height: 400px" class="ion-padding">height: 400px</div>
+          </ion-content>
         \`;
       }
     }
@@ -131,9 +148,9 @@ const presentNavModal = async (page: E2EPage) => {
 };
 
 /**
- * This behavior does not vary across directions/modes
+ * This behavior does not vary across directions
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('modal: content height'), () => {
     test.describe('content-based heights', () => {
       /**
@@ -201,7 +218,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         // Content sizing should not be applied by default.
         await expect(page.locator('ion-modal ion-content')).not.toHaveClass(/content-sizing/);
-        await expect.poll(() => getContentHeight(page)).toBe(viewport.height);
+        await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
       });
 
       test('should fill and scroll a pixel height', async ({ page }) => {
@@ -213,8 +230,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await expect(page.locator('ion-modal ion-content')).not.toHaveClass(/content-sizing/);
         await expect.poll(() => getWrapperHeight(page)).toBe(300);
 
+        // The scroll container takes what the header leaves of the modal.
+        const headerHeight = (await page.locator('ion-modal ion-header').boundingBox())!.height;
         const { scrollHeight, clientHeight } = await getScrollMetrics(page);
-        expect(clientHeight).toBe(300);
+        expect(clientHeight).toBe(300 - headerHeight);
         expect(scrollHeight).toBeGreaterThan(clientHeight);
       });
 
@@ -360,10 +379,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(pageBox.y).toBeCloseTo(wrapperBox.y, 0);
         expect(pageBox.height).toBeGreaterThan(0);
 
-        // The title drifting down the viewport is the reported symptom, so it
-        // has to come to rest against the top of the modal.
+        /**
+         * The title drifting down the viewport is the reported symptom, so the
+         * header has to sit at the top of the modal with the title inside it.
+         * Each mode insets the title by a different amount.
+         */
+        const headerBox = (await arrived.locator('ion-header').boundingBox())!;
         const titleBox = (await arrived.locator('ion-title').boundingBox())!;
-        expect(titleBox.y).toBeCloseTo(wrapperBox.y, 0);
+        expect(headerBox.y).toBeCloseTo(wrapperBox.y, 0);
+        expect(titleBox.y).toBeGreaterThanOrEqual(headerBox.y);
+        expect(titleBox.y + titleBox.height).toBeLessThanOrEqual(headerBox.y + headerBox.height + 1);
 
         // Going back has to land the same way, since the pop animates too.
         await page.locator('ion-modal ion-nav').evaluate((nav: HTMLIonNavElement) => nav.pop());
@@ -417,6 +442,27 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await expect(content).not.toHaveClass(/content-sizing/, { timeout: REMOUNT_TIMEOUT });
         await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
       });
+    });
+
+    test('should render a modal sized to its content', async ({ page }) => {
+      await page.setContent(contentModal('--height: fit-content;'), config);
+      await expect(page.locator('ion-modal')).toBeVisible();
+
+      await expect(page).toHaveScreenshot(screenshot('modal-content-height-basic'));
+    });
+
+    test('should render a content-sized modal whose content overflows', async ({ page }) => {
+      await page.setContent(contentModal('--height: fit-content;', TALL_CHILD_HEIGHT), config);
+      await expect(page.locator('ion-modal')).toBeVisible();
+
+      await expect(page).toHaveScreenshot(screenshot('modal-content-height-overflow'));
+    });
+
+    test('should render a content-sized modal with an ion-nav', async ({ page }) => {
+      await page.setContent(`<style>ion-modal { --height: fit-content; }</style>${NAV_MODAL}`, config);
+      await presentNavModal(page);
+
+      await expect(page).toHaveScreenshot(screenshot('modal-content-height-nav'));
     });
   });
 });
