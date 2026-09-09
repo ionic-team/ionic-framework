@@ -8,6 +8,7 @@ import {
   Listen,
   Method,
   Prop,
+  State,
   Watch,
   forceUpdate,
   h,
@@ -46,7 +47,6 @@ export class Content implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
-  private sizeToContent = false;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
   private fullscreenResizeObserver?: ResizeObserver;
   private sizeToContentObserver?: MutationObserver;
@@ -78,6 +78,11 @@ export class Content implements ComponentInterface {
   };
 
   @Element() el!: HTMLIonContentElement;
+
+  /**
+   * Whether the host is sized to its content.
+   */
+  @State() sizeToContent = false;
 
   /**
    * The color to use from your application's color palette.
@@ -150,6 +155,7 @@ export class Content implements ComponentInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.sizeToContent = this.readSizeToContent();
   }
 
   connectedCallback() {
@@ -296,15 +302,13 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Re-renders when the overlay is no longer sized the way the last render
-   * assumed. Read in a `readTask` because resolving the custom property forces
-   * a style recalculation.
+   * Picks up an overlay that is no longer sized the way the last render
+   * assumed, re-rendering only when the answer changes. Read in a `readTask`
+   * because resolving the custom property forces a style recalculation.
    */
   private updateSizeToContent() {
     readTask(() => {
-      if (this.shouldSizeToContent() !== this.sizeToContent) {
-        forceUpdate(this);
-      }
+      this.sizeToContent = this.readSizeToContent();
     });
   }
 
@@ -361,7 +365,8 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Whether to size the component to its content height.
+   * Reads whether to size the component to its content height. Forces a style
+   * recalculation, so it belongs in a read task or before the first render.
    *
    * This applies inside popovers and modals with a content-based `--height`,
    * where the overlay does not provide the content with a definite height
@@ -372,7 +377,7 @@ export class Content implements ComponentInterface {
    * `--height` and therefore cannot be observed. `--height` is the only
    * supported way to opt into content-based sizing.
    */
-  private shouldSizeToContent() {
+  private readSizeToContent() {
     if (hostContext('ion-popover', this.el)) {
       return true;
     }
@@ -627,7 +632,7 @@ export class Content implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'content-fullscreen': this.fullscreen,
-          'content-sizing': (this.sizeToContent = this.shouldSizeToContent()),
+          'content-sizing': this.sizeToContent,
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,
         })}
