@@ -1349,18 +1349,18 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.setContent(
         `
         <ion-select label="Fruit" interface="alert">
-          <ion-icon id="start-icon" slot="start" name="pizza" aria-hidden="true"></ion-icon>
-          <ion-button id="end-button" slot="end" aria-label="Clear selection">
+          <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+          <ion-button slot="end" aria-label="Clear selection">
             <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
           </ion-button>
-          <input id="end-checkbox" slot="end" type="checkbox" aria-label="Favorite" />
-          <ion-checkbox id="end-ion-checkbox" slot="end" aria-label="Favorite"></ion-checkbox>
-          <ion-radio id="end-ion-radio" slot="end" aria-label="Preferred"></ion-radio>
-          <ion-toggle id="end-ion-toggle" slot="end" aria-label="Notify"></ion-toggle>
-          <a id="end-anchor" slot="end" href="#navigated">Details</a>
+          <input slot="end" type="checkbox" aria-label="Favorite" />
+          <ion-checkbox slot="end" aria-label="Favorite"></ion-checkbox>
+          <ion-radio slot="end" aria-label="Preferred"></ion-radio>
+          <ion-toggle slot="end" aria-label="Notify"></ion-toggle>
+          <a slot="end" href="#navigated">Details</a>
           <div slot="end">
-            <button id="nested-button" type="button">Nested</button>
-            <span id="nested-text">Nested</span>
+            <button type="button">Nested</button>
+            <span>Nested</span>
           </div>
           <ion-select-option value="apple">Apple</ion-select-option>
         </ion-select>
@@ -1377,7 +1377,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const clickEvent = await page.spyOnEvent('click');
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
 
-      await page.locator('#start-icon').click();
+      await page.locator('ion-icon[slot="start"]').click();
 
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
@@ -1392,7 +1392,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should emit one click without opening the select when a slotted button is clicked', async ({ page }) => {
       const clickEvent = await page.spyOnEvent('click');
 
-      await page.locator('#end-button').click();
+      await page.locator('ion-button[slot="end"]').click();
 
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
@@ -1413,7 +1413,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('should activate slotted form controls without opening the select', async ({ page }) => {
-      const checkbox = page.locator('#end-checkbox');
+      const checkbox = page.locator('input[slot="end"][type="checkbox"]');
 
       await checkbox.click();
       await page.waitForChanges();
@@ -1428,12 +1428,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
      * interactive check relied on a focusability selector.
      */
     [
-      { tag: 'ion-checkbox', id: 'end-ion-checkbox', checkable: true },
-      { tag: 'ion-radio', id: 'end-ion-radio', checkable: false },
-      { tag: 'ion-toggle', id: 'end-ion-toggle', checkable: true },
-    ].forEach(({ tag, id, checkable }) => {
+      { tag: 'ion-checkbox', checkable: true },
+      { tag: 'ion-radio', checkable: false },
+      { tag: 'ion-toggle', checkable: true },
+    ].forEach(({ tag, checkable }) => {
       test(`should not open the select when a slotted ${tag} is clicked`, async ({ page }) => {
-        const control = page.locator(`#${id}`);
+        const control = page.locator(tag);
 
         await control.click();
         await page.waitForChanges();
@@ -1447,7 +1447,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('should follow a slotted link without opening the select', async ({ page }) => {
-      await page.locator('#end-anchor').click();
+      await page.locator('a[slot="end"]').click();
       await page.waitForChanges();
 
       expect(new URL(page.url()).hash).toBe('#navigated');
@@ -1461,7 +1461,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should not open the select when interactive content inside a slotted wrapper is clicked', async ({
       page,
     }) => {
-      await page.locator('#nested-button').click();
+      await page.locator('div[slot="end"] button').click();
       await page.waitForChanges();
 
       await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
@@ -1470,7 +1470,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should open the select when decorative content inside a slotted wrapper is clicked', async ({ page }) => {
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
 
-      await page.locator('#nested-text').click();
+      await page.locator('div[slot="end"] span').click();
       await ionAlertDidPresent.next();
 
       await expect(page.locator('ion-alert')).toBeVisible();
@@ -1482,7 +1482,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
        * select to ignore, so the following click on the select itself must
        * still open it.
        */
-      await page.locator('#end-button').click();
+      await page.locator('ion-button[slot="end"]').click();
 
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
 
@@ -1505,8 +1505,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         `
         <ion-item>
           <ion-select slot="end" label="Fruit" interface="alert">
-            <ion-icon id="start-icon" slot="start" name="pizza" aria-hidden="true"></ion-icon>
-            <ion-button id="end-button" slot="end" aria-label="Clear selection">
+            <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+            <ion-button slot="end" aria-label="Clear selection">
               <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
             </ion-button>
             <ion-select-option value="apple">Apple</ion-select-option>
@@ -1529,14 +1529,14 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should open when a slotted icon is clicked', async ({ page }) => {
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
 
-      await page.locator('#start-icon').click();
+      await page.locator('ion-icon[slot="start"]').click();
       await ionAlertDidPresent.next();
 
       await expect(page.locator('ion-alert')).toBeVisible();
     });
 
     test('should not open when a slotted button is clicked', async ({ page }) => {
-      await page.locator('#end-button').click();
+      await page.locator('ion-button[slot="end"]').click();
       await page.waitForChanges();
 
       await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);

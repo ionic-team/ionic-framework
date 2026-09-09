@@ -357,13 +357,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.setContent(
         `
         <ion-input label="Email">
-          <ion-icon id="start-icon" slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
-          <ion-button id="end-button" slot="end" aria-label="Show password">
+          <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+          <ion-button slot="end" aria-label="Show password">
             <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
           </ion-button>
-          <ion-checkbox id="end-ion-checkbox" slot="end" aria-label="Remember"></ion-checkbox>
-          <ion-radio id="end-ion-radio" slot="end" aria-label="Preferred"></ion-radio>
-          <ion-toggle id="end-ion-toggle" slot="end" aria-label="Notify"></ion-toggle>
+          <ion-checkbox slot="end" aria-label="Remember"></ion-checkbox>
+          <ion-radio slot="end" aria-label="Preferred"></ion-radio>
+          <ion-toggle slot="end" aria-label="Notify"></ion-toggle>
         </ion-input>
       `,
         config
@@ -373,7 +373,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should emit one click and focus the input when a slotted icon is clicked', async ({ page }) => {
       const clickEvent = await page.spyOnEvent('click');
 
-      await page.locator('#start-icon').click();
+      await page.locator('ion-icon[slot="start"]').click();
 
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
@@ -386,7 +386,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should emit one click without focusing the input when a slotted button is clicked', async ({ page }) => {
       const clickEvent = await page.spyOnEvent('click');
 
-      await page.locator('#end-button').click();
+      await page.locator('ion-button[slot="end"]').click();
 
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
@@ -400,12 +400,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
      * for it.
      */
     [
-      { tag: 'ion-checkbox', id: 'end-ion-checkbox', checkable: true },
-      { tag: 'ion-radio', id: 'end-ion-radio', checkable: false },
-      { tag: 'ion-toggle', id: 'end-ion-toggle', checkable: true },
-    ].forEach(({ tag, id, checkable }) => {
+      { tag: 'ion-checkbox', checkable: true },
+      { tag: 'ion-radio', checkable: false },
+      { tag: 'ion-toggle', checkable: true },
+    ].forEach(({ tag, checkable }) => {
       test(`should not focus the input when a slotted ${tag} is clicked`, async ({ page }) => {
-        const control = page.locator(`#${id}`);
+        const control = page.locator(tag);
 
         await control.click();
         await page.waitForChanges();
@@ -424,7 +424,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
        * input to ignore, so the following click on the input itself must
        * still be emitted.
        */
-      await page.locator('#end-button').click();
+      await page.locator('ion-button[slot="end"]').click();
 
       const clickEvent = await page.spyOnEvent('click');
 
