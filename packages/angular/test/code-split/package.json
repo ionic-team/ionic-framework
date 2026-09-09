@@ -1,0 +1,44 @@
+{
+  "name": "code-split",
+  "version": "0.0.1",
+  "author": "Ionic Framework",
+  "homepage": "https://ionicframework.com/",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --stats-json --output-hashing=none",
+    "watch": "ng build --watch --configuration development",
+    "lint": "ng lint"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "22.0.1",
+    "@angular/compiler": "22.0.1",
+    "@angular/core": "22.0.1",
+    "@angular/forms": "22.0.1",
+    "@angular/platform-browser": "22.0.1",
+    "@angular/router": "22.0.1",
+    "@capacitor/app": "8.1.1",
+    "@capacitor/core": "8.5.0",
+    "@capacitor/haptics": "8.0.2",
+    "@capacitor/keyboard": "8.0.5",
+    "@capacitor/status-bar": "8.0.3",
+    "@ionic/angular": "^9.0.0",
+    "ionicons": "^8.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "22.0.1",
+    "@angular/cli": "22.0.1",
+    "@angular/compiler-cli": "22.0.1",
+    "@angular/language-service": "22.0.1",
+    "@capacitor/cli": "8.5.0",
+    "@ionic/angular-toolkit": "^13.0.0",
+    "angular-eslint": "22.0.0",
+    "eslint": "^9.16.0",
+    "typescript": "~6.0.0",
+    "typescript-eslint": "^8.61.0"
+  },
+  "description": "An Ionic project"
+}

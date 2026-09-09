@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "9.0.2",
+  "version": "9.0.3",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -41,7 +41,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^9.0.2",
+    "@ionic/core": "^9.0.3",
     "@stencil/react-output-target": "^1.6.2",
     "ionicons": "^8.0.13",
     "tslib": "*"
@@ -59,7 +59,7 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
-    "@types/jest": "^26.0.15",
+    "@types/jest": "^29.5.14",
     "@types/node": "^24.13.3",
     "@types/react": "^18.3.28",
     "@types/react-dom": "^18.3.7",

@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue-router",
-  "version": "9.0.2",
+  "version": "9.0.3",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "eslint": "eslint src",
@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic-framework#readme",
   "dependencies": {
-    "@ionic/vue": "^9.0.2"
+    "@ionic/vue": "^9.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

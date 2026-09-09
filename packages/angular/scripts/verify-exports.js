@@ -16,6 +16,9 @@ const KNOWN_EXCLUDED_COMPONENTS = [
   'ion-select-popover',
   'ion-slides',
 ];
+const KNOWN_NON_CORE_ION_COMPONENTS = [
+  'ion-modal-token',
+];
 
 function getComponentsFromCore() {
   const componentsList = fs.readdirSync(CORE_COMPONENTS_DIR, { withFileTypes: true })
@@ -60,7 +63,7 @@ function verify() {
 
   // Check for exports that don't have a corresponding component in core
   for (const exportName of Object.keys(ionExports)) {
-    if (!coreComponents.has(exportName)) {
+    if (!coreComponents.has(exportName) && !KNOWN_NON_CORE_ION_COMPONENTS.includes(exportName)) {
       console.log(`${exportName} is exported without a matching component in core.`);
       hasErrors = true;
     }

@@ -30,6 +30,27 @@ export const createIonRouter = (
     action: undefined,
     delta: undefined,
   };
+  /**
+   * The navigation the staged delta belongs to, matched on identity for the
+   * same reason the params are. Two history navigations can move to the same
+   * path, and a path cannot tell them apart.
+   */
+  let currentNavigationInfoOwner: RouteLocationNormalized | undefined;
+  /**
+   * Set between the history listener staging a delta and the navigation
+   * claiming it below.
+   */
+  let currentNavigationInfoUnclaimed = false;
+
+  const clearNavigationInfo = () => {
+    currentNavigationInfo = {
+      direction: undefined,
+      action: undefined,
+      delta: undefined,
+    };
+    currentNavigationInfoOwner = undefined;
+    currentNavigationInfoUnclaimed = false;
+  };
 
   /**
    * Ionic Vue should only react to navigation
@@ -46,7 +67,11 @@ export const createIonRouter = (
       _: RouteLocationNormalized,
       failure?: NavigationFailure | void
     ) => {
-      if (failure) return;
+      if (failure) {
+        discardStagedStateFor(to);
+
+        return;
+      }
 
       const { direction, action, delta } = currentNavigationInfo;
 
@@ -64,13 +89,46 @@ export const createIonRouter = (
       const replaceAction = opts.history.state.replaced ? "replace" : undefined;
       handleHistoryChange(to, action || replaceAction, direction, delta);
 
-      currentNavigationInfo = {
-        direction: undefined,
-        action: undefined,
-        delta: undefined,
-      };
+      clearNavigationInfo();
     }
   );
+
+  /**
+   * vue-router only logs an uncaught navigation error while no error handler
+   * is registered, so the handler below would silence it for every app that
+   * has not added one of its own. Track whether the app adds one so the log
+   * can be put back when it has not.
+   */
+  let appErrorHandlers = 0;
+  const addErrorHandler = router.onError.bind(router);
+  router.onError = (handler) => {
+    appErrorHandlers++;
+    const removeHandler = addErrorHandler(handler);
+
+    return () => {
+      appErrorHandlers--;
+      removeHandler();
+    };
+  };
+
+  /**
+   * A guard that throws, including an await on a session check that rejects,
+   * never reaches afterEach. vue-router rejects the navigation promise
+   * instead, so there is no failure to inspect there and the staged state
+   * would survive. The error is re-thrown to the app the same way it was
+   * before, so navigation outcomes are unchanged.
+   *
+   * A guard that returns a location is still not covered, because that
+   * redirects rather than fails and afterEach is never called for the original
+   * navigation.
+   */
+  addErrorHandler((error: unknown, to: RouteLocationNormalized) => {
+    discardStagedStateFor(to);
+
+    if (appErrorHandlers === 0) {
+      console.error(error);
+    }
+  });
 
   const locationHistory = createLocationHistory();
 
@@ -89,6 +147,99 @@ export const createIonRouter = (
    * Cleared once `handleHistoryChange` has consumed them.
    */
   let incomingRouteParams: RouteParams | undefined;
+  /**
+   * The navigation the staged params belong to. vue-router hands the same
+   * location object to every hook for one navigation and builds a fresh one
+   * per navigation, so it identifies a navigation even when two of them target
+   * the same path. Kept beside the params rather than on them so it is never
+   * spread onto a RouteInfo and stored in `locationHistory`.
+   */
+  let incomingRouteParamsOwner: RouteLocationNormalized | undefined;
+  /**
+   * Set between staging the params and the navigation claiming them below.
+   * A navigation rejected as a duplicate never reaches `beforeEach`, so it
+   * never claims, and this is what tells the gate those params are still its
+   * own rather than a later navigation's.
+   */
+  let incomingRouteParamsUnclaimed = false;
+
+  /**
+   * The only place that stages route params, so an owner can never be left
+   * over from an earlier navigation.
+   */
+  const stageRouteParams = (params: RouteParams) => {
+    incomingRouteParams = params;
+    incomingRouteParamsOwner = undefined;
+    incomingRouteParamsUnclaimed = true;
+  };
+
+  /**
+   * The only place that clears them, so an owner can never outlive the params
+   * it belongs to and go on to match an unrelated navigation.
+   */
+  const clearStagedParams = () => {
+    incomingRouteParams = undefined;
+    incomingRouteParamsOwner = undefined;
+    incomingRouteParamsUnclaimed = false;
+  };
+
+  /**
+   * The navigation that starts first after params are staged is the one they
+   * were staged for, so it takes ownership of them here. Registered before any
+   * guard the app adds so that it still runs when one of those aborts.
+   */
+  router.beforeEach((to: RouteLocationNormalized) => {
+    if (incomingRouteParamsUnclaimed) {
+      incomingRouteParamsOwner = to;
+      incomingRouteParamsUnclaimed = false;
+    }
+
+    if (currentNavigationInfoUnclaimed) {
+      currentNavigationInfoOwner = to;
+      currentNavigationInfoUnclaimed = false;
+    }
+  });
+
+  /**
+   * State staged for a navigation that did not complete describes something
+   * that did not happen. handleHistoryChange normally consumes it, but it does
+   * not run for a navigation that failed, so it has to be discarded here or
+   * the next navigation picks it up instead.
+   *
+   * A delta is only staged for a history navigation, and a stale one makes the
+   * next navigation look like traversal, which stops the incoming route from
+   * being added. A stale set of params carries an action, a direction and
+   * sometimes a tab or a previous route's id into whatever runs next.
+   *
+   * Only discard state belonging to this navigation, and check the two slots
+   * separately. Another navigation can replace this one and stage its own
+   * state first, in which case discarding would strip that state from the
+   * navigation still running.
+   *
+   * Both are matched on the navigation that owns them rather than on where it
+   * was heading, because two navigations can head for the same path and a path
+   * cannot tell them apart. State still unclaimed belongs to this navigation,
+   * since nothing has started since it was staged.
+   */
+  const discardStagedStateFor = (to: RouteLocationNormalized) => {
+    const deltaIsForThisNavigation =
+      currentNavigationInfoOwner === undefined
+        ? currentNavigationInfoUnclaimed
+        : currentNavigationInfoOwner === to;
+
+    const paramsAreForThisNavigation =
+      incomingRouteParamsOwner === undefined
+        ? incomingRouteParamsUnclaimed
+        : incomingRouteParamsOwner === to;
+
+    if (deltaIsForThisNavigation) {
+      clearNavigationInfo();
+    }
+
+    if (paramsAreForThisNavigation) {
+      clearStagedParams();
+    }
+  };
 
   const historyChangeListeners: any[] = [];
 
@@ -101,7 +252,7 @@ export const createIonRouter = (
     });
   }
 
-  opts.history.listen((_: any, _x: any, info: any) => {
+  opts.history.listen((_to: any, _x: any, info: any) => {
     /**
      * history.listen only fires on certain
      * event such as when the user clicks the
@@ -124,6 +275,9 @@ export const createIonRouter = (
       action: info.type === "pop" && info.delta >= 1 ? "push" : info.type,
       direction: info.direction === "" ? "forward" : info.direction,
     };
+
+    currentNavigationInfoOwner = undefined;
+    currentNavigationInfoUnclaimed = true;
   });
 
   const handleNavigateBack = (
@@ -142,12 +296,12 @@ export const createIonRouter = (
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
-        incomingRouteParams = {
+        stageRouteParams({
           ...prevInfo,
           routerAction: "pop",
           routerDirection: "back",
           routerAnimation: routerAnimation || routeInfo.routerAnimation,
-        };
+        });
         if (
           routeInfo.lastPathname === routeInfo.pushedByRoute ||
           /**
@@ -222,7 +376,7 @@ export const createIonRouter = (
              * There is nowhere to navigate, so drop the params rather than
              * letting them leak into the next navigation.
              */
-            incomingRouteParams = undefined;
+            clearStagedParams();
           }
         }
       } else if (defaultHref) {
@@ -585,7 +739,7 @@ export const createIonRouter = (
 
       currentRouteInfo = routeInfo;
     }
-    incomingRouteParams = undefined;
+    clearStagedParams();
     historyChangeListeners.forEach((cb) => cb(currentRouteInfo));
   };
 
@@ -665,13 +819,6 @@ export const createIonRouter = (
     const hrefSearch = search ? `?${search}` : "";
 
     if (routeInfo) {
-      incomingRouteParams = {
-        ...incomingRouteParams,
-        routerAction: "push",
-        routerDirection: "none",
-        tab,
-      };
-
       /**
        * When going back to a tab
        * you just left, it's possible
@@ -684,15 +831,20 @@ export const createIonRouter = (
        * are honored when re-selecting the tab.
        */
       const effectiveSearch = hrefSearch || routeInfo.search || "";
-      const push = {
+      const target = {
+        path: routeInfo.pathname === pathname ? routeInfo.pathname : pathname,
         query: parseQuery(effectiveSearch),
         ...(hrefHash ? { hash: hrefHash } : {}),
       };
-      if (routeInfo.pathname === pathname) {
-        router.push({ path: routeInfo.pathname, ...push });
-      } else {
-        router.push({ path: pathname, ...push });
-      }
+
+      stageRouteParams({
+        ...incomingRouteParams,
+        routerAction: "push",
+        routerDirection: "none",
+        tab,
+      });
+
+      router.push(target);
     } else {
       handleNavigate(
         pathname + hrefSearch + hrefHash,
@@ -792,12 +944,12 @@ export const createIonRouter = (
     routerAnimation?: AnimationBuilder,
     tab?: string
   ) => {
-    incomingRouteParams = {
+    stageRouteParams({
       routerAction,
       routerDirection,
       routerAnimation,
       tab,
-    };
+    });
   };
 
   const goBack = (routerAnimation?: AnimationBuilder) => {

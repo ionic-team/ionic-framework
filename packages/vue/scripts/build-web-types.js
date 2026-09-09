@@ -74,6 +74,7 @@ for (const component of filteredComponents) {
     name: componentName,
     "doc-url": docUrl,
     description: component.docs,
+    priority: "highest", // Fixes attribute autocomplete (FW-7636)
     source: {
       module: "@ionic/vue",
       symbol: componentName,

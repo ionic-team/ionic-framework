@@ -42,10 +42,9 @@ const EAGER_COMPONENTS = {
 
 Everything else takes the plain form: `changeDetection: ChangeDetectionStrategy.OnPush`, no eslint-disable, no script entry. See `packages/angular/src/standalone/navigation/nav.ts`, where the comment records why `ion-nav` stays `OnPush` despite hosting pages, and `packages/angular/src/lazy/directives/navigation/ion-nav.ts`, with the same comment.
 
-The `npm run build` script enforces this in two steps:
+`npm run build.change-detection` (`packages/angular/scripts/normalize-change-detection.js`) rewrites Angular 22's emitted `ChangeDetectionStrategy.Eager` back to `Default`, since `Eager` only exists from Angular 21.2 onward and earlier linkers in the peer range reject it outright.
 
-- The `build.change-detection` step (`packages/angular/scripts/normalize-change-detection.js`) rewrites Angular 22's emitted `ChangeDetectionStrategy.Eager` back to `Default`, since `Eager` only exists from Angular 21.2 onward and earlier linkers in the peer range reject it outright.
-- The `validate.change-detection` step (`packages/angular/scripts/verify-change-detection.js`) fails the build on a component with no strategy, a strategy name that won't link across the whole peer range, or a component going eager without being listed in `EAGER_COMPONENTS`.
+`npm run test.change-detection` (`packages/angular/scripts/verify-change-detection.js`) fails on a component with no strategy, a strategy name that won't link across the whole peer range, or a component going eager without being listed in `EAGER_COMPONENTS`.
 
 If that check names a component from `packages/angular/src/lazy/directives/proxies.ts` or `packages/angular/src/standalone/directives/ion-*.ts`, don't edit those files. They are emitted by `@stencil/angular-output-target`, which hardcodes the strategy, so a failure there means the generator changed. Fix or pin that dependency in `core/package.json` instead. Those generated files are 158 of the 182 components and `packages/angular/eslint.config.js` ignores all of them, so lint can never see them, which is why this check exists.
 
