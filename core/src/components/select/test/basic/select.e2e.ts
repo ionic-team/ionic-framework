@@ -1492,4 +1492,54 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('ion-alert')).toBeVisible();
     });
   });
+
+  /**
+   * A select slotted into an item carries slot="end" on its own host, so the
+   * host is excluded when looking for the slotted content a click started on.
+   * Without that the select would read every click on itself as a slotted
+   * click and would never open.
+   */
+  test.describe(title('select: slotted click in item'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-select slot="end" label="Fruit" interface="alert">
+            <ion-icon id="start-icon" slot="start" name="pizza" aria-hidden="true"></ion-icon>
+            <ion-button id="end-button" slot="end" aria-label="Clear selection">
+              <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-select-option value="apple">Apple</ion-select-option>
+          </ion-select>
+        </ion-item>
+      `,
+        config
+      );
+    });
+
+    test('should open when the select itself is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-select').click({ position: { x: 5, y: 5 } });
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should open when a slotted icon is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('#start-icon').click();
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should not open when a slotted button is clicked', async ({ page }) => {
+      await page.locator('#end-button').click();
+      await page.waitForChanges();
+
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+  });
 });
