@@ -1,5 +1,5 @@
 import { win } from '@utils/browser';
-import { raf } from '@utils/helpers';
+import { onCustomPropertyChange, raf } from '@utils/helpers';
 import { getOverlaySizeType } from '@utils/overlays';
 
 type SafeAreaValue = '0px' | 'inherit';
@@ -99,42 +99,12 @@ export const getRootSafeAreaTop = (): number => {
 };
 
 /**
- * Calls back when the resolved root `--ion-safe-area-top` changes, which no
- * event and no window resize covers. The probe's height tracks the variable, so
- * a change to it becomes a size change the observer can see.
+ * Calls back when the resolved root `--ion-safe-area-top` changes. The value
+ * the caller already applied is passed as the baseline, so a change between
+ * that read and the observer starting is still reported.
  */
 export const onRootSafeAreaTopChange = (callback: (safeAreaTop: number) => void): (() => void) => {
-  const doc = win?.document;
-  if (!doc?.body || typeof ResizeObserver === 'undefined') {
-    return () => undefined;
-  }
-
-  const probe = doc.createElement('div');
-  probe.style.cssText =
-    'position:fixed;visibility:hidden;pointer-events:none;top:0;left:0;width:0;' +
-    'height:var(--ion-safe-area-top,0px);';
-  doc.body.appendChild(probe);
-
-  /**
-   * Seeded with the value the caller has already applied, so a change that
-   * lands before the observer's first delivery still gets reported. Comparing
-   * against an unset value instead would consume that first delivery and treat
-   * the new inset as the baseline.
-   */
-  let lastHeight = getRootSafeAreaTop();
-  const observer = new ResizeObserver((entries) => {
-    const { height } = entries[0].contentRect;
-    if (height !== lastHeight) {
-      lastHeight = height;
-      callback(height);
-    }
-  });
-  observer.observe(probe);
-
-  return () => {
-    observer.disconnect();
-    probe.remove();
-  };
+  return onCustomPropertyChange(win?.document?.body, '--ion-safe-area-top', callback, getRootSafeAreaTop());
 };
 
 /**

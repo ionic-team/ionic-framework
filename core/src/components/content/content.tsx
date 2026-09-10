@@ -50,7 +50,6 @@ export class Content implements ComponentInterface {
   private isMainContent = true;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
   private fullscreenResizeObserver?: ResizeObserver;
-  private sizeToContentObserver?: MutationObserver;
   private inheritedAttributes: Attributes = {};
 
   private tabsElement: HTMLElement | null = null;
@@ -199,7 +198,6 @@ export class Content implements ComponentInterface {
 
     // Re-observe on reattach, since componentDidLoad only fires once.
     this.setupFullscreenResizeObserver();
-    this.setupSizeToContentObserver();
     this.updateSizeToContent();
   }
 
@@ -233,7 +231,6 @@ export class Content implements ComponentInterface {
     }
 
     this.destroyFullscreenResizeObserver();
-    this.destroySizeToContentObserver();
   }
 
   /**
@@ -268,38 +265,6 @@ export class Content implements ComponentInterface {
       this.resize();
     });
     this.fullscreenResizeObserver.observe(this.el);
-  }
-
-  /**
-   * A modal's `--height` can be changed at runtime with no event to react
-   * to, either by setting the property directly or by toggling a class that
-   * changes which rule wins. Both of those mutate an attribute on the modal,
-   * so watch for that and re-evaluate. Viewport driven changes are already
-   * covered by the `resize` listener.
-   */
-  private setupSizeToContentObserver() {
-    if (!Build.isBrowser || typeof MutationObserver === 'undefined') {
-      return;
-    }
-
-    if (this.sizeToContentObserver !== undefined) {
-      return;
-    }
-
-    const modal = this.el.closest('ion-modal');
-    if (modal === null) {
-      return;
-    }
-
-    this.sizeToContentObserver = new MutationObserver(() => this.updateSizeToContent());
-    this.sizeToContentObserver.observe(modal, { attributes: true, attributeFilter: ['style', 'class'] });
-  }
-
-  private destroySizeToContentObserver() {
-    if (this.sizeToContentObserver !== undefined) {
-      this.sizeToContentObserver.disconnect();
-      this.sizeToContentObserver = undefined;
-    }
   }
 
   /**
@@ -420,14 +385,16 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Recalculate content dimensions. Called by overlays (e.g., popover) when
-   * sibling elements like headers or footers have finished rendering and their
-   * heights are available, ensuring accurate offset-top calculations.
+   * Recalculates the content dimensions and whether it should size itself to
+   * its content. Called by overlays when something they own changes, such as
+   * a header finishing its render or `--height` being updated.
+   *
    * @internal
    */
   @Method()
   async recalculateDimensions(): Promise<void> {
     readTask(() => this.readDimensions());
+    this.updateSizeToContent();
   }
 
   private readDimensions() {

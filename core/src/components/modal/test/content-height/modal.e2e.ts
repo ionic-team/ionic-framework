@@ -426,6 +426,32 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         await expect(content).not.toHaveClass(/content-sizing/, { timeout: REMOUNT_TIMEOUT });
         await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
       });
+
+      test('should respect a dynamically added body class that sets --height', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            body.custom-class ion-modal {
+              --height: fit-content;
+            }
+          </style>
+          ${contentModal('')}
+        `,
+          config
+        );
+        await expect(page.locator('ion-modal')).toBeVisible();
+
+        const viewport = page.viewportSize()!;
+        const content = page.locator('ion-modal ion-content');
+
+        await expect(content).not.toHaveClass(/content-sizing/);
+        await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
+
+        await page.evaluate(() => document.body.classList.add('custom-class'));
+
+        await expect(content).toHaveClass(/content-sizing/);
+        await expect.poll(() => getContentHeight(page)).toBe(CHILD_HEIGHT);
+      });
     });
   });
 
