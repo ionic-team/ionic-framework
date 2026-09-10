@@ -69,6 +69,7 @@
       "@typescript-eslint/parser": "$@typescript-eslint/parser",
       "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
       "eslint-plugin-import": "$eslint-plugin-import"
-    }
+    },
+    "postcss": "8.5.23"
   }
 }
