@@ -16,6 +16,8 @@ ion-radio-group {
   @include padding($list-md-padding-top, null, $list-md-padding-bottom, null);
 
   display: block;
+
+  background: $item-md-background;
 }
 
 ion-item {
