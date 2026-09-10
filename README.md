@@ -17,6 +17,7 @@
 </p>
 
 <p align="center">
+<a href="https://inspect.software/software/ionic-team/ionic-framework"><img src="https://raw.githubusercontent.com/inspect-software/badges/main/v1/i/ionic-team/ionic-framework.svg" alt="inspect.software score badge for ionic-team/ionic-framework" /></a>
   <a href="https://github.com/ionic-team/ionic-framework/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Ionic Framework is released under the MIT license." />
   </a>
