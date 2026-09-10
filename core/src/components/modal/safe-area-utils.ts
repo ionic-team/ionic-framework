@@ -1,5 +1,6 @@
 import { win } from '@utils/browser';
 import { raf } from '@utils/helpers';
+import { getOverlaySizeType } from '@utils/overlays';
 
 type SafeAreaValue = '0px' | 'inherit';
 
@@ -42,13 +43,6 @@ export interface ModalSafeAreaContext {
 const MODAL_INSET_MIN_WIDTH = 768;
 const MODAL_INSET_MIN_HEIGHT = 600;
 const EDGE_THRESHOLD = 5;
-
-/**
- * CSS values for `--width` / `--height` that are treated as fullscreen
- * (modal touches the corresponding screen edges). Empty string means the
- * property was not overridden. See `hasCustomModalDimensions()`.
- */
-const FULLSCREEN_SIZE_VALUES = new Set(['', '100%', '100vw', '100vh', '100dvw', '100dvh', '100svw', '100svh']);
 
 /**
  * Cache for resolved root safe-area-top value, invalidated once per frame.
@@ -155,9 +149,55 @@ export const onRootSafeAreaTopChange = (callback: (safeAreaTop: number) => void)
  */
 export const hasCustomModalDimensions = (hostEl: HTMLElement): boolean => {
   const styles = getComputedStyle(hostEl);
-  const width = styles.getPropertyValue('--width').trim();
-  const height = styles.getPropertyValue('--height').trim();
-  return !FULLSCREEN_SIZE_VALUES.has(width) && !FULLSCREEN_SIZE_VALUES.has(height);
+  const width = getOverlaySizeType(styles.getPropertyValue('--width'));
+  const height = getOverlaySizeType(styles.getPropertyValue('--height'));
+
+  if (width === 'fullscreen' || height === 'fullscreen') {
+    return false;
+  }
+
+  /**
+   * A content-sized `--height` resolves against the content. Tall content
+   * is clamped by `--max-height`, causing the modal to span the viewport
+   * and reach the top edge, where it needs the inset. The used height is
+   * what distinguishes this case from a short dialog.
+   */
+  if (height === 'content') {
+    return !fillsViewportHeight(hostEl);
+  }
+
+  return true;
+};
+
+/**
+ * True when a content-sized modal wrapper is as tall as the viewport,
+ * putting it against the top and bottom edges.
+ *
+ * This is used only for content-sized `--height`, where the used height
+ * determines whether the modal needs the viewport safe-area inset.
+ *
+ * The wrapper has no box while the modal is hidden, and this is read
+ * before the modal is shown, so the class that hides it is removed for
+ * measurement and restored in the same task. Nothing paints in between.
+ */
+const fillsViewportHeight = (hostEl: HTMLElement): boolean => {
+  const wrapperEl = hostEl.shadowRoot?.querySelector('.modal-wrapper');
+  if (wrapperEl == null || win === undefined) {
+    return false;
+  }
+
+  const wasHidden = hostEl.classList.contains('overlay-hidden');
+  if (wasHidden) {
+    hostEl.classList.remove('overlay-hidden');
+  }
+
+  const { height } = wrapperEl.getBoundingClientRect();
+
+  if (wasHidden) {
+    hostEl.classList.add('overlay-hidden');
+  }
+
+  return height >= win.innerHeight - EDGE_THRESHOLD;
 };
 
 /**

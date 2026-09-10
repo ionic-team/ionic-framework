@@ -16,6 +16,7 @@ import {
 } from '@stencil/core';
 import { componentOnReady, hasLazyBuild, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { getOverlaySizeType } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -387,14 +388,9 @@ export class Content implements ComponentInterface {
       return false;
     }
 
-    const height = getComputedStyle(modal).getPropertyValue('--height').trim().toLowerCase();
+    const height = getComputedStyle(modal).getPropertyValue('--height');
 
-    /**
-     * Compared as a suffix so a value carrying a vendor prefix is still
-     * recognized, such as `-webkit-fit-content` or the `-moz-fit-content`
-     * that Firefox needed before 94.
-     */
-    return CONTENT_SIZED_HEIGHTS.some((value) => height.endsWith(value));
+    return getOverlaySizeType(height) === 'content';
   }
 
   private resize() {
@@ -672,12 +668,6 @@ export class Content implements ComponentInterface {
     );
   }
 }
-
-/**
- * `ion-modal` `--height` values that size the modal to its contents, leaving
- * children an indefinite height to resolve against.
- */
-const CONTENT_SIZED_HEIGHTS = ['auto', 'fit-content', 'min-content', 'max-content'];
 
 const getParentElement = (el: any) => {
   if (el.parentElement) {

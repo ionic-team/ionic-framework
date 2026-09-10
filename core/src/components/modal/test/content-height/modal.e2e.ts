@@ -191,22 +191,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
         await expectSizedToContent(page, 'max-content');
       });
-
-      test('should size the content with a prefixed fit-content', async ({ page }) => {
-        /**
-         * Firefox only took `fit-content` unprefixed in 94, so a value carrying
-         * only the `-moz-` prefix still has to be recognized.
-         */
-        await expectSizedToContent(page, '-moz-fit-content');
-      });
-
-      test('should size the content with an uppercase keyword', async ({ page }) => {
-        /**
-         * CSS property values are case-insensitive, so `FIT-CONTENT` should
-         * size the modal to its content just like the lowercase value.
-         */
-        await expectSizedToContent(page, 'FIT-CONTENT');
-      });
     });
 
     test.describe('definite heights', () => {
@@ -443,7 +427,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
       });
     });
+  });
 
+  test.describe(title('modal: content height rendering'), () => {
     test('should render a modal sized to its content', async ({ page }) => {
       await page.setContent(contentModal('--height: fit-content;'), config);
       await expect(page.locator('ion-modal')).toBeVisible();

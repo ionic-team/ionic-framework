@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
+import type { E2EPage } from '@utils/test/playwright';
 import { configs, detachAndReattach, test, Viewports } from '@utils/test/playwright';
 
 /**
@@ -443,6 +444,55 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
 
       // Clean up
       await modal.evaluate((el: HTMLIonModalElement) => el.remove());
+    });
+
+    test.describe('content sized dialogs', () => {
+      /**
+       * The safe-area prediction is applied before the modal is shown, so
+       * reading it when the modal starts presenting captures the prediction
+       * itself rather than the position based correction that follows.
+       */
+      const getPredictedSafeArea = async (page: E2EPage, trigger: string) => {
+        await page.evaluate(() => {
+          document.addEventListener(
+            'ionModalWillPresent',
+            (ev) => {
+              const modal = ev.target as HTMLElement;
+              (window as any).predictedSafeArea = {
+                top: modal.style.getPropertyValue('--ion-safe-area-top'),
+                bottom: modal.style.getPropertyValue('--ion-safe-area-bottom'),
+              };
+            },
+            { once: true }
+          );
+        });
+
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+        await page.click(trigger);
+        await ionModalDidPresent.next();
+
+        return page.evaluate(() => (window as any).predictedSafeArea);
+      };
+
+      test('should predict a zeroed safe-area for a dialog that fits its content', async ({ page }) => {
+        expect(await getPredictedSafeArea(page, '#content-sized-dialog')).toEqual({
+          top: '0px',
+          bottom: '0px',
+        });
+      });
+
+      /**
+       * Overflowing content leaves the dialog clamped to the viewport and
+       * reaching the top edge, so the inset has to be there from the first
+       * frame. Predicting zero here leaves the header changing height once
+       * the modal has finished presenting.
+       */
+      test('should predict an inherited safe-area for a dialog whose content overflows', async ({ page }) => {
+        expect(await getPredictedSafeArea(page, '#content-sized-dialog-tall')).toEqual({
+          top: 'inherit',
+          bottom: 'inherit',
+        });
+      });
     });
 
     test.describe('moving a presented modal', () => {
