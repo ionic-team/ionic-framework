@@ -1,8 +1,13 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAttributes, raf } from '@utils/helpers';
+import {
+  inheritAttributes,
+  raf,
+  watchForAriaAttributeChanges,
+  type AttributeWatcher,
+  type Attributes,
+} from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
@@ -38,6 +43,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private inheritedAriaAttributes: Attributes = {};
   private indicatorControlObserver?: MutationObserver;
   private didLoad = false;
+  private ariaWatcher?: AttributeWatcher;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -179,6 +185,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (this.didLoad) {
       this.watchForIndicatorControls();
       this.updateInteractivityOnSlotChange();
+      this.startAriaWatcher();
     }
   }
 
@@ -195,6 +202,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     });
 
     this.watchForIndicatorControls();
+    this.startAriaWatcher();
     this.didLoad = true;
   }
 
@@ -203,6 +211,20 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       this.indicatorControlObserver.disconnect();
       this.indicatorControlObserver = undefined;
     }
+
+    this.ariaWatcher?.destroy();
+    this.ariaWatcher = undefined;
+  }
+
+  private startAriaWatcher() {
+    this.ariaWatcher = watchForAriaAttributeChanges(
+      this.el,
+      (changed) => {
+        this.inheritedAriaAttributes = { ...this.inheritedAriaAttributes, ...changed };
+        forceUpdate(this);
+      },
+      ['aria-disabled']
+    );
   }
 
   private totalNestedInputs() {
