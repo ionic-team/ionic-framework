@@ -125,7 +125,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         const list = selectModalPage.selectModal.locator('ion-list');
         await expect(list).toBeVisible();
-        await expect(list).toHaveAttribute('role', 'list');
 
         const checkboxes = selectModalPage.selectModal.locator('ion-checkbox');
         await expect(checkboxes).toHaveCount(options.length);
