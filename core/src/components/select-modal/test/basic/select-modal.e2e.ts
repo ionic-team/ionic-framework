@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
@@ -102,8 +103,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await expect(selectModalPage.modal).not.toBeVisible();
       });
 
-      test('should render a radio group without a wrapping ion-list', async () => {
+      test('should render a radio group without a wrapping ion-list', async ({ page }, testInfo) => {
+        testInfo.annotations.push({ type: 'issue', description: '#31074' });
+
         await selectModalPage.setup(config, options, false);
+
+        const results = await new AxeBuilder({ page }).include('ion-select-modal').analyze();
+        expect(results.violations).toEqual([]);
 
         const radioGroup = selectModalPage.selectModal.locator('ion-radio-group');
         await expect(radioGroup).toHaveAttribute('role', 'radiogroup');
@@ -120,8 +126,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         selectModalPage = new SelectModalPage(page);
       });
 
-      test('should render checkboxes inside an ion-list', async () => {
+      test('should render checkboxes inside an ion-list', async ({ page }, testInfo) => {
+        testInfo.annotations.push({ type: 'issue', description: '#31074' });
+
         await selectModalPage.setup(config, options, true);
+
+        const results = await new AxeBuilder({ page }).include('ion-select-modal').analyze();
+        expect(results.violations).toEqual([]);
 
         const list = selectModalPage.selectModal.locator('ion-list');
         await expect(list).toBeVisible();
