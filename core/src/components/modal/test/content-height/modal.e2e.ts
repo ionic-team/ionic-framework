@@ -23,13 +23,9 @@ const REMOUNT_TIMEOUT = 100;
  */
 const DISABLE_ANIMATIONS = `<script>window.Ionic.config.animated = false;</script>`;
 
-const contentModal = (style: string, childHeight = CHILD_HEIGHT) => `
+const contentModal = (css = '', childHeight = CHILD_HEIGHT) => `
   ${DISABLE_ANIMATIONS}
-  <style>
-    ion-modal {
-      ${style}
-    }
-  </style>
+  ${css === '' ? '' : `<style>${css}</style>`}
   <ion-modal is-open="true">
     <ion-header>
       <ion-toolbar>
@@ -47,7 +43,8 @@ const contentModal = (style: string, childHeight = CHILD_HEIGHT) => `
  * nav has to arrive through the modal's `component` delegate. An `ion-nav`
  * slotted inline renders no pages at all.
  */
-const NAV_MODAL = `
+const navModal = (css = '') => `
+  ${css === '' ? '' : `<style>${css}</style>`}
   <ion-modal></ion-modal>
   <script>
     class NavPageOne extends HTMLElement {
@@ -161,7 +158,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
        * fill the screen.
        */
       const expectSizedToContent = async (page: E2EPage, height: string) => {
-        await page.setContent(contentModal(`--height: ${height};`), config);
+        await page.setContent(contentModal(`ion-modal { --height: ${height}; }`), config);
         await expect(page.locator('ion-modal')).toBeVisible();
 
         await expect(page.locator('ion-modal ion-content')).toHaveClass(/content-sizing/);
@@ -195,7 +192,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
     test.describe('definite heights', () => {
       test('should fill the screen with the default height', async ({ page }) => {
-        await page.setContent(contentModal(''), config);
+        await page.setContent(contentModal(), config);
         await expect(page.locator('ion-modal')).toBeVisible();
 
         const viewport = page.viewportSize()!;
@@ -206,7 +203,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
 
       test('should fill and scroll a pixel height', async ({ page }) => {
-        await page.setContent(contentModal('--height: 300px;', TALL_CHILD_HEIGHT), config);
+        await page.setContent(contentModal('ion-modal { --height: 300px; }', TALL_CHILD_HEIGHT), config);
         await expect(page.locator('ion-modal')).toBeVisible();
 
         // A definite height is not content-sized, so the ion-content
@@ -222,7 +219,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
 
       test('should clamp a pixel height taller than the overlay', async ({ page }) => {
-        await page.setContent(contentModal('--height: 2000px;'), config);
+        await page.setContent(contentModal('ion-modal { --height: 2000px; }'), config);
         await expect(page.locator('ion-modal')).toBeVisible();
 
         const viewport = page.viewportSize()!;
@@ -235,7 +232,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
     test.describe('overflowing content', () => {
       test('should scroll rather than overflow the screen', async ({ page }) => {
-        await page.setContent(contentModal('--height: fit-content;', TALL_CHILD_HEIGHT), config);
+        await page.setContent(contentModal('ion-modal { --height: fit-content; }', TALL_CHILD_HEIGHT), config);
         await expect(page.locator('ion-modal')).toBeVisible();
 
         const viewport = page.viewportSize()!;
@@ -250,7 +247,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
 
       test('should honor a smaller --max-height', async ({ page }) => {
-        await page.setContent(contentModal('--height: fit-content; --max-height: 50%;', TALL_CHILD_HEIGHT), config);
+        await page.setContent(
+          contentModal('ion-modal { --height: fit-content; --max-height: 50%; }', TALL_CHILD_HEIGHT),
+          config
+        );
         await expect(page.locator('ion-modal')).toBeVisible();
 
         const viewport = page.viewportSize()!;
@@ -290,7 +290,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
 
       test('should size a modal around an ion-nav and follow it between pages', async ({ page }) => {
-        await page.setContent(`<style>ion-modal { --height: fit-content; }</style>${NAV_MODAL}`, config);
+        await page.setContent(navModal('ion-modal { --height: fit-content; }'), config);
         await presentNavModal(page);
 
         // Without the nav being positioned relatively it has no intrinsic
@@ -311,7 +311,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
          * tree at once during the transition, which is what makes it possible
          * to catch them laid out one below the other.
          */
-        await page.setContent(`<style>ion-modal { --height: fit-content; }</style>${NAV_MODAL}`, config);
+        await page.setContent(navModal('ion-modal { --height: fit-content; }'), config);
         await presentNavModal(page);
 
         const tops = await page.locator('ion-modal ion-nav').evaluate(async (nav: HTMLIonNavElement) => {
@@ -345,7 +345,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
        * resting against the modal.
        */
       test('should settle a nav transition with the new page in place', async ({ page }) => {
-        await page.setContent(`<style>ion-modal { --height: fit-content; }</style>${NAV_MODAL}`, config);
+        await page.setContent(navModal('ion-modal { --height: fit-content; }'), config);
         await presentNavModal(page);
 
         // Awaiting the push resolves once the transition is done.
@@ -383,7 +383,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
 
       test('should respect a --height set on the modal at runtime', async ({ page }) => {
-        await page.setContent(contentModal(''), config);
+        await page.setContent(contentModal(), config);
         await expect(page.locator('ion-modal')).toBeVisible();
 
         const viewport = page.viewportSize()!;
@@ -408,7 +408,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
 
       test('should respect a --height that changed while the content was detached', async ({ page }) => {
-        await page.setContent(contentModal(''), config);
+        await page.setContent(contentModal(), config);
         await expect(page.locator('ion-modal')).toBeVisible();
 
         const viewport = page.viewportSize()!;
@@ -428,17 +428,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
 
       test('should respect a dynamically added body class that sets --height', async ({ page }) => {
-        await page.setContent(
-          `
-          <style>
-            body.custom-class ion-modal {
-              --height: fit-content;
-            }
-          </style>
-          ${contentModal('')}
-        `,
-          config
-        );
+        await page.setContent(contentModal('body.custom-class ion-modal { --height: fit-content; }'), config);
         await expect(page.locator('ion-modal')).toBeVisible();
 
         const viewport = page.viewportSize()!;
@@ -457,21 +447,21 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
   test.describe(title('modal: content height rendering'), () => {
     test('should render a modal sized to its content', async ({ page }) => {
-      await page.setContent(contentModal('--height: fit-content;'), config);
+      await page.setContent(contentModal('ion-modal { --height: fit-content; }'), config);
       await expect(page.locator('ion-modal')).toBeVisible();
 
       await expect(page).toHaveScreenshot(screenshot('modal-content-height-basic'));
     });
 
     test('should render a content-sized modal whose content overflows', async ({ page }) => {
-      await page.setContent(contentModal('--height: fit-content;', TALL_CHILD_HEIGHT), config);
+      await page.setContent(contentModal('ion-modal { --height: fit-content; }', TALL_CHILD_HEIGHT), config);
       await expect(page.locator('ion-modal')).toBeVisible();
 
       await expect(page).toHaveScreenshot(screenshot('modal-content-height-overflow'));
     });
 
     test('should render a content-sized modal with an ion-nav', async ({ page }) => {
-      await page.setContent(`<style>ion-modal { --height: fit-content; }</style>${NAV_MODAL}`, config);
+      await page.setContent(navModal('ion-modal { --height: fit-content; }'), config);
       await presentNavModal(page);
 
       await expect(page).toHaveScreenshot(screenshot('modal-content-height-nav'));
