@@ -238,6 +238,10 @@ test('example test', async ({ page }) => {
 
 If you are running a test that takes a screenshot, you must first generate the reference screenshot from your reference branch. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth.
 
+Playwright appends the browser and platform to every screenshot name, so the same test resolves a different file per operating system. Example: `button-expand-md-ltr-Mobile-Chrome-linux.png`. The ground truths committed to the repository are the `-linux.png` files generated in Docker, and `.gitignore` excludes every other platform's.
+
+This is why screenshot tests should be run with `npm run test.e2e.docker`. Running them natively on macOS or Windows looks for a `-darwin.png` or `-win32.png` ground truth that is not in the repository. Playwright writes that file, fails the test once, and passes on every run afterward against a baseline that git ignores and CI never sees. The result is a test that passes locally and fails on CI.
+
 ### Generating or Updating Ground Truths With Docker (Local Development)
 
 We recommend generating ground truths inside of [Docker](https://www.docker.com) using [Rancher Desktop](#installing-rancher-desktop). This allows anyone contributing to Ionic Framework to create or update ground truths in a consistent environment.
