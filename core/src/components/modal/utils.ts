@@ -1,4 +1,5 @@
 import { win } from '@utils/browser';
+import { onCustomPropertyChange } from '@utils/helpers';
 import { StatusBar, Style } from '@utils/native/status-bar';
 
 /**
@@ -83,4 +84,11 @@ export const setCardStatusBarDefault = (defaultStyle = Style.Default) => {
   }
 
   StatusBar.setStyle({ style: defaultStyle });
+};
+
+/**
+ * Calls back when the modal's resolved `--height` changes.
+ */
+export const onModalHeightChange = (hostEl: HTMLElement, callback: () => void): (() => void) => {
+  return onCustomPropertyChange(hostEl, '--height', () => callback());
 };
