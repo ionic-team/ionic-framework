@@ -236,13 +236,17 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         await expect(page.locator('ion-modal')).toBeVisible();
 
         const viewport = page.viewportSize()!;
+        const headerHeight = (await page.locator('ion-modal ion-header').boundingBox())!.height;
 
         // The default --max-height keeps a content-sized modal inside the
-        // overlay. Rounded up by one, since the clamp lands on a sub-pixel.
-        expect(await getWrapperHeight(page)).toBeLessThanOrEqual(viewport.height + 1);
+        // overlay, so overflowing content leaves it exactly as tall as the
+        // viewport rather than any height up to it.
+        await expect.poll(() => getWrapperHeight(page)).toBe(viewport.height);
 
-        // The content shrinks to reach that cap, leaving the child scrollable.
+        // The content takes what the header leaves and scrolls the child
+        // inside it, where a collapsed content would measure zero.
         const { scrollHeight, clientHeight } = await getScrollMetrics(page);
+        expect(clientHeight).toBe(viewport.height - headerHeight);
         expect(scrollHeight).toBeGreaterThan(clientHeight);
       });
 
@@ -254,13 +258,17 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         await expect(page.locator('ion-modal')).toBeVisible();
 
         const viewport = page.viewportSize()!;
+        const headerHeight = (await page.locator('ion-modal ion-header').boundingBox())!.height;
 
-        // Setting --max-height to 50% should shrink the modal to half the
-        // viewport, rounded up by one.
-        expect(await getWrapperHeight(page)).toBeLessThanOrEqual(viewport.height * 0.5 + 1);
+        // Setting --max-height to 50% shrinks the modal to half the viewport.
+        // Half of an odd viewport lands on a sub-pixel, which the wrapper
+        // keeps and `clientHeight` rounds.
+        expect(await getWrapperHeight(page)).toBeCloseTo(viewport.height * 0.5, 0);
 
-        // The content shrinks to reach that cap, leaving the child scrollable.
+        // The content takes what the header leaves and scrolls the child
+        // inside it, where a collapsed content would measure zero.
         const { scrollHeight, clientHeight } = await getScrollMetrics(page);
+        expect(clientHeight).toBe(Math.round(viewport.height * 0.5 - headerHeight));
         expect(scrollHeight).toBeGreaterThan(clientHeight);
       });
     });
