@@ -477,8 +477,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
       });
 
-      // TODO(FW-7682): unskip once the selected text is no longer clipped away by .native-wrapper
-      test.skip(`should not have visual regressions with a start-positioned label, a value and a wide ${slotName} slot`, async ({
+      test(`should not have visual regressions with a start-positioned label, a value and a wide ${slotName} slot`, async ({
         page,
       }) => {
         await setContent(page, 'label-placement="start" value="100"', slot);
