@@ -26,6 +26,49 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       await page.goto('/src/components/modal/test/safe-area', config);
     });
 
+    /**
+     * The safe-area prediction is applied before the modal is shown, so
+     * reading it when the modal starts presenting captures the prediction
+     * before the position-based correction runs.
+     */
+    const getPredictedSafeArea = async (page: E2EPage, trigger: string) => {
+      await page.evaluate(() => {
+        document.addEventListener(
+          'ionModalWillPresent',
+          (ev) => {
+            const modal = ev.target as HTMLElement;
+            (window as any).predictedSafeArea = {
+              top: modal.style.getPropertyValue('--ion-safe-area-top'),
+              bottom: modal.style.getPropertyValue('--ion-safe-area-bottom'),
+              left: modal.style.getPropertyValue('--ion-safe-area-left'),
+              right: modal.style.getPropertyValue('--ion-safe-area-right'),
+            };
+          },
+          { once: true }
+        );
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      await page.click(trigger);
+      await ionModalDidPresent.next();
+
+      return page.evaluate(() => (window as any).predictedSafeArea);
+    };
+
+    /**
+     * The safe-area values after the modal has finished presenting.
+     * These reflect the modal's actual position and are the values that
+     * the initial prediction should converge to.
+     */
+    const getSettledSafeArea = (page: E2EPage) => {
+      return page.locator('ion-modal').evaluate((el: HTMLElement) => ({
+        top: el.style.getPropertyValue('--ion-safe-area-top'),
+        bottom: el.style.getPropertyValue('--ion-safe-area-bottom'),
+        left: el.style.getPropertyValue('--ion-safe-area-left'),
+        right: el.style.getPropertyValue('--ion-safe-area-right'),
+      }));
+    };
+
     test('fullscreen modal should inherit all safe-area values on phone', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
@@ -51,7 +94,20 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(safeAreaBottom).toBe('inherit');
     });
 
-    test('regular modal should have safe-area zeroed on tablet (centered dialog)', async ({ page }, testInfo) => {
+    test('regular modal should predict zeroed safe-area on tablet (centered dialog)', async ({ page }) => {
+      // The viewport gives it centered dialog dimensions, so it stays clear
+      // of every edge.
+      await page.setViewportSize(Viewports.tablet.portrait);
+
+      expect(await getPredictedSafeArea(page, '#fullscreen-modal')).toEqual({
+        top: '0px',
+        bottom: '0px',
+        left: '0px',
+        right: '0px',
+      });
+    });
+
+    test('regular modal should have zeroed safe-area on tablet (centered dialog)', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
@@ -447,51 +503,90 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
     });
 
     test.describe('content sized dialogs', () => {
-      /**
-       * The safe-area prediction is applied before the modal is shown, so
-       * reading it when the modal starts presenting captures the prediction
-       * itself rather than the position based correction that follows.
-       */
-      const getPredictedSafeArea = async (page: E2EPage, trigger: string) => {
-        await page.evaluate(() => {
-          document.addEventListener(
-            'ionModalWillPresent',
-            (ev) => {
-              const modal = ev.target as HTMLElement;
-              (window as any).predictedSafeArea = {
-                top: modal.style.getPropertyValue('--ion-safe-area-top'),
-                bottom: modal.style.getPropertyValue('--ion-safe-area-bottom'),
-              };
-            },
-            { once: true }
-          );
-        });
-
-        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-        await page.click(trigger);
-        await ionModalDidPresent.next();
-
-        return page.evaluate(() => (window as any).predictedSafeArea);
-      };
-
       test('should predict a zeroed safe-area for a dialog that fits its content', async ({ page }) => {
         expect(await getPredictedSafeArea(page, '#content-sized-dialog')).toEqual({
           top: '0px',
           bottom: '0px',
+          left: '0px',
+          right: '0px',
         });
       });
 
       /**
-       * Overflowing content leaves the dialog clamped to the viewport and
-       * reaching the top edge, so the inset has to be there from the first
-       * frame. Predicting zero here leaves the header changing height once
-       * the modal has finished presenting.
+       * Overflowing content causes the dialog to be clamped to the viewport
+       * and reach the top and bottom edges, so the insets must be applied
+       * from the first frame. Predicting zero here would cause the header
+       * to change height once the modal has finished presenting.
        */
       test('should predict an inherited safe-area for a dialog whose content overflows', async ({ page }) => {
         expect(await getPredictedSafeArea(page, '#content-sized-dialog-tall')).toEqual({
           top: 'inherit',
           bottom: 'inherit',
+          left: '0px',
+          right: '0px',
         });
+      });
+
+      /**
+       * A full-width dialog reaches the horizontal edges while staying clear
+       * of the top and bottom, so the safe-area values differ by edge.
+       */
+      test('should predict per edge for a full width dialog that fits its content', async ({ page }) => {
+        expect(await getPredictedSafeArea(page, '#content-sized-dialog-full-width')).toEqual({
+          top: '0px',
+          bottom: '0px',
+          left: 'inherit',
+          right: 'inherit',
+        });
+      });
+
+      test('should predict an inherited safe-area for a full width dialog that overflows', async ({ page }) => {
+        expect(await getPredictedSafeArea(page, '#content-sized-dialog-full-width-tall')).toEqual({
+          top: 'inherit',
+          bottom: 'inherit',
+          left: 'inherit',
+          right: 'inherit',
+        });
+      });
+
+      /**
+       * A wide viewport gives regular modals the dimensions of a centered
+       * dialog, but a modal sized to its content can still be clamped to the
+       * viewport by `--max-height` and reach the edges.
+       */
+      test('should predict per axis on a wide viewport', async ({ page }) => {
+        await page.setViewportSize(Viewports.tablet.portrait);
+
+        expect(await getPredictedSafeArea(page, '#content-sized-dialog-tall')).toEqual({
+          top: 'inherit',
+          bottom: 'inherit',
+          left: '0px',
+          right: '0px',
+        });
+      });
+
+      test('should predict an inherited safe-area for a full width overflowing dialog on a wide viewport', async ({
+        page,
+      }) => {
+        await page.setViewportSize(Viewports.tablet.portrait);
+
+        expect(await getPredictedSafeArea(page, '#content-sized-dialog-full-width-tall')).toEqual({
+          top: 'inherit',
+          bottom: 'inherit',
+          left: 'inherit',
+          right: 'inherit',
+        });
+      });
+
+      /**
+       * A position-based pass replaces the prediction once the modal has
+       * presented. Any edge where the two disagree changes value at that
+       * point, which can cause the header to grow or shrink.
+       */
+      test('should predict what the modal settles on', async ({ page }) => {
+        const predicted = await getPredictedSafeArea(page, '#content-sized-dialog-full-width');
+
+        expect(predicted).toEqual(await getSettledSafeArea(page));
       });
     });
 

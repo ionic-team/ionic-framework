@@ -53,7 +53,7 @@ import {
   clearSafeAreaOverrides,
   getRootSafeAreaTop,
   onRootSafeAreaTopChange,
-  hasCustomModalDimensions,
+  getModalCoveredAxes,
   type ModalSafeAreaContext,
 } from './safe-area-utils';
 import { onModalHeightChange, setCardStatusBarDark, setCardStatusBarDefault } from './utils';
@@ -1488,7 +1488,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Creates the context object for safe-area utilities.
    *
-   * `hasCustomDimensions` is only set by `setInitialSafeAreaOverrides()`
+   * `coveredAxes` is only set by `setInitialSafeAreaOverrides()`
    * because it is only read by `getInitialSafeAreaConfig()`. Other callers
    * (resize handler, post-animation update, fullscreen-padding apply) would
    * pay a `getComputedStyle()` cost for a value they never consult.
@@ -1538,7 +1538,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private setInitialSafeAreaOverrides(): void {
     const context: ModalSafeAreaContext = {
       ...this.getSafeAreaContext(),
-      hasCustomDimensions: hasCustomModalDimensions(this.el),
+      coveredAxes: getModalCoveredAxes(this.el),
     };
     const safeAreaConfig = getInitialSafeAreaConfig(context);
     applySafeAreaOverrides(this.el, safeAreaConfig);

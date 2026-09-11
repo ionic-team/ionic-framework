@@ -78,6 +78,12 @@
           <button id="content-sized-dialog-tall" onclick="presentContentSizedDialog(2000)">
             Present Content Sized Dialog (overflowing)
           </button>
+          <button id="content-sized-dialog-full-width" onclick="presentContentSizedDialog(200, '100%')">
+            Present Content Sized Dialog (short, full width)
+          </button>
+          <button id="content-sized-dialog-full-width-tall" onclick="presentContentSizedDialog(2000, '100%')">
+            Present Content Sized Dialog (overflowing, full width)
+          </button>
 
           <h2>Diagnostic Info</h2>
           <div id="diagnostic">
@@ -242,7 +248,7 @@
        * overflowing content causes `--max-height` to clamp it to the
        * viewport, where it reaches the top and bottom edges.
        */
-      async function presentContentSizedDialog(childHeight) {
+      async function presentContentSizedDialog(childHeight, width = '300px') {
         const element = document.createElement('div');
         element.innerHTML = `
           <ion-header>
@@ -268,7 +274,7 @@
         const style = document.createElement('style');
         style.textContent = `
           .content-sized-dialog {
-            --width: 300px;
+            --width: ${width};
             --height: fit-content;
           }
         `;

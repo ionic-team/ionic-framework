@@ -16,6 +16,17 @@ export interface SafeAreaConfig {
 }
 
 /**
+ * Indicates whether the modal spans the viewport on each axis.
+ *
+ * `vertical` means the modal reaches both the top and bottom edges.
+ * `horizontal` means the modal reaches both the left and right edges.
+ */
+export interface ModalCoveredAxes {
+  vertical: boolean;
+  horizontal: boolean;
+}
+
+/**
  * Context information about the modal used to determine safe-area behavior.
  */
 export interface ModalSafeAreaContext {
@@ -24,24 +35,15 @@ export interface ModalSafeAreaContext {
   presentingElement?: HTMLElement;
   breakpoints?: number[];
   currentBreakpoint?: number;
+
   /**
-   * Only consulted by `getInitialSafeAreaConfig()`. Callers that only use the
-   * context for non-initial paths can omit this. See `hasCustomModalDimensions()`.
+   * Only used by `getInitialSafeAreaConfig()` to predict safe-area
+   * requirements before the modal is presented. Callers that only use
+   * the context for non-initial paths can omit this.
    */
-  hasCustomDimensions?: boolean;
+  coveredAxes?: ModalCoveredAxes;
 }
 
-/**
- * These thresholds match the SCSS media query breakpoints in modal.vars.scss
- * that trigger the centered dialog layout (non-fullscreen modal).
- *
- * SCSS defines two height breakpoints: $modal-inset-min-height-small (600px)
- * and $modal-inset-min-height-large (768px). We use the smaller one because
- * that's the threshold where the modal transitions from fullscreen to centered
- * dialog — the larger breakpoint only increases the dialog's height.
- */
-const MODAL_INSET_MIN_WIDTH = 768;
-const MODAL_INSET_MIN_HEIGHT = 600;
 const EDGE_THRESHOLD = 5;
 
 /**
@@ -49,17 +51,6 @@ const EDGE_THRESHOLD = 5;
  */
 let cachedRootSafeAreaTop: number | null = null;
 let cacheInvalidationScheduled = false;
-
-/**
- * Determines if the current viewport meets the CSS media query conditions
- * that cause regular modals to render as centered dialogs instead of fullscreen.
- * Matches: @media (min-width: 768px) and (min-height: 600px)
- */
-const isCenteredDialogViewport = (): boolean => {
-  if (!win) return false;
-  return win.matchMedia(`(min-width: ${MODAL_INSET_MIN_WIDTH}px) and (min-height: ${MODAL_INSET_MIN_HEIGHT}px)`)
-    .matches;
-};
 
 /**
  * Resolves the current root --ion-safe-area-top value to pixels.
@@ -108,52 +99,46 @@ export const onRootSafeAreaTopChange = (callback: (safeAreaTop: number) => void)
 };
 
 /**
- * True when the modal host declares BOTH a non-fullscreen `--width` AND a
- * non-fullscreen `--height` (i.e. a centered-dialog-like modal that doesn't
- * touch any screen edge).
+ * Determines which viewport axes the modal spans so safe-area requirements
+ * can be predicted independently for each axis.
  *
- * The conservative "both axes" check avoids mis-zeroing safe-area for
- * partial-custom modals where the modal still touches top/bottom edges
- * (e.g. only `--width` overridden). Partial cases fall through to the
- * existing position-based post-animation correction.
+ * A modal that spans an axis reaches both edges on that axis and needs the
+ * corresponding safe-area insets. A modal that does not span an axis reaches
+ * neither edge on that axis.
+ *
+ * When both `--width` and `--height` are `fullscreen`, coverage can be
+ * determined directly. Otherwise, coverage is based on the rendered wrapper,
+ * including cases where content sizing or `--max-height` causes the modal
+ * to reach the viewport.
  */
-export const hasCustomModalDimensions = (hostEl: HTMLElement): boolean => {
+export const getModalCoveredAxes = (hostEl: HTMLElement): ModalCoveredAxes => {
   const styles = getComputedStyle(hostEl);
   const width = getOverlaySizeType(styles.getPropertyValue('--width'));
   const height = getOverlaySizeType(styles.getPropertyValue('--height'));
 
-  if (width === 'fullscreen' || height === 'fullscreen') {
-    return false;
+  if (width === 'fullscreen' && height === 'fullscreen') {
+    return { vertical: true, horizontal: true };
   }
 
-  /**
-   * A content-sized `--height` resolves against the content. Tall content
-   * is clamped by `--max-height`, causing the modal to span the viewport
-   * and reach the top edge, where it needs the inset. The used height is
-   * what distinguishes this case from a short dialog.
-   */
-  if (height === 'content') {
-    return !fillsViewportHeight(hostEl);
-  }
-
-  return true;
+  return measureCoveredAxes(hostEl);
 };
 
 /**
- * True when a content-sized modal wrapper is as tall as the viewport,
- * putting it against the top and bottom edges.
+ * Measures the modal wrapper to determine whether it spans the viewport
+ * on each axis.
  *
- * This is used only for content-sized `--height`, where the used height
- * determines whether the modal needs the viewport safe-area inset.
+ * The wrapper has no box while the modal is hidden, so `overlay-hidden`
+ * is temporarily removed to allow the wrapper to be measured. The class
+ * is restored in the same task before the browser can paint.
  *
- * The wrapper has no box while the modal is hidden, and this is read
- * before the modal is shown, so the class that hides it is removed for
- * measurement and restored in the same task. Nothing paints in between.
+ * Only the wrapper's size is measured. Its position is affected by the
+ * enter animation, which initially translates it by its own height, while
+ * the translation does not affect its measured size.
  */
-const fillsViewportHeight = (hostEl: HTMLElement): boolean => {
+const measureCoveredAxes = (hostEl: HTMLElement): ModalCoveredAxes => {
   const wrapperEl = hostEl.shadowRoot?.querySelector('.modal-wrapper');
   if (wrapperEl == null || win === undefined) {
-    return false;
+    return { vertical: false, horizontal: false };
   }
 
   const wasHidden = hostEl.classList.contains('overlay-hidden');
@@ -161,13 +146,16 @@ const fillsViewportHeight = (hostEl: HTMLElement): boolean => {
     hostEl.classList.remove('overlay-hidden');
   }
 
-  const { height } = wrapperEl.getBoundingClientRect();
+  const { width, height } = wrapperEl.getBoundingClientRect();
 
   if (wasHidden) {
     hostEl.classList.add('overlay-hidden');
   }
 
-  return height >= win.innerHeight - EDGE_THRESHOLD;
+  return {
+    vertical: height >= win.innerHeight - EDGE_THRESHOLD,
+    horizontal: width >= win.innerWidth - EDGE_THRESHOLD,
+  };
 };
 
 /**
@@ -205,27 +193,24 @@ export const getInitialSafeAreaConfig = (context: ModalSafeAreaContext): SafeAre
     };
   }
 
-  // On viewports that meet the centered dialog media query breakpoints,
-  // regular modals render as centered dialogs (not fullscreen), so they
-  // don't touch any screen edges and don't need safe-area insets. Also
-  // applies to phone viewports when the modal declares custom --width and
-  // --height; these don't touch screen edges either, so the initial
-  // prediction must be zero to avoid a post-animation correction flash.
-  if (isCenteredDialogViewport() || context.hasCustomDimensions) {
-    return {
-      top: '0px',
-      bottom: '0px',
-      left: '0px',
-      right: '0px',
-    };
-  }
+  /**
+   * Each axis is evaluated independently because a modal can span one axis
+   * without spanning the other. This allows the initial safe-area configuration
+   * to match the modal's expected dimensions and avoids correcting an incorrect
+   * pair of insets after presentation.
+   *
+   * A modal can span the horizontal axis while remaining inset vertically, or
+   * span the vertical axis while remaining inset horizontally. Wide viewports
+   * can also render regular modals as centered dialogs, while content-sized
+   * modals may still be clamped to the viewport.
+   */
+  const { vertical, horizontal } = context.coveredAxes ?? { vertical: true, horizontal: true };
 
-  // Fullscreen modals on phone - inherit all safe areas
   return {
-    top: 'inherit',
-    bottom: 'inherit',
-    left: 'inherit',
-    right: 'inherit',
+    top: vertical ? 'inherit' : '0px',
+    bottom: vertical ? 'inherit' : '0px',
+    left: horizontal ? 'inherit' : '0px',
+    right: horizontal ? 'inherit' : '0px',
   };
 };
 

@@ -1,12 +1,13 @@
-import { hasCustomModalDimensions } from './safe-area-utils';
+import { getModalCoveredAxes } from './safe-area-utils';
 
 /**
- * The helper resolves `--width` and `--height` through `getComputedStyle`, and
- * measures the wrapper when the height sizes to the content. A spec
- * environment reports no custom properties and a zero rect, so each test
- * states the sizes and the wrapper height it wants.
+ * Tests `getModalCoveredAxes()` across fullscreen, fixed-size, and
+ * content-sized modals. The helper uses computed CSS sizes when both
+ * dimensions are fullscreen and measures the rendered wrapper otherwise,
+ * so the tests mock both sources of size information as needed.
  */
-describe('modal: hasCustomModalDimensions', () => {
+describe('modal: getModalCoveredAxes', () => {
+  const VIEWPORT_WIDTH = window.innerWidth;
   const VIEWPORT_HEIGHT = window.innerHeight;
 
   let host: HTMLElement;
@@ -19,10 +20,10 @@ describe('modal: hasCustomModalDimensions', () => {
     sizes = { '--width': width, '--height': height };
   };
 
-  const setWrapperHeight = (height: number) => {
+  const setWrapperBox = (width: number, height: number) => {
     wrapper.getBoundingClientRect = () => {
       hiddenDuringMeasurement = host.classList.contains('overlay-hidden');
-      return { height } as DOMRect;
+      return { width, height } as DOMRect;
     };
   };
 
@@ -36,11 +37,11 @@ describe('modal: hasCustomModalDimensions', () => {
     host.attachShadow({ mode: 'open' }).appendChild(wrapper);
 
     hiddenDuringMeasurement = true;
-    setWrapperHeight(0);
+    setWrapperBox(0, 0);
 
     /**
-     * The mock window exposes `getComputedStyle` as a getter, so it has to be
-     * replaced on `globalThis` rather than assigned.
+     * Replace the mocked `getComputedStyle` getter so tests can control
+     * the modal's `--width` and `--height` values.
      */
     sizes = {};
     originalGetComputedStyle = Object.getOwnPropertyDescriptor(globalThis, 'getComputedStyle');
@@ -58,64 +59,72 @@ describe('modal: hasCustomModalDimensions', () => {
     host.remove();
   });
 
-  it('should be false when the width spans the viewport', () => {
-    setSize('100%', '300px');
+  it('should cover both axes when the sizes span the viewport', () => {
+    setSize('100%', '100%');
 
-    expect(hasCustomModalDimensions(host)).toBe(false);
+    expect(getModalCoveredAxes(host)).toEqual({ vertical: true, horizontal: true });
   });
 
-  it('should be false when the height spans the viewport', () => {
-    setSize('300px', '100%');
-
-    expect(hasCustomModalDimensions(host)).toBe(false);
-  });
-
-  it('should be true when both axes are a definite size', () => {
+  it('should cover neither axis for a dialog that stays clear of the viewport edges', () => {
     setSize('300px', '200px');
+    setWrapperBox(300, 200);
 
-    expect(hasCustomModalDimensions(host)).toBe(true);
+    expect(getModalCoveredAxes(host)).toEqual({ vertical: false, horizontal: false });
   });
 
-  it('should be true when a content sized modal stays clear of the edges', () => {
-    setSize('300px', 'fit-content');
-    setWrapperHeight(244);
+  it('should cover only the horizontal axis for a full-width dialog that fits its content', () => {
+    setSize('100%', 'fit-content');
+    setWrapperBox(VIEWPORT_WIDTH, 244);
 
-    expect(hasCustomModalDimensions(host)).toBe(true);
+    expect(getModalCoveredAxes(host)).toEqual({ vertical: false, horizontal: true });
   });
 
-  // Overflowing content leaves `--max-height` clamping the modal to the
-  // viewport, where it reaches the top and bottom edges.
-  it('should be false when a content sized modal fills the viewport', () => {
+  it('should cover only the vertical axis for a narrow modal that fills the viewport', () => {
     setSize('300px', 'fit-content');
-    setWrapperHeight(VIEWPORT_HEIGHT);
+    setWrapperBox(300, VIEWPORT_HEIGHT);
 
-    expect(hasCustomModalDimensions(host)).toBe(false);
+    expect(getModalCoveredAxes(host)).toEqual({ vertical: true, horizontal: false });
+  });
+
+  it('should cover an axis whose definite size reaches the viewport', () => {
+    setSize('300px', `${VIEWPORT_HEIGHT}px`);
+    setWrapperBox(300, VIEWPORT_HEIGHT);
+
+    expect(getModalCoveredAxes(host)).toEqual({ vertical: true, horizontal: false });
   });
 
   it('should allow a few pixels of tolerance when comparing to the viewport', () => {
     setSize('300px', 'fit-content');
-    setWrapperHeight(VIEWPORT_HEIGHT - 4);
+    setWrapperBox(300, VIEWPORT_HEIGHT - 4);
 
-    expect(hasCustomModalDimensions(host)).toBe(false);
+    expect(getModalCoveredAxes(host)).toEqual({ vertical: true, horizontal: false });
   });
 
-  it('should measure the wrapper while it is visible and hide it again', () => {
+  it('should temporarily show a hidden modal while measuring and hide it again', () => {
     setSize('300px', 'fit-content');
-    setWrapperHeight(VIEWPORT_HEIGHT);
+    setWrapperBox(300, VIEWPORT_HEIGHT);
 
-    hasCustomModalDimensions(host);
+    getModalCoveredAxes(host);
 
     expect(hiddenDuringMeasurement).toBe(false);
     expect(host.classList.contains('overlay-hidden')).toBe(true);
   });
 
-  it('should leave a visible modal visible', () => {
+  it('should not change visibility when measuring an already visible modal', () => {
     host.classList.remove('overlay-hidden');
     setSize('300px', 'fit-content');
-    setWrapperHeight(244);
+    setWrapperBox(300, 244);
 
-    hasCustomModalDimensions(host);
+    getModalCoveredAxes(host);
 
     expect(host.classList.contains('overlay-hidden')).toBe(false);
+  });
+
+  it('should not measure when both sizes span the viewport', () => {
+    setSize('100%', '100vh');
+    setWrapperBox(0, 0);
+
+    expect(getModalCoveredAxes(host)).toEqual({ vertical: true, horizontal: true });
+    expect(hiddenDuringMeasurement).toBe(true);
   });
 });
