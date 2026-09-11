@@ -3,6 +3,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -18,7 +19,7 @@ import { defineCustomElement as defineIonAlert } from '@ionic/core/components/io
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'inputs', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'subHeader', 'translucent', 'trigger'],
+  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, { name: 'backdropDismiss', transform: nullableBooleanAttribute }, 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'inputs', { name: 'isOpen', transform: nullableBooleanAttribute }, { name: 'keyboardClose', transform: nullableBooleanAttribute }, 'leaveAnimation', 'message', 'mode', 'subHeader', { name: 'translucent', transform: nullableBooleanAttribute }, 'trigger'],
   outputs: ['ionAlertDidPresent', 'ionAlertWillPresent', 'ionAlertWillDismiss', 'ionAlertDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss'],
 })
 export class IonAlert {

@@ -3,6 +3,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -17,7 +18,7 @@ import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/compo
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['contentId', 'disabled', 'layout', 'mode', 'type', 'value'],
+  inputs: ['contentId', { name: 'disabled', transform: nullableBooleanAttribute }, 'layout', 'mode', 'type', 'value'],
 })
 export class IonSegmentButton {
   protected el: HTMLIonSegmentButtonElement;

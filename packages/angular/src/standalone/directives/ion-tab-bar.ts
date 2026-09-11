@@ -3,6 +3,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -17,7 +18,7 @@ import { defineCustomElement as defineIonTabBar } from '@ionic/core/components/i
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'selectedTab', 'translucent'],
+  inputs: ['color', 'mode', 'selectedTab', { name: 'translucent', transform: nullableBooleanAttribute }],
 })
 export class IonTabBar {
   protected el: HTMLIonTabBarElement;

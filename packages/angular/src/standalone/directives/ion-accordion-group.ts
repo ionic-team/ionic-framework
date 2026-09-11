@@ -3,6 +3,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -17,7 +18,7 @@ import { defineCustomElement as defineIonAccordionGroup } from '@ionic/core/comp
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value'],
+  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, { name: 'disabled', transform: nullableBooleanAttribute }, 'expand', 'mode', { name: 'multiple', transform: nullableBooleanAttribute }, { name: 'readonly', transform: nullableBooleanAttribute }, 'value'],
   outputs: ['ionChange'],
 })
 export class IonAccordionGroup {

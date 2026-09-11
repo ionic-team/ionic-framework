@@ -3,6 +3,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -17,7 +18,7 @@ import { defineCustomElement as defineIonMenuButton } from '@ionic/core/componen
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'type'],
+  inputs: [{ name: 'autoHide', transform: nullableBooleanAttribute }, 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'menu', 'mode', 'type'],
 })
 export class IonMenuButton {
   protected el: HTMLIonMenuButtonElement;
