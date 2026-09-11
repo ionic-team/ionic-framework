@@ -4,6 +4,7 @@ import { getElementRoot } from '@utils/helpers';
 import type { Animation } from '../../../interface';
 import {
   calculateWindowAdjustment,
+  getDocumentZoom,
   getArrowDimensions,
   getPopoverDimensions,
   getPopoverPosition,
@@ -31,6 +32,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
   const { event: ev, size, trigger, reference, side, align } = opts;
   const doc = baseEl.ownerDocument as any;
   const isRTL = doc.dir === 'rtl';
+  const zoom = getDocumentZoom(doc as Document);
   const bodyWidth = doc.defaultView.innerWidth;
   const bodyHeight = doc.defaultView.innerHeight;
 
@@ -39,8 +41,8 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
   const arrowEl = root.querySelector('.popover-arrow') as HTMLElement | null;
 
   const referenceSizeEl = trigger || ev?.detail?.ionShadowTarget || ev?.target;
-  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, referenceSizeEl);
-  const { arrowWidth, arrowHeight } = getArrowDimensions(arrowEl);
+  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, referenceSizeEl, zoom);
+  const { arrowWidth, arrowHeight } = getArrowDimensions(arrowEl, zoom);
 
   const defaultPosition = {
     top: bodyHeight / 2 - contentHeight / 2,
@@ -60,19 +62,26 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     align,
     defaultPosition,
     trigger,
-    ev
+    ev,
+    zoom
   );
 
   const padding = size === 'cover' ? 0 : POPOVER_IOS_BODY_PADDING;
   const rawSafeArea = getSafeAreaInsets(doc as Document);
+  const normalizedSafeArea = {
+    top: rawSafeArea.top / zoom,
+    bottom: rawSafeArea.bottom / zoom,
+    left: rawSafeArea.left / zoom,
+    right: rawSafeArea.right / zoom,
+  };
   const safeArea =
     size === 'cover'
       ? { top: 0, bottom: 0, left: 0, right: 0 }
       : {
-          top: Math.max(rawSafeArea.top, POPOVER_IOS_MIN_EDGE_MARGIN),
-          bottom: Math.max(rawSafeArea.bottom, POPOVER_IOS_MIN_EDGE_MARGIN),
-          left: Math.max(rawSafeArea.left, POPOVER_IOS_MIN_EDGE_MARGIN),
-          right: Math.max(rawSafeArea.right, POPOVER_IOS_MIN_EDGE_MARGIN),
+          top: Math.max(normalizedSafeArea.top, POPOVER_IOS_MIN_EDGE_MARGIN),
+          bottom: Math.max(normalizedSafeArea.bottom, POPOVER_IOS_MIN_EDGE_MARGIN),
+          left: Math.max(normalizedSafeArea.left, POPOVER_IOS_MIN_EDGE_MARGIN),
+          right: Math.max(normalizedSafeArea.right, POPOVER_IOS_MIN_EDGE_MARGIN),
         };
 
   const {

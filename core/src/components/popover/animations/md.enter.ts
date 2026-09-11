@@ -2,7 +2,13 @@ import { createAnimation } from '@utils/animation/animation';
 import { getElementRoot } from '@utils/helpers';
 
 import type { Animation } from '../../../interface';
-import { calculateWindowAdjustment, getPopoverDimensions, getPopoverPosition, getSafeAreaInsets } from '../utils';
+import {
+  calculateWindowAdjustment,
+  getDocumentZoom,
+  getPopoverDimensions,
+  getPopoverPosition,
+  getSafeAreaInsets,
+} from '../utils';
 
 const POPOVER_MD_BODY_PADDING = 12;
 
@@ -14,6 +20,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
   const { event: ev, size, trigger, reference, side, align } = opts;
   const doc = baseEl.ownerDocument as any;
   const isRTL = doc.dir === 'rtl';
+  const zoom = getDocumentZoom(doc as Document);
 
   const bodyWidth = doc.defaultView.innerWidth;
   const bodyHeight = doc.defaultView.innerHeight;
@@ -22,7 +29,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
   const contentEl = root.querySelector('.popover-content') as HTMLElement;
 
   const referenceSizeEl = trigger || ev?.detail?.ionShadowTarget || ev?.target;
-  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, referenceSizeEl);
+  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, referenceSizeEl, zoom);
 
   const defaultPosition = {
     top: bodyHeight / 2 - contentHeight / 2,
@@ -42,13 +49,23 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
     align,
     defaultPosition,
     trigger,
-    ev
+    ev,
+    zoom
   );
 
   const padding = size === 'cover' ? 0 : POPOVER_MD_BODY_PADDING;
   // MD mode now applies safe-area insets (previously passed 0, ignoring all safe areas).
   // This is needed for Android edge-to-edge (API 36+) where system bars overlap content.
-  const safeArea = size === 'cover' ? { top: 0, bottom: 0, left: 0, right: 0 } : getSafeAreaInsets(doc as Document);
+  const rawSafeArea = getSafeAreaInsets(doc as Document);
+  const safeArea =
+    size === 'cover'
+      ? { top: 0, bottom: 0, left: 0, right: 0 }
+      : {
+          top: rawSafeArea.top / zoom,
+          bottom: rawSafeArea.bottom / zoom,
+          left: rawSafeArea.left / zoom,
+          right: rawSafeArea.right / zoom,
+        };
 
   const {
     originX,
