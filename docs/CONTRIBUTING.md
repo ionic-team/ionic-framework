@@ -86,7 +86,7 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 To contribute on Windows, do the following:
 
-- Configure VS Code to read/save files using line breaks (LF) instead of carriage returns (CRLF). Set it globally by navigating to: Settings -> Text Editor -> Files -> Eol. Set to `\n`.
+- Configure VS Code to read/save files using line breaks (LF) instead of carriage returns (CRLF). Set it globally by navigating to: Settings → Text Editor → Files → Eol. Set to `\n`.
 
   - You can optionally use the following settings in your `.vscode/settings.json`:
     ```json
@@ -293,7 +293,7 @@ npm install file:/~/ionic-vue-router-7.0.1.tgz
 3. If a new test is needed, the easiest way is to copy the `basic/` directory from the component's `test/` directory, rename it, and edit the content in both the `index.html` and `*.e2e.ts` file (see [Screenshot Tests](#screenshot-tests) for more information on this file).
 4. The `preview/` directory is used in the documentation as a demo. Only update this test if there is a bug in the test or if the API has a change that hasn't been updated in the test.
 
-Refer to [Ionic's E2E testing guide](/core/src/utils/test/playwright/docs/README.md) for information regarding the tools you can use to test Ionic.
+Refer to [Ionic's E2E testing guide](/docs/core/testing/README.md) for information regarding the tools you can use to test Ionic.
 
 ##### Screenshot Tests
 
