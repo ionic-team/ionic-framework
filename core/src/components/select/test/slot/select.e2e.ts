@@ -486,8 +486,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         await expect(container).toHaveScreenshot(screenshot(`select-slot-overflow-label-start-value-${slotName}-slot`));
       });
 
-      // TODO(FW-7682): unskip once the selected text is no longer clipped away by .native-wrapper
-      test.skip(`should keep two characters of the value visible with a start-positioned label and a wide ${slotName} slot`, async ({
+      test(`should reserve two characters of width for the selected text with a start-positioned label and a wide ${slotName} slot`, async ({
         page,
       }) => {
         await setContent(page, 'label-placement="start" value="100"', slot);
