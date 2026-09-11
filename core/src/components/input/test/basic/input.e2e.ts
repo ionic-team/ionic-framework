@@ -395,25 +395,16 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     /**
      * Browsers skip the label forwarding when a click lands on interactive
-     * content, so activating a slotted control leaves the input alone. A radio
-     * outside a radio group cannot be checked, so only the input is asserted
-     * for it.
+     * content, so activating a slotted control leaves the input alone.
      */
-    [
-      { tag: 'ion-checkbox', checkable: true },
-      { tag: 'ion-radio', checkable: false },
-      { tag: 'ion-toggle', checkable: true },
-    ].forEach(({ tag, checkable }) => {
-      test(`should not focus the input when a slotted ${tag} is clicked`, async ({ page }) => {
+    ['ion-checkbox', 'ion-radio', 'ion-toggle'].forEach((tag) => {
+      test(`should activate a slotted ${tag} without focusing the input`, async ({ page }) => {
         const control = page.locator(tag);
 
         await control.click();
         await page.waitForChanges();
 
-        if (checkable) {
-          await expect(control).toHaveJSProperty('checked', true);
-        }
-
+        await expect(control).toHaveAttribute('aria-checked', 'true');
         await expect(page.locator('ion-input input.native-input')).not.toBeFocused();
       });
     });

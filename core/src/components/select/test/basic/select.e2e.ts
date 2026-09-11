@@ -1427,21 +1427,14 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
      * would otherwise raise, so it is the control that regressed while the
      * interactive check relied on a focusability selector.
      */
-    [
-      { tag: 'ion-checkbox', checkable: true },
-      { tag: 'ion-radio', checkable: false },
-      { tag: 'ion-toggle', checkable: true },
-    ].forEach(({ tag, checkable }) => {
-      test(`should not open the select when a slotted ${tag} is clicked`, async ({ page }) => {
+    ['ion-checkbox', 'ion-radio', 'ion-toggle'].forEach((tag) => {
+      test(`should activate a slotted ${tag} without opening the select`, async ({ page }) => {
         const control = page.locator(tag);
 
         await control.click();
         await page.waitForChanges();
 
-        if (checkable) {
-          await expect(control).toHaveJSProperty('checked', true);
-        }
-
+        await expect(control).toHaveAttribute('aria-checked', 'true');
         await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
       });
     });
