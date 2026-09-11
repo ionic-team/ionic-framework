@@ -58,6 +58,70 @@ const zoomedPage = (zoomStyles: string) => `
   </ion-popover>
 `;
 
+/**
+ * Markup where the zoom wraps only the trigger, leaving the popover outside the
+ * zoomed subtree. This is the split `popoverController.create()` produces by
+ * default, since the overlay is appended to `ion-app`.
+ */
+const triggerOnlyZoomPage = `
+  <style>
+    .panel {
+      zoom: 1.5;
+    }
+
+    #trigger {
+      display: block;
+
+      width: 80px;
+
+      margin: 20px;
+      padding: 8px;
+    }
+
+    ion-popover {
+      --width: 100px;
+    }
+  </style>
+
+  <div class="panel">
+    <button id="trigger">Trigger</button>
+  </div>
+  <ion-popover trigger="trigger">
+    <ion-content class="ion-padding">Content</ion-content>
+  </ion-popover>
+`;
+
+/**
+ * Builds a page with the popover on a given side, under a zoom. The trigger sits
+ * in the middle so the popover fits on every side without the offscreen
+ * adjustment moving it, which would mask an arrow positioning error.
+ */
+const zoomedSidePage = (side: string) => `
+  <style>
+    html {
+      zoom: 1.25;
+    }
+
+    #trigger {
+      display: block;
+
+      width: 60px;
+
+      margin: 200px auto 0;
+      padding: 8px;
+    }
+
+    ion-popover {
+      --width: 80px;
+    }
+  </style>
+
+  <button id="trigger">Trigger</button>
+  <ion-popover trigger="trigger" side="${side}">
+    <ion-content class="ion-padding">Content</ion-content>
+  </ion-popover>
+`;
+
 const expectAnchoredToTrigger = async (page: E2EPage) => {
   const triggerBox = (await page.locator('#trigger').boundingBox())!;
   const contentBox = (await page.locator('ion-popover').locator('.popover-content').boundingBox())!;
@@ -135,6 +199,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await expectAnchoredToTrigger(page);
       });
 
+      test('should align the popover when the zoom wraps only the trigger', async ({ page }) => {
+        await page.setContent(triggerOnlyZoomPage, config);
+        await openPopover(page, 'trigger');
+
+        await expectAnchoredToTrigger(page);
+      });
+
       test('should align the popover when the page is zoomed out', async ({ page }) => {
         await page.setContent(zoomedPage('html { zoom: 0.8; }'), config);
         await openPopover(page, 'trigger');
@@ -160,7 +231,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         const contentBox = (await page.locator('ion-popover').locator('.popover-content').boundingBox())!;
 
         /**
-         * Playwright clicks the centre of the trigger, which is where the
+         * Playwright clicks the center of the trigger, which is where the
          * popover should be anchored.
          */
         expectAligned(contentBox.x, triggerBox.x + triggerBox.width / 2);
@@ -171,23 +242,49 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 /**
- * The arrow only exists in ios mode.
+ * The arrow only exists in ios mode. `calculateArrowPosition` branches per side
+ * and every branch now runs on zoom-normalized dimensions, so each side needs
+ * its own coverage.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('popover: zoom'), () => {
-    test('should centre the arrow on the trigger when a zoom is applied', async ({ page }) => {
+    test.beforeEach(() => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30919',
       });
-
-      await page.setContent(zoomedPage('html { zoom: 1.5; }'), config);
-      await openPopover(page, 'trigger');
-
-      const triggerBox = (await page.locator('#trigger').boundingBox())!;
-      const arrowBox = (await page.locator('ion-popover').locator('.popover-arrow').boundingBox())!;
-
-      expectAligned(arrowBox.x + arrowBox.width / 2, triggerBox.x + triggerBox.width / 2);
     });
+
+    /**
+     * On the vertical sides the arrow sits above or below the content and is
+     * centered horizontally on the trigger.
+     */
+    for (const side of ['top', 'bottom']) {
+      test(`should center the arrow on the trigger when side is ${side}`, async ({ page }) => {
+        await page.setContent(zoomedSidePage(side), config);
+        await openPopover(page, 'trigger');
+
+        const triggerBox = (await page.locator('#trigger').boundingBox())!;
+        const arrowBox = (await page.locator('ion-popover').locator('.popover-arrow').boundingBox())!;
+
+        expectAligned(arrowBox.x + arrowBox.width / 2, triggerBox.x + triggerBox.width / 2);
+      });
+    }
+
+    /**
+     * On the horizontal sides the arrow is rotated to point sideways and is
+     * centered vertically on the trigger instead.
+     */
+    for (const side of ['left', 'right']) {
+      test(`should center the arrow on the trigger when side is ${side}`, async ({ page }) => {
+        await page.setContent(zoomedSidePage(side), config);
+        await openPopover(page, 'trigger');
+
+        const triggerBox = (await page.locator('#trigger').boundingBox())!;
+        const arrowBox = (await page.locator('ion-popover').locator('.popover-arrow').boundingBox())!;
+
+        expectAligned(arrowBox.y + arrowBox.height / 2, triggerBox.y + triggerBox.height / 2);
+      });
+    }
   });
 });

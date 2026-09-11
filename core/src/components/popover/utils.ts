@@ -132,9 +132,9 @@ export const getElementCSSZoom = (el: HTMLElement | null): number => {
 
   /**
    * `currentCSSZoom` exposes the exact effective zoom of an element
-   * (Chromium 126+). When available we use it directly.
+   * (Chromium 128+). When available we use it directly.
    */
-  const currentCSSZoom = (el as unknown as { currentCSSZoom?: number }).currentCSSZoom;
+  const currentCSSZoom = el.currentCSSZoom;
   if (typeof currentCSSZoom === 'number' && currentCSSZoom > 0) {
     return currentCSSZoom;
   }
@@ -152,7 +152,8 @@ export const getElementCSSZoom = (el: HTMLElement | null): number => {
      * `offsetWidth` is rounded to an integer while the bounding rect is not,
      * so the ratio is rarely exactly 1 even when no zoom is applied. Treat
      * sub-pixel differences as "no zoom" so that unzoomed popovers are not
-     * shifted by the rounding error. A real zoom deviates far more than this.
+     * shifted by the rounding error. A real zoom deviates far more, though
+     * the same rounding leaves the detected factor approximate.
      */
     return Math.abs(ratio - 1) < ZOOM_ROUNDING_TOLERANCE ? 1 : ratio;
   }
