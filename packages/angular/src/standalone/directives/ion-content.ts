@@ -3,6 +3,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -18,7 +19,7 @@ import { defineCustomElement as defineIonContent } from '@ionic/core/components/
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'fixedSlotPlacement', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
+  inputs: ['color', 'fixedSlotPlacement', { name: 'forceOverscroll', transform: nullableBooleanAttribute }, { name: 'fullscreen', transform: nullableBooleanAttribute }, { name: 'scrollEvents', transform: nullableBooleanAttribute }, { name: 'scrollX', transform: nullableBooleanAttribute }, { name: 'scrollY', transform: nullableBooleanAttribute }],
   outputs: ['ionScrollStart', 'ionScroll', 'ionScrollEnd'],
 })
 export class IonContent {
