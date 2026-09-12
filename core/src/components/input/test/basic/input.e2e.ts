@@ -129,6 +129,27 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       const item = page.locator('ion-item');
       await expect(item).toHaveScreenshot(screenshot(`input-with-clear-button-item-color`));
     });
+
+    test('should retain opacity: 1 when the clear button receives keyboard focus', async ({ page, browserName }) => {
+      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+
+      await page.setContent(
+        `
+        <ion-input label="my label" value="abc" clear-input="true"></ion-input>
+      `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      const nativeInput = input.locator('input');
+      const clearButton = input.locator('.input-clear-icon');
+
+      await nativeInput.focus();
+      await page.keyboard.press(tabKey);
+
+      await expect(clearButton).toBeFocused();
+      await expect(clearButton).toHaveCSS('opacity', '1');
+    });
   });
 
   test.describe(title('input: click'), () => {
