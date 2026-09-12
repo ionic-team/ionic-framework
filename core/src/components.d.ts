@@ -2983,6 +2983,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "setButtonAriaPosition": (posInSet: number, setSize: number) => Promise<void>;
         "setFocus": () => Promise<void>;
         /**
           * The type of the button.
