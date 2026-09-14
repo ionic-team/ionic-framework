@@ -86,7 +86,7 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 To contribute on Windows, do the following:
 
-- Configure VS Code to read/save files using line breaks (LF) instead of carriage returns (CRLF). Set it globally by navigating to: Settings -> Text Editor -> Files -> Eol. Set to `\n`.
+- Configure VS Code to read/save files using line breaks (LF) instead of carriage returns (CRLF). Set it globally by navigating to: Settings → Text Editor → Files → Eol. Set to `\n`.
 
   - You can optionally use the following settings in your `.vscode/settings.json`:
     ```json
@@ -290,20 +290,28 @@ npm install file:/~/ionic-vue-router-7.0.1.tgz
 
 1. Locate the test to modify inside the `test/` folder in the component's directory.
 2. If a test exists, modify the test by adding an example to reproduce the problem fixed or feature added.
-3. If a new test is needed, the easiest way is to copy the `basic/` directory from the component's `test/` directory, rename it, and edit the content in both the `index.html` and `e2e.ts` file (see [Screenshot Tests](#screenshot-tests) for more information on this file).
+3. If a new test is needed, the easiest way is to copy the `basic/` directory from the component's `test/` directory, rename it, and edit the content in both the `index.html` and `*.e2e.ts` file (see [Screenshot Tests](#screenshot-tests) for more information on this file).
 4. The `preview/` directory is used in the documentation as a demo. Only update this test if there is a bug in the test or if the API has a change that hasn't been updated in the test.
 
-Refer to [Ionic's E2E testing guide](/core/src/utils/test/playwright/docs/README.md) for information regarding the tools you can use to test Ionic.
+Refer to [Ionic's E2E testing guide](/docs/core/testing/README.md) for information regarding the tools you can use to test Ionic.
 
 ##### Screenshot Tests
 
-1. If the test exists in screenshot, there will be a file named `e2e.ts` in the directory of the test.
-2. A screenshot test can be added by including this file and adding one or more `test()` calls that include a call to `page.compareScreenshot()`. See [Stencil end-to-end testing](https://stenciljs.com/docs/end-to-end-testing) and existing tests in `core/` for examples.
-3. **Important:** each `test()` should have only one screenshot (`page.compareScreenshot()`) call **or** it should check the expect at the end of each test. If there is a mismatch it will fail the test which will prevent the rest of the test from running, i.e. if the first screenshot fails the remaining screenshot calls would not be called _unless_ they are in a separate test or all of the expects are called at the end.
-4. To run screenshot locally, use the following command: `npm run test.screenshot`.
-    - To run screenshot for a specific test, pass the path to the test or a string to search for.
-    - For example, running all `alert` tests: `npm run test.screenshot alert`.
-    - Or, running the basic `alert` tests: `npm run test.screenshot src/components/alert/test/basic/e2e.ts`.
+Screenshot tests live in the same `*.e2e.ts` files as a component's other E2E tests and assert with `toHaveScreenshot()`. They compare against ground truth screenshots that are generated in Docker, so both generating and running them use the Docker commands from the `core` directory:
+
+```shell
+# Generate or update the ground truths for a component
+npm run test.e2e.docker.update-snapshots src/components/alert/
+
+# Run the tests against the committed ground truths
+npm run test.e2e.docker src/components/alert
+```
+
+To learn more:
+
+- [Managing Screenshots](/docs/core/testing/usage-instructions.md#managing-screenshots) covers why Docker is required, which screenshots are committed, and how Ionic team members update ground truths on CI.
+- [Best Practices](/docs/core/testing/best-practices.md) covers the conventions screenshot tests follow, including using one screenshot assertion per test.
+- [Playwright Test Utils](/docs/core/testing/api.md) documents `configs`, `screenshot`, and the other helpers.
 
 
 #### Building Changes
