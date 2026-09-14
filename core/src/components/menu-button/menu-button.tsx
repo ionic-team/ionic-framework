@@ -76,6 +76,11 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
     this.visible = await updateVisibility(this.menu);
   }
 
+  /**
+   * Get the icon to use for the menu icon.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
   get menuIcon() {
     // Determine the theme and map to the default icon
     const theme = getIonTheme(this);

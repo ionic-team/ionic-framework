@@ -133,11 +133,21 @@ export class Breadcrumb implements ComponentInterface {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
+  /**
+   * Get the icon to use for the collapsed icon.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
   get breadcrumbCollapsedIcon() {
     // Return the configured breadcrumb collapsed icon or the default icon
     return config.get('breadcrumbCollapsedIcon', ellipsisHorizontal);
   }
 
+  /**
+   * Get the icon to use for the separator icon.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
   get breadcrumbSeparatorIcon() {
     // Return the configured breadcrumb separator icon or the default icon
     return config.get('breadcrumbSeparatorIcon', chevronForwardOutline);

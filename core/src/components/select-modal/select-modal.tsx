@@ -95,6 +95,9 @@ export class SelectModal implements ComponentInterface {
     }
   }
 
+  /**
+   * Get the icon to use for the cancel icon.
+   */
   private get cancelButtonIcon(): string {
     const theme = getIonTheme(this);
     return theme === 'ios' ? closeOutline : closeSharp;

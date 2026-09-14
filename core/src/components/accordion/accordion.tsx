@@ -241,6 +241,12 @@ export class Accordion implements ComponentInterface {
     button.setAttribute('aria-expanded', `${expanded}`);
   };
 
+  /**
+   * Get the icon to use for the toggle icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
   get accordionToggleIcon() {
     // Return the icon if it is explicitly set
     if (this.toggleIcon != null) {

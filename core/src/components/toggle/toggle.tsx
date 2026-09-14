@@ -364,6 +364,9 @@ export class Toggle implements ComponentInterface {
     return checked ? this.toggleCheckedIcon : this.toggleUncheckedIcon;
   };
 
+  /**
+   * Get the default icon to use for the checked icon based on the theme.
+   */
   get toggleDefaultCheckedIcon(): string {
     // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
@@ -372,7 +375,7 @@ export class Toggle implements ComponentInterface {
 
   /**
    * Get the icon to use for the checked icon.
-   * Otherwise, use the icon set in the config.
+   * Use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
   get toggleCheckedIcon(): string {
@@ -381,7 +384,7 @@ export class Toggle implements ComponentInterface {
 
   /**
    * Get the icon to use for the unchecked icon.
-   * Otherwise, use the icon set in the config.
+   * Use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
   get toggleUncheckedIcon(): string {

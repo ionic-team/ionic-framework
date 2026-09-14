@@ -107,6 +107,12 @@ export class InputPasswordToggle implements ComponentInterface {
     inputElRef.type = inputElRef.type === 'text' ? 'password' : 'text';
   };
 
+  /**
+   * Get the icon to use for the hide icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
   get inputPasswordHideIcon() {
     // Return the icon if it is explicitly set
     if (this.hideIcon != null) {
@@ -117,6 +123,12 @@ export class InputPasswordToggle implements ComponentInterface {
     return config.get('inputPasswordHideIcon', eyeOff);
   }
 
+  /**
+   * Get the icon to use for the show icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
   get inputPasswordShowIcon() {
     // Return the icon if it is explicitly set
     if (this.showIcon != null) {

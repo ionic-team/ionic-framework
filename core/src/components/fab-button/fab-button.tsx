@@ -237,6 +237,12 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
+  /**
+   * Get the icon to use for the close icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
   get fabButtonCloseIcon() {
     // Return the icon if it is explicitly set
     if (this.closeIcon != null) {
