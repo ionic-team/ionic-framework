@@ -560,7 +560,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
     /**
      * With no label there is nothing to space the field away from, so the free
      * space belongs after it. This matches the flex layout these placements had
-     * before, where space-between with a single in-flow item behaved as start.
+     * before, where `space-between` with a single in-flow item behaved as start.
      */
     for (const justify of ['start', 'space-between'] as const) {
       test(`justify ${justify} should place the field at the start when there is no label`, async ({ page }) => {

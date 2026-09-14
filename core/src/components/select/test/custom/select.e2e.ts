@@ -247,7 +247,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
 
 /**
  * The ionic theme flattens the control with `display: contents`, so it has no
- * box to paint. Only the native themes can honour a background on this part.
+ * box to paint. Only the native themes can honor a background on this part.
  */
 configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('select: custom'), () => {

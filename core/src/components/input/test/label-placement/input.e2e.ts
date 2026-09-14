@@ -334,8 +334,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
         parseFloat(getComputedStyle(el, '::after').height),
       ]);
 
-      // The target area is taller than the field box, and overflows the row
-      // rather than growing it.
       expect(targetHeight).toBeGreaterThan(boxHeight);
     });
   });

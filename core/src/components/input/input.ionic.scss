@@ -214,6 +214,12 @@
 // Target area
 // --------------------------------------------------
 
+/**
+ * This stays at the default stacking level. The native input is positioned at
+ * `z-index: 1`, so a target area at that level or above paints over it and
+ * swallows the clicks meant for it. Tree order already puts this above the
+ * field box, which is all it needs to cover.
+ */
 .input-wrapper::after {
   grid-row: field;
   grid-column: field-start / field-end;
@@ -224,8 +230,6 @@
 
   // Cursor should match the native input when hovering over the target area.
   cursor: text;
-
-  z-index: 1;
 }
 
 /**

@@ -96,7 +96,7 @@
 /**
  * The label is nested in the control so that every theme renders the same
  * tree. Laying the wrapper out as a grid and flattening the control lets the
- * label sit outside the field box, which is drawn by ::before over the cells
+ * label sit outside the field box, which is drawn by `::before` over the cells
  * the label does not occupy.
  */
 .textarea-wrapper {
@@ -235,7 +235,7 @@
 
 /**
  * The native wrapper's own content sizes the field row, and it stretches to
- * fill it. The shared stylesheet sets height: 100%, which would resolve
+ * fill it. The shared stylesheet sets `height: 100%`, which would resolve
  * against the row this element is itself sizing, so reset it here.
  */
 .native-wrapper {

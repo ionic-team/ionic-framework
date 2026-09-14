@@ -125,7 +125,7 @@
 /**
  * The label is nested in the control so that every theme renders the same
  * tree. Laying the wrapper out as a grid and flattening the control lets the
- * label sit outside the field box, which is drawn by ::before over the cells
+ * label sit outside the field box, which is drawn by `::before` over the cells
  * the label does not occupy.
  */
 .select-wrapper {
@@ -196,11 +196,11 @@
 // ----------------------------------------------------------------
 
 /**
- * justify-content cannot serve here the way it does on a flex row, because grid
- * would distribute the free space between every track, including the ones
- * inside the field. So three empty tracks stand in for that space, and the
- * justify property below decides which of them takes it. The other two
- * collapse to 0fr.
+ * The `justify-content` property cannot serve here the way it does on a flex
+ * row, because grid would distribute the free space between every track,
+ * including the ones inside the field. So three empty tracks stand in for that
+ * space, and the justify property below decides which of them takes it. The
+ * other two collapse to `0fr`.
  */
 :host(.select-label-placement-start) .select-wrapper,
 :host(.select-label-placement-fixed) .select-wrapper {
@@ -251,10 +251,10 @@
  * would leave the others at whatever the no-label rule above set, since the
  * cascade resolves per declaration and the two rules have equal specificity.
  *
- * Exactly one track stays flexible in every combination, which is what keeps
- * the justify-content the shared stylesheet sets on the wrapper inert. Leave
- * all three at 0fr and it starts distributing space between the field's own
- * tracks.
+ * Exactly one track stays flexible in every combination. That leaves no free
+ * space for the `justify-content` the shared stylesheet sets on the wrapper, so
+ * it stays inert. Leave all three at `0fr` and it starts distributing space
+ * between the field's own tracks.
  */
 :host(.select-justify-start) .select-wrapper {
   --internal-justify-lead: 0fr;
@@ -269,7 +269,7 @@
 }
 
 /**
- * This only applies with a label, because space-between on a flex row with one
+ * This only applies with a label, because `space-between` on a flex row with one
  * in-flow item behaves as start, which is what the no-label rule already gives.
  */
 :host(.has-label.select-justify-space-between) .select-wrapper {
