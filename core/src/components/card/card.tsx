@@ -1,12 +1,8 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createAttributeController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import {
-  inheritAttributes,
-  watchForAriaAttributeChanges,
-  type AttributeWatcher,
-  type Attributes,
-} from '@utils/helpers';
 import { createColorClasses, openURL } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -27,9 +23,7 @@ import type { RouterDirection } from '../router/utils/interface';
   shadow: true,
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
-  private inheritedAriaAttributes: Attributes = {};
-  private didLoad = false;
-  private ariaWatcher?: AttributeWatcher;
+  private ariaController?: AttributeController;
 
   @Element() el!: HTMLElement;
   /**
@@ -94,38 +88,15 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() target: string | undefined;
 
   componentWillLoad() {
-    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
   }
 
   connectedCallback() {
-    // Only run the initial snapshot once. On subsequent reconnects the
-    // host has already been stripped, so inheritAriaAttributes would
-    // return {} and overwrite previously captured values.
-
-    if (this.didLoad) {
-      this.startAriaWatcher();
-    }
-  }
-
-  componentDidLoad() {
-    this.didLoad = true;
-    this.startAriaWatcher();
+    this.ariaController?.init();
   }
 
   disconnectedCallback() {
-    this.ariaWatcher?.destroy();
-    this.ariaWatcher = undefined;
-  }
-
-  private startAriaWatcher() {
-    this.ariaWatcher = watchForAriaAttributeChanges(
-      this.el,
-      (changed) => {
-        this.inheritedAriaAttributes = { ...this.inheritedAriaAttributes, ...changed };
-        forceUpdate(this);
-      },
-      ['aria-disabled']
-    );
+    this.ariaController?.destroy();
   }
 
   private isClickable(): boolean {
@@ -138,7 +109,8 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (!clickable) {
       return [<slot></slot>];
     }
-    const { href, routerAnimation, routerDirection, inheritedAriaAttributes } = this;
+    const { href, routerAnimation, routerDirection } = this;
+    const inheritedAriaAttributes = this.ariaController?.attributes ?? {};
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
     const attrs =
       TagType === 'button'

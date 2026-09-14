@@ -1,13 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, State, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createAriaAttributeController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import {
-  inheritAriaAttributes,
-  hasShadowDom,
-  watchForAriaAttributeChanges,
-  type AttributeWatcher,
-  type Attributes,
-} from '@utils/helpers';
+import { hasShadowDom } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 
@@ -39,9 +35,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inToolbar = false;
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
-  private inheritedAttributes: Attributes = {};
-  private didLoad = false;
-  private ariaWatcher?: AttributeWatcher;
+  private ariaController?: AttributeController;
 
   @Element() el!: HTMLElement;
 
@@ -206,38 +200,24 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inToolbar = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
-    this.inheritedAttributes = inheritAriaAttributes(this.el);
+
+    /**
+     * The ARIA state has to stay live, since `ion-input-password-toggle` rewrites
+     * `aria-label` and `aria-pressed` on its `ion-button` on every toggle. We keep
+     * `aria-disabled` out of the watch because the `<Host>` below renders it from the
+     * `disabled` prop and those writes would clobber a developer's value, and `role` out
+     * because a post-load write stays on the host too, which would put the same role on
+     * two elements in the accessibility tree.
+     */
+    this.ariaController = createAriaAttributeController(this.el, () => forceUpdate(this), ['aria-disabled', 'role']);
   }
 
   connectedCallback() {
-    // Only run the initial snapshot once. On subsequent reconnects the
-    // host has already been stripped, so inheritAriaAttributes would
-    // return {} and overwrite previously captured values.
-
-    if (this.didLoad) {
-      this.startAriaWatcher();
-    }
-  }
-
-  componentDidLoad() {
-    this.didLoad = true;
-    this.startAriaWatcher();
+    this.ariaController?.init();
   }
 
   disconnectedCallback() {
-    this.ariaWatcher?.destroy();
-    this.ariaWatcher = undefined;
-  }
-
-  private startAriaWatcher() {
-    this.ariaWatcher = watchForAriaAttributeChanges(
-      this.el,
-      (changed) => {
-        this.inheritedAttributes = { ...this.inheritedAttributes, ...changed };
-        forceUpdate(this);
-      },
-      ['aria-disabled']
-    );
+    this.ariaController?.destroy();
   }
 
   private get hasIconOnly() {
@@ -356,21 +336,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   render() {
     const mode = getIonMode(this);
-    const {
-      buttonType,
-      type,
-      disabled,
-      rel,
-      target,
-      size,
-      href,
-      color,
-      expand,
-      hasIconOnly,
-      shape,
-      strong,
-      inheritedAttributes,
-    } = this;
+    const { buttonType, type, disabled, rel, target, size, href, color, expand, hasIconOnly, shape, strong } = this;
+    const inheritedAttributes = this.ariaController?.attributes ?? {};
     const finalSize = size === undefined && this.inItem ? 'small' : size;
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =

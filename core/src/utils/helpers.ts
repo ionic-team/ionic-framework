@@ -98,8 +98,8 @@ export type Attributes = { [key: string]: any };
  * helper function should be called in componentWillLoad and assigned to a variable
  * that is later used in the render function.
  *
- * This does not need to be reactive as changing attributes on the host element
- * does not trigger a re-render.
+ * This copies once. Use `createAttributeController` instead when the attributes can
+ * change after load, since a host attribute change does not trigger a re-render.
  */
 export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) => {
   const attributeObject: Attributes = {};
@@ -121,8 +121,10 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
  * List of available ARIA attributes + `role`.
  * Removed deprecated attributes.
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
+ *
+ * @internal Exported for `attribute-controller.ts`, which needs the same set.
  */
-const ariaAttributes = [
+export const ariaAttributes = [
   'role',
   'aria-activedescendant',
   'aria-atomic',
@@ -189,75 +191,6 @@ export const inheritAriaAttributes = (el: HTMLElement, ignoreList?: string[]) =>
     attributesToInherit = attributesToInherit.filter((attr) => !ignoreList.includes(attr));
   }
   return inheritAttributes(el, attributesToInherit);
-};
-
-export interface AttributeWatcher {
-  destroy: () => void;
-}
-
-/**
- * Watches an element for changes to a given set of attributes and calls
- * onChange whenever one changes. Returns null when an attribute is removed.
- * Call destroy() from disconnectedCallback to stop watching.
- */
-export const watchAttributes = (
-  el: HTMLElement,
-  attributes: string[],
-  onChange: (changed: { [k: string]: string | null }) => void
-): AttributeWatcher => {
-  if (typeof MutationObserver === 'undefined') {
-    // Not available in Stencil's mock-doc test environment (used by
-    // `stencil test --spec`), and, as a defensive fallback, environments
-    // without native MutationObserver support.
-    return { destroy: () => {} };
-  }
-
-  const observer = new MutationObserver((mutations) => {
-    const changed: { [k: string]: string | null } = {};
-
-    for (const mutation of mutations) {
-      if (mutation.type !== 'attributes' || !mutation.attributeName) continue;
-      const name = mutation.attributeName;
-      if (!attributes.includes(name)) continue;
-
-      // getAttribute returns null when the attribute was removed —
-      // passed through to onChange so consumers can clear the value
-      // from the native element.
-      changed[name] = el.getAttribute(name);
-    }
-
-    if (Object.keys(changed).length > 0) {
-      onChange(changed);
-    }
-  });
-
-  observer.observe(el, {
-    attributes: true,
-    attributeFilter: attributes,
-    attributeOldValue: true,
-  });
-
-  return { destroy: () => observer.disconnect() };
-};
-
-/**
- * Watches an element for changes to ARIA attributes (and `role`) and invokes
- * a callback whenever one is set externally, so that inherited ARIA state
- * stays in sync for the lifetime of the component — not just at initial load.
- *
- * Call this in connectedCallback, alongside the initial inheritAriaAttributes
- * call, and call destroy() on the returned watcher in disconnectedCallback.
- */
-export const watchForAriaAttributeChanges = (
-  el: HTMLElement,
-  onChange: (changed: { [k: string]: string | null }) => void,
-  ignoreList?: string[]
-): AttributeWatcher => {
-  let attributesToWatch = ariaAttributes;
-  if (ignoreList && ignoreList.length > 0) {
-    attributesToWatch = attributesToWatch.filter((attr) => !ignoreList.includes(attr));
-  }
-  return watchAttributes(el, attributesToWatch, onChange);
 };
 
 export const addEventListener = (el: any, eventName: string, callback: any, opts?: any) => {

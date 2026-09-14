@@ -154,20 +154,18 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
   });
 });
 
-configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+/**
+ * Attribute syncing does not vary across modes or directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('item: aria attribute sync'), () => {
-    test('native element updates aria-label when host attribute changes', async ({ page }) => {
+    test('should sync aria-label to the native element when it changes on the host', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
       });
 
-      await page.setContent(
-        `
-        <ion-item button="true" aria-label="label">Item</ion-item>
-      `,
-        config
-      );
+      await page.setContent(`<ion-item button="true" aria-label="label">Item</ion-item>`, config);
 
       const host = page.locator('ion-item');
       const nativeItem = host.locator('[part="native"]');
@@ -179,46 +177,12 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(nativeItem).toHaveAttribute('aria-label', 'updated');
     });
 
-    test('preserves inherited aria-label after detach and reattach', async ({ page }) => {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
-      });
-
+    test('should keep syncing after the item is detached and reattached', async ({ page }) => {
       await page.setContent(
         `
-        <div id="container">
-          <ion-item button="true" aria-label="label">Item</ion-item>
-        </div>
-      `,
-        config
-      );
-
-      const host = page.locator('ion-item');
-      const nativeItem = host.locator('[part="native"]');
-
-      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
-
-      // Detach, reattach, and force a render via a prop change.
-      await host.evaluate((itemEl) => {
-        const parent = itemEl.parentElement!;
-        parent.removeChild(itemEl);
-        parent.appendChild(itemEl);
-        (itemEl as HTMLIonButtonElement).color = 'primary';
-      });
-
-      // Assert the original value survived
-      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
-    });
-
-    test('syncs aria-label updates and removal after initial inheritance', async ({ page }) => {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
-      });
-      await page.setContent(
-        `
-          <ion-item button="true" aria-label="initial">Item</ion-item>
+          <div id="container">
+            <ion-item button="true" aria-label="label">Item</ion-item>
+          </div>
         `,
         config
       );
@@ -226,24 +190,78 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       const host = page.locator('ion-item');
       const nativeItem = host.locator('[part="native"]');
 
-      // Initial inheritance moves the value from the host to the native button.
+      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
+
+      await host.evaluate((el) => {
+        const parent = el.parentElement!;
+        parent.removeChild(el);
+        parent.appendChild(el);
+      });
+      await page.waitForChanges();
+
+      // The value captured at load survives the move.
+      await expect(nativeItem).toHaveAttribute('aria-label', 'label');
+
+      // Updates made after the move must still reach the native element.
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+      await expect(nativeItem).toHaveAttribute('aria-label', 'updated');
+
+      // So must one made while it was detached, when nothing is watching.
+      await host.evaluate((el) => {
+        const parent = el.parentElement!;
+        parent.removeChild(el);
+        el.setAttribute('aria-label', 'while detached');
+        parent.appendChild(el);
+      });
+      await expect(nativeItem).toHaveAttribute('aria-label', 'while detached');
+    });
+
+    test('should sync updates, empty values and removals after the initial copy', async ({ page }) => {
+      await page.setContent(`<ion-item button="true" aria-label="initial">Item</ion-item>`, config);
+
+      const host = page.locator('ion-item');
+      const nativeItem = host.locator('[part="native"]');
+
+      // The initial copy moves the value from the host to the native element.
       await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeItem).toHaveAttribute('aria-label', 'initial');
 
-      // Post-load writes remain on the host and are synchronized to native
+      // Post-load writes stay on the host and are copied to the native element.
       await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
-      await expect(host).toHaveAttribute('aria-label');
+      await expect(host).toHaveAttribute('aria-label', 'second');
       await expect(nativeItem).toHaveAttribute('aria-label', 'second');
 
-      // An empty string is a valid ARIA attribute value and remains synchronized.
+      // An empty string is a valid ARIA attribute value.
       await host.evaluate((el) => el.setAttribute('aria-label', ''));
-      await expect(host).toHaveAttribute('aria-label');
       await expect(nativeItem).toHaveAttribute('aria-label', '');
 
-      // Native MutationObserver behavior sees a real removal after a post-load write.
+      // A removal of a post-load write does reach the native element.
       await host.evaluate((el) => el.removeAttribute('aria-label'));
       await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeItem).not.toHaveAttribute('aria-label');
+    });
+
+    test('should not sync ARIA attributes other than aria-label', async ({ page }) => {
+      await page.setContent(`<ion-item button="true" aria-label="label">Item</ion-item>`, config);
+
+      const host = page.locator('ion-item');
+      const nativeItem = host.locator('[part="native"]');
+
+      /**
+       * Only `aria-label` should reach the native element. An `ion-item` in a list renders
+       * `role="listitem"` on its own Host, so watching `role` would copy that onto the
+       * native button.
+       */
+      await host.evaluate((el) => {
+        el.setAttribute('role', 'presentation');
+        el.setAttribute('aria-describedby', 'hint');
+        // Written in the same batch as a barrier, since once it lands the sync has run.
+        el.setAttribute('aria-label', 'updated');
+      });
+
+      await expect(nativeItem).toHaveAttribute('aria-label', 'updated');
+      await expect(nativeItem).not.toHaveAttribute('aria-describedby');
+      await expect(nativeItem).not.toHaveAttribute('role');
     });
   });
 });

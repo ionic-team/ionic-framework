@@ -1,13 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createAttributeController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import {
-  inheritAttributes,
-  raf,
-  watchForAriaAttributeChanges,
-  type AttributeWatcher,
-  type Attributes,
-} from '@utils/helpers';
+import { raf } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
@@ -40,10 +36,9 @@ const INDICATOR_CONTROL_SELECTOR = 'ion-checkbox, ion-radio, ion-toggle';
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
-  private inheritedAriaAttributes: Attributes = {};
   private indicatorControlObserver?: MutationObserver;
   private didLoad = false;
-  private ariaWatcher?: AttributeWatcher;
+  private ariaController?: AttributeController;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -185,12 +180,19 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (this.didLoad) {
       this.watchForIndicatorControls();
       this.updateInteractivityOnSlotChange();
-      this.startAriaWatcher();
     }
+
+    this.ariaController?.init();
   }
 
   componentWillLoad() {
-    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+    /**
+     * Only the initial copy takes the attribute off the host, so an `aria-label` written
+     * after load names both the native element and the Host, which is a `listitem` when
+     * the item is in an `ion-list`. The two names always agree, so a screen reader just
+     * reads it twice.
+     */
+    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
   }
 
   componentDidLoad() {
@@ -202,7 +204,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     });
 
     this.watchForIndicatorControls();
-    this.startAriaWatcher();
     this.didLoad = true;
   }
 
@@ -212,19 +213,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       this.indicatorControlObserver = undefined;
     }
 
-    this.ariaWatcher?.destroy();
-    this.ariaWatcher = undefined;
-  }
-
-  private startAriaWatcher() {
-    this.ariaWatcher = watchForAriaAttributeChanges(
-      this.el,
-      (changed) => {
-        this.inheritedAriaAttributes = { ...this.inheritedAriaAttributes, ...changed };
-        forceUpdate(this);
-      },
-      ['aria-disabled']
-    );
+    this.ariaController?.destroy();
   }
 
   private totalNestedInputs() {
@@ -377,9 +366,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       target,
       routerAnimation,
       routerDirection,
-      inheritedAriaAttributes,
       multipleInputs,
     } = this;
+    const inheritedAriaAttributes = this.ariaController?.attributes ?? {};
     const childStyles = {} as StyleEventDetail;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
