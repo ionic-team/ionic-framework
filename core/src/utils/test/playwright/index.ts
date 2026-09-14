@@ -8,3 +8,4 @@ export * from './matchers';
 export * from './viewports';
 export * from './generator';
 export * from './detach-reattach';
+export * from './field-geometry';

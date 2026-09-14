@@ -483,6 +483,8 @@ If you target `part="label"`, `part="container"`, or `part="icon"`, the part nam
 
 Use the new `part="start"`, `part="control"`, and `part="end"` parts to target the new structural wrappers.
 
+Note that the `"ionic"` theme flattens the control wrapper, so `part="control"` cannot be given a box of its own in that theme. Target `part="start"`, `part="end"`, or the field itself instead.
+
 <h4 id="version-9x-textarea">Textarea</h4>
 
 **Floating Label Behavior**

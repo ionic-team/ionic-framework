@@ -1021,30 +1021,6 @@ export class Input implements ComponentInterface {
     );
   }
 
-  /**
-   * The ionic theme keeps the label above a field box that wraps the slots and
-   * the input, so the label can size independently of the slotted content.
-   */
-  private renderIonicField() {
-    return [
-      this.renderLabel(),
-      <div key="inner" class="input-wrapper-inner">
-        <div key="outline" class="input-outline"></div>
-        {this.renderStartContainer()}
-        <div key="control" class="input-control">
-          <div class="native-wrapper" onClick={this.onLabelClick}>
-            {this.renderNativeInput()}
-          </div>
-        </div>
-        {this.renderEndContainer()}
-      </div>,
-    ];
-  }
-
-  /**
-   * The ios and md themes nest the label alongside the input so a floating
-   * label can escape the control and clear the start and end slots.
-   */
   private renderStartContainer() {
     return (
       <div key="start" class="input-start" ref={(el) => (this.startContainerEl = el)}>
@@ -1062,7 +1038,13 @@ export class Input implements ComponentInterface {
     );
   }
 
-  private renderNativeField() {
+  /**
+   * Every theme renders the same label and control structure, aside from the md
+   * outline container below. The label is nested alongside the input so the ios
+   * and md floating label can escape the control and clear the start and end
+   * slots. The ionic theme lifts it above the field with grid instead.
+   */
+  private renderField() {
     const hasOutlineFill = getIonTheme(this) === 'md' && this.getFill() === 'outline';
 
     return [
@@ -1150,7 +1132,7 @@ export class Input implements ComponentInterface {
          * since it comes before the input in the DOM.
          */}
         <label class="input-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
-          {theme === 'ionic' ? this.renderIonicField() : this.renderNativeField()}
+          {this.renderField()}
           {shouldRenderHighlight && <div class="input-highlight"></div>}
         </label>
         {this.renderBottomContent()}

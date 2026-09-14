@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, expectFieldCellsShareARow, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: label placement start'), () => {
     test('label should appear on the starting side of the textarea', async ({ page }) => {
       await page.setContent(
@@ -375,5 +375,77 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       await expect(textarea).toHaveScreenshot(screenshot(`textarea-label-layering`));
     });
+  });
+});
+
+/**
+ * The label placement does not vary by mode, so `ionic-md` stands in for both.
+ * These comparisons are along the inline axis, which would need inverting under
+ * rtl.
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('textarea: label placement'), () => {
+    for (const placement of ['start', 'fixed'] as const) {
+      test(`label should sit before the field with a ${placement} placement`, async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea label="Comment" label-placement="${placement}" value="hi"></ion-textarea>`,
+          config
+        );
+
+        const host = page.locator('ion-textarea');
+        const label = await host.locator('.label-text-wrapper').boundingBox();
+        const native = await host.locator('.native-wrapper').boundingBox();
+
+        expect(label).not.toBeNull();
+        expect(native).not.toBeNull();
+
+        // The two share the row.
+        expect(label!.y).toBeLessThan(native!.y + native!.height);
+        expect(native!.y).toBeLessThan(label!.y + label!.height);
+
+        expect(label!.x + label!.width).toBeLessThanOrEqual(native!.x);
+
+        await expectFieldCellsShareARow(host, 'textarea');
+      });
+    }
+
+    test('label should sit after the field with an end placement', async ({ page }) => {
+      await page.setContent(`<ion-textarea label="Comment" label-placement="end" value="hi"></ion-textarea>`, config);
+
+      const host = page.locator('ion-textarea');
+      const label = await host.locator('.label-text-wrapper').boundingBox();
+      const native = await host.locator('.native-wrapper').boundingBox();
+
+      expect(label!.y).toBeLessThan(native!.y + native!.height);
+      expect(native!.y).toBeLessThan(label!.y + label!.height);
+
+      expect(label!.x).toBeGreaterThanOrEqual(native!.x + native!.width);
+
+      await expectFieldCellsShareARow(host, 'textarea');
+    });
+
+    for (const placement of ['stacked', 'floating'] as const) {
+      test(`label should sit above the field with a ${placement} placement`, async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea label="Comment" label-placement="${placement}" value="hi"></ion-textarea>`,
+          config
+        );
+
+        const host = page.locator('ion-textarea');
+        const label = await host.locator('.label-text-wrapper').boundingBox();
+        const native = await host.locator('.native-wrapper').boundingBox();
+
+        expect(label).not.toBeNull();
+        expect(native).not.toBeNull();
+
+        // Above, in its own row.
+        expect(label!.y + label!.height).toBeLessThanOrEqual(native!.y);
+
+        // Starts at the field's inline edge.
+        expect(label!.x).toBeLessThanOrEqual(native!.x);
+
+        await expectFieldCellsShareARow(host, 'textarea');
+      });
+    }
   });
 });

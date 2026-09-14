@@ -869,10 +869,6 @@ export class Textarea implements ComponentInterface {
     );
   }
 
-  /**
-   * The ionic theme keeps the label above a field box that wraps the slots and
-   * the textarea, so the label can size independently of the slotted content.
-   */
   private renderStartContainer() {
     return (
       <div key="start" class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
@@ -889,27 +885,13 @@ export class Textarea implements ComponentInterface {
     );
   }
 
-  private renderIonicField() {
-    return [
-      this.renderLabel(),
-      <div key="inner" class="textarea-wrapper-inner">
-        {this.getFill() === 'outline' && <div key="outline" class="textarea-outline"></div>}
-        {this.renderStartContainer()}
-        <div key="control" class="textarea-control">
-          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
-            {this.renderNativeTextarea()}
-          </div>
-        </div>
-        {this.renderEndContainer()}
-      </div>,
-    ];
-  }
-
   /**
-   * The ios and md themes nest the label alongside the textarea so a floating
-   * label can escape the control and clear the start and end slots.
+   * Every theme renders the same label and control structure, aside from the md
+   * outline container below. The label is nested alongside the textarea so the
+   * ios and md floating label can escape the control and clear the start and
+   * end slots. The ionic theme lifts it outside the field with grid instead.
    */
-  private renderNativeField() {
+  private renderField() {
     const hasOutlineFill = getIonTheme(this) === 'md' && this.getFill() === 'outline';
 
     return [
@@ -1040,7 +1022,7 @@ export class Textarea implements ComponentInterface {
           onClick={this.onLabelClick}
           part="wrapper"
         >
-          {theme === 'ionic' ? this.renderIonicField() : this.renderNativeField()}
+          {this.renderField()}
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>
         {this.renderBottomContent()}

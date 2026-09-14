@@ -65,9 +65,8 @@ import type {
  * @part bottom - The container element for helper text, error text, and counter.
  * @part wrapper - The clickable label element that wraps the entire form field (label text, slots, selected values or placeholder, and toggle icons).
  * @part start - The wrapper element for the content in the start slot.
- * @part control - The wrapper element containing the native select control. In the `"ios"` and `"md"` themes it also contains the label, and the dropdown icon when the label is not floating or stacked.
- * @part end - The wrapper element for the content in the end slot. In the `"ios"` and `"md"` themes it also contains the dropdown icon when the label is floating or stacked.
- * @part inner - The wrapper element containing the start, control and end wrappers and the dropdown icon. Only rendered in the `"ionic"` theme.
+ * @part control - The wrapper element containing the label, the native select control, and the dropdown icon when the label is not floating or stacked. The `"ionic"` theme flattens this wrapper, so it cannot be given a box of its own there.
+ * @part end - The wrapper element for the content in the end slot. It also contains the dropdown icon when the label is floating or stacked.
  */
 @Component({
   tag: 'ion-select',
@@ -1184,41 +1183,13 @@ export class Select implements ComponentInterface {
     );
   }
 
-  private renderNativeWrapper() {
-    return (
-      <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
-        {this.renderSelectText()}
-        {this.renderListbox()}
-      </div>
-    );
-  }
-
   /**
-   * The ionic theme keeps the label above a field box that wraps the slots and
-   * the control, so the label can size independently of the slotted content.
+   * Every theme renders the same label and control structure, aside from the md
+   * outline container below. The label is nested alongside the control so the
+   * ios and md floating label can escape it and clear the start and end slots.
+   * The ionic theme lifts it outside the field with grid instead.
    */
-  private renderIonicField() {
-    return [
-      this.renderLabel(),
-      <div key="inner" class="select-wrapper-inner" part="inner">
-        {this.fill === 'outline' && <div key="outline" class="select-outline"></div>}
-        {this.renderStartContainer()}
-        <div key="control" class="select-control" part="control">
-          {this.renderNativeWrapper()}
-        </div>
-        <div key="end" class="select-end" part="end">
-          <slot name="end"></slot>
-        </div>
-        {this.renderSelectIcon()}
-      </div>,
-    ];
-  }
-
-  /**
-   * The ios and md themes nest the label alongside the control so a floating
-   * label can escape it and clear the start and end slots.
-   */
-  private renderNativeField() {
+  private renderField() {
     const { fill, labelPlacement } = this;
     const hasOutlineFill = getIonTheme(this) === 'md' && fill === 'outline';
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
@@ -1567,6 +1538,7 @@ export class Select implements ComponentInterface {
           'has-expanded-icon': expandedIcon !== undefined,
           'has-value': hasValue,
           'label-floating': labelShouldFloat,
+          'has-label': this.hasLabel,
           'has-placeholder': placeholder !== undefined,
           'has-focus': hasFocus,
           // TODO(FW-6451): Remove `ion-focusable` class in favor of `has-focus`.
@@ -1580,7 +1552,7 @@ export class Select implements ComponentInterface {
         })}
       >
         <label class="select-wrapper" id="select-label" onClick={this.onLabelClick} part="wrapper">
-          {theme === 'ionic' ? this.renderIonicField() : this.renderNativeField()}
+          {this.renderField()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
         </label>
         {this.renderBottomContent()}

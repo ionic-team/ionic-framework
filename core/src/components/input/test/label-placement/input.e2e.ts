@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, expectFieldCellsShareARow, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('input: label placement start'), () => {
@@ -285,6 +285,58 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const input = page.locator('ion-input');
 
       await expect(input).toHaveScreenshot(screenshot(`input-label-layering`));
+    });
+  });
+});
+
+/**
+ * The ionic theme supports only the stacked and floating placements, and the
+ * placement does not vary by mode, so `ionic-md` stands in for both. These
+ * comparisons are along the inline axis, which would need inverting under rtl.
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: label placement'), () => {
+    for (const placement of ['stacked', 'floating'] as const) {
+      test(`label should sit above the field with a ${placement} placement`, async ({ page }) => {
+        await page.setContent(
+          `<ion-input label="Email" label-placement="${placement}" value="hi@ionic.io"></ion-input>`,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        const label = await input.locator('.label-text-wrapper').boundingBox();
+        const native = await input.locator('.native-wrapper').boundingBox();
+
+        expect(label).not.toBeNull();
+        expect(native).not.toBeNull();
+
+        // Above, in its own row.
+        expect(label!.y + label!.height).toBeLessThanOrEqual(native!.y);
+
+        // Starts at the field's inline edge.
+        expect(label!.x).toBeLessThanOrEqual(native!.x);
+
+        await expectFieldCellsShareARow(input, 'input');
+      });
+    }
+
+    /**
+     * The target area is taller than the medium field on purpose, and is held
+     * off the row by a negative block margin so it cannot grow it.
+     */
+    test('target area should not grow the medium field', async ({ page }) => {
+      await page.setContent(`<ion-input label="Email" value="hi@ionic.io"></ion-input>`, config);
+
+      const wrapper = page.locator('ion-input').locator('.input-wrapper');
+
+      const [boxHeight, targetHeight] = await wrapper.evaluate((el) => [
+        parseFloat(getComputedStyle(el, '::before').height),
+        parseFloat(getComputedStyle(el, '::after').height),
+      ]);
+
+      // The target area is taller than the field box, and overflows the row
+      // rather than growing it.
+      expect(targetHeight).toBeGreaterThan(boxHeight);
     });
   });
 });

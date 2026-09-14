@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: slot'), () => {
     test('should not have visual regressions with a start-positioned label', async ({ page }) => {
       await page.setContent(
@@ -401,10 +401,12 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * The outline fill is only supported by `md` mode.
+ * The `ios` theme does not support the outline fill, so it is left out. The
+ * ionic theme supports it in both modes, and `ionic-md` stands in for both
+ * since the overflow behavior does not vary by mode.
  * The overflow behavior is the same regardless of direction.
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: slot: overflow'), () => {
     /**
      * Wide enough that the label cannot fit beside it, and given a
