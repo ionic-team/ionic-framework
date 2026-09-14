@@ -1,3 +1,4 @@
+import { config } from '@global/config';
 import { getIonMode, getIonTheme } from '@global/ionic-global';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
@@ -97,10 +98,15 @@ export class SelectModal implements ComponentInterface {
 
   /**
    * Get the icon to use for the cancel icon.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
    */
   private get cancelButtonIcon(): string {
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    return theme === 'ios' ? closeOutline : closeSharp;
+    const defaultIcon = theme === 'ios' ? closeOutline : closeSharp;
+
+    return config.get('selectModalCancelIcon', defaultIcon);
   }
 
   private getModalContextClasses() {

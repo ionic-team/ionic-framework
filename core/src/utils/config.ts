@@ -226,6 +226,12 @@ export interface IonicConfig {
   selectCollapsedIcon?: string;
 
   /**
+   * Overrides the cancel icon for all `ion-select-modal` components,
+   * only when the cancel button is set to display an icon.
+   */
+  selectModalCancelIcon?: string;
+
+  /**
    * Overrides the checked icon for all `ion-toggle` components.
    */
   toggleCheckedIcon?: string;
