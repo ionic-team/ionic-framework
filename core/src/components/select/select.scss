@@ -159,7 +159,7 @@ button {
 .select-text {
   flex: 1;
 
-  min-width: 16px;
+  min-width: $form-control-min-width;
 
   font-size: inherit;
 

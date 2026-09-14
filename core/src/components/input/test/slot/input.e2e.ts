@@ -299,6 +299,47 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           screenshot(`input-slot-overflow-label-floating-value-${slotName}-slot`)
         );
       });
+
+      /**
+       * The label and the input compete for whatever space the slot leaves
+       * behind. The input has to keep some of it so that the user can still
+       * see the value they are entering.
+       */
+      test(`should not have visual regressions with a start-positioned label, a value and a wide ${slotName} slot`, async ({
+        page,
+      }) => {
+        await setContent(page, 'label-placement="start" value="100"', slot);
+
+        const container = page.locator('.container');
+        await expect(container).toHaveScreenshot(screenshot(`input-slot-overflow-label-start-value-${slotName}-slot`));
+      });
+
+      test(`should keep two characters of the value visible with a start-positioned label and a wide ${slotName} slot`, async ({
+        page,
+      }) => {
+        await setContent(page, 'label-placement="start" value="100"', slot);
+
+        const nativeInput = page.locator('ion-input input');
+
+        /**
+         * The width of two characters in the input's own font, which is what
+         * `$form-control-min-width` reserves for the value.
+         */
+        const twoCharacterWidth = await nativeInput.evaluate((el) => {
+          const probe = document.createElement('span');
+          probe.style.cssText = `position: absolute; visibility: hidden; white-space: pre; font: ${
+            getComputedStyle(el).font
+          }`;
+          probe.textContent = '00';
+          document.body.append(probe);
+          const { width } = probe.getBoundingClientRect();
+          probe.remove();
+          return width;
+        });
+        const box = await nativeInput.boundingBox();
+
+        expect(box!.width).toBeGreaterThanOrEqual(twoCharacterWidth);
+      });
     });
   });
 });

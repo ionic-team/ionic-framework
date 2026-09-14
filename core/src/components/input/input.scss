@@ -106,6 +106,13 @@
   flex: 1;
 
   width: 100%;
+
+  /**
+   * The input keeps a minimum width so that the value stays visible
+   * when a long label or wide slotted content would otherwise shrink
+   * it to nothing.
+   */
+  min-width: $form-control-min-width;
   max-width: 100%;
 
   // Ensure the input fills the full height of the native wrapper.
