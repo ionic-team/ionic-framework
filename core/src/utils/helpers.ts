@@ -1,4 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
+import { win } from '@utils/browser';
 import { printIonError } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 
@@ -197,6 +198,55 @@ export const addEventListener = (el: any, eventName: string, callback: any, opts
 
 export const removeEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
   return el.removeEventListener(eventName, callback, opts);
+};
+
+/**
+ * Calls back when a CSS custom property that resolves to a length changes,
+ * which no event covers. The probe inherits the property from `hostEl` and
+ * uses it as its height, turning a property change into a size change that
+ * `ResizeObserver` can detect.
+ *
+ * The callback receives the probe's height. For length values, this matches
+ * the resolved property value. For other values, such as `fit-content`, the
+ * probe remains at zero, so the value only signals that the property changed.
+ * Percentages resolve against the probe's containing block, not the element
+ * where the property is ultimately used.
+ *
+ * Pass `initialValue` when the caller has already read the property so that
+ * changes occurring before the observer's first delivery are not missed.
+ * Without it, the first delivery establishes the baseline.
+ */
+export const onCustomPropertyChange = (
+  hostEl: HTMLElement | null | undefined,
+  property: string,
+  callback: (value: number) => void,
+  initialValue?: number
+): (() => void) => {
+  const doc = win?.document;
+  if (!doc || !hostEl || typeof ResizeObserver === 'undefined') {
+    return () => undefined;
+  }
+
+  const probe = doc.createElement('div');
+  probe.style.cssText = `position:fixed;visibility:hidden;pointer-events:none;top:0;left:0;width:0;height:var(${property},0px);`;
+  hostEl.appendChild(probe);
+
+  let lastHeight = initialValue;
+  const observer = new ResizeObserver((entries) => {
+    const { height } = entries[0].contentRect;
+
+    if (lastHeight !== undefined && height !== lastHeight) {
+      callback(height);
+    }
+
+    lastHeight = height;
+  });
+  observer.observe(probe);
+
+  return () => {
+    observer.disconnect();
+    probe.remove();
+  };
 };
 
 /**
