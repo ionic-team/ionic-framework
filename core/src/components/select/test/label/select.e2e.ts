@@ -100,7 +100,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
  * used to change the alignment of the select
  * within the container.
  */
-configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
+configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('select: label'), () => {
     test.describe('select: start placement', () => {
       test('should render a start justification with label in the start position', async ({ page }) => {

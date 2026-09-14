@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, expectFieldCellsShareARow, test } from '@utils/test/playwright';
 
-configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
+configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: label placement start'), () => {
     test('label should appear on the starting side of the textarea', async ({ page }) => {
       await page.setContent(
