@@ -190,6 +190,7 @@ export class Segment implements ComponentInterface {
   async componentDidLoad() {
     this.segmentViewEl = this.getSegmentView();
 
+    this.updateButtonAriaPositions();
     this.setCheckedClasses();
 
     /**
@@ -266,6 +267,15 @@ export class Segment implements ComponentInterface {
 
   private getButtons(): HTMLIonSegmentButtonElement[] {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
+  }
+
+  private updateButtonAriaPositions() {
+    const buttons = this.getButtons();
+    const setSize = buttons.length;
+
+    buttons.forEach((button, index) => {
+      button.setButtonAriaPosition(index + 1, setSize);
+    });
   }
 
   private get checked() {
@@ -634,6 +644,8 @@ export class Segment implements ComponentInterface {
   };
 
   private onSlottedItemsChange = () => {
+    this.updateButtonAriaPositions();
+
     /**
      * When the slotted segment buttons change we need to
      * ensure that the new segment buttons are checked if
