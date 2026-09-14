@@ -8,6 +8,15 @@ export const routes: Routes = [
     children: [
       { path: '', loadComponent: () => import('../home-page/home-page.component').then(c => c.HomePageComponent) },
       { path: 'inputs', loadComponent: () => import('../inputs/inputs.component').then(c => c.InputsComponent) },
+      { path: 'async-change-detection', loadComponent: () => import('../async-change-detection/async-change-detection.component').then(c => c.AsyncChangeDetectionComponent) },
+      { path: 'async-change-detection-tabs', redirectTo: '/standalone/async-change-detection-tabs/tab-one', pathMatch: 'full' },
+      {
+        path: 'async-change-detection-tabs',
+        loadComponent: () => import('../async-change-detection/async-change-detection-tabs.component').then(c => c.AsyncChangeDetectionTabsComponent),
+        children: [
+          { path: 'tab-one', loadComponent: () => import('../async-change-detection/async-change-detection.component').then(c => c.AsyncChangeDetectionComponent) }
+        ]
+      },
       { path: 'menu-controller', loadComponent: () => import('../menu-controller/menu-controller.component').then(c => c.MenuControllerComponent) },
       { path: 'action-sheet-controller', loadComponent: () => import('../action-sheet-controller/action-sheet-controller.component').then(c => c.ActionSheetControllerComponent) },
       { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },

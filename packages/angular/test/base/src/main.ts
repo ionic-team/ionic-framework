@@ -8,6 +8,14 @@ if (environment.production) {
   enableProdMode();
 }
 
+/**
+ * The bootstrap is picked once, at page load, so a link into /lazy from a page
+ * the standalone bootstrap rendered has to be a full page load. IonicModule.forRoot()
+ * registers the Ionic elements from an APP_INITIALIZER, and Angular only runs those
+ * at bootstrap, never for a lazily loaded child module. Router-navigate into /lazy
+ * and ion-app and ion-router-outlet are never defined, so the page stays invisible.
+ * Going the other way is fine, the loader has already run.
+ */
 const isLazy = window.location.href.includes('lazy');
 
 if (isLazy) {

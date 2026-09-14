@@ -1,4 +1,4 @@
-import { enableAutoUnmount, mount } from '@vue/test-utils';
+import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import {
@@ -12,7 +12,12 @@ import {
   IonLabel,
   useIonRouter
 } from '@ionic/vue';
-import { onBeforeRouteLeave } from 'vue-router';
+import {
+  isNavigationFailure,
+  NavigationFailureType,
+  onBeforeRouteLeave
+} from 'vue-router';
+import { inject } from 'vue';
 import { waitForRouter } from './utils';
 
 enableAutoUnmount(afterEach);
@@ -21,6 +26,54 @@ const BasePage = {
   template: '<ion-page :data-pageid="name"></ion-page>',
   components: { IonPage },
 }
+
+/*
+ * Kept separate from BasePage because BasePage binds `:data-pageid="name"`, and
+ * a component's name option is not reachable from its template in Vue 3, so
+ * that attribute renders empty.
+ */
+const createPage = (id: string) => ({
+  components: { IonPage },
+  name: id,
+  template: `<ion-page data-pageid="${id}"></ion-page>`
+});
+
+/*
+ * Ionic keeps previously visited pages mounted so they can be animated back to,
+ * hiding the inactive ones with `ion-page-hidden`. Asserting on the whole stack
+ * catches both a wrong visible page and a page that was destroyed when it
+ * should have been kept.
+ */
+const viewStack = (wrapper: any) =>
+  wrapper.findAll('.ion-page').map((page: any) => ({
+    id: page.attributes('data-pageid'),
+    hidden: page.classes('ion-page-hidden')
+  }));
+
+const currentRoute = (navManager: any) => {
+  const routeInfo = navManager.getCurrentRouteInfo();
+
+  return {
+    pathname: routeInfo.pathname,
+    routerAction: routeInfo.routerAction,
+    routerDirection: routeInfo.routerDirection
+  };
+};
+
+/*
+ * Waiting a fixed number of microtasks is not enough to know a navigation has
+ * reached a guard, so wait on the condition itself.
+ */
+const waitUntil = async (predicate: () => boolean, label: string) => {
+  for (let i = 0; i < 200; i++) {
+    if (predicate()) {
+      return;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  }
+
+  throw new Error(`timed out waiting for ${label}`);
+};
 
 describe('Routing', () => {
   it('should pass no props', async () => {
@@ -732,5 +785,1234 @@ describe('Routing', () => {
     expect(wrapper.findComponent(Page).exists()).toBe(true);
     expect(wrapper.findComponent(Page2).exists()).toBe(false);
     expect(wrapper.findComponent(Page3).exists()).toBe(false);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should keep the previous page when pushing after a guard blocks going back', async () => {
+    /*
+     * The pages are rendered inside the outlet, so injecting from one of them
+     * reaches the router the same way useIonRouter does, without wrapping the
+     * outlet in another component.
+     */
+    let navManager: any;
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Register = createPage('register');
+    const Profile = createPage('profile');
+
+    let isLoggedIn = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/register', component: Register },
+        { path: '/profile', component: Profile }
+      ]
+    });
+
+    /*
+     * Leaving the authenticated route while still logged in is blocked, which
+     * aborts the navigation. An aborted back navigation used to leave stale
+     * navigation info behind, which then made the next navigation look like
+     * history traversal.
+     */
+    router.beforeEach((to, from) => {
+      if (from.path === '/profile' && to.path !== '/profile' && isLoggedIn) {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/register');
+    await waitForRouter();
+
+    isLoggedIn = true;
+    router.replace('/profile');
+    await waitForRouter();
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: false }
+    ]);
+
+    // The guard blocks this, so the stack should be untouched.
+    router.back();
+    await waitForRouter();
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: false }
+    ]);
+
+    /*
+     * Logging out is a push, so Profile stays in the stack behind Home and the
+     * route is recorded as a forward push. The stale delta from the blocked
+     * back navigation used to make this look like history traversal, which
+     * recorded it as a pop going back and destroyed the Profile view.
+     */
+    isLoggedIn = false;
+    router.push('/home');
+    await waitForRouter();
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: false },
+      { id: 'profile', hidden: true }
+    ]);
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/home',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+
+    router.push('/profile');
+    await waitForRouter();
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: false }
+    ]);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should keep canGoBack accurate after a guard blocks a programmatic back', async () => {
+    const Home = createPage('home');
+    const Profile = createPage('profile');
+    const Settings = createPage('settings');
+
+    const AppWithInject = {
+      components: { IonApp, IonRouterOutlet },
+      name: 'AppWithInject',
+      template: '<ion-app><ion-router-outlet /></ion-app>',
+      setup() {
+        const ionRouter = useIonRouter();
+        return { ionRouter };
+      }
+    };
+
+    let isLoggedIn = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/profile', component: Profile },
+        { path: '/settings', component: Settings }
+      ]
+    });
+
+    router.beforeEach((to, from) => {
+      if (from.path === '/profile' && to.path !== '/profile' && isLoggedIn) {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(AppWithInject, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const ionRouter = wrapper.vm.ionRouter;
+
+    router.push('/profile');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    /*
+     * useIonRouter's back() stages route params before handing off to the
+     * router. The guard blocks the navigation, so those params used to be left
+     * behind and then applied to the next route instead.
+     */
+    isLoggedIn = true;
+    ionRouter.back();
+    await waitForRouter();
+
+    /*
+     * Navigating with vue-router rather than useIonRouter matters here. The
+     * useIonRouter helpers stage their own route params, which would overwrite
+     * the leftovers and hide the problem.
+     */
+    isLoggedIn = false;
+    router.push('/settings');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should not apply a cancelled back navigation to the navigation that replaced it', async () => {
+    let navManager: any;
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Profile = createPage('profile');
+    const Settings = createPage('settings');
+
+    let racing = false;
+    let releaseBack!: () => void;
+    let releasePush!: () => void;
+    let backReachedGuard: () => void;
+    let cancelReported: () => void;
+
+    const backStarted = new Promise((resolve) => {
+      backReachedGuard = resolve as () => void;
+    });
+    const backCancelled = new Promise((resolve) => {
+      cancelReported = resolve as () => void;
+    });
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/home', component: Home },
+        { path: '/profile', component: Profile },
+        { path: '/settings', component: Settings }
+      ]
+    });
+
+    /*
+     * Both navigations are held inside their guards so the test controls the
+     * order they finish in, rather than relying on timing. The back navigation
+     * is released first so it reports its cancellation before the push that
+     * replaced it completes.
+     */
+    router.beforeEach(async (to) => {
+      if (!racing) {
+        return true;
+      }
+
+      if (to.path === '/home') {
+        backReachedGuard();
+        await new Promise((resolve) => {
+          releaseBack = resolve as () => void;
+        });
+      }
+
+      if (to.path === '/settings') {
+        await new Promise((resolve) => {
+          releasePush = resolve as () => void;
+        });
+      }
+
+      return true;
+    });
+
+    router.afterEach((_to, _from, failure) => {
+      if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+        cancelReported();
+      }
+    });
+
+    router.push('/home');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/profile');
+    await waitForRouter();
+
+    racing = true;
+
+    // Start going back, and wait until it is actually in flight.
+    router.back();
+    await backStarted;
+
+    // Replace it with a push while it is still in flight.
+    router.push('/settings');
+    await flushPromises();
+
+    // Let the back navigation finish, which reports it as cancelled.
+    releaseBack();
+    await backCancelled;
+
+    // Only now let the push finish, so it is the one reading any staged state.
+    releasePush();
+    await waitForRouter();
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'settings', hidden: false }
+    ]);
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/settings',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should not reuse the previous route after a guard blocks a back button navigation', async () => {
+    let navManager: any;
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Profile = createPage('profile');
+    const Settings = createPage('settings');
+
+    let isLoggedIn = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/profile', component: Profile },
+        { path: '/settings', component: Settings }
+      ]
+    });
+
+    router.beforeEach((to, from) => {
+      if (from.path === '/profile' && to.path !== '/profile' && isLoggedIn) {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/profile');
+    await waitForRouter();
+
+    /*
+     * ion-back-button calls handleNavigateBack, which stages the whole previous
+     * route rather than just an action and direction. Those params carry an id,
+     * and a staged id makes handleHistoryChange reuse the params wholesale, so
+     * a stale set would report the previous route's pathname for whatever is
+     * navigated to next.
+     */
+    isLoggedIn = true;
+    navManager.handleNavigateBack();
+    await waitForRouter();
+
+    isLoggedIn = false;
+    router.push('/settings');
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/settings',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'settings', hidden: false }
+    ]);
+  });
+
+  // Guards against clearing params that belong to another navigation still in flight.
+  it('should keep the route params of a navigation that replaced a cancelled one', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Slow = createPage('slow');
+    const Login = createPage('login');
+
+    let racing = false;
+    let releaseSlow!: () => void;
+    let releaseLogin!: () => void;
+    let slowReachedGuard: () => void;
+    let loginReachedGuard: () => void;
+    let cancelReported: () => void;
+
+    const slowStarted = new Promise((resolve) => {
+      slowReachedGuard = resolve as () => void;
+    });
+    const loginStarted = new Promise((resolve) => {
+      loginReachedGuard = resolve as () => void;
+    });
+    const pushCancelled = new Promise((resolve) => {
+      cancelReported = resolve as () => void;
+    });
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/slow', component: Slow },
+        { path: '/login', component: Login }
+      ]
+    });
+
+    /*
+     * Neither navigation here is a history traversal, so no delta is ever
+     * staged. The staged params are the only state in play, which is why they
+     * need a target of their own to be told apart.
+     */
+    router.beforeEach(async (to) => {
+      if (!racing) {
+        return true;
+      }
+
+      if (to.path === '/slow') {
+        slowReachedGuard();
+        await new Promise((resolve) => {
+          releaseSlow = resolve as () => void;
+        });
+      }
+
+      if (to.path === '/login') {
+        loginReachedGuard();
+        await new Promise((resolve) => {
+          releaseLogin = resolve as () => void;
+        });
+      }
+
+      return true;
+    });
+
+    router.afterEach((_to, _from, failure) => {
+      if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+        cancelReported();
+      }
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    racing = true;
+
+    /*
+     * These are what useIonRouter's push and replace call through to, used
+     * directly so the outlet can stay the mounted component.
+     */
+    navManager.handleNavigate('/slow', 'push', 'forward');
+    await slowStarted;
+
+    // Logging out replaces it, staging its own params on the way.
+    navManager.handleNavigate('/login', 'replace', 'root');
+    await loginStarted;
+
+    // Let the push finish, which reports it as cancelled.
+    releaseSlow();
+    await pushCancelled;
+
+    // Only now let the replace finish, so it is the one reading staged params.
+    releaseLogin();
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'replace',
+      routerDirection: 'root'
+    });
+
+    /*
+     * A root replace clears the history, so Login is the only page left. Losing
+     * the staged params drops the root direction, and the pages behind it stay.
+     */
+    expect(viewStack(wrapper)).toEqual([{ id: 'login', hidden: false }]);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should not apply the params of a blocked replace to the next navigation', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Blocked = createPage('blocked');
+    const Other = createPage('other');
+
+    let blocking = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/blocked', component: Blocked },
+        { path: '/other', component: Other }
+      ]
+    });
+
+    router.beforeEach((to) => {
+      if (blocking && to.path === '/blocked') {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /*
+     * A root replace stages its own params and records where they were meant
+     * for, then the guard blocks it. Leaving those behind hands a root replace
+     * to the next navigation, which clears the history it should have kept.
+     */
+    blocking = true;
+    navManager.handleNavigate('/blocked', 'replace', 'root');
+    await waitForRouter();
+
+    router.push('/other');
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/other',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+
+    // A leaked root replace clears the history, which would drop Home.
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'other', hidden: false }
+    ]);
+  });
+
+  // Guards against clearing the params of a later navigation with the same target.
+  it('should not apply a cancelled navigation to a later one with the same target', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const List = createPage('list');
+    const Login = createPage('login');
+
+    const holds: Array<() => void> = [];
+    let holding = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/list', component: List },
+        { path: '/login', component: Login }
+      ]
+    });
+
+    router.beforeEach(async (to) => {
+      if (holding && to.path === '/login') {
+        await new Promise<void>((resolve) => holds.push(resolve));
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/list');
+    await waitForRouter();
+
+    /*
+     * Both navigations head for the same path, so the location they were
+     * staged against cannot tell them apart. Only the identity of the
+     * navigation itself can, otherwise the cancelled push discards the params
+     * of the root replace and it degrades to a plain replace.
+     */
+    holding = true;
+
+    navManager.handleNavigate('/login', 'push', 'forward');
+    await waitUntil(() => holds.length === 1, 'the push to reach the guard');
+
+    navManager.handleNavigate('/login', 'replace', 'root');
+    await waitUntil(() => holds.length === 2, 'the replace to reach the guard');
+
+    holding = false;
+    holds[0]();
+    await waitForRouter();
+
+    holds[1]();
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'replace',
+      routerDirection: 'root'
+    });
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'login', hidden: false }
+    ]);
+
+    // Losing the root direction leaves the back stack in place.
+    expect(navManager.canGoBack()).toBe(false);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should discard the staged params when the blocked route redirects', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Tab = createPage('tab');
+    const Other = createPage('other');
+
+    let blocking = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/tabs', redirect: '/tabs/tab' },
+        { path: '/tabs/tab', component: Tab },
+        { path: '/other', component: Other }
+      ]
+    });
+
+    router.beforeEach((to) => {
+      if (blocking && to.path === '/tabs/tab') {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /*
+     * The params are staged against the location the caller asked for, so a
+     * `redirect:` record leaves them recorded against `/tabs` while afterEach
+     * reports `/tabs/tab`. Without matching on the location before the
+     * redirect the two never line up, so the root replace survives and clears
+     * the history the next navigation should have kept.
+     */
+    blocking = true;
+    navManager.handleNavigate('/tabs', 'replace', 'root');
+    await waitForRouter();
+
+    router.push('/other');
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/other',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'other', hidden: false }
+    ]);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should discard the staged params when the blocked href has a spaced query', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Search = createPage('search');
+    const Other = createPage('other');
+
+    let blocking = false;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/search', component: Search },
+        { path: '/other', component: Other }
+      ]
+    });
+
+    router.beforeEach((to) => {
+      if (blocking && to.path === '/search') {
+        return false;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /*
+     * A back button falling through to its default href hands the href along
+     * as a string, and resolving a string leaves the space in the query alone
+     * while afterEach reports it as a plus. Without normalizing the two the
+     * pop/back params survive the block and turn the next push into a
+     * backwards navigation.
+     */
+    blocking = true;
+    navManager.handleNavigate('/search?q=hello world', 'pop', 'back');
+    await waitForRouter();
+
+    router.push('/other');
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/other',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'other', hidden: false }
+    ]);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29721
+  it('should show the correct view after a guard rejects instead of returning false', async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Profile = createPage('profile');
+    const Settings = createPage('settings');
+
+    let sessionValid = true;
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/profile', component: Profile },
+        { path: '/settings', component: Settings }
+      ]
+    });
+
+    /*
+     * A session check that rejects rather than returning false. vue-router
+     * rejects the navigation promise for this, so afterEach never runs and the
+     * staged state has to be discarded through onError instead.
+     */
+    router.beforeEach(async (to, from) => {
+      if (from.path === '/profile' && to.path !== '/profile' && !sessionValid) {
+        await Promise.reject(new Error('session check failed'));
+      }
+
+      return true;
+    });
+
+    // Stands in for an app that handles its own navigation errors.
+    router.onError(() => {});
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/profile');
+    await waitForRouter();
+
+    // Going back rejects inside the guard.
+    sessionValid = false;
+    router.back();
+    await waitForRouter();
+
+    sessionValid = true;
+    router.push('/settings');
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/settings',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'settings', hidden: false }
+    ]);
+  });
+
+  /*
+   * Registering an error handler stops vue-router logging an uncaught
+   * navigation error itself, so these cover the log still reaching an app that
+   * has not registered one of its own.
+   */
+  const mountThrowingGuard = async () => {
+    const guardError = new Error('session check failed');
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: createPage('home') },
+        { path: '/boom', component: createPage('boom') }
+      ]
+    });
+
+    router.beforeEach((to) => {
+      if (to.path === '/boom') {
+        throw guardError;
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const navigateAndCountLogs = async () => {
+      errorSpy.mockClear();
+      router.push('/boom').catch(() => {});
+      await waitForRouter();
+
+      return errorSpy.mock.calls.filter((call) => call[0] === guardError).length;
+    };
+
+    return { router, navigateAndCountLogs, restore: () => errorSpy.mockRestore() };
+  };
+
+  it('should log a guard error when the app has no error handler of its own', async () => {
+    const { navigateAndCountLogs, restore } = await mountThrowingGuard();
+
+    expect(await navigateAndCountLogs()).toEqual(1);
+
+    restore();
+  });
+
+  it('should not log a guard error when the app registers its own handler', async () => {
+    const { router, navigateAndCountLogs, restore } = await mountThrowingGuard();
+    const appHandler = vi.fn();
+    router.onError(appHandler);
+
+    expect(await navigateAndCountLogs()).toEqual(0);
+    expect(appHandler).toHaveBeenCalledTimes(1);
+
+    restore();
+  });
+
+  it('should log a guard error again once the app removes its handler', async () => {
+    const { router, navigateAndCountLogs, restore } = await mountThrowingGuard();
+    const unregister = router.onError(vi.fn());
+
+    await navigateAndCountLogs();
+    unregister();
+
+    expect(await navigateAndCountLogs()).toEqual(1);
+
+    restore();
+  });
+
+  // Guards against clearing params that belong to another navigation still in flight.
+  it('should keep the tab params of a tab change that replaced a cancelled push', async () => {
+    let navManager: any;
+
+    const TabOne = {
+      ...createPage('tabone'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const TabTwo = createPage('tabtwo');
+    const Details = createPage('details');
+
+    let racing = false;
+    let releasePush!: () => void;
+    let releaseTabChange!: () => void;
+    let pushReachedGuard!: () => void;
+    let tabChangeReachedGuard!: () => void;
+    let cancelReported!: () => void;
+
+    const pushStarted = new Promise((resolve) => {
+      pushReachedGuard = resolve as () => void;
+    });
+    const tabChangeStarted = new Promise((resolve) => {
+      tabChangeReachedGuard = resolve as () => void;
+    });
+    const pushCancelled = new Promise((resolve) => {
+      cancelReported = resolve as () => void;
+    });
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/tabs/tab1' },
+        { path: '/tabs/tab1', component: TabOne },
+        { path: '/tabs/tab2', component: TabTwo },
+        { path: '/details', component: Details }
+      ]
+    });
+
+    /*
+     * A global async guard, the session check kind. Both navigations are held
+     * inside it so the test controls which one settles first, rather than
+     * relying on one being slower than the other.
+     */
+    router.beforeEach(async (to) => {
+      if (!racing) {
+        return true;
+      }
+
+      if (to.path === '/details') {
+        pushReachedGuard();
+        await new Promise((resolve) => {
+          releasePush = resolve as () => void;
+        });
+      }
+
+      if (to.path === '/tabs/tab2') {
+        tabChangeReachedGuard();
+        await new Promise((resolve) => {
+          releaseTabChange = resolve as () => void;
+        });
+      }
+
+      return true;
+    });
+
+    router.afterEach((_to, _from, failure) => {
+      if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+        cancelReported();
+      }
+    });
+
+    router.push('/');
+    await router.isReady();
+    mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /*
+     * Both tabs need a routeInfo before changeTab will stage params itself
+     * rather than delegating to handleNavigate.
+     */
+    navManager.changeTab('tab1', '/tabs/tab1');
+    await waitForRouter();
+    navManager.changeTab('tab2', '/tabs/tab2');
+    await waitForRouter();
+    navManager.changeTab('tab1', '/tabs/tab1');
+    await waitForRouter();
+
+    racing = true;
+
+    /*
+     * Tapping a link and then Tab 2 before the first one finishes. The push
+     * is cancelled, and its params used to be cleared along with the tab's,
+     * which cost the tab its direction and its tab name.
+     */
+    navManager.handleNavigate('/details', 'push', 'forward');
+    await pushStarted;
+
+    // The tab change replaces the push and stages its own params.
+    navManager.changeTab('tab2', '/tabs/tab2');
+    await tabChangeStarted;
+
+    // Let the push finish, which reports it as cancelled.
+    releasePush();
+    await pushCancelled;
+
+    // Only now let the tab change finish.
+    releaseTabChange();
+    await waitForRouter();
+
+    const routeInfo = navManager.getCurrentRouteInfo();
+
+    expect(routeInfo.pathname).toEqual('/tabs/tab2');
+    expect(routeInfo.routerDirection).toEqual('none');
+    expect(routeInfo.tab).toEqual('tab2');
+    // Losing the tab takes the pushed branch, which borrows the previous tab.
+    expect(routeInfo.pushedByRoute).toEqual(undefined);
+  });
+
+  // Guards against clearing a delta that belongs to another navigation still in flight.
+  it('should keep the delta of a back navigation that replaced a cancelled one', async () => {
+    let navManager: any;
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const First = createPage('first');
+    const Second = createPage('second');
+
+    let racing = false;
+    let releaseFirstBack!: () => void;
+    let releaseSecondBack!: () => void;
+    let firstBackReachedGuard: () => void;
+    let secondBackReachedGuard: () => void;
+    let cancelReported: () => void;
+
+    const firstBackStarted = new Promise((resolve) => {
+      firstBackReachedGuard = resolve as () => void;
+    });
+    const secondBackStarted = new Promise((resolve) => {
+      secondBackReachedGuard = resolve as () => void;
+    });
+    const firstBackCancelled = new Promise((resolve) => {
+      cancelReported = resolve as () => void;
+    });
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/first', component: First },
+        { path: '/second', component: Second }
+      ]
+    });
+
+    /*
+     * Both back navigations are held inside their guards so the test controls
+     * which one settles first. The second one stages its own navigation info as
+     * soon as its popstate lands, which is why the first one must not clear it.
+     */
+    router.beforeEach(async (to) => {
+      if (!racing) {
+        return true;
+      }
+
+      if (to.path === '/first') {
+        firstBackReachedGuard();
+        await new Promise((resolve) => {
+          releaseFirstBack = resolve as () => void;
+        });
+      }
+
+      if (to.path === '/home') {
+        secondBackReachedGuard();
+        await new Promise((resolve) => {
+          releaseSecondBack = resolve as () => void;
+        });
+      }
+
+      return true;
+    });
+
+    router.afterEach((_to, _from, failure) => {
+      if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+        cancelReported();
+      }
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/first');
+    await waitForRouter();
+    router.push('/second');
+    await waitForRouter();
+
+    racing = true;
+
+    // First back, held until the second one is also in flight.
+    router.back();
+    await firstBackStarted;
+
+    // Second back, which replaces the first and stages its own info.
+    router.back();
+    await secondBackStarted;
+
+    // Let the first back finish, which reports it as cancelled.
+    releaseFirstBack();
+    await firstBackCancelled;
+
+    // Only now let the second back finish.
+    releaseSecondBack();
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/home',
+      routerAction: 'pop',
+      routerDirection: 'back'
+    });
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: false },
+      { id: 'first', hidden: true }
+    ]);
+  });
+
+  // Guards against clearing a delta that belongs to another navigation still in flight.
+  it('should keep the delta of a back navigation that a cancelled push shares a path with', async () => {
+    let navManager: any;
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const List = createPage('list');
+    const Detail = createPage('detail');
+
+    const holds: Array<() => void> = [];
+    let holding = false;
+    let cancelReported!: () => void;
+
+    const pushCancelled = new Promise((resolve) => {
+      cancelReported = resolve as () => void;
+    });
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/list', component: List },
+        { path: '/detail', component: Detail }
+      ]
+    });
+
+    router.beforeEach(async (to) => {
+      if (holding && to.path === '/list') {
+        await new Promise<void>((resolve) => holds.push(resolve));
+      }
+
+      return true;
+    });
+
+    router.afterEach((_to, _from, failure) => {
+      if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+        cancelReported();
+      }
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/list');
+    await waitForRouter();
+    router.push('/detail');
+    await waitForRouter();
+
+    /*
+     * The push and the back both target /list, so the location the delta was
+     * staged against cannot tell them apart. Only the identity of the
+     * navigation can, otherwise the cancelled push takes the back's delta and
+     * the back stops being treated as traversal.
+     */
+    holding = true;
+
+    router.push('/list').catch(() => {});
+    await waitUntil(() => holds.length === 1, 'the push to reach the guard');
+
+    router.back();
+    await waitUntil(() => holds.length === 2, 'the back to reach the guard');
+
+    // Let the push finish, which reports it as cancelled.
+    holding = false;
+    holds[0]();
+    await pushCancelled;
+
+    // Only now let the back finish.
+    holds[1]();
+    await waitForRouter();
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/list',
+      routerAction: 'pop',
+      routerDirection: 'back'
+    });
+
+    // Losing the delta stops the back being traversal, so /detail is kept.
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'list', hidden: false }
+    ]);
   });
 });

@@ -1,4 +1,12 @@
-import { Component, ElementRef, Injector, EnvironmentInjector, NgZone, ChangeDetectorRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Injector,
+  EnvironmentInjector,
+  NgZone,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { IonNav as IonNavBase, ProxyCmp, AngularDelegate } from '@ionic/angular/common';
 import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
 
@@ -7,6 +15,9 @@ import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
 })
 @Component({
   selector: 'ion-nav',
+  // Unlike ion-router-outlet, the delegate attaches pages here as root views and
+  // IonNavBase detaches this one, so a tick never descends through it.
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   standalone: true,
 })
