@@ -94,6 +94,15 @@ export class RefresherContent implements ComponentInterface {
     }
   }
 
+  /**
+   * Get the icon to use for the arrow icon.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get refresherArrowIcon(): string {
+    return config.get('refresherArrowIcon', caretBackSharp);
+  }
+
   private renderPullingText() {
     const { customHTMLEnabled, pullingText } = this;
     if (customHTMLEnabled) {
@@ -130,7 +139,7 @@ export class RefresherContent implements ComponentInterface {
                 <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
                 {(theme === 'md' || theme === 'ionic') && this.pullingIcon === 'circular' && (
                   <div class="arrow-container">
-                    <ion-icon icon={caretBackSharp} aria-hidden="true"></ion-icon>
+                    <ion-icon icon={this.refresherArrowIcon} aria-hidden="true"></ion-icon>
                   </div>
                 )}
               </div>

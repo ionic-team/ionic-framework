@@ -105,6 +105,13 @@ export interface IonicConfig {
   refreshingSpinner?: SpinnerTypes | null;
 
   /**
+   * Overrides the arrow icon shown on the circular pulling spinner
+   * in all `<ion-refresher-content>` components, only when the theme
+   * is `md` or `ionic`.
+   */
+  refresherArrowIcon?: string;
+
+  /**
    * Overrides the default spinner type in all `<ion-infinite-scroll-content>` components.
    */
   infiniteLoadingSpinner?: SpinnerTypes | null;
