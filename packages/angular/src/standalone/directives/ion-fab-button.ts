@@ -3,6 +3,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -17,7 +18,7 @@ import { defineCustomElement as defineIonFabButton } from '@ionic/core/component
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type'],
+  inputs: [{ name: 'activated', transform: nullableBooleanAttribute }, 'closeIcon', 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', { name: 'show', transform: nullableBooleanAttribute }, 'size', 'target', { name: 'translucent', transform: nullableBooleanAttribute }, 'type'],
   outputs: ['ionFocus', 'ionBlur'],
 })
 export class IonFabButton {

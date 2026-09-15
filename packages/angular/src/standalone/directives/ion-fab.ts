@@ -3,6 +3,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -18,7 +19,7 @@ import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activated', 'edge', 'horizontal', 'vertical'],
+  inputs: [{ name: 'activated', transform: nullableBooleanAttribute }, { name: 'edge', transform: nullableBooleanAttribute }, 'horizontal', 'vertical'],
 })
 export class IonFab {
   protected el: HTMLIonFabElement;

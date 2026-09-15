@@ -10,9 +10,19 @@ import {
 import type { Components } from '@ionic/core';
 
 import { AngularDelegate } from '../../providers/angular-delegate';
+import { nullableBooleanAttribute } from '../../utils/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from '../../utils/proxy';
 
-const NAV_INPUTS = ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'];
+const NAV_INPUTS = [
+  { name: 'animated', transform: nullableBooleanAttribute },
+  'animation',
+  'root',
+  'rootParams',
+  { name: 'swipeGesture', transform: nullableBooleanAttribute },
+];
+
+/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
+const NAV_PROXY_INPUTS = NAV_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
 
 const NAV_METHODS = [
   'push',
@@ -42,7 +52,7 @@ export declare interface IonNav extends Components.IonNav {
 }
 
 @ProxyCmp({
-  inputs: NAV_INPUTS,
+  inputs: NAV_PROXY_INPUTS,
   methods: NAV_METHODS,
 })
 @Directive({
