@@ -1,5 +1,5 @@
+import { config } from '@global/config';
 import { getIonMode, getIonTheme } from '@global/ionic-global';
-import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
 import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
@@ -8,7 +8,6 @@ import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap, hostContext } from '@utils/theme';
 import { closeOutline, closeSharp } from 'ionicons/icons';
 
-import type { Theme } from '../../interface';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 import type { SelectOverlayOption } from '../select/select-interface';
@@ -97,14 +96,17 @@ export class SelectModal implements ComponentInterface {
     }
   }
 
+  /**
+   * Get the icon to use for the cancel icon.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
   private get cancelButtonIcon(): string {
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const icons: Record<Theme, string> = {
-      ios: closeOutline,
-      md: closeSharp,
-      ionic: xRegular,
-    };
-    return icons[theme];
+    const defaultIcon = theme === 'ios' ? closeOutline : closeSharp;
+
+    return config.get('selectModalCancelIcon', defaultIcon);
   }
 
   private getModalContextClasses() {

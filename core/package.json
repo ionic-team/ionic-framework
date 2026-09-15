@@ -34,7 +34,6 @@
     "loader/"
   ],
   "dependencies": {
-    "@phosphor-icons/core": "^2.1.1",
     "@stencil/core": "4.43.5",
     "ionicons": "^8.1.0",
     "tslib": "^2.1.0"

@@ -573,7 +573,6 @@ ion-checkbox,css-prop,--checkbox-background-checked,md
 ion-checkbox,css-prop,--checkmark-color,ionic
 ion-checkbox,css-prop,--checkmark-color,ios
 ion-checkbox,css-prop,--checkmark-color,md
-ion-checkbox,css-prop,--checkmark-height,ionic
 ion-checkbox,css-prop,--checkmark-width,ionic
 ion-checkbox,css-prop,--checkmark-width,ios
 ion-checkbox,css-prop,--checkmark-width,md
@@ -589,6 +588,7 @@ ion-checkbox,css-prop,--transition,md
 ion-checkbox,part,container
 ion-checkbox,part,error-text
 ion-checkbox,part,helper-text
+ion-checkbox,part,icon
 ion-checkbox,part,label
 ion-checkbox,part,mark
 ion-checkbox,part,supporting-text

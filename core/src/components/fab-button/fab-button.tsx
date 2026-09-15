@@ -1,4 +1,3 @@
-import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
@@ -238,25 +237,20 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
+  /**
+   * Get the icon to use for the close icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
   get fabButtonCloseIcon() {
     // Return the icon if it is explicitly set
     if (this.closeIcon != null) {
       return this.closeIcon;
     }
 
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: close,
-      ionic: xRegular,
-      md: close,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
     // Return the configured fab button close icon or the default icon
-    return config.get('fabButtonCloseIcon', defaultIcon);
+    return config.get('fabButtonCloseIcon', close);
   }
 
   render() {
