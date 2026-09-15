@@ -8,7 +8,6 @@ import { ProxyCmp } from '../../utils/proxy';
 
 import { IonRouterOutlet } from './router-outlet';
 
-
 const BACK_BUTTON_INPUTS = [
   'color',
   'defaultHref',
