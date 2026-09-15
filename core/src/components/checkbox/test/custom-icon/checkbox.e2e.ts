@@ -26,7 +26,7 @@ const customIcons = `
 `;
 
 /**
- * The icon is the same in every direction.
+ * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: custom icon'), () => {
