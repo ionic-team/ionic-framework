@@ -157,6 +157,16 @@ export interface IonicConfig {
   breadcrumbCollapsedIcon?: string;
 
   /**
+   * Overrides the checkmark icon for all `ion-checkbox` components.
+   */
+  checkboxCheckedIcon?: string;
+
+  /**
+   * Overrides the indeterminate icon for all `ion-checkbox` components.
+   */
+  checkboxIndeterminateIcon?: string;
+
+  /**
    * Overrides the next icon for all `ion-datetime` components.
    */
   datetimeNextIcon?: string;

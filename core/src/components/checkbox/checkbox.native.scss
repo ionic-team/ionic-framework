@@ -26,12 +26,6 @@
 // Checkbox: Keyboard Focus
 // ---------------------------------------------
 
-// The indicator is positioned against the wrapper, which is only made a
-// containing block here because the `ionic` theme draws its own ring instead.
-.native-wrapper {
-  position: relative;
-}
-
 :host(.ion-focused) .native-wrapper::after {
   @include border-radius(50%);
 
@@ -70,27 +64,11 @@
   @include margin(null, null, $checkbox-item-label-margin-bottom, null);
 }
 
+// Checkbox Icon
+// ----------------------------------------------------------------
+
 .checkbox-icon {
-  @include border-radius(var(--border-radius));
-
-  width: var(--size);
-  height: var(--size);
-
-  transition: var(--transition);
-
-  border-width: var(--border-width);
-  border-style: var(--border-style);
-  border-color: var(--border-color);
-
-  background: var(--checkbox-background);
-
-  box-sizing: border-box;
-}
-
-.checkbox-icon path {
-  fill: none;
-  stroke: var(--checkmark-color);
-  stroke-width: var(--checkmark-width);
+  font-size: calc(var(--size) - 2 * var(--border-width));
 }
 
 // Checkbox Bottom Content

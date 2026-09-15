@@ -5,6 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { Color, Theme } from '../../interface';
 
@@ -18,7 +19,8 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  *
  * @part container - The container for the checkbox mark.
  * @part label - The label text describing the checkbox.
- * @part mark - The checkmark used to indicate the checked state.
+ * @part icon - The icon that displays the checkmark.
+ * @part mark - The checkmark used to indicate the checked state. Only applies when no icon is set in the config.
  * @part supporting-text - Supporting text displayed beneath the checkbox label.
  * @part helper-text - Supporting text displayed beneath the checkbox label when the checkbox is valid.
  * @part error-text - Supporting text displayed beneath the checkbox label when the checkbox is invalid and touched.
@@ -296,6 +298,22 @@ export class Checkbox implements ComponentInterface {
     ev.stopPropagation();
   };
 
+  /**
+   * Get the icon to use for the checked icon.
+   * Use the icon set in the config.
+   */
+  get checkboxCheckedIcon(): string | undefined {
+    return config.get('checkboxCheckedIcon');
+  }
+
+  /**
+   * Get the icon to use for the indeterminate icon.
+   * Use the icon set in the config.
+   */
+  get checkboxIndeterminateIcon(): string | undefined {
+    return config.get('checkboxIndeterminateIcon');
+  }
+
   private getHintTextId(): string | undefined {
     const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
@@ -358,6 +376,7 @@ export class Checkbox implements ComponentInterface {
       size,
     } = this;
     const theme = getIonTheme(this);
+    const markIcon = indeterminate ? this.checkboxIndeterminateIcon : this.checkboxCheckedIcon;
     const path = getSVGPath(theme, indeterminate);
     const inItem = hostContext('ion-item', el);
     const inMultipleInputsItem = hostContext('ion-item.item-multiple-inputs', el);
@@ -424,16 +443,16 @@ export class Checkbox implements ComponentInterface {
             <slot></slot>
             {this.renderHintText()}
           </div>
-          <div class="native-wrapper">
-            {/* Phosphor Icons define a larger viewBox */}
-            <svg
-              class="checkbox-icon"
-              viewBox={theme === 'ionic' ? '0 0 256 256' : '0 0 24 24'}
-              part="container"
-              aria-hidden="true"
-            >
-              {path}
-            </svg>
+          <div class="native-wrapper" part="container">
+            {/*
+              If no icon is set in the config, the theme draws its own mark with
+              an inline SVG path so that it can be animated and sized with the
+              checkmark CSS properties. An icon set in the config replaces the
+              slotted path, so both are styled through the same element.
+            */}
+            <ion-icon class="checkbox-icon" icon={markIcon} part="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">{path}</svg>
+            </ion-icon>
           </div>
         </label>
       </Host>
@@ -447,19 +466,11 @@ export class Checkbox implements ComponentInterface {
       <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
     );
 
-    if (theme === 'md') {
+    if (theme === 'md' || theme === 'ionic') {
       path = indeterminate ? (
         <path d="M2 12H22" part="mark" />
       ) : (
         <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
-      );
-    } else if (theme === 'ionic') {
-      path = indeterminate ? (
-        // Phosphor Icon - minus bold
-        <path d="M228,128a12,12,0,0,1-12,12H40a12,12,0,0,1,0-24H216A12,12,0,0,1,228,128Z"></path>
-      ) : (
-        // Phosphor Icon - check bold
-        <path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path>
       );
     }
 
