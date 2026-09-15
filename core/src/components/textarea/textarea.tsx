@@ -51,6 +51,9 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
  * @part error-text - Supporting text displayed beneath the textarea label when the textarea is invalid and touched.
  * @part counter - The character counter displayed when the counter property is set.
  * @part bottom - The container element for helper text, error text, and counter.
+ * @part start - The wrapper element for the content in the start slot.
+ * @part control - The wrapper element containing the label and the native textarea. The `"ionic"` theme flattens this wrapper, so it cannot be given a box of its own there.
+ * @part end - The wrapper element for the content in the end slot.
  */
 @Component({
   tag: 'ion-textarea',
@@ -871,7 +874,7 @@ export class Textarea implements ComponentInterface {
 
   private renderStartContainer() {
     return (
-      <div key="start" class="textarea-start" ref={(el) => (this.startContainerEl = el)}>
+      <div key="start" class="textarea-start" part="start" ref={(el) => (this.startContainerEl = el)}>
         <slot name="start"></slot>
       </div>
     );
@@ -879,7 +882,7 @@ export class Textarea implements ComponentInterface {
 
   private renderEndContainer() {
     return (
-      <div key="end" class="textarea-end">
+      <div key="end" class="textarea-end" part="end">
         <slot name="end"></slot>
       </div>
     );
@@ -897,7 +900,7 @@ export class Textarea implements ComponentInterface {
     return [
       hasOutlineFill && this.renderOutlineContainer(),
       this.renderStartContainer(),
-      <div key="control" class="textarea-control">
+      <div key="control" class="textarea-control" part="control">
         {this.renderLabel()}
         <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
           {this.renderNativeTextarea()}

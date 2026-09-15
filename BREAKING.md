@@ -483,8 +483,6 @@ If you target `part="label"`, `part="container"`, or `part="icon"`, the part nam
 
 Use the new `part="start"`, `part="control"`, and `part="end"` parts to target the new structural wrappers.
 
-Note that the `"ionic"` theme flattens the control wrapper, so `part="control"` cannot be given a box of its own in that theme. Target `part="start"`, `part="end"`, or the field itself instead.
-
 <h4 id="version-9x-textarea">Textarea</h4>
 
 **Floating Label Behavior**
@@ -497,30 +495,32 @@ The internal DOM structure has been reorganized to support floating labels with 
 
 Removed: `.textarea-wrapper-inner`
 
-Added: `.textarea-control`
+Added: `.textarea-control`, exposed as `part="control"`
 
 Renamed:
-- `.start-slot-wrapper` → `.textarea-start`
-- `.end-slot-wrapper` → `.textarea-end`
+- `.start-slot-wrapper` → `.textarea-start`, now exposed as `part="start"`
+- `.end-slot-wrapper` → `.textarea-end`, now exposed as `part="end"`
 
 Restructured:
-- `.label-text-wrapper` moved from `.textarea-wrapper-inner` into `.textarea-control`
-- `.native-wrapper` moved from `.textarea-wrapper-inner` into `.textarea-control`
+- `.label-text-wrapper` moved from `.textarea-wrapper` into `.textarea-control`, now exposed as `part="label"`
+- `.native-wrapper` moved from `.textarea-wrapper-inner` into `.textarea-control`, now exposed as `part="container"`
 - `.start-slot-wrapper` moved from `.textarea-wrapper-inner` to `.textarea-wrapper` and was renamed `.textarea-start`
 - `.end-slot-wrapper` moved from `.textarea-wrapper-inner` to `.textarea-wrapper` and was renamed `.textarea-end`
 
-Update your selectors to account for these structural changes:
+Update your selectors to account for these structural changes. `ion-textarea` also moved to Shadow DOM in this release (see **Shadow DOM Conversion** below), so the wrappers are no longer reachable as descendants. Slotted content stays in the light DOM, so it is still reachable directly:
 
 ```diff
 -ion-textarea .textarea-wrapper-inner .native-wrapper { }
-+ion-textarea .textarea-control .native-wrapper { }
++ion-textarea::part(container) { }
 
 -ion-textarea .start-slot-wrapper [slot="start"] { }
-+ion-textarea .textarea-start [slot="start"] { }
++ion-textarea [slot="start"] { }
 
 -ion-textarea .end-slot-wrapper [slot="end"] { }
-+ion-textarea .textarea-end [slot="end"] { }
++ion-textarea [slot="end"] { }
 ```
+
+To style the wrappers themselves rather than the slotted content, use `part="start"` and `part="end"`.
 
 **Minimum Height Change**
 
@@ -545,9 +545,11 @@ ion-textarea.custom {
 }
 ```
 
+**Shadow DOM Conversion**
+
 Converted `ion-textarea` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
-If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, or `bottom` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, `bottom`, `start`, `control`, or `end` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
