@@ -14,13 +14,25 @@ import { ValueAccessor } from '@ionic/angular/common';
 import type { SegmentChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-segment.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-const SEGMENT_INPUTS = ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'];
+const SEGMENT_INPUTS = [
+  'color',
+  { name: 'disabled', transform: nullableBooleanAttribute },
+  'mode',
+  { name: 'scrollable', transform: nullableBooleanAttribute },
+  { name: 'selectOnFocus', transform: nullableBooleanAttribute },
+  { name: 'swipeGesture', transform: nullableBooleanAttribute },
+  'value',
+];
+
+/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
+const SEGMENT_PROXY_INPUTS = SEGMENT_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: SEGMENT_INPUTS,
+  inputs: SEGMENT_PROXY_INPUTS,
 })
 @Component({
   selector: 'ion-segment',

@@ -14,13 +14,14 @@ import { ValueAccessor, setIonicClasses } from '@ionic/angular/common';
 import type { ToggleChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-toggle.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const TOGGLE_INPUTS = [
-  'checked',
+  { name: 'checked', transform: nullableBooleanAttribute },
   'color',
-  'disabled',
-  'enableOnOffLabels',
+  { name: 'disabled', transform: nullableBooleanAttribute },
+  { name: 'enableOnOffLabels', transform: nullableBooleanAttribute },
   'errorText',
   'helperText',
   'justify',
@@ -30,9 +31,12 @@ const TOGGLE_INPUTS = [
   'value',
 ];
 
+/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
+const TOGGLE_PROXY_INPUTS = TOGGLE_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: TOGGLE_INPUTS,
+  inputs: TOGGLE_PROXY_INPUTS,
 })
 @Component({
   selector: 'ion-toggle',
