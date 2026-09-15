@@ -92,14 +92,30 @@ const triggerOnlyZoomPage = `
 `;
 
 /**
+ * The vertical sides take a larger zoom. The gap a missing `arrowHeight`
+ * normalization opens between the arrow and the content edge scales with it,
+ * so a larger factor keeps that gap comfortably clear of the tolerance. Going
+ * much beyond this leaves too little layout height below the trigger and the
+ * popover flips above it, which changes which edge the arrow sits against.
+ */
+const VERTICAL_SIDE_ZOOM = 1.5;
+
+/**
+ * The horizontal sides need a smaller one: at a larger zoom the popover no
+ * longer fits beside the trigger, and the offscreen adjustment would move it
+ * and mask the arrow position under test.
+ */
+const HORIZONTAL_SIDE_ZOOM = 1.25;
+
+/**
  * Builds a page with the popover on a given side, under a zoom. The trigger sits
  * in the middle so the popover fits on every side without the offscreen
  * adjustment moving it, which would mask an arrow positioning error.
  */
-const zoomedSidePage = (side: string) => `
+const zoomedSidePage = (side: string, zoom: number) => `
   <style>
     html {
-      zoom: 1.25;
+      zoom: ${zoom};
     }
 
     #trigger {
@@ -256,18 +272,27 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     /**
-     * On the vertical sides the arrow sits above or below the content and is
-     * centered horizontally on the trigger.
+     * On the vertical sides the arrow sits between the trigger and the content,
+     * centered horizontally on the trigger and flush against the content edge
+     * it points away from. That second relationship is what `arrowHeight`
+     * feeds into, so it needs asserting as well as the centering.
      */
     for (const side of ['top', 'bottom']) {
-      test(`should center the arrow on the trigger when side is ${side}`, async ({ page }) => {
-        await page.setContent(zoomedSidePage(side), config);
+      test(`should place the arrow between the trigger and the content when side is ${side}`, async ({ page }) => {
+        await page.setContent(zoomedSidePage(side, VERTICAL_SIDE_ZOOM), config);
         await openPopover(page, 'trigger');
 
         const triggerBox = (await page.locator('#trigger').boundingBox())!;
+        const contentBox = (await page.locator('ion-popover').locator('.popover-content').boundingBox())!;
         const arrowBox = (await page.locator('ion-popover').locator('.popover-arrow').boundingBox())!;
 
         expectAligned(arrowBox.x + arrowBox.width / 2, triggerBox.x + triggerBox.width / 2);
+
+        if (side === 'bottom') {
+          expectAligned(arrowBox.y + arrowBox.height, contentBox.y);
+        } else {
+          expectAligned(arrowBox.y, contentBox.y + contentBox.height);
+        }
       });
     }
 
@@ -277,7 +302,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
      */
     for (const side of ['left', 'right']) {
       test(`should center the arrow on the trigger when side is ${side}`, async ({ page }) => {
-        await page.setContent(zoomedSidePage(side), config);
+        await page.setContent(zoomedSidePage(side, HORIZONTAL_SIDE_ZOOM), config);
         await openPopover(page, 'trigger');
 
         const triggerBox = (await page.locator('#trigger').boundingBox())!;
