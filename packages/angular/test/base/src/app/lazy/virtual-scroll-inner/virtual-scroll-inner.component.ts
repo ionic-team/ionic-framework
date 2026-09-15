@@ -1,4 +1,6 @@
-import { Component, OnInit, NgZone, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { assertZoneContext } from '../../zone-assert.util';
 
 @Component({
   selector: 'app-virtual-scroll-inner',
@@ -10,7 +12,7 @@ export class VirtualScrollInnerComponent implements OnInit {
   onInit = 0;
 
   ngOnInit() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.onInit++;
     console.log('created');
   }

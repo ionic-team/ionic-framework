@@ -75,14 +75,6 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
       addEventListener(segmentEl, 'ionSelect', this.updateState);
       addEventListener(segmentEl, 'ionStyle', this.updateStyle);
     }
-
-    // Prevent buttons from being disabled when associated with segment content
-    if (this.contentId && this.disabled) {
-      printIonWarning(
-        `[ion-segment-button] - Segment buttons cannot be disabled when associated with an <ion-segment-content>.`
-      );
-      this.disabled = false;
-    }
   }
 
   disconnectedCallback() {
@@ -101,6 +93,18 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
     // Return if there is no contentId defined
     if (!this.contentId) return;
+
+    /**
+     * Checked here rather than in `connectedCallback` so frameworks that assign element
+     * props after inserting the element have set `disabled` by now. A disabled ion-segment
+     * pushes that onto its buttons too, which this guard should not undo.
+     */
+    if (this.disabled && this.segmentEl?.disabled !== true) {
+      printIonWarning(
+        `[ion-segment-button] - Segment buttons cannot be disabled when associated with an <ion-segment-content>.`
+      );
+      this.disabled = false;
+    }
 
     // Attempt to find the Segment Content by its contentId
     const segmentContent = document.getElementById(this.contentId) as HTMLIonSegmentContentElement | null;

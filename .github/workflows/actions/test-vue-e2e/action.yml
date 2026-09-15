@@ -32,6 +32,10 @@ runs:
       run: npm install
       shell: bash
       working-directory: ./packages/vue/test/build/${{ inputs.app }}
+    - name: 📦 Install Playwright Browsers
+      run: npx playwright install chromium
+      shell: bash
+      working-directory: ./packages/vue/test/build/${{ inputs.app }}
     - name: 🔄 Sync
       run: npm run sync
       shell: bash
@@ -42,5 +46,11 @@ runs:
       working-directory: ./packages/vue/test/build/${{ inputs.app }}
     - name: 🧪 Run E2E Tests
       run: npm run test:e2e
+      shell: bash
+      working-directory: ./packages/vue/test/build/${{ inputs.app }}
+    - name: 🎭 Run Playwright Tests
+      run: npx playwright test --retries=2
+      env:
+        CI: true
       shell: bash
       working-directory: ./packages/vue/test/build/${{ inputs.app }}

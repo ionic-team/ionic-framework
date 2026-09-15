@@ -37,6 +37,16 @@ describe('Logging', () => {
       });
     });
 
+    describe("when the logLevel configuration is set to 'DEBUG'", () => {
+      it('logs a warning to the console', () => {
+        config.set('logLevel', LogLevel.DEBUG);
+
+        printIonWarning('This is a warning message');
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith('[Ionic Warning]: This is a warning message');
+      });
+    });
+
     describe("when the logLevel configuration is set to 'ERROR'", () => {
       it('does not log a warning to the console', () => {
         config.set('logLevel', LogLevel.ERROR);
@@ -94,6 +104,16 @@ describe('Logging', () => {
     describe("when the logLevel configuration is set to 'WARN'", () => {
       it('logs an error to the console', () => {
         config.set('logLevel', LogLevel.WARN);
+
+        printIonError('This is an error message');
+
+        expect(consoleErrorSpy).toHaveBeenCalledWith('[Ionic Error]: This is an error message');
+      });
+    });
+
+    describe("when the logLevel configuration is set to 'DEBUG'", () => {
+      it('logs an error to the console', () => {
+        config.set('logLevel', LogLevel.DEBUG);
 
         printIonError('This is an error message');
 

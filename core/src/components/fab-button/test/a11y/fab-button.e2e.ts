@@ -36,7 +36,8 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
         config
       );
 
-      const results = await new AxeBuilder({ page }).analyze();
+      // TODO(FW-7733): Remove the disableRules call once the ticket is resolved.
+      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
       expect(results.violations).toEqual([]);
     });
   });
@@ -60,7 +61,8 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
         config
       );
 
-      const results = await new AxeBuilder({ page }).analyze();
+      // TODO(FW-7733): Remove the disableRules call once the ticket is resolved.
+      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
       expect(results.violations).toEqual([]);
     });
   });

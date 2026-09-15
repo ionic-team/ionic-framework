@@ -34,9 +34,29 @@ export const createViewStacks = (router: Router) => {
      * and will not run route guards that
      * are written in the component.
      */
+    const instance = viewItem.vueComponentRef.value;
     viewItem.matchedRoute.instances = {
-      default: viewItem.vueComponentRef.value,
+      default: instance,
     };
+
+    /**
+     * Run any callbacks passed to `next()` inside a
+     * `beforeRouteEnter` guard now that the component
+     * instance is available. Vue Router's official
+     * `<router-view>` does this in a post-flush watcher;
+     * because IonRouterOutlet manages rendering itself,
+     * the wrapper must invoke them explicitly.
+     */
+    const enterCallbacks = viewItem.matchedRoute.enterCallbacks?.default;
+    if (instance && enterCallbacks && enterCallbacks.length > 0) {
+      /**
+       * Clear before invoking so any synchronous navigation
+       * triggered by a callback can push fresh callbacks onto
+       * the array without being wiped by a post-iteration reset.
+       */
+      viewItem.matchedRoute.enterCallbacks.default = [];
+      enterCallbacks.forEach((cb) => cb(instance));
+    }
   };
 
   const findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
@@ -69,12 +89,19 @@ export const createViewStacks = (router: Router) => {
   };
 
   const findViewItemByPath = (
-    path: string,
+    path: string | undefined,
     outletId?: number,
     mustBeIonRoute = false
   ): ViewItem | undefined => {
+    /**
+     * An empty or missing pathname cannot identify a view item.
+     */
+    if (!path) {
+      return undefined;
+    }
+
     const matchView = (viewItem: ViewItem) => {
-      if ((mustBeIonRoute && !viewItem.ionRoute) || path === "") {
+      if (mustBeIonRoute && !viewItem.ionRoute) {
         return false;
       }
 
@@ -135,7 +162,7 @@ export const createViewStacks = (router: Router) => {
   ): ViewItem => {
     return {
       id: generateId("viewItem"),
-      pathname: routeInfo.pathname,
+      pathname: routeInfo.pathname!,
       outletId,
       matchedRoute,
       ionPageElement: ionPage,

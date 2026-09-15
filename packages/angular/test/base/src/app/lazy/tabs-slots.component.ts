@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from "@ionic/angular/lazy";
 
 /**
  * Test purpose: Validates that the tab bar is relocated to the

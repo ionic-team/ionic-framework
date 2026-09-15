@@ -7,12 +7,14 @@ import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
   BACKDROP,
+  cleanupRootFocusTrapAccessibility,
   dismiss,
   eventMethod,
+  FOCUS_TRAP_DISABLE_CLASS,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   setOverlayId,
-  FOCUS_TRAP_DISABLE_CLASS,
 } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
@@ -356,6 +358,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
     prepareOverlay(el);
     configureTriggerInteraction();
+
+    // Re-apply the root lock if moved without dismiss() being called
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(el);
+      // The disconnect tore down the header observer, and `present()` is its
+      // only other caller, so a move mid-layout would lose the recalculation.
+      this.recalculateContentOnHeaderReady();
+    }
   }
 
   disconnectedCallback() {
@@ -368,6 +378,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
     if (this.headerResizeObserver) {
       this.headerResizeObserver.disconnect();
       this.headerResizeObserver = undefined;
+    }
+
+    // Clean up aria-hidden if removed without dismiss() being called
+    if (this.presented) {
+      cleanupRootFocusTrapAccessibility();
     }
   }
 
@@ -568,6 +583,13 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
     if (!header || contentElements.length === 0) {
       return;
+    }
+
+    // Both `present()` and a reconnect call this, so drop any existing
+    // observer. Below the guards, so a call that bails cannot leave none.
+    if (this.headerResizeObserver) {
+      this.headerResizeObserver.disconnect();
+      this.headerResizeObserver = undefined;
     }
 
     this.headerResizeObserver = new ResizeObserver(async () => {

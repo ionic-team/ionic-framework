@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
-import { configs, test } from '@utils/test/playwright';
+import { configs, detachAndReattach, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('alert: basic'), () => {
@@ -203,3 +203,56 @@ class AlertFixture {
     await expect(this.alert).toHaveScreenshot(screenshotFn(`alert-${modifier}`));
   }
 }
+
+/**
+ * The button gesture only exists in iOS mode, so these run there.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('alert: moved while presented'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/alert/test/basic', config);
+    });
+
+    test('should keep the app root locked', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+      });
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.click('#basic');
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('body')).toHaveClass(/backdrop-no-scroll/);
+
+      await detachAndReattach(page.locator('ion-alert'));
+
+      await expect(page.locator('body')).toHaveClass(/backdrop-no-scroll/);
+    });
+
+    test('should keep activating buttons on press', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+      });
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.click('#multipleButtons');
+      await ionAlertDidPresent.next();
+
+      await detachAndReattach(page.locator('ion-alert'));
+
+      const button = page.locator('ion-alert .alert-button').first();
+      const box = (await button.boundingBox())!;
+
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+
+      await expect(button).toHaveClass(/ion-activated/);
+
+      await page.mouse.up();
+    });
+  });
+});
