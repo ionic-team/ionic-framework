@@ -912,6 +912,48 @@ export const safeCall = (handler: any, arg?: any) => {
   return undefined;
 };
 
+/**
+ * `--width` and `--height` values that leave an overlay spanning the viewport
+ * on that axis, so it reaches both edges. An empty value means the property
+ * was never overridden.
+ */
+const FULLSCREEN_SIZES = ['', '100%', '100vw', '100vh', '100dvw', '100dvh', '100svw', '100svh'];
+
+/**
+ * `--width` and `--height` values that size an overlay to its content, leaving
+ * the rendered size dependent on the content and on `--max-width` or
+ * `--max-height`.
+ */
+const CONTENT_SIZES = ['auto', 'fit-content', 'min-content', 'max-content'];
+
+type OverlaySizeType = 'fullscreen' | 'content' | 'definite';
+
+/**
+ * How an overlay's `--width` or `--height` determines its used size:
+ *
+ * `fullscreen` spans the viewport on that axis. `content` depends on the
+ * overlay's content, so its used size is not known until layout. `definite`
+ * resolves independently of the overlay's content size.
+ *
+ * Values are lowercased because CSS keywords are case-insensitive, while a
+ * custom property preserves the case in which it was authored. Content values
+ * are matched as a suffix so vendor-prefixed values such as `-moz-fit-content`
+ * are recognized.
+ */
+export const getOverlaySizeType = (size: string): OverlaySizeType => {
+  const value = size.trim().toLowerCase();
+
+  if (FULLSCREEN_SIZES.includes(value)) {
+    return 'fullscreen';
+  }
+
+  if (CONTENT_SIZES.some((keyword) => value.endsWith(keyword))) {
+    return 'content';
+  }
+
+  return 'definite';
+};
+
 export const BACKDROP = 'backdrop';
 export const GESTURE = 'gesture';
 export const OVERLAY_GESTURE_PRIORITY = 39;
