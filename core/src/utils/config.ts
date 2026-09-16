@@ -95,12 +95,13 @@ export interface IonicConfig {
   loadingSpinner?: SpinnerTypes | null;
 
   /**
-   * Overrides the default icon in all `<ion-refresh-content>` components.
+   * Overrides the default icon in all `<ion-refresher-content>` components.
    */
   refreshingIcon?: string;
 
   /**
-   * Overrides the default spinner type in all `<ion-refresh-content>` components.
+   * Overrides the default spinner type in all `<ion-refresher-content>`
+   * components.
    */
   refreshingSpinner?: SpinnerTypes | null;
 
