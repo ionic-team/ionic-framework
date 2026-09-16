@@ -136,14 +136,18 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
     }
   };
 
-  ref.addEventListener('keydown', onKeydown);
+  /*
+   * Capture phase, so the mode is current for the overlay focus trap, which
+   * intercepts Tab in its own capture listener.
+   */
+  ref.addEventListener('keydown', onKeydown, true);
   ref.addEventListener('focusin', onFocusin);
   ref.addEventListener('focusout', onFocusout);
   ref.addEventListener('touchstart', pointerDown, { passive: true });
   ref.addEventListener('mousedown', pointerDown);
 
   const destroy = () => {
-    ref.removeEventListener('keydown', onKeydown);
+    ref.removeEventListener('keydown', onKeydown, true);
     ref.removeEventListener('focusin', onFocusin);
     ref.removeEventListener('focusout', onFocusout);
     ref.removeEventListener('touchstart', pointerDown);

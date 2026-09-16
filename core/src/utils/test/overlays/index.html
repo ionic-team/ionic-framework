@@ -45,6 +45,9 @@
           <ion-button id="create-and-present-toast" onclick="createAndPresentToast()"
             >Create and Present Toast</ion-button
           >
+          <ion-button id="create-and-present-focus-trap" onclick="createAndPresentFocusTrapModal()"
+            >Create and Present Focus Trap Modal</ion-button
+          >
         </ion-content>
       </div>
     </ion-app>
@@ -126,6 +129,53 @@
         });
 
         await toast.present();
+      };
+
+      /*
+        Presents a modal for checking the focus trap's redirect by hand. An item
+        holding a single checkbox is focusable without being clickable, so the
+        trap resolves to the item itself and draws the indicator on it.
+
+        Moving focus to an element outside the modal makes the trap redirect
+        focus back in. The indicator should only follow that redirect when the
+        interaction was keyboard driven.
+      */
+      const createAndPresentFocusTrapModal = async () => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <ion-content class="ion-padding">
+            <ion-list>
+              <ion-item>
+                <ion-checkbox>Dark Mode</ion-checkbox>
+              </ion-item>
+            </ion-list>
+
+            <ion-button id="modal-move-focus">Move focus outside</ion-button>
+
+            <p>
+              Pointer case: click the button above. Keyboard case: press Tab twice to
+              reach it, then Enter. A third Tab escapes the modal, so the count
+              matters.
+            </p>
+
+            <p>
+              Only the keyboard case should leave the indicator on the Dark Mode row.
+            </p>
+          </ion-content>
+        `;
+
+        const moveFocusButton = div.querySelector('ion-button#modal-move-focus');
+        moveFocusButton.onclick = () => {
+          document.querySelector('#root-input').setFocus();
+        };
+
+        const modal = await modalController.create({
+          component: div,
+        });
+
+        await modal.present();
+
+        return modal;
       };
 
       const createNestedOverlayModal = async () => {
