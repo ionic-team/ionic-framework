@@ -739,7 +739,6 @@ export class Searchbar implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcon = theme === 'ios' ? closeCircle : closeSharp;
 
-    // Return the configured searchbar clear icon or the default icon
     return config.get('searchbarClearIcon', defaultIcon);
   }
 
@@ -760,7 +759,6 @@ export class Searchbar implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcon = theme === 'ios' ? searchOutline : searchSharp;
 
-    // Return the configured searchbar search icon or the default icon
     return config.get('searchbarSearchIcon', defaultIcon);
   }
 
@@ -776,7 +774,6 @@ export class Searchbar implements ComponentInterface {
       return this.cancelButtonIcon;
     }
 
-    // Return the configured searchbar cancel icon, the back button icon or the default icon
     return config.get('searchbarCancelIcon', config.get('backButtonIcon', arrowBackSharp));
   }
 

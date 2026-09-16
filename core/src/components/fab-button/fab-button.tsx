@@ -249,7 +249,6 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
       return this.closeIcon;
     }
 
-    // Return the configured fab button close icon or the default icon
     return config.get('fabButtonCloseIcon', close);
   }
 

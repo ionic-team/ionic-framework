@@ -392,7 +392,6 @@ export class Toggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcon = theme === 'ios' ? ellipseOutline : removeOutline;
 
-    // Return the configured toggle unchecked icon or the default icon
     return config.get('toggleUncheckedIcon', defaultIcon);
   }
 

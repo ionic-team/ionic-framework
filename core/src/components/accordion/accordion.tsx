@@ -253,7 +253,6 @@ export class Accordion implements ComponentInterface {
       return this.toggleIcon;
     }
 
-    // Return the configured accordion toggle icon or the default icon
     return config.get('accordionToggleIcon', chevronDown);
   }
 

@@ -46,7 +46,6 @@ export class Reorder implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcon = theme === 'ios' ? reorderThreeOutline : reorderTwoSharp;
 
-    // Return the configured reorder handle icon or the default icon
     return config.get('reorderHandleIcon', defaultIcon);
   }
 

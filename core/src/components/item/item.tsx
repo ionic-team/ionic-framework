@@ -368,7 +368,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       return this.detailIcon;
     }
 
-    // Return the configured item detail icon or the default icon
     return config.get('itemDetailIcon', chevronForward);
   }
 

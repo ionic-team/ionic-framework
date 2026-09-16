@@ -95,7 +95,6 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     const theme = getIonTheme(this);
     const defaultIcon = theme === 'ios' ? chevronBack : arrowBackSharp;
 
-    // Return the configured back button icon or the default icon
     return config.get('backButtonIcon', defaultIcon);
   }
 

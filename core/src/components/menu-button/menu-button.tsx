@@ -86,7 +86,6 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
     const theme = getIonTheme(this);
     const defaultIcon = theme === 'ios' ? menuOutline : menuSharp;
 
-    // Return the configured menu icon or the default icon
     return config.get('menuIcon', defaultIcon);
   }
 

@@ -119,7 +119,6 @@ export class InputPasswordToggle implements ComponentInterface {
       return this.hideIcon;
     }
 
-    // Return the configured input password hide icon or the default icon
     return config.get('inputPasswordHideIcon', eyeOff);
   }
 
@@ -135,7 +134,6 @@ export class InputPasswordToggle implements ComponentInterface {
       return this.showIcon;
     }
 
-    // Return the configured input password show icon or the default icon
     return config.get('inputPasswordShowIcon', eye);
   }
 

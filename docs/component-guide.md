@@ -811,7 +811,6 @@ get inputClearIcon(): string {
   const theme = getIonTheme(this);
   const defaultIcon = theme === 'ios' ? closeCircle : closeSharp;
 
-  // Return the configured input clear icon or the default icon
   return config.get('inputClearIcon', defaultIcon);
 }
 ```

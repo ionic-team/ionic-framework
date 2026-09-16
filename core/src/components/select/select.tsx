@@ -1307,7 +1307,6 @@ export class Select implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
 
-    // Return the configured select expanded icon or the default icon
     return config.get('selectExpandedIcon', defaultIcon);
   }
 

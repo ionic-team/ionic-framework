@@ -2751,7 +2751,6 @@ export class Datetime implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get datetimeNextIcon(): string {
-    // Return the configured datetime next icon or the default icon
     return config.get('datetimeNextIcon', chevronForward);
   }
 
@@ -2761,7 +2760,6 @@ export class Datetime implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get datetimePreviousIcon(): string {
-    // Return the configured datetime previous icon or the default icon
     return config.get('datetimePreviousIcon', chevronBack);
   }
 
@@ -2775,7 +2773,6 @@ export class Datetime implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcon = theme === 'ios' ? chevronForward : caretDownSharp;
 
-    // Return the configured datetime show month and year icon or the default icon
     return config.get('datetimeCollapsedIcon', defaultIcon);
   }
 
@@ -2789,7 +2786,6 @@ export class Datetime implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcon = theme === 'ios' ? chevronDown : caretUpSharp;
 
-    // Return the configured datetime hide month and year icon or the default icon
     return config.get('datetimeExpandedIcon', defaultIcon);
   }
 

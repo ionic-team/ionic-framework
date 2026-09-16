@@ -139,7 +139,6 @@ export class Breadcrumb implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get breadcrumbCollapsedIcon() {
-    // Return the configured breadcrumb collapsed icon or the default icon
     return config.get('breadcrumbCollapsedIcon', ellipsisHorizontal);
   }
 
@@ -149,7 +148,6 @@ export class Breadcrumb implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get breadcrumbSeparatorIcon() {
-    // Return the configured breadcrumb separator icon or the default icon
     return config.get('breadcrumbSeparatorIcon', chevronForwardOutline);
   }
 
