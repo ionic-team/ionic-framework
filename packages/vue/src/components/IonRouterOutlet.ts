@@ -43,7 +43,6 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
   },
   setup() {
     defineCustomElement();
-    printIonWarning("Warning: it's visible!");
 
     const injectedRoute = inject(routeLocationKey)!;
     const route = useRoute();
