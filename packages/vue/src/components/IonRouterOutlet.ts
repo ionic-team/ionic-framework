@@ -293,7 +293,7 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
        * methods to work properly.
        */
       if (enteringEl === undefined) {
-        printIonWarning(`[@ionic/vue Warning]: The view you are trying to render for path ${routeInfo.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected.
+        printIonWarning(`The view you are trying to render for path ${routeInfo.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected.
 
 See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
       }

@@ -37,7 +37,7 @@ const injectHook = (
     return wrappedHook;
   } else {
     printIonWarning(
-      "[@ionic/vue]: Ionic Lifecycle Hooks can only be used during execution of setup()."
+      "Ionic Lifecycle Hooks can only be used during execution of setup()."
     );
   }
 };
