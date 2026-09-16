@@ -1,6 +1,6 @@
-import { printIonWarning } from "@ionic/core";
 import type { AnimationBuilder } from "@ionic/core/components";
 import {
+  printIonWarning,
   LIFECYCLE_DID_ENTER,
   LIFECYCLE_DID_LEAVE,
   LIFECYCLE_WILL_ENTER,
@@ -43,6 +43,7 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
   },
   setup() {
     defineCustomElement();
+    printIonWarning("Warning: it's visible!");
 
     const injectedRoute = inject(routeLocationKey)!;
     const route = useRoute();

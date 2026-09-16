@@ -1,4 +1,4 @@
-import { Config } from '@global/config';
+import { config } from '@global/config';
 
 export enum LogLevel {
   OFF = 'OFF',
@@ -20,23 +20,13 @@ const LOG_LEVEL_RANK: Record<LogLevel, number> = {
   [LogLevel.DEBUG]: 3,
 };
 
-const getConfigLogLevel = (): LogLevel => {
-  if (typeof (window as any) !== 'undefined') {
-    const Ionic = (window as any).Ionic;
-    if (Ionic && Ionic.config) {
-      const config = Ionic.config as Config;
-      // Levels set through a query parameter arrive as raw strings, hence the uppercasing.
-      return String(config.get('logLevel', LogLevel.WARN)).toUpperCase() as LogLevel;
-    }
-  }
-  return LogLevel.WARN;
-};
-
 /**
- * Whether the configured level is verbose enough to log `minimum`.
+ * Whether the configured level is verbose enough to log `minimum`. Levels set
+ * through a query parameter arrive as raw strings, hence the uppercasing.
  */
 const isLogLevelEnabled = (minimum: LogLevel): boolean => {
-  return LOG_LEVEL_RANK[getConfigLogLevel()] >= LOG_LEVEL_RANK[minimum];
+  const configured = String(config.get('logLevel', LogLevel.WARN)).toUpperCase() as LogLevel;
+  return LOG_LEVEL_RANK[configured] >= LOG_LEVEL_RANK[minimum];
 };
 
 /**

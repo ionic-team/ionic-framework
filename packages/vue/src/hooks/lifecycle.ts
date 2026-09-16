@@ -1,4 +1,4 @@
-import { printIonWarning } from "@ionic/core";
+import { printIonWarning } from "@ionic/core/components";
 import type { ComponentInternalInstance } from "vue";
 import { getCurrentInstance } from "vue";
 
