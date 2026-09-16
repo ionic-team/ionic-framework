@@ -65,7 +65,8 @@
 // ----------------------------------------------------------------
 
 .checkbox-icon {
-  font-size: calc(var(--size) - 2 * var(--border-width));
+  width: 100%;
+  height: 100%;
 }
 
 // Checkbox Bottom Content
