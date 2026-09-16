@@ -16,11 +16,11 @@ const phosphorHeart = `data:image/svg+xml;base64,${Buffer.from(
  */
 const customIcons = `
   <script>
-    window.Ionic = {
-      config: {
-        checkboxCheckedIcon: '${phosphorHeart}',
-        checkboxIndeterminateIcon: 'star',
-      },
+    window.Ionic = window.Ionic || {};
+    window.Ionic.config = {
+      ...window.Ionic.config,
+      checkboxCheckedIcon: '${phosphorHeart}',
+      checkboxIndeterminateIcon: 'star',
     };
   </script>
 `;
