@@ -48,10 +48,12 @@ export const focusElements = (elements: Element[]) => {
 };
 
 /**
- * Whether the most recent interaction on the page was keyboard-driven.
+ * Reports whether the most recent interaction on the page was keyboard-driven.
  *
  * Check this before drawing the keyboard focus indicator programmatically.
- * Reads the document-level utility, the only one that sees every interaction.
+ *
+ * @returns `true` while the user is navigating with a keyboard, and before the
+ * first interaction on the page.
  */
 export const isKeyboardMode = () => getOrInitFocusVisibleUtility().isKeyboardMode();
 
@@ -60,22 +62,17 @@ export const isKeyboardMode = () => getOrInitFocusVisibleUtility().isKeyboardMod
  * element with `ion-focused`, so the keyboard focus indicator is only drawn
  * while the user navigates with a keyboard.
  *
- * Returns `setFocus` to mark elements explicitly, for a focus move the
- * listeners below cannot attribute to a keyboard event, and `destroy` to
- * detach the listeners.
- *
  * @param rootEl Scopes the utility to this element's shadow root, so it only
- * reacts to interactions inside that element. `ion-datetime` does this to draw
- * indicators on its own buttons. Omit it to listen on the document, which is
- * what `ion-app` does. Only the document-level instance publishes its mode
- * through `isKeyboardMode`.
+ * reacts to interactions inside it. Omit it to listen on the document.
+ * @returns `setFocus` to mark elements focused programmatically, and `destroy`
+ * to detach the listeners.
  */
 export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => {
   let currentFocus: Element[] = [];
 
   /*
-   * Starts as `true` so a focus move before the user has interacted at all
-   * still draws an indicator, such as an element focused on page load.
+   * Starts as `true` so an element focused before the user has interacted,
+   * such as one focused on page load, still draws an indicator.
    */
   let keyboardMode = true;
 
