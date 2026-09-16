@@ -565,6 +565,7 @@ ion-checkbox,css-prop,--border-style,md
 ion-checkbox,css-prop,--border-width,ionic
 ion-checkbox,css-prop,--border-width,ios
 ion-checkbox,css-prop,--border-width,md
+ion-checkbox,css-prop,--checkbox-background,ionic
 ion-checkbox,css-prop,--checkbox-background,ios
 ion-checkbox,css-prop,--checkbox-background,md
 ion-checkbox,css-prop,--checkbox-background-checked,ionic

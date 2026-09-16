@@ -6,9 +6,6 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --checkbox-background: Background of the checkbox icon
-   */
   --checkbox-background-checked: #{ion-color(primary, base)};
   --border-color-checked: #{ion-color(primary, base)};
   --checkmark-color: #{ion-color(primary, contrast)};

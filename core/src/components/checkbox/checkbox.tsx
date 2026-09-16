@@ -19,7 +19,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  *
  * @part container - The container for the checkbox mark.
  * @part label - The label text describing the checkbox.
- * @part icon - The icon that displays the checkmark.
+ * @part icon - The icon that displays the checked or indeterminate mark.
  * @part mark - The checkmark used to indicate the checked state. Only applies when no icon is set in the config.
  * @part supporting-text - Supporting text displayed beneath the checkbox label.
  * @part helper-text - Supporting text displayed beneath the checkbox label when the checkbox is valid.
@@ -359,6 +359,8 @@ export class Checkbox implements ComponentInterface {
   render() {
     const {
       color,
+      checkboxCheckedIcon,
+      checkboxIndeterminateIcon,
       checked,
       disabled,
       el,
@@ -376,7 +378,7 @@ export class Checkbox implements ComponentInterface {
       size,
     } = this;
     const theme = getIonTheme(this);
-    const markIcon = indeterminate ? this.checkboxIndeterminateIcon : this.checkboxCheckedIcon;
+    const markIcon = indeterminate ? checkboxIndeterminateIcon : checkboxCheckedIcon;
     const path = getSVGPath(theme, indeterminate);
     const inItem = hostContext('ion-item', el);
     const inMultipleInputsItem = hostContext('ion-item.item-multiple-inputs', el);

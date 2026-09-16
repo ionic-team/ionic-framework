@@ -7,6 +7,7 @@
   /**
    * @prop --size: Size of the checkbox icon
    *
+   * @prop --checkbox-background: Background of the checkbox icon
    * @prop --checkbox-background-checked: Background of the checkbox icon when checked
    *
    * @prop --border-color: Border color of the checkbox icon
@@ -129,8 +130,6 @@ input {
  * checkmark icon and any configured icon apply color consistently.
  */
 .checkbox-icon {
-  position: relative;
-
   color: var(--checkmark-color);
 
   opacity: 0;
