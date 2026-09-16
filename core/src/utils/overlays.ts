@@ -1,5 +1,10 @@
 import { doc } from '@utils/browser';
-import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
+import {
+  focusFirstDescendant,
+  focusLastDescendant,
+  focusRedirectedElement,
+  focusableQueryString,
+} from '@utils/focus-trap';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
 import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import { printIonError, printIonWarning } from '@utils/logging';
@@ -294,7 +299,7 @@ const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, over
   }
 
   if (elementToFocus) {
-    focusVisibleElement(elementToFocus);
+    focusRedirectedElement(elementToFocus);
   } else {
     // Focus overlay instead of letting focus escape
     overlay.focus();
