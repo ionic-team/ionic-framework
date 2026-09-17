@@ -88,6 +88,11 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() target: string | undefined;
 
   componentWillLoad() {
+    /**
+     * Only the initial copy takes the attribute off the host, so an `aria-label` written
+     * after load stays on the host too. That's harmless here, because unlike `ion-item`
+     * the card host renders no role of its own, so nothing reads the leftover copy.
+     */
     this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
   }
 
