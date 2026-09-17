@@ -243,12 +243,7 @@
 :host .datetime-footer {
   @include globals.padding(globals.$ion-space-200, 0, 0, 0);
   @include globals.margin(globals.$ion-space-200, 0, 0, 0);
-  @include globals.border(
-    solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-400,
-    0,
-    0,
-    0
-  );
+  @include globals.border(solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-400, 0, 0, 0);
 }
 
 :host .datetime-buttons .datetime-action-buttons,
