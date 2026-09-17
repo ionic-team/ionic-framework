@@ -346,7 +346,7 @@ test-results-[current shard]-[total shards]
 
 Example:
 
-test-results-2-5 -→ Test results from job runner 2 out of 5.
+test-results-2-5 → Test results from job runner 2 out of 5.
 ```
 
 Download the appropriate artifact and unzip the file.

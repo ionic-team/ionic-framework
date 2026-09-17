@@ -312,6 +312,7 @@ To learn more:
 - [Managing Screenshots](/docs/core/testing/usage-instructions.md#managing-screenshots) covers why Docker is required, which screenshots are committed, and how Ionic team members update ground truths on CI.
 - [Best Practices](/docs/core/testing/best-practices.md) covers the conventions screenshot tests follow, including using one screenshot assertion per test.
 - [Playwright Test Utils](/docs/core/testing/api.md) documents `configs`, `screenshot`, and the other helpers.
+- [Playwright Visual Comparisons](https://playwright.dev/docs/test-snapshots) documents Playwright's screenshot comparison APIs, including `toHaveScreenshot()` and its options.
 
 
 #### Building Changes
