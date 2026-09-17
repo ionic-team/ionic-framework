@@ -122,6 +122,7 @@ describe('ion-checkbox: icon', () => {
     const icon = checkbox.shadowRoot?.querySelector('.checkbox-icon')!;
 
     expect(icon.getAttribute('icon')).toBe('custom-checked-icon');
+    expect(icon.querySelector('svg')).toBeNull();
   });
 
   it('should pass the indeterminate icon set in the config to the icon', async () => {
@@ -138,5 +139,6 @@ describe('ion-checkbox: icon', () => {
     const icon = checkbox.shadowRoot?.querySelector('.checkbox-icon')!;
 
     expect(icon.getAttribute('icon')).toBe('custom-indeterminate-icon');
+    expect(icon.querySelector('svg')).toBeNull();
   });
 });
