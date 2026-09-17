@@ -99,8 +99,8 @@ export type Attributes = { [key: string]: any };
  * helper function should be called in componentWillLoad and assigned to a variable
  * that is later used in the render function.
  *
- * This does not need to be reactive as changing attributes on the host element
- * does not trigger a re-render.
+ * This copies once. Use `createAttributeController` instead when the attributes can
+ * change after load, since a host attribute change does not trigger a re-render.
  */
 export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) => {
   const attributeObject: Attributes = {};
@@ -122,8 +122,10 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
  * List of available ARIA attributes + `role`.
  * Removed deprecated attributes.
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
+ *
+ * @internal Exported for `attribute-controller.ts`, which needs the same set.
  */
-const ariaAttributes = [
+export const ariaAttributes = [
   'role',
   'aria-activedescendant',
   'aria-atomic',
