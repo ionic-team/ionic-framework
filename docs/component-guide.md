@@ -465,24 +465,41 @@ render() {
 
 Labels should be passed directly to the component in the form of either visible text or an `aria-label`. The visible text can be set inside of a `label` element, and the `aria-label` can be set directly on the interactive element.
 
-In the following example the `aria-label` can be inherited from the Host using the `inheritAttributes` or `inheritAriaAttributes` utilities. This allows developers to set `aria-label` on the host element since they do not have access to inside the shadow root.
+In the following example the `aria-label` is copied from the Host using `createAttributeController`. This allows developers to set `aria-label` on the host element since they do not have access to inside the shadow root.
 
 > [!NOTE]
-> Use `inheritAttributes` to specify which attributes should be inherited or `inheritAriaAttributes` to inherit all of the possible `aria` attributes.
+> Use `createAttributeController` to specify which attributes should be copied or `createAriaAttributeController` to copy all of the possible `aria` attributes.
+
+The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load.
+
+> [!IMPORTANT]
+> Pass `hostOwnedAttributes`, the last argument of either function, for any attribute that should be copied at load but not watched afterwards. There are two cases. One is an attribute the component renders on its own `<Host>`, like the `aria-disabled` that `ion-button` renders from its `disabled` prop, where watching it would let the component's own renders overwrite a developer's value. The other is an attribute that would put a second node in the accessibility tree if the host kept a copy, like `role`, since only the initial copy removes attributes from the host and anything written after load stays there too.
+
+> [!NOTE]
+> Attributes that reference an element by ID (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-activedescendant`) cannot resolve a light DOM ID from inside the shadow root, so only copy those when the target is in the same tree.
 
 ```tsx
-import { Prop } from '@stencil/core';
-import { inheritAttributes } from '@utils/helpers';
-import type { Attributes } from '@utils/helpers';
+import { Prop, forceUpdate } from '@stencil/core';
+import { createAttributeController } from '@utils/attribute-controller';
+import type { AttributeController } from '@utils/attribute-controller';
 
 ...
 
-private inheritedAttributes: Attributes = {};
+private ariaController?: AttributeController;
 
 @Prop() labelText?: string;
 
 componentWillLoad() {
-  this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+  this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+}
+
+connectedCallback() {
+  // componentWillLoad does not run again when the host is moved.
+  this.ariaController?.init();
+}
+
+disconnectedCallback() {
+  this.ariaController?.destroy();
 }
 
 render() {
@@ -490,7 +507,7 @@ render() {
     <Host>
       <label>
         {this.labelText}
-        <input type="checkbox" {...this.inheritedAttributes} />
+        <input type="checkbox" {...(this.ariaController?.attributes ?? {})} />
       </label>
     </Host>
   )
@@ -578,24 +595,41 @@ render() {
 
 Labels should be passed directly to the component in the form of either visible text or an `aria-label`. The visible text can be set inside of a `label` element, and the `aria-label` can be set directly on the interactive element.
 
-In the following example the `aria-label` can be inherited from the Host using the `inheritAttributes` or `inheritAriaAttributes` utilities. This allows developers to set `aria-label` on the host element since they do not have access to inside the shadow root.
+In the following example the `aria-label` is copied from the Host using `createAttributeController`. This allows developers to set `aria-label` on the host element since they do not have access to inside the shadow root.
 
 > [!NOTE]
-> Use `inheritAttributes` to specify which attributes should be inherited or `inheritAriaAttributes` to inherit all of the possible `aria` attributes.
+> Use `createAttributeController` to specify which attributes should be copied or `createAriaAttributeController` to copy all of the possible `aria` attributes.
+
+The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load.
+
+> [!IMPORTANT]
+> Pass `hostOwnedAttributes`, the last argument of either function, for any attribute that should be copied at load but not watched afterwards. There are two cases. One is an attribute the component renders on its own `<Host>`, like the `aria-disabled` that `ion-button` renders from its `disabled` prop, where watching it would let the component's own renders overwrite a developer's value. The other is an attribute that would put a second node in the accessibility tree if the host kept a copy, like `role`, since only the initial copy removes attributes from the host and anything written after load stays there too.
+
+> [!NOTE]
+> Attributes that reference an element by ID (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-activedescendant`) cannot resolve a light DOM ID from inside the shadow root, so only copy those when the target is in the same tree.
 
 ```tsx
-import { Prop } from '@stencil/core';
-import { inheritAttributes } from '@utils/helpers';
-import type { Attributes } from '@utils/helpers';
+import { Prop, forceUpdate } from '@stencil/core';
+import { createAttributeController } from '@utils/attribute-controller';
+import type { AttributeController } from '@utils/attribute-controller';
 
 ...
 
-private inheritedAttributes: Attributes = {};
+private ariaController?: AttributeController;
 
 @Prop() labelText?: string;
 
 componentWillLoad() {
-  this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+  this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+}
+
+connectedCallback() {
+  // componentWillLoad does not run again when the host is moved.
+  this.ariaController?.init();
+}
+
+disconnectedCallback() {
+  this.ariaController?.destroy();
 }
 
 render() {
@@ -603,7 +637,7 @@ render() {
     <Host>
       <label>
         {this.labelText}
-        <input type="checkbox" role="switch" {...this.inheritedAttributes} />
+        <input type="checkbox" role="switch" {...(this.ariaController?.attributes ?? {})} />
       </label>
     </Host>
   )
