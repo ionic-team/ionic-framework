@@ -58,7 +58,7 @@
 
   margin-bottom: globals.$ion-space-200;
 
-  border-bottom: globals.$ion-border-style-solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-400;
+  border-bottom: solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-400;
 }
 
 :host .datetime-header .datetime-title {
@@ -100,7 +100,7 @@
   min-width: globals.$ion-scale-1600;
   min-height: globals.$ion-scale-1000;
 
-  border: var(--focus-ring-width) globals.$ion-border-style-solid transparent;
+  border: var(--focus-ring-width) solid transparent;
 
   color: globals.$ion-semantics-primary-base;
 }
@@ -133,7 +133,7 @@
 
 // TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
 .calendar-next-prev ion-button.button-has-icon-only.ion-focused::part(native) {
-  border: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
+  border: globals.$ion-border-size-050 solid globals.$ion-border-focus-default;
 
   outline: none;
 }
@@ -185,7 +185,7 @@
 
 // Focused Day
 .calendar-day:focus-visible {
-  border: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
+  border: var(--focus-ring-width) solid var(--focus-ring-color);
 }
 
 // Hovered Day
@@ -244,7 +244,7 @@
   @include globals.padding(globals.$ion-space-200, 0, 0, 0);
   @include globals.margin(globals.$ion-space-200, 0, 0, 0);
   @include globals.border(
-    globals.$ion-border-style-solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-400,
+    solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-400,
     0,
     0,
     0

@@ -6,7 +6,7 @@
   --background: #{globals.$tabbar-ionic-background};
   --background-activated: #{globals.$tabbar-ionic-background-activated};
   --background-focused: #{globals.$tabbar-ionic-background-focused};
-  --border: #{globals.$ion-border-size-0} #{globals.$ion-border-style-solid} #{globals.$tabbar-ionic-border-color};
+  --border: #{globals.$ion-border-size-0} solid #{globals.$tabbar-ionic-border-color};
   --color: #{globals.$tabbar-ionic-color};
   --color-selected: #{globals.$tabbar-ionic-color-selected};
 
@@ -99,7 +99,9 @@
 :host(.tab-bar-compact.tab-bar-scroll-hidden) {
   transform: translateY(calc(100% + var(--ion-safe-area-bottom, 0) + globals.$ion-space-1000)) translateX(calc(-50%));
 
-  transition: transform globals.$ion-transition-time-350 globals.$ion-transition-curve-base;
+  // Was $ion-transition-time-350, removed from the token scale in design-tokens 2.x.
+  // Snapped to the nearest surviving step, 300 (the alternative, 500, is three times further).
+  transition: transform globals.$ion-transition-time-300 globals.$ion-transition-curve-base;
 }
 
 :host([slot="top"].tab-bar-compact.tab-bar-scroll-hidden) {

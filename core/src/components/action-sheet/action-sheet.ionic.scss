@@ -30,7 +30,7 @@
 .action-sheet-button.ion-focused::after {
   @include globals.focused-state(
     globals.$ion-border-size-050,
-    globals.$ion-border-style-solid,
+    solid,
     globals.$ion-border-focus-default
   );
 

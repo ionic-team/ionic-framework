@@ -3,7 +3,11 @@
 
 // Transition utility classes
 .item-sliding-transition-open .item {
-  transition: transform globals.$ion-transition-time-250 globals.$ion-transition-curve-smooth;
+  // Was $ion-transition-time-250, removed from the token scale in design-tokens 2.x
+  // (it now goes 200 -> 300). Snapped down to 200 rather than up to 300 — 250 sat exactly
+  // between the two, and 300 is the snapback duration below, so rounding up would have made
+  // the open gesture as slow as its snapback instead of deliberately quicker.
+  transition: transform globals.$ion-transition-time-200 globals.$ion-transition-curve-smooth;
 }
 
 .item-sliding-transition-snapback .item {
