@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Checkbox - Custom Icon</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Checkbox - Custom Icon</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="test-content">
+        <ion-list>
+          <ion-item>
+            <ion-checkbox>Unchecked</ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox checked="true">Checked</ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox indeterminate="true">Indeterminate</ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Phosphor Icons ship as SVG files, so they are supplied as a data URL.
+      // This is the `heart` icon at the `bold` weight, which is used because it
+      // cannot be mistaken for the checkmark the theme draws.
+      const phosphorHeart =
+        'data:image/svg+xml;base64,' +
+        btoa(
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M178,36c-20.09,0-37.92,7.93-50,21.56C115.92,43.93,98.09,36,78,36a66.08,66.08,0,0,0-66,66c0,72.34,105.81,130.14,110.31,132.57a12,12,0,0,0,11.38,0C138.19,232.14,244,174.34,244,102A66.08,66.08,0,0,0,178,36Zm-5.49,142.36A328.69,328.69,0,0,1,128,210.16a328.69,328.69,0,0,1-44.51-31.8C61.82,159.77,36,131.42,36,102A42,42,0,0,1,78,60c17.8,0,32.7,9.4,38.89,24.54a12,12,0,0,0,22.22,0C145.3,69.4,160.2,60,178,60a42,42,0,0,1,42,42C220,131.42,194.18,159.77,172.51,178.36Z"/></svg>'
+        );
+
+      window.Ionic = {
+        config: {
+          checkboxCheckedIcon: phosphorHeart,
+          checkboxIndeterminateIcon: 'star',
+        },
+      };
+    </script>
+
+    <style>
+      ion-checkbox {
+        --checkbox-background-checked: #ecfc78;
+      }
+
+      ion-checkbox::part(container) {
+        border-radius: 6px;
+        border: 2px solid #ecfc78;
+      }
+
+      ion-checkbox::part(icon) {
+        color: black;
+      }
+    </style>
+  </body>
+</html>

@@ -7,6 +7,7 @@
   /**
    * @prop --size: Size of the checkbox icon
    *
+   * @prop --checkbox-background: Background of the checkbox icon
    * @prop --checkbox-background-checked: Background of the checkbox icon when checked
    *
    * @prop --border-color: Border color of the checkbox icon
@@ -97,17 +98,52 @@ input {
 }
 
 .native-wrapper {
+  @include mixins.border-radius(var(--border-radius));
+
   display: flex;
 
+  position: relative;
+
+  flex-shrink: 0;
+
   align-items: center;
+
+  width: var(--size);
+  height: var(--size);
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--checkbox-background);
+
+  box-sizing: border-box;
 }
 
+// Checkbox Icon
+// ----------------------------------------------------------------
+
+/**
+ * Apply the color to the ion-icon container so that the default
+ * checkmark icon and any configured icon apply color consistently.
+ */
 .checkbox-icon {
-  position: relative;
+  color: var(--checkmark-color);
+
+  opacity: 0;
+}
+
+.checkbox-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .checkbox-icon path {
-  opacity: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--checkmark-width);
 }
 
 // Checkbox Bottom Content
@@ -247,15 +283,15 @@ input {
 // Checked / Indeterminate Checkbox
 // ---------------------------------------------
 
-:host(.checkbox-checked) .checkbox-icon,
-:host(.checkbox-indeterminate) .checkbox-icon {
+:host(.checkbox-checked) .native-wrapper,
+:host(.checkbox-indeterminate) .native-wrapper {
   border-color: var(--border-color-checked);
 
   background: var(--checkbox-background-checked);
 }
 
-:host(.checkbox-checked) .checkbox-icon path,
-:host(.checkbox-indeterminate) .checkbox-icon path {
+:host(.checkbox-checked) .checkbox-icon,
+:host(.checkbox-indeterminate) .checkbox-icon {
   opacity: 1;
 }
 
