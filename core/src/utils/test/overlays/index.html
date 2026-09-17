@@ -132,45 +132,37 @@
       };
 
       /*
-        Presents a modal for checking the focus trap's redirect by hand. An item
-        holding a single checkbox is focusable without being clickable, so the
-        trap resolves to the item itself and draws the indicator on it.
-
-        Moving focus to an element outside the modal makes the trap redirect
-        focus back in. The indicator should only follow that redirect when the
-        interaction was keyboard driven.
+        Presents a modal for checking the focus trap's redirect by hand. Both
+        routes move focus to the input behind the modal, which the trap
+        redirects back to the checkbox. Only the keyboard route should leave an
+        indicator there.
       */
       const createAndPresentFocusTrapModal = async () => {
         const div = document.createElement('div');
         div.innerHTML = `
           <ion-content class="ion-padding">
-            <ion-list>
-              <ion-item>
-                <ion-checkbox>Dark Mode</ion-checkbox>
-              </ion-item>
-            </ion-list>
+            <ion-checkbox>Dark Mode</ion-checkbox>
 
             <ion-button id="modal-move-focus">Move focus outside</ion-button>
 
-            <p>
-              Pointer case: click the button above. Keyboard case: press ArrowDown.
-              Both move focus to the same element outside the modal.
-            </p>
+            <p>Pointer: click the button above. Expect false below.</p>
+
+            <p>Keyboard: reopen the modal, press Tab twice to reach the button, then Enter. Expect true below.</p>
+
+            <p id="focus-trap-status">indicator on the checkbox: not checked yet</p>
 
             <p>
-              Only the keyboard case should leave the indicator on the Dark Mode row.
-              The indicator is a faint grey wash, so the reading below reports it
-              directly.
+              The indicator is a faint wash, so the reading above is the reliable
+              check. Reopen the modal between the two routes, since a click leaves
+              the focus utility out of keyboard mode.
             </p>
-
-            <p id="focus-trap-status">indicator on the Dark Mode row: not checked yet</p>
           </ion-content>
         `;
 
         const report = () => {
-          const item = div.querySelector('ion-item');
+          const checkbox = div.querySelector('ion-checkbox');
           const status = div.querySelector('#focus-trap-status');
-          status.textContent = `indicator on the Dark Mode row: ${item.classList.contains('ion-focused')}`;
+          status.textContent = `indicator on the checkbox: ${checkbox.classList.contains('ion-focused')}`;
         };
 
         /*
@@ -185,24 +177,8 @@
         const moveFocusButton = div.querySelector('ion-button#modal-move-focus');
         moveFocusButton.onclick = moveFocusOutside;
 
-        /*
-          ArrowDown gives the keyboard case a route that does not depend on tab
-          order, since Tab does not reach the button while the trap holds focus
-          on the wrapper.
-        */
-        const onKeydown = (ev) => {
-          if (ev.key === 'ArrowDown') {
-            moveFocusOutside();
-          }
-        };
-        document.addEventListener('keydown', onKeydown);
-
         const modal = await modalController.create({
           component: div,
-        });
-
-        modal.onDidDismiss().then(() => {
-          document.removeEventListener('keydown', onKeydown);
         });
 
         await modal.present();
