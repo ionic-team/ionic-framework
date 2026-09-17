@@ -153,24 +153,56 @@
             <ion-button id="modal-move-focus">Move focus outside</ion-button>
 
             <p>
-              Pointer case: click the button above. Keyboard case: press Tab twice to
-              reach it, then Enter. A third Tab escapes the modal, so the count
-              matters.
+              Pointer case: click the button above. Keyboard case: press ArrowDown.
+              Both move focus to the same element outside the modal.
             </p>
 
             <p>
               Only the keyboard case should leave the indicator on the Dark Mode row.
+              The indicator is a faint grey wash, so the reading below reports it
+              directly.
             </p>
+
+            <p id="focus-trap-status">indicator on the Dark Mode row: not checked yet</p>
           </ion-content>
         `;
 
-        const moveFocusButton = div.querySelector('ion-button#modal-move-focus');
-        moveFocusButton.onclick = () => {
-          document.querySelector('#root-input').setFocus();
+        const report = () => {
+          const item = div.querySelector('ion-item');
+          const status = div.querySelector('#focus-trap-status');
+          status.textContent = `indicator on the Dark Mode row: ${item.classList.contains('ion-focused')}`;
         };
+
+        /*
+          The reading is deferred a frame because `setFocus` is async, so the
+          trap has not redirected focus back yet when it returns.
+        */
+        const moveFocusOutside = () => {
+          document.querySelector('#root-input').setFocus();
+          requestAnimationFrame(report);
+        };
+
+        const moveFocusButton = div.querySelector('ion-button#modal-move-focus');
+        moveFocusButton.onclick = moveFocusOutside;
+
+        /*
+          ArrowDown gives the keyboard case a route that does not depend on tab
+          order, since Tab does not reach the button while the trap holds focus
+          on the wrapper.
+        */
+        const onKeydown = (ev) => {
+          if (ev.key === 'ArrowDown') {
+            moveFocusOutside();
+          }
+        };
+        document.addEventListener('keydown', onKeydown);
 
         const modal = await modalController.create({
           component: div,
+        });
+
+        modal.onDidDismiss().then(() => {
+          document.removeEventListener('keydown', onKeydown);
         });
 
         await modal.present();
