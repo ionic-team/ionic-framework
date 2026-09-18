@@ -3,12 +3,12 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { componentOnReady, isEndSide } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
+import { isRTL } from '@utils/rtl';
 import { watchForOptions } from '@utils/watch-options';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
 import type { Side } from '../menu/menu-interface';
-import { isRTL } from '@utils/rtl';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;

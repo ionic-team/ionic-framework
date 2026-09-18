@@ -1,4 +1,5 @@
 import { isRTL } from '@utils/rtl';
+
 import type { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
 import type { TransitionOptions } from '../transition';
@@ -585,13 +586,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
     const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-condense');
 
-    const { forward, backward } = createLargeTitleTransition(
-      rootAnimation,
-      rtl,
-      backDirection,
-      enteringEl,
-      leavingEl
-    );
+    const { forward, backward } = createLargeTitleTransition(rootAnimation, rtl, backDirection, enteringEl, leavingEl);
     enteringToolBarEls.forEach((enteringToolBarEl) => {
       const enteringToolBar = createAnimation();
       enteringToolBar.addElement(enteringToolBarEl);

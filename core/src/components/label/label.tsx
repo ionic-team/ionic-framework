@@ -1,10 +1,10 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
-import { isRTL } from '@utils/rtl';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

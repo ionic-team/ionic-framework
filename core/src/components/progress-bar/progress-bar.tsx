@@ -1,12 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { clamp } from '@utils/helpers';
+import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
-import { isRTL } from '@utils/rtl';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -25,7 +25,6 @@ import { isRTL } from '@utils/rtl';
   shadow: true,
 })
 export class ProgressBar implements ComponentInterface {
-
   @Element() el: HTMLElement;
 
   /**
