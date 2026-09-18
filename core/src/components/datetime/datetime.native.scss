@@ -67,18 +67,12 @@
 }
 
 .calendar-day:not(.calendar-day-adjacent-day):focus {
-  background: ion-color(primary, base, 0.2);
+  background: globals.ion-color(primary, base, 0.2);
 
-  box-shadow: 0px 0px 0px 4px ion-color(primary, base, 0.2);
+  box-shadow: 0px 0px 0px 4px globals.ion-color(primary, base, 0.2);
 }
 
 :host(.ion-color) .calendar-day:not(.calendar-day-adjacent-day):focus {
-  background: current-color(base, 0.2);
-
-  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
-}
-
-.calendar-day:focus {
   background: globals.current-color(base, 0.2);
 
   box-shadow: 0px 0px 0px 4px globals.current-color(base, 0.2);
@@ -116,7 +110,7 @@
 }
 
 :host .time-body-active {
-  color: ion-color(primary, base);
+  color: globals.ion-color(primary, base);
 }
 
 :host(.ion-color) .time-body-active {
@@ -127,7 +121,7 @@
 // -----------------------------------
 
 :host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
-  color: ion-color(primary, base);
+  color: globals.ion-color(primary, base);
 }
 
 :host(.ion-color.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
@@ -137,7 +131,7 @@
 // Default text color for action buttons (cancel, clear, done).
 // When datetime doesn't receive a color prop.
 :host .datetime-action-buttons ion-button {
-  --color: #{ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, base)};
 }
 
 .calendar-month-year-toggle {
