@@ -14,13 +14,24 @@ import { ValueAccessor } from '@ionic/angular/common';
 import type { RadioGroupChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-radio-group.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'compareWith', 'errorText', 'helperText', 'name', 'value'];
+const RADIO_GROUP_INPUTS = [
+  { name: 'allowEmptySelection', transform: nullableBooleanAttribute },
+  'compareWith',
+  'errorText',
+  'helperText',
+  'name',
+  'value',
+];
+
+/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
+const RADIO_GROUP_PROXY_INPUTS = RADIO_GROUP_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: RADIO_GROUP_INPUTS,
+  inputs: RADIO_GROUP_PROXY_INPUTS,
 })
 @Component({
   selector: 'ion-radio-group',

@@ -14,18 +14,19 @@ import { ValueAccessor } from '@ionic/angular/common';
 import type { SearchbarInputEventDetail, SearchbarChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-searchbar.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const SEARCHBAR_INPUTS = [
-  'animated',
+  { name: 'animated', transform: nullableBooleanAttribute },
   'autocomplete',
-  'autocorrect',
+  { name: 'autocorrect', transform: nullableBooleanAttribute },
   'cancelButtonIcon',
   'cancelButtonText',
   'clearIcon',
   'color',
   'debounce',
-  'disabled',
+  { name: 'disabled', transform: nullableBooleanAttribute },
   'enterkeyhint',
   'inputmode',
   'mode',
@@ -34,14 +35,17 @@ const SEARCHBAR_INPUTS = [
   'searchIcon',
   'showCancelButton',
   'showClearButton',
-  'spellcheck',
+  { name: 'spellcheck', transform: nullableBooleanAttribute },
   'type',
   'value',
 ];
 
+/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
+const SEARCHBAR_PROXY_INPUTS = SEARCHBAR_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: SEARCHBAR_INPUTS,
+  inputs: SEARCHBAR_PROXY_INPUTS,
   methods: ['setFocus', 'getInputElement'],
 })
 @Component({
