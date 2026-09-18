@@ -1,6 +1,12 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
 html {
+  // The design tokens package defaults this to Inter, which is not yet adopted
+  // at this layer. Defining it here keeps every $ion-font-family reference on
+  // the system stack without editing the generated ionic.vars.scss.
+  --token-font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
   font-family: globals.$ion-font-family;
 }
 
