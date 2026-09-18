@@ -14,19 +14,20 @@ import { ValueAccessor } from '@ionic/angular/common';
 import type { TextareaChangeEventDetail, TextareaInputEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-textarea.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const TEXTAREA_INPUTS = [
-  'autoGrow',
+  { name: 'autoGrow', transform: nullableBooleanAttribute },
   'autocapitalize',
-  'autofocus',
-  'clearOnEdit',
+  { name: 'autofocus', transform: nullableBooleanAttribute },
+  { name: 'clearOnEdit', transform: nullableBooleanAttribute },
   'color',
   'cols',
-  'counter',
+  { name: 'counter', transform: nullableBooleanAttribute },
   'counterFormatter',
   'debounce',
-  'disabled',
+  { name: 'disabled', transform: nullableBooleanAttribute },
   'enterkeyhint',
   'errorText',
   'fill',
@@ -39,18 +40,21 @@ const TEXTAREA_INPUTS = [
   'mode',
   'name',
   'placeholder',
-  'readonly',
-  'required',
+  { name: 'readonly', transform: nullableBooleanAttribute },
+  { name: 'required', transform: nullableBooleanAttribute },
   'rows',
   'shape',
-  'spellcheck',
+  { name: 'spellcheck', transform: nullableBooleanAttribute },
   'value',
   'wrap',
 ];
 
+/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
+const TEXTAREA_PROXY_INPUTS = TEXTAREA_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: TEXTAREA_INPUTS,
+  inputs: TEXTAREA_PROXY_INPUTS,
   methods: ['setFocus', 'getInputElement'],
 })
 @Component({
