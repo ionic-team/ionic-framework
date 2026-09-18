@@ -9,8 +9,8 @@
  *
  * @param hostEl the element to resolve the direction for.
  */
-export const isRTL = (hostEl?: Element | null): boolean => {
-  for (let el = hostEl; el; el = el.parentElement) {
+export const isRTL = (hostEl: Element): boolean => {
+  for (let el: Element | null = hostEl; el; el = el.parentElement) {
     const dir = el.getAttribute('dir')?.toLowerCase();
 
     if (dir === 'rtl') {

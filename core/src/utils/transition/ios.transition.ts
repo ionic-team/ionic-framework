@@ -1,3 +1,5 @@
+import { isRTL } from '@utils/rtl';
+
 import type { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
 import type { TransitionOptions } from '../transition';
@@ -501,9 +503,9 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     const CENTER = '0%';
     const OFF_OPACITY = 0.8;
 
-    const isRTL = navEl.ownerDocument.dir === 'rtl';
-    const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
-    const OFF_LEFT = isRTL ? '33%' : '-33%';
+    const rtl = isRTL(navEl);
+    const OFF_RIGHT = rtl ? '-99.5%' : '99.5%';
+    const OFF_LEFT = rtl ? '33%' : '-33%';
 
     const enteringEl = opts.enteringEl;
     const leavingEl = opts.leavingEl;
@@ -584,13 +586,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
     const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-condense');
 
-    const { forward, backward } = createLargeTitleTransition(
-      rootAnimation,
-      isRTL,
-      backDirection,
-      enteringEl,
-      leavingEl
-    );
+    const { forward, backward } = createLargeTitleTransition(rootAnimation, rtl, backDirection, enteringEl, leavingEl);
     enteringToolBarEls.forEach((enteringToolBarEl) => {
       const enteringToolBar = createAnimation();
       enteringToolBar.addElement(enteringToolBarEl);
@@ -668,7 +664,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         if (!translucentHeader) {
           enteringToolBarBg.fromTo(OPACITY, 0.01, 'var(--opacity)');
         } else {
-          enteringToolBarBg.fromTo('transform', isRTL ? 'translateX(-100%)' : 'translateX(100%)', 'translateX(0px)');
+          enteringToolBarBg.fromTo('transform', rtl ? 'translateX(-100%)' : 'translateX(100%)', 'translateX(0px)');
         }
 
         // forward direction, entering page has a back button
@@ -680,7 +676,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           const enteringBackBtnText = createAnimation();
           enteringBackBtnText
             .addElement(shadow(backButtonEl).querySelector('.button-text')!) // REVIEW
-            .fromTo(`transform`, isRTL ? 'translateX(-100px)' : 'translateX(100px)', 'translateX(0px)');
+            .fromTo(`transform`, rtl ? 'translateX(-100px)' : 'translateX(100px)', 'translateX(0px)');
 
           enteringToolBar.addAnimation(enteringBackBtnText);
         }
@@ -709,7 +705,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         // leaving content, back direction
         leavingContent
           .beforeClearStyles([OPACITY])
-          .fromTo('transform', `translateX(${CENTER})`, isRTL ? 'translateX(-100%)' : 'translateX(100%)');
+          .fromTo('transform', `translateX(${CENTER})`, rtl ? 'translateX(-100%)' : 'translateX(100%)');
 
         const leavingPage = getIonPageElement(leavingEl) as HTMLElement;
         rootAnimation.afterAddWrite(() => {
@@ -811,14 +807,14 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           if (!inactiveHeader) {
             // leaving toolbar, back direction
             leavingTitle
-              .fromTo('transform', `translateX(${CENTER})`, isRTL ? 'translateX(-100%)' : 'translateX(100%)')
+              .fromTo('transform', `translateX(${CENTER})`, rtl ? 'translateX(-100%)' : 'translateX(100%)')
               .fromTo(OPACITY, 0.99, 0);
           }
 
           leavingToolBarItems.fromTo(
             'transform',
             `translateX(${CENTER})`,
-            isRTL ? 'translateX(-100%)' : 'translateX(100%)'
+            rtl ? 'translateX(-100%)' : 'translateX(100%)'
           );
           leavingToolBarBg.beforeClearStyles([OPACITY, 'transform']);
           // leaving toolbar, back direction, and there's no entering toolbar
@@ -827,14 +823,14 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           if (!translucentHeader) {
             leavingToolBarBg.fromTo(OPACITY, 'var(--opacity)', 0);
           } else {
-            leavingToolBarBg.fromTo('transform', 'translateX(0px)', isRTL ? 'translateX(-100%)' : 'translateX(100%)');
+            leavingToolBarBg.fromTo('transform', 'translateX(0px)', rtl ? 'translateX(-100%)' : 'translateX(100%)');
           }
 
           if (backButtonEl && !backward) {
             const leavingBackBtnText = createAnimation();
             leavingBackBtnText
               .addElement(shadow(backButtonEl).querySelector('.button-text')!) // REVIEW
-              .fromTo('transform', `translateX(${CENTER})`, `translateX(${(isRTL ? -124 : 124) + 'px'})`);
+              .fromTo('transform', `translateX(${CENTER})`, `translateX(${(rtl ? -124 : 124) + 'px'})`);
             leavingToolBar.addAnimation(leavingBackBtnText);
           }
         } else {

@@ -377,7 +377,7 @@ export const pointerCoord = (ev: any): { x: number; y: number } => {
  * it or its nearest ancestor that declares one. When omitted, the direction
  * is resolved from the document.
  */
-export const isEndSide = (side: Side, hostEl?: HTMLElement): boolean => {
+export const isEndSide = (side: Side, hostEl: HTMLElement): boolean => {
   const rtl = isRTL(hostEl);
 
   switch (side) {
