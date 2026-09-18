@@ -4,6 +4,7 @@ import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
+import { isRTL } from '@utils/rtl';
 
 @Component({
   tag: 'ion-title',
@@ -64,7 +65,7 @@ export class ToolbarTitle implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           [`title-${size}`]: true,
-          'title-rtl': document.dir === 'rtl',
+          'title-rtl': isRTL(this.el),
         })}
       >
         <div class="toolbar-title">

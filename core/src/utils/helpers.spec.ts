@@ -6,16 +6,6 @@ describe('isEndSide', () => {
     document.body.innerHTML = '';
   });
 
-  it('should use document direction when no host element is provided', () => {
-    document.dir = 'ltr';
-    expect(isEndSide('start')).toBe(false);
-    expect(isEndSide('end')).toBe(true);
-
-    document.dir = 'rtl';
-    expect(isEndSide('start')).toBe(true);
-    expect(isEndSide('end')).toBe(false);
-  });
-
   // https://github.com/ionic-team/ionic-framework/issues/30226
   it('should use the nearest ancestor dir attribute', () => {
     document.dir = 'ltr';

@@ -1,11 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { clamp } from '@utils/helpers';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
+import { isRTL } from '@utils/rtl';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -24,6 +25,9 @@ import type { Color } from '../../interface';
   shadow: true,
 })
 export class ProgressBar implements ComponentInterface {
+
+  @Element() el: HTMLElement;
+
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
    * Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
@@ -71,7 +75,7 @@ export class ProgressBar implements ComponentInterface {
           [mode]: true,
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
-          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
+          'progress-bar-reversed': isRTL(this.el) ? !reversed : reversed,
           'progress-bar-solid': progressSolid,
         })}
       >

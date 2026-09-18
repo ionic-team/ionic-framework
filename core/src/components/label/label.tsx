@@ -4,6 +4,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
+import { isRTL } from '@utils/rtl';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -112,7 +113,7 @@ export class Label implements ComponentInterface {
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           [`label-${position}`]: position !== undefined,
           [`label-no-animate`]: this.noAnimate,
-          'label-rtl': document.dir === 'rtl',
+          'label-rtl': isRTL(this.el),
         })}
       >
         <slot></slot>
