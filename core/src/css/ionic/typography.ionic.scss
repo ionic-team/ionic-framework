@@ -4,7 +4,7 @@ html {
   --token-font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol";
 
-  font-family: globals.$ion-font-family;
+  font-family: var(--token-font-family);
 }
 
 // Dynamic Type is an iOS-only feature, so
@@ -12,7 +12,7 @@ html {
 @supports (-webkit-touch-callout: none) {
   html {
     font: var(--ion-dynamic-font, 16px #{globals.$ion-font-family});
-    font-family: globals.$ion-font-family;
+    font-family: var(--token-font-family);
   }
 }
 
