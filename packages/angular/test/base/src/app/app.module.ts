@@ -1,10 +1,11 @@
 import { APP_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular/lazy';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AppLandingComponent } from './app-landing/app-landing.component';
+import { changeDetectionProviders } from './change-detection.providers';
+import { ModeSwitcherComponent } from './mode-switcher.component';
 
 const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
 
@@ -14,13 +15,15 @@ export function ionicConfigFactory(): any {
 }
 
 @NgModule({
-  declarations: [AppComponent, AppLandingComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     IonicModule.forRoot(ionicConfigFactory()),
+    ModeSwitcherComponent,
   ],
   providers: [
+    ...changeDetectionProviders,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: APP_ID, useValue: 'serverApp' },
   ],

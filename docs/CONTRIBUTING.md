@@ -323,9 +323,10 @@ Refer to [Ionic's E2E testing guide](/core/src/utils/test/playwright/docs/README
   - Vue: [`/packages/vue/src`](/packages/vue/src)
 2. Make your changes to the files. If the change is overly complex or out of the ordinary, add comments so we can understand the changes.
 3. Run lint on the directory and make sure there are no errors.
-4. Build the project.
-5. After the build is finished, commit the changes. Please follow the [commit message format](#commit-message-format) for every commit.
-6. [Submit a Pull Request](#submit-pull-request) of your changes.
+4. For React and Vue, run `npm run typecheck` in each package you changed (`/packages/react`, `/packages/react-router`, `/packages/vue`, `/packages/vue-router`). These packages build with rollup, which only reports type errors as warnings, so a passing build does not mean the types are clean. Angular has no `typecheck` script because ng-packagr already fails the build on type errors.
+5. Build the project.
+6. After the build is finished, commit the changes. Please follow the [commit message format](#commit-message-format) for every commit.
+7. [Submit a Pull Request](#submit-pull-request) of your changes.
 
 
 

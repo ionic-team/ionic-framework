@@ -200,7 +200,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       // Verify the click was triggered exactly once
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
-      // Verify that the event target is the checkbox and not the item
+      // Verify that the event target is the input and not the item
       const event = clickEvent.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-input');
     });
@@ -238,9 +238,148 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       // Verify the click was triggered exactly once
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
-      // Verify that the event target is the checkbox and not the item
+      // Verify that the event target is the input and not the item
       const event = clickEvent.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-input');
+    });
+
+    test('should trigger onclick only once when the input is itself slotted', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-input slot="end" label="Click Me" value="Test Value"></ion-input>
+        </ion-item>
+      `,
+        config
+      );
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('label.input-wrapper').click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+
+    test('should propagate clicks from start slot button to parent', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="parent" onclick="window.parentClicks = (window.parentClicks || 0) + 1">
+          Parent Container
+          <ion-input value="test@ionic.io" label="Email">
+            <ion-button slot="start" onclick="window.buttonClicks = (window.buttonClicks || 0) + 1">Icon</ion-button>
+          </ion-input>
+        </div>
+      `,
+        config
+      );
+
+      const button = page.locator('ion-button[slot="start"]');
+      const parent = page.locator('#parent');
+
+      // Click the button in the start slot
+      await button.click();
+
+      // The button's own click handler should have fired
+      let buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+
+      // The parent's click handler should also have fired
+      let parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(1);
+
+      // Click on the parent container (far right to avoid the start button)
+      await parent.click({ position: { x: 250, y: 50 } });
+
+      // Parent should have incremented
+      parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(2);
+
+      // Button should NOT have incremented
+      buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+    });
+
+    test('should propagate clicks from end slot button to parent', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="parent" onclick="window.parentClicks = (window.parentClicks || 0) + 1">
+          Parent Container
+          <ion-input value="test@ionic.io" label="Email">
+            <ion-button slot="end" onclick="window.buttonClicks = (window.buttonClicks || 0) + 1">Toggle</ion-button>
+          </ion-input>
+        </div>
+      `,
+        config
+      );
+
+      const button = page.locator('ion-button[slot="end"]');
+      const parent = page.locator('#parent');
+
+      // Click the button in the end slot
+      await button.click();
+
+      // The button's own click handler should have fired
+      let buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+
+      // The parent's click handler should also have fired
+      let parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(1);
+
+      // Click on the parent container (far left to avoid the end button)
+      await parent.click({ position: { x: 10, y: 50 } });
+
+      // Parent should have incremented
+      parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(2);
+
+      // Button should NOT have incremented
+      buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+    });
+  });
+});
+
+/**
+ * The solid and outline fills are only supported by `md` mode. These
+ * are the only fills that get padding which can cause a double click.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: click'), () => {
+    ['solid', 'outline'].forEach((fill) => {
+      test(`should trigger onclick only once when clicking the ${fill} wrapper padding`, async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-input
+            label="Click Me"
+            value="Test Value"
+            label-placement="floating"
+            fill="${fill}"
+          ></ion-input>
+        `,
+          config
+        );
+
+        const clickEvent = await page.spyOnEvent('click');
+        const wrapper = page.locator('label.input-wrapper');
+
+        await wrapper.click({
+          position: {
+            x: 5,
+            y: 5,
+          },
+        });
+
+        expect(clickEvent).toHaveReceivedEventTimes(1);
+
+        const event = clickEvent.events[0];
+        expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-input');
+      });
     });
   });
 });

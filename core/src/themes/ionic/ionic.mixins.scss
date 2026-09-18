@@ -22,6 +22,27 @@
   content: "";
 }
 
+// Field box mixin to be used on the pseudo element that draws the box around a
+// form field's control and slots. The field's own stylesheet places it on the
+// grid and sets the border and background, since those vary per fill.
+//
+// ex: .input-wrapper::before {
+//       @include globals.field-box();
+//      }
+//
+// --------------------------------------------------
+@mixin field-box($border-radius: var(--border-radius, 0)) {
+  @include mixins.border-radius($border-radius);
+
+  align-self: stretch;
+
+  box-sizing: border-box;
+
+  content: "";
+
+  pointer-events: none;
+}
+
 // Disabled mixin to be used on pseudo elements for the Ionic Theme disabled state
 //
 // ex: :host(.checkbox-disabled) .native-wrapper:after {

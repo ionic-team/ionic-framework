@@ -23,18 +23,22 @@ runs:
       run: npm run lint
       shell: bash
       working-directory: ./packages/vue
+    # The rollup build reports type errors as warnings and still succeeds, so
+    # this step is what keeps the package type-clean.
+    - name: 🔎 Typecheck
+      run: npm run typecheck
+      shell: bash
+      working-directory: ./packages/vue
     - name: 🏗️ Build
       run: npm run build
       shell: bash
       working-directory: ./packages/vue
-    - name: Clean core package.json
-      run: git checkout ./package.json
+    - name: Clean package.json updates
+      run: git checkout ./core/package.json ./packages/react/package.json
       shell: bash
-      working-directory: ./core
     - name: 🔍 Check Diff
       run: git diff --exit-code
       shell: bash
-      working-directory: ./packages/vue
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-vue

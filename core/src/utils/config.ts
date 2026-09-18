@@ -272,11 +272,6 @@ export interface IonicConfig {
   toastEnter?: AnimationBuilder;
 
   /**
-   * Provides a custom enter animation for all `ion-picker-legacy`, overriding the default "animation".
-   */
-  pickerEnter?: AnimationBuilder;
-
-  /**
    * Provides a custom leave animation for all `ion-action-sheet`, overriding the default "animation".
    */
   actionSheetLeave?: AnimationBuilder;
@@ -305,11 +300,6 @@ export interface IonicConfig {
    * Provides a custom leave animation for all `ion-toast`, overriding the default "animation".
    */
   toastLeave?: AnimationBuilder;
-
-  /**
-   * Provides a custom leave animation for all `ion-picker-legacy`, overriding the default "animation".
-   */
-  pickerLeave?: AnimationBuilder;
 
   /**
    * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
@@ -353,6 +343,7 @@ export interface IonicConfig {
    * - `'OFF'`: No errors or warnings are logged.
    * - `'ERROR'`: Logs only errors.
    * - `'WARN'`: Logs errors and warnings.
+   * - `'DEBUG'`: Logs errors, warnings, and Ionic's internal diagnostics.
    */
   logLevel?: LogLevel;
 
@@ -377,7 +368,7 @@ type FocusManagerPriority = 'content' | 'heading' | 'banner';
 export const setupConfig = (config: IonicConfig) => {
   const win = window as any;
   const Ionic = win.Ionic;
-  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
     return;
   }
