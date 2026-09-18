@@ -19,17 +19,18 @@ import type {
 } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-input-otp.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const INPUT_OTP_INPUTS = [
   'autocapitalize',
   'color',
-  'disabled',
+  { name: 'disabled', transform: nullableBooleanAttribute },
   'fill',
   'inputmode',
   'length',
   'pattern',
-  'readonly',
+  { name: 'readonly', transform: nullableBooleanAttribute },
   'separators',
   'shape',
   'size',
@@ -37,9 +38,12 @@ const INPUT_OTP_INPUTS = [
   'value',
 ];
 
+/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
+const INPUT_OTP_PROXY_INPUTS = INPUT_OTP_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: INPUT_OTP_INPUTS,
+  inputs: INPUT_OTP_PROXY_INPUTS,
   methods: ['setFocus'],
 })
 @Component({

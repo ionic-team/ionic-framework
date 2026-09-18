@@ -19,31 +19,35 @@ import type {
 } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-range.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const RANGE_INPUTS = [
   'activeBarStart',
   'color',
   'debounce',
-  'disabled',
-  'dualKnobs',
+  { name: 'disabled', transform: nullableBooleanAttribute },
+  { name: 'dualKnobs', transform: nullableBooleanAttribute },
   'label',
   'labelPlacement',
   'max',
   'min',
   'mode',
   'name',
-  'pin',
+  { name: 'pin', transform: nullableBooleanAttribute },
   'pinFormatter',
-  'snaps',
+  { name: 'snaps', transform: nullableBooleanAttribute },
   'step',
-  'ticks',
+  { name: 'ticks', transform: nullableBooleanAttribute },
   'value',
 ];
 
+/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
+const RANGE_PROXY_INPUTS = RANGE_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: RANGE_INPUTS,
+  inputs: RANGE_PROXY_INPUTS,
 })
 @Component({
   selector: 'ion-range',

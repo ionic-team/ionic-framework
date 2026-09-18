@@ -29,6 +29,7 @@ import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
+import { nullableBooleanAttribute } from '../../utils/boolean-attribute';
 
 import { StackController } from './stack-controller';
 import { RouteView, StackDidChangeEvent, StackWillChangeEvent, getUrl, isTabSwitch } from './stack-utils';
@@ -39,7 +40,12 @@ import { RouteView, StackDidChangeEvent, StackWillChangeEvent, getUrl, isTabSwit
   selector: 'ion-router-outlet',
   exportAs: 'outlet',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'animation', 'mode', 'swipeGesture'],
+  inputs: [
+    { name: 'animated', transform: nullableBooleanAttribute },
+    'animation',
+    'mode',
+    { name: 'swipeGesture', transform: nullableBooleanAttribute },
+  ],
 })
 export abstract class IonRouterOutlet implements OnDestroy, OnInit {
   abstract outletContent: any;

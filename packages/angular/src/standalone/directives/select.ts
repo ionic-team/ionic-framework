@@ -14,13 +14,14 @@ import { ValueAccessor } from '@ionic/angular/common';
 import type { SelectChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-select.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const SELECT_INPUTS = [
   'cancelText',
   'color',
   'compareWith',
-  'disabled',
+  { name: 'disabled', transform: nullableBooleanAttribute },
   'errorText',
   'expandedIcon',
   'fill',
@@ -31,7 +32,7 @@ const SELECT_INPUTS = [
   'label',
   'labelPlacement',
   'mode',
-  'multiple',
+  { name: 'multiple', transform: nullableBooleanAttribute },
   'name',
   'okText',
   'placeholder',
@@ -41,9 +42,12 @@ const SELECT_INPUTS = [
   'value',
 ];
 
+/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
+const SELECT_PROXY_INPUTS = SELECT_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: SELECT_INPUTS,
+  inputs: SELECT_PROXY_INPUTS,
   methods: ['open'],
 })
 @Component({
