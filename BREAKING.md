@@ -24,6 +24,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input Otp](#version-10x-input-otp)
   - [Radio Group](#version-10x-radio-group)
   - [Textarea](#version-10x-textarea)
+- [Framework Specific](#version-10x-framework-specific)
+  - [Angular](#version-10x-angular)
 
 <h2 id="version-10x-components">Components</h2>
 
@@ -221,3 +223,24 @@ The internal wrappers that Ionic 9 introduced are no longer reachable as descend
 ```
 
 To style the wrappers themselves rather than the slotted content, use `part="start"` and `part="end"`.
+
+<h2 id="version-10x-framework-specific">Framework Specific</h2>
+
+<h4 id="version-10x-angular">Angular</h4>
+
+**Boolean Inputs Are Type Checked**
+
+Boolean inputs can now be set by attribute presence, so `<ion-item button detail>` is valid where it previously reported `Type 'string' is not assignable to type 'boolean'`.
+
+Declaring the transform that allows this also makes Angular type check these inputs, which it did not do before. Bindings that pass a value outside `boolean | string | null | undefined` now fail to compile. The common case is a truthiness binding:
+
+```diff
+- <ion-item [button]="items.length"></ion-item>
++ <ion-item [button]="!!items.length"></ion-item>
+```
+
+```
+error TS2322: Type 'number' is not assignable to type 'string | boolean | null | undefined'.
+```
+
+Coerce the expression to a boolean, with `!!value` or an explicit comparison such as `items.length > 0`. Bindings that already pass a boolean, a string, `null` or `undefined` are unaffected, and runtime behavior is unchanged.
