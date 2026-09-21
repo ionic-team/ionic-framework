@@ -139,7 +139,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
 
       const content = page.locator('ion-content');
-      const offsetTop = () => content.evaluate((el) => el.style.getPropertyValue('--offset-top'));
+      const offsetTop = () => content.evaluate((el) => el.style.getPropertyValue('--internal-offset-top'));
 
       await content.evaluate((el: HTMLIonContentElement) => (el.fullscreen = false));
 
@@ -175,7 +175,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       const content = page.locator('ion-content');
       const scrollRegion = page.locator('ion-content .inner-scroll');
-      const offsetTop = () => content.evaluate((el) => el.style.getPropertyValue('--offset-top'));
+      const offsetTop = () => content.evaluate((el) => el.style.getPropertyValue('--internal-offset-top'));
 
       await expect(async () => {
         expect(Math.abs((await scrollRegion.boundingBox())!.y)).toBeLessThanOrEqual(1);
