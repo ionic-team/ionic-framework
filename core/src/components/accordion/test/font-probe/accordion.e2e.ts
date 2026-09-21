@@ -7,6 +7,9 @@ import { configs, test } from '@utils/test/playwright';
  * runner. The ionic stack starts with `-apple-system, system-ui, ...`, neither
  * of which exists on Linux, so the face that wins there is decided by
  * fontconfig and cannot be determined from the stylesheets alone.
+ *
+ * It fails on purpose: the configured reporters (html, github) do not echo
+ * console output to the job log, but they do print failure messages.
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, title }) => {
   test.describe(title('accordion: font probe'), () => {
@@ -33,10 +36,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, title }
 
       const { root } = await client.send('DOM.getDocument', { depth: -1, pierce: true });
 
+      const report: string[] = [];
+
       for (const selector of ['ion-label', 'div[slot="content"]']) {
         const { nodeId } = await client.send('DOM.querySelector', { nodeId: root.nodeId, selector });
         if (!nodeId) {
-          console.log(`FONT-PROBE ${selector}: node not found`);
+          report.push(`${selector}: node not found`);
           continue;
         }
 
@@ -51,8 +56,10 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, title }
           };
         });
 
-        console.log(`FONT-PROBE ${selector} used=${JSON.stringify(fonts)} computed=${JSON.stringify(computed)}`);
+        report.push(`${selector} used=${JSON.stringify(fonts)} computed=${JSON.stringify(computed)}`);
       }
+
+      throw new Error(`FONT-PROBE\n${report.join('\n')}`);
     });
   });
 });
