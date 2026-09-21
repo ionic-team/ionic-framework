@@ -20,7 +20,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  * @part container - The container for the checkbox mark.
  * @part label - The label text describing the checkbox.
  * @part icon - The icon that displays the checked or indeterminate mark.
- * @part mark - The checkmark used to indicate the checked state. Only applies when no icon is set in the config.
+ * @part mark - The mark used to indicate the checked or indeterminate state. Only applies when no icon is set in the config.
  * @part supporting-text - Supporting text displayed beneath the checkbox label.
  * @part helper-text - Supporting text displayed beneath the checkbox label when the checkbox is valid.
  * @part error-text - Supporting text displayed beneath the checkbox label when the checkbox is invalid and touched.
