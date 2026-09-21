@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component } from "@angular/core";
 
 /**
  * Validates that inline modals will correctly display
@@ -16,9 +16,13 @@ export class ModalInlineComponent implements AfterViewInit {
 
   breakpointDidChangeCounter = 0;
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.items = ['A', 'B', 'C', 'D'];
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      this.cdr.markForCheck();
     }, 1000);
   }
 

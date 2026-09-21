@@ -1,6 +1,18 @@
 import { blockedTags, IonicSafeString, reflectPropertiesToAttributes, sanitizeDOMString, sanitizeDOMTree } from '..';
 
 describe('sanitizeDOMString', () => {
+  let consoleWarnSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    consoleWarnSpy = jest.spyOn(console, 'warn');
+    // Suppress console.warn output from polluting the test output
+    consoleWarnSpy.mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    consoleWarnSpy.mockRestore();
+  });
+
   it('disable sanitizer', () => {
     enableSanitizer(false);
     expect(sanitizeDOMString('<img src="x" onerror="alert(document.cookie);">')).toEqual(
@@ -24,6 +36,33 @@ describe('sanitizeDOMString', () => {
         '<button id="myButton" name="myButton" onclick="alert(document.cookie);">harmless button</button>'
       )
     ).toEqual('<button id="myButton" name="myButton">harmless button</button>');
+  });
+
+  it('filter onload', () => {
+    /**
+     * Only a non-outermost `<svg>` fires its load handler mid-parse, so the
+     * nesting is what makes these payloads real.
+     */
+    expect(sanitizeDOMString('<svg><svg onload=alert(document.cookie)></svg></svg>')).toEqual('');
+    expect(sanitizeDOMString('<svg><svg onLoad=alert(document.cookie)></svg></svg>')).toEqual('');
+    expect(sanitizeDOMString('<svg><svg ONLOAD=alert(document.cookie)></svg></svg>')).toEqual('');
+    expect(sanitizeDOMString('<svg><svg onload =alert(document.cookie)></svg></svg>')).toEqual('');
+  });
+
+  it('filter onload discards benign content too (known false positive)', () => {
+    /**
+     * The check runs before parsing, so it can't tell an attribute from a
+     * URL or from prose. Both of these lose their whole string.
+     */
+    expect(sanitizeDOMString('<a href="/docs?onload=1">docs</a>')).toEqual('');
+    expect(sanitizeDOMString('<a href="/docs?onLoad=1">docs</a>')).toEqual('');
+  });
+
+  it('warn when content is discarded by the onload check', () => {
+    sanitizeDOMString('<svg><svg onLoad=alert(document.cookie)></svg></svg>');
+
+    expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
+    expect(consoleWarnSpy.mock.calls[0][0]).toContain('onload handler');
   });
 
   it('filter <a> href JS', () => {

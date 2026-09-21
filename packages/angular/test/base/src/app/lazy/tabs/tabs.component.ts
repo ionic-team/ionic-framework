@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonTabBar } from '@ionic/angular';
+import { IonTabBar } from '@ionic/angular/lazy';
 
 @Component({
   selector: 'app-tabs',

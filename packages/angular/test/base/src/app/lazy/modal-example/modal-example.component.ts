@@ -1,6 +1,8 @@
-import { Component, Input, NgZone, OnInit, Optional } from '@angular/core';
+import { Component, Input, OnInit, Optional, signal } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { ModalController, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { ModalController, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular/lazy';
+
+import { assertZoneContext } from '../../zone-assert.util';
 
 @Component({
     selector: 'app-modal-example',
@@ -16,11 +18,13 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
     select: new UntypedFormControl([])
   });
 
-  onInit = 0;
-  willEnter = 0;
-  didEnter = 0;
-  willLeave = 0;
-  didLeave = 0;
+  // Signals so state set from Ionic lifecycle hooks renders under the
+  // OnPush-by-default change detection introduced in Angular 22.
+  onInit = signal(0);
+  willEnter = signal(0);
+  didEnter = signal(0);
+  willLeave = signal(0);
+  didLeave = signal(0);
 
   modal!: HTMLElement;
 
@@ -30,8 +34,8 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
   ) {}
 
   ngOnInit() {
-    NgZone.assertInAngularZone();
-    this.onInit++;
+    assertZoneContext();
+    this.onInit.update((value) => value + 1);
   }
 
   setSelect(value: null | undefined) {
@@ -39,23 +43,23 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
   }
 
   ionViewWillEnter() {
-    if (this.onInit !== 1) {
+    if (this.onInit() !== 1) {
       throw new Error('ngOnInit was not called');
     }
-    NgZone.assertInAngularZone();
-    this.willEnter++;
+    assertZoneContext();
+    this.willEnter.update((value) => value + 1);
   }
   ionViewDidEnter() {
-    NgZone.assertInAngularZone();
-    this.didEnter++;
+    assertZoneContext();
+    this.didEnter.update((value) => value + 1);
   }
   ionViewWillLeave() {
-    NgZone.assertInAngularZone();
-    this.willLeave++;
+    assertZoneContext();
+    this.willLeave.update((value) => value + 1);
   }
   ionViewDidLeave() {
-    NgZone.assertInAngularZone();
-    this.didLeave++;
+    assertZoneContext();
+    this.didLeave.update((value) => value + 1);
   }
   closeModal() {
     this.modalCtrl.dismiss();

@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, detachAndReattach, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: inline'), () => {
@@ -149,6 +149,35 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(modal).toBeHidden();
 
       // Verify the container was actually removed
+      await expect(modalContainer).not.toBeAttached();
+    });
+
+    test('it should still dismiss on parent removal after the modal was moved', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+      });
+
+      // Moving a presented modal is a disconnect plus a connect, so the
+      // observer built at the end of `present()` has to be rebuilt.
+      await page.goto('/src/components/modal/test/inline', config);
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      const modal = page.locator('ion-modal').first();
+      const modalContainer = page.locator('#modal-container');
+
+      await page.click('#open-inline-modal');
+      await ionModalDidPresent.next();
+      await expect(modal).toBeVisible();
+
+      await detachAndReattach(modal);
+
+      await page.click('#remove-modal-container');
+
+      const dismissEvent = await ionModalDidDismiss.next();
+
+      expect(dismissEvent.detail.role).toBe('parent-removed');
       await expect(modalContainer).not.toBeAttached();
     });
 

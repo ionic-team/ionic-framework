@@ -8,6 +8,15 @@ export const routes: Routes = [
     children: [
       { path: '', loadComponent: () => import('../home-page/home-page.component').then(c => c.HomePageComponent) },
       { path: 'inputs', loadComponent: () => import('../inputs/inputs.component').then(c => c.InputsComponent) },
+      { path: 'async-change-detection', loadComponent: () => import('../async-change-detection/async-change-detection.component').then(c => c.AsyncChangeDetectionComponent) },
+      { path: 'async-change-detection-tabs', redirectTo: '/standalone/async-change-detection-tabs/tab-one', pathMatch: 'full' },
+      {
+        path: 'async-change-detection-tabs',
+        loadComponent: () => import('../async-change-detection/async-change-detection-tabs.component').then(c => c.AsyncChangeDetectionTabsComponent),
+        children: [
+          { path: 'tab-one', loadComponent: () => import('../async-change-detection/async-change-detection.component').then(c => c.AsyncChangeDetectionComponent) }
+        ]
+      },
       { path: 'menu-controller', loadComponent: () => import('../menu-controller/menu-controller.component').then(c => c.MenuControllerComponent) },
       { path: 'action-sheet-controller', loadComponent: () => import('../action-sheet-controller/action-sheet-controller.component').then(c => c.ActionSheetControllerComponent) },
       { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },
@@ -65,6 +74,14 @@ export const routes: Routes = [
           { path: 'tab2', loadComponent: () => import('../tabs-search-params/tab2.component').then(c => c.TabsSearchParamsTab2Component) },
           { path: 'tab3', loadComponent: () => import('../tabs-search-params/tab3.component').then(c => c.TabsSearchParamsTab3Component) },
           { path: 'tab4', loadComponent: () => import('../tabs-search-params/tab4.component').then(c => c.TabsSearchParamsTab4Component) }
+        ]
+      },
+      {
+        path: 'swipe-gesture-disabled',
+        loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled.component').then(c => c.SwipeGestureDisabledComponent),
+        children: [
+          { path: '', loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled-main.component').then(c => c.SwipeGestureDisabledMainComponent) },
+          { path: 'details', loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled-details.component').then(c => c.SwipeGestureDisabledDetailsComponent) }
         ]
       },
       {

@@ -105,7 +105,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Set the input's autocorrect property.
    */
-  @Prop() autocorrect: 'on' | 'off' = 'off';
+  @Prop() autocorrect: boolean = false;
 
   /**
    * Set the cancel button icon. Only available when the theme is `"md"`.
@@ -846,7 +846,7 @@ export class Searchbar implements ComponentInterface {
             value={this.getValue()}
             autoCapitalize={autocapitalize === 'default' ? undefined : autocapitalize}
             autoComplete={this.autocomplete}
-            autoCorrect={this.autocorrect}
+            autoCorrect={this.autocorrect ? 'on' : 'off'}
             spellcheck={this.spellcheck}
             {...this.inheritedAttributes}
           />
