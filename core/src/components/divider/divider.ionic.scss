@@ -2,7 +2,7 @@
 @use "./divider.common.scss";
 
 :host hr {
-  border-top: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-border-default;
+  border-top: globals.$ion-border-size-025 solid globals.$ion-border-default;
 }
 
 // Divider Inset

@@ -69,15 +69,15 @@
 // --------------------------------------------------
 
 :host(.textarea-shape-soft) {
-  --border-radius: #{globals.$ion-soft-xl};
+  --border-radius: #{globals.$ion-shape-soft-xl};
 }
 
 :host(.textarea-shape-round) {
-  --border-radius: #{globals.$ion-round-xl};
+  --border-radius: #{globals.$ion-shape-round-xl};
 }
 
 :host(.textarea-shape-rectangular) {
-  --border-radius: #{globals.$ion-rectangular-xl};
+  --border-radius: #{globals.$ion-shape-rectangular-xl};
 }
 
 // Textarea Auto Grow
