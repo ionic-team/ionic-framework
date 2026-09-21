@@ -32,18 +32,6 @@
   position: relative;
 }
 
-/**
- * The select icon should be centered with
- * the entire container not just the control
- * with floating/stacked labels.
- */
-:host(.select-label-placement-stacked) .select-icon,
-:host(.select-label-placement-floating) .select-icon {
-  position: absolute;
-
-  height: 100%;
-}
-
 // Select Wrapper
 // --------------------------------------------------
 
@@ -154,17 +142,6 @@
 // ----------------------------------------------------------------
 
 /**
- * Ensures the select does not
- * overlap the label.
- * Also ensure that the native wrapper
- * takes up the remaining available height and width.
- */
-:host(.select-label-placement-stacked) .native-wrapper,
-:host(.select-label-placement-floating) .native-wrapper {
-  @include margin(1px, 0, 0, 0);
-}
-
-/**
  * This makes the label sit over the select
  * when the select is blurred and has no value.
  * The label should not sit over the select if the
@@ -202,15 +179,16 @@
   min-height: 56px;
 }
 
-/**
- * When using a stacked/floating label, the inner wrapper is
- * stacked vertically under the label container. This line
- * ensures that the inner wrapper fills all the remaining height
- * of the component.
- */
-:host(.select-label-placement-stacked) .select-wrapper-inner,
-:host(.select-label-placement-floating) .select-wrapper-inner {
-  flex-grow: 1;
+// Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * Allows the label to shrink below its intrinsic content width.
+   * Without this the label keeps its full width and can push the
+   * select and end slot outside the wrapper.
+   */
+  min-width: 0;
 }
 
 // Start/End Slots
@@ -228,6 +206,14 @@
 // ----------------------------------------------------------------
 
 .native-wrapper {
+  /**
+   * Give up space before the label does. Flexbox would otherwise take
+   * from both in proportion to their size and truncate the shorter
+   * label first. The factor is this large because the label truncates
+   * as soon as it loses any width at all, even a fraction of a pixel.
+   */
+  flex-shrink: 100000;
+
   /**
    * When the floating label appears on top of the
    * input, we need to fade the input out so that the

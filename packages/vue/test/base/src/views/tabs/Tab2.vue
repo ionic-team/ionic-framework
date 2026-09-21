@@ -18,6 +18,10 @@
       <ion-item router-link="/routing" id="routing">
         <ion-label>Go to /routing</ion-label>
       </ion-item>
+
+      <ion-item router-link="/tabs/tab2/childone" id="child-one">
+        <ion-label>Go to Tab 2 Child 1</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>

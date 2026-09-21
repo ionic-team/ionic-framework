@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from "@ionic/angular/lazy";
 
 import { NavRootComponent } from "./nav-root.component";
 

@@ -13,7 +13,7 @@ import {
 } from '@ionic/react';
 import { homeOutline, radioOutline, libraryOutline } from 'ionicons/icons';
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Navigate } from 'react-router';
 
 const HomePage: React.FC = () => (
   <IonPage data-testid="home-page">
@@ -58,10 +58,10 @@ const TabsSimilarPrefixes: React.FC = () => {
   return (
     <IonTabs data-testid="tabs-similar-prefixes">
       <IonRouterOutlet>
-        <Redirect exact path="/tabs-similar-prefixes" to="/tabs-similar-prefixes/home" />
-        <Route path="/tabs-similar-prefixes/home" render={() => <HomePage />} exact={true} />
-        <Route path="/tabs-similar-prefixes/home2" render={() => <Home2Page />} exact={true} />
-        <Route path="/tabs-similar-prefixes/home3" render={() => <Home3Page />} exact={true} />
+        <Route index element={<Navigate to="/tabs-similar-prefixes/home" replace />} />
+        <Route path="home" element={<HomePage />} />
+        <Route path="home2" element={<Home2Page />} />
+        <Route path="home3" element={<Home3Page />} />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom" data-testid="tab-bar">

@@ -5,15 +5,16 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowUnreachableCode": false,
-    "lib": ["es2017", "dom"],
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "lib": ["es2022"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "sourceMap": false,
     "pretty": true,
-    "rootDir": "src/schematics",
-    "target": "es2017",
-    "outDir": "dist/schematics"
+    "rootDir": "schematics",
+    "target": "es2022",
+    "outDir": "dist/schematics",
+    "types": ["node"]
   },
   "exclude": ["node_modules"],
-  "include": ["src/schematics/**/*.ts"]
+  "include": ["schematics/**/*.ts"]
 }

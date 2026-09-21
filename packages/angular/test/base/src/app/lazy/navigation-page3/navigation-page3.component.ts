@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/lazy';
 
 @Component({
   selector: 'app-navigation-page3',

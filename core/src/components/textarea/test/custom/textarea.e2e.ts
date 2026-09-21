@@ -218,5 +218,77 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       expect(bottomBgColor).toBe('rgb(0, 0, 255)');
     });
+
+    test('should allow styling the start and end parts', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-textarea::part(start) {
+            background-color: red;
+          }
+
+          ion-textarea::part(end) {
+            background-color: blue;
+          }
+        </style>
+
+        <ion-textarea label="textarea">
+          <span slot="start">Start</span>
+          <span slot="end">End</span>
+        </ion-textarea>
+      `,
+        config
+      );
+
+      const textarea = await page.locator('ion-textarea');
+      const startBgColor = await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        const startEl = el.shadowRoot?.querySelector('[part="start"]') as HTMLElement | null;
+        if (!startEl) {
+          return '';
+        }
+        return getComputedStyle(startEl).backgroundColor;
+      });
+
+      const endBgColor = await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        const endEl = el.shadowRoot?.querySelector('[part="end"]') as HTMLElement | null;
+        if (!endEl) {
+          return '';
+        }
+        return getComputedStyle(endEl).backgroundColor;
+      });
+
+      expect(startBgColor).toBe('rgb(255, 0, 0)');
+      expect(endBgColor).toBe('rgb(0, 0, 255)');
+    });
+
+    /**
+     * The ionic theme flattens the control with `display: contents`, so it has
+     * no box to paint. Only the native themes can honor a background here.
+     */
+    test('should allow styling the control part', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-textarea::part(control) {
+            background-color: green;
+          }
+        </style>
+
+        <ion-textarea label="textarea" label-placement="stacked"></ion-textarea>
+      `,
+        config
+      );
+
+      const textarea = await page.locator('ion-textarea');
+      const controlBgColor = await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        const controlEl = el.shadowRoot?.querySelector('[part="control"]') as HTMLElement | null;
+        if (!controlEl) {
+          return '';
+        }
+        return getComputedStyle(controlEl).backgroundColor;
+      });
+
+      expect(controlBgColor).toBe('rgb(0, 128, 0)');
+    });
   });
 });

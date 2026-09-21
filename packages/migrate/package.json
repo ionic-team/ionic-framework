@@ -1,0 +1,51 @@
+{
+  "name": "@ionic/migrate",
+  "version": "1.0.0",
+  "description": "Migration tool to automate and report on breaking changes across Ionic Framework major versions.",
+  "keywords": [
+    "ionic",
+    "framework",
+    "migrate",
+    "migration",
+    "codemod",
+    "upgrade",
+    "angular",
+    "react",
+    "vue",
+    "cli"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic-framework.git",
+    "directory": "packages/migrate"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "bin": {
+    "ionic-migrate": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
+    "test": "vitest run",
+    "test.watch": "vitest",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ts-morph": "^28.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "^5.7.3",
+    "vitest": "^4.0.0"
+  }
+}

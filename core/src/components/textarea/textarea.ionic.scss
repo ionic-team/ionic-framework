@@ -27,21 +27,31 @@
 // Ionic Textarea Sizes
 // --------------------------------------------------
 
-:host(.textarea-size-small) .textarea-wrapper-inner {
+/**
+ * The size padding is scoped to the field cells rather than to the wrapper, so
+ * the label, which sits outside the field box, does not inherit it.
+ */
+:host(.textarea-size-small) .textarea-start,
+:host(.textarea-size-small) .native-wrapper,
+:host(.textarea-size-small) .textarea-end {
   --padding-top: #{globals.$ion-space-200};
   --padding-end: #{globals.$ion-space-300};
   --padding-bottom: #{globals.$ion-space-200};
   --padding-start: #{globals.$ion-space-300};
 }
 
-:host(.textarea-size-medium) .textarea-wrapper-inner {
+:host(.textarea-size-medium) .textarea-start,
+:host(.textarea-size-medium) .native-wrapper,
+:host(.textarea-size-medium) .textarea-end {
   --padding-top: #{globals.$ion-space-300};
   --padding-end: #{globals.$ion-space-400};
   --padding-bottom: #{globals.$ion-space-300};
   --padding-start: #{globals.$ion-space-400};
 }
 
-:host(.textarea-size-large) .textarea-wrapper-inner {
+:host(.textarea-size-large) .textarea-start,
+:host(.textarea-size-large) .native-wrapper,
+:host(.textarea-size-large) .textarea-end {
   --padding-top: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-500};
   --padding-bottom: #{globals.$ion-space-400};
@@ -73,11 +83,6 @@
 // Textarea Auto Grow
 // ----------------------------------------------------------------
 
-// The height should be auto only when auto-grow is enabled.
-:host([auto-grow]) .textarea-wrapper-inner {
-  height: auto;
-}
-
 // The min and max height should be inherited if auto-grow is enabled.
 // This allows the textarea to grow and shrink as needed.
 :host([auto-grow]) .native-wrapper {
@@ -88,26 +93,175 @@
 // Textarea Wrapper
 // ----------------------------------------------------------------
 
+/**
+ * The label is nested in the control so that every theme renders the same
+ * tree. Laying the wrapper out as a grid and flattening the control lets the
+ * label sit outside the field box, which is drawn by `::before` over the cells
+ * the label does not occupy.
+ */
 .textarea-wrapper {
-  gap: globals.$ion-space-100;
+  display: grid;
+
+  /**
+   * Auto rows stretch to fill any extra height by default, which would pad the
+   * label row and pull the field box away from it.
+   */
+  align-content: start;
+
+  /**
+   * The wrapper spans the label too, so the background belongs on the field
+   * box rather than here.
+   */
+  background: transparent;
 }
 
-.textarea-wrapper-inner {
-  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+.textarea-control {
+  display: contents;
 }
 
-:host([rows]:not([auto-grow])) .textarea-wrapper-inner {
-  @include globals.padding(0, var(--padding-end), 0, var(--padding-start));
+// Textarea Field Box
+// ----------------------------------------------------------------
+
+.textarea-wrapper::before {
+  @include globals.field-box();
+
+  /**
+   * The wrapper takes its min-height from the host and the pseudo-element
+   * inherits it, so a min-height on the host still reaches the box.
+   */
+  min-height: inherit;
+
+  border: var(--border-width) var(--border-style) var(--border-color);
+
+  background: var(--background);
+}
+
+// Textarea Grid Template - Start & Fixed
+// ----------------------------------------------------------------
+
+:host(.textarea-label-placement-start) .textarea-wrapper,
+:host(.textarea-label-placement-fixed) .textarea-wrapper {
+  grid-template-columns:
+    [label] auto
+    [field-start slot-start] auto
+    [native] minmax(0, 1fr)
+    [slot-end] auto [field-end];
+  grid-template-rows: [label field] auto;
+}
+
+:host(.textarea-label-placement-start) .label-text-wrapper,
+:host(.textarea-label-placement-fixed) .label-text-wrapper {
+  @include globals.margin(null, globals.$ion-space-100, null, null);
+
+  grid-column: label;
+}
+
+// Textarea Grid Template - End
+// ----------------------------------------------------------------
+
+:host(.textarea-label-placement-end) .textarea-wrapper {
+  grid-template-columns:
+    [field-start slot-start] auto
+    [native] minmax(0, 1fr)
+    [slot-end] auto
+    [field-end label] auto;
+  grid-template-rows: [label field] auto;
+}
+
+:host(.textarea-label-placement-end) .label-text-wrapper {
+  @include globals.margin(null, null, null, globals.$ion-space-100);
+
+  grid-column: label;
+}
+
+// Textarea Grid Template - Stacked & Floating
+// ----------------------------------------------------------------
+
+:host(.textarea-label-placement-stacked) .textarea-wrapper,
+:host(.textarea-label-placement-floating) .textarea-wrapper {
+  grid-template-columns: [field-start slot-start] auto [native] minmax(0, 1fr) [slot-end] auto [field-end];
+  grid-template-rows: [label] auto [field] auto;
+}
+
+:host(.textarea-label-placement-stacked) .label-text-wrapper,
+:host(.textarea-label-placement-floating) .label-text-wrapper {
+  @include globals.margin(null, null, globals.$ion-space-100, null);
+
+  grid-column: field-start / field-end;
+}
+
+// Textarea Field Placement
+// ----------------------------------------------------------------
+
+/**
+ * The templates above all name the same lines, so every placement shares these.
+ * A label with its own row lands on the label row. Otherwise that name resolves
+ * to the only row there is.
+ */
+.label-text-wrapper {
+  grid-row: label;
+}
+
+.textarea-start {
+  grid-row: field;
+  grid-column: slot-start;
+}
+
+.native-wrapper {
+  grid-row: field;
+  grid-column: native;
+}
+
+.textarea-end {
+  grid-row: field;
+  grid-column: slot-end;
+}
+
+.textarea-wrapper::before {
+  grid-row: field;
+  grid-column: field-start / field-end;
+}
+
+// Textarea Field Padding
+// ----------------------------------------------------------------
+
+/**
+ * The padding sits on the cells that the field box covers, so the label is not
+ * indented by it.
+ */
+.textarea-start {
+  @include globals.padding(var(--padding-top), null, var(--padding-bottom), var(--padding-start));
 }
 
 /**
- * Top and bottom padding are applied to ensure that text remains visible 
- * as it scrolls past the container boundaries. This provides a "sneak peek" 
- * of the content transitioning off-screen, mirroring native textarea behavior 
- * where text isn't immediately clipped or "glued" to the border at the 
+ * The native wrapper's own content sizes the field row, and it stretches to
+ * fill it. The shared stylesheet sets `height: 100%`, which would resolve
+ * against the row this element is itself sizing, so reset it here.
+ */
+.native-wrapper {
+  @include globals.padding(var(--padding-top), null, var(--padding-bottom), null);
+
+  align-self: stretch;
+
+  height: auto;
+}
+
+.textarea-end {
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), null);
+}
+
+:host([rows]:not([auto-grow])) .native-wrapper {
+  @include globals.padding(0, null, 0, null);
+}
+
+/**
+ * Top and bottom padding are applied to ensure that text remains visible
+ * as it scrolls past the container boundaries. This provides a "sneak peek"
+ * of the content transitioning off-screen, mirroring native textarea behavior
+ * where text isn't immediately clipped or "glued" to the border at the
  * scroll limits.
  */
-:host([rows]:not([auto-grow])) .textarea-wrapper-inner .native-textarea {
+:host([rows]:not([auto-grow])) .native-wrapper .native-textarea {
   padding-top: var(--padding-top);
   padding-bottom: var(--padding-bottom);
 }
@@ -161,6 +315,7 @@
 
 .label-text-wrapper {
   @include globals.typography(globals.$ion-body-sm-medium);
+  @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
 
   max-width: globals.$ion-scale-5000;
 
@@ -225,14 +380,9 @@ ion-icon {
 // Start / End Slots
 // ----------------------------------------------------------------
 
-.start-slot-wrapper,
-.end-slot-wrapper {
+.textarea-start,
+.textarea-end {
   margin-top: globals.$ion-space-050;
-}
-
-:host([rows]:not([auto-grow])) .start-slot-wrapper,
-:host([rows]:not([auto-grow])) .end-slot-wrapper {
-  @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
 }
 
 // Textarea Focus

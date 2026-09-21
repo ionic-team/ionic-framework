@@ -9,6 +9,14 @@ declare namespace NodeJS {
   }
 }
 
+interface ImportMetaEnv {
+  readonly BASE_URL?: string;
+}
+
+interface ImportMeta {
+  readonly env?: ImportMetaEnv;
+}
+
 declare module '*.bmp' {
   const src: string;
   export default src;
@@ -40,7 +48,7 @@ declare module '*.webp' {
 }
 
 declare module '*.svg' {
-  import * as React from 'react';
+  import type * as React from 'react';
 
   export const ReactComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement> & { title?: string }

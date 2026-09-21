@@ -13,7 +13,7 @@ type Props = PropsWithChildren<
 >;
 
 export class IonBackButton extends React.Component<Props> {
-  context!: React.ContextType<typeof NavContext>;
+  declare context: React.ContextType<typeof NavContext>;
 
   clickButton = (e: React.MouseEvent) => {
     /**
