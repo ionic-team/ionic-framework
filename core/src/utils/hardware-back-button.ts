@@ -45,7 +45,7 @@ export const shouldUseCloseWatcher = () =>
  * will still happen.
  */
 export const blockHardwareBackButton = () => {
-  document.addEventListener('backbutton', () => {}); // eslint-disable-line
+  document.addEventListener('backbutton', () => {});
 };
 
 export const startHardwareBackButton = () => {

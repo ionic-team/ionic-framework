@@ -26,21 +26,18 @@ const getAngularOutputTargets = () => {
 
     // tabs
     'ion-tabs',
-
-    // auxiliar
-    'ion-picker-legacy-column',
   ]
   return [
     angularOutputTarget({
       componentCorePackage,
-      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
-      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
+      directivesProxyFile: '../packages/angular/src/lazy/directives/proxies.ts',
+      directivesArrayFile: '../packages/angular/src/lazy/directives/proxies-list.ts',
       excludeComponents,
       outputType: 'component',
     }),
     angularOutputTarget({
       componentCorePackage,
-      directivesProxyFile: '../packages/angular/standalone/src/directives/proxies.ts',
+      directivesProxyFile: '../packages/angular/src/standalone/directives/proxies.ts',
       excludeComponents: [
         ...excludeComponents,
         /**
@@ -67,6 +64,8 @@ const getAngularOutputTargets = () => {
 
       ],
       outputType: 'standalone',
+      // Emit each component in a separate file rather than putting them all in one large file.
+      esModules: true,
     })
   ];
 }
@@ -86,7 +85,7 @@ export const config: Config = {
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip'] },
-    { components: ['ion-datetime', 'ion-picker-legacy', 'ion-picker-legacy-column'] },
+    { components: ['ion-datetime'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-gallery'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
@@ -126,11 +125,7 @@ export const config: Config = {
   ],
   outputTargets: [
     reactOutputTarget({
-      componentCorePackage,
-      includeImportCustomElements: true,
-      includePolyfills: false,
-      includeDefineCustomElements: false,
-      proxiesFile: '../packages/react/src/components/proxies.ts',
+      outDir: '../packages/react/src/components',
       excludeComponents: [
         // Routing
         'ion-router',
@@ -154,7 +149,6 @@ export const config: Config = {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 
@@ -185,7 +179,6 @@ export const config: Config = {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 
@@ -196,17 +189,17 @@ export const config: Config = {
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          event: 'ion-change'
+          event: 'ionChange'
         },
         {
           elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
-          event: 'ion-change',
+          event: 'ionChange',
         },
         {
           elements: ['ion-input', 'ion-input-otp', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
-          event: 'ion-input',
+          event: 'ionInput',
         }
       ],
     }),

@@ -1,12 +1,13 @@
 {
   "name": "@ionic/vue",
-  "version": "8.8.19",
+  "version": "9.0.2",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "build": "npm run clean && npm run copy && npm run copy.overlays && npm run bundle && npm run build.vetur && npm run build.web-types",
     "build.watch": "npm run bundle -- --watch",
@@ -50,26 +51,35 @@
   },
   "homepage": "https://github.com/ionic-team/ionic-framework#readme",
   "devDependencies": {
-    "@babel/types": "^7.18.4",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-typescript": "^11.1.5",
-    "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "@typescript-eslint/parser": "^5.48.2",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "change-case": "^4.1.1",
-    "eslint": "^7.32.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-import": "^2.31.0",
     "fs-extra": "^9.1.0",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
-    "typescript": "^5.7.3",
-    "vue": "3.4.38",
-    "vue-router": "^4.0.16"
+    "typescript": "^6.0.0",
+    "vue": "^3.5.0",
+    "vue-router": "^5.2.0"
+  },
+  "overrides": {
+    "@ionic/eslint-config": {
+      "@typescript-eslint/parser": "$@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+      "eslint-plugin-import": "$eslint-plugin-import"
+    }
   },
   "dependencies": {
-    "@ionic/core": "^8.8.19",
-    "@stencil/vue-output-target": "0.10.7",
+    "@ionic/core": "^9.0.2",
+    "@stencil/vue-output-target": "0.14.2",
     "ionicons": "^8.0.13"
   },
   "vetur": {

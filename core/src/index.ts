@@ -26,7 +26,6 @@ export {
   actionSheetController,
   modalController,
   loadingController,
-  pickerController,
   popoverController,
   toastController,
 } from './utils/overlays';

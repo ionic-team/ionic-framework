@@ -15,8 +15,13 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { NotchController } from '@utils/forms';
-import { createNotchController, checkInvalidState, reportValidityToElementInternals } from '@utils/forms';
+import type { NotchController, StartContainerController } from '@utils/forms';
+import {
+  createNotchController,
+  createStartContainerController,
+  checkInvalidState,
+  reportValidityToElementInternals,
+} from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
@@ -46,6 +51,9 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
  * @part error-text - Supporting text displayed beneath the textarea label when the textarea is invalid and touched.
  * @part counter - The character counter displayed when the counter property is set.
  * @part bottom - The container element for helper text, error text, and counter.
+ * @part start - The wrapper element for the content in the start slot.
+ * @part control - The wrapper element containing the label and the native textarea. The `"ionic"` theme flattens this wrapper, so it cannot be given a box of its own there.
+ * @part end - The wrapper element for the content in the end slot.
  */
 @Component({
   tag: 'ion-textarea',
@@ -74,11 +82,13 @@ export class Textarea implements ComponentInterface {
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
   private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
-  private notchSpacerEl: HTMLElement | undefined;
 
   private slotMutationController?: SlotMutationController;
 
   private notchController?: NotchController;
+  private notchSpacerEl: HTMLElement | undefined;
+  private startContainerController?: StartContainerController;
+  private startContainerEl: HTMLElement | undefined;
 
   /**
    * The value of the textarea when the textarea is focused.
@@ -390,12 +400,28 @@ export class Textarea implements ComponentInterface {
 
   connectedCallback() {
     const { el } = this;
-    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
+
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
+      this.startContainerController?.calculateStartContainerWidth();
+
+      forceUpdate(this);
+    });
+
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
       () => this.labelSlot
     );
+
+    this.startContainerController = createStartContainerController(
+      el,
+      () => this.startContainerEl,
+      () => {
+        return Build.isBrowser && getIonTheme(this) === 'md' && this.fill === 'outline';
+      }
+    );
+
+    this.startContainerController.calculateStartContainerWidth();
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
@@ -446,6 +472,11 @@ export class Textarea implements ComponentInterface {
       this.notchController = undefined;
     }
 
+    if (this.startContainerController) {
+      this.startContainerController.destroy();
+      this.startContainerController = undefined;
+    }
+
     // Clean up validation observer to prevent memory leaks
     if (this.validationObserver) {
       this.validationObserver.disconnect();
@@ -475,6 +506,7 @@ export class Textarea implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
+    this.startContainerController?.calculateStartContainerWidth();
   }
 
   /**
@@ -726,55 +758,156 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Stops propagation when the label is clicked,
-   * otherwise, two clicks will be triggered.
+   * Stops propagation for clicks on the textarea's own content (label text,
+   * textarea field) to prevent double-click events. Allows clicks on slotted
+   * content to propagate so event delegation works for parent handlers.
+   *
+   * Only slots belonging directly to this textarea should be considered.
+   * The textarea itself may have a slot attribute when placed in an item
+   * or toolbar, which does not make its content slotted content.
    */
+  /**
+   * Whether the click that began the current gesture already reached the
+   * consumer. Clicking the label makes the browser forward a second click to
+   * the native textarea; WebKit forwards it even when the gesture began on
+   * slotted content, where it would arrive as a duplicate.
+   */
+  private clickReachedConsumer = false;
+
+  private onLabelPointerDown = () => {
+    this.clickReachedConsumer = false;
+  };
+
   private onLabelClick = (ev: MouseEvent) => {
-    // Only stop propagation if the click was directly on the label
-    // and not on the input or other child elements
-    if (ev.target === ev.currentTarget) {
+    const target = ev.target as HTMLElement;
+
+    if (target === this.nativeInput) {
+      /**
+       * Either the click the label forwarded here, or a direct click on the
+       * textarea. Both should reach the consumer as a single click on the host,
+       * so only drop it when something else already did.
+       */
+      if (this.clickReachedConsumer) {
+        ev.stopPropagation();
+      }
+
+      this.clickReachedConsumer = false;
+
+      return;
+    }
+
+    /**
+     * Clicks on slotted content belong to the consumer and have to keep
+     * propagating. Everything else is internal chrome (the label, the
+     * start/end containers, the wrapper padding) and is represented by the
+     * click the label forwards to the native textarea.
+     */
+    const slotted = target.closest('[slot="start"], [slot="end"]');
+    const isSlotted = slotted !== null && slotted !== this.el && this.el.contains(slotted);
+
+    this.clickReachedConsumer = isSlotted;
+
+    if (!isSlotted) {
       ev.stopPropagation();
     }
   };
 
   /**
-   * Renders the border container when fill="outline".
+   * Renders the outline border with a notch for the label.
    */
-  private renderLabelContainer() {
-    const theme = getIonTheme(this);
-    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
-
-    if (hasOutlineFill) {
-      /**
-       * The outline fill has a special outline
-       * that appears around the textarea and the label.
-       * Certain stacked and floating label placements cause the
-       * label to translate up and create a "cut out"
-       * inside of that border by using the notch-spacer element.
-       */
-      return [
-        <div class="textarea-outline-container">
-          <div class="textarea-outline-start"></div>
-          <div
-            class={{
-              'textarea-outline-notch': true,
-              'textarea-outline-notch-hidden': !this.hasLabel,
-            }}
-          >
-            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
-              {this.label}
-            </div>
+  private renderOutlineContainer() {
+    return (
+      <div key="outline" class="textarea-outline-container">
+        <div class="textarea-outline-start"></div>
+        <div
+          class={{
+            'textarea-outline-notch': true,
+            'textarea-outline-notch-hidden': !this.hasLabel,
+          }}
+        >
+          <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+            {this.label}
           </div>
-          <div class="textarea-outline-end"></div>
-        </div>,
-        this.renderLabel(),
-      ];
-    }
-    /**
-     * If not using the outline style,
-     * we can render just the label.
-     */
-    return this.renderLabel();
+        </div>
+        <div class="textarea-outline-end"></div>
+      </div>
+    );
+  }
+
+  private renderNativeTextarea() {
+    const { inputId, disabled } = this;
+
+    return (
+      <textarea
+        class="native-textarea"
+        part="native"
+        ref={(el) => (this.nativeInput = el)}
+        id={inputId}
+        disabled={disabled}
+        autoCapitalize={this.autocapitalize}
+        autoFocus={this.autofocus}
+        enterKeyHint={this.enterkeyhint}
+        inputMode={this.inputmode}
+        minLength={this.minlength}
+        maxLength={this.maxlength}
+        name={this.name}
+        placeholder={this.placeholder || ''}
+        readOnly={this.readonly}
+        required={this.required}
+        spellcheck={this.spellcheck}
+        cols={this.cols}
+        rows={this.rows}
+        wrap={this.wrap}
+        onInput={this.onInput}
+        onChange={this.onChange}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onKeyDown={this.onKeyDown}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.isInvalid ? 'true' : undefined}
+        {...this.inheritedAttributes}
+      >
+        {this.getValue()}
+      </textarea>
+    );
+  }
+
+  private renderStartContainer() {
+    return (
+      <div key="start" class="textarea-start" part="start" ref={(el) => (this.startContainerEl = el)}>
+        <slot name="start"></slot>
+      </div>
+    );
+  }
+
+  private renderEndContainer() {
+    return (
+      <div key="end" class="textarea-end" part="end">
+        <slot name="end"></slot>
+      </div>
+    );
+  }
+
+  /**
+   * Every theme renders the same label and control structure, aside from the md
+   * outline container below. The label is nested alongside the textarea so the
+   * ios and md floating label can escape the control and clear the start and
+   * end slots. The ionic theme lifts it outside the field with grid instead.
+   */
+  private renderField() {
+    const hasOutlineFill = getIonTheme(this) === 'md' && this.getFill() === 'outline';
+
+    return [
+      hasOutlineFill && this.renderOutlineContainer(),
+      this.renderStartContainer(),
+      <div key="control" class="textarea-control" part="control">
+        {this.renderLabel()}
+        <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
+          {this.renderNativeTextarea()}
+        </div>
+      </div>,
+      this.renderEndContainer(),
+    ];
   }
 
   /**
@@ -847,36 +980,21 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, readonly, size, labelPlacement, el, hasFocus } = this;
-    const fill = this.getFill();
+    const { inputId, disabled, readonly, size, labelPlacement, hasFocus } = this;
     const theme = getIonTheme(this);
+    const fill = this.getFill();
     const shape = this.getShape();
-    const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
 
     /**
      * If the label is stacked, it should always sit above the textarea.
      * For floating labels, the label should move above the textarea if
-     * the textarea has a value, is focused, or has anything in either
-     * the start or end slot.
-     *
-     * If there is content in the start slot, the label would overlap
-     * it if not forced to float. This is also applied to the end slot
-     * because with the default or solid fills, the textarea is not
-     * vertically centered in the container, but the label is. This
-     * causes the slots and label to appear vertically offset from each
-     * other when the label isn't floating above the input. This doesn't
-     * apply to the outline fill, but this was not accounted for to keep
-     * things consistent.
-     *
-     * TODO(FW-5592): Remove hasStartEndSlots condition
+     * the textarea has a value or is focused.
      */
-    const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+    const labelShouldFloat = labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus));
 
     return (
       <Host
@@ -900,68 +1018,14 @@ export class Textarea implements ComponentInterface {
          * interactable, clicking the label would focus that instead
          * since it comes before the textarea in the DOM.
          */}
-        <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick} part="wrapper">
-          {this.renderLabelContainer()}
-          <div class="textarea-wrapper-inner">
-            {
-              /**
-               * For the ionic theme, we render the outline container here
-               * instead of higher up, so it can be positioned relative to
-               * the native wrapper instead of the <label> element or the
-               * entire component. This allows the label text to be positioned
-               * above the outline, while staying within the bounds of the
-               * <label> element, ensuring that clicking the label text
-               * focuses the textarea.
-               */
-              theme === 'ionic' && fill === 'outline' && <div class="textarea-outline"></div>
-            }
-            {/**
-             * Some elements have their own padding styles which may
-             * interfere with slot content alignment (such as icon-
-             * only buttons setting --padding-top=0). To avoid this,
-             * we wrap both the start and end slots in separate
-             * elements and apply our padding styles to that instead.
-             */}
-            <div class="start-slot-wrapper">
-              <slot name="start"></slot>
-            </div>
-            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
-              <textarea
-                class="native-textarea"
-                part="native"
-                ref={(el) => (this.nativeInput = el)}
-                id={inputId}
-                disabled={disabled}
-                autoCapitalize={this.autocapitalize}
-                autoFocus={this.autofocus}
-                enterKeyHint={this.enterkeyhint}
-                inputMode={this.inputmode}
-                minLength={this.minlength}
-                maxLength={this.maxlength}
-                name={this.name}
-                placeholder={this.placeholder || ''}
-                readOnly={this.readonly}
-                required={this.required}
-                spellcheck={this.spellcheck}
-                cols={this.cols}
-                rows={this.rows}
-                wrap={this.wrap}
-                onInput={this.onInput}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-                onFocus={this.onFocus}
-                onKeyDown={this.onKeyDown}
-                aria-describedby={this.getHintTextID()}
-                aria-invalid={this.isInvalid ? 'true' : undefined}
-                {...this.inheritedAttributes}
-              >
-                {value}
-              </textarea>
-            </div>
-            <div class="end-slot-wrapper">
-              <slot name="end"></slot>
-            </div>
-          </div>
+        <label
+          class="textarea-wrapper"
+          htmlFor={inputId}
+          onMouseDown={this.onLabelPointerDown}
+          onClick={this.onLabelClick}
+          part="wrapper"
+        >
+          {this.renderField()}
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>
         {this.renderBottomContent()}

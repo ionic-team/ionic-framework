@@ -28,14 +28,22 @@ runs:
       run: npm run lint
       shell: bash
       working-directory: ./packages/vue-router
+    # The rollup build reports type errors as warnings and still succeeds, so
+    # this step is what keeps the package type-clean.
+    - name: 🔎 Typecheck
+      run: npm run typecheck
+      shell: bash
+      working-directory: ./packages/vue-router
     - name: 🏗️ Build
       run: npm run build
       shell: bash
       working-directory: ./packages/vue-router
-    - name: 🧪 Test Spec
-      run: npm run test.spec
+    - name: Clean package.json updates
+      run: git checkout ./core/package.json
       shell: bash
-      working-directory: ./packages/vue-router
+    - name: 🔍 Check Diff
+      run: git diff --exit-code
+      shell: bash
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-vue-router

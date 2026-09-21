@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, detachAndReattach, test } from '@utils/test/playwright';
 
 import { PopoverFixture } from '../fixture';
 
@@ -312,6 +312,32 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await pageUtils.pressKeys('Shift+Tab');
       await expect(buttons.nth(1)).toBeFocused();
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('popover: moved while presented'), () => {
+    test('should keep the app root locked', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+      });
+
+      await page.goto('/src/components/popover/test/basic', config);
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.click('#basic-popover');
+      await ionPopoverDidPresent.next();
+
+      await expect(page.locator('body')).toHaveClass(/backdrop-no-scroll/);
+
+      await detachAndReattach(page.locator('ion-popover'));
+
+      await expect(page.locator('body')).toHaveClass(/backdrop-no-scroll/);
     });
   });
 });

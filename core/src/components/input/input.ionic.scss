@@ -16,21 +16,10 @@
   @include globals.typography(globals.$ion-body-md-regular);
 }
 
-// Input Outline Container
-// ----------------------------------------------------------------
-
-.input-outline {
-  @include globals.position(0, 0, 0, 0);
-  @include globals.border-radius(var(--border-radius));
-
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  pointer-events: none;
-
-  border: var(--border-width) var(--border-style) var(--border-color);
+// Keeps the input clear of the label.
+:host(.input-label-placement-stacked) input,
+:host(.input-label-placement-floating) input {
+  @include globals.margin(1px, 0, 0, 0);
 }
 
 // Input Label Placement: Stacked
@@ -42,36 +31,106 @@
   @include globals.padding(globals.$ion-space-100, null);
 }
 
+// Input Wrapper
+// ----------------------------------------------------------------
+
+/**
+ * The label is nested in the control so that every theme renders the same tree.
+ * Laying the wrapper out as a grid and flattening the control lets the label
+ * span its own row above the start slot, the input and the end slot.
+ */
 .input-wrapper {
-  /**
-   * For the ionic theme, the padding needs to sit on the
-   * native wrapper instead, so that it sits within the
-   * outline container but does not always affect the
-   * label text.
-   */
+  // The field cells own the padding, so the wrapper adds none.
   @include globals.padding(0);
 
-  /**
-   * Outline inputs do not have a bottom border.
-   * Instead, they have a border that wraps the
-   * input + label.
-   */
-  border-bottom: none;
+  display: grid;
+
+  grid-template-columns: [field-start slot-start] auto [native] minmax(0, 1fr) [slot-end] auto [field-end];
+  grid-template-rows: [label] auto [field] auto;
 
   /**
-   * Do not show a background on the input wrapper as
-   * this includes the label, instead we apply the
-   * background to the native wrapper.
+   * Only stretch grows an auto row, so centering holds the label row at its
+   * content height and still centers the field in any leftover host height.
+   */
+  align-content: center;
+
+  align-items: center;
+
+  /**
+   * The wrapper spans the label too, so the background belongs on the field
+   * box rather than here.
    */
   background: transparent;
 }
 
+.input-control {
+  display: contents;
+}
+
+// Input Field Box
+// ----------------------------------------------------------------
+
+/**
+ * A pseudo-element draws the box across the second row, so the label can sit in
+ * the first row and stay outside of it while the tree matches the other themes.
+ */
+.input-wrapper::before {
+  @include globals.field-box();
+
+  min-height: globals.$ion-scale-1000;
+
+  border: var(--border-width) var(--border-style) var(--border-color);
+
+  background: var(--background);
+}
+
+// Input Field Placement
+// ----------------------------------------------------------------
+
+.input-wrapper::before {
+  grid-row: field;
+  grid-column: field-start / field-end;
+}
+
 .label-text-wrapper {
-  /**
-   * The label should appear on top of an outline
-   * container that overlaps it so it is always clickable.
-   */
-  position: relative;
+  grid-row: label;
+  grid-column: field-start / field-end;
+}
+
+.input-start {
+  grid-row: field;
+  grid-column: slot-start;
+}
+
+.native-wrapper {
+  grid-row: field;
+  grid-column: native;
+}
+
+.input-end {
+  grid-row: field;
+  grid-column: slot-end;
+}
+
+// Input Field Padding
+// ----------------------------------------------------------------
+
+/**
+ * The padding sits on the cells that the field box covers, so the label is not
+ * indented by it.
+ */
+.input-start,
+.native-wrapper,
+.input-end {
+  @include globals.padding(var(--padding-top), null, var(--padding-bottom), null);
+}
+
+.input-start {
+  @include globals.padding(null, null, null, var(--padding-start));
+}
+
+.input-end {
+  @include globals.padding(null, var(--padding-end), null, null);
 }
 
 :host(.input-label-placement-stacked) .label-text-wrapper {
@@ -92,19 +151,6 @@
   border-top: none;
 }
 
-.native-wrapper {
-  @include globals.border-radius(inherit);
-  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-
-  min-height: globals.$ion-scale-1000;
-
-  /**
-  * Apply the background to the native input
-  * wrapper to only style the input.
-  */
-  background: var(--background);
-}
-
 // Ionic Input Sizes
 // --------------------------------------------------
 
@@ -123,15 +169,15 @@
   --padding-end: #{globals.$ion-space-500};
 }
 
-:host(.input-size-medium) .native-wrapper {
+:host(.input-size-medium) .input-wrapper::before {
   min-height: globals.$ion-scale-1000;
 }
 
-:host(.input-size-large) .native-wrapper {
+:host(.input-size-large) .input-wrapper::before {
   min-height: globals.$ion-scale-1200;
 }
 
-:host(.input-size-xlarge) .native-wrapper {
+:host(.input-size-xlarge) .input-wrapper::before {
   min-height: globals.$ion-scale-1400;
 }
 
@@ -168,20 +214,38 @@
 // Target area
 // --------------------------------------------------
 
-.native-wrapper::after {
-  @include globals.position(50%, 0, null, 0);
+/**
+ * This stays at the default stacking level. The native input is positioned at
+ * `z-index: 1`, so a target area at that level or above paints over it and
+ * swallows the clicks meant for it. Tree order already puts this above the
+ * field box, which is all it needs to cover.
+ */
+.input-wrapper::after {
+  grid-row: field;
+  grid-column: field-start / field-end;
 
-  position: absolute;
-
-  height: 100%;
-  min-height: globals.$ion-scale-1200;
-
-  transform: translateY(-50%);
+  align-self: stretch;
 
   content: "";
 
   // Cursor should match the native input when hovering over the target area.
   cursor: text;
+}
+
+/**
+ * The medium field is shorter than the minimum target area, so the negative
+ * block margin lets the target area overflow the row instead of growing it.
+ * The larger sizes are already at least as tall, so they need no correction.
+ */
+:host(.input-size-medium) .input-wrapper::after {
+  @include globals.margin(
+    calc((#{globals.$ion-scale-1000} - #{globals.$ion-scale-1200}) / 2),
+    null,
+    calc((#{globals.$ion-scale-1000} - #{globals.$ion-scale-1200}) / 2),
+    null
+  );
+
+  min-height: globals.$ion-scale-1200;
 }
 
 ::slotted([slot="start"]),
@@ -199,11 +263,11 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-::slotted([slot="start"]) {
+::slotted([slot="start"]:last-of-type) {
   margin-inline-end: globals.$ion-space-200;
 }
 
-::slotted([slot="end"]) {
+::slotted([slot="end"]:first-of-type) {
   margin-inline-start: globals.$ion-space-200;
 }
 
@@ -211,6 +275,8 @@
 // ----------------------------------------------------------------
 
 .input-clear-icon {
+  @include globals.margin(auto);
+
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 

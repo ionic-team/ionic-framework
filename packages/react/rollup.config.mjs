@@ -16,5 +16,11 @@ export default {
   plugins: [
     typescript(),
   ],
-  external: id => external.includes(id) || id.startsWith('@ionic/core') || id.startsWith('ionicons') || id.startsWith('@stencil/react-output-target'),
+  external: id =>
+    external.includes(id) ||
+    id.startsWith('react/') ||
+    id.startsWith('react-dom/') ||
+    id.startsWith('@ionic/core') ||
+    id.startsWith('ionicons') ||
+    id.startsWith('@stencil/react-output-target'),
 };
