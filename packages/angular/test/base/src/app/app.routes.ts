@@ -1,11 +1,15 @@
 import { Routes } from '@angular/router';
-import { AppLandingComponent } from './app-landing/app-landing.component';
 
 export const routes: Routes = [
+  /**
+   * Has to load lazily. The lazy app bootstraps from this same route table, and
+   * eagerly pulling in a standalone component races its custom element
+   * registration against the lazy loader's.
+   */
   {
     path: '',
     pathMatch: 'full',
-    component: AppLandingComponent
+    loadComponent: () => import('./app-landing/app-landing.component').then(c => c.AppLandingComponent)
   },
   {
     path: 'lazy',

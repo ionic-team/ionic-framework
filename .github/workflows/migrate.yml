@@ -1,0 +1,93 @@
+name: 'Ionic Migrate'
+
+# Lint, test, and build the @ionic/migrate CLI.
+#
+# The workflow always triggers (no trigger-level `paths` filter) so the
+# `verify-migrate` gate always reports a status and can be marked a required
+# check: a path-filtered *trigger* would skip the whole workflow on unrelated
+# PRs, and a required check that never runs blocks merges forever. Instead the
+# `changes` job detects whether the package was touched and the heavy job runs
+# only then; `verify-migrate` reports success either way (skipped == fine).
+on:
+  pull_request:
+    branches: [ '**' ]
+  merge_group:
+  workflow_dispatch:
+
+# Lint/test/build only reads the repo; keep the token least-privilege.
+permissions:
+  contents: read
+
+concurrency:
+  group: migrate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      migrate: ${{ steps.filter.outputs.migrate }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Full history so the PR base commit is reachable for the diff below.
+          fetch-depth: 0
+      - name: Detect migrate changes
+        id: filter
+        shell: bash
+        run: |
+          # Fail the step (not the else branch) if git diff itself errors, so a
+          # broken detector can't masquerade as "package untouched".
+          set -euo pipefail
+          # Only pull_request runs get the path optimization. merge_group and
+          # manual dispatch run the (fast) tests unconditionally, so the merge
+          # queue never blocks on a check that was skipped by a stale diff.
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "migrate=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          base="${{ github.event.pull_request.base.sha }}"
+          changed="$(git diff --name-only "$base" HEAD)"
+          if echo "$changed" \
+            | grep -qE '^(packages/migrate/|\.github/workflows/migrate\.yml$)'; then
+            echo "migrate=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "migrate=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  test-migrate:
+    needs: changes
+    if: ${{ needs.changes.outputs.migrate == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/migrate
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.x
+          cache: 'npm'
+          cache-dependency-path: packages/migrate/package-lock.json
+      - name: Install Dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm test
+      - name: Build
+        run: npm run build
+
+  # Always-running required gate. See header comment for why this exists.
+  # Green when the package was untouched (test-migrate skipped) or tests pass;
+  # red when detection failed or the tests actually failed.
+  verify-migrate:
+    if: ${{ always() }}
+    needs: [ changes, test-migrate ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check results
+        # changes.result != 'success' catches a failed/cancelled detector,
+        # whose skipped test-migrate would otherwise slip through as green.
+        if: ${{ needs.changes.result != 'success' || needs.test-migrate.result == 'failure' || needs.test-migrate.result == 'cancelled' }}
+        run: exit 1

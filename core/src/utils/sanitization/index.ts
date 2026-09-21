@@ -1,4 +1,4 @@
-import { printIonError } from '@utils/logging';
+import { printIonError, printIonWarning } from '@utils/logging';
 
 /**
  * Sanitize an untrusted HTML string.
@@ -19,8 +19,8 @@ import { printIonError } from '@utils/logging';
  * @param untrustedString - The HTML string to sanitize. Pass an
  * `IonicSafeString` to bypass sanitization, or `undefined` to short-circuit.
  * @returns The sanitized HTML string, or `undefined` if the input was
- * `undefined`. Returns `''` if sanitization fails or the input contains
- * an inline `onload=` handler.
+ * `undefined`. Returns `''` if sanitization fails or the input appears to
+ * carry an inline `onload` handler.
  */
 export const sanitizeDOMString = (untrustedString: IonicSafeString | string | undefined): string | undefined => {
   try {
@@ -32,12 +32,18 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
     }
 
     /**
-     * onload is fired when appending to a document
-     * fragment in Chrome. If a string
-     * contains onload then we should not
-     * attempt to add this to the fragment.
+     * In Blink a non-outermost `<svg>` (e.g. `<svg><svg onload=...>`) fires
+     * its load handler while `innerHTML` below parses the string, so it runs
+     * before the attribute-stripping pass can remove it. The match has to
+     * stay this loose because attribute names are case-insensitive and
+     * whitespace is allowed before the `=`.
      */
-    if (untrustedString.includes('onload=')) {
+    if (/onload\s*=/i.test(untrustedString)) {
+      printIonWarning(
+        'sanitizeDOMString - Content was discarded because it appears to contain an onload handler:',
+        untrustedString.substring(0, 100)
+      );
+
       return '';
     }
 

@@ -2,12 +2,14 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 
 import { getIonTheme } from '../../global/ionic-global';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ * @deprecated
  *
  * @part image - The inner `img` element.
  */
@@ -57,6 +59,11 @@ export class Img implements ComponentInterface {
   }
 
   componentDidLoad() {
+    printIonWarning(
+      '[ion-img] - This component is deprecated and will be removed in Ionic v10. ' +
+        'Use a native <img> with the loading="lazy" attribute instead.',
+      this.el
+    );
     this.addIO();
   }
 

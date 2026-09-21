@@ -38,7 +38,7 @@ const ModalSheetChildRouteParent: React.FC = () => {
         </div>
       </IonContent>
       <IonRouterOutlet>
-        <Route path="/overlay-components/modal-sheet-child-route/child" component={ModalSheetChildRouteChild} />
+        <Route path="child" element={<ModalSheetChildRouteChild />} />
       </IonRouterOutlet>
     </IonPage>
   );
