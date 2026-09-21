@@ -78,6 +78,56 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(nativeInput).toBeFocused();
     });
+
+    test('should clear the value when the searchbar blurs between pointerdown and click', async ({ page }) => {
+      await page.setContent(`<ion-searchbar value="abc" show-clear-button="focus"></ion-searchbar>`, config);
+
+      const searchbar = page.locator('ion-searchbar');
+      const nativeInput = searchbar.locator('input');
+      const clearButton = searchbar.locator('.searchbar-clear-button');
+
+      await searchbar.evaluate((el: HTMLIonSearchbarElement) => el.setFocus());
+      await expect(clearButton).toBeVisible();
+
+      const box = (await clearButton.boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+
+      // Some browsers blur anyway, despite the `preventDefault` on `pointerdown`.
+      await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+      await page.waitForChanges();
+
+      await page.mouse.up();
+      await page.waitForChanges();
+
+      await expect(searchbar).toHaveJSProperty('value', '');
+    });
+
+    test('should hide the clear button when the press is abandoned', async ({ page }) => {
+      await page.setContent(`<ion-searchbar value="abc" show-clear-button="focus"></ion-searchbar>`, config);
+
+      const searchbar = page.locator('ion-searchbar');
+      const nativeInput = searchbar.locator('input');
+      const clearButton = searchbar.locator('.searchbar-clear-button');
+
+      await searchbar.evaluate((el: HTMLIonSearchbarElement) => el.setFocus());
+      await expect(clearButton).toBeVisible();
+
+      const box = (await clearButton.boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+      await page.waitForChanges();
+
+      // Releasing off the button sends the click to an ancestor, not the button.
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2 + 200);
+      await page.mouse.up();
+      // A regression would clear via onClearInput's 64ms timer; outlast it.
+      await page.waitForTimeout(100);
+
+      await expect(searchbar).toHaveJSProperty('value', 'abc');
+      await expect(clearButton).not.toBeVisible();
+    });
   });
 
   test.describe(title('searchbar: placeholder'), () => {

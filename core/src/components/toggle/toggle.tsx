@@ -1,8 +1,8 @@
 import checkRegular from '@phosphor-icons/core/assets/regular/check.svg';
 import minusRegular from '@phosphor-icons/core/assets/regular/minus.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
-import { checkInvalidState } from '@utils/forms';
+import { Build, Component, Element, Event, Host, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { checkInvalidState, createItemMultipleInputsObserver } from '@utils/forms';
 import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { hapticSelection } from '@utils/native/haptic';
@@ -50,6 +50,7 @@ export class Toggle implements ComponentInterface {
   private toggleTrack?: HTMLElement;
   private didLoad = false;
   private validationObserver?: MutationObserver;
+  private itemFocusObserver?: MutationObserver;
 
   @Element() el!: HTMLIonToggleElement;
 
@@ -231,6 +232,11 @@ export class Toggle implements ComponentInterface {
 
     // Always set initial state
     this.isInvalid = checkInvalidState(el);
+
+    this.itemFocusObserver = createItemMultipleInputsObserver(el, () => forceUpdate(this), [
+      'item-multiple-inputs',
+      'ion-activatable',
+    ]);
   }
 
   componentDidLoad() {
@@ -260,6 +266,11 @@ export class Toggle implements ComponentInterface {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
+    }
+
+    if (this.itemFocusObserver) {
+      this.itemFocusObserver.disconnect();
+      this.itemFocusObserver = undefined;
     }
 
     // Clean up validation observer to prevent memory leaks.
@@ -515,6 +526,13 @@ export class Toggle implements ComponentInterface {
     const value = this.getValue();
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const isIonicTheme = theme === 'ionic';
+    const inItem = hostContext('ion-item', el);
+    const inMultipleInputsItem = hostContext('ion-item.item-multiple-inputs', el);
+    // A clickable item is a second tab stop painting the same row indicator, which
+    // `item-multiple-inputs` misses because it counts cover elements, not toggles.
+    // The attributes are matched too because the class needs the item to render.
+    const inClickableItem = hostContext('ion-item.ion-activatable, ion-item[button], ion-item[href]', el);
+
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     return (
@@ -534,7 +552,11 @@ export class Toggle implements ComponentInterface {
         onBlur={this.onBlur}
         class={createColorClasses(color, {
           [theme]: true,
-          'in-item': hostContext('ion-item', el),
+          'in-item': inItem,
+          // `ion-focusable` has to stay on because it is what makes the item focusable.
+          // When the item draws the row indicator, CSS suppresses ours instead.
+          'ion-focusable': true,
+          'toggle-defers-indicator': inItem && !inMultipleInputsItem && !inClickableItem,
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
@@ -543,7 +565,6 @@ export class Toggle implements ComponentInterface {
           [`toggle-label-placement-${labelPlacement}`]: true,
           [`toggle-${rtl}`]: true,
           'ion-activatable': isIonicTheme,
-          'ion-focusable': isIonicTheme,
         })}
       >
         <label class="toggle-wrapper" htmlFor={inputId}>

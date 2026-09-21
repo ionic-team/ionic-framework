@@ -3,7 +3,7 @@ description: 'Build Ionic React Router'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: 24.x
     - uses: ./.github/workflows/actions/download-archive
@@ -28,10 +28,22 @@ runs:
       run: npm run lint
       shell: bash
       working-directory: ./packages/react-router
+    # The rollup build reports type errors as warnings and still succeeds, so
+    # this step is what keeps the package type-clean.
+    - name: 🔎 Typecheck
+      run: npm run typecheck
+      shell: bash
+      working-directory: ./packages/react-router
     - name: 🏗️ Build
       run: npm run build
       shell: bash
       working-directory: ./packages/react-router
+    - name: Clean package.json updates
+      run: git checkout ./core/package.json ./packages/react/package.json
+      shell: bash
+    - name: 🔍 Check Diff
+      run: git diff --exit-code
+      shell: bash
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-react-router

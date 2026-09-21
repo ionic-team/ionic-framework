@@ -8,6 +8,18 @@
   font-family: $font-family-base;
 }
 
+// Item Focus Indicator Room
+// --------------------------------------------------
+// Widens the clip boundary so a focus indicator on a control in the default
+// slot isn't cut off. Scoped because the wider painted box overlaps end slot
+// content on items with nothing overhanging. The `ionic` theme draws its own
+// rings, so the room is only made for the `ios` and `md` indicators.
+
+:host(.item-focus-indicator-room) .input-wrapper {
+  @include margin-horizontal(-$item-input-focus-indicator-room);
+  @include padding-horizontal($item-input-focus-indicator-room);
+}
+
 // Item: Color
 // --------------------------------------------------
 

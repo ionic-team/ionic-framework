@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.2](https://github.com/ionic-team/ionic-framework/compare/v9.0.1...v9.0.2) (2026-09-02)
+
+### Bug Fixes
+
+* **angular:** restore change detection for routed pages ([#31414](https://github.com/ionic-team/ionic-framework/issues/31414)) ([65def73](https://github.com/ionic-team/ionic-framework/commit/65def730d3c762c943fca8df82d9fa312360eeef)), closes [#31406](https://github.com/ionic-team/ionic-framework/issues/31406)
+* **sanitization:** match onload case- and space-insensitively ([#31417](https://github.com/ionic-team/ionic-framework/issues/31417)) ([ae7d44e](https://github.com/ionic-team/ionic-framework/commit/ae7d44ebdee434d5eceb5ae03b68f9bcc17e6f7b))
+
+
+## [9.0.1](https://github.com/ionic-team/ionic-framework/compare/v9.0.0...v9.0.1) (2026-08-26)
+
+### Bug Fixes
+
+* **core:** restore prop defaults when consumers downlevel ([#31375](https://github.com/ionic-team/ionic-framework/issues/31375)) ([b4174f9](https://github.com/ionic-team/ionic-framework/commit/b4174f96f5061ebc93119cc7e1363162ae666ae9)), closes [#31280](https://github.com/ionic-team/ionic-framework/issues/31280)
+* **item-sliding, segment-button:** read props after frameworks assign them ([#31391](https://github.com/ionic-team/ionic-framework/issues/31391)) ([7956b97](https://github.com/ionic-team/ionic-framework/commit/7956b973b8bb55e5f0cae844ee992fe9921432cb)), closes [#31388](https://github.com/ionic-team/ionic-framework/issues/31388)
+* **overlays:** restore presented state after a DOM move ([#31400](https://github.com/ionic-team/ionic-framework/issues/31400)) ([bfff8e1](https://github.com/ionic-team/ionic-framework/commit/bfff8e1377a8faff3581e61026733ce29b671513)), closes [#31389](https://github.com/ionic-team/ionic-framework/issues/31389) [#31390](https://github.com/ionic-team/ionic-framework/issues/31390) [#31389](https://github.com/ionic-team/ionic-framework/issues/31389)
+* **picker-column:** commit value on outside press ([#31397](https://github.com/ionic-team/ionic-framework/issues/31397)) ([95e2224](https://github.com/ionic-team/ionic-framework/commit/95e222488d4e4bac9c6c8c0b42a2154082846767)), closes [#30449](https://github.com/ionic-team/ionic-framework/issues/30449) [#30674](https://github.com/ionic-team/ionic-framework/issues/30674)
+* **refresher:** validate slot after frameworks assign it ([#31377](https://github.com/ionic-team/ionic-framework/issues/31377)) ([d41f258](https://github.com/ionic-team/ionic-framework/commit/d41f25860dcb9a71a40226973cca9ca223b7f7ca)), closes [#31376](https://github.com/ionic-team/ionic-framework/issues/31376)
+* **select:** derive option text from all child nodes ([#31382](https://github.com/ionic-team/ionic-framework/issues/31382)) ([7879ec5](https://github.com/ionic-team/ionic-framework/commit/7879ec5763be92b4ecf03c6c58975265166e33ba)), closes [#31381](https://github.com/ionic-team/ionic-framework/issues/31381)
+
+
+# [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
+
+**Full Changelog**: https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0
+
+**Migration guide**: https://ionicframework.com/docs/updating/9-0
+
+**Breaking changes**: https://github.com/ionic-team/ionic-framework/blob/main/BREAKING.md#version-9x
+
+
+## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
+
+### Bug Fixes
+
+* **gesture:** remove leaked optsTest listener from passive support check ([#31363](https://github.com/ionic-team/ionic-framework/issues/31363)) ([c689000](https://github.com/ionic-team/ionic-framework/commit/c6890002df0a1ec5ac030626b1694e87022365c0)), closes [#30539](https://github.com/ionic-team/ionic-framework/issues/30539)
+* **menu:** respect ion-app dir attribute for menu animation side ([#31246](https://github.com/ionic-team/ionic-framework/issues/31246)) ([2618a6f](https://github.com/ionic-team/ionic-framework/commit/2618a6f7bd793ad09e38e4868d753189610eff9d)), closes [#30226](https://github.com/ionic-team/ionic-framework/issues/30226)
+* **range:** update knob positions when dualKnobs changes ([#31365](https://github.com/ionic-team/ionic-framework/issues/31365)) ([7d64d62](https://github.com/ionic-team/ionic-framework/commit/7d64d62a31d59078560575ad9c4fc67a8e49e524)), closes [#31026](https://github.com/ionic-team/ionic-framework/issues/31026)
+
+
+## [8.8.18](https://github.com/ionic-team/ionic-framework/compare/v8.8.17...v8.8.18) (2026-08-12)
+
+
+### Bug Fixes
+
+* **core:** resolve lazy component chunks under Vite 8 ([#31341](https://github.com/ionic-team/ionic-framework/issues/31341)) ([a73e183](https://github.com/ionic-team/ionic-framework/commit/a73e1831d389e6dc968f646c0322b3984c1d3224)), closes [#31333](https://github.com/ionic-team/ionic-framework/issues/31333)
+* **core:** update offsets when safe-area insets arrive late ([#31343](https://github.com/ionic-team/ionic-framework/issues/31343)) ([bc4fce2](https://github.com/ionic-team/ionic-framework/commit/bc4fce218d6c3aaac69f11d416b9fc8c8dacdfa4)), closes [#31337](https://github.com/ionic-team/ionic-framework/issues/31337)
+* **datetime:** tear down ready state when an overlay dismisses ([#31335](https://github.com/ionic-team/ionic-framework/issues/31335)) ([d59e341](https://github.com/ionic-team/ionic-framework/commit/d59e3415df06cb26a7dea688f6720ba228b775d5)), closes [#31155](https://github.com/ionic-team/ionic-framework/issues/31155) [#31143](https://github.com/ionic-team/ionic-framework/issues/31143)
+* **modal:** allow pull-to-refresh with a custom scroll host ([#31339](https://github.com/ionic-team/ionic-framework/issues/31339)) ([d6202a8](https://github.com/ionic-team/ionic-framework/commit/d6202a8933ad77735fceca05cb4b0fe6b33bfb55)), closes [#31332](https://github.com/ionic-team/ionic-framework/issues/31332)
+
+
+
+
+
+## [8.8.17](https://github.com/ionic-team/ionic-framework/compare/v8.8.16...v8.8.17) (2026-08-05)
+
+
+### Bug Fixes
+
+* **checkbox,radio,toggle:** add missing keyboard focus indicators ([#31295](https://github.com/ionic-team/ionic-framework/issues/31295)) ([2f9c0b7](https://github.com/ionic-team/ionic-framework/commit/2f9c0b7d8fa6371785cfdf1d99857eece4835e4d))
+* **fab-button:** restore submit, reset, and disabled form functionality ([#31249](https://github.com/ionic-team/ionic-framework/issues/31249)) ([93ee380](https://github.com/ionic-team/ionic-framework/commit/93ee38015125619509b9aa844d6f0025be0a71b7)), closes [#18550](https://github.com/ionic-team/ionic-framework/issues/18550)
+* **refresher:** avoid gesture setup after disconnect ([#31316](https://github.com/ionic-team/ionic-framework/issues/31316)) ([d9b877f](https://github.com/ionic-team/ionic-framework/commit/d9b877f6059992808cccec503dbe2a30f6ccdb48)), closes [#31315](https://github.com/ionic-team/ionic-framework/issues/31315)
+* **tab:** retry lazy load after a failed attach ([#31324](https://github.com/ionic-team/ionic-framework/issues/31324)) ([81b52e2](https://github.com/ionic-team/ionic-framework/commit/81b52e25bd8fa55b905da2791d84b381a2db630b))
+
+
+
+
+
+## [8.8.16](https://github.com/ionic-team/ionic-framework/compare/v8.8.15...v8.8.16) (2026-07-29)
+
+
+### Bug Fixes
+
+* **modal:** keep focus on dialog for cycle sheet modals ([#31293](https://github.com/ionic-team/ionic-framework/issues/31293)) ([b4b2603](https://github.com/ionic-team/ionic-framework/commit/b4b2603210b313fc2f2ee2c88b9112751e24b338))
+* **select:** prevent floating label and placeholder from overlapping when focused ([#31276](https://github.com/ionic-team/ionic-framework/issues/31276)) ([e987009](https://github.com/ionic-team/ionic-framework/commit/e9870091c2f7460a1dc12c4b407ddfde39e1b156)), closes [#30401](https://github.com/ionic-team/ionic-framework/issues/30401)
+
+
+
+
+
+## [8.8.15](https://github.com/ionic-team/ionic-framework/compare/v8.8.14...v8.8.15) (2026-07-22)
+
+
+### Bug Fixes
+
+* **modal:** focus the dialog wrapper on present so screen readers can enter the modal ([#31260](https://github.com/ionic-team/ionic-framework/issues/31260)) ([6251eb8](https://github.com/ionic-team/ionic-framework/commit/6251eb85db0e5b43b9e09604248dc8451e1664c0))
+
+
+
+
+
+## [8.8.14](https://github.com/ionic-team/ionic-framework/compare/v8.8.13...v8.8.14) (2026-07-15)
+
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
+## [8.8.13](https://github.com/ionic-team/ionic-framework/compare/v8.8.12...v8.8.13) (2026-07-01)
+
+
+### Bug Fixes
+
+* **button:** sync disabled state and type in renderHiddenButton ([#31225](https://github.com/ionic-team/ionic-framework/issues/31225)) ([0c76135](https://github.com/ionic-team/ionic-framework/commit/0c76135f8c373dfad66a65717092ffd4d52461c5)), closes [#30968](https://github.com/ionic-team/ionic-framework/issues/30968)
+* **datetime-button:** respect datetime constraints in initial text ([#31218](https://github.com/ionic-team/ionic-framework/issues/31218)) ([044f358](https://github.com/ionic-team/ionic-framework/commit/044f3589f184b51f093419556a38d1a0ff2413d6)), closes [#30183](https://github.com/ionic-team/ionic-framework/issues/30183)
+* **datetime:** don't setActiveParts from month/year wheels when multiple=true ([#31248](https://github.com/ionic-team/ionic-framework/issues/31248)) ([bf46a3d](https://github.com/ionic-team/ionic-framework/commit/bf46a3d7405e77c28659dbfc0a094023a9e8bd87)), closes [#29673](https://github.com/ionic-team/ionic-framework/issues/29673)
+* **datetime:** respect config animated setting when paging month calendar ([#31227](https://github.com/ionic-team/ionic-framework/issues/31227)) ([a35f8a9](https://github.com/ionic-team/ionic-framework/commit/a35f8a98e31f5895e36c845484207f3ed4c74689)), closes [#30484](https://github.com/ionic-team/ionic-framework/issues/30484)
+
+
+
+
+
+## [8.8.12](https://github.com/ionic-team/ionic-framework/compare/v8.8.11...v8.8.12) (2026-06-24)
+
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
 ## [8.8.11](https://github.com/ionic-team/ionic-framework/compare/v8.8.10...v8.8.11) (2026-06-17)
 
 

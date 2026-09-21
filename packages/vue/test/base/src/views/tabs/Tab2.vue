@@ -9,7 +9,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
+      <ion-header scroll-effect="condense">
         <ion-toolbar>
           <ion-title size="large">Tab 2</ion-title>
         </ion-toolbar>
@@ -17,6 +17,10 @@
 
       <ion-item router-link="/routing" id="routing">
         <ion-label>Go to /routing</ion-label>
+      </ion-item>
+
+      <ion-item router-link="/tabs/tab2/childone" id="child-one">
+        <ion-label>Go to Tab 2 Child 1</ion-label>
       </ion-item>
     </ion-content>
   </ion-page>

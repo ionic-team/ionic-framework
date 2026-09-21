@@ -59,6 +59,41 @@ export const findClosestIonContent = (el: Element) => {
 };
 
 /**
+ * Queries the custom scroll host an `ion-refresher` scrolls with in the given
+ * `ion-content`. A refresher only pairs with the first host.
+ */
+export const findRefresherScrollHost = (ionContent: Element) => {
+  return ionContent.querySelector<HTMLElement>(ION_CONTENT_CLASS_SELECTOR);
+};
+
+/**
+ * Queries the `ion-refresher` that scrolls with the given content element,
+ * which may be an `ion-content` or a custom scroll host. A refresher is a
+ * `slot="fixed"` child of `ion-content`, so it is a sibling of a scroll host
+ * rather than a descendant of it.
+ */
+export const findRefresherInContent = (contentEl: Element) => {
+  // An `ion-content` owns any refresher inside it, scroll host or not.
+  if (isIonContent(contentEl)) {
+    return contentEl.querySelector('ion-refresher');
+  }
+
+  // A refresher needs an `ion-content` ancestor to initialize.
+  const ionContent = contentEl.closest(ION_CONTENT_ELEMENT_SELECTOR);
+  if (ionContent === null) {
+    return null;
+  }
+
+  // Any scroll host other than the refresher's own has no refresher.
+  const refresherScrollHost = findRefresherScrollHost(ionContent);
+  if (refresherScrollHost === null || !refresherScrollHost.contains(contentEl)) {
+    return null;
+  }
+
+  return ionContent.querySelector('ion-refresher');
+};
+
+/**
  * Scrolls to the top of the element. If an `ion-content` is found, it will scroll
  * using the public API `scrollToTop` with a duration.
  */

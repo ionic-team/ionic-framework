@@ -7,9 +7,10 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { useEffect } from 'react';
-import React from 'react';
-import { Route, Redirect } from 'react-router';
+import React, { useEffect } from 'react';
+import { Route, Navigate } from 'react-router';
+
+import TestDescription from '../../components/TestDescription';
 
 const Page: React.FC = () => {
   useEffect(() => {
@@ -48,10 +49,9 @@ const SecondPage: React.FC = () => {
     <IonRouterOutlet ionPage>
       <Route
         path="/nested-outlet/secondpage"
-        exact={true}
-        render={() => <Redirect to="/nested-outlet/secondpage/page" />}
+        element={<Navigate to="/nested-outlet/secondpage/page" replace />}
       />
-      <Route path="/nested-outlet/secondpage/page" component={Page} exact={true} />
+      <Route path="/nested-outlet/secondpage/page" element={<Page />} />
     </IonRouterOutlet>
   );
 };
@@ -74,6 +74,7 @@ const FirstPage: React.FC = () => {
         <IonButton routerLink="/nested-outlet/secondpage/page" routerDirection="forward">
           Go to second page
         </IonButton>
+        <TestDescription>Go to the second page (hosted in a nested IonRouterOutlet). Use "Back with direction back" and "Back with direction root" to return. Both should bring you back here without blank pages or console errors about unmounting.</TestDescription>
       </IonContent>
     </IonPage>
   );
@@ -81,8 +82,8 @@ const FirstPage: React.FC = () => {
 
 const NestedOutlet: React.FC = () => (
   <IonRouterOutlet>
-    <Route path="/nested-outlet" component={FirstPage} exact={true} />
-    <Route path="/nested-outlet/secondpage" component={SecondPage} />
+    <Route path="/nested-outlet" element={<FirstPage />} />
+    <Route path="/nested-outlet/secondpage/*" element={<SecondPage />} />
   </IonRouterOutlet>
 );
 

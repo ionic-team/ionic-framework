@@ -36,7 +36,8 @@
  */
 :host(.textarea-label-placement-floating),
 :host(.textarea-label-placement-stacked) {
-  --padding-top: 0px;
+  --padding-top: 20px;
+  --padding-bottom: 6px;
 
   min-height: 56px;
 }
@@ -48,10 +49,6 @@
 .native-wrapper {
   min-height: inherit;
   max-height: inherit;
-}
-
-.native-wrapper textarea {
-  @include globals.padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
 
 // Textarea Bottom Content
@@ -134,24 +131,39 @@
   @include globals.margin(8px, 0px, 0px, 0px);
 }
 
+/**
+ * When the label sits beside the textarea, the label should size to its content
+ * and the textarea should take the remaining space. A zero flex basis prevents
+ * the textarea from requesting its full width and forcing the label to shrink.
+ * Stacked and floating placements use a column layout, so their flex basis
+ * controls height instead and does not need to be overridden.
+ */
+:host(.textarea-label-placement-start) .native-wrapper,
+:host(.textarea-label-placement-end) .native-wrapper,
+:host(.textarea-label-placement-fixed) .native-wrapper {
+  flex: 1 1 0;
+}
+
+// Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * Allows the label to shrink below its intrinsic content width.
+   * Without this the label keeps its full width and can push the
+   * textarea and end slot outside the wrapper.
+   */
+  min-width: 0;
+}
+
 // Start / End Slots
 // ----------------------------------------------------------------
 
-.start-slot-wrapper,
-.end-slot-wrapper {
-  @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
-}
-
-:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
-:host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
-  margin-top: 8px;
-}
-
+// Align slotted content with the top of the label by
+// matching the label's top padding
 ::slotted([slot="start"]),
 ::slotted([slot="end"]) {
-  margin-top: 0; // ensure slot content is vertically aligned with label
+  margin-top: var(--padding-top);
 }
 
 ::slotted([slot="start"]:last-of-type) {

@@ -6,10 +6,16 @@
 
 <ion-content>
   <ion-list>
-    <ion-item routerLink="/lazy">
+    <!--
+      Plain hrefs, not routerLinks: routing into lazy never registers the Ionic
+      custom elements, and routing into standalone from the lazy bootstrap runs it
+      against the lazy implementation. See main.ts. The hrefs are relative so they
+      resolve against <base href>, which is /angular/ on the Vercel preview.
+    -->
+    <ion-item href="lazy">
       <ion-label>Go to Lazy App</ion-label>
     </ion-item>
-    <ion-item routerLink="/standalone">
+    <ion-item href="standalone">
       <ion-label>Go to Standalone App</ion-label>
     </ion-item>
   </ion-list>

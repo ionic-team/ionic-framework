@@ -10,7 +10,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
+      <ion-header scroll-effect="condense">
         <ion-toolbar>
           <ion-title size="large">Test App</ion-title>
         </ion-toolbar>
@@ -40,6 +40,9 @@
         </ion-item>
         <ion-item router-link="/nested" id="nested">
           <ion-label>Nested Router Outlet</ion-label>
+        </ion-item>
+        <ion-item router-link="/swipe-gesture-disabled" router-direction="root" id="swipe-gesture-disabled">
+          <ion-label>Swipe Gesture Disabled</ion-label>
         </ion-item>
         <ion-item router-link="/tabs" id="tabs">
           <ion-label>Tabs</ion-label>

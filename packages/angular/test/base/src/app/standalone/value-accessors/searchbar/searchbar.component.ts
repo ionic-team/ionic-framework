@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
-import { IonSearchbar } from "@ionic/angular/standalone";
+import { IonSearchbar } from "@ionic/angular";
 import { ValueAccessorTestComponent } from "../value-accessor-test/value-accessor-test.component";
 
 @Component({

@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, expectFieldCellsShareARow, test } from '@utils/test/playwright';
 
 /**
  * By default ion-select takes up the full width
@@ -320,6 +320,65 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const select = page.locator('ion-select');
       await expect(select).toHaveScreenshot(screenshot(`select-label-slot-truncate`));
     });
+
+    /**
+     * The floating label must be positioned relative to `.select-wrapper` so its
+     * width is not constrained when the select width collapses. These tests
+     * cover both cases: a long label should retain the same available width
+     * despite wide start content, and a short label should not collapse when
+     * the start content takes up most of the select's width.
+     */
+    test('start slot content should not shrink the label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-select id="plain" fill="outline" label-placement="floating" value="1" label="Email Email Email Email Email Email">
+            <ion-select-option value="1">One</ion-select-option>
+          </ion-select>
+          <ion-select id="wide-start" fill="outline" label-placement="floating" value="1" label="Email Email Email Email Email Email">
+            <div slot="start" style="width: 120px; height: 24px"></div>
+            <ion-select-option value="1">One</ion-select-option>
+          </ion-select>
+        </div>
+      `,
+        config
+      );
+
+      const labelWidth = (id: string) =>
+        page.locator(`${id} .label-text`).evaluate((el: HTMLElement) => ({
+          available: el.clientWidth,
+          wanted: el.scrollWidth,
+        }));
+
+      const plain = await labelWidth('#plain');
+      const wideStart = await labelWidth('#wide-start');
+
+      // The label is long enough that it has to truncate in both cases
+      expect(plain.wanted).toBeGreaterThan(plain.available);
+
+      expect(wideStart.available).toBe(plain.available);
+    });
+
+    test('start slot content should not collapse a short label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-select fill="outline" label-placement="floating" value="1" label="Email">
+            <div slot="start" style="width: 170px; height: 24px"></div>
+            <ion-select-option value="1">One</ion-select-option>
+          </ion-select>
+        </div>
+      `,
+        config
+      );
+
+      const label = await page.locator('.label-text').evaluate((el: HTMLElement) => ({
+        available: el.clientWidth,
+        wanted: el.scrollWidth,
+      }));
+
+      expect(label.available).toBe(label.wanted);
+    });
   });
 });
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
@@ -385,5 +444,162 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(alert.locator('.alert-title')).toHaveText('My Prop Alert');
     });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select: floating label focus'), () => {
+    test('label should appear on top of the select when it is focused, has a placeholder, and no value', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+           <ion-select label="Label" label-placement="floating" placeholder="Placeholder">
+             <ion-select-option value="apples">Apples</ion-select-option>
+           </ion-select>
+         `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      await page.locator('ion-select button').focus();
+      await expect(select).toHaveScreenshot(screenshot(`select-label-floating-focus-no-value-placeholder`));
+    });
+  });
+});
+
+/**
+ * The label placement does not vary by mode, so `ionic-md` stands in for both.
+ * These comparisons are along the inline axis, which would need inverting under
+ * rtl.
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: label'), () => {
+    for (const placement of ['start', 'fixed'] as const) {
+      test(`label should sit before the field with a ${placement} placement`, async ({ page }) => {
+        await page.setContent(
+          `<ion-select label="Fruit" label-placement="${placement}" value="apple"><ion-select-option value="apple">Apple</ion-select-option></ion-select>`,
+          config
+        );
+
+        const host = page.locator('ion-select');
+        const label = await host.locator('.label-text-wrapper').boundingBox();
+        const native = await host.locator('.native-wrapper').boundingBox();
+
+        expect(label).not.toBeNull();
+        expect(native).not.toBeNull();
+
+        // The two share the row.
+        expect(label!.y).toBeLessThan(native!.y + native!.height);
+        expect(native!.y).toBeLessThan(label!.y + label!.height);
+
+        expect(label!.x + label!.width).toBeLessThanOrEqual(native!.x);
+
+        await expectFieldCellsShareARow(host, 'select');
+      });
+    }
+
+    test('label should sit after the field with an end placement', async ({ page }) => {
+      await page.setContent(
+        `<ion-select label="Fruit" label-placement="end" value="apple"><ion-select-option value="apple">Apple</ion-select-option></ion-select>`,
+        config
+      );
+
+      const host = page.locator('ion-select');
+      const label = await host.locator('.label-text-wrapper').boundingBox();
+      const native = await host.locator('.native-wrapper').boundingBox();
+
+      expect(label!.y).toBeLessThan(native!.y + native!.height);
+      expect(native!.y).toBeLessThan(label!.y + label!.height);
+
+      expect(label!.x).toBeGreaterThanOrEqual(native!.x + native!.width);
+
+      await expectFieldCellsShareARow(host, 'select');
+    });
+
+    test('field should sit at the start when there is no label', async ({ page }) => {
+      await page.setContent(
+        `<ion-select placeholder="Fruit"><ion-select-option value="apple">Apple</ion-select-option></ion-select>`,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const wrapper = await select.locator('.select-wrapper').boundingBox();
+      const start = await select.locator('.select-start').boundingBox();
+
+      // A hidden label collapses its own track, but the free space that
+      // separates it from the field has to collapse too.
+      expect(start!.x).toBeLessThan(wrapper!.x + wrapper!.width / 2);
+
+      await expectFieldCellsShareARow(select, 'select');
+    });
+
+    /**
+     * The no-label rule and the justify rules land on the same element with the
+     * same specificity, so the cascade resolves them per declaration. That is
+     * why `end` restates every track, while `space-between` is gated on the
+     * label so it defers instead.
+     */
+    test('justify end should place the field at the end when there is no label', async ({ page }) => {
+      await page.setContent(
+        `<ion-select placeholder="Fruit" justify="end"><ion-select-option value="apple">Apple</ion-select-option></ion-select>`,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const host = await select.boundingBox();
+      const end = await select.locator('.select-end').boundingBox();
+
+      // Flush with the end edge.
+      expect(end!.x + end!.width).toBeCloseTo(host!.x + host!.width, 0);
+    });
+
+    /**
+     * With no label there is nothing to space the field away from, so the free
+     * space belongs after it. This matches the flex layout these placements had
+     * before, where `space-between` with a single in-flow item behaved as start.
+     */
+    for (const justify of ['start', 'space-between'] as const) {
+      test(`justify ${justify} should place the field at the start when there is no label`, async ({ page }) => {
+        await page.setContent(
+          `<ion-select placeholder="Fruit" justify="${justify}"><ion-select-option value="apple">Apple</ion-select-option></ion-select>`,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        const host = await select.boundingBox();
+        const start = await select.locator('.select-start').boundingBox();
+
+        expect(start!.x).toBeCloseTo(host!.x, 0);
+      });
+    }
+
+    for (const placement of ['stacked', 'floating'] as const) {
+      test(`label should sit above the field with a ${placement} placement`, async ({ page }) => {
+        await page.setContent(
+          `<ion-select label="Fruit" label-placement="${placement}" value="apple"><ion-select-option value="apple">Apple</ion-select-option></ion-select>`,
+          config
+        );
+
+        const host = page.locator('ion-select');
+        const label = await host.locator('.label-text-wrapper').boundingBox();
+        const native = await host.locator('.native-wrapper').boundingBox();
+
+        expect(label).not.toBeNull();
+        expect(native).not.toBeNull();
+
+        // Above, in its own row. The rows are adjacent with no gap, so this
+        // edge is meant to be equal and gets a pixel of slack.
+        expect(label!.y + label!.height).toBeLessThan(native!.y + 1);
+
+        // Starts at the field's inline edge.
+        expect(label!.x).toBeLessThanOrEqual(native!.x);
+
+        await expectFieldCellsShareARow(host, 'select');
+      });
+    }
   });
 });
