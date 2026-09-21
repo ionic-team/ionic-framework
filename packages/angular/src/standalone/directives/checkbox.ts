@@ -28,6 +28,7 @@ const CHECKBOX_INPUTS = [
   'labelPlacement',
   'mode',
   'name',
+  { name: 'required', transform: nullableBooleanAttribute },
   'value',
 ];
 

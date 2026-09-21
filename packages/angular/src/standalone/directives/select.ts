@@ -18,6 +18,7 @@ import { nullableBooleanAttribute } from './angular-component-lib/boolean-attrib
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const SELECT_INPUTS = [
+  { name: 'cancelIcon', transform: nullableBooleanAttribute },
   'cancelText',
   'color',
   'compareWith',
@@ -36,6 +37,7 @@ const SELECT_INPUTS = [
   'name',
   'okText',
   'placeholder',
+  { name: 'required', transform: nullableBooleanAttribute },
   'selectedText',
   'shape',
   'toggleIcon',

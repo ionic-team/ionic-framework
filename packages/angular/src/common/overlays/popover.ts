@@ -60,6 +60,7 @@ const POPOVER_INPUTS = [
   { name: 'focusTrap', transform: nullableBooleanAttribute },
   { name: 'isOpen', transform: nullableBooleanAttribute },
   { name: 'keyboardClose', transform: nullableBooleanAttribute },
+  { name: 'keyboardEvents', transform: nullableBooleanAttribute },
   'leaveAnimation',
   'mode',
   { name: 'showBackdrop', transform: nullableBooleanAttribute },
