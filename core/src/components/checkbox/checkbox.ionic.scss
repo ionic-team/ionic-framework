@@ -13,7 +13,7 @@
 
   // Border
   --border-width: #{globals.$ion-border-size-025};
-  --border-style: #{globals.$ion-border-style-solid};
+  --border-style: solid;
   --border-color: #{globals.$ion-primitives-neutral-800};
   --checkmark-width: 3;
 
@@ -212,7 +212,7 @@ input {
 // --------------------------------------------------
 // Only show the focus ring when the checkbox is focused and not disabled
 :host(.ion-focused:not(.checkbox-disabled)) .native-wrapper {
-  @include globals.focused-state(var(--focus-ring-width), globals.$ion-border-style-solid, var(--focus-ring-color));
+  @include globals.focused-state(var(--focus-ring-width), solid, var(--focus-ring-color));
 }
 
 // Checkbox: Active
