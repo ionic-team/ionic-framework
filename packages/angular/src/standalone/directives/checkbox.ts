@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor, setIonicClasses } from '@ionic/angular/common';
+import { inputNames, setIonicClasses, ValueAccessor } from '@ionic/angular/common';
 import type { CheckboxChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-checkbox.js';
 
@@ -32,8 +32,7 @@ const CHECKBOX_INPUTS = [
   'value',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const CHECKBOX_PROXY_INPUTS = CHECKBOX_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const CHECKBOX_PROXY_INPUTS = inputNames(CHECKBOX_INPUTS);
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,

@@ -4,7 +4,7 @@ import type { Components } from '@ionic/core';
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 import { nullableBooleanAttribute } from '../../utils/boolean-attribute';
-import { ProxyCmp } from '../../utils/proxy';
+import { inputNames, ProxyCmp } from '../../utils/proxy';
 
 import { IonRouterOutlet } from './router-outlet';
 
@@ -19,8 +19,7 @@ const BACK_BUTTON_INPUTS = [
   'type',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const BACK_BUTTON_PROXY_INPUTS = BACK_BUTTON_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const BACK_BUTTON_PROXY_INPUTS = inputNames(BACK_BUTTON_INPUTS);
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export declare interface IonBackButton extends Components.IonBackButton {}

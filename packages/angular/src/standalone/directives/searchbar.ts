@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type { SearchbarInputEventDetail, SearchbarChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-searchbar.js';
 
@@ -40,8 +40,7 @@ const SEARCHBAR_INPUTS = [
   'value',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const SEARCHBAR_PROXY_INPUTS = SEARCHBAR_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const SEARCHBAR_PROXY_INPUTS = inputNames(SEARCHBAR_INPUTS);
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,

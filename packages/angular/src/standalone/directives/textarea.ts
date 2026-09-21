@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type { TextareaChangeEventDetail, TextareaInputEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-textarea.js';
 
@@ -49,8 +49,7 @@ const TEXTAREA_INPUTS = [
   'wrap',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const TEXTAREA_PROXY_INPUTS = TEXTAREA_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const TEXTAREA_PROXY_INPUTS = inputNames(TEXTAREA_INPUTS);
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,

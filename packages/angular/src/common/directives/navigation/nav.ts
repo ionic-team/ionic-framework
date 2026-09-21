@@ -11,7 +11,7 @@ import type { Components } from '@ionic/core';
 
 import { AngularDelegate } from '../../providers/angular-delegate';
 import { nullableBooleanAttribute } from '../../utils/boolean-attribute';
-import { ProxyCmp, proxyOutputs } from '../../utils/proxy';
+import { inputNames, ProxyCmp, proxyOutputs } from '../../utils/proxy';
 
 const NAV_INPUTS = [
   { name: 'animated', transform: nullableBooleanAttribute },
@@ -21,8 +21,7 @@ const NAV_INPUTS = [
   { name: 'swipeGesture', transform: nullableBooleanAttribute },
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const NAV_PROXY_INPUTS = NAV_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const NAV_PROXY_INPUTS = inputNames(NAV_INPUTS);
 
 const NAV_METHODS = [
   'push',

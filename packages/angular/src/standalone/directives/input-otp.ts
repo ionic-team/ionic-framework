@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type {
   InputOtpInputEventDetail as IIonInputOtpInputEventDetail,
   InputOtpChangeEventDetail as IIonInputOtpChangeEventDetail,
@@ -38,8 +38,7 @@ const INPUT_OTP_INPUTS = [
   'value',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const INPUT_OTP_PROXY_INPUTS = INPUT_OTP_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const INPUT_OTP_PROXY_INPUTS = inputNames(INPUT_OTP_INPUTS);
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,

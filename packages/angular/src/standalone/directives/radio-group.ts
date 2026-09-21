@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type { RadioGroupChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-radio-group.js';
 
@@ -26,8 +26,7 @@ const RADIO_GROUP_INPUTS = [
   'value',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const RADIO_GROUP_PROXY_INPUTS = RADIO_GROUP_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const RADIO_GROUP_PROXY_INPUTS = inputNames(RADIO_GROUP_INPUTS);
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,

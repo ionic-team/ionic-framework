@@ -10,7 +10,7 @@ import {
 import type { Components } from '@ionic/core/components';
 
 import { nullableBooleanAttribute } from '../utils/boolean-attribute';
-import { ProxyCmp, proxyOutputs } from '../utils/proxy';
+import { inputNames, ProxyCmp, proxyOutputs } from '../utils/proxy';
 
 export declare interface IonPopover extends Components.IonPopover {
   /**
@@ -72,8 +72,7 @@ const POPOVER_INPUTS = [
   'side',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const POPOVER_PROXY_INPUTS = POPOVER_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const POPOVER_PROXY_INPUTS = inputNames(POPOVER_INPUTS);
 
 const POPOVER_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'];
 

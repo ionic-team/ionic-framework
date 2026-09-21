@@ -10,7 +10,7 @@ import {
 import type { Components, ModalBreakpointChangeEventDetail, ModalDragEventDetail } from '@ionic/core/components';
 
 import { nullableBooleanAttribute } from '../utils/boolean-attribute';
-import { ProxyCmp, proxyOutputs } from '../utils/proxy';
+import { inputNames, ProxyCmp, proxyOutputs } from '../utils/proxy';
 
 export declare interface IonModal extends Components.IonModal {
   /**
@@ -88,8 +88,7 @@ const MODAL_INPUTS = [
   'trigger',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const MODAL_PROXY_INPUTS = MODAL_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const MODAL_PROXY_INPUTS = inputNames(MODAL_INPUTS);
 
 const MODAL_METHODS = [
   'present',

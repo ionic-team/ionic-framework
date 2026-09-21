@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type { DatetimeChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-datetime.js';
 
@@ -52,8 +52,7 @@ const DATETIME_INPUTS = [
   'yearValues',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const DATETIME_PROXY_INPUTS = DATETIME_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const DATETIME_PROXY_INPUTS = inputNames(DATETIME_INPUTS);
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,

@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type {
   RangeChangeEventDetail,
   RangeKnobMoveStartEventDetail,
@@ -42,8 +42,7 @@ const RANGE_INPUTS = [
   'value',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const RANGE_PROXY_INPUTS = RANGE_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const RANGE_PROXY_INPUTS = inputNames(RANGE_INPUTS);
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,

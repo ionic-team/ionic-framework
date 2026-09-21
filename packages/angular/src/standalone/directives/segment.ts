@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type { SegmentChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-segment.js';
 
@@ -27,8 +27,7 @@ const SEGMENT_INPUTS = [
   'value',
 ];
 
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const SEGMENT_PROXY_INPUTS = SEGMENT_INPUTS.map((input) => (typeof input === 'string' ? input : input.name));
+const SEGMENT_PROXY_INPUTS = inputNames(SEGMENT_INPUTS);
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
