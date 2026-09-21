@@ -374,8 +374,7 @@ export const pointerCoord = (ev: any): { x: number; y: number } => {
  *
  * @param side The current side before being redefined based on the direction.
  * @param hostEl The component's host element. The direction is resolved from
- * it or its nearest ancestor that declares one. When omitted, the direction
- * is resolved from the document.
+ * it or its nearest ancestor that declares one.
  */
 export const isEndSide = (side: Side, hostEl: HTMLElement): boolean => {
   const rtl = isRTL(hostEl);

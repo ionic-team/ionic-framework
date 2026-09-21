@@ -261,7 +261,7 @@ export class ItemSliding implements ComponentInterface {
     this.leftOptions = this.rightOptions = undefined;
 
     for (const option of options) {
-      const side = isEndSide(option.side ?? option.getAttribute('side'), this.el) ? 'end' : 'start';
+      const side = isEndSide(option.side ?? option.getAttribute('side'), option) ? 'end' : 'start';
 
       if (side === 'start') {
         this.leftOptions = option;

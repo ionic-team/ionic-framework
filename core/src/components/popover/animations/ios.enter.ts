@@ -1,5 +1,6 @@
 import { createAnimation } from '@utils/animation/animation';
 import { getElementRoot } from '@utils/helpers';
+import { isRTL } from '@utils/rtl';
 
 import type { Animation } from '../../../interface';
 import {
@@ -30,7 +31,7 @@ const POPOVER_IOS_MIN_EDGE_MARGIN = 25;
 export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
   const { event: ev, size, trigger, reference, side, align } = opts;
   const doc = baseEl.ownerDocument as any;
-  const isRTL = doc.dir === 'rtl';
+  const rtl = isRTL(baseEl);
   const bodyWidth = doc.defaultView.innerWidth;
   const bodyHeight = doc.defaultView.innerHeight;
 
@@ -45,12 +46,12 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
   const defaultPosition = {
     top: bodyHeight / 2 - contentHeight / 2,
     left: bodyWidth / 2 - contentWidth / 2,
-    originX: isRTL ? 'right' : 'left',
+    originX: rtl ? 'right' : 'left',
     originY: 'top',
   };
 
   const results = getPopoverPosition(
-    isRTL,
+    rtl,
     contentWidth,
     contentHeight,
     arrowWidth,

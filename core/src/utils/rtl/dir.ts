@@ -20,5 +20,5 @@ export const isRTL = (hostEl: Element): boolean => {
       return false;
     }
   }
-  return document?.dir?.toLowerCase() === 'rtl';
+  return hostEl.ownerDocument?.dir?.toLowerCase() === 'rtl';
 };

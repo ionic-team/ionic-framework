@@ -25,7 +25,7 @@ import type { Color } from '../../interface';
   shadow: true,
 })
 export class ProgressBar implements ComponentInterface {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.

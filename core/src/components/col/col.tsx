@@ -16,7 +16,7 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true,
 })
 export class Col implements ComponentInterface {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
