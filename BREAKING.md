@@ -249,4 +249,6 @@ Declaring the transform also makes Angular type check these inputs, which it did
 error TS2322: Type 'number' is not assignable to type 'string | boolean | null | undefined'.
 ```
 
-Coerce the expression to a boolean, with an explicit comparison or `!!value`. Bindings that already pass a boolean, a string, `null` or `undefined` are unaffected, and runtime behavior is unchanged.
+Coerce the expression to a boolean, with an explicit comparison or `!!value`. Bindings that already pass a boolean, a string, `null` or `undefined` are unaffected.
+
+Coercion also moves from Stencil to Angular, which changes the result for numbers. `0` and `NaN` previously became `false` and now become `true`, matching Angular's own `booleanAttribute`. An app without `strictTemplates` gets no compile error for the binding above, so an empty list now disables the item rather than enabling it. Coercing the expression fixes both the type error and the runtime change.
