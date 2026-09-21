@@ -138,7 +138,7 @@ export class Breadcrumb implements ComponentInterface {
    * Use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get breadcrumbCollapsedIcon() {
+  get breadcrumbCollapsedIcon(): string {
     return config.get('breadcrumbCollapsedIcon', ellipsisHorizontal);
   }
 
@@ -147,7 +147,7 @@ export class Breadcrumb implements ComponentInterface {
    * Use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get breadcrumbSeparatorIcon() {
+  get breadcrumbSeparatorIcon(): string {
     return config.get('breadcrumbSeparatorIcon', chevronForwardOutline);
   }
 

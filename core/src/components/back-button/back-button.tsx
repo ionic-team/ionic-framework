@@ -85,7 +85,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get backButtonIcon() {
+  get backButtonIcon(): string {
     // Return the icon if it is explicitly set
     if (this.icon != null) {
       return this.icon;
@@ -103,8 +103,8 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     return this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
   }
 
-  get hasIconOnly() {
-    return this.backButtonIcon && !this.backButtonText;
+  get hasIconOnly(): boolean {
+    return !!this.backButtonIcon && !this.backButtonText;
   }
 
   get rippleType() {

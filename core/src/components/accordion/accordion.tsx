@@ -247,7 +247,7 @@ export class Accordion implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get accordionToggleIcon() {
+  get accordionToggleIcon(): string {
     // Return the icon if it is explicitly set
     if (this.toggleIcon != null) {
       return this.toggleIcon;

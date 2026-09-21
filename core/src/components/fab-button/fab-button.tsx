@@ -243,7 +243,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get fabButtonCloseIcon() {
+  get fabButtonCloseIcon(): string {
     // Return the icon if it is explicitly set
     if (this.closeIcon != null) {
       return this.closeIcon;

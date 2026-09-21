@@ -113,7 +113,7 @@ export class InputPasswordToggle implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get inputPasswordHideIcon() {
+  get inputPasswordHideIcon(): string {
     // Return the icon if it is explicitly set
     if (this.hideIcon != null) {
       return this.hideIcon;
@@ -128,7 +128,7 @@ export class InputPasswordToggle implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get inputPasswordShowIcon() {
+  get inputPasswordShowIcon(): string {
     // Return the icon if it is explicitly set
     if (this.showIcon != null) {
       return this.showIcon;

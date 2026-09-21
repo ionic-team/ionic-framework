@@ -362,7 +362,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get itemDetailIcon() {
+  get itemDetailIcon(): string {
     // Return the icon if it is explicitly set
     if (this.detailIcon != null) {
       return this.detailIcon;
