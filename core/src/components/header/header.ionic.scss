@@ -23,7 +23,8 @@ ion-toolbar + ion-toolbar {
 
     position: absolute;
 
-    backdrop-filter: saturate(180%) blur(globals.$ion-scale-100);
+    backdrop-filter: blur(globals.$ion-scale-1600);
+    mask-image: linear-gradient(to bottom, #000 32.5%, transparent 91%);
   }
   .header-translucent-ionic ion-toolbar {
     --background: linear-gradient(
