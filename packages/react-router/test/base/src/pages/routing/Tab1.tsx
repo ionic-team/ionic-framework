@@ -1,4 +1,3 @@
-import React, { useEffect, useContext } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -14,8 +13,11 @@ import {
   IonButton,
   IonRouterContext,
 } from '@ionic/react';
+import React, { useEffect, useContext } from 'react';
 import './Tab1.css';
 import { Link } from 'react-router-dom';
+
+import TestDescription from '../../components/TestDescription';
 
 const Tab1: React.FC = () => {
   useEffect(() => {
@@ -54,8 +56,8 @@ const Tab1: React.FC = () => {
           <IonItem routerLink="/routing/tabs/home/details/1">
             <IonLabel>Details 1</IonLabel>
           </IonItem>
-          <IonItem routerLink="/routing/tabs/home/details/1" routerOptions={{ unmount: true }}>
-            <IonLabel>Details 1 & Unmount</IonLabel>
+          <IonItem routerLink="/routing/tabs/home/details/1">
+            <IonLabel>Details 1 (alt)</IonLabel>
           </IonItem>
           <IonItem routerLink="/routing/tabs/home/details/1?hello=there">
             <IonLabel>Details 1 with Query Params</IonLabel>
@@ -80,6 +82,7 @@ const Tab1: React.FC = () => {
         <br />
         <br />
         RouteInfo: {JSON.stringify(ionRouter.routeInfo)}
+        <TestDescription>Navigate to Details pages, then back. Verify each detail page stacks (not replaced), the back button walks through the stack in order, and switching tabs preserves each tab's navigation stack. Try navigating to Settings Details from Home and confirm the Settings tab activates with the correct view.</TestDescription>
       </IonContent>
     </IonPage>
   );

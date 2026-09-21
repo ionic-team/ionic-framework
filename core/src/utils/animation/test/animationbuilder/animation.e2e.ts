@@ -16,18 +16,21 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 const testNavigation = async (page: E2EPage) => {
-  const ionRouteDidChange = await page.spyOnEvent('ionRouteDidChange');
+  // ionNavDidChange is emitted with bubbles: false, so spy on the ion-nav host
+  // element directly rather than at the window level.
+  const nav = page.locator('ion-nav');
+  const ionNavDidChange = await nav.spyOnEvent('ionNavDidChange');
 
   await page.click('page-root ion-button.next');
-  await ionRouteDidChange.next();
+  await ionNavDidChange.next();
   await page.click('page-one ion-button.next');
-  await ionRouteDidChange.next();
+  await ionNavDidChange.next();
   await page.click('page-two ion-button.next');
-  await ionRouteDidChange.next();
+  await ionNavDidChange.next();
   await page.click('page-three ion-back-button');
-  await ionRouteDidChange.next();
+  await ionNavDidChange.next();
   await page.click('page-two ion-back-button');
-  await ionRouteDidChange.next();
+  await ionNavDidChange.next();
   await page.click('page-one ion-back-button');
-  await ionRouteDidChange.next();
+  await ionNavDidChange.next();
 };

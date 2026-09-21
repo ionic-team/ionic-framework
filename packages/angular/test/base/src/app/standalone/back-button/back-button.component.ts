@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonBackButton } from '@ionic/angular/standalone';
+import { IonBackButton } from '@ionic/angular';
 
 @Component({
   selector: 'app-back-button',

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides } from '@ionic/angular/lazy';
 
 @Component({
   selector: 'app-slides',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonIcon } from '@ionic/angular/standalone';
+import { IonIcon } from '@ionic/angular';
 import { logoIonic, logoIonitron, logoApple, logoAndroid } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 

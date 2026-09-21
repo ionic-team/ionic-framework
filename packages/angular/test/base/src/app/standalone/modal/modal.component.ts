@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonModal } from '@ionic/angular/standalone';
+import { IonModal } from '@ionic/angular';
 
 @Component({
   selector: 'app-test',

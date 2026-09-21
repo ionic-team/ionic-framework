@@ -10,7 +10,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
+      <ion-header scroll-effect="condense">
         <ion-toolbar>
           <ion-title size="large">Routing</ion-title>
         </ion-toolbar>
@@ -22,6 +22,10 @@
 
       <ion-item router-link="/routing/child" id="child">
         <ion-label>Go to Child Page</ion-label>
+      </ion-item>
+
+      <ion-item router-link="/routing/guards" id="guards">
+        <ion-label>Go to Route Guards Page</ion-label>
       </ion-item>
 
       <ion-item router-link="/routing/abc" id="parameter-abc">

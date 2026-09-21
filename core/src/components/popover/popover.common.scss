@@ -141,7 +141,7 @@
    * A viewport-relative value is used instead of `auto` or
    * `max-content` because the enter animation reads `--width`
    * via getBoundingClientRect() before the first layout pass
-   * completes — intrinsic values return 0 at that point and
+   * completes. Intrinsic values return 0 at that point and
    * cause the popover to be positioned off-screen on first open.
    */
   --width: clamp(250px, calc(100vw - 40px), 400px);

@@ -5,3 +5,4 @@ export * from './components';
 export * from './routing';
 export * from './models';
 export * from './utils/generateId';
+export * from './utils/debug';

@@ -92,17 +92,17 @@
 // Tab Bar Hide on Scroll
 // --------------------------------------------------
 
-:host(.tab-bar-hide-on-scroll) {
+:host(.tab-bar-scroll-effect-hide) {
   transition: transform globals.$ion-transition-time-200 globals.$ion-transition-curve-spring;
 }
 
-:host(.tab-bar-scroll-hidden) {
+:host(.tab-bar-compact.tab-bar-scroll-hidden) {
   transform: translateY(calc(100% + var(--ion-safe-area-bottom, 0) + globals.$ion-space-1000)) translateX(calc(-50%));
 
   transition: transform globals.$ion-transition-time-350 globals.$ion-transition-curve-base;
 }
 
-:host([slot="top"].tab-bar-scroll-hidden) {
+:host([slot="top"].tab-bar-compact.tab-bar-scroll-hidden) {
   transform: translateY(-100%) translateX(calc(-50%));
 }
 
@@ -137,4 +137,14 @@
 /* Rectangular */
 :host(.tab-bar-rectangular) {
   @include globals.border-radius(globals.$ion-border-radius-0);
+}
+
+// Reduced Motion
+// --------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.tab-bar-scroll-effect-hide),
+  :host(.tab-bar-compact.tab-bar-scroll-hidden) {
+    transition: none;
+  }
 }

@@ -28,8 +28,7 @@
 // -----------------------------------------
 
 .searchbar-search-icon {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  font-size: globals.$ion-font-size-400;
 }
 
 // Searchbar Input Field
@@ -52,7 +51,7 @@
 
   background-color: transparent;
 
-  font-size: globals.$ion-scale-400;
+  font-size: globals.$ion-font-size-400;
 
   contain: strict;
 }
@@ -348,9 +347,7 @@
 :host(.searchbar-size-large) .searchbar-cancel-button {
   width: globals.$ion-scale-500;
   height: globals.$ion-scale-500;
-}
 
-:host(.searchbar-size-large) .searchbar-cancel-button {
   font-size: globals.$ion-font-size-500;
 }
 

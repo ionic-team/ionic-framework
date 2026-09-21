@@ -56,7 +56,7 @@
         <ion-header>
           <ion-toolbar>
             <ion-buttons>
-              <ion-back-button default-href="/test"></ion-back-button>
+              <ion-back-button default-href="/home"></ion-back-button>
             </ion-buttons>
             <ion-title>Child Page</ion-title>
           </ion-toolbar>
@@ -72,7 +72,7 @@
         <ion-header>
           <ion-toolbar>
             <ion-buttons>
-              <ion-back-button></ion-back-button>
+              <ion-back-button default-href="/home"></ion-back-button>
             </ion-buttons>
             <ion-title>Test Page</ion-title>
           </ion-toolbar>
@@ -155,7 +155,7 @@
         <ion-route url="/guard-initial-page" component="guard-initial-page"></ion-route>
       </ion-router>
 
-      <ion-nav></ion-nav>
+      <ion-router-outlet></ion-router-outlet>
 
       <script>
         const beforeEnterGroup = document.querySelector('ion-radio-group#beforeEnter');

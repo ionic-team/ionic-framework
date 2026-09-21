@@ -11,9 +11,11 @@ export const useKeyboard = (): UseKeyboardResult => {
   const isOpen = ref(false);
   const keyboardHeight = ref(0);
 
-  const showCallback = (ev: CustomEvent) => {
+  const showCallback = (ev: Event) => {
     isOpen.value = true;
-    keyboardHeight.value = ev.detail.keyboardHeight;
+    keyboardHeight.value = (
+      ev as CustomEvent<{ keyboardHeight: number }>
+    ).detail.keyboardHeight;
   };
 
   const hideCallback = () => {

@@ -91,10 +91,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
               background-color: red;
             }
 
-            ion-select::part(inner) {
-              background-color: orange;
-            }
-
             ion-select::part(bottom) {
               background-color: green;
             }
@@ -109,14 +105,9 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
 
       const select = page.locator('ion-select');
       const wrapper = select.locator('.select-wrapper');
-      const wrapperInner = select.locator('.select-wrapper-inner');
       const bottom = select.locator('.select-bottom');
 
       const wrapperBackgroundColor = await wrapper.evaluate((el) => {
-        return window.getComputedStyle(el).backgroundColor;
-      });
-
-      const wrapperInnerBackgroundColor = await wrapperInner.evaluate((el) => {
         return window.getComputedStyle(el).backgroundColor;
       });
 
@@ -125,8 +116,45 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       });
 
       expect(wrapperBackgroundColor).toBe('rgb(255, 0, 0)');
-      expect(wrapperInnerBackgroundColor).toBe('rgb(255, 165, 0)');
       expect(bottomBackgroundColor).toBe('rgb(0, 128, 0)');
+    });
+
+    test('should be able to customize start and end using css parts', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-select::part(start) {
+            background-color: red;
+          }
+
+          ion-select::part(end) {
+            background-color: blue;
+          }
+        </style>
+
+        <ion-select label="Select" label-placement="stacked" placeholder="Fruits" helper-text="Helper text">
+          <ion-select-option value="a">Apple</ion-select-option>
+          <span slot="start">Start</span>
+          <span slot="end">End</span>
+        </ion-select>
+    `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const start = select.locator('.select-start');
+      const end = select.locator('.select-end');
+
+      const startBackgroundColor = await start.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      const endBackgroundColor = await end.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(startBackgroundColor).toBe('rgb(255, 0, 0)');
+      expect(endBackgroundColor).toBe('rgb(0, 0, 255)');
     });
 
     test('should render custom cancel text when prop is provided with alert interface', async ({ page }) => {
@@ -213,6 +241,39 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
 
       // Verify the cancel button text
       await expect(cancelButton).toHaveText('Close me');
+    });
+  });
+});
+
+/**
+ * The ionic theme flattens the control with `display: contents`, so it has no
+ * box to paint. Only the native themes can honor a background on this part.
+ */
+configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: custom'), () => {
+    test('should be able to customize control using css parts', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-select::part(control) {
+            background-color: green;
+          }
+        </style>
+
+        <ion-select label="Select" label-placement="stacked" placeholder="Fruits" helper-text="Helper text">
+          <ion-select-option value="a">Apple</ion-select-option>
+        </ion-select>
+    `,
+        config
+      );
+
+      const control = page.locator('ion-select').locator('.select-control');
+
+      const controlBackgroundColor = await control.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(controlBackgroundColor).toBe('rgb(0, 128, 0)');
     });
   });
 });

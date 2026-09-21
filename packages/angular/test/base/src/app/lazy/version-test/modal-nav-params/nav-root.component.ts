@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from "@ionic/angular/lazy";
 
 /**
  * This is used to track if any occurrences of

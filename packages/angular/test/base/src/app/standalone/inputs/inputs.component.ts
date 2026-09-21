@@ -5,7 +5,7 @@ import {
   IonLabel, IonDatetime, IonNote, IonSelect, IonSelectOption, 
   IonToggle, IonInput, IonInputOtp, IonCheckbox, IonRadioGroup, 
   IonRadio, IonRange, IonTextarea, IonButton 
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 @Component({
   selector: 'app-inputs',

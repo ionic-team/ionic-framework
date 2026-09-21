@@ -15,14 +15,21 @@
   </head>
 
   <body>
+    <!--
+      As of Ionic 9, ion-nav no longer integrates with ion-router. This page
+      reproduces the pattern from https://github.com/ionic-team/ionic-framework/issues/24641,
+      where an ion-router and an ion-nav coexist. The ion-nav must manage its own
+      stack via `root` and ion-nav-link, the URL must never change as the stack
+      changes, and the page must still finish loading even though the router has no
+      outlet to drive.
+    -->
     <ion-app>
-      <ion-router>
+      <ion-router use-hash="true">
         <ion-route url="/" component="page-root"></ion-route>
         <ion-route url="/page-one" component="page-one"></ion-route>
         <ion-route url="/page-two" component="page-two"></ion-route>
-        <ion-route url="/page-three" component="page-three"></ion-route>
       </ion-router>
-      <ion-nav></ion-nav>
+      <ion-nav root="page-root"></ion-nav>
     </ion-app>
 
     <script>
@@ -78,28 +85,6 @@
           </ion-header>
           <ion-content class="ion-padding">
             <h1>Page Two</h1>
-            <div>
-              <ion-nav-link router-direction="forward" component="page-three">
-                <button class="next">Go to Page Three</button>
-              </ion-nav-link>
-            </div>
-          </ion-content>
-        `;
-        }
-      }
-      class PageThree extends HTMLElement {
-        connectedCallback() {
-          this.innerHTML = `
-          <ion-header>
-            <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-back-button></ion-back-button>
-              </ion-buttons>
-              <ion-title>Page Three</ion-title>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="ion-padding">
-            <h1>Page Three</h1>
           </ion-content>
         `;
         }
@@ -107,7 +92,6 @@
       customElements.define('page-root', PageRoot);
       customElements.define('page-one', PageOne);
       customElements.define('page-two', PageTwo);
-      customElements.define('page-three', PageThree);
     </script>
   </body>
 </html>

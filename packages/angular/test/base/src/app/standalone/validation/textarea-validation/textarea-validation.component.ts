@@ -14,7 +14,7 @@ import {
   IonTextarea,
   IonTitle,
   IonToolbar
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 // Custom validator for address (must be at least 10 chars and contain a digit)
 function addressValidator(control: AbstractControl): ValidationErrors | null {

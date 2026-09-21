@@ -20,10 +20,10 @@ body:
     id: affected-versions
     attributes:
       label: Ionic Framework Version
-      description: Which version(s) of Ionic Framework does this issue impact? [Ionic Framework 1.x to 6.x are no longer supported](https://ionicframework.com/docs/reference/support#framework-maintenance-and-support-status). For extended support, considering visiting [Ionic's Enterprise offering](https://ionic.io/enterprise).
+      description: Which version(s) of Ionic Framework does this issue impact? [Ionic Framework 1.x to 7.x are no longer supported](https://ionicframework.com/docs/reference/support#framework-maintenance-and-support-status).
       options:
-        - v7.x
         - v8.x
+        - v9.x
         - Nightly
       multiple: true
     validations:

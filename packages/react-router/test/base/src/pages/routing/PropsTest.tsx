@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -8,11 +7,10 @@ import {
   IonButton,
   IonRouterOutlet,
 } from '@ionic/react';
+import React, { useState, useEffect } from 'react';
 import { Route } from 'react-router';
 
-interface PropsTestProps {}
-
-const PropsTest: React.FC<PropsTestProps> = () => {
+const PropsTest: React.FC = () => {
   const [count, setCount] = useState(1);
   useEffect(() => {
     console.log(count);
@@ -21,7 +19,7 @@ const PropsTest: React.FC<PropsTestProps> = () => {
     <IonRouterOutlet>
       <Route
         path="/routing/propstest"
-        render={() => <InnerPropsTest count={count} setCount={setCount} />}
+        element={<InnerPropsTest count={count} setCount={setCount} />}
       />
     </IonRouterOutlet>
   );

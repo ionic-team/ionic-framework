@@ -42,19 +42,25 @@
  * regardless of the content.
  */
 
-// Avatar / Image / SVG / Thumbnail / Icon
+// Avatar / Image / SVG / Thumbnail
 .select-option-start > ion-avatar,
 .select-option-start > ion-img,
 .select-option-start > ion-thumbnail,
-.select-option-start > ion-icon,
 .select-option-start > img,
 .select-option-start > svg,
 .select-option-end > ion-avatar,
 .select-option-end > ion-img,
 .select-option-end > ion-thumbnail,
-.select-option-end > ion-icon,
 .select-option-end > img,
 .select-option-end > svg {
   width: globals.$ion-scale-1200;
   height: globals.$ion-scale-1200;
+}
+
+// Icon
+.select-option-start > ion-icon,
+.select-option-end > ion-icon {
+  // TODO(FW-6881): this should be $ion-font-size-1200 but that
+  // variable does not exist
+  font-size: globals.$ion-scale-1200;
 }

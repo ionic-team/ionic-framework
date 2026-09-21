@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
-import { isEndSide } from '@utils/helpers';
+import { componentOnReady, isEndSide } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { watchForOptions } from '@utils/watch-options';
 
@@ -606,24 +606,21 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private async updateOptions() {
-    const options = this.el.querySelectorAll('ion-item-options');
+    const options = Array.from(this.el.querySelectorAll('ion-item-options'));
+
+    /**
+     * Frameworks that assign element props after inserting the element haven't set
+     * `side` while `connectedCallback` runs, so reading it any earlier reports every
+     * option as `end`.
+     */
+    await Promise.all(options.map((option) => new Promise((resolve) => componentOnReady(option, resolve))));
 
     let sides = 0;
 
     // Reset left and right options in case they were removed
     this.leftOptions = this.rightOptions = undefined;
 
-    for (let i = 0; i < options.length; i++) {
-      const item = options.item(i);
-
-      /**
-       * We cannot use the componentOnReady helper
-       * util here since we need to wait for all of these items
-       * to be ready before we set `this.sides` and `this.optsDirty`.
-       */
-      // eslint-disable-next-line custom-rules/no-component-on-ready-method
-      const option = (item as any).componentOnReady !== undefined ? await item.componentOnReady() : item;
-
+    for (const option of options) {
       const side = isEndSide(option.side ?? option.getAttribute('side')) ? 'end' : 'start';
 
       if (side === 'start') {

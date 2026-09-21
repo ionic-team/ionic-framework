@@ -6,8 +6,8 @@ import { NavContext } from '../../contexts/NavContext';
 import PageManager from '../../routing/PageManager';
 import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
+import { IonTab } from '../components';
 import { IonTabsInner } from '../inner-proxies';
-import { IonTab } from '../proxies';
 
 import type { IonTabsContextState } from './IonTabsContext';
 import { IonTabsContext } from './IonTabsContext';
@@ -42,7 +42,7 @@ type ChildFunction = (ionTabContext: IonTabsContextState) => React.ReactNode;
 
 interface Props extends LocalJSX.IonTabs {
   className?: string;
-  children: ChildFunction | React.ReactNode;
+  children: React.ReactNode;
   onIonTabsWillChange?: (event: CustomEvent<{ tab: string }>) => void;
   onIonTabsDidChange?: (event: CustomEvent<{ tab: string }>) => void;
 }
@@ -52,7 +52,7 @@ export class IonTabs extends React.Component<Props> {
     return true;
   }
 
-  context!: React.ContextType<typeof NavContext>;
+  declare context: React.ContextType<typeof NavContext>;
   /**
    * `routerOutletRef` allows users to add a `ref` to `IonRouterOutlet`.
    * Without this, `ref.current` will be `undefined` in the user's app,

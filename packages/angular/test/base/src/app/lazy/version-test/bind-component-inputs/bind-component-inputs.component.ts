@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 
 @Component({
   selector: 'app-bind-route',

@@ -347,7 +347,7 @@ test.describe('Tabs', () => {
 
         await expect(page.locator('ion-title')).toContainText('Test App');
 
-        await page.locator('ion-item').filter({ hasText: 'Tabs Test' }).first().click();
+        await page.locator('ion-item[routerlink="/lazy/tabs"]').click();
 
         let tab = await getSelectedTab(page);
         await expect(tab.locator('ion-title')).toContainText('Tab 1 - Page 1');

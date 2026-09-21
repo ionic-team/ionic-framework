@@ -16,6 +16,10 @@
   --padding-start: 0px;
   --highlight-height: 2px;
 
+  // Setting the min-height to 72px enforces consistent heights
+  // across all label placements and fills.
+  min-height: 72px;
+
   font-size: $textarea-md-font-size;
 }
 
@@ -94,6 +98,13 @@
 
 // Start/End Slots
 // ----------------------------------------------------------------
+
+// Buttons should have a smaller margin top to
+// align them properly with the label
+::slotted(ion-button[slot="start"]),
+::slotted(ion-button[slot="end"]) {
+  margin-top: 7px;
+}
 
 /**
  * Slotted buttons have a lot of default padding that can

@@ -8,14 +8,16 @@ import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
 import {
+  BACKDROP,
+  cleanupRootFocusTrapAccessibility,
   createDelegateController,
   createTriggerController,
-  BACKDROP,
   dismiss,
   eventMethod,
   isCancel,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   safeCall,
   setOverlayId,
 } from '@utils/overlays';
@@ -364,10 +366,16 @@ export class Alert implements ComponentInterface, OverlayInterface {
     this.triggerChanged();
     /**
      * If the alert was previously connected and is being reattached, the
-     * ResizeObserver was disconnected. componentDidLoad only fires once per
-     * instance, so re-establish the observer here on reconnect.
+     * `ResizeObserver` and the button gesture were torn down. `componentDidLoad`
+     * only fires once per instance, so re-establish both here on reconnect.
      */
     this.setupButtonGroupResizeObserver();
+    this.setupButtonActiveGesture();
+
+    // Re-apply the root lock if moved without dismiss() being called
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(this.el);
+    }
   }
 
   componentWillLoad() {
@@ -386,24 +394,32 @@ export class Alert implements ComponentInterface, OverlayInterface {
       this.gesture = undefined;
     }
 
+    // Clean up aria-hidden if removed without dismiss() being called
+    if (this.presented) {
+      cleanupRootFocusTrapAccessibility();
+    }
+
     this.buttonGroupResizeObserver?.disconnect();
     this.buttonGroupResizeObserver = undefined;
   }
 
-  componentDidLoad() {
-    /**
-     * Only create gesture if:
-     * 1. A gesture does not already exist
-     * 2. App is running in iOS mode
-     * 3. A wrapper ref exists
-     */
+  /**
+   * Only create gesture if:
+   * 1. A gesture does not already exist
+   * 2. App is running in iOS mode
+   * 3. A wrapper ref exists
+   */
+  private setupButtonActiveGesture() {
     if (!this.gesture && getIonMode(this) === 'ios' && this.wrapperEl) {
       this.gesture = createButtonActiveGesture(this.wrapperEl, (refEl: HTMLElement) =>
         refEl.classList.contains('alert-button')
       );
       this.gesture.enable(true);
     }
+  }
 
+  componentDidLoad() {
+    this.setupButtonActiveGesture();
     this.setupButtonGroupResizeObserver();
 
     /**

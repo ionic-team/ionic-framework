@@ -53,7 +53,7 @@
   width: auto;
 }
 
-// Hide the native focus outline.
+// Hide the native focus ring since we draw our own focus indicator.
 :host(:focus) {
   outline: none;
 }

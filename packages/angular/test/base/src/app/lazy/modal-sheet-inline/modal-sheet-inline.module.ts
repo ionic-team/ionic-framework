@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from "@ionic/angular/lazy";
 import { ModalSheetInlineRoutingModule } from "./modal-sheet-inline-routing.module";
 import { ModalSheetInlineComponent } from "./modal-sheet-inline.component";
 

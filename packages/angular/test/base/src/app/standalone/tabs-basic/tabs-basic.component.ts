@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonTabBar, IonTabButton, IonIcon, IonLabel, IonTabs, IonTab } from '@ionic/angular/standalone';
+import { IonTabBar, IonTabButton, IonIcon, IonLabel, IonTabs, IonTab } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { add, logoIonic, save } from 'ionicons/icons';
 

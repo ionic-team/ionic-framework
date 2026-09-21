@@ -170,7 +170,7 @@ const Inputs: React.FC<InputsProps> = () => {
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        <IonHeader collapse="condense">
+        <IonHeader scrollEffect="condense">
           <IonToolbar>
             <IonTitle size="large">Inputs</IonTitle>
           </IonToolbar>
