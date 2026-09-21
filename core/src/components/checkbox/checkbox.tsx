@@ -451,9 +451,18 @@ export class Checkbox implements ComponentInterface {
               an inline SVG path so that it can be animated and sized with the
               checkmark CSS properties. An icon set in the config renders inside
               of the ion-icon instead, so the default checkmark svg is omitted
-              to prevent it from appearing while the icon loads.
+              to prevent it from appearing while the icon loads. The key forces
+              a new element whenever the mark switches between the two, because
+              ion-icon keeps the content it last resolved even after its icon is
+              removed.
             */}
-            <ion-icon class="checkbox-icon" icon={markIcon} part="icon" aria-hidden="true">
+            <ion-icon
+              key={markIcon ? 'config-icon' : 'theme-mark'}
+              class="checkbox-icon"
+              icon={markIcon}
+              part="icon"
+              aria-hidden="true"
+            >
               {!markIcon && <svg viewBox="0 0 24 24">{path}</svg>}
             </ion-icon>
           </div>

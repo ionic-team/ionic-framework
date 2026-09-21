@@ -26,10 +26,35 @@ const customIcons = `
 `;
 
 /**
+ * Only the indeterminate icon is set, so checking the checkbox falls back to
+ * the mark the theme draws. Setting both icons never reaches that fallback.
+ */
+const indeterminateIconOnly = `
+  <script>
+    window.Ionic = window.Ionic || {};
+    window.Ionic.config = {
+      ...window.Ionic.config,
+      checkboxIndeterminateIcon: 'star',
+    };
+  </script>
+`;
+
+/**
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: custom icon'), () => {
+    /**
+     * The icon is always in the DOM and the checked state controls its opacity,
+     * so an unchecked checkbox must not show the icon set in the config.
+     */
+    test('should hide the checked icon set in the config when unchecked', async ({ page }) => {
+      await page.setContent(`${customIcons}<ion-checkbox>Label</ion-checkbox>`, config);
+
+      const checkbox = page.locator('ion-checkbox');
+      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-custom-unchecked-icon`));
+    });
+
     test('should render the checked icon set in the config', async ({ page }) => {
       await page.setContent(`${customIcons}<ion-checkbox checked="true">Label</ion-checkbox>`, config);
 
@@ -42,6 +67,22 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ ti
 
       const checkbox = page.locator('ion-checkbox');
       await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-custom-indeterminate-icon`));
+    });
+
+    /**
+     * The icon element is reused across renders, and ion-icon keeps the content
+     * it last resolved, so a checkbox that has shown an icon can keep showing it
+     * after the state no longer has one set.
+     */
+    test('should render the theme mark after the state changes to one with no icon set', async ({ page }) => {
+      await page.setContent(`${indeterminateIconOnly}<ion-checkbox indeterminate="true">Label</ion-checkbox>`, config);
+
+      const checkbox = page.locator('ion-checkbox');
+
+      await checkbox.click();
+      await expect(checkbox).toHaveClass(/checkbox-checked/);
+
+      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-custom-indeterminate-icon-checked`));
     });
   });
 });
