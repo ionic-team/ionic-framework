@@ -335,8 +335,7 @@ ion-badge,css-prop,--ion-badge-shape-soft-border-radius
 ion-badge,css-prop,--ion-badge-size-large-content-font-size
 ion-badge,css-prop,--ion-badge-size-large-content-font-weight
 ion-badge,css-prop,--ion-badge-size-large-content-height
-ion-badge,css-prop,--ion-badge-size-large-content-icon-height
-ion-badge,css-prop,--ion-badge-size-large-content-icon-width
+ion-badge,css-prop,--ion-badge-size-large-content-icon-font-size
 ion-badge,css-prop,--ion-badge-size-large-content-letter-spacing
 ion-badge,css-prop,--ion-badge-size-large-content-line-height
 ion-badge,css-prop,--ion-badge-size-large-content-min-height
@@ -354,8 +353,7 @@ ion-badge,css-prop,--ion-badge-size-large-dot-padding-top
 ion-badge,css-prop,--ion-badge-size-medium-content-font-size
 ion-badge,css-prop,--ion-badge-size-medium-content-font-weight
 ion-badge,css-prop,--ion-badge-size-medium-content-height
-ion-badge,css-prop,--ion-badge-size-medium-content-icon-height
-ion-badge,css-prop,--ion-badge-size-medium-content-icon-width
+ion-badge,css-prop,--ion-badge-size-medium-content-icon-font-size
 ion-badge,css-prop,--ion-badge-size-medium-content-letter-spacing
 ion-badge,css-prop,--ion-badge-size-medium-content-line-height
 ion-badge,css-prop,--ion-badge-size-medium-content-min-height
@@ -373,8 +371,7 @@ ion-badge,css-prop,--ion-badge-size-medium-dot-padding-top
 ion-badge,css-prop,--ion-badge-size-small-content-font-size
 ion-badge,css-prop,--ion-badge-size-small-content-font-weight
 ion-badge,css-prop,--ion-badge-size-small-content-height
-ion-badge,css-prop,--ion-badge-size-small-content-icon-height
-ion-badge,css-prop,--ion-badge-size-small-content-icon-width
+ion-badge,css-prop,--ion-badge-size-small-content-icon-font-size
 ion-badge,css-prop,--ion-badge-size-small-content-letter-spacing
 ion-badge,css-prop,--ion-badge-size-small-content-line-height
 ion-badge,css-prop,--ion-badge-size-small-content-min-height
