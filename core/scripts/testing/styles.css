@@ -58,6 +58,8 @@ html.ionic.ios,
 html.ionic.md {
   --ion-background-color: var(--background);
   --ion-font-family: initial;
+  /* ionic reads --token-font-family; its stack's system-ui resolves to a CJK font on the Linux CI image */
+  --token-font-family: "mdTestingFont", sans-serif;
 }
 
 /**
