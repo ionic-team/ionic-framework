@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, expectFieldCellsShareARow, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: label placement start'), () => {
@@ -234,6 +234,61 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const textarea = page.locator('ion-textarea');
       await expect(textarea).toHaveScreenshot(screenshot(`textarea-label-slot-truncate`));
     });
+
+    /**
+     * The floating label must be positioned relative to `.textarea-wrapper` so
+     * its width is not constrained when the textarea width collapses. These
+     * tests cover both cases: a long label should retain the same available
+     * width despite wide start content, and a short label should not collapse
+     * when the start content takes up most of the textarea's width.
+     */
+    test('start slot content should not shrink the label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-textarea id="plain" fill="outline" label-placement="floating" value="x" label="Email Email Email Email Email Email"></ion-textarea>
+          <ion-textarea id="wide-start" fill="outline" label-placement="floating" value="x" label="Email Email Email Email Email Email">
+            <div slot="start" style="width: 120px; height: 24px"></div>
+          </ion-textarea>
+        </div>
+      `,
+        config
+      );
+
+      const labelWidth = (id: string) =>
+        page.locator(`${id} .label-text`).evaluate((el: HTMLElement) => ({
+          available: el.clientWidth,
+          wanted: el.scrollWidth,
+        }));
+
+      const plain = await labelWidth('#plain');
+      const wideStart = await labelWidth('#wide-start');
+
+      // The label is long enough that it has to truncate in both cases
+      expect(plain.wanted).toBeGreaterThan(plain.available);
+
+      expect(wideStart.available).toBe(plain.available);
+    });
+
+    test('start slot content should not collapse a short label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-textarea fill="outline" label-placement="floating" value="x" label="Email">
+            <div slot="start" style="width: 170px; height: 24px"></div>
+          </ion-textarea>
+        </div>
+      `,
+        config
+      );
+
+      const label = await page.locator('.label-text').evaluate((el: HTMLElement) => ({
+        available: el.clientWidth,
+        wanted: el.scrollWidth,
+      }));
+
+      expect(label.available).toBe(label.wanted);
+    });
   });
 });
 
@@ -320,5 +375,77 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       await expect(textarea).toHaveScreenshot(screenshot(`textarea-label-layering`));
     });
+  });
+});
+
+/**
+ * The label placement does not vary by mode, so `ionic-md` stands in for both.
+ * These comparisons are along the inline axis, which would need inverting under
+ * rtl.
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('textarea: label placement'), () => {
+    for (const placement of ['start', 'fixed'] as const) {
+      test(`label should sit before the field with a ${placement} placement`, async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea label="Comment" label-placement="${placement}" value="hi"></ion-textarea>`,
+          config
+        );
+
+        const host = page.locator('ion-textarea');
+        const label = await host.locator('.label-text-wrapper').boundingBox();
+        const native = await host.locator('.native-wrapper').boundingBox();
+
+        expect(label).not.toBeNull();
+        expect(native).not.toBeNull();
+
+        // The two share the row.
+        expect(label!.y).toBeLessThan(native!.y + native!.height);
+        expect(native!.y).toBeLessThan(label!.y + label!.height);
+
+        expect(label!.x + label!.width).toBeLessThanOrEqual(native!.x);
+
+        await expectFieldCellsShareARow(host, 'textarea');
+      });
+    }
+
+    test('label should sit after the field with an end placement', async ({ page }) => {
+      await page.setContent(`<ion-textarea label="Comment" label-placement="end" value="hi"></ion-textarea>`, config);
+
+      const host = page.locator('ion-textarea');
+      const label = await host.locator('.label-text-wrapper').boundingBox();
+      const native = await host.locator('.native-wrapper').boundingBox();
+
+      expect(label!.y).toBeLessThan(native!.y + native!.height);
+      expect(native!.y).toBeLessThan(label!.y + label!.height);
+
+      expect(label!.x).toBeGreaterThanOrEqual(native!.x + native!.width);
+
+      await expectFieldCellsShareARow(host, 'textarea');
+    });
+
+    for (const placement of ['stacked', 'floating'] as const) {
+      test(`label should sit above the field with a ${placement} placement`, async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea label="Comment" label-placement="${placement}" value="hi"></ion-textarea>`,
+          config
+        );
+
+        const host = page.locator('ion-textarea');
+        const label = await host.locator('.label-text-wrapper').boundingBox();
+        const native = await host.locator('.native-wrapper').boundingBox();
+
+        expect(label).not.toBeNull();
+        expect(native).not.toBeNull();
+
+        // Above, in its own row.
+        expect(label!.y + label!.height).toBeLessThanOrEqual(native!.y);
+
+        // Starts at the field's inline edge.
+        expect(label!.x).toBeLessThanOrEqual(native!.x);
+
+        await expectFieldCellsShareARow(host, 'textarea');
+      });
+    }
   });
 });

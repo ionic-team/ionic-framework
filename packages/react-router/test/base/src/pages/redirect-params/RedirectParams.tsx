@@ -1,0 +1,168 @@
+import {
+  IonTabs,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
+  IonLabel,
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonButton,
+} from '@ionic/react';
+import { triangle, square } from 'ionicons/icons';
+import React from 'react';
+import { Route, Navigate, useParams } from 'react-router-dom';
+
+import TestDescription from '../../components/TestDescription';
+
+/**
+ * Scenario 1: Tabs with catch-all Navigate redirect
+ */
+const TabsWithRedirect: React.FC = () => {
+  return (
+    <IonTabs data-pageid="redirect-params-tabs">
+      <IonRouterOutlet>
+        <Route path="tab1/:id" element={<Tab1WithParam />} />
+        <Route path="tab2" element={<Tab2Page />} />
+        <Route path="*" element={<Navigate to="tab2" replace />} />
+      </IonRouterOutlet>
+      <IonTabBar slot="bottom">
+        <IonTabButton tab="tab1" href="/redirect-params/tabs/tab1/TESTING">
+          <IonIcon icon={triangle} />
+          <IonLabel>Tab1</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="tab2" href="/redirect-params/tabs/tab2">
+          <IonIcon icon={square} />
+          <IonLabel>Tab2</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
+  );
+};
+
+const Tab1WithParam: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  return (
+    <IonPage data-pageid="tab1-with-param">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Tab 1</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <div data-testid="param-value">{id}</div>
+        <div id="param-display">Tab 1 with param: {id || 'undefined'}</div>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+const Tab2Page: React.FC = () => {
+  return (
+    <IonPage data-pageid="tab2-page">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Tab 2</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <div data-testid="tab2-loaded">Tab 2 loaded</div>
+        <IonButton routerLink="/redirect-params/tabs/tab1/TESTING" id="go-to-tab1">
+          Go to Tab 1 with param
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+/**
+ * Scenario 2: Flat outlet with catch-all Navigate redirect
+ */
+const FlatOutletWithRedirect: React.FC = () => {
+  return (
+    <IonRouterOutlet>
+      <Route path="home" element={<HomePage />} />
+      <Route path="details/:id" element={<DetailsPage />} />
+      <Route path="*" element={<Navigate to="home" replace />} />
+    </IonRouterOutlet>
+  );
+};
+
+const HomePage: React.FC = () => {
+  return (
+    <IonPage data-pageid="home-page">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Home</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <div data-testid="home-loaded">Home loaded</div>
+        <IonButton routerLink="/redirect-params/flat/details/42" id="go-to-details-42">
+          Go to Details 42
+        </IonButton>
+        <IonButton routerLink="/redirect-params/flat/details/99" id="go-to-details-99">
+          Go to Details 99
+        </IonButton>
+        <IonButton routerLink="/redirect-params/flat/this-route-does-not-exist" id="go-to-non-existing">
+          Go to Non-Existing Route
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+const DetailsPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  return (
+    <IonPage data-pageid="details-page">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Details</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <div data-testid="detail-param-value">{id}</div>
+        <div id="detail-display">Detail ID: {id || 'undefined'}</div>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+/**
+ * Main entry: routes into tabs vs flat scenarios
+ */
+const RedirectParams: React.FC = () => {
+  return (
+    <IonRouterOutlet>
+      <Route path="tabs/*" element={<TabsWithRedirect />} />
+      <Route path="flat/*" element={<FlatOutletWithRedirect />} />
+      <Route
+        index
+        element={
+          <IonPage data-pageid="redirect-params-landing">
+            <IonHeader>
+              <IonToolbar>
+                <IonTitle>Redirect Params Test</IonTitle>
+              </IonToolbar>
+            </IonHeader>
+            <IonContent>
+              <IonButton routerLink="/redirect-params/tabs" id="go-to-tabs-scenario">
+                Tabs Scenario
+              </IonButton>
+              <IonButton routerLink="/redirect-params/flat" id="go-to-flat-scenario">
+                Flat Outlet Scenario
+              </IonButton>
+              <TestDescription>In both Tabs and Flat scenarios, verify that parameterized routes display the correct param value after a catch-all redirect. In Tabs: the initial redirect should land on Tab 2, then navigating to Tab 1 should show "TESTING". In Flat: navigating to a non-existing route should redirect to Home, and details pages should display the correct ID.</TestDescription>
+            </IonContent>
+          </IonPage>
+        }
+      />
+    </IonRouterOutlet>
+  );
+};
+
+export default RedirectParams;

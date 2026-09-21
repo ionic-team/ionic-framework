@@ -336,7 +336,10 @@ a {
 
   text-overflow: ellipsis;
 
+  // Makes the wrapper a scroll container, which zeroes its automatic minimum
+  // size and lets long labels ellipsize
   overflow: inherit;
+
   box-sizing: border-box;
 }
 

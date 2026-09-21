@@ -3,11 +3,15 @@ import { Component, Element, Host, Prop, h, writeTask } from '@stencil/core';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import type { ScrollHideController } from '@utils/scroll-hide-controller';
+import { createScrollHideController } from '@utils/scroll-hide-controller';
 import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 
+import type { HeaderScrollEffect } from './header-interface';
 import {
   cloneElement,
   createHeaderIndex,
@@ -37,14 +41,30 @@ export class Header implements ComponentInterface {
   private intersectionObserver?: IntersectionObserver;
   private collapsibleMainHeader?: HTMLElement;
   private inheritedAttributes: Attributes = {};
+  private scrollHideCtrl?: ScrollHideController;
+  private scrollHideCtrlPromise: Promise<ScrollHideController> | null = null;
+  private hasWarnedCollapse = false;
+  private activeEffect?: string;
+  private fadeCondenseSetupId = 0;
 
   @Element() el!: HTMLElement;
+
+  /**
+   * Describes the scroll effect that will be applied to the header.
+   * `"hide"` slides the header out of view when scrolling down and back in
+   * when scrolling up.
+   * `"condense"` collapses the large title into the main toolbar on scroll.
+   * `"fade"` fades the toolbar background on scroll.
+   */
+  @Prop({ reflect: true }) scrollEffect?: HeaderScrollEffect;
 
   /**
    * Describes the scroll effect that will be applied to the header.
    * Only applies when the theme is `"ios"`.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+   *
+   * @deprecated Use `scrollEffect` instead.
    */
   @Prop() collapse?: 'condense' | 'fade';
 
@@ -81,24 +101,46 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
-    const theme = getIonTheme(this);
+    const { scrollEffect, collapse } = this;
 
-    if (theme !== 'ios') {
+    if (collapse !== undefined && scrollEffect === undefined && !this.hasWarnedCollapse) {
+      this.hasWarnedCollapse = true;
+      printIonWarning(
+        `[ion-header] - The \`collapse\` property is deprecated. Use \`scrollEffect\` instead.\nExample: <ion-header scroll-effect="${collapse}">`,
+        this.el
+      );
+    }
+
+    const effect = scrollEffect ?? collapse;
+
+    // Skip teardown/rebuild if the effect hasn't changed.
+    // This prevents re-renders from destroying the scroll controller
+    // and resetting isHidden.
+    if (effect === this.activeEffect) {
       return;
     }
 
-    const { collapse } = this;
-    const hasCondense = collapse === 'condense';
-    const hasFade = collapse === 'fade';
+    const hasHide = effect === 'hide';
+    const hasCondense = effect === 'condense';
+    const hasFade = effect === 'fade';
 
     this.destroyCollapsibleHeader();
 
     const appRootSelector = config.get('appRootSelector', 'ion-app');
+    const pageEl = this.el.closest(`${appRootSelector}, ion-page, .ion-page, page-inner`);
+    const contentEl = pageEl ? findIonContent(pageEl) : null;
 
-    if (hasCondense) {
-      const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
-      const contentEl = pageEl ? findIonContent(pageEl) : null;
+    if (hasHide && contentEl) {
+      this.activeEffect = effect;
+      await this.setupScrollEffectHide(contentEl);
+      return;
+    }
 
+    // condense/fade via the deprecated `collapse` prop are iOS-only.
+    // condense/fade via the new `scrollEffect` prop work in all themes.
+    const isModeRestricted = scrollEffect === undefined && getIonTheme(this) !== 'ios';
+
+    if (hasCondense && !isModeRestricted) {
       // Cloned elements are always needed in iOS transition
       writeTask(() => {
         const title = cloneElement('ion-title') as HTMLIonTitleElement;
@@ -106,24 +148,54 @@ export class Header implements ComponentInterface {
         cloneElement('ion-back-button');
       });
 
-      await this.setupCondenseHeader(contentEl, pageEl);
-    } else if (hasFade) {
-      const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
-      const contentEl = pageEl ? findIonContent(pageEl) : null;
-
+      const didSetup = await this.setupCondenseHeader(contentEl, pageEl);
+      if (didSetup) {
+        this.activeEffect = effect;
+      }
+    } else if (hasFade && !isModeRestricted) {
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
         return;
       }
 
-      const condenseHeader = contentEl.querySelector('ion-header[collapse="condense"]') as HTMLElement | null;
+      const condenseHeader = contentEl.querySelector(
+        'ion-header[collapse="condense"],ion-header[scroll-effect="condense"]'
+      ) as HTMLElement | null;
 
+      this.activeEffect = effect;
       await this.setupFadeHeader(contentEl, condenseHeader);
     }
   }
 
+  private setupScrollEffectHide = async (contentEl: HTMLElement) => {
+    const setupPromise = createScrollHideController(contentEl, {
+      el: this.el,
+      cssVar: '--internal-header-hide-height',
+      hiddenClass: 'header-scroll-hidden',
+      contentPartnerClass: 'content-header-hide-scroll-partner',
+      contentHiddenClass: 'content-header-hide-scroll-hidden',
+    });
+    this.scrollHideCtrlPromise = setupPromise;
+
+    const controller = await setupPromise;
+
+    if (this.scrollHideCtrlPromise === setupPromise) {
+      this.scrollHideCtrlPromise = null;
+      controller.init();
+      this.scrollHideCtrl = controller;
+    }
+  };
+
   private setupFadeHeader = async (contentEl: HTMLElement, condenseHeader: HTMLElement | null) => {
-    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
+    const setupId = ++this.fadeCondenseSetupId;
+
+    const scrollEl = await getScrollElement(contentEl);
+
+    if (this.fadeCondenseSetupId !== setupId) {
+      return;
+    }
+
+    this.scrollEl = scrollEl;
 
     /**
      * Handle fading of toolbars on scroll
@@ -137,6 +209,15 @@ export class Header implements ComponentInterface {
   };
 
   private destroyCollapsibleHeader() {
+    this.activeEffect = undefined;
+    this.fadeCondenseSetupId++;
+    this.scrollHideCtrlPromise = null;
+
+    if (this.scrollHideCtrl) {
+      this.scrollHideCtrl.destroy();
+      this.scrollHideCtrl = undefined;
+    }
+
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
       this.intersectionObserver = undefined;
@@ -153,31 +234,54 @@ export class Header implements ComponentInterface {
     }
   }
 
-  private async setupCondenseHeader(contentEl: HTMLElement | null, pageEl: Element | null) {
+  private async setupCondenseHeader(contentEl: HTMLElement | null, pageEl: Element | null): Promise<boolean> {
     if (!contentEl || !pageEl) {
       printIonContentErrorMsg(this.el);
-      return;
+      return false;
     }
     if (typeof (IntersectionObserver as any) === 'undefined') {
-      return;
+      return false;
     }
 
-    this.scrollEl = await getScrollElement(contentEl);
+    const setupId = ++this.fadeCondenseSetupId;
+
+    const scrollEl = await getScrollElement(contentEl);
+
+    if (this.fadeCondenseSetupId !== setupId) {
+      return false;
+    }
+
+    this.scrollEl = scrollEl;
+
+    /**
+     * The condense effect requires an ion-title with size="large"
+     * in the condense header. Without it, there is nothing to
+     * collapse into the main header toolbar.
+     */
+    const hasLargeTitle = this.el.querySelector('ion-title[size="large"]') !== null;
+    if (!hasLargeTitle) {
+      printIonWarning(
+        '[ion-header] - The condense scroll effect requires an <ion-title size="large"> in the condense header.',
+        this.el
+      );
+      return false;
+    }
 
     const headers = pageEl.querySelectorAll('ion-header');
-    this.collapsibleMainHeader = Array.from(headers).find(
-      (header: HTMLIonHeaderElement) => header.collapse !== 'condense'
-    ) as HTMLElement | undefined;
+    this.collapsibleMainHeader = Array.from(headers).find((header) => {
+      const effect = header.scrollEffect ?? header.collapse;
+      return effect !== 'condense';
+    }) as HTMLElement | undefined;
 
     if (!this.collapsibleMainHeader) {
-      return;
+      return false;
     }
 
     const mainHeaderIndex = createHeaderIndex(this.collapsibleMainHeader);
     const scrollHeaderIndex = createHeaderIndex(this.el);
 
     if (!mainHeaderIndex || !scrollHeaderIndex) {
-      return;
+      return false;
     }
 
     setHeaderActive(mainHeaderIndex, false);
@@ -214,16 +318,26 @@ export class Header implements ComponentInterface {
         this.collapsibleMainHeader.classList.add('header-collapse-main');
       }
     });
+
+    return true;
   }
 
   render() {
-    const { translucent, inheritedAttributes, divider } = this;
+    const { translucent, inheritedAttributes, divider, scrollEffect, collapse } = this;
     const theme = getIonTheme(this);
-    const collapse = this.collapse || 'none';
-    const isCondensed = collapse === 'condense';
-
+    const effect = scrollEffect ?? collapse;
+    // condense/fade via the deprecated `collapse` prop are iOS-only.
+    const isModeRestricted = scrollEffect === undefined && theme !== 'ios';
+    const hasHide = effect === 'hide';
+    const hasCondense =
+      effect === 'condense' && !isModeRestricted && this.el.querySelector('ion-title[size="large"]') !== null;
+    const hasFade = effect === 'fade' && !isModeRestricted;
+    // The condense header should be hidden when
+    // - deprecated collapse prop is used on non-iOS (mode restricted), or
+    // - scrollEffect="condense" is set but no ion-title[size="large"] is present
+    const isHiddenCondense = effect === 'condense' && !hasCondense;
     // banner role must be at top level, so remove role if inside a menu
-    const roleType = getRoleType(hostContext('ion-menu', this.el), isCondensed, theme);
+    const roleType = isHiddenCondense ? 'none' : getRoleType(hostContext('ion-menu', this.el));
 
     return (
       <Host
@@ -235,9 +349,12 @@ export class Header implements ComponentInterface {
           [`header-${theme}`]: true,
 
           [`header-translucent`]: this.translucent,
-          [`header-collapse-${collapse}`]: true,
+          ['header-collapse-condense']: hasCondense,
+          ['header-collapse-condense-hidden']: isHiddenCondense,
+          ['header-collapse-fade']: hasFade,
           [`header-translucent-${theme}`]: this.translucent,
           ['header-divider']: divider,
+          'header-scroll-effect-hide': hasHide,
         }}
         {...inheritedAttributes}
       >

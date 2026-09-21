@@ -25,7 +25,7 @@ const Icons: React.FC<IconsProps> = () => {
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        <IonHeader collapse="condense">
+        <IonHeader scrollEffect="condense">
           <IonToolbar>
             <IonTitle size="large">Icons</IonTitle>
           </IonToolbar>

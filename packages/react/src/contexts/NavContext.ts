@@ -7,8 +7,6 @@ import type { RouteInfo } from '../models';
 
 export interface NavContextState {
   getIonRoute: () => any;
-  getIonRedirect: () => any;
-  getPageManager: () => any;
   getStackManager: () => any;
   goBack: (route?: string | RouteInfo, animationBuilder?: AnimationBuilder) => void;
   navigate: (
@@ -27,9 +25,7 @@ export interface NavContextState {
 }
 
 export const NavContext = /*@__PURE__*/ React.createContext<NavContextState>({
-  getIonRedirect: () => undefined,
   getIonRoute: () => undefined,
-  getPageManager: () => undefined,
   getStackManager: () => undefined,
   goBack: (route?: string | RouteInfo) => {
     if (typeof window !== 'undefined') {

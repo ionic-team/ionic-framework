@@ -3,6 +3,97 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.2](https://github.com/ionic-team/ionic-framework/compare/v9.0.1...v9.0.2) (2026-09-02)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [9.0.1](https://github.com/ionic-team/ionic-framework/compare/v9.0.0...v9.0.1) (2026-08-26)
+
+### Bug Fixes
+
+* **react-router:** skip page clone when nothing will animate ([#31387](https://github.com/ionic-team/ionic-framework/issues/31387)) ([898001c](https://github.com/ionic-team/ionic-framework/commit/898001c5c6a92a3269dd8e60c4e79da1c634af9d))
+
+
+# [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
+
+**Full Changelog**: https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0
+
+**Migration guide**: https://ionicframework.com/docs/updating/9-0
+
+**Breaking changes**: https://github.com/ionic-team/ionic-framework/blob/main/BREAKING.md#version-9x
+
+
+## [8.8.19](https://github.com/ionic-team/ionic-framework/compare/v8.8.18...v8.8.19) (2026-08-19)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [8.8.18](https://github.com/ionic-team/ionic-framework/compare/v8.8.17...v8.8.18) (2026-08-12)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [8.8.17](https://github.com/ionic-team/ionic-framework/compare/v8.8.16...v8.8.17) (2026-08-05)
+
+
+### Bug Fixes
+
+* **react-router:** symmetric pathname+search url comparison ([#31153](https://github.com/ionic-team/ionic-framework/issues/31153)) ([ffef25d](https://github.com/ionic-team/ionic-framework/commit/ffef25d2e2597bee5fdb8833d9e50ff9234d74e0)), closes [#31152](https://github.com/ionic-team/ionic-framework/issues/31152) [#31152](https://github.com/ionic-team/ionic-framework/issues/31152) [#25534](https://github.com/ionic-team/ionic-framework/issues/25534)
+
+
+
+
+
+## [8.8.16](https://github.com/ionic-team/ionic-framework/compare/v8.8.15...v8.8.16) (2026-07-29)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [8.8.15](https://github.com/ionic-team/ionic-framework/compare/v8.8.14...v8.8.15) (2026-07-22)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [8.8.14](https://github.com/ionic-team/ionic-framework/compare/v8.8.13...v8.8.14) (2026-07-15)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [8.8.13](https://github.com/ionic-team/ionic-framework/compare/v8.8.12...v8.8.13) (2026-07-01)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [8.8.12](https://github.com/ionic-team/ionic-framework/compare/v8.8.11...v8.8.12) (2026-06-24)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
 ## [8.8.11](https://github.com/ionic-team/ionic-framework/compare/v8.8.10...v8.8.11) (2026-06-17)
 
 **Note:** Version bump only for package @ionic/react-router

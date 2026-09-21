@@ -7,6 +7,7 @@
   "rewrites": [
     { "source": "/angular/:path*", "destination": "/angular/index.html" },
     { "source": "/react/:path*", "destination": "/react/index.html" },
+    { "source": "/react-router/:path*", "destination": "/react-router/index.html" },
     { "source": "/vue/:path*", "destination": "/vue/index.html" }
   ]
 }

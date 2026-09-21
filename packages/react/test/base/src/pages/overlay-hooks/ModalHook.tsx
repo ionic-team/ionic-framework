@@ -51,7 +51,7 @@ const ModalHook: React.FC = () => {
     setCount(count + 1);
   }, [count, setCount]);
 
-  const handleDismissWithComponent = useCallback((data: any, role: string) => {
+  const handleDismissWithComponent = useCallback((data?: any, role?: string) => {
     dismissWithComponent(data, role);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -87,6 +87,9 @@ const ModalHook: React.FC = () => {
 
   const [presentSecondaryModal] = useIonModal(ModalSecondary);
   const [presentRootModal, dismissRootModal] = useIonModal(Body, {
+    type: 'Root',
+    count: count,
+    onIncrement: handleIncrement,
     onDismiss: () => {
       dismissRootModal();
       presentSecondaryModal();

@@ -2,7 +2,7 @@ describe('IonTabs', () => {
   /**
    * Verifies that tabs with similar route prefixes (e.g., /home, /home2, /home3)
    * correctly select the matching tab instead of the first prefix match.
-   * 
+   *
    * @see https://github.com/ionic-team/ionic-framework/issues/30448
    */
   describe('Similar Route Prefixes', () => {
@@ -58,7 +58,11 @@ describe('IonTabs', () => {
 
   describe('Without IonRouterOutlet', () => {
     beforeEach(() => {
-      cy.visit('/tabs-basic');
+      cy.visit('/tabs-basic', {
+        onBeforeLoad(win) {
+          cy.spy(win.console, 'log').as('consoleLog');
+        },
+      });
     });
 
     it.skip('should show correct tab when clicking the tab button', () => {
@@ -82,6 +86,13 @@ describe('IonTabs', () => {
       cy.get('ion-tab-button[tab="tab2"]').click();
 
       cy.url().should('include', '/tabs-basic');
+    });
+
+    it('should fire tab change events on tab click', () => {
+      cy.get('ion-tab-button[tab="tab2"]').click();
+
+      cy.get('@consoleLog').should('be.calledWith', 'onIonTabsWillChange', 'tab2');
+      cy.get('@consoleLog').should('be.calledWith', 'onIonTabsDidChange:', 'tab2');
     });
   });
 });

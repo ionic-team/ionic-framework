@@ -2,6 +2,10 @@
 
 Ionic Framework supports multiple versions of React. As a result, we need to verify that Ionic works correctly with each of these React versions.
 
+## Type Checking
+
+Run `npm run typecheck` in `packages/react` to check types. The rollup build only reports type errors as warnings, so a passing build does not mean the types are clean.
+
 ## Syncing Local Changes
 
 The React test app supports syncing your locally built changes for validation.
@@ -29,19 +33,25 @@ Unlike other test applications, these test apps are broken up into multiple dire
 Usage:
 
 ```shell
-# Build a test app using apps/react17 as a reference
-./build.sh react17
+# Build a test app using apps/react18 as a reference
+./build.sh react18
 ```
 
 ## How to modify test apps
 
 To add new tests, components, or pages, modify the `base` project. This ensures that tests are run for every tested version.
 
-If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.e2e.ts` in `apps/react17`, make sure you place the file in `apps/react17/tests/e2e/test.e2e.ts`.
+If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.e2e.ts` in `apps/react18`, make sure you place the file in `apps/react18/tests/e2e/test.e2e.ts`.
 
 ### Version-specific tests
 
 If you need to add E2E tests that are only run on a specific version of the JS Framework, replicate the `VersionTest` component on each partial application. This ensures that tests for framework version X do not get run for framework version Y.
+
+### Testing Ionic Components
+
+`@ionic/react` imports every component through `defineCustomElement` from `@ionic/core/components`, so every test runs against the custom elements build.
+
+These test apps are Cypress only, and Cypress retries assertions until they pass, so there is nothing to wait on manually today. If we add unit tests that assert against rendered DOM, use the `componentOnReady` helper exported from `@ionic/core` rather than calling `el.componentOnReady()` directly. That method does not exist on custom elements, so the direct call throws. The helper waits one animation frame instead, giving the component's inner contents a chance to render.
 
 ## Adding New Test Apps
 

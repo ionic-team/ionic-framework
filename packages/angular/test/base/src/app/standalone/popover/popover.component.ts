@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonPopover } from '@ionic/angular/standalone';
+import { IonPopover } from '@ionic/angular';
 
 @Component({
   selector: 'app-test',

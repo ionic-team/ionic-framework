@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Range - Dual Knobs</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      :root {
+        --color-purple: #8b5cf6;
+        --color-blue: var(--ion-color-primary, #0054e9);
+      }
+
+      ion-range::part(bar-active) {
+        background: linear-gradient(to right, var(--color-purple) 0%, var(--color-blue) 100%);
+      }
+
+      ion-range::part(knob-lower) {
+        background: var(--color-purple);
+      }
+
+      ion-range::part(knob-upper) {
+        background: var(--color-blue);
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Range - Dual Knobs</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <p>
+          Every range below is assigned <code>{ lower: 20, upper: 80 }</code>. The lower knob is purple while the upper
+          is blue.
+        </p>
+
+        <h2>dualKnobs set on the component</h2>
+        <ion-range id="markup" dual-knobs="true">
+          <span slot="label">20 - 80</span>
+        </ion-range>
+
+        <h2>dualKnobs assigned before value</h2>
+        <ion-range id="dual-knobs-first">
+          <span slot="label">20 - 80</span>
+        </ion-range>
+
+        <h2>dualKnobs assigned after value</h2>
+        <ion-range id="value-first">
+          <span slot="label">20 - 80</span>
+        </ion-range>
+
+        <h2>dualKnobs toggled</h2>
+        <ion-range id="toggled">
+          <span slot="label" id="toggled-label"></span>
+        </ion-range>
+        <ion-button id="toggle-dual-knobs" onclick="toggleDualKnobs()">Toggle Dual Knobs</ion-button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const dualValue = { lower: 20, upper: 80 };
+
+      document.querySelector('#markup').value = dualValue;
+
+      (async () => {
+        await customElements.whenDefined('ion-range');
+
+        const dualKnobsFirst = document.querySelector('#dual-knobs-first');
+        await dualKnobsFirst.componentOnReady();
+        dualKnobsFirst.dualKnobs = true;
+        dualKnobsFirst.value = dualValue;
+
+        /**
+         * Frameworks apply bindings in template order, so a template that lists
+         * `value` before `dualKnobs` assigns them in this order. `dualKnobs` is
+         * still false when the value lands, so the object collapses to its
+         * `upper` value and only one ratio is ever computed.
+         */
+        const valueFirst = document.querySelector('#value-first');
+        await valueFirst.componentOnReady();
+        valueFirst.value = dualValue;
+        valueFirst.dualKnobs = true;
+
+        const toggled = document.querySelector('#toggled');
+        await toggled.componentOnReady();
+        toggled.value = dualValue;
+        updateToggledLabel();
+      })();
+
+      /**
+       * A single knob range ignores the `lower` half of an object value, so the
+       * label only reads as a range once `dualKnobs` is on.
+       */
+      const updateToggledLabel = () => {
+        const { dualKnobs, value } = document.querySelector('#toggled');
+        document.querySelector('#toggled-label').textContent = dualKnobs
+          ? `${value.lower} - ${value.upper}`
+          : `${value.upper}`;
+      };
+
+      // Toggling dualKnobs at runtime should reposition the knobs.
+      const toggleDualKnobs = () => {
+        const toggled = document.querySelector('#toggled');
+        toggled.dualKnobs = !toggled.dualKnobs;
+        updateToggledLabel();
+      };
+    </script>
+  </body>
+</html>

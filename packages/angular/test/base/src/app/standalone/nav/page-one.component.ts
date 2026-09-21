@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonNavLink, IonToolbar, IonTitle } from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonNavLink, IonToolbar, IonTitle } from '@ionic/angular';
 import { PageTwoComponent } from './page-two.component';
 
 @Component({

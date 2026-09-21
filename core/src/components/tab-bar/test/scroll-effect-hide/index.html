@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tab Bar - Scroll Effect Hide</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Header</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <div class="ion-padding" style="height: 3000px">
+            <h1>Content</h1>
+            <p>Scroll down. The tab bar should hide when scrolling down and reappear when scrolling back up.</p>
+          </div>
+        </ion-content>
+        <ion-tab-bar slot="bottom" scroll-effect="hide">
+          <ion-tab-button>
+            <ion-icon name="star"></ion-icon>
+            <ion-label>Tab One</ion-label>
+          </ion-tab-button>
+          <ion-tab-button>
+            <ion-icon name="globe"></ion-icon>
+            <ion-label>Tab Two</ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </div>
+    </ion-app>
+  </body>
+</html>

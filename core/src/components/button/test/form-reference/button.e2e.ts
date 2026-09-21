@@ -153,6 +153,41 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
 
       expect(submitEvent).toHaveReceivedEvent();
     });
+
+    test('should keep hidden button type in sync with visible button', async ({ page }) => {
+      // Set the form to have a submit button
+      await page.setContent(
+        `
+        <form id="myForm"></form>
+        <ion-button form="myForm" type="submit">
+          Submit
+        </ion-button>
+      `,
+        config
+      );
+
+      // Get visible button
+      const button = page.locator('ion-button');
+
+      // Get type of the hidden button
+      const getHiddenType = () =>
+        page.evaluate(() => {
+          const hidden = document.querySelector('form button[style*="display: none"]') as HTMLButtonElement;
+
+          return hidden?.type;
+        });
+
+      // Type of hidden button should be submit to start
+      expect(await getHiddenType()).toBe('submit');
+
+      // Set type of visible button to reset
+      await button.evaluate((el: HTMLIonButtonElement) => {
+        el.type = 'reset';
+      });
+
+      // Expect hidden button type to be reset
+      await expect.poll(async () => await getHiddenType()).toBe('reset');
+    });
   });
 
   test.describe(title('should throw a warning if the form cannot be found'), () => {

@@ -3,14 +3,14 @@
     <ng-content></ng-content>
   </div>
 
-  <input type="submit" value="Submit" [disabled]="!formGroup.valid" />
+  <input type="submit" value="Submit" [disabled]="!valid()" />
 
   <h3>Form Value</h3>
-  <pre id="formValue">{{ formGroup.value | json }}</pre>
+  <pre id="formValue">{{ value() | json }}</pre>
 
   <h3>Form Validity</h3>
   <ul id="formValidity">
-    <li>Form valid: {{ formGroup.valid }}</li>
-    <li *ngFor="let control of formGroup.controls | keyvalue">{{ control.key }} valid: {{ control.value.valid }}</li>
+    <li>Form valid: {{ valid() }}</li>
+    <li *ngFor="let control of controls()">{{ control.key }} valid: {{ control.valid }}</li>
   </ul>
 </form>

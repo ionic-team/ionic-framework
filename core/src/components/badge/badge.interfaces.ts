@@ -68,8 +68,9 @@ type IonBadgeSizeContentDefinition = IonBadgeSizeDefinition & {
   };
 
   icon?: {
-    width?: string;
-    height?: string;
+    font?: {
+      size?: string;
+    };
   };
 };
 

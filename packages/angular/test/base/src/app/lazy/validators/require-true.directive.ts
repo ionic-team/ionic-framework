@@ -2,7 +2,7 @@ import { Directive, forwardRef } from '@angular/core';
 import { NG_VALIDATORS, Validator, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 
 @Directive({
-  selector: '[requireTrue]',
+  selector: '[appRequireTrue]',
   providers: [
     {
       provide: NG_VALIDATORS,

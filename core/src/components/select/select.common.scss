@@ -46,6 +46,7 @@
   --highlight-color-invalid: #{ion-color(danger, base)};
   --select-text-media-height: 1.5em;
   --select-text-media-width: 1.5em;
+  --select-text-gap: 12px;
 
   /**
    * This is a private API that is used to switch
@@ -130,24 +131,6 @@ button {
   color: inherit;
 }
 
-/**
- * This positions the icon at the correct
- * edge of the component with LTR and RTL
- * text directions. The position mixin cannot be
- * used here because the icon is in the Shadow DOM.
- */
-:host(.select-ltr.select-label-placement-stacked) .select-icon,
-:host(.select-ltr.select-label-placement-floating) .select-icon {
-  // stylelint-disable-next-line property-disallowed-list
-  right: var(--padding-end, 0);
-}
-
-:host(.select-rtl.select-label-placement-stacked) .select-icon,
-:host(.select-rtl.select-label-placement-floating) .select-icon {
-  // stylelint-disable-next-line property-disallowed-list
-  left: var(--padding-start, 0);
-}
-
 // Select Text
 // --------------------------------------------------
 .select-text {
@@ -196,7 +179,7 @@ button {
 
   flex-grow: 1;
 
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
 
   height: inherit;
@@ -220,12 +203,37 @@ button {
   box-sizing: border-box;
 }
 
-.select-wrapper-inner {
+.select-wrapper .select-placeholder {
+  /**
+   * When the floating label appears on top of the
+   * select, we need to fade the text out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/**
+ * The control must inherit specific flex properties
+ * so that it will be placed properly when justify
+ * or label-placement are set on the host.
+ */
+.select-control {
   display: flex;
 
-  align-items: center;
+  flex: 1;
 
-  overflow: hidden;
+  flex-direction: inherit;
+
+  align-items: center;
+  justify-content: inherit;
+
+  /**
+   * The min-width is set to 0 to allow flex items to shrink below
+   * their content size. This enables the select text to collapse
+   * in width. We avoid overflow: hidden here because it will clip
+   * the floating label.
+   */
+  min-width: 0;
 }
 
 // Select Highlight
@@ -319,11 +327,35 @@ button {
   align-items: center;
 
   /**
+   * Label text should not extend
+   * beyond the bounds of the select.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see what they are typing.
+   */
+  max-width: 200px;
+
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /**
    * This ensures that double tapping this text
    * clicks the <label> and focuses the input
    * when a screen reader is enabled.
    */
   pointer-events: none;
+}
+
+/**
+ * When start/end slots are added or removed, we temporarily
+ * disable the label transition to prevent the floating label
+ * from animating as its position is adjusted.
+ *
+ * This class is applied by the start container controller, so
+ * renaming it here requires renaming it there too.
+ */
+:host(.skip-label-transition) .label-text-wrapper {
+  transition: none;
 }
 
 /**
@@ -421,9 +453,18 @@ button {
  * down when the select is focused or has a value.
  *
  */
-:host(.select-label-placement-stacked) .select-wrapper,
-:host(.select-label-placement-floating) .select-wrapper {
+:host(.select-label-placement-stacked) .select-control,
+:host(.select-label-placement-floating) .select-control {
   flex-direction: column;
+
+  /**
+   * When using a stacked/floating label, the control is
+   * stacked vertically under the label container. This line
+   * ensures that the control fills all the remaining height
+   * of the component.
+   */
+  flex-grow: 1;
+
   align-items: start;
 }
 
@@ -450,10 +491,8 @@ button {
 }
 
 /**
- * Ensures the select does not
- * overlap the label.
- * Also ensure that the native wrapper
- * takes up the remaining available height and width.
+ * Ensures that the native wrapper takes up the
+ * remaining available height and width.
  */
 :host(.select-label-placement-stacked) .native-wrapper,
 :host(.select-label-placement-floating) .native-wrapper {
@@ -466,31 +505,31 @@ button {
  * The placeholder should be hidden when the label
  * is on top of the select. This prevents the label
  * from overlapping any placeholder value.
- *
- * TODO(FW-5592): Remove :not(.label-floating) piece
  */
-:host(.select-label-placement-floating:not(.label-floating)) .native-wrapper .select-placeholder {
+:host(.select-label-placement-floating) .native-wrapper .select-placeholder {
   opacity: 0;
 }
 
 /**
- * We don't use .label-floating here because that would
- * also include the case where the label is floating due
- * to content in the start/end slot. We want the opacity
- * to remain at the default in this case, since the select
- * isn't being actively interacted with.
- *
- * TODO(FW-5592): Change entire selector to:
- * :host(.label-floating.select-label-placement-floating) .native-wrapper .select-placeholder
+ * Show the placeholder when the label is floating.
  */
-:host(.select-expanded.select-label-placement-floating) .native-wrapper .select-placeholder,
-:host(.has-focus.select-label-placement-floating) .native-wrapper .select-placeholder,
-:host(.has-value.select-label-placement-floating) .native-wrapper .select-placeholder {
-  opacity: 1;
+:host(.label-floating.select-label-placement-floating) .native-wrapper .select-placeholder {
+  opacity: var(--placeholder-opacity);
 }
 
 // Start/End Slots
 // ----------------------------------------------------------------
+
+.select-start,
+.select-end {
+  display: flex;
+
+  position: relative;
+
+  flex-shrink: 0;
+
+  align-items: center;
+}
 
 ::slotted([slot="start"]),
 ::slotted([slot="end"]) {

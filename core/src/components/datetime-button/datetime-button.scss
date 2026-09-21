@@ -39,6 +39,11 @@
 
 :host(.time-active) #time-button,
 :host(.date-active) #date-button {
+  color: ion-color(primary, base);
+}
+
+:host(.ion-color.time-active) #time-button,
+:host(.ion-color.date-active) #date-button {
   color: current-color(base);
 }
 

@@ -83,12 +83,7 @@ describe('Nested Outlets 2', () => {
     cy.ionPageVisible('list');
   });
 
-  it(`/nested-outlet2 >
-    Go to Welcome IonItem click >
-    Go to list from Welcome IonItem click >
-    Item#1 IonItem Click >
-    Item page should be visible
-`, () => {
+  it('/nested-outlet2 > Go to Welcome IonItem click > Go to list from Welcome IonItem click > Item#1 IonItem Click > Item page should be visible', () => {
     cy.visit(`http://localhost:${port}/nested-outlet2`);
     cy.ionPageVisible('home');
     cy.ionNav('ion-item', 'Go to Welcome');
@@ -99,13 +94,7 @@ describe('Nested Outlets 2', () => {
     cy.ionPageVisible('item');
   });
 
-  it(`/nested-outlet2 >
-    Go to list from Home IonItem click >
-    Item#1 IonItem Click >
-    Item page should be visible >
-    Back >
-    List page should be visible
-`, () => {
+  it('/nested-outlet2 > Go to list from Home IonItem click > Item#1 IonItem Click > Item page should be visible > Back > List page should be visible', () => {
     cy.visit(`http://localhost:${port}/nested-outlet2`);
     cy.ionPageVisible('home');
     cy.ionNav('ion-item', 'Go to list from Home');
@@ -116,15 +105,7 @@ describe('Nested Outlets 2', () => {
     cy.ionPageVisible('list');
 });
 
-  it(`/nested-outlet2 >
-    Go to list from Home IonItem click >
-    Item#1 IonItem Click >
-    Item page should be visible >
-    Back >
-    List page should be visible
-    Back >
-    Home page should be visible
-`, () => {
+  it('/nested-outlet2 > Go to list from Home IonItem click > Item#1 IonItem Click > Item page should be visible > Back > List page should be visible > Back > Home page should be visible', () => {
     cy.visit(`http://localhost:${port}/nested-outlet2`);
     cy.ionPageVisible('home');
     cy.ionNav('ion-item', 'Go to list from Home');
@@ -135,5 +116,31 @@ describe('Nested Outlets 2', () => {
     cy.ionPageVisible('list');
     cy.ionBackClick('list');
     cy.ionPageVisible('home');
+  });
+
+  it('/nested-outlet2 > Browser back/forward across nested outlets should show correct page', () => {
+    cy.visit(`http://localhost:${port}/nested-outlet2`);
+    cy.ionPageVisible('home');
+
+    // Navigate: Home → Welcome → List → Item #1
+    cy.ionNav('ion-item', 'Go to Welcome');
+    cy.ionPageVisible('welcome');
+    cy.ionNav('ion-item', 'Go to list from Welcome');
+    cy.ionPageVisible('list');
+    cy.ionNav('ion-item', 'Item #1');
+    cy.ionPageVisible('item');
+    cy.location('pathname').should('eq', '/nested-outlet2/list/1');
+
+    // Browser back: Item → List
+    cy.go('back');
+    cy.ionPageVisible('list');
+    cy.location('pathname').should('eq', '/nested-outlet2/list');
+
+    // Browser forward: List → Item (this was showing Welcome page before the fix)
+    cy.go('forward');
+    cy.wait(500);
+    cy.ionPageVisible('item');
+    cy.location('pathname').should('eq', '/nested-outlet2/list/1');
+    cy.ionPageDoesNotExist('welcome');
   });
 });

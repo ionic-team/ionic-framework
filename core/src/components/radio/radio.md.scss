@@ -76,24 +76,6 @@
   opacity: $radio-md-icon-disabled-opacity;
 }
 
-// Material Design Radio: Keyboard Focus
-// -----------------------------------------
-
-:host(.ion-focused) .radio-icon::after {
-  @include border-radius(var(--inner-border-radius));
-
-  display: block;
-  position: absolute;
-
-  width: 36px;
-  height: 36px;
-
-  background: $radio-md-background-color-focused;
-
-  content: "";
-  opacity: 0.2;
-}
-
 // Radio Native Wrapper
 // ----------------------------------------------------------------
 
