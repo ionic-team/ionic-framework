@@ -1,4 +1,3 @@
-import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
@@ -357,25 +356,19 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return controls[0];
   }
 
-  get itemDetailIcon() {
+  /**
+   * Get the icon to use for the detail icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get itemDetailIcon(): string {
     // Return the icon if it is explicitly set
     if (this.detailIcon != null) {
       return this.detailIcon;
     }
 
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronForward,
-      ionic: caretRightRegular,
-      md: chevronForward,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured item detail icon or the default icon
-    return config.get('itemDetailIcon', defaultIcon);
+    return config.get('itemDetailIcon', chevronForward);
   }
 
   /**
@@ -383,7 +376,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * the icon is a variation of chevron.
    */
   get shouldFlipIcon() {
-    return this.itemDetailIcon === chevronForward || this.itemDetailIcon === caretRightRegular;
+    return this.itemDetailIcon === chevronForward;
   }
 
   render() {

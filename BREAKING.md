@@ -18,6 +18,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#version-10x-components)
   - [Button](#version-10x-button)
   - [Card](#version-10x-card)
+  - [Checkbox](#version-10x-checkbox)
   - [Chip](#version-10x-chip)
   - [Datetime](#version-10x-datetime)
   - [Grid](#version-10x-grid)
@@ -62,6 +63,29 @@ This is a comprehensive list of the breaking changes introduced in the major ver
     font-size: 0.875rem;
   }
   ```
+
+<h4 id="version-10x-checkbox">Checkbox</h4>
+
+- The `container` CSS shadow part is now the element that wraps the checkmark instead of the `svg` element that draws it. The part still controls the checkbox's size, border, and background, so existing styles for those properties are unaffected.
+
+  SVG-specific properties such as `fill`, `stroke` and `stroke-width` no longer have any effect through `::part(container)` because `container` is no longer an SVG element. To set the color of the checkmark, use the `icon` part instead:
+
+  ```diff
+  - ion-checkbox::part(container) {
+  -   stroke: purple;
+  - }
+  + ion-checkbox::part(icon) {
+  +   color: purple;
+  + }
+  ```
+
+  The `--checkmark-color` CSS variable can also be used to set the checkmark color. Both `::part(icon)` and `--checkmark-color` apply to the default checkmark as well as to an icon set with the `checkboxCheckedIcon` or `checkboxIndeterminateIcon` global config options. In contrast, the `mark` part only applies to states that do not have a configured icon.
+
+  Setting `color` on the `container` part has no effect because the icon sets its own color.
+
+  To change the thickness of the default checkmark, use the `--checkmark-width` CSS variable or set `stroke-width` on the `mark` part. These apply to each state (`checked` and `indeterminate`) unless an icon is configured for that state. For example, when `checkboxCheckedIcon` is configured, these properties do not apply to the checked state but continue to apply to the indeterminate state. Similarly, when `checkboxIndeterminateIcon` is configured, they do not apply to the indeterminate state but continue to apply to the checked state.
+
+  For a configured Ionicon drawn with a stroke, set `--ionicon-stroke-width` on the `icon` part. For a configured SVG, set `stroke-width` on the `icon` part; this applies unless the SVG sets its own `stroke-width`.
 
 <h4 id="version-10x-chip">Chip</h4>
 

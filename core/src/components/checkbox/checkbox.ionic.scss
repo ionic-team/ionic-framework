@@ -6,8 +6,6 @@
 
 :host {
   /**
-   * @prop --checkmark-height: Stroke height of the checkbox checkmark
-   *
    * @prop --focus-ring-color: Color of the focus ring
    * @prop --focus-ring-width: Width of the focus ring
    * @prop --focus-ring-offset: Offset of the focus ring
@@ -17,8 +15,7 @@
   --border-width: #{globals.$ion-border-size-025};
   --border-style: solid;
   --border-color: #{globals.$ion-primitives-neutral-800};
-  --checkmark-width: #{globals.$ion-scale-400};
-  --checkmark-height: var(--checkmark-width);
+  --checkmark-width: 3;
 
   // Focus
   --focus-ring-color: #{globals.$ion-border-focus-default};
@@ -53,10 +50,6 @@
 
     z-index: 1;
   }
-
-  .native-wrapper {
-    position: relative;
-  }
 }
 
 .label-text-wrapper {
@@ -80,33 +73,16 @@ input {
 }
 
 .native-wrapper {
-  @include globals.border-radius(var(--border-radius));
-
-  flex-shrink: 0;
-
   justify-content: center;
-
-  width: var(--size);
-  height: var(--size);
-
-  transition: var(--transition);
-
-  border-width: var(--border-width);
-  border-style: var(--border-style);
-  border-color: var(--border-color);
-
-  background: var(--checkbox-background);
-
-  box-sizing: border-box;
 }
 
+// Checkbox Icon
+// ----------------------------------------------------------------
+
+// The mark is inset within the container, so it is
+// sized as a share of the container.
 .checkbox-icon {
-  width: var(--checkmark-width);
-  height: var(--checkmark-height);
-}
-
-.checkbox-icon path {
-  fill: var(--checkmark-color);
+  font-size: calc(var(--size) * 2 / 3);
 }
 
 // Checkbox Hint Text
@@ -186,15 +162,6 @@ input {
   --size: #{globals.$ion-scale-400};
 }
 
-// Checked / Indeterminate Checkbox
-// ---------------------------------------------
-:host(.checkbox-checked) .native-wrapper,
-:host(.checkbox-indeterminate) .native-wrapper {
-  border-color: var(--border-color-checked);
-
-  background: var(--checkbox-background-checked);
-}
-
 // Ionic Design Checkbox Invalid
 // --------------------------------------------------
 :host(.ion-invalid) {
@@ -236,9 +203,7 @@ input {
   }
 
   :host(:hover.checkbox-checked) .native-wrapper,
-  :host(:hover.checkbox-checked) .checkbox-icon,
-  :host(:hover.checkbox-indeterminate) .native-wrapper,
-  :host(:hover.checkbox-indeterminate) .checkbox-icon {
+  :host(:hover.checkbox-indeterminate) .native-wrapper {
     background-color: globals.$ion-semantics-primary-800;
   }
 }
@@ -257,9 +222,7 @@ input {
 }
 
 :host(.ion-activated.checkbox-checked) .native-wrapper,
-:host(.ion-activated.checkbox-checked) .checkbox-icon,
-:host(.ion-activated.checkbox-indeterminate) .native-wrapper,
-:host(.ion-activated.checkbox-indeterminate) .checkbox-icon {
+:host(.ion-activated.checkbox-indeterminate) .native-wrapper {
   background-color: globals.$ion-bg-primary-base-press;
 }
 

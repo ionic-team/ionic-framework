@@ -308,15 +308,6 @@
   @include globals.position-horizontal(null, globals.$ion-space-400);
 }
 
-.alert-checkbox-inner {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
-}
-
-.alert-checkbox-inner path {
-  fill: globals.$ion-bg-surface-default;
-}
-
 // Ionic Alert Checkbox Checkmark: Checked
 // --------------------------------------------------
 
@@ -324,6 +315,19 @@
   border-color: globals.$ion-semantics-primary-base;
 
   background-color: globals.$ion-bg-primary-base-default;
+}
+
+// The checkmark is a box clipped to the outline of the mark ion-checkbox
+// draws. It represents a two-segment polyline with a 3-unit stroke in a
+// 24-unit box. The polygon points trace the outer and inner edges of that
+// stroke and are derived from the checkmark's geometry.
+[aria-checked="true"] .alert-checkbox-inner {
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
+
+  background-color: globals.$ion-bg-surface-default;
+
+  clip-path: polygon(2.79% 58.21%, 33.75% 89.17%, 99.38% 23.54%, 90.54% 14.71%, 33.75% 71.49%, 11.63% 49.37%);
 }
 
 // Ionic Alert Button

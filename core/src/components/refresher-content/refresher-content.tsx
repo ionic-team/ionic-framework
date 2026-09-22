@@ -1,4 +1,3 @@
-import caretLeftFill from '@phosphor-icons/core/assets/fill/caret-left-fill.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
@@ -95,6 +94,15 @@ export class RefresherContent implements ComponentInterface {
     }
   }
 
+  /**
+   * Get the icon to use for the arrow icon.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get refresherArrowIcon(): string {
+    return config.get('refresherArrowIcon', caretBackSharp);
+  }
+
   private renderPullingText() {
     const { customHTMLEnabled, pullingText } = this;
     if (customHTMLEnabled) {
@@ -117,7 +125,6 @@ export class RefresherContent implements ComponentInterface {
     const pullingIcon = this.pullingIcon;
     const hasSpinner = pullingIcon != null && (SPINNERS[pullingIcon] as any) !== undefined;
     const theme = getIonTheme(this);
-    const arrowIcon = theme === 'ionic' ? caretLeftFill : caretBackSharp;
 
     return (
       <Host
@@ -132,7 +139,7 @@ export class RefresherContent implements ComponentInterface {
                 <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
                 {(theme === 'md' || theme === 'ionic') && this.pullingIcon === 'circular' && (
                   <div class="arrow-container">
-                    <ion-icon icon={arrowIcon} aria-hidden="true"></ion-icon>
+                    <ion-icon icon={this.refresherArrowIcon} aria-hidden="true"></ion-icon>
                   </div>
                 )}
               </div>
