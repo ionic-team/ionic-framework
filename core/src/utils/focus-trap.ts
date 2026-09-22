@@ -1,4 +1,4 @@
-import { focusVisibleElement } from '@utils/helpers';
+import { focusRedirectedElement } from '@utils/helpers';
 
 /**
  * This query string selects elements that
@@ -94,7 +94,7 @@ const focusElementInContext = <T extends HTMLElement>(
     if (radioGroup) {
       radioGroup.setFocus();
     } else {
-      focusVisibleElement(elementToFocus);
+      focusRedirectedElement(elementToFocus);
     }
   } else {
     // Focus fallback element instead of letting focus escape
