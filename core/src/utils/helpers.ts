@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { focusElements } from '@utils/focus-visible';
+import { focusElements, isKeyboardMode } from '@utils/focus-visible';
 import { printIonError } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 
@@ -301,6 +301,20 @@ export const focusVisibleElement = (el: HTMLElement) => {
         });
       }
     }
+  }
+};
+
+/**
+ * Focuses an element a focus trap is redirecting focus to. Only draws the
+ * keyboard focus indicator when the user is navigating with a keyboard, so a
+ * redirect caused by a tap or click does not leave the element looking as
+ * though it was tabbed to.
+ */
+export const focusRedirectedElement = (el: HTMLElement) => {
+  if (isKeyboardMode()) {
+    focusVisibleElement(el);
+  } else {
+    el.focus();
   }
 };
 
