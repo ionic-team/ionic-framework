@@ -18,7 +18,7 @@
 
   gap: globals.$ion-space-100;
 
-  line-height: globals.$ion-font-line-height-full;
+  line-height: 100%;
 
   cursor: auto;
 }
@@ -28,7 +28,7 @@
 
 :host(.chip-outline) {
   border-width: globals.$ion-border-size-025;
-  border-style: globals.$ion-border-style-solid;
+  border-style: solid;
 }
 
 // Chip: Focus

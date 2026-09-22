@@ -58,7 +58,7 @@
 
 :host(.button-outline) {
   --border-width: #{globals.$ion-border-size-025};
-  --border-style: #{globals.$ion-border-style-solid};
+  --border-style: solid;
   --background-activated: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-focused: transparent;
   --background-hover: #{globals.ion-color(primary, shade, $subtle: true)};
@@ -183,21 +183,21 @@
 // --------------------------------------------------
 
 :host(.button-soft) {
-  --border-radius: #{globals.$ion-soft-xs};
+  --border-radius: #{globals.$ion-shape-soft-xs};
 }
 
 // Round Button
 // --------------------------------------------------
 
 :host(.button-round) {
-  --border-radius: #{globals.$ion-round-xs};
+  --border-radius: #{globals.$ion-shape-round-xs};
 }
 
 // Rectangular Button
 // --------------------------------------------------
 
 :host(.button-rectangular) {
-  --border-radius: #{globals.$ion-rectangular-xs};
+  --border-radius: #{globals.$ion-shape-rectangular-xs};
 }
 
 // Button: Focus
@@ -205,7 +205,7 @@
 
 // Only show the focus ring when the button is focused
 :host(.ion-focused) .button-native {
-  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: globals.$ion-border-size-050;
 }
 
