@@ -18,6 +18,7 @@ const FOCUS_KEYS = [
 export interface FocusVisibleUtility {
   destroy: () => void;
   setFocus: (elements: Element[]) => void;
+  isKeyboardMode: () => boolean;
 }
 
 let focusVisibleUtility: FocusVisibleUtility | null = null;
@@ -46,10 +47,39 @@ export const focusElements = (elements: Element[]) => {
   focusVisible.setFocus(elements);
 };
 
+/**
+ * Reports whether the most recent interaction on the page was keyboard-driven.
+ *
+ * Check this before drawing the keyboard focus indicator programmatically.
+ *
+ * @returns `true` while the user is navigating with a keyboard, and before the
+ * first interaction on the page.
+ */
+export const isKeyboardMode = () => getOrInitFocusVisibleUtility().isKeyboardMode();
+
+/**
+ * Watches how the user is interacting with the page and marks the focused
+ * element with `ion-focused`, so the keyboard focus indicator is only drawn
+ * while the user navigates with a keyboard.
+ *
+ * @param rootEl Scopes the utility to this element's shadow root, so it only
+ * reacts to interactions inside it. Omit it to listen on the document.
+ * @returns `setFocus` to mark elements focused programmatically, and `destroy`
+ * to detach the listeners.
+ */
 export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => {
   let currentFocus: Element[] = [];
+
+  /*
+   * Starts as `true` so an element focused before the user has interacted,
+   * such as one focused on page load, still draws an indicator.
+   */
   let keyboardMode = true;
 
+  /*
+   * `ref` is where the listeners go and `root` is the element focus falls back
+   * to once it leaves everything inside `ref`.
+   */
   const ref = rootEl ? rootEl.shadowRoot! : document;
   const root = rootEl ? rootEl : document.body;
 
@@ -63,12 +93,25 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
     setFocus([]);
   };
 
+  /*
+   * Only the keys that move focus keep the indicator on. Any other key means
+   * the user is typing into the focused element rather than navigating, so the
+   * indicator is dropped.
+   */
   const onKeydown = (ev: Event) => {
     keyboardMode = FOCUS_KEYS.includes((ev as KeyboardEvent).key);
     if (!keyboardMode) {
       setFocus([]);
     }
   };
+
+  /*
+   * The indicator does not always belong to the element that took focus. The
+   * composed path is walked so every `ion-focusable` ancestor is marked too,
+   * which is how an `ion-item` draws the indicator for a checkbox slotted into
+   * it, since a checkbox in an item drops the class itself. The composed path
+   * is used because it reaches hosts across shadow boundaries.
+   */
   const onFocusin = (ev: Event) => {
     if (keyboardMode && ev.composedPath !== undefined) {
       const toFocus = ev.composedPath().filter((el: any) => {
@@ -81,20 +124,30 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
       setFocus(toFocus);
     }
   };
+
+  /*
+   * Focus landing back on `root` means it left every focusable element, so
+   * nothing should stay marked. Focus moving between elements is left alone
+   * because `onFocusin` marks the new one.
+   */
   const onFocusout = () => {
     if (ref.activeElement === root) {
       setFocus([]);
     }
   };
 
-  ref.addEventListener('keydown', onKeydown);
+  /*
+   * Capture phase, so the mode is current for the overlay focus trap, which
+   * intercepts Tab in its own capture listener.
+   */
+  ref.addEventListener('keydown', onKeydown, true);
   ref.addEventListener('focusin', onFocusin);
   ref.addEventListener('focusout', onFocusout);
   ref.addEventListener('touchstart', pointerDown, { passive: true });
   ref.addEventListener('mousedown', pointerDown);
 
   const destroy = () => {
-    ref.removeEventListener('keydown', onKeydown);
+    ref.removeEventListener('keydown', onKeydown, true);
     ref.removeEventListener('focusin', onFocusin);
     ref.removeEventListener('focusout', onFocusout);
     ref.removeEventListener('touchstart', pointerDown);
@@ -104,5 +157,6 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
   return {
     destroy,
     setFocus,
+    isKeyboardMode: () => keyboardMode,
   };
 };
