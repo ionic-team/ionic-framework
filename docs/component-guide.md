@@ -803,9 +803,11 @@ This would output `transform-origin: left center` in LTR mode and `transform-ori
 
 These mixins depend on the `:host-context` pseudo-class when used inside of shadow components, which is not supported in WebKit. As a result, these mixins will not work in Safari for macOS and iOS when applied to shadow components.
 
-To work around this, you should set an RTL class on the host of your component:
+To work around this, you should set an RTL class on the host of your component and set your RTL styles by targeting that class:
 
 ```tsx
+import { isRTL } from '@utils/rtl';
+
 <Host
 class={{
   'my-cmp-rtl': isRTL(this.el)
