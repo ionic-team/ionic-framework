@@ -1,4 +1,3 @@
-import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import {
   Build,
@@ -1074,18 +1073,10 @@ export class Input implements ComponentInterface {
       return this.clearInputIcon;
     }
 
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: closeCircle,
-      ionic: xRegular,
-      md: closeSharp,
-    };
+    const defaultIcon = theme === 'ios' ? closeCircle : closeSharp;
 
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured input clear icon or the default icon
     return config.get('inputClearIcon', defaultIcon);
   }
 
