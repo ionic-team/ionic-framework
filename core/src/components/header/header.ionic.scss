@@ -76,10 +76,6 @@ ion-toolbar + ion-toolbar {
   }
 
   .header-translucent-ionic ion-toolbar {
-    --background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 1),
-      rgba(255, 255, 255, 0)
-    );
+    --background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
   }
 }
