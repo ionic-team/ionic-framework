@@ -10,10 +10,11 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type { DatetimeChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-datetime.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const DATETIME_INPUTS = [
@@ -21,7 +22,7 @@ const DATETIME_INPUTS = [
   'clearText',
   'color',
   'dayValues',
-  'disabled',
+  { name: 'disabled', transform: nullableBooleanAttribute },
   'doneText',
   'firstDayOfWeek',
   'formatOptions',
@@ -35,25 +36,27 @@ const DATETIME_INPUTS = [
   'minuteValues',
   'mode',
   'monthValues',
-  'multiple',
+  { name: 'multiple', transform: nullableBooleanAttribute },
   'name',
-  'preferWheel',
+  { name: 'preferWheel', transform: nullableBooleanAttribute },
   'presentation',
-  'readonly',
-  'showAdjacentDays',
-  'showClearButton',
-  'showDefaultButtons',
-  'showDefaultTimeLabel',
-  'showDefaultTitle',
+  { name: 'readonly', transform: nullableBooleanAttribute },
+  { name: 'showAdjacentDays', transform: nullableBooleanAttribute },
+  { name: 'showClearButton', transform: nullableBooleanAttribute },
+  { name: 'showDefaultButtons', transform: nullableBooleanAttribute },
+  { name: 'showDefaultTimeLabel', transform: nullableBooleanAttribute },
+  { name: 'showDefaultTitle', transform: nullableBooleanAttribute },
   'size',
   'titleSelectedDatesFormatter',
   'value',
   'yearValues',
 ];
 
+const DATETIME_PROXY_INPUTS = inputNames(DATETIME_INPUTS);
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: DATETIME_INPUTS,
+  inputs: DATETIME_PROXY_INPUTS,
   methods: ['confirm', 'reset', 'cancel'],
 })
 @Component({

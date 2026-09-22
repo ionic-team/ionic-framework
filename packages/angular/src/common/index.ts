@@ -27,7 +27,7 @@ export {
 } from './directives/navigation/router-link-delegate';
 export { IonTabs } from './directives/navigation/tabs';
 
-export { ProxyCmp } from './utils/proxy';
+export { ProxyCmp, inputNames } from './utils/proxy';
 
 export { OverlayBaseController } from './utils/overlay';
 export { IonicRouteStrategy } from './utils/routing';

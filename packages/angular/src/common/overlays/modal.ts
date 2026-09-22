@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 import type { Components, ModalBreakpointChangeEventDetail, ModalDragEventDetail } from '@ionic/core/components';
 
-import { ProxyCmp, proxyOutputs } from '../utils/proxy';
+import { nullableBooleanAttribute } from '../utils/boolean-attribute';
+import { inputNames, ProxyCmp, proxyOutputs } from '../utils/proxy';
 
 export declare interface IonModal extends Components.IonModal {
   /**
@@ -63,29 +64,31 @@ export declare interface IonModal extends Components.IonModal {
 }
 
 const MODAL_INPUTS = [
-  'animated',
-  'keepContentsMounted',
+  { name: 'animated', transform: nullableBooleanAttribute },
+  { name: 'keepContentsMounted', transform: nullableBooleanAttribute },
   'backdropBreakpoint',
-  'backdropDismiss',
+  { name: 'backdropDismiss', transform: nullableBooleanAttribute },
   'breakpoints',
   'canDismiss',
   'cssClass',
   'enterAnimation',
-  'expandToScroll',
+  { name: 'expandToScroll', transform: nullableBooleanAttribute },
   'event',
-  'focusTrap',
-  'handle',
+  { name: 'focusTrap', transform: nullableBooleanAttribute },
+  { name: 'handle', transform: nullableBooleanAttribute },
   'handleBehavior',
   'initialBreakpoint',
-  'isOpen',
-  'keyboardClose',
+  { name: 'isOpen', transform: nullableBooleanAttribute },
+  { name: 'keyboardClose', transform: nullableBooleanAttribute },
   'leaveAnimation',
   'mode',
   'presentingElement',
-  'showBackdrop',
+  { name: 'showBackdrop', transform: nullableBooleanAttribute },
   'translucent',
   'trigger',
 ];
+
+const MODAL_PROXY_INPUTS = inputNames(MODAL_INPUTS);
 
 const MODAL_METHODS = [
   'present',
@@ -97,7 +100,7 @@ const MODAL_METHODS = [
 ];
 
 @ProxyCmp({
-  inputs: MODAL_INPUTS,
+  inputs: MODAL_PROXY_INPUTS,
   methods: MODAL_METHODS,
 })
 /**

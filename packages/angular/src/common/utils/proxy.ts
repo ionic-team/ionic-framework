@@ -28,6 +28,13 @@ export const proxyMethods = (Cmp: any, methods: string[]) => {
   });
 };
 
+/**
+ * Extracts the plain names from an inputs array that may contain transform entries.
+ * `ProxyCmp` only needs the names, and runs at runtime rather than through the Angular compiler.
+ */
+export const inputNames = (inputs: (string | { name: string })[]): string[] =>
+  inputs.map((input) => (typeof input === 'string' ? input : input.name));
+
 export const proxyOutputs = (instance: any, el: any, events: string[]) => {
   events.forEach((eventName) => (instance[eventName] = fromEvent(el, eventName)));
 };

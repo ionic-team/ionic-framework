@@ -959,6 +959,21 @@ For standalone components, create a directive in the [standalone package](/packa
 - For boolean inputs: See [ion-checkbox](/packages/angular/src/standalone/directives/checkbox.ts) or [ion-toggle](/packages/angular/src/standalone/directives/toggle.ts)
 - For select-like inputs: See [ion-select](/packages/angular/src/standalone/directives/select.ts) or [ion-radio-group](/packages/angular/src/standalone/directives/radio-group.ts)
 
+Boolean inputs take the `nullableBooleanAttribute` transform, so that they can be set by attribute presence the same way they can on the generated proxies:
+
+```typescript
+import { inputNames } from '@ionic/angular/common';
+
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
+
+const NEW_COMPONENT_INPUTS = [{ name: 'disabled', transform: nullableBooleanAttribute }, 'mode'];
+const NEW_COMPONENT_PROXY_INPUTS = inputNames(NEW_COMPONENT_INPUTS);
+```
+
+Pass `NEW_COMPONENT_INPUTS` to `@Component({ inputs })` and `NEW_COMPONENT_PROXY_INPUTS` to `@ProxyCmp({ inputs })`. Unlike Angular's own `booleanAttribute`, the transform passes `null` and `undefined` through rather than coercing them to `false`, because components frequently treat them as a state distinct from `false`.
+
+Wrappers under [`common/`](/packages/angular/src/common) import both by relative path instead: `nullableBooleanAttribute` from `../utils/boolean-attribute`, since the output target only copies `angular-component-lib/` next to the files it generates, and `inputNames` from `../utils/proxy`, since they sit inside the package that defines it.
+
 After creating the directive, you need to export it in two places:
 
 1. First, add your component to the directives export group in [`packages/angular/src/standalone/directives/index.ts`](/packages/angular/src/standalone/directives/index.ts):
