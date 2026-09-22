@@ -925,14 +925,12 @@ For standalone components, create a directive in the [standalone package](/packa
 Boolean inputs take the `nullableBooleanAttribute` transform, so that they can be set by attribute presence the same way they can on the generated proxies:
 
 ```typescript
+import { inputNames } from '@ionic/angular/common';
+
 import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 const NEW_COMPONENT_INPUTS = [{ name: 'disabled', transform: nullableBooleanAttribute }, 'mode'];
-
-/* ProxyCmp only needs the names, and runs at runtime rather than through the Angular compiler. */
-const NEW_COMPONENT_PROXY_INPUTS = NEW_COMPONENT_INPUTS.map((input) =>
-  typeof input === 'string' ? input : input.name
-);
+const NEW_COMPONENT_PROXY_INPUTS = inputNames(NEW_COMPONENT_INPUTS);
 ```
 
 Pass `NEW_COMPONENT_INPUTS` to `@Component({ inputs })` and `NEW_COMPONENT_PROXY_INPUTS` to `@ProxyCmp({ inputs })`. Unlike Angular's own `booleanAttribute`, the transform passes `null` and `undefined` through rather than coercing them to `false`, because components frequently treat them as a state distinct from `false`. Wrappers under [`common/`](/packages/angular/src/common) import it from `../utils/boolean-attribute`, since the output target only copies `angular-component-lib/` next to the files it generates.
