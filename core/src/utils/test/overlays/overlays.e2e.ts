@@ -535,8 +535,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
      * outside of it. The indicator should only follow that redirect during
      * keyboard navigation.
      *
-     * The checkbox is the modal's first focusable, so it is where the trap
-     * redirects focus to. `ion-app` is required to apply the focused styles.
+     * The button is the modal's first focusable, so it is where the trap
+     * redirects focus to. It has to be something that can actually take focus,
+     * or the redirect is a no-op and the tests prove nothing. `ion-app` is
+     * required to apply the focused styles.
      */
     const redirectContent = `
       <ion-app>
@@ -544,7 +546,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         <div tabindex="0">Outside Element</div>
         <ion-modal trigger="open-modal">
           <ion-content>
-            <ion-checkbox>Dark Mode</ion-checkbox>
+            <ion-button id="inside-modal">Inside Modal</ion-button>
           </ion-content>
         </ion-modal>
       </ion-app>
@@ -554,7 +556,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(redirectContent, config);
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-      const checkbox = page.locator('ion-modal ion-checkbox');
+      const insideButton = page.locator('ion-modal ion-button#inside-modal');
 
       // Opening with a click leaves the focus utility in pointer mode.
       await page.locator('ion-button#open-modal').click();
@@ -568,10 +570,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
        * frame makes a missing indicator a real absence rather than an assertion
        * that ran too early.
        */
-      await expect(checkbox).toBeFocused();
+      await expect(insideButton).toBeFocused();
       await page.evaluate(() => new Promise(requestAnimationFrame));
 
-      await expect(checkbox).not.toHaveClass(/ion-focused/);
+      await expect(insideButton).not.toHaveClass(/ion-focused/);
     });
 
     test('should show a focus indicator when focus is redirected during keyboard navigation', async ({
@@ -581,7 +583,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(redirectContent, config);
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-      const checkbox = page.locator('ion-modal ion-checkbox');
+      const insideButton = page.locator('ion-modal ion-button#inside-modal');
 
       await page.locator('ion-button#open-modal').click();
       await ionModalDidPresent.next();
@@ -590,8 +592,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await pageUtils.pressKeys('Shift');
       await page.locator('ion-app > div[tabindex="0"]').evaluate((el: HTMLElement) => el.focus());
 
-      await expect(checkbox).toBeFocused();
-      await expect(checkbox).toHaveClass(/ion-focused/);
+      await expect(insideButton).toBeFocused();
+      await expect(insideButton).toHaveClass(/ion-focused/);
     });
   });
 });
