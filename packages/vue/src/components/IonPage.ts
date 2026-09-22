@@ -3,7 +3,6 @@ import { h, defineComponent } from "vue";
 export const IonPage = /*@__PURE__*/ defineComponent({
   name: "IonPage",
   props: {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     registerIonPage: { type: Function, default: () => {} },
   },
   mounted() {

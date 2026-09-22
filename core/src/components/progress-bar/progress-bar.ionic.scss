@@ -15,11 +15,11 @@
 // -------------------------------------------------------------------------------
 
 :host(.progress-bar-shape-round) {
-  @include globals.border-radius(globals.$ion-round-xs);
+  @include globals.border-radius(globals.$ion-shape-round-xs);
 }
 
 :host(.progress-bar-shape-rectangular) {
-  @include globals.border-radius(globals.$ion-rectangular-xs);
+  @include globals.border-radius(globals.$ion-shape-rectangular-xs);
 }
 
 // Progress Bar: Color

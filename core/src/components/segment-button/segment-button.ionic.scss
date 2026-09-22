@@ -15,7 +15,7 @@
   --color-disabled: #{globals.$ion-primitives-neutral-500};
   --border-width: #{globals.$ion-border-size-025};
   --border-color: #{globals.$ion-primitives-neutral-300};
-  --border-style: #{globals.$ion-border-style-solid};
+  --border-style: solid;
   --indicator-box-shadow: none;
   --indicator-color: var(--color-checked);
   --indicator-height: #{globals.$ion-border-size-025};

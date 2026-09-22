@@ -9,11 +9,16 @@ on:
     - cron: '00 06 * * 1-5'
   workflow_dispatch:
     inputs:
-      npm_release_tag:
+      npm_release_tag_core:
         required: true
         type: string
-        description: What version should be pulled from NPM?
+        description: What stencil/core version should be pulled from NPM?
         default: nightly
+      npm_release_tag_react_output_target:
+        required: true
+        type: string
+        description: What stencil/react-output-target version should be pulled from NPM?
+        default: latest
 
 # When pushing a new commit we should
 # cancel the previous test run to not
@@ -29,7 +34,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/workflows/actions/build-core-stencil-prerelease
         with:
-          stencil-version: ${{ inputs.npm_release_tag || 'nightly' }}
+          stencil-core-version: ${{ inputs.npm_release_tag_core || 'nightly' }}
+          stencil-react-output-target-version: ${{ inputs.npm_release_tag_react_output_target || 'latest' }}
+
 
   test-core-clean-build:
     needs: [build-core-with-stencil-nightly]
@@ -52,7 +59,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/workflows/actions/test-core-spec
         with:
-          stencil-version: ${{ inputs.npm_release_tag || 'nightly' }}
+          stencil-version: ${{ inputs.npm_release_tag_core || 'nightly' }}
 
   test-core-screenshot:
     strategy:
@@ -150,7 +157,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [ng16, ng17, ng18, ng19, ng20]
+        apps: [ng18, ng19, ng20, ng21, ng22, ng22-zone]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
@@ -173,6 +180,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - name: Install Stencil React Output Target
+      working-directory: ./packages/react
+      run: npm i @stencil/react-output-target@${{ inputs.npm_release_tag_react_output_target || 'latest' }}
+      shell: bash
     - uses: ./.github/workflows/actions/build-react
 
   build-react-router:
@@ -186,7 +197,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [reactrouter5]
+        apps: [reactrouter6-react18, reactrouter6-react19]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
@@ -208,7 +219,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [react17, react18, react19]
+        apps: [react18, react19]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:

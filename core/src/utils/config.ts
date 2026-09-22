@@ -95,14 +95,22 @@ export interface IonicConfig {
   loadingSpinner?: SpinnerTypes | null;
 
   /**
-   * Overrides the default icon in all `<ion-refresh-content>` components.
+   * Overrides the default icon in all `<ion-refresher-content>` components.
    */
   refreshingIcon?: string;
 
   /**
-   * Overrides the default spinner type in all `<ion-refresh-content>` components.
+   * Overrides the default spinner type in all `<ion-refresher-content>`
+   * components.
    */
   refreshingSpinner?: SpinnerTypes | null;
+
+  /**
+   * Overrides the arrow icon shown on the circular pulling spinner
+   * in all `<ion-refresher-content>` components, only when the theme
+   * is `md` or `ionic`.
+   */
+  refresherArrowIcon?: string;
 
   /**
    * Overrides the default spinner type in all `<ion-infinite-scroll-content>` components.
@@ -148,6 +156,16 @@ export interface IonicConfig {
    * Overrides the collapsed icon for all `ion-breadcrumb` components.
    */
   breadcrumbCollapsedIcon?: string;
+
+  /**
+   * Overrides the checkmark icon for all `ion-checkbox` components.
+   */
+  checkboxCheckedIcon?: string;
+
+  /**
+   * Overrides the indeterminate icon for all `ion-checkbox` components.
+   */
+  checkboxIndeterminateIcon?: string;
 
   /**
    * Overrides the next icon for all `ion-datetime` components.
@@ -226,6 +244,12 @@ export interface IonicConfig {
   selectCollapsedIcon?: string;
 
   /**
+   * Overrides the cancel icon for all `ion-select-modal` components,
+   * only when the cancel button is set to display an icon.
+   */
+  selectModalCancelIcon?: string;
+
+  /**
    * Overrides the checked icon for all `ion-toggle` components.
    */
   toggleCheckedIcon?: string;
@@ -272,11 +296,6 @@ export interface IonicConfig {
   toastEnter?: AnimationBuilder;
 
   /**
-   * Provides a custom enter animation for all `ion-picker-legacy`, overriding the default "animation".
-   */
-  pickerEnter?: AnimationBuilder;
-
-  /**
    * Provides a custom leave animation for all `ion-action-sheet`, overriding the default "animation".
    */
   actionSheetLeave?: AnimationBuilder;
@@ -305,11 +324,6 @@ export interface IonicConfig {
    * Provides a custom leave animation for all `ion-toast`, overriding the default "animation".
    */
   toastLeave?: AnimationBuilder;
-
-  /**
-   * Provides a custom leave animation for all `ion-picker-legacy`, overriding the default "animation".
-   */
-  pickerLeave?: AnimationBuilder;
 
   /**
    * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
@@ -353,6 +367,7 @@ export interface IonicConfig {
    * - `'OFF'`: No errors or warnings are logged.
    * - `'ERROR'`: Logs only errors.
    * - `'WARN'`: Logs errors and warnings.
+   * - `'DEBUG'`: Logs errors, warnings, and Ionic's internal diagnostics.
    */
   logLevel?: LogLevel;
 
@@ -377,7 +392,7 @@ type FocusManagerPriority = 'content' | 'heading' | 'banner';
 export const setupConfig = (config: IonicConfig) => {
   const win = window as any;
   const Ionic = win.Ionic;
-  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
     return;
   }

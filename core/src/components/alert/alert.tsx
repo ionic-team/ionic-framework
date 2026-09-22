@@ -8,14 +8,16 @@ import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
 import {
+  BACKDROP,
+  cleanupRootFocusTrapAccessibility,
   createDelegateController,
   createTriggerController,
-  BACKDROP,
   dismiss,
   eventMethod,
   isCancel,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   safeCall,
   setOverlayId,
 } from '@utils/overlays';
@@ -364,10 +366,16 @@ export class Alert implements ComponentInterface, OverlayInterface {
     this.triggerChanged();
     /**
      * If the alert was previously connected and is being reattached, the
-     * ResizeObserver was disconnected. componentDidLoad only fires once per
-     * instance, so re-establish the observer here on reconnect.
+     * `ResizeObserver` and the button gesture were torn down. `componentDidLoad`
+     * only fires once per instance, so re-establish both here on reconnect.
      */
     this.setupButtonGroupResizeObserver();
+    this.setupButtonActiveGesture();
+
+    // Re-apply the root lock if moved without dismiss() being called
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(this.el);
+    }
   }
 
   componentWillLoad() {
@@ -386,24 +394,32 @@ export class Alert implements ComponentInterface, OverlayInterface {
       this.gesture = undefined;
     }
 
+    // Clean up aria-hidden if removed without dismiss() being called
+    if (this.presented) {
+      cleanupRootFocusTrapAccessibility();
+    }
+
     this.buttonGroupResizeObserver?.disconnect();
     this.buttonGroupResizeObserver = undefined;
   }
 
-  componentDidLoad() {
-    /**
-     * Only create gesture if:
-     * 1. A gesture does not already exist
-     * 2. App is running in iOS mode
-     * 3. A wrapper ref exists
-     */
+  /**
+   * Only create gesture if:
+   * 1. A gesture does not already exist
+   * 2. App is running in iOS mode
+   * 3. A wrapper ref exists
+   */
+  private setupButtonActiveGesture() {
     if (!this.gesture && getIonMode(this) === 'ios' && this.wrapperEl) {
       this.gesture = createButtonActiveGesture(this.wrapperEl, (refEl: HTMLElement) =>
         refEl.classList.contains('alert-button')
       );
       this.gesture.enable(true);
     }
+  }
 
+  componentDidLoad() {
+    this.setupButtonActiveGesture();
     this.setupButtonGroupResizeObserver();
 
     /**
@@ -634,13 +650,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 }}
               >
                 <div class="alert-checkbox-icon">
-                  {theme === 'ionic' ? (
-                    <svg class="alert-checkbox-inner" viewBox="0 0 256 256" aria-hidden="true">
-                      <path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z" />
-                    </svg>
-                  ) : (
-                    <div class="alert-checkbox-inner"></div>
-                  )}
+                  <div class="alert-checkbox-inner"></div>
                 </div>
                 {renderOptionLabel(optionLabelOptions, 'alert-checkbox-label')}
               </div>

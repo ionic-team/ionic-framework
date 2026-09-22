@@ -4,7 +4,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
-- [Version 9.x](#version-9x)
+- [Version 10.x](#version-10x)
+- [Version 9.x](./BREAKING_ARCHIVE/v9.md)
 - [Version 8.x](./BREAKING_ARCHIVE/v8.md)
 - [Version 7.x](./BREAKING_ARCHIVE/v7.md)
 - [Version 6.x](./BREAKING_ARCHIVE/v6.md)
@@ -12,25 +13,26 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Version 4.x](./BREAKING_ARCHIVE/v4.md)
 - [Legacy](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md)
 
-## Version 9.x
+## Version 10.x
 
-- [Components](#version-9x-components)
-  - [Button](#version-9x-button)
-  - [Card](#version-9x-card)
-  - [Chip](#version-9x-chip)
-  - [Datetime](#version-9x-datetime)
-  - [Grid](#version-9x-grid)
-  - [Input Otp](#version-9x-input-otp)
-  - [Radio Group](#version-9x-radio-group)
-  - [Textarea](#version-9x-textarea)
+- [Components](#version-10x-components)
+  - [Button](#version-10x-button)
+  - [Card](#version-10x-card)
+  - [Checkbox](#version-10x-checkbox)
+  - [Chip](#version-10x-chip)
+  - [Datetime](#version-10x-datetime)
+  - [Grid](#version-10x-grid)
+  - [Input Otp](#version-10x-input-otp)
+  - [Radio Group](#version-10x-radio-group)
+  - [Textarea](#version-10x-textarea)
 
-<h2 id="version-9x-components">Components</h2>
+<h2 id="version-10x-components">Components</h2>
 
-<h4 id="version-9x-button">Button</h4>
+<h4 id="version-10x-button">Button</h4>
 
 - The `border-radius` of the `ios` and `md` button now defaults to `6px` and `999px` instead of `14px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"` for `md` and override the `--border-radius` CSS variable for `ios` to `14px`, or set it to a different value entirely.
 
-<h4 id="version-9x-card">Card</h4>
+<h4 id="version-10x-card">Card</h4>
 
 - **ion-card**: The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
 
@@ -62,15 +64,38 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   }
   ```
 
-<h4 id="version-9x-chip">Chip</h4>
+<h4 id="version-10x-checkbox">Checkbox</h4>
+
+- The `container` CSS shadow part is now the element that wraps the checkmark instead of the `svg` element that draws it. The part still controls the checkbox's size, border, and background, so existing styles for those properties are unaffected.
+
+  SVG-specific properties such as `fill`, `stroke` and `stroke-width` no longer have any effect through `::part(container)` because `container` is no longer an SVG element. To set the color of the checkmark, use the `icon` part instead:
+
+  ```diff
+  - ion-checkbox::part(container) {
+  -   stroke: purple;
+  - }
+  + ion-checkbox::part(icon) {
+  +   color: purple;
+  + }
+  ```
+
+  The `--checkmark-color` CSS variable can also be used to set the checkmark color. Both `::part(icon)` and `--checkmark-color` apply to the default checkmark as well as to an icon set with the `checkboxCheckedIcon` or `checkboxIndeterminateIcon` global config options. In contrast, the `mark` part only applies to states that do not have a configured icon.
+
+  Setting `color` on the `container` part has no effect because the icon sets its own color.
+
+  To change the thickness of the default checkmark, use the `--checkmark-width` CSS variable or set `stroke-width` on the `mark` part. These apply to each state (`checked` and `indeterminate`) unless an icon is configured for that state. For example, when `checkboxCheckedIcon` is configured, these properties do not apply to the checked state but continue to apply to the indeterminate state. Similarly, when `checkboxIndeterminateIcon` is configured, they do not apply to the indeterminate state but continue to apply to the checked state.
+
+  For a configured Ionicon drawn with a stroke, set `--ionicon-stroke-width` on the `icon` part. For a configured SVG, set `stroke-width` on the `icon` part; this applies unless the SVG sets its own `stroke-width`.
+
+<h4 id="version-10x-chip">Chip</h4>
 
 - The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `--border-radius` CSS variable to specify a different value.
 
-<h4 id="version-9x-datetime">Datetime</h4>
+<h4 id="version-10x-datetime">Datetime</h4>
 
 - The `ion-buttons` component has been removed from the internal implementation of `ion-datetime` and is no longer required when passing custom buttons to the `slot="buttons"`. When providing custom buttons, use a `div` element instead of `ion-buttons`. While existing code using `ion-buttons` may continue to work visually, future updates to the `ion-buttons` component may cause any styles you rely on to break.
 
-<h4 id="version-9x-grid">Grid</h4>
+<h4 id="version-10x-grid">Grid</h4>
 
 - The properties `pull` and `push` have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
 
@@ -186,13 +211,13 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-<h4 id="version-9x-input-otp">Input Otp</h4>
+<h4 id="version-10x-input-otp">Input Otp</h4>
 
 Converted `ion-input-otp` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 If you were targeting the internals of `ion-input-otp` in your CSS, you will need to target the `group`, `container`, `native`, `separator` or `description` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
-<h4 id="version-9x-radio-group">Radio Group</h4>
+<h4 id="version-10x-radio-group">Radio Group</h4>
 
 Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
@@ -200,8 +225,23 @@ If you were targeting the internals of `ion-radio-group` in your CSS, you will n
 
 Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
 
-<h4 id="version-9x-textarea">Textarea</h4>
+<h4 id="version-10x-textarea">Textarea</h4>
 
 Converted `ion-textarea` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
-If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, or `bottom` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, `bottom`, `start`, `control`, or `end` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+The internal wrappers that Ionic 9 introduced are no longer reachable as descendants. Slotted content stays in the light DOM, so it is still reachable directly:
+
+```diff
+-ion-textarea .textarea-control .native-wrapper { }
++ion-textarea::part(container) { }
+
+-ion-textarea .textarea-start [slot="start"] { }
++ion-textarea [slot="start"] { }
+
+-ion-textarea .textarea-end [slot="end"] { }
++ion-textarea [slot="end"] { }
+```
+
+To style the wrappers themselves rather than the slotted content, use `part="start"` and `part="end"`.

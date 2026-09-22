@@ -53,9 +53,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
              * values which is why we do the ts-ignore.
              */
             // @ts-ignore
-            el.isDateEnabled = () => {
-              undefined;
-            };
+            el.isDateEnabled = () => undefined;
           });
 
           await page.waitForChanges();

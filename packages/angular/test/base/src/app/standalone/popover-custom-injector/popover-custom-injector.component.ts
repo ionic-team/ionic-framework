@@ -1,5 +1,5 @@
 import { Component, inject, Injector } from '@angular/core';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, PopoverController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, PopoverController } from '@ionic/angular';
 import { PopoverCustomInjectorPopoverComponent } from './popover/popover.component';
 import { TestService } from './test.service';
 

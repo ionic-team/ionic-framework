@@ -2,11 +2,12 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
-  test.describe(title('checkbox: a11y'), () => {
-    test('should not have accessibility violations', async ({ page }) => {
-      await page.setContent(
-        `
+configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'], palettes: ['light', 'dark'] }).forEach(
+  ({ title, config }) => {
+    test.describe(title('checkbox: a11y'), () => {
+      test('should not have accessibility violations', async ({ page }) => {
+        await page.setContent(
+          `
         <main>
           <ion-checkbox>Label</ion-checkbox>
           <ion-checkbox aria-label="my aria label"></ion-checkbox>
@@ -16,11 +17,35 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
           </ion-item>
         </main>
       `,
-        config
-      );
+          config
+        );
 
-      const results = await new AxeBuilder({ page }).analyze();
-      expect(results.violations).toEqual([]);
+        const results = await new AxeBuilder({ page }).analyze();
+        expect(results.violations).toEqual([]);
+      });
+    });
+  }
+);
+
+configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ title, config, screenshot }) => {
+  test.describe(title('checkbox: a11y'), () => {
+    test.describe(title('checkbox: font scaling'), () => {
+      test('should scale text on larger font sizes', async ({ page }) => {
+        await page.setContent(
+          `
+            <style>
+              html {
+                font-size: 310%;
+              }
+            </style>
+            <ion-checkbox checked>Checked</ion-checkbox>
+          `,
+          config
+        );
+
+        const checkbox = page.locator('ion-checkbox');
+        await expect(checkbox).toHaveScreenshot(screenshot('checkbox-scale'));
+      });
     });
   });
 });
@@ -79,29 +104,6 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
       const checkboxes = page.locator('ion-checkbox');
       await expect(checkboxes.nth(0)).toHaveClass(/ion-focusable/);
       await expect(checkboxes.nth(1)).toHaveClass(/ion-focusable/);
-    });
-  });
-});
-
-configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
-  test.describe(title('checkbox: a11y'), () => {
-    test.describe(title('checkbox: font scaling'), () => {
-      test('should scale text on larger font sizes', async ({ page }) => {
-        await page.setContent(
-          `
-            <style>
-              html {
-                font-size: 310%;
-              }
-            </style>
-            <ion-checkbox checked>Checked</ion-checkbox>
-          `,
-          config
-        );
-
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot('checkbox-scale'));
-      });
     });
   });
 });

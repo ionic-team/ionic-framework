@@ -122,6 +122,6 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
   }
 
   return React.forwardRef<OverlayType, Props>((props, ref) => {
-    return <Overlay {...props} forwardedRef={ref} />;
+    return <Overlay {...(props as Props)} forwardedRef={ref} />;
   });
 };

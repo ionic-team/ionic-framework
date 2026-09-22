@@ -1,6 +1,3 @@
-import arrowLeftRegular from '@phosphor-icons/core/assets/regular/arrow-left.svg';
-import magnifyingGlassRegular from '@phosphor-icons/core/assets/regular/magnifying-glass.svg';
-import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { createClearButtonPressController } from '@utils/forms';
@@ -108,7 +105,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Set the input's autocorrect property.
    */
-  @Prop() autocorrect: 'on' | 'off' = 'off';
+  @Prop() autocorrect: boolean = false;
 
   /**
    * Set the cancel button icon. Only available when the theme is `"md"`.
@@ -738,18 +735,10 @@ export class Searchbar implements ComponentInterface {
       return this.clearIcon;
     }
 
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: closeCircle,
-      ionic: xRegular,
-      md: closeSharp,
-    };
+    const defaultIcon = theme === 'ios' ? closeCircle : closeSharp;
 
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured searchbar clear icon or the default icon
     return config.get('searchbarClearIcon', defaultIcon);
   }
 
@@ -766,18 +755,10 @@ export class Searchbar implements ComponentInterface {
       return this.searchIcon;
     }
 
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: searchOutline,
-      ionic: magnifyingGlassRegular,
-      md: searchSharp,
-    };
+    const defaultIcon = theme === 'ios' ? searchOutline : searchSharp;
 
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured searchbar search icon or the default icon
     return config.get('searchbarSearchIcon', defaultIcon);
   }
 
@@ -793,19 +774,7 @@ export class Searchbar implements ComponentInterface {
       return this.cancelButtonIcon;
     }
 
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: arrowBackSharp,
-      ionic: arrowLeftRegular,
-      md: arrowBackSharp,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured searchbar cancel icon, the back button icon or the default icon
-    return config.get('searchbarCancelIcon', config.get('backButtonIcon', defaultIcon));
+    return config.get('searchbarCancelIcon', config.get('backButtonIcon', arrowBackSharp));
   }
 
   render() {
@@ -877,7 +846,7 @@ export class Searchbar implements ComponentInterface {
             value={this.getValue()}
             autoCapitalize={autocapitalize === 'default' ? undefined : autocapitalize}
             autoComplete={this.autocomplete}
-            autoCorrect={this.autocorrect}
+            autoCorrect={this.autocorrect ? 'on' : 'off'}
             spellcheck={this.spellcheck}
             {...this.inheritedAttributes}
           />

@@ -23,12 +23,6 @@ test.describe('Overlay Controllers', () => {
     await expect(page.locator('ion-modal app-dialog-content')).toBeVisible();
   });
 
-  test('should present a picker', async ({ page }) => {
-    await page.locator('button#open-picker').click();
-
-    await expect(page.locator('ion-picker-legacy .picker-button')).toBeVisible();
-  });
-
   test('should present a popover', async ({ page }) => {
     await page.locator('button#open-popover').click();
 

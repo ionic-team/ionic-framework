@@ -9,7 +9,7 @@ rm -f *.tgz
 npm pack ../../../../../core
 
 # Pack @ionic/angular
-npm pack ../../../dist
+npm pack ../../../
 
 # Pack @ionic/angular-server
 npm pack ../../../../angular-server/dist

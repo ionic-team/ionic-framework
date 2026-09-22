@@ -11,6 +11,7 @@ export {
   getTimeGivenProgression,
   getIonPageElement,
   openURL,
+  LogLevel,
 
   // TYPES
   Animation,
@@ -57,10 +58,6 @@ export {
   ModalDragEventDetail,
   ModalOptions,
   NavCustomEvent,
-  PickerOptions,
-  PickerButton,
-  PickerColumn,
-  PickerColumnOption,
   PopoverOptions,
   RadioGroupCustomEvent,
   RadioGroupChangeEventDetail,
@@ -99,14 +96,13 @@ export {
   TransitionOptions,
 } from '@ionic/core/components';
 
-export * from './proxies';
+export * from './components';
 export * from './routing-proxies';
 
 // createControllerComponent
 export { IonAlert } from './IonAlert';
 export { IonLoading } from './IonLoading';
 export * from './IonToast';
-export { IonPickerLegacy } from './IonPickerLegacy';
 
 // createOverlayComponent
 export * from './IonActionSheet';
@@ -125,11 +121,12 @@ export { IonBackButton } from './navigation/IonBackButton';
 export { IonRouterOutlet } from './IonRouterOutlet';
 export { IonIcon } from './IonIcon';
 export * from './IonRoute';
-export * from './IonRedirect';
+
 export * from './IonRouterContext';
 
 // Utils
-export { isPlatform, getPlatforms, getConfig } from './utils';
+export { isPlatform, getPlatforms } from './utils';
+export { getConfig } from '../utils/config';
 export * from './hrefprops';
 
 // Ionic Animations
@@ -141,7 +138,6 @@ export { useIonAlert, UseIonAlertResult } from '../hooks/useIonAlert';
 export { useIonToast, UseIonToastResult } from '../hooks/useIonToast';
 export { useIonModal, UseIonModalResult } from '../hooks/useIonModal';
 export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
-export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
 export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
 
 export const setupIonicReact = (config: IonicConfig = {}) => {

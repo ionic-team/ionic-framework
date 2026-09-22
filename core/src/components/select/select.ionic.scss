@@ -89,8 +89,6 @@
 :host(.select-label-placement-fixed) .label-text-wrapper {
   $text-wrapper-width: calc(globals.$ion-scale-2400 + globals.$ion-space-100);
 
-  flex: 0 0 $text-wrapper-width;
-
   width: $text-wrapper-width;
   min-width: $text-wrapper-width;
   max-width: globals.$ion-scale-5000;
@@ -124,10 +122,229 @@
 // Select Wrapper
 // ----------------------------------------------------------------
 
+/**
+ * The label is nested in the control so that every theme renders the same
+ * tree. Laying the wrapper out as a grid and flattening the control lets the
+ * label sit outside the field box, which is drawn by `::before` over the cells
+ * the label does not occupy.
+ */
 .select-wrapper {
+  display: grid;
+
+  /**
+   * Only stretch grows an auto row, so centering holds the label row at its
+   * content height and still centers the field in any leftover host height.
+   */
+  align-content: center;
+
+  align-items: center;
+
   min-width: globals.$ion-scale-5000;
 
   background: transparent;
+}
+
+.select-control {
+  display: contents;
+}
+
+// Select Field Box
+// ----------------------------------------------------------------
+
+/**
+ * A pseudo-element draws the box over the field cells, so the label stays
+ * outside of it.
+ */
+.select-wrapper::before {
+  @include globals.field-box();
+
+  background: var(--background);
+}
+
+/**
+ * The field row is as tall as the size asks for, whatever the slots contain.
+ */
+:host(.select-size-small) .select-wrapper {
+  --internal-field-height: #{globals.$ion-scale-1000};
+}
+
+:host(.select-size-medium) .select-wrapper {
+  --internal-field-height: #{globals.$ion-scale-1200};
+}
+
+:host(.select-size-large) .select-wrapper {
+  --internal-field-height: #{globals.$ion-scale-1400};
+}
+
+// Select Label Columns
+// ----------------------------------------------------------------
+
+// The label shares the field's row, so it takes a column of its own.
+:host(.select-label-placement-start) .label-text-wrapper,
+:host(.select-label-placement-fixed) .label-text-wrapper,
+:host(.select-label-placement-end) .label-text-wrapper {
+  grid-column: label;
+}
+
+// The label has its own row, so it spans the width of the field.
+:host(.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-label-placement-floating) .label-text-wrapper {
+  grid-column: field-start / field-end;
+}
+
+// Select Grid Template - Start & Fixed
+// ----------------------------------------------------------------
+
+/**
+ * The `justify-content` property cannot serve here the way it does on a flex
+ * row, because grid would distribute the free space between every track,
+ * including the ones inside the field. So three empty tracks stand in for that
+ * space, and the justify property below decides which of them takes it. The
+ * other two collapse to `0fr`.
+ */
+:host(.select-label-placement-start) .select-wrapper,
+:host(.select-label-placement-fixed) .select-wrapper {
+  grid-template-columns:
+    var(--internal-justify-lead, 0fr)
+    [label] auto
+    var(--internal-justify-gap, 1fr)
+    [field-start slot-start] minmax(0, auto)
+    [native] minmax(0, auto)
+    [slot-end] minmax(0, auto)
+    [field-end] var(--internal-justify-trail, 0fr);
+  grid-template-rows: [label field] var(--internal-field-height, auto);
+}
+
+// Select Grid Template - End
+// ----------------------------------------------------------------
+
+:host(.select-label-placement-end) .select-wrapper {
+  grid-template-columns:
+    var(--internal-justify-lead, 0fr)
+    [field-start slot-start] minmax(0, auto)
+    [native] minmax(0, auto)
+    [slot-end] minmax(0, auto)
+    [field-end] var(--internal-justify-gap, 1fr)
+    [label] auto
+    var(--internal-justify-trail, 0fr);
+  grid-template-rows: [label field] var(--internal-field-height, auto);
+}
+
+// Select No Label
+// ----------------------------------------------------------------
+
+/**
+ * With no label there is nothing to separate the field from, so the free space
+ * belongs after the field instead of before it. The label's own track collapses
+ * on its own, but the flexible one does not.
+ */
+:host(:not(.has-label)) .select-wrapper {
+  --internal-justify-gap: 0fr;
+  --internal-justify-trail: 1fr;
+}
+
+// Select Justify
+// ----------------------------------------------------------------
+
+/**
+ * Each of these declares all three tracks. Declaring only the ones it moves
+ * would leave the others at whatever the no-label rule above set, since the
+ * cascade resolves per declaration and the two rules have equal specificity.
+ *
+ * Exactly one track stays flexible in every combination. That leaves no free
+ * space for the `justify-content` the shared stylesheet sets on the wrapper, so
+ * it stays inert. Leave all three at `0fr` and it starts distributing space
+ * between the field's own tracks.
+ */
+:host(.select-justify-start) .select-wrapper {
+  --internal-justify-lead: 0fr;
+  --internal-justify-gap: 0fr;
+  --internal-justify-trail: 1fr;
+}
+
+:host(.select-justify-end) .select-wrapper {
+  --internal-justify-lead: 1fr;
+  --internal-justify-gap: 0fr;
+  --internal-justify-trail: 0fr;
+}
+
+/**
+ * This only applies with a label, because `space-between` on a flex row with one
+ * in-flow item behaves as start, which is what the no-label rule already gives.
+ */
+:host(.has-label.select-justify-space-between) .select-wrapper {
+  --internal-justify-lead: 0fr;
+  --internal-justify-gap: 1fr;
+  --internal-justify-trail: 0fr;
+}
+
+// Select Grid Template - Stacked & Floating
+// ----------------------------------------------------------------
+
+:host(.select-label-placement-stacked) .select-wrapper,
+:host(.select-label-placement-floating) .select-wrapper {
+  grid-template-columns: [field-start slot-start] minmax(0, auto) [native] minmax(0, 1fr) [slot-end] minmax(0, auto) [field-end];
+  grid-template-rows: [label] auto [field] var(--internal-field-height, auto);
+}
+
+// Select Field Placement
+// ----------------------------------------------------------------
+
+/**
+ * The templates above all name the same lines, so every placement shares these.
+ * A label with its own row lands on the label row. Otherwise that name resolves
+ * to the only row there is.
+ */
+.label-text-wrapper {
+  grid-row: label;
+}
+
+.select-start {
+  grid-row: field;
+  grid-column: slot-start;
+}
+
+.native-wrapper {
+  grid-row: field;
+  grid-column: native;
+}
+
+.select-end {
+  grid-row: field;
+  grid-column: slot-end;
+}
+
+.select-wrapper::before {
+  grid-row: field;
+  grid-column: field-start / field-end;
+}
+
+// Select Field Padding
+// ----------------------------------------------------------------
+
+/**
+ * The padding sits on the cells that the field box covers, so the label is not
+ * indented by it.
+ */
+.select-start {
+  @include globals.padding(var(--padding-top), null, var(--padding-bottom), var(--padding-start));
+}
+
+.native-wrapper {
+  @include globals.padding(var(--padding-top), null, var(--padding-bottom), null);
+}
+
+.select-end {
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), null);
+}
+
+/**
+ * The slot cells can shrink below their content so that oversized slotted
+ * content is cut off at the edge of the field instead of widening it.
+ */
+.select-start,
+.select-end {
+  overflow: hidden;
 }
 
 .select-wrapper .select-placeholder {
@@ -137,27 +354,6 @@
    * label does not overlap with the placeholder.
    */
   transition: opacity globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
-}
-
-// Select Inner Wrapper
-// ----------------------------------------------------------------
-
-.select-wrapper-inner {
-  @include globals.border-radius(var(--border-radius));
-  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-
-  position: relative;
-
-  background: var(--background);
-
-  box-sizing: border-box;
-
-  gap: globals.$ion-space-200;
-}
-
-:host(.select-label-placement-stacked) .select-wrapper-inner,
-:host(.select-label-placement-floating) .select-wrapper-inner {
-  width: 100%;
 }
 
 // Select Native Wrapper
@@ -176,16 +372,6 @@
   color: globals.$ion-text-default;
 }
 
-:host(.select-label-placement-stacked) .native-wrapper,
-:host(.select-label-placement-floating) .native-wrapper {
-  /**
-   * Text should not extend beyond the bounds of the select.
-   * This is done by setting the width to the full width minus
-   * the icon width and the gap between the icon and the text.
-   */
-  width: calc(100% - globals.$ion-scale-400 - globals.$ion-space-200);
-}
-
 // Start/End Slots
 // ----------------------------------------------------------------
 
@@ -197,6 +383,14 @@
  * clear buttons and the focus/hover state on clear ones
  * don't look too crowded.
  */
+::slotted([slot="start"]:last-of-type) {
+  margin-inline-end: globals.$ion-space-200;
+}
+
+::slotted([slot="end"]:first-of-type) {
+  margin-inline-start: globals.$ion-space-200;
+}
+
 ::slotted(ion-button[slot="start"].button-has-icon-only),
 ::slotted(ion-button[slot="end"].button-has-icon-only) {
   --border-radius: 50%;
@@ -217,9 +411,23 @@
 }
 
 .select-icon {
+  @include globals.margin(0, 0, 0, globals.$ion-space-200);
+
   transition: transform 0.15s globals.$ion-transition-curve-expressive;
 
   color: globals.$ion-text-subtlest;
+}
+
+/**
+ * The icon renders inside the end container for floating and stacked labels and
+ * inside the native wrapper otherwise, the structure BREAKING.md documents for
+ * v9. Using `order` moves it past the slotted end content so the chevron stays
+ * on the field's trailing edge. The other themes leave it ahead of that
+ * content.
+ */
+:host(.select-label-placement-stacked) .select-icon,
+:host(.select-label-placement-floating) .select-icon {
+  order: 1;
 }
 
 :host(.has-value) .select-icon {
@@ -272,19 +480,4 @@
 
 :host(.select-shape-rectangular) {
   --border-radius: #{globals.$ion-border-radius-0};
-}
-
-// Sizes
-// ----------------------------------------------------------------
-
-:host(.select-size-small) .select-wrapper-inner {
-  height: globals.$ion-scale-1000;
-}
-
-:host(.select-size-medium) .select-wrapper-inner {
-  height: globals.$ion-scale-1200;
-}
-
-:host(.select-size-large) .select-wrapper-inner {
-  height: globals.$ion-scale-1400;
 }
