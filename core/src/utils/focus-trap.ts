@@ -1,19 +1,4 @@
-import { isKeyboardMode } from '@utils/focus-visible';
-import { focusVisibleElement } from '@utils/helpers';
-
-/**
- * Focuses an element a focus trap is redirecting focus to. Only draws the
- * keyboard focus indicator when the user is navigating with a keyboard, so a
- * redirect caused by a tap or click does not leave the element looking as
- * though it was tabbed to.
- */
-export const focusRedirectedElement = (el: HTMLElement) => {
-  if (isKeyboardMode()) {
-    focusVisibleElement(el);
-  } else {
-    el.focus();
-  }
-};
+import { focusRedirectedElement } from '@utils/helpers';
 
 /**
  * This query string selects elements that

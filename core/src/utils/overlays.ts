@@ -1,10 +1,5 @@
 import { doc } from '@utils/browser';
-import {
-  focusFirstDescendant,
-  focusLastDescendant,
-  focusRedirectedElement,
-  focusableQueryString,
-} from '@utils/focus-trap';
+import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
 import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import { printIonError, printIonWarning } from '@utils/logging';
@@ -33,6 +28,7 @@ import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import {
   addEventListener,
   componentOnReady,
+  focusRedirectedElement,
   focusVisibleElement,
   getElementRoot,
   removeEventListener,
