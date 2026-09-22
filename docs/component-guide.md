@@ -933,7 +933,9 @@ const NEW_COMPONENT_INPUTS = [{ name: 'disabled', transform: nullableBooleanAttr
 const NEW_COMPONENT_PROXY_INPUTS = inputNames(NEW_COMPONENT_INPUTS);
 ```
 
-Pass `NEW_COMPONENT_INPUTS` to `@Component({ inputs })` and `NEW_COMPONENT_PROXY_INPUTS` to `@ProxyCmp({ inputs })`. Unlike Angular's own `booleanAttribute`, the transform passes `null` and `undefined` through rather than coercing them to `false`, because components frequently treat them as a state distinct from `false`. Wrappers under [`common/`](/packages/angular/src/common) import it from `../utils/boolean-attribute`, since the output target only copies `angular-component-lib/` next to the files it generates.
+Pass `NEW_COMPONENT_INPUTS` to `@Component({ inputs })` and `NEW_COMPONENT_PROXY_INPUTS` to `@ProxyCmp({ inputs })`. Unlike Angular's own `booleanAttribute`, the transform passes `null` and `undefined` through rather than coercing them to `false`, because components frequently treat them as a state distinct from `false`.
+
+Wrappers under [`common/`](/packages/angular/src/common) import both by relative path instead: `nullableBooleanAttribute` from `../utils/boolean-attribute`, since the output target only copies `angular-component-lib/` next to the files it generates, and `inputNames` from `../utils/proxy`, since they sit inside the package that defines it.
 
 After creating the directive, you need to export it in two places:
 
