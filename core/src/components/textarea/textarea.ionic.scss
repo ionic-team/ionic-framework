@@ -69,7 +69,7 @@
 // --------------------------------------------------
 
 :host(.textarea-shape-soft) {
-  --border-radius: #{globals.$ion-shape-soft-xl};
+  --border-radius: #{globals.$ion-shape-soft-lg};
 }
 
 :host(.textarea-shape-round) {
