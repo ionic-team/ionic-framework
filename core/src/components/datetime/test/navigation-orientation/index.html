@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Navigation Orientation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
+        grid-gap: 60px 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+
+      ion-datetime {
+        box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25), 0px 8px 16px rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+      }
+
+      /* Tall filler so the page itself scrolls, to expose scroll chaining. */
+      .filler {
+        height: 70vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #6f7378;
+        font-size: 12px;
+
+        border: 1px dashed #c8ccd0;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Navigation Orientation</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="filler">Scroll down. The page must not move while swiping inside a calendar.</div>
+
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Horizontal (default)</h2>
+            <ion-datetime presentation="date" value="2022-06-03"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical</h2>
+            <ion-datetime
+              id="vertical"
+              presentation="date"
+              navigation-orientation="vertical"
+              value="2022-06-03"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, no arrows (the design)</h2>
+            <ion-datetime
+              id="vertical-no-arrows"
+              presentation="date"
+              navigation-orientation="vertical"
+              show-navigation-buttons="false"
+              value="2022-06-03"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Horizontal, no arrows (prop is orientation independent)</h2>
+            <ion-datetime
+              id="horizontal-no-arrows"
+              presentation="date"
+              show-navigation-buttons="false"
+              value="2022-06-03"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, min/max (Mar 2022 to Sep 2022)</h2>
+            <ion-datetime
+              presentation="date"
+              navigation-orientation="vertical"
+              value="2022-06-03"
+              min="2022-03-01"
+              max="2022-09-30"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, adjacent days + firstDayOfWeek=1</h2>
+            <ion-datetime
+              presentation="date"
+              navigation-orientation="vertical"
+              value="2022-06-03"
+              show-adjacent-days="true"
+              first-day-of-week="1"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, presentation="date"</h2>
+            <ion-datetime
+              id="vertical-date"
+              presentation="date"
+              navigation-orientation="vertical"
+              value="2022-06-03"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, presentation="date-time"</h2>
+            <ion-datetime
+              id="vertical-date-time"
+              presentation="date-time"
+              navigation-orientation="vertical"
+              value="2022-06-03T09:30:00"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, presentation="time-date"</h2>
+            <ion-datetime
+              id="vertical-time-date"
+              presentation="time-date"
+              navigation-orientation="vertical"
+              value="2022-06-03T09:30:00"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, monthValues=6,7,8 (others disabled)</h2>
+            <ion-datetime
+              presentation="date"
+              navigation-orientation="vertical"
+              value="2022-06-03"
+              month-values="6,7,8"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, readonly (scrolls, cannot select)</h2>
+            <ion-datetime
+              presentation="date"
+              navigation-orientation="vertical"
+              value="2022-06-03"
+              readonly="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Runtime toggle (re-init path)</h2>
+            <ion-datetime id="toggleable" presentation="date" value="2022-06-03"></ion-datetime>
+            <button onclick="toggleOrientation()">Toggle orientation</button>
+            <div>
+              <span>navigationOrientation: <span id="orientation-value">horizontal</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="filler">End of page. Swiping past the last month must not scroll this into view.</div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      function toggleOrientation() {
+        const datetime = document.querySelector('#toggleable');
+        const next = datetime.navigationOrientation === 'vertical' ? 'horizontal' : 'vertical';
+
+        datetime.navigationOrientation = next;
+        document.querySelector('#orientation-value').textContent = next;
+      }
+    </script>
+  </body>
+</html>

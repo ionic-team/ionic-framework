@@ -700,7 +700,7 @@ Set `scrollEvents` to `true` to enable.
 
 
 @ProxyCmp({
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showAdjacentDays', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'navigationOrientation', 'preferWheel', 'presentation', 'readonly', 'showAdjacentDays', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'showNavigationButtons', 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
   methods: ['confirm', 'reset', 'cancel']
 })
 @Component({
@@ -708,7 +708,7 @@ Set `scrollEvents` to `true` to enable.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', { name: 'disabled', transform: nullableBooleanAttribute }, 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', { name: 'multiple', transform: nullableBooleanAttribute }, 'name', { name: 'preferWheel', transform: nullableBooleanAttribute }, 'presentation', { name: 'readonly', transform: nullableBooleanAttribute }, { name: 'showAdjacentDays', transform: nullableBooleanAttribute }, { name: 'showClearButton', transform: nullableBooleanAttribute }, { name: 'showDefaultButtons', transform: nullableBooleanAttribute }, { name: 'showDefaultTimeLabel', transform: nullableBooleanAttribute }, { name: 'showDefaultTitle', transform: nullableBooleanAttribute }, 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', { name: 'disabled', transform: nullableBooleanAttribute }, 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', { name: 'multiple', transform: nullableBooleanAttribute }, 'name', 'navigationOrientation', { name: 'preferWheel', transform: nullableBooleanAttribute }, 'presentation', { name: 'readonly', transform: nullableBooleanAttribute }, { name: 'showAdjacentDays', transform: nullableBooleanAttribute }, { name: 'showClearButton', transform: nullableBooleanAttribute }, { name: 'showDefaultButtons', transform: nullableBooleanAttribute }, { name: 'showDefaultTimeLabel', transform: nullableBooleanAttribute }, { name: 'showDefaultTitle', transform: nullableBooleanAttribute }, { name: 'showNavigationButtons', transform: nullableBooleanAttribute }, 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
   outputs: ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur'],
   standalone: false
 })

@@ -255,6 +255,45 @@
 }
 
 /**
+ * Vertical navigation stacks the same three-month window on the Y axis.
+ * `scroll-snap-align` and `scroll-snap-stop` on .calendar-month are
+ * axis-agnostic, so only the container changes.
+ */
+:host(.datetime-navigation-vertical) .calendar-body {
+  flex-flow: column;
+
+  scroll-snap-type: y mandatory;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  /**
+   * Without this the page scrolls once the user reaches either end of the
+   * three-month window mid-gesture. On the X axis this is invisible because
+   * the page does not scroll sideways.
+   */
+  overscroll-behavior-y: contain;
+
+  /**
+   * Stacking three months would otherwise make the body three months tall,
+   * and on iOS it would also push the host past its 350px min-height, which
+   * is what gives the calendar its height in the first place. The value is
+   * measured from the horizontal layout on init. Refer to
+   * `initializeCalendarListener`.
+   */
+  height: var(--internal-calendar-body-height, auto);
+}
+
+/**
+ * Pinning each month to the body's height keeps one month per scroll page,
+ * which is what makes the snap points land on month boundaries. It also
+ * gives the iOS month grid the definite height it sizes itself against.
+ */
+:host(.datetime-navigation-vertical) .calendar-body .calendar-month {
+  height: 100%;
+}
+
+/**
  * Hide scrollbars on Chrome and Safari
  */
 :host .calendar-body::-webkit-scrollbar {

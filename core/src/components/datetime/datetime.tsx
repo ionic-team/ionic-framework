@@ -14,6 +14,7 @@ import type { Color, StyleEventDetail, Theme } from '../../interface';
 
 import type {
   DatetimePresentation,
+  DatetimeNavigationOrientation,
   DatetimeChangeEventDetail,
   DatetimeParts,
   TitleSelectedDatesFormatter,
@@ -150,6 +151,8 @@ export class Datetime implements ComponentInterface {
   private hasBeenIntersecting = false;
 
   private prevPresentation: string | null = null;
+  // Lets `componentDidRender` spot an axis change and rebuild the scroll listener against the new layout.
+  private prevNavigationOrientation: DatetimeNavigationOrientation | null = null;
 
   private resolveForceDateScrolling?: () => void;
 
@@ -294,6 +297,16 @@ export class Datetime implements ComponentInterface {
     const { presentation, preferWheel } = this;
     const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
     return hasDatePresentation && !preferWheel;
+  }
+
+  /**
+   * Vertical navigation only applies to the calendar grid, so it is gated
+   * behind the same check as the grid itself. Everything that branches on
+   * the navigation axis should use this rather than reading the prop, so
+   * that `navigationOrientation="vertical"` is inert when no grid is shown.
+   */
+  private get isVerticalNavigation() {
+    return this.isGridStyle && this.navigationOrientation === 'vertical';
   }
 
   /**
@@ -468,6 +481,17 @@ export class Datetime implements ComponentInterface {
   @Prop() showClearButton = false;
 
   /**
+   * If `true`, the previous and next month buttons will be rendered in the
+   * calendar header. Set this to `false` to navigate by swipe alone, which
+   * is the usual pairing for `navigationOrientation="vertical"`.
+   *
+   * This has no effect when a wheel picker is rendered, or when `presentation`
+   * is one of the following values: `"time"`, `"month"`, `"month-year"`, or
+   * `"year"`.
+   */
+  @Prop() showNavigationButtons = true;
+
+  /**
    * If `true`, the default "Time" label will be rendered
    * for the time selector of the `ion-datetime` component.
    * Developers can also use the `time-label` slot
@@ -502,6 +526,19 @@ export class Datetime implements ComponentInterface {
    * `"time"`, `"month"`, `"month-year"`, or `"year"`.
    */
   @Prop() preferWheel = false;
+
+  /**
+   * The axis the calendar grid uses to navigate between months.
+   *
+   * `"horizontal"` pages left and right. `"vertical"` pages up and down.
+   * Both snap one month at a time, and the previous/next buttons work in
+   * either orientation.
+   *
+   * This has no effect when a wheel picker is rendered, or when `presentation`
+   * is one of the following values: `"time"`, `"month"`, `"month-year"`, or
+   * `"year"`.
+   */
+  @Prop() navigationOrientation: DatetimeNavigationOrientation = 'horizontal';
 
   /**
    * Emitted when the datetime selection was cancelled.
@@ -905,6 +942,33 @@ export class Datetime implements ComponentInterface {
     this.maxParts = parseMaxParts(max, defaultParts);
   };
 
+  /**
+   * Measures one scroll page for vertical navigation and pins the calendar
+   * body to it, returning the measured height.
+   *
+   * The height has to be measured in the horizontal layout, because that is
+   * the only layout that produces it. Stacking three months vertically makes
+   * the body three months tall, and on iOS it also pushes the host past the
+   * 350px min-height that gives the calendar its height, which collapses the
+   * month grid to its content. Dropping the class restores the row layout so
+   * the existing flex chain resolves the same height it would have used on
+   * the X axis.
+   *
+   * This runs inside a writeTask, so the swap and the measurement are in one
+   * synchronous block and the intermediate layout is never painted.
+   */
+  private setVerticalPageHeight = (calendarBodyRef: HTMLElement) => {
+    const { el } = this;
+
+    el.classList.remove(NAVIGATION_VERTICAL_CLASS);
+    const pageHeight = calendarBodyRef.clientHeight;
+    el.classList.add(NAVIGATION_VERTICAL_CLASS);
+
+    calendarBodyRef.style.setProperty('--internal-calendar-body-height', `${pageHeight}px`);
+
+    return pageHeight;
+  };
+
   private initializeCalendarListener = () => {
     const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
@@ -941,14 +1005,19 @@ export class Datetime implements ComponentInterface {
      * if element is not in viewport. Use scrollLeft instead.
      */
     writeTask(() => {
-      calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+      if (this.isVerticalNavigation) {
+        calendarBodyRef.scrollTop = this.setVerticalPageHeight(calendarBodyRef);
+      } else {
+        calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+      }
 
       const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
         const box = calendarBodyRef.getBoundingClientRect();
 
         /**
-         * If the current scroll position is all the way to the left
-         * then we have scrolled to the previous month.
+         * If the current scroll position is at the start of the container
+         * (all the way to the left, or all the way up when navigating
+         * vertically) then we have scrolled to the previous month.
          * Otherwise, assume that we have scrolled to the next
          * month. We have a tolerance of 2px to account for
          * sub pixel rendering.
@@ -956,7 +1025,15 @@ export class Datetime implements ComponentInterface {
          * Check below the next line ensures that we did not
          * swipe and abort (i.e. we swiped but we are still on the current month).
          */
-        const condition = isRTL(this.el) ? calendarBodyRef.scrollLeft >= -2 : calendarBodyRef.scrollLeft <= 2;
+        let condition: boolean;
+        if (this.isVerticalNavigation) {
+          condition = calendarBodyRef.scrollTop <= 2;
+        } else if (isRTL(this.el)) {
+          condition = calendarBodyRef.scrollLeft >= -2;
+        } else {
+          condition = calendarBodyRef.scrollLeft <= 2;
+        }
+
         const month = condition ? startMonth : endMonth;
 
         /**
@@ -970,7 +1047,8 @@ export class Datetime implements ComponentInterface {
          * sub pixel rendering.
          */
         const monthBox = month.getBoundingClientRect();
-        if (Math.abs(monthBox.x - box.x) > 2) return;
+        const edgeDelta = this.isVerticalNavigation ? monthBox.y - box.y : monthBox.x - box.x;
+        if (Math.abs(edgeDelta) > 2) return;
 
         /**
          * If we're force-rendering a month, assume we've
@@ -1052,7 +1130,11 @@ export class Datetime implements ComponentInterface {
             year,
           });
 
-          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+          if (this.isVerticalNavigation) {
+            calendarBodyRef.scrollTop = calendarBodyRef.clientHeight;
+          } else {
+            calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+          }
           calendarBodyRef.style.removeProperty('overflow');
 
           if (this.resolveForceDateScrolling) {
@@ -1326,8 +1408,27 @@ export class Datetime implements ComponentInterface {
        * and the resolveForceDateScrolling promise never resolves.
        */
       if (workingMonth && forceRenderDate === undefined) {
-        calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+        if (this.isVerticalNavigation) {
+          calendarBodyRef.scrollTop = calendarBodyRef.clientHeight;
+        } else {
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+        }
       }
+    }
+
+    /**
+     * Switching the navigation axis swaps which scroll offset is meaningful,
+     * so the listener has to be rebuilt against the new layout.
+     */
+    const { navigationOrientation, prevNavigationOrientation } = this;
+    const didChangeOrientation =
+      prevNavigationOrientation !== null && navigationOrientation !== prevNavigationOrientation;
+
+    this.prevNavigationOrientation = navigationOrientation;
+
+    if (didChangeOrientation) {
+      this.destroyInteractionListeners();
+      this.initializeListeners();
     }
 
     if (prevPresentation === null) {
@@ -1483,7 +1584,14 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, formatOptions, highlightedDates, multiple, presentation, preferWheel } = this;
+    const { el, formatOptions, highlightedDates, multiple, navigationOrientation, presentation, preferWheel } = this;
+
+    if (navigationOrientation === 'vertical' && !this.isGridStyle) {
+      printIonWarning(
+        `[ion-datetime] - navigationOrientation="vertical" only applies to the calendar grid, so it has no effect with preferWheel="true" or presentation="${presentation}".`,
+        el
+      );
+    }
 
     if (multiple) {
       if (presentation !== 'date') {
@@ -1571,9 +1679,24 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
+
+    /**
+     * Overshooting by two months lets the browser clamp to the end of the
+     * scroll range, which is where the next month sits. The same trick is
+     * used on both axes.
+     */
+    if (this.isVerticalNavigation) {
+      calendarBodyRef.scrollTo({
+        top: calendarBodyRef.clientHeight * 2,
+        left: 0,
+        behavior: scrollMode,
+      });
+      return;
+    }
+
     const left = (nextMonth as HTMLElement).offsetWidth * 2;
 
-    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? -1 : 1),
@@ -1592,9 +1715,19 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
+
+    if (this.isVerticalNavigation) {
+      calendarBodyRef.scrollTo({
+        top: calendarBodyRef.clientHeight * -2,
+        left: 0,
+        behavior: scrollMode,
+      });
+      return;
+    }
+
     const left = (prevMonth as HTMLElement).offsetWidth * 2;
 
-    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? 1 : -1),
@@ -2284,38 +2417,40 @@ export class Datetime implements ComponentInterface {
             </button>
           </div>
 
-          <div class="calendar-next-prev">
-            <ion-button
-              aria-label="Previous month"
-              disabled={prevMonthDisabled}
-              onClick={() => this.prevMonth()}
-              part="navigation-button previous-button"
-            >
-              <ion-icon
-                dir={hostDir}
-                aria-hidden="true"
-                slot="icon-only"
-                icon={datetimePreviousIcon}
-                lazy={false}
-                flipRtl
-              ></ion-icon>
-            </ion-button>
-            <ion-button
-              aria-label="Next month"
-              disabled={nextMonthDisabled}
-              onClick={() => this.nextMonth()}
-              part="navigation-button next-button"
-            >
-              <ion-icon
-                dir={hostDir}
-                aria-hidden="true"
-                slot="icon-only"
-                icon={datetimeNextIcon}
-                lazy={false}
-                flipRtl
-              ></ion-icon>
-            </ion-button>
-          </div>
+          {this.showNavigationButtons && (
+            <div class="calendar-next-prev">
+              <ion-button
+                aria-label="Previous month"
+                disabled={prevMonthDisabled}
+                onClick={() => this.prevMonth()}
+                part="navigation-button previous-button"
+              >
+                <ion-icon
+                  dir={hostDir}
+                  aria-hidden="true"
+                  slot="icon-only"
+                  icon={datetimePreviousIcon}
+                  lazy={false}
+                  flipRtl
+                ></ion-icon>
+              </ion-button>
+              <ion-button
+                aria-label="Next month"
+                disabled={nextMonthDisabled}
+                onClick={() => this.nextMonth()}
+                part="navigation-button next-button"
+              >
+                <ion-icon
+                  dir={hostDir}
+                  aria-hidden="true"
+                  slot="icon-only"
+                  icon={datetimeNextIcon}
+                  lazy={false}
+                  flipRtl
+                ></ion-icon>
+              </ion-button>
+            </div>
+          )}
         </div>
         <div class="calendar-days-of-week" aria-hidden="true" part="calendar-days-of-week">
           {getDaysOfWeek(this.locale, theme, this.firstDayOfWeek % 7).map((d) => {
@@ -2818,6 +2953,7 @@ export class Datetime implements ComponentInterface {
       presentation,
       size,
       isGridStyle,
+      isVerticalNavigation,
     } = this;
     const theme = getIonTheme(this);
     const isMonthAndYearPresentation =
@@ -2845,6 +2981,7 @@ export class Datetime implements ComponentInterface {
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,
             [`datetime-grid`]: isGridStyle,
+            [NAVIGATION_VERTICAL_CLASS]: isVerticalNavigation,
           }),
         }}
       >
@@ -2874,3 +3011,4 @@ const CONFIRM_ROLE = 'datetime-confirm';
 const WHEEL_PART = 'wheel';
 const WHEEL_ITEM_PART = 'wheel-item';
 const WHEEL_ITEM_ACTIVE_PART = `active`;
+const NAVIGATION_VERTICAL_CLASS = 'datetime-navigation-vertical';

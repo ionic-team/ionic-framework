@@ -15,7 +15,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeNavigationOrientation, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { FooterScrollEffect } from "./components/footer/footer-interface";
 import { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
 import { HeaderScrollEffect } from "./components/header/header-interface";
@@ -55,7 +55,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeNavigationOrientation, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { FooterScrollEffect } from "./components/footer/footer-interface";
 export { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
 export { HeaderScrollEffect } from "./components/header/header-interface";
@@ -1227,6 +1227,11 @@ export namespace Components {
          */
         "name": string;
         /**
+          * The axis the calendar grid uses to navigate between months.  `"horizontal"` pages left and right. `"vertical"` pages up and down. Both snap one month at a time, and the previous/next buttons work in either orientation.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
+          * @default 'horizontal'
+         */
+        "navigationOrientation": DatetimeNavigationOrientation;
+        /**
           * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `"date"`, `"date-time"`, or `"time-date"`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
           * @default false
          */
@@ -1271,6 +1276,11 @@ export namespace Components {
           * @default false
          */
         "showDefaultTitle": boolean;
+        /**
+          * If `true`, the previous and next month buttons will be rendered in the calendar header. Set this to `false` to navigate by swipe alone, which is the usual pairing for `navigationOrientation="vertical"`.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
+          * @default true
+         */
+        "showNavigationButtons": boolean;
         /**
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
           * @default 'fixed'
@@ -7131,6 +7141,11 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
+          * The axis the calendar grid uses to navigate between months.  `"horizontal"` pages left and right. `"vertical"` pages up and down. Both snap one month at a time, and the previous/next buttons work in either orientation.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
+          * @default 'horizontal'
+         */
+        "navigationOrientation"?: DatetimeNavigationOrientation;
+        /**
           * Emitted when the datetime loses focus.
          */
         "onIonBlur"?: (event: IonDatetimeCustomEvent<void>) => void;
@@ -7198,6 +7213,11 @@ declare namespace LocalJSX {
           * @default false
          */
         "showDefaultTitle"?: boolean;
+        /**
+          * If `true`, the previous and next month buttons will be rendered in the calendar header. Set this to `false` to navigate by swipe alone, which is the usual pairing for `navigationOrientation="vertical"`.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
+          * @default true
+         */
+        "showNavigationButtons"?: boolean;
         /**
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
           * @default 'fixed'
@@ -10725,10 +10745,12 @@ declare namespace LocalJSX {
         "showDefaultTitle": boolean;
         "showDefaultButtons": boolean;
         "showClearButton": boolean;
+        "showNavigationButtons": boolean;
         "showDefaultTimeLabel": boolean;
         "hourCycle": DatetimeHourCycle;
         "size": 'cover' | 'fixed';
         "preferWheel": boolean;
+        "navigationOrientation": DatetimeNavigationOrientation;
     }
     interface IonDatetimeButtonAttributes {
         "color": Color;
