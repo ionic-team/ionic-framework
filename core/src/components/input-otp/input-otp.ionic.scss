@@ -68,7 +68,7 @@
 // --------------------------------------------------
 
 :host(.input-otp-shape-round) {
-  --border-radius: #{globals.$ion-shape-round-xl};
+  --border-radius: #{globals.$ion-shape-round-lg};
 }
 
 :host(.input-otp-shape-soft) {
