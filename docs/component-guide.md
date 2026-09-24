@@ -1004,7 +1004,7 @@ These files contain tests for input behavior. Review how similar components are 
 
 Add your component's interfaces to the framework packages:
 
-1. Angular ([`packages/angular/src/lazy/index.ts`](/packages/angular/src/lazy/index.ts) and [`packages/angular/src/standalone/index.ts`](/packages/angular/src/standalone/index.ts)):
+1. Angular ([`packages/angular/src/lazy/index.ts`](/packages/angular/src/lazy/index.ts) and [`packages/angular/src/standalone/index.ts`](/packages/angular/src/standalone/index.ts), which exports these from `@ionic/core/components` instead):
 ```typescript
 export {
   NewComponentCustomEvent,
