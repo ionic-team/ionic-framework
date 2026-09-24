@@ -50,17 +50,14 @@ test.describe('splat route with a more specific sibling', () => {
     await expect(page.locator('[data-testid="count"]')).toHaveText('3');
   });
 
-  /*
-    Swipe-to-go-back over a splat container. Animations must be on, so the gesture reveals
-    the page underneath rather than a commit doing it.
+  // Animations stay on here, so the gesture reveals the page underneath rather than a
+  // commit doing it.
+  test('reveals the splat page while swiping back', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/31477',
+    });
 
-    The gesture starts, but the entering page goes back to display:none with
-    ion-page-hidden re-applied, so the drag shows nothing and the navigation never
-    commits. Neither the renderViewItem deactivation scan nor the splat's stored
-    routeData.match is the cause, both were tried. No follow-up ticket yet, so there is no
-    annotation on this one, and it is not issue 31477.
-  */
-  test.fixme('reveals the splat page while swiping back', async ({ page }) => {
     await page.goto('/splat-sibling?ionic:mode=ios');
     await ionPageVisible(page, 'splat-sibling-home');
 
@@ -69,6 +66,11 @@ test.describe('splat route with a more specific sibling', () => {
 
     await page.locator('[data-testid="open-detail"]').click();
     await ionPageVisible(page, 'splat-sibling-detail');
+    // ionPageHidden resolves early here, because the deactivation scan applies
+    // ion-page-hidden at render time rather than on commit, so wait out the push
+    // transition before starting the gesture.
+    await ionPageHidden(page, 'splat-sibling-home');
+    await page.waitForTimeout(600);
 
     await ionSwipeToGoBack(page, true, 'ion-router-outlet#splat-sibling-outlet');
 

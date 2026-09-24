@@ -55,6 +55,30 @@ export const isOverMatchingRoute = (route: { path?: string; index?: boolean }): 
 export const isForwardPush = (routeInfo: Pick<RouteInfo, 'routeAction' | 'routeDirection'>): boolean =>
   routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward';
 
+const swipeRevealed = new WeakSet<ViewItem>();
+
+/**
+ * Marks the page a swipe-back gesture has revealed. For the length of the drag that page
+ * is on screen while a more specific sibling still matches the current pathname, and the
+ * deactivation scan in `renderViewItem` would otherwise re-hide it on the next render and
+ * leave the user dragging a blank page.
+ */
+export const markSwipeRevealed = (viewItem: ViewItem | undefined): void => {
+  if (viewItem) {
+    swipeRevealed.add(viewItem);
+  }
+};
+
+/** Drops the mark once the gesture ends, so the view is hidden normally again. */
+export const clearSwipeRevealed = (viewItem: ViewItem | undefined): void => {
+  if (viewItem) {
+    swipeRevealed.delete(viewItem);
+  }
+};
+
+/** True while a swipe-back gesture is showing this view. */
+export const isSwipeRevealed = (viewItem: ViewItem): boolean => swipeRevealed.has(viewItem);
+
 /**
  * Sorts view items by route specificity (most specific first).
  *

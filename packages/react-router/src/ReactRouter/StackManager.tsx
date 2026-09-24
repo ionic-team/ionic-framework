@@ -20,7 +20,7 @@ import {
 import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
 import { stripTrailingSlash } from './utils/pathNormalization';
 import { extractRouteChildren, getRoutesChildren, isNavigateElement } from './utils/routeElements';
-import { isForwardPush, isOverMatchingRoute } from './utils/viewItemUtils';
+import { clearSwipeRevealed, isForwardPush, isOverMatchingRoute, markSwipeRevealed } from './utils/viewItemUtils';
 
 /**
  * Delay in milliseconds before unmounting a view after a transition completes.
@@ -119,6 +119,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
   prevProps?: StackManagerProps;
   skipTransition: boolean;
+  /** The view item the in-flight swipe gesture revealed, so the same one gets cleared. */
+  private swipeRevealedViewItem?: ViewItem;
 
   stackContextValue: StackContextState = {
     registerIonPage: this.registerIonPage.bind(this),
@@ -220,7 +222,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           hasWildcardRoute,
         });
 
-        if (result.outletMountPath && !this.outletMountPath) {
+        // A root outlet is mounted under nothing, so caching the inferred path would scope
+        // it to whatever route was active and make every other pathname look out of scope.
+        if (!this.isRootOutlet && result.outletMountPath && !this.outletMountPath) {
           this.outletMountPath = result.outletMountPath;
         }
 
@@ -303,6 +307,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
 
     return false;
+  }
+
+  /** Clears the reveal flag from the view item the gesture marked. */
+  private clearSwipeRevealedView(): void {
+    clearSwipeRevealed(this.swipeRevealedViewItem);
+    this.swipeRevealedViewItem = undefined;
   }
 
   /**
@@ -525,9 +535,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         routeInfo.lastPathname.startsWith(containerBase + '/') || routeInfo.lastPathname === containerBase;
 
       // A root-level "/*" leaves an empty base, so both checks above are true for every
-      // pathname and the shortcut would skip every navigation in this outlet. That only
-      // stops the shortcut misfiring. The root "/*" shape has other problems and is still
-      // not fully working, which framework-react.md covers.
+      // pathname and the shortcut would otherwise skip every navigation in this outlet.
       if (containerBase !== '' && currentInContainer && previousInContainer) {
         const updatedMatch = matchComponent(
           enteringViewItem.reactElement,
@@ -1089,6 +1097,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
     this.waitingForIonPage = false;
     this.preservedViewItems.clear();
+    this.clearSwipeRevealedView();
 
     // Hide all views in this outlet before clearing.
     // This is critical for nested outlets - when the parent component unmounts,
@@ -1123,6 +1132,11 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       this.pendingPageTransition = true;
       return;
     }
+
+    // A completed swipe keeps its reveal flag past goBack() so the deactivation scan does
+    // not re-hide the page between the gesture ending and the URL settling. Clear it at
+    // the start of the transition for the new pathname.
+    this.clearSwipeRevealedView();
 
     // Find entering and leaving view items
     const viewItems = this.findViewItems(routeInfo);
@@ -1435,6 +1449,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     };
 
     const onStart = async () => {
+      // Core only calls onEnd when a progress animation exists, so with animations off a
+      // previous gesture can leave its mark behind. Drop any stale one before marking.
+      this.clearSwipeRevealedView();
+
       const { routeInfo } = this.props;
       const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
       const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
@@ -1465,6 +1483,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
       // When the gesture starts, kick off a transition controlled via swipe gesture
       if (enteringViewItem && leavingViewItem) {
+        // Without a leaving view there is no progress animation, and core only calls
+        // swipeHandler.onEnd when one exists, so nothing would clear the mark until the
+        // next transition.
+        markSwipeRevealed(enteringViewItem);
+        this.swipeRevealedViewItem = enteringViewItem;
+
         await this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back', true);
       }
 
@@ -1491,6 +1515,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
         const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
         const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
+
+        this.clearSwipeRevealedView();
 
         // Don't hide if entering and leaving are the same (parameterized route edge case)
         if (enteringViewItem !== leavingViewItem && enteringViewItem?.ionPageElement !== undefined) {
