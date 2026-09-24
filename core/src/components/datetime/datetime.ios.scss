@@ -227,7 +227,7 @@
   // will collapse instead of expanding to fill the button
   height: 0;
 
-  min-height: dynamic-font(16px);
+  min-height: calc(#{$datetime-ios-day-height} + 2px);
 }
 
 :host .calendar-day {
