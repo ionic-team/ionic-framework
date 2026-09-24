@@ -20,6 +20,19 @@ describe('isEndSide', () => {
     expect(isEndSide('start', menu)).toBe(true);
     expect(isEndSide('end', menu)).toBe(false);
   });
+
+  it('should fall back to the document dir when no ancestor declares one', () => {
+    const menu = document.createElement('ion-menu');
+    document.body.appendChild(menu);
+
+    document.dir = 'ltr';
+    expect(isEndSide('start', menu)).toBe(false);
+    expect(isEndSide('end', menu)).toBe(true);
+
+    document.dir = 'rtl';
+    expect(isEndSide('start', menu)).toBe(true);
+    expect(isEndSide('end', menu)).toBe(false);
+  });
 });
 
 describe('inheritAriaAttributes', () => {

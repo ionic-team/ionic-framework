@@ -59,7 +59,7 @@ export class ProgressBar implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   render() {
-    const { color, type, reversed, value, buffer } = this;
+    const { color, type, reversed, value, buffer, el } = this;
     const paused = config.getBoolean('_testing');
     const mode = getIonMode(this);
     // If the progress is displayed as a solid bar.
@@ -74,7 +74,7 @@ export class ProgressBar implements ComponentInterface {
           [mode]: true,
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
-          'progress-bar-reversed': isRTL(this.el) ? !reversed : reversed,
+          'progress-bar-reversed': isRTL(el) ? !reversed : reversed,
           'progress-bar-solid': progressSolid,
         })}
       >
