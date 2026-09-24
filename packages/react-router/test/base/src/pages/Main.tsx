@@ -153,6 +153,15 @@ const Main: React.FC = () => {
           <IonItem routerLink="/wildcard-no-heuristic">
             <IonLabel>Wildcard No Heuristic</IonLabel>
           </IonItem>
+          <IonItem routerLink="/splat-sibling">
+            <IonLabel>Splat Sibling</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/index-sibling">
+            <IonLabel>Index Sibling</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/empty-path-sibling">
+            <IonLabel>Empty Path Sibling</IonLabel>
+          </IonItem>
         </IonList>
 
         <IonList>

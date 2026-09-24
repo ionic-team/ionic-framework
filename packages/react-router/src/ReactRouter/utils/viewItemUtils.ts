@@ -1,4 +1,4 @@
-import type { ViewItem } from '@ionic/react';
+import type { RouteInfo, ViewItem } from '@ionic/react';
 
 /**
  * Compares two routes by specificity for sorting (most specific first).
@@ -36,6 +36,24 @@ export const compareRouteSpecificity = (
 
   return 0;
 };
+
+/**
+ * True when a route matches more pathnames than its own path, so a splat, an index route,
+ * or a route with an empty or absent path. A lookup can return one of these for a pathname
+ * a more specific sibling owns, so callers must confirm ownership against React Router's
+ * ranking before reusing the view item.
+ *
+ * This is deliberately wider than the catch-all checks in ReactRouterViewStack, which each
+ * gate on a narrower shape for a different reason. Don't unify them with this helper.
+ */
+export const isOverMatchingRoute = (route: { path?: string; index?: boolean }): boolean => {
+  const { path, index } = route;
+  return !path || path.includes('*') || !!index;
+};
+
+/** True when the navigation pushed a new page forward on top of the current one. */
+export const isForwardPush = (routeInfo: Pick<RouteInfo, 'routeAction' | 'routeDirection'>): boolean =>
+  routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward';
 
 /**
  * Sorts view items by route specificity (most specific first).

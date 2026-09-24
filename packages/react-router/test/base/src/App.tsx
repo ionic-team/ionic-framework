@@ -71,6 +71,8 @@ import { NavigateRootPageA, NavigateRootPageB, NavigateRootPageC } from './pages
 import SuspenseOutlet from './pages/suspense-outlet/SuspenseOutlet';
 import { PropsUpdateDirect, PropsUpdateRoutesWrapper } from './pages/props-update/PropsUpdate';
 import DisabledButton from './pages/disabled-button/DisabledButton';
+import SplatSibling from './pages/splat-sibling/SplatSibling';
+import { EmptyPathSibling, IndexSibling } from './pages/index-sibling/IndexSibling';
 
 // Debug logs on so failing specs include the navigation diagnostics.
 setupIonicReact({ logLevel: LogLevel.DEBUG });
@@ -142,6 +144,9 @@ const App: React.FC = () => {
           <Route path="/suspense-outlet/*" element={<SuspenseOutlet />} />
           <Route path="/props-update-routes/*" element={<PropsUpdateRoutesWrapper />} />
           <Route path="/props-update-direct/*" element={<PropsUpdateDirect />} />
+          <Route path="/splat-sibling/*" element={<SplatSibling />} />
+          <Route path="/index-sibling/*" element={<IndexSibling />} />
+          <Route path="/empty-path-sibling/*" element={<EmptyPathSibling />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
