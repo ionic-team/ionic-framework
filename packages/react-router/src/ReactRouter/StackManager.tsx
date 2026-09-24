@@ -20,6 +20,7 @@ import {
 import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
 import { stripTrailingSlash } from './utils/pathNormalization';
 import { extractRouteChildren, getRoutesChildren, isNavigateElement } from './utils/routeElements';
+import { isForwardPush, isOverMatchingRoute } from './utils/viewItemUtils';
 
 /**
  * Delay in milliseconds before unmounting a view after a transition completes.
@@ -297,8 +298,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
 
     // For non-replace actions, only unmount for back navigation
-    const isForwardPush = routeInfo.routeAction === 'push' && (routeInfo as any).routeDirection === 'forward';
-    if (!isForwardPush && routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
+    if (!isForwardPush(routeInfo) && routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
       return true;
     }
 
@@ -524,7 +524,11 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       const previousInContainer =
         routeInfo.lastPathname.startsWith(containerBase + '/') || routeInfo.lastPathname === containerBase;
 
-      if (currentInContainer && previousInContainer) {
+      // A root-level "/*" leaves an empty base, so both checks above are true for every
+      // pathname and the shortcut would skip every navigation in this outlet. That only
+      // stops the shortcut misfiring. The root "/*" shape has other problems and is still
+      // not fully working, which framework-react.md covers.
+      if (containerBase !== '' && currentInContainer && previousInContainer) {
         const updatedMatch = matchComponent(
           enteringViewItem.reactElement,
           routeInfo.pathname,
@@ -1124,10 +1128,32 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const viewItems = this.findViewItems(routeInfo);
     let enteringViewItem = viewItems.enteringViewItem;
     let leavingViewItem = viewItems.leavingViewItem;
-    let shouldUnmountLeavingViewItem = this.shouldUnmountLeavingView(routeInfo, enteringViewItem, leavingViewItem);
 
     // Get parent path for nested outlets
     const parentPath = this.getParentPath();
+
+    // Find the matching route element. This is React Router's own ranking of the outlet's
+    // routes, so it decides which route owns the pathname.
+    const enteringRoute = findRouteByRouteInfo(this.ionRouterOutlet?.props.children, routeInfo, parentPath) as
+      | React.ReactElement
+      | undefined;
+
+    // The lookup above only matches view items that already exist, so a sibling route with
+    // no view item yet never wins there and an over-matching route (splat, index, empty
+    // path) comes back for pathnames it does not own. Drop it rather than reusing it,
+    // because overwriting its reactElement below would swap its page for the winning
+    // route's and unmount it. This has to resolve before shouldUnmountLeavingView and
+    // handleRootNavigation, which both branch on the entering view item.
+    if (
+      enteringViewItem &&
+      enteringRoute &&
+      isOverMatchingRoute(enteringViewItem.routeData?.childProps ?? {}) &&
+      enteringRoute.props.path !== enteringViewItem.routeData?.childProps?.path
+    ) {
+      enteringViewItem = undefined;
+    }
+
+    let shouldUnmountLeavingViewItem = this.shouldUnmountLeavingView(routeInfo, enteringViewItem, leavingViewItem);
 
     // Handle out-of-scope outlet (route outside mount path)
     if (this.handleOutOfScopeOutlet(routeInfo)) {
@@ -1151,13 +1177,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     if (this.handleOutOfContextNestedOutlet(parentPath, leavingViewItem)) {
       return;
     }
-
-    // Find the matching route element
-    const enteringRoute = findRouteByRouteInfo(
-      this.ionRouterOutlet?.props.children,
-      routeInfo,
-      parentPath
-    ) as React.ReactElement;
 
     // Handle nested outlet with no matching route
     if (this.handleNoMatchingRoute(enteringRoute, enteringViewItem, leavingViewItem)) {

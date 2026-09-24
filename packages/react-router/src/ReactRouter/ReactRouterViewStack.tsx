@@ -15,7 +15,7 @@ import { analyzeRouteChildren, computeParentPath } from './utils/computeParentPa
 import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
 import { normalizePathnameForComparison } from './utils/pathNormalization';
 import { extractRouteChildren, isNavigateElement } from './utils/routeElements';
-import { sortViewsBySpecificity } from './utils/viewItemUtils';
+import { isForwardPush, sortViewsBySpecificity } from './utils/viewItemUtils';
 
 /**
  * Delay in milliseconds before removing a Navigate view item after a redirect.
@@ -454,7 +454,7 @@ export class ReactRouterViewStack extends ViewStacks {
 
     // Deactivate wildcard (catch-all) and empty-path (default) routes when a more-specific route matches.
     // This prevents "Not found" or fallback pages from showing alongside valid routes.
-    if (routePath === '*' || routePath === '') {
+    if (routePath === '*' || routePath === '/*' || routePath === '') {
       // Check if any other view in this outlet has a match for the current route
       const outletViews = this.getViewItemsForOutlet(viewItem.outletId);
 
@@ -511,7 +511,14 @@ export class ReactRouterViewStack extends ViewStacks {
       }
 
       if (hasSpecificMatch) {
-        viewItem.mount = false;
+        // A splat can be the outlet's container page rather than a "not found" fallback.
+        // Pushed over it is the page underneath, so unmounting it destroys its state and
+        // leaves nothing for back to reveal. Hiding it below covers that. A view with no
+        // ion-page was never a page in the stack and has nothing to hide, so it still
+        // unmounts.
+        if (!isForwardPush(routeInfo) || !viewItem.ionPageElement) {
+          viewItem.mount = false;
+        }
         if (viewItem.ionPageElement) {
           viewItem.ionPageElement.classList.add('ion-page-hidden');
           viewItem.ionPageElement.setAttribute('aria-hidden', 'true');
