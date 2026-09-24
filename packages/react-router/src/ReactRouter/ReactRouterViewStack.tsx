@@ -15,7 +15,7 @@ import { analyzeRouteChildren, computeParentPath } from './utils/computeParentPa
 import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
 import { normalizePathnameForComparison } from './utils/pathNormalization';
 import { extractRouteChildren, isNavigateElement } from './utils/routeElements';
-import { isForwardPush, sortViewsBySpecificity } from './utils/viewItemUtils';
+import { isForwardPush, isSwipeRevealed, sortViewsBySpecificity } from './utils/viewItemUtils';
 
 /**
  * Delay in milliseconds before removing a Navigate view item after a redirect.
@@ -510,7 +510,7 @@ export class ReactRouterViewStack extends ViewStacks {
         }
       }
 
-      if (hasSpecificMatch) {
+      if (hasSpecificMatch && !isSwipeRevealed(viewItem)) {
         // A splat can be the outlet's container page rather than a "not found" fallback.
         // Pushed over it is the page underneath, so unmounting it destroys its state and
         // leaves nothing for back to reveal. Hiding it below covers that. A view with no
@@ -636,8 +636,11 @@ export class ReactRouterViewStack extends ViewStacks {
 
         // Persist the mount path for subsequent calls, mirroring StackManager.outletMountPath.
         // Unlike outletParentPaths (cleared when parentPath is undefined), the mount path is
-        // intentionally sticky — it anchors the outlet's scope and is only removed in clear().
-        if (result.outletMountPath && !this.outletMountPaths.has(outletId)) {
+        // intentionally sticky, it anchors the outlet's scope and is only removed in clear().
+        // A root outlet is skipped because it is mounted under nothing, so an inferred path
+        // would scope it to whatever route was active. parentPathnameBase is undefined
+        // exactly when the outlet has no parent matches.
+        if (parentPathnameBase && result.outletMountPath && !this.outletMountPaths.has(outletId)) {
           this.outletMountPaths.set(outletId, result.outletMountPath);
         }
       }
