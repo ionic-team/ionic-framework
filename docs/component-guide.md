@@ -835,14 +835,14 @@ When creating a new component that renders native input elements (such as `<inpu
 
 For Angular integration, you should use one of the existing value accessors based on your component's needs. Choose the one that most closely matches your component's behavior:
 
-- For text input (handles string values): Use [`TextValueAccessorDirective`](/packages/angular/src/directives/control-value-accessors/text-value-accessor.ts) which handles `ion-input:not([type=number])`, `ion-input-otp[type=text]`, `ion-textarea`, and `ion-searchbar`
-- For numeric input (converts string to number): Use [`NumericValueAccessorDirective`](/packages/angular/src/directives/control-value-accessors/numeric-value-accessor.ts) which handles `ion-input[type=number]`, `ion-input-otp:not([type=text])`, and `ion-range`
-- For boolean input (handles true/false): Use [`BooleanValueAccessorDirective`](/packages/angular/src/directives/control-value-accessors/boolean-value-accessor.ts) which handles `ion-checkbox` and `ion-toggle`
-- For select-like input (handles option selection): Use [`SelectValueAccessorDirective`](/packages/angular/src/directives/control-value-accessors/select-value-accessor.ts) which handles `ion-select`, `ion-radio-group`, `ion-segment`, and `ion-datetime`
+- For text input (handles string values): Use [`TextValueAccessorDirective`](/packages/angular/src/lazy/directives/control-value-accessors/text-value-accessor.ts) which handles `ion-input:not([type=number])`, `ion-input-otp[type=text]`, `ion-textarea`, and `ion-searchbar`
+- For numeric input (converts string to number): Use [`NumericValueAccessorDirective`](/packages/angular/src/lazy/directives/control-value-accessors/numeric-value-accessor.ts) which handles `ion-input[type=number]`, `ion-input-otp:not([type=text])`, and `ion-range`
+- For boolean input (handles true/false): Use [`BooleanValueAccessorDirective`](/packages/angular/src/lazy/directives/control-value-accessors/boolean-value-accessor.ts) which handles `ion-checkbox` and `ion-toggle`
+- For select-like input (handles option selection): Use [`SelectValueAccessorDirective`](/packages/angular/src/lazy/directives/control-value-accessors/select-value-accessor.ts) which handles `ion-select`, `ion-radio-group`, `ion-segment`, and `ion-datetime`
 
 These value accessors are already set up in the `@ionic/angular` package and handle all the necessary form integration. You don't need to create a new value accessor unless your component has unique requirements that aren't covered by these existing ones.
 
-For example, if your component renders a text input, it should be included in the `TextValueAccessorDirective` selector in [`text-value-accessor.ts`](/packages/angular/src/directives/control-value-accessors/text-value-accessor.ts):
+For example, if your component renders a text input, it should be included in the `TextValueAccessorDirective` selector in [`text-value-accessor.ts`](/packages/angular/src/lazy/directives/control-value-accessors/text-value-accessor.ts):
 
 ```diff
 @Directive({
@@ -1004,7 +1004,7 @@ These files contain tests for input behavior. Review how similar components are 
 
 Add your component's interfaces to the framework packages:
 
-1. Angular ([`packages/angular/src/index.ts`](/packages/angular/src/index.ts)):
+1. Angular ([`packages/angular/src/lazy/index.ts`](/packages/angular/src/lazy/index.ts) and [`packages/angular/src/standalone/index.ts`](/packages/angular/src/standalone/index.ts)):
 ```typescript
 export {
   NewComponentCustomEvent,
