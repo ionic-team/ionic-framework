@@ -195,6 +195,11 @@ export class InputOTP implements ComponentInterface {
   valueChanged() {
     this.initializeValues();
     this.updateTabIndexes();
+      @Watch('length')
+  lengthChanged() {
+    this.initializeValues();
+    this.updateTabIndexes();
+  }
   }
 
   /**
