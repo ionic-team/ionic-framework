@@ -1,8 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createAttributeController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAttributes, raf } from '@utils/helpers';
+import { raf } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
@@ -38,9 +39,9 @@ const INDICATOR_CONTROL_SELECTOR = 'ion-checkbox, ion-radio, ion-toggle';
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
-  private inheritedAriaAttributes: Attributes = {};
   private indicatorControlObserver?: MutationObserver;
   private didLoad = false;
+  private ariaController?: AttributeController;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -183,10 +184,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       this.watchForIndicatorControls();
       this.updateInteractivityOnSlotChange();
     }
+
+    this.ariaController?.init();
   }
 
   componentWillLoad() {
-    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+    /**
+     * Only the initial copy takes the attribute off the host, so an `aria-label` written
+     * after load names both the native element and the Host, which is a `listitem` when
+     * the item is in an `ion-list`. The two names always agree, so a screen reader just
+     * reads it twice.
+     */
+    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
   }
 
   componentDidLoad() {
@@ -206,6 +215,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       this.indicatorControlObserver.disconnect();
       this.indicatorControlObserver = undefined;
     }
+
+    this.ariaController?.destroy();
   }
 
   private totalNestedInputs() {
@@ -393,9 +404,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       target,
       routerAnimation,
       routerDirection,
-      inheritedAriaAttributes,
       multipleInputs,
     } = this;
+    const inheritedAriaAttributes = this.ariaController?.attributes ?? {};
     const childStyles = {} as StyleEventDetail;
     const theme = getIonTheme(this);
     const clickable = this.isClickable();

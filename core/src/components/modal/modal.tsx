@@ -54,10 +54,10 @@ import {
   clearSafeAreaOverrides,
   getRootSafeAreaTop,
   onRootSafeAreaTopChange,
-  hasCustomModalDimensions,
+  getModalCoveredAxes,
   type ModalSafeAreaContext,
 } from './safe-area-utils';
-import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
+import { onModalHeightChange, setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 // TODO(FW-2832): types
 
@@ -117,6 +117,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private viewTransitionAnimation?: Animation;
   private resizeTimeout?: any;
   private unsubscribeRootSafeAreaTop?: () => void;
+  private unsubscribeHeightChange?: () => void;
   // True from the first safe-area write in `present()` until the enter
   // animation settles. A position-based read in that window is not the rest position.
   private isPresenting = false;
@@ -1518,7 +1519,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Creates the context object for safe-area utilities.
    *
-   * `hasCustomDimensions` is only set by `setInitialSafeAreaOverrides()`
+   * `coveredAxes` is only set by `setInitialSafeAreaOverrides()`
    * because it is only read by `getInitialSafeAreaConfig()`. Other callers
    * (resize handler, post-animation update, fullscreen-padding apply) would
    * pay a `getComputedStyle()` cost for a value they never consult.
@@ -1534,6 +1535,28 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * Keeps the content's sizing in sync with `--height`. The content reads the
+   * property to determine whether it should size itself to its content, and
+   * changes to `--height` on an ancestor or the root can change that behavior
+   * without changing the modal itself.
+   */
+  private watchHeightForContent(): void {
+    /**
+     * A sheet's height comes from its breakpoints, so its content never sizes
+     * itself to `--height`. Watching it would cause the drag to recalculate on
+     * every frame.
+     */
+    if (this.isSheetModal) {
+      return;
+    }
+
+    this.unsubscribeHeightChange?.();
+    this.unsubscribeHeightChange = onModalHeightChange(this.el, () => {
+      this.el.querySelectorAll('ion-content').forEach((contentEl) => contentEl.recalculateDimensions());
+    });
+  }
+
+  /**
    * Sets initial safe-area overrides before modal animation.
    * Called in present() before animation starts.
    *
@@ -1546,10 +1569,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private setInitialSafeAreaOverrides(): void {
     const context: ModalSafeAreaContext = {
       ...this.getSafeAreaContext(),
-      hasCustomDimensions: hasCustomModalDimensions(this.el),
+      coveredAxes: getModalCoveredAxes(this.el),
     };
     const safeAreaConfig = getInitialSafeAreaConfig(context);
     applySafeAreaOverrides(this.el, safeAreaConfig);
+
+    this.watchHeightForContent();
 
     // Set the internal offset property with the resolved root safe-area-top value
     if (context.isSheetModal) {
@@ -1676,6 +1701,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.unsubscribeRootSafeAreaTop?.();
     this.unsubscribeRootSafeAreaTop = undefined;
+
+    this.unsubscribeHeightChange?.();
+    this.unsubscribeHeightChange = undefined;
 
     // Remove internal sheet offset property
     this.el.style.removeProperty('--ion-modal-offset-top');

@@ -229,3 +229,28 @@
   min-width: 100px;
   max-width: 200px;
 }
+
+// The minimum width the editable area may shrink to. Only the native themes
+// carry it; the ionic theme sizes its field with its own tokens.
+// --------------------------------------------------
+
+.native-textarea {
+  /**
+   * The textarea keeps a minimum width so that the value stays visible
+   * when a long label or wide slotted content would otherwise shrink
+   * it to nothing.
+   */
+  min-width: globals.$form-control-min-width;
+}
+
+.native-wrapper {
+  /**
+   * The wrapper has to carry the same minimum width as the textarea it holds.
+   * It is the flex item that competes with the label and the slots for space,
+   * so without it the textarea keeps its width but overflows the field.
+   *
+   * The minimum cannot be inherited because .textarea-control sets
+   * `min-width: 0` so that the slots keep their size.
+   */
+  min-width: globals.$form-control-min-width;
+}

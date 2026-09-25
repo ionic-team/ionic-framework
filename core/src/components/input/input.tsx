@@ -13,9 +13,10 @@ import {
   forceUpdate,
   h,
 } from '@stencil/core';
-import type { NotchController, StartContainerController } from '@utils/forms';
+import type { ClickController, NotchController, StartContainerController } from '@utils/forms';
 import {
   createClearButtonPressController,
+  createClickController,
   createNotchController,
   createStartContainerController,
   checkInvalidState,
@@ -65,6 +66,7 @@ export class Input implements ComponentInterface {
   private notchSpacerEl: HTMLElement | undefined;
   private startContainerController?: StartContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private clickController?: ClickController;
 
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
@@ -421,11 +423,7 @@ export class Input implements ComponentInterface {
    */
   @Listen('click', { capture: true })
   onClickCapture(ev: Event) {
-    const nativeInput = this.nativeInput;
-    if (nativeInput && ev.target === nativeInput) {
-      ev.stopPropagation();
-      this.el.click();
-    }
+    this.clickController?.handleClickCapture(ev);
   }
 
   componentWillLoad() {
@@ -465,6 +463,8 @@ export class Input implements ComponentInterface {
     );
 
     this.startContainerController.calculateStartContainerWidth();
+
+    this.clickController = createClickController(el, () => this.nativeInput);
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
