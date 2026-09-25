@@ -71,6 +71,15 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await verifyInputValues(inputOtp, ['1', '2', '3', '4', '5', '6', '7', '8']);
     });
 
+    test('should synchronize the value when length changes', async ({ page }) => {
+      await page.setContent(`<ion-input-otp length="4" value="1234">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el) => el.setAttribute('length', '2'));
+
+      await verifyInputValues(inputOtp, ['1', '2']);
+    });
+
     test('should accept numbers only by default', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
