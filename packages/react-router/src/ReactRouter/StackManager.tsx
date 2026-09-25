@@ -1417,22 +1417,22 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       const { routeInfo } = this.props;
       const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
       const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
+      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
       // View might have mount=false but ionPageElement still in DOM
       const ionPageInDocument = Boolean(
         enteringViewItem?.ionPageElement && document.body.contains(enteringViewItem.ionPageElement)
       );
 
-      // For wildcard/parameterized routes, the pattern path (e.g. "/foo/*") will
-      // never equal the resolved pathname (e.g. "/foo/bar"), so the pattern check
-      // alone isn't sufficient. Also, verify the entering view's resolved pathname
-      // differs from the current pathname — if they match, the entering and leaving
-      // views are the same and the swipe gesture shouldn't start.
+      // A splat consumes whatever is left of the pathname, so its match resolves to the whole
+      // current pathname and comparing pathnames can't tell a container page underneath a
+      // pushed sibling from the page being left. Compare the view items instead, like onEnd
+      // does. Without a leaving view onStart skips the transition, so reject that here too.
       const canStartSwipe =
         !!enteringViewItem &&
+        !!leavingViewItem &&
         (enteringViewItem.mount || ionPageInDocument) &&
-        enteringViewItem.routeData.match.pattern.path !== routeInfo.pathname &&
-        enteringViewItem.routeData.match.pathname !== routeInfo.pathname;
+        enteringViewItem !== leavingViewItem;
 
       debug('SwipeBackCanStart', () => ({
         outletId: this.id,
@@ -1442,6 +1442,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         enteringViewPath: enteringViewItem?.reactElement?.props?.path,
         enteringMount: enteringViewItem?.mount,
         ionPageInDocument,
+        leavingViewId: leavingViewItem?.id,
         canStartSwipe,
       }));
 
