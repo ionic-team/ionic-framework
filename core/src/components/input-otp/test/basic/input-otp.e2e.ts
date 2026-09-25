@@ -1,3 +1,12 @@
+    test('should synchronize the value when length changes', async ({ page }) => {
+      await page.setContent(`<ion-input-otp length="4" value="1234">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el) => el.setAttribute('length', '2'));
+
+      await verifyInputValues(inputOtp, ['1', '2']);
+    });
+
 import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
