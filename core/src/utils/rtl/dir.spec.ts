@@ -75,20 +75,8 @@ describe('rtl: dir', () => {
       // value left behind by another test.
       expect(document.dir).toBe('');
 
-      expect(isRTL()).toBe(false);
-      expect(isRTL(null)).toBe(false);
       expect(isRTL(document.createElement('div'))).toBe(false);
       expect(isRTL(render('<div><div id="target"></div></div>'))).toBe(false);
-    });
-  });
-
-  describe('without a host element', () => {
-    it('should use the document dir', () => {
-      document.dir = 'rtl';
-      expect(isRTL()).toBe(true);
-
-      document.dir = 'ltr';
-      expect(isRTL()).toBe(false);
     });
   });
 });

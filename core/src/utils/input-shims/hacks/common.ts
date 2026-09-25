@@ -1,3 +1,5 @@
+import { isRTL } from '@utils/rtl';
+
 const cloneMap = new WeakMap<HTMLElement, HTMLElement>();
 
 export const relocateInput = (
@@ -73,10 +75,9 @@ const addClone = (
    * Position the clone at the same horizontal offset as the native input
    * to prevent the placeholder from overlapping start slot content (e.g., icons).
    */
-  const doc = componentEl.ownerDocument!;
-  const isRTL = doc.dir === 'rtl';
+  const rtl = isRTL(componentEl);
 
-  if (isRTL) {
+  if (rtl) {
     const parentWidth = (parentEl as HTMLElement).offsetWidth;
     const startOffset = parentWidth - inputEl.offsetLeft - inputEl.offsetWidth;
     clonedEl.style.insetInlineStart = `${startOffset}px`;
@@ -87,7 +88,7 @@ const addClone = (
   parentEl.appendChild(clonedEl);
   cloneMap.set(componentEl, clonedEl);
 
-  const tx = isRTL ? 9999 : -9999;
+  const tx = rtl ? 9999 : -9999;
   componentEl.style.pointerEvents = 'none';
   inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0) scale(0)`;
 };

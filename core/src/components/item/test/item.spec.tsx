@@ -74,4 +74,26 @@ describe('item', () => {
       expect(item).not.toHaveClass('item-focus-indicator-room');
     });
   });
+
+  describe('rtl', () => {
+    const newItemPage = async (html: string) => {
+      const page = await newSpecPage({ components: [Item], html });
+      return page.body.querySelector('ion-item')!;
+    };
+
+    it('should set item-rtl when an ancestor declares rtl', async () => {
+      const item = await newItemPage(`<div dir="rtl"><div><ion-item>Item</ion-item></div></div>`);
+      expect(item).toHaveClass('item-rtl');
+    });
+
+    it('should not set item-rtl when an ancestor declares ltr', async () => {
+      const item = await newItemPage(`<div dir="ltr"><ion-item>Item</ion-item></div>`);
+      expect(item).not.toHaveClass('item-rtl');
+    });
+
+    it('should use the nearest ancestor that declares a dir', async () => {
+      const item = await newItemPage(`<div dir="rtl"><div dir="ltr"><ion-item>Item</ion-item></div></div>`);
+      expect(item).not.toHaveClass('item-rtl');
+    });
+  });
 });

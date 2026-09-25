@@ -1,6 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
 import { matchBreakpoint } from '@utils/media';
+import { isRTL } from '@utils/rtl';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -15,6 +16,8 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true,
 })
 export class Col implements ComponentInterface {
+  @Element() el!: HTMLElement;
+
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
    * of the total available.
@@ -235,20 +238,20 @@ export class Col implements ComponentInterface {
     };
   }
 
-  private calculateOffset(isRTL: boolean) {
-    return this.calculatePosition('offset', isRTL ? 'margin-right' : 'margin-left');
+  private calculateOffset(rtl: boolean) {
+    return this.calculatePosition('offset', rtl ? 'margin-right' : 'margin-left');
   }
 
-  private calculatePull(isRTL: boolean) {
-    return this.calculatePosition('pull', isRTL ? 'left' : 'right');
+  private calculatePull(rtl: boolean) {
+    return this.calculatePosition('pull', rtl ? 'left' : 'right');
   }
 
-  private calculatePush(isRTL: boolean) {
-    return this.calculatePosition('push', isRTL ? 'right' : 'left');
+  private calculatePush(rtl: boolean) {
+    return this.calculatePosition('push', rtl ? 'right' : 'left');
   }
 
   render() {
-    const isRTL = document.dir === 'rtl';
+    const rtl = isRTL(this.el);
     const mode = getIonMode(this);
     return (
       <Host
@@ -256,9 +259,9 @@ export class Col implements ComponentInterface {
           [mode]: true,
         }}
         style={{
-          ...this.calculateOffset(isRTL),
-          ...this.calculatePull(isRTL),
-          ...this.calculatePush(isRTL),
+          ...this.calculateOffset(rtl),
+          ...this.calculatePull(rtl),
+          ...this.calculatePush(rtl),
           ...this.calculateSize(),
         }}
       >
