@@ -15,8 +15,9 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { NotchController, StartContainerController } from '@utils/forms';
+import type { ClickController, NotchController, StartContainerController } from '@utils/forms';
 import {
+  createClickController,
   createNotchController,
   createStartContainerController,
   checkInvalidState,
@@ -89,6 +90,7 @@ export class Textarea implements ComponentInterface {
   private notchSpacerEl: HTMLElement | undefined;
   private startContainerController?: StartContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private clickController?: ClickController;
 
   /**
    * The value of the textarea when the textarea is focused.
@@ -391,11 +393,7 @@ export class Textarea implements ComponentInterface {
    */
   @Listen('click', { capture: true })
   onClickCapture(ev: Event) {
-    const nativeInput = this.nativeInput;
-    if (nativeInput && ev.target === nativeInput) {
-      ev.stopPropagation();
-      this.el.click();
-    }
+    this.clickController?.handleClickCapture(ev);
   }
 
   connectedCallback() {
@@ -422,6 +420,8 @@ export class Textarea implements ComponentInterface {
     );
 
     this.startContainerController.calculateStartContainerWidth();
+
+    this.clickController = createClickController(el, () => this.nativeInput);
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {

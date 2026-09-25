@@ -71,6 +71,20 @@
           <h2>Centered Dialog (Tablet)</h2>
           <button id="centered-dialog" onclick="presentCenteredDialog()">Present Centered Dialog</button>
 
+          <h2>Content Sized Dialog</h2>
+          <button id="content-sized-dialog" onclick="presentContentSizedDialog(200)">
+            Present Content Sized Dialog (short)
+          </button>
+          <button id="content-sized-dialog-tall" onclick="presentContentSizedDialog(2000)">
+            Present Content Sized Dialog (overflowing)
+          </button>
+          <button id="content-sized-dialog-full-width" onclick="presentContentSizedDialog(200, '100%')">
+            Present Content Sized Dialog (short, full width)
+          </button>
+          <button id="content-sized-dialog-full-width-tall" onclick="presentContentSizedDialog(2000, '100%')">
+            Present Content Sized Dialog (overflowing, full width)
+          </button>
+
           <h2>Diagnostic Info</h2>
           <div id="diagnostic">
             <p>Window Width: <span id="window-width"></span></p>
@@ -226,6 +240,55 @@
 
         await modal.onDidDismiss();
         modal.remove();
+      }
+
+      /**
+       * A dialog with custom dimensions on both axes and a content-sized
+       * height. Short content keeps it away from the screen edges, while
+       * overflowing content causes `--max-height` to clamp it to the
+       * viewport, where it reaches the top and bottom edges.
+       */
+      async function presentContentSizedDialog(childHeight, width = '300px') {
+        const element = document.createElement('div');
+        element.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Content Sized Dialog</ion-title>
+              <ion-buttons slot="end">
+                <ion-button class="dismiss">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <p>Content sized dialog.</p>
+            <div style="height: ${childHeight}px; background: #d0e6ff"></div>
+            <p>Last line of content, which the home indicator must not cover.</p>
+          </ion-content>
+        `;
+
+        const modal = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+          cssClass: 'content-sized-dialog',
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+          .content-sized-dialog {
+            --width: ${width};
+            --height: fit-content;
+          }
+        `;
+        document.head.appendChild(style);
+
+        element.querySelector('.dismiss').addEventListener('click', () => modal.dismiss());
+        document.body.appendChild(modal);
+
+        await modal.present();
+        updateModalDiagnostics(modal);
+
+        await modal.onDidDismiss();
+        modal.remove();
+        style.remove();
       }
 
       async function presentCenteredDialog() {

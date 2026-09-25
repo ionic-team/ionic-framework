@@ -580,6 +580,107 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 /**
+ * WebKit can report a datetime that is still on screen as not intersecting,
+ * so the datetime must not tear down its ready state on that alone.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: spurious hidden report'), () => {
+    test('should stay ready when the observer reports it hidden while it is on screen', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30933',
+      });
+
+      await page.addInitScript(() => {
+        const OriginalIO = window.IntersectionObserver;
+        const datetimeObservers: {
+          callback: IntersectionObserverCallback;
+          targets: Element[];
+          sawVisible: boolean;
+        }[] = [];
+        let reportedHidden = false;
+
+        /**
+         * The datetime only tears down once its observers have reported it
+         * visible, so the test waits for that first.
+         */
+        (window as any).datetimeObserversSawVisible = () =>
+          datetimeObservers.length > 0 && datetimeObservers.every(({ sawVisible }) => sawVisible);
+
+        /**
+         * Reports the datetime as not intersecting and then goes quiet,
+         * since WebKit never sends a recovery entry to undo it.
+         */
+        (window as any).reportHiddenToDatetimeObservers = () => {
+          reportedHidden = true;
+          datetimeObservers.forEach(({ callback, targets }) => {
+            targets.forEach((target) => {
+              callback([{ isIntersecting: false, target } as IntersectionObserverEntry], null as any);
+            });
+          });
+        };
+
+        (window as any).IntersectionObserver = function (
+          callback: IntersectionObserverCallback,
+          options?: IntersectionObserverInit
+        ) {
+          const root = options?.root as Element | null;
+
+          if (root?.tagName !== 'ION-DATETIME') {
+            return new OriginalIO(callback, options);
+          }
+
+          const record = { callback, targets: [] as Element[], sawVisible: false };
+          datetimeObservers.push(record);
+
+          const instance = new OriginalIO((entries, observer) => {
+            if (reportedHidden) {
+              return;
+            }
+
+            if (entries.some((entry) => entry.isIntersecting)) {
+              record.sawVisible = true;
+            }
+
+            callback(entries, observer);
+          }, options);
+
+          const originalObserve = instance.observe.bind(instance);
+          instance.observe = (target: Element) => {
+            record.targets.push(target);
+            originalObserve(target);
+          };
+
+          return instance;
+        } as any;
+      });
+
+      await page.setContent(`<ion-datetime value="2022-05-03"></ion-datetime>`, config);
+
+      const datetime = page.locator('ion-datetime');
+      const calendarBody = datetime.locator('.calendar-body');
+
+      await expect(datetime).toHaveClass(/datetime-ready/);
+      await expect(calendarBody).toHaveCSS('opacity', '1');
+      await page.waitForFunction(() => (window as any).datetimeObserversSawVisible());
+
+      /**
+       * A one-shot layout fallback runs 100ms after the datetime loads and
+       * would add the class back. Real reports arrive long after that, so
+       * wait it out.
+       */
+      await page.waitForTimeout(300);
+
+      await page.evaluate(() => (window as any).reportHiddenToDatetimeObservers());
+      await page.waitForChanges();
+
+      await expect(datetime).toHaveClass(/datetime-ready/);
+      await expect(calendarBody).toHaveCSS('opacity', '1');
+    });
+  });
+});
+
+/**
  * We are setting RTL on the component instead, so we don't need to test
  * both directions. Also, this behavior does not vary across modes.
  */

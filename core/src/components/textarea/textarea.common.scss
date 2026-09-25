@@ -106,6 +106,7 @@
   flex: 1;
 
   width: 100%;
+
   max-width: 100%;
   max-height: 100%;
 
@@ -279,7 +280,6 @@
 .native-wrapper {
   display: grid;
 
-  min-width: inherit;
   max-width: inherit;
 
   /**
