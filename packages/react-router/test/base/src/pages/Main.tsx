@@ -10,6 +10,7 @@ import {
   IonLabel,
 } from '@ionic/react';
 import React from 'react';
+import { ROOT_SPLAT_SIBLING_BASENAME } from '../root-splat-sibling/basename';
 
 const Main: React.FC = () => {
   return (
@@ -152,6 +153,19 @@ const Main: React.FC = () => {
           </IonItem>
           <IonItem routerLink="/wildcard-no-heuristic">
             <IonLabel>Wildcard No Heuristic</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/splat-sibling">
+            <IonLabel>Splat Sibling</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/index-sibling">
+            <IonLabel>Index Sibling</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/empty-path-sibling">
+            <IonLabel>Empty Path Sibling</IonLabel>
+          </IonItem>
+          {/* A separate React root, so a plain href rather than a routerLink. */}
+          <IonItem href={`${ROOT_SPLAT_SIBLING_BASENAME}/feed`}>
+            <IonLabel>Root Splat Sibling</IonLabel>
           </IonItem>
         </IonList>
 
