@@ -10,7 +10,7 @@ Run `npm run typecheck` in `packages/vue` to check types. The rollup build only 
 
 The Vue test app supports syncing your locally built changes for validation.
 
-1. [Build](../README.md#building) the `core`, `packages/vue`, and `packages/vue-router` projects using `npm run build`.
+1. [Build](../../packages/vue/README.md#building) the `core`, `packages/vue`, and `packages/vue-router` projects using `npm run build`.
 2. [Build the Vue test app](#test-app-build-structure).
 3. Navigate to the built test app directory (e.g. `packages/vue/test/build/vue3`).
 4. Install dependencies using `npm install`.
