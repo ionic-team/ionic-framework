@@ -129,7 +129,7 @@ The following breaking changes apply to `ion-col`:
 
 Column padding was a single value per breakpoint and is now set per-side, and the variables have moved from the `grid` namespace to the `col` namespace. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--ion-grid-column-padding-{bp}` | `IonCol.breakpoint.{bp}.padding.{top\|end\|bottom\|start}` | `--ion-col-breakpoint-{bp}-padding-{top\|end\|bottom\|start}` |
 
@@ -150,7 +150,7 @@ The following breaking changes apply to `ion-content`:
 
 `--background` and `--color` have been removed. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--background` | `IonContent.background` | `--ion-content-default-background` |
 | `--color` | `IonContent.color` | `--ion-content-default-color` |
@@ -159,7 +159,7 @@ The following breaking changes apply to `ion-content`:
 
 New code should use the token-based API:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--padding-top` | `IonContent.padding.top` | `--ion-content-padding-top` |
 | `--padding-end` | `IonContent.padding.end` | `--ion-content-padding-end` |
@@ -173,7 +173,7 @@ New code should use the token-based API:
 
 The following CSS variables were previously documented `@prop`s on `ion-content` and have been renamed to the `--internal-*` namespace, removing them from the public API:
 
-| Old (8.x) | New |
+| Old (9.x) | New |
 |---|---|
 | `--keyboard-offset` | `--internal-keyboard-offset` |
 | `--offset-top` | `--internal-offset-top` |
@@ -202,13 +202,13 @@ The following breaking changes apply to `ion-grid`:
 
 Grid padding was a single value per breakpoint and is now set per-side. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--ion-grid-padding-{bp}` | `IonGrid.breakpoint.{bp}.padding.{top\|end\|bottom\|start}` | `--ion-grid-breakpoint-{bp}-padding-{top\|end\|bottom\|start}` |
 
 <h5 id="version-10x-grid-fixed-width-variables">Fixed width variables</h5>
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--ion-grid-width-{bp}` | `IonGrid.breakpoint.{bp}.width` | `--ion-grid-breakpoint-{bp}-width` |
 
@@ -396,7 +396,7 @@ The following breaking changes apply to `ion-ripple-effect`:
 
 The ripple fade opacity is now part of the centralized Ionic Theming system. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--ripple-opacity` | `IonRippleEffect.opacity` | `--ion-ripple-effect-opacity` |
 
@@ -426,7 +426,7 @@ The following breaking changes apply to `ion-skeleton-text`:
 
 The background is now defined per state (resting and animated), and each state exposes an RGB value plus an alpha so the color and its opacity can be set independently. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--background-rgb` | `IonSkeletonText.default.background.rgb` | `--ion-skeleton-text-default-background-rgb` |
 | `--background-rgb` | `IonSkeletonText.animated.background.rgb` | `--ion-skeleton-text-animated-background-rgb` |
@@ -505,7 +505,7 @@ The following breaking changes apply to `ion-thumbnail`:
 
 `--size` and `--border-radius` have been replaced. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--size` | `IonThumbnail.width` | `--ion-thumbnail-width` |
 | `--size` | `IonThumbnail.height` | `--ion-thumbnail-height` |
