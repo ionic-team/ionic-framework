@@ -1158,12 +1158,11 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // because overwriting its reactElement below would swap its page for the winning
     // route's and unmount it. This has to resolve before shouldUnmountLeavingView and
     // handleRootNavigation, which both branch on the entering view item.
-    if (
-      enteringViewItem &&
-      enteringRoute &&
-      isOverMatchingRoute(enteringViewItem.routeData?.childProps ?? {}) &&
-      enteringRoute.props.path !== enteringViewItem.routeData?.childProps?.path
-    ) {
+    const matchedRouteProps = enteringViewItem?.routeData?.childProps;
+    const matchedAnOverMatchingRoute = isOverMatchingRoute(matchedRouteProps ?? {});
+    const routeOwnerDisagrees = enteringRoute !== undefined && enteringRoute.props.path !== matchedRouteProps?.path;
+
+    if (enteringViewItem && matchedAnOverMatchingRoute && routeOwnerDisagrees) {
       enteringViewItem = undefined;
     }
 
