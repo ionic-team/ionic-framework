@@ -138,16 +138,6 @@ export class Datetime implements ComponentInterface {
   private todayParts!: DatetimeParts;
   private defaultParts!: DatetimeParts;
   private loadTimeout: ReturnType<typeof setTimeout> | undefined;
-  /**
-   * Set true only by `visibleCallback`. Lets `hiddenCallback` ignore the
-   * synthetic "not intersecting" entry IntersectionObserver fires on
-   * `observe()` when the host mounts offscreen.
-   *
-   * Don't reset this in `disconnectedCallback`. Overlays disconnect and
-   * reconnect the host without re-creating the observers, so a reset there
-   * makes `hiddenCallback` miss the dismissal.
-   */
-  private hasBeenIntersecting = false;
 
   private prevPresentation: string | null = null;
 
@@ -1160,12 +1150,21 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const rect = this.el.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) {
+    if (!this.hasLayoutBox()) {
       return;
     }
 
     this.markReady();
+  };
+
+  /**
+   * Whether the datetime is on screen. A modal or popover hides its contents
+   * with `display: none`, which leaves the host without a layout box.
+   */
+  private hasLayoutBox = () => {
+    const { width, height } = this.el.getBoundingClientRect();
+
+    return width > 0 && height > 0;
   };
 
   private markReady = () => {
@@ -1205,12 +1204,15 @@ export class Datetime implements ComponentInterface {
      * areas will not have the correct values snapped into place.
      */
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
+      /**
+       * The browser can batch several observations into one callback, so
+       * only the last entry describes the datetime now.
+       */
+      const ev = entries[entries.length - 1];
       if (!ev.isIntersecting) {
         return;
       }
 
-      this.hasBeenIntersecting = true;
       this.markReady();
     };
     const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01, root: el });
@@ -1246,16 +1248,23 @@ export class Datetime implements ComponentInterface {
      * we did originally has been lost.
      */
     const hiddenCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
+      const ev = entries[entries.length - 1];
       if (ev.isIntersecting) {
         return;
       }
 
-      // Ignore the initial "not intersecting" entry IntersectionObserver fires on observe().
-      if (!this.hasBeenIntersecting) {
+      /**
+       * WebKit reports a datetime that is still on screen as not
+       * intersecting, and it doesn't deliver that entry to every observer on
+       * the same root and target, so `visibleCallback` may never hear about
+       * it and add `datetime-ready` back. That is what left the calendar
+       * blank in #30933. Checking the host instead of trusting the entry
+       * also covers the synthetic "not intersecting" entry `observe()` fires
+       * when the datetime mounts offscreen.
+       */
+      if (this.hasLayoutBox()) {
         return;
       }
-      this.hasBeenIntersecting = false;
 
       this.destroyInteractionListeners();
 

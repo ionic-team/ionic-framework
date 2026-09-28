@@ -267,6 +267,24 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(selectedDay).toBeInViewport();
     });
 
+    test('should keep the calendar visible across repeated open and dismiss cycles', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30933',
+      });
+
+      const calendarBody = datetime.locator('.calendar-body');
+
+      for (let cycle = 0; cycle < 10; cycle++) {
+        await openModal(page);
+
+        await expect(calendarBody).toHaveCSS('opacity', '1');
+        await expect(monthYear).toHaveText('March 2022');
+
+        await dismissModal();
+      }
+    });
+
     test('should navigate to the previous month when reopened', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',

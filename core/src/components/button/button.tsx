@@ -1,8 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, State, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createAriaAttributeController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
+import { hasShadowDom } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 
@@ -37,7 +38,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inButtons = false;
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
-  private inheritedAttributes: Attributes = {};
+  private ariaController?: AttributeController;
 
   @Element() el!: HTMLElement;
 
@@ -165,27 +166,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Event() ionBlur!: EventEmitter<void>;
 
   /**
-   * This component is used within the `ion-input-password-toggle` component
-   * to toggle the visibility of the password input.
-   * These attributes need to update based on the state of the password input.
-   * Otherwise, the values will be stale.
-   *
-   * @param newValue
-   * @param _oldValue
-   * @param propName
-   */
-  @Watch('aria-checked')
-  @Watch('aria-label')
-  @Watch('aria-pressed')
-  onAriaChanged(newValue: string, _oldValue: string, propName: string) {
-    this.inheritedAttributes = {
-      ...this.inheritedAttributes,
-      [propName]: newValue,
-    };
-    forceUpdate(this);
-  }
-
-  /**
    * This is responsible for rendering a hidden native
    * button element inside the associated form. This allows
    * users to submit a form by pressing "Enter" when a text
@@ -227,7 +207,24 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inButtons = hostContext('ion-buttons', this.el);
     this.inListHeader = hostContext('ion-list-header', this.el);
     this.inItem = hostContext('ion-item', this.el) || hostContext('ion-item-divider', this.el);
-    this.inheritedAttributes = inheritAriaAttributes(this.el);
+
+    /**
+     * The ARIA state has to stay live, since `ion-input-password-toggle` rewrites
+     * `aria-label` and `aria-pressed` on its `ion-button` on every toggle. We keep
+     * `aria-disabled` out of the watch because the `<Host>` below renders it from the
+     * `disabled` prop and those writes would clobber a developer's value, and `role` out
+     * because a post-load write stays on the host too, which would put the same role on
+     * two elements in the accessibility tree.
+     */
+    this.ariaController = createAriaAttributeController(this.el, () => forceUpdate(this), ['aria-disabled', 'role']);
+  }
+
+  connectedCallback() {
+    this.ariaController?.init();
+  }
+
+  disconnectedCallback() {
+    this.ariaController?.destroy();
   }
 
   private get hasIconOnly() {
@@ -379,25 +376,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   };
 
   render() {
-    const {
-      buttonType,
-      type,
-      disabled,
-      rel,
-      target,
-      href,
-      color,
-      expand,
-      hasIconOnly,
-      hasBadge,
-      strong,
-      inheritedAttributes,
-    } = this;
+    const { buttonType, type, disabled, rel, target, href, color, expand, hasIconOnly, hasBadge, strong } = this;
 
     const theme = getIonTheme(this);
     const mode = getIonMode(this);
     const size = this.getSize();
     const shape = this.getShape();
+    const inheritedAttributes = this.ariaController?.attributes ?? {};
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'

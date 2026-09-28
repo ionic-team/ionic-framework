@@ -209,3 +209,16 @@
   margin-inline-start: $form-control-label-margin;
   margin-inline-end: 0;
 }
+
+// The minimum width the editable area may shrink to. Only the native themes
+// carry it; the ionic theme sizes its field with its own tokens.
+// --------------------------------------------------
+
+.native-input {
+  /**
+   * The input keeps a minimum width so that the value stays visible
+   * when a long label or wide slotted content would otherwise shrink
+   * it to nothing.
+   */
+  min-width: $form-control-min-width;
+}

@@ -44,7 +44,7 @@ npm run build
 
 * Run `npm run typecheck` to check types. Run it in `packages/vue-router` too when you change `@ionic/vue-router`. The rollup build only reports type errors as warnings, so a passing build does not mean the types are clean.
 * E2E Tests are found in the `packages/vue/test/base/tests` directory and use Cypress.
-* When making changes to `@ionic/vue` or `@ionic/vue-router` you can run `npm run sync` in the [test-app directory](test/README.md#syncing-local-changes) to ensure that the test application is using your built changes. Be sure to build in the `vue` and `vue-router` directories first.
+* When making changes to `@ionic/vue` or `@ionic/vue-router` you can run `npm run sync` in the test app directory (see [Syncing Local Changes](https://github.com/ionic-team/ionic-framework/blob/main/docs/vue/testing.md#syncing-local-changes)) to ensure that the test application is using your built changes. Be sure to build in the `vue` and `vue-router` directories first.
 * Tests can be run in headless mode by running `npm run cypress`.
 * If you want to open the Cypress test runner, you can run `node_modules/.bin/cypress open`.
 * Bug fix and feature PRs should have new tests verifying the PR functionality.

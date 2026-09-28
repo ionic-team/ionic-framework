@@ -249,3 +249,81 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across directions/modes
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('textarea: slotted click'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Notes">
+          <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+          <ion-button slot="end" aria-label="Clear notes">
+            <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+          </ion-button>
+          <ion-checkbox slot="end" aria-label="Remember"></ion-checkbox>
+          <ion-radio slot="end" aria-label="Preferred"></ion-radio>
+          <ion-toggle slot="end" aria-label="Notify"></ion-toggle>
+        </ion-textarea>
+      `,
+        config
+      );
+    });
+
+    test('should emit one click and focus the textarea when a slotted icon is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-icon[slot="start"]').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      const event = clickEvent.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
+
+      await expect(page.locator('ion-textarea textarea')).toBeFocused();
+    });
+
+    test('should emit one click without focusing the textarea when a slotted button is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-button[slot="end"]').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      await expect(page.locator('ion-textarea textarea')).not.toBeFocused();
+    });
+
+    /**
+     * Browsers skip the label forwarding when a click lands on interactive
+     * content, so activating a slotted control leaves the textarea alone.
+     */
+    ['ion-checkbox', 'ion-radio', 'ion-toggle'].forEach((tag) => {
+      test(`should activate a slotted ${tag} without focusing the textarea`, async ({ page }) => {
+        const control = page.locator(tag);
+
+        await control.click();
+        await page.waitForChanges();
+
+        await expect(control).toHaveAttribute('aria-checked', 'true');
+        await expect(page.locator('ion-textarea textarea')).not.toBeFocused();
+      });
+    });
+
+    test('should emit one click when the textarea is clicked after slotted content', async ({ page }) => {
+      /**
+       * Clicking a slotted button does not produce a forwarded click for the
+       * textarea to ignore, so the following click on the textarea itself
+       * must still be emitted.
+       */
+      await page.locator('ion-button[slot="end"]').click();
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-textarea textarea').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+  });
+});
