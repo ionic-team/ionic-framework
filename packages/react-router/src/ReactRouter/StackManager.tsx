@@ -88,6 +88,15 @@ const revealIonPageForSwipeBack = (element: HTMLElement | undefined): void => {
   }
 };
 
+type ViewLifecycleEvent = 'ionViewWillEnter' | 'ionViewDidEnter' | 'ionViewWillLeave' | 'ionViewDidLeave';
+
+/** Dispatches a view lifecycle event the way core's `lifecycle()` does. */
+const dispatchLifecycleEvent = (element: HTMLElement | undefined, eventName: ViewLifecycleEvent): void => {
+  if (element) {
+    element.dispatchEvent(new CustomEvent(eventName, { bubbles: false, cancelable: false }));
+  }
+};
+
 /**
  * A leaf view is "preservable" on browser-back (pop) when its React state
  * should survive a forward-pop round-trip. Non-parameterized leaf paths
@@ -357,12 +366,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
     allViewsInOutlet.forEach((viewItem) => {
       if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewWillLeave', { bubbles: false, cancelable: false })
-        );
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewDidLeave', { bubbles: false, cancelable: false })
-        );
+        dispatchLifecycleEvent(viewItem.ionPageElement, 'ionViewWillLeave');
+        dispatchLifecycleEvent(viewItem.ionPageElement, 'ionViewDidLeave');
       }
     });
 
@@ -399,12 +404,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         return;
       }
       if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewWillLeave', { bubbles: false, cancelable: false })
-        );
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewDidLeave', { bubbles: false, cancelable: false })
-        );
+        dispatchLifecycleEvent(viewItem.ionPageElement, 'ionViewWillLeave');
+        dispatchLifecycleEvent(viewItem.ionPageElement, 'ionViewDidLeave');
       }
       this.context.unMountViewItem(viewItem);
     });
@@ -1737,10 +1738,36 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           // Bail out if the component unmounted during waitForComponentsReady
           if (!this._isMounted) return;
 
+          const isCurrent = myGeneration === this.transitionGeneration;
+          // A page the newest transition is entering is not leaving after all.
+          const isLeaving = isCurrent || leavingEl !== this.transitionEnteringElement;
+          // Already hidden means the leave events have fired. This checks the class rather
+          // than `isViewVisible` because a nested outlet marks its leaving page
+          // `visibility: hidden` before we get here and still needs `ionViewDidLeave`.
+          const announceLeaving = isLeaving && !leavingEl.classList.contains('ion-page-hidden');
+
+          /**
+           * Dispatch the lifecycle events, since we skipped `commit()`. Only the
+           * newest transition fires the entering events, and the class swap follows
+           * all four so the ordering matches core's `transition()`.
+           *
+           * These run after `waitForComponentsReady` because on a first mount the
+           * page has not attached its listeners yet.
+           */
+          if (announceLeaving) {
+            dispatchLifecycleEvent(leavingEl, 'ionViewWillLeave');
+          }
+          if (isCurrent) {
+            dispatchLifecycleEvent(enteringEl, 'ionViewWillEnter');
+            dispatchLifecycleEvent(enteringEl, 'ionViewDidEnter');
+          }
+          if (announceLeaving) {
+            dispatchLifecycleEvent(leavingEl, 'ionViewDidLeave');
+          }
+
           // Swap visibility synchronously - show entering, hide leaving
-          // Skip hiding if a newer transition already made leavingEl the entering view
           enteringEl.classList.remove('ion-page-invisible');
-          if (myGeneration === this.transitionGeneration || leavingEl !== this.transitionEnteringElement) {
+          if (isLeaving) {
             leavingEl.classList.add('ion-page-hidden');
             leavingEl.setAttribute('aria-hidden', 'true');
           }
