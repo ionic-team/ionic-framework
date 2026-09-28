@@ -34,6 +34,7 @@ const getAngularOutputTargets = () => {
       directivesArrayFile: '../packages/angular/src/lazy/directives/proxies-list.ts',
       excludeComponents,
       outputType: 'component',
+      booleanAttributes: true,
     }),
     angularOutputTarget({
       componentCorePackage,
@@ -66,6 +67,7 @@ const getAngularOutputTargets = () => {
       outputType: 'standalone',
       // Emit each component in a separate file rather than putting them all in one large file.
       esModules: true,
+      booleanAttributes: true,
     })
   ];
 }
@@ -247,8 +249,7 @@ export const config: Config = {
   testing: {
     moduleNameMapper: {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
-      "@utils/logging": ["<rootDir>/src/utils/logging"],
-      "^.+\\.svg": "<rootDir>/svgTransform.js"
+      "@utils/logging": ["<rootDir>/src/utils/logging"]
     },
     setupFilesAfterEnv: ['./setupJest.js']
   },

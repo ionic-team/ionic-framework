@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 import type { Components } from '@ionic/core/components';
 
-import { ProxyCmp, proxyOutputs } from '../utils/proxy';
+import { nullableBooleanAttribute } from '../utils/boolean-attribute';
+import { inputNames, ProxyCmp, proxyOutputs } from '../utils/proxy';
 
 export declare interface IonPopover extends Components.IonPopover {
   /**
@@ -48,21 +49,22 @@ export declare interface IonPopover extends Components.IonPopover {
 
 const POPOVER_INPUTS = [
   'alignment',
-  'animated',
-  'arrow',
-  'keepContentsMounted',
-  'backdropDismiss',
+  { name: 'animated', transform: nullableBooleanAttribute },
+  { name: 'arrow', transform: nullableBooleanAttribute },
+  { name: 'keepContentsMounted', transform: nullableBooleanAttribute },
+  { name: 'backdropDismiss', transform: nullableBooleanAttribute },
   'cssClass',
-  'dismissOnSelect',
+  { name: 'dismissOnSelect', transform: nullableBooleanAttribute },
   'enterAnimation',
   'event',
-  'focusTrap',
-  'isOpen',
-  'keyboardClose',
+  { name: 'focusTrap', transform: nullableBooleanAttribute },
+  { name: 'isOpen', transform: nullableBooleanAttribute },
+  { name: 'keyboardClose', transform: nullableBooleanAttribute },
+  { name: 'keyboardEvents', transform: nullableBooleanAttribute },
   'leaveAnimation',
   'mode',
-  'showBackdrop',
-  'translucent',
+  { name: 'showBackdrop', transform: nullableBooleanAttribute },
+  { name: 'translucent', transform: nullableBooleanAttribute },
   'trigger',
   'triggerAction',
   'reference',
@@ -70,10 +72,12 @@ const POPOVER_INPUTS = [
   'side',
 ];
 
+const POPOVER_PROXY_INPUTS = inputNames(POPOVER_INPUTS);
+
 const POPOVER_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'];
 
 @ProxyCmp({
-  inputs: POPOVER_INPUTS,
+  inputs: POPOVER_PROXY_INPUTS,
   methods: POPOVER_METHODS,
 })
 /**

@@ -26,6 +26,7 @@ import { BACKDROP_NO_SCROLL } from './gesture/gesture-controller';
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import {
   addEventListener,
+  focusRedirectedElement,
   focusVisibleElement,
   getElementRoot,
   removeEventListener,
@@ -296,7 +297,7 @@ const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, over
   }
 
   if (elementToFocus) {
-    focusVisibleElement(elementToFocus);
+    focusRedirectedElement(elementToFocus);
   } else {
     // Focus overlay instead of letting focus escape
     overlay.focus();

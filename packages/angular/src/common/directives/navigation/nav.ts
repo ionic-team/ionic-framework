@@ -10,9 +10,18 @@ import {
 import type { Components } from '@ionic/core';
 
 import { AngularDelegate } from '../../providers/angular-delegate';
-import { ProxyCmp, proxyOutputs } from '../../utils/proxy';
+import { nullableBooleanAttribute } from '../../utils/boolean-attribute';
+import { inputNames, ProxyCmp, proxyOutputs } from '../../utils/proxy';
 
-const NAV_INPUTS = ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'];
+const NAV_INPUTS = [
+  { name: 'animated', transform: nullableBooleanAttribute },
+  'animation',
+  'root',
+  'rootParams',
+  { name: 'swipeGesture', transform: nullableBooleanAttribute },
+];
+
+const NAV_PROXY_INPUTS = inputNames(NAV_INPUTS);
 
 const NAV_METHODS = [
   'push',
@@ -42,7 +51,7 @@ export declare interface IonNav extends Components.IonNav {
 }
 
 @ProxyCmp({
-  inputs: NAV_INPUTS,
+  inputs: NAV_PROXY_INPUTS,
   methods: NAV_METHODS,
 })
 @Directive({

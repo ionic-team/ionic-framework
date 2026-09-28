@@ -10,17 +10,27 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type { RadioGroupChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-radio-group.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'compareWith', 'errorText', 'helperText', 'name', 'value'];
+const RADIO_GROUP_INPUTS = [
+  { name: 'allowEmptySelection', transform: nullableBooleanAttribute },
+  'compareWith',
+  'errorText',
+  'helperText',
+  'name',
+  'value',
+];
+
+const RADIO_GROUP_PROXY_INPUTS = inputNames(RADIO_GROUP_INPUTS);
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: RADIO_GROUP_INPUTS,
+  inputs: RADIO_GROUP_PROXY_INPUTS,
 })
 @Component({
   selector: 'ion-radio-group',

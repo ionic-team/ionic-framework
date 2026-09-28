@@ -10,29 +10,33 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor, setIonicClasses } from '@ionic/angular/common';
+import { inputNames, setIonicClasses, ValueAccessor } from '@ionic/angular/common';
 import type { CheckboxChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-checkbox.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const CHECKBOX_INPUTS = [
-  'checked',
+  { name: 'checked', transform: nullableBooleanAttribute },
   'color',
-  'disabled',
+  { name: 'disabled', transform: nullableBooleanAttribute },
   'errorText',
   'helperText',
-  'indeterminate',
+  { name: 'indeterminate', transform: nullableBooleanAttribute },
   'justify',
   'labelPlacement',
   'mode',
   'name',
+  { name: 'required', transform: nullableBooleanAttribute },
   'value',
 ];
 
+const CHECKBOX_PROXY_INPUTS = inputNames(CHECKBOX_INPUTS);
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: CHECKBOX_INPUTS,
+  inputs: CHECKBOX_PROXY_INPUTS,
 })
 @Component({
   selector: 'ion-checkbox',

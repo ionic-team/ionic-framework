@@ -529,5 +529,71 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(wrapper).toHaveAttribute('role', 'dialog');
       await expect(wrapper).toBeFocused();
     });
+
+    /*
+     * The focus trap redirects focus back into the overlay when focus lands
+     * outside of it. The indicator should only follow that redirect during
+     * keyboard navigation.
+     *
+     * The button is the modal's first focusable, so it is where the trap
+     * redirects focus to. It has to be something that can actually take focus,
+     * or the redirect is a no-op and the tests prove nothing. `ion-app` is
+     * required to apply the focused styles.
+     */
+    const redirectContent = `
+      <ion-app>
+        <ion-button id="open-modal">Show Modal</ion-button>
+        <div tabindex="0">Outside Element</div>
+        <ion-modal trigger="open-modal">
+          <ion-content>
+            <ion-button id="inside-modal">Inside Modal</ion-button>
+          </ion-content>
+        </ion-modal>
+      </ion-app>
+    `;
+
+    test('should not show a focus indicator when focus is redirected after a pointer interaction', async ({ page }) => {
+      await page.setContent(redirectContent, config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const insideButton = page.locator('ion-modal ion-button#inside-modal');
+
+      // Opening with a click leaves the focus utility in pointer mode.
+      await page.locator('ion-button#open-modal').click();
+      await ionModalDidPresent.next();
+
+      await page.locator('ion-app > div[tabindex="0"]').evaluate((el: HTMLElement) => el.focus());
+
+      /*
+       * The trap focuses the element before applying the indicator, and applies
+       * it through an async method. Waiting for focus to land and flushing a
+       * frame makes a missing indicator a real absence rather than an assertion
+       * that ran too early.
+       */
+      await expect(insideButton).toBeFocused();
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+
+      await expect(insideButton).not.toHaveClass(/ion-focused/);
+    });
+
+    test('should show a focus indicator when focus is redirected during keyboard navigation', async ({
+      page,
+      pageUtils,
+    }) => {
+      await page.setContent(redirectContent, config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const insideButton = page.locator('ion-modal ion-button#inside-modal');
+
+      await page.locator('ion-button#open-modal').click();
+      await ionModalDidPresent.next();
+
+      // Shift turns keyboard mode back on without moving focus.
+      await pageUtils.pressKeys('Shift');
+      await page.locator('ion-app > div[tabindex="0"]').evaluate((el: HTMLElement) => el.focus());
+
+      await expect(insideButton).toBeFocused();
+      await expect(insideButton).toHaveClass(/ion-focused/);
+    });
   });
 });

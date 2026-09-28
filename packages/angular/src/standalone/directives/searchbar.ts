@@ -10,22 +10,23 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type { SearchbarInputEventDetail, SearchbarChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-searchbar.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const SEARCHBAR_INPUTS = [
-  'animated',
+  { name: 'animated', transform: nullableBooleanAttribute },
   'autocomplete',
-  'autocorrect',
+  { name: 'autocorrect', transform: nullableBooleanAttribute },
   'cancelButtonIcon',
   'cancelButtonText',
   'clearIcon',
   'color',
   'debounce',
-  'disabled',
+  { name: 'disabled', transform: nullableBooleanAttribute },
   'enterkeyhint',
   'inputmode',
   'mode',
@@ -34,14 +35,16 @@ const SEARCHBAR_INPUTS = [
   'searchIcon',
   'showCancelButton',
   'showClearButton',
-  'spellcheck',
+  { name: 'spellcheck', transform: nullableBooleanAttribute },
   'type',
   'value',
 ];
 
+const SEARCHBAR_PROXY_INPUTS = inputNames(SEARCHBAR_INPUTS);
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: SEARCHBAR_INPUTS,
+  inputs: SEARCHBAR_PROXY_INPUTS,
   methods: ['setFocus', 'getInputElement'],
 })
 @Component({

@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type {
   InputInputEventDetail as IIonInputInputInputEventDetail,
   InputChangeEventDetail as IIonInputInputChangeEventDetail,
@@ -18,21 +18,22 @@ import type {
 } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-input.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const INPUT_INPUTS = [
   'accept',
   'autocapitalize',
   'autocomplete',
-  'autocorrect',
-  'autofocus',
-  'clearInput',
-  'clearOnEdit',
+  { name: 'autocorrect', transform: nullableBooleanAttribute },
+  { name: 'autofocus', transform: nullableBooleanAttribute },
+  { name: 'clearInput', transform: nullableBooleanAttribute },
+  { name: 'clearOnEdit', transform: nullableBooleanAttribute },
   'color',
-  'counter',
+  { name: 'counter', transform: nullableBooleanAttribute },
   'counterFormatter',
   'debounce',
-  'disabled',
+  { name: 'disabled', transform: nullableBooleanAttribute },
   'enterkeyhint',
   'errorText',
   'fill',
@@ -45,23 +46,25 @@ const INPUT_INPUTS = [
   'min',
   'minlength',
   'mode',
-  'multiple',
+  { name: 'multiple', transform: nullableBooleanAttribute },
   'name',
   'pattern',
   'placeholder',
-  'readonly',
-  'required',
+  { name: 'readonly', transform: nullableBooleanAttribute },
+  { name: 'required', transform: nullableBooleanAttribute },
   'shape',
   'size',
-  'spellcheck',
+  { name: 'spellcheck', transform: nullableBooleanAttribute },
   'step',
   'type',
   'value',
 ];
 
+const INPUT_PROXY_INPUTS = inputNames(INPUT_INPUTS);
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: INPUT_INPUTS,
+  inputs: INPUT_PROXY_INPUTS,
   methods: ['setFocus', 'getInputElement'],
 })
 @Component({

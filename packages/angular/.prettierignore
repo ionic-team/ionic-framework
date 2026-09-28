@@ -5,3 +5,4 @@ proxies.ts
 src/lazy/directives/proxies-list.ts
 src/standalone/directives/ion-*.ts
 **/*/angular-component-lib/utils.ts
+**/*/angular-component-lib/boolean-attribute.ts

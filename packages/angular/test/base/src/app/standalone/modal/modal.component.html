@@ -1,6 +1,7 @@
 <button id="open-modal">Open Modal</button>
 
-<ion-modal trigger="open-modal">
+<!-- `focusTrap` stays `undefined` here: Angular's own `booleanAttribute` would coerce it to `false`. -->
+<ion-modal trigger="open-modal" [focusTrap]="unsetFocusTrap">
   <ng-template>
     <div class="ion-padding" id="modal-content">This is my modal content</div>
   </ng-template>

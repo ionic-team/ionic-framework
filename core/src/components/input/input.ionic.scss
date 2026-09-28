@@ -185,15 +185,15 @@
 // --------------------------------------------------
 
 :host(.input-shape-soft) {
-  --border-radius: #{globals.$ion-soft-xl};
+  --border-radius: #{globals.$ion-shape-soft-lg};
 }
 
 :host(.input-shape-round) {
-  --border-radius: #{globals.$ion-round-xl};
+  --border-radius: #{globals.$ion-shape-round-xl};
 }
 
 :host(.input-shape-rectangular) {
-  --border-radius: #{globals.$ion-rectangular-xl};
+  --border-radius: #{globals.$ion-shape-rectangular-xl};
 }
 
 // Ionic Input Password Toggle Sizes
@@ -286,7 +286,7 @@
 .input-clear-icon:focus-visible {
   @include globals.border-radius(globals.$ion-border-radius-100);
 
-  outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
+  outline: globals.$ion-border-size-050 solid globals.$ion-border-focus-default;
 
   opacity: 1;
 }

@@ -101,14 +101,22 @@ export interface IonicConfig {
   loadingSpinner?: SpinnerTypes | null;
 
   /**
-   * Overrides the default icon in all `<ion-refresh-content>` components.
+   * Overrides the default icon in all `<ion-refresher-content>` components.
    */
   refreshingIcon?: string;
 
   /**
-   * Overrides the default spinner type in all `<ion-refresh-content>` components.
+   * Overrides the default spinner type in all `<ion-refresher-content>`
+   * components.
    */
   refreshingSpinner?: SpinnerTypes | null;
+
+  /**
+   * Overrides the arrow icon shown on the circular pulling spinner
+   * in all `<ion-refresher-content>` components, only when the theme
+   * is `md` or `ionic`.
+   */
+  refresherArrowIcon?: string;
 
   /**
    * Overrides the default spinner type in all `<ion-infinite-scroll-content>` components.
@@ -154,6 +162,16 @@ export interface IonicConfig {
    * Overrides the collapsed icon for all `ion-breadcrumb` components.
    */
   breadcrumbCollapsedIcon?: string;
+
+  /**
+   * Overrides the checkmark icon for all `ion-checkbox` components.
+   */
+  checkboxCheckedIcon?: string;
+
+  /**
+   * Overrides the indeterminate icon for all `ion-checkbox` components.
+   */
+  checkboxIndeterminateIcon?: string;
 
   /**
    * Overrides the next icon for all `ion-datetime` components.
@@ -230,6 +248,12 @@ export interface IonicConfig {
    * Overrides the collapsed icon for all `ion-select` components.
    */
   selectCollapsedIcon?: string;
+
+  /**
+   * Overrides the cancel icon for all `ion-select-modal` components,
+   * only when the cancel button is set to display an icon.
+   */
+  selectModalCancelIcon?: string;
 
   /**
    * Overrides the checked icon for all `ion-toggle` components.

@@ -10,7 +10,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
+import { inputNames, ValueAccessor } from '@ionic/angular/common';
 import type {
   InputOtpInputEventDetail as IIonInputOtpInputEventDetail,
   InputOtpChangeEventDetail as IIonInputOtpChangeEventDetail,
@@ -19,17 +19,18 @@ import type {
 } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-input-otp.js';
 
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const INPUT_OTP_INPUTS = [
   'autocapitalize',
   'color',
-  'disabled',
+  { name: 'disabled', transform: nullableBooleanAttribute },
   'fill',
   'inputmode',
   'length',
   'pattern',
-  'readonly',
+  { name: 'readonly', transform: nullableBooleanAttribute },
   'separators',
   'shape',
   'size',
@@ -37,9 +38,11 @@ const INPUT_OTP_INPUTS = [
   'value',
 ];
 
+const INPUT_OTP_PROXY_INPUTS = inputNames(INPUT_OTP_INPUTS);
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: INPUT_OTP_INPUTS,
+  inputs: INPUT_OTP_PROXY_INPUTS,
   methods: ['setFocus'],
 })
 @Component({

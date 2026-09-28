@@ -19,6 +19,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#version-10x-components)
   - [Button](#version-10x-button)
   - [Card](#version-10x-card)
+  - [Checkbox](#version-10x-checkbox)
   - [Chip](#version-10x-chip)
   - [Col](#version-10x-col)
   - [Content](#version-10x-content)
@@ -36,6 +37,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Text](#version-10x-text)
   - [Textarea](#version-10x-textarea)
   - [Thumbnail](#version-10x-thumbnail)
+- [Framework Specific](#version-10x-framework-specific)
+  - [Angular](#version-10x-angular)
 
 <h2 id="version-10x-global-styles">Global Styles</h2>
 
@@ -80,6 +83,29 @@ This is a comprehensive list of the breaking changes introduced in the major ver
     font-size: 0.875rem;
   }
   ```
+
+<h4 id="version-10x-checkbox">Checkbox</h4>
+
+- The `container` CSS shadow part is now the element that wraps the checkmark instead of the `svg` element that draws it. The part still controls the checkbox's size, border, and background, so existing styles for those properties are unaffected.
+
+  SVG-specific properties such as `fill`, `stroke` and `stroke-width` no longer have any effect through `::part(container)` because `container` is no longer an SVG element. To set the color of the checkmark, use the `icon` part instead:
+
+  ```diff
+  - ion-checkbox::part(container) {
+  -   stroke: purple;
+  - }
+  + ion-checkbox::part(icon) {
+  +   color: purple;
+  + }
+  ```
+
+  The `--checkmark-color` CSS variable can also be used to set the checkmark color. Both `::part(icon)` and `--checkmark-color` apply to the default checkmark as well as to an icon set with the `checkboxCheckedIcon` or `checkboxIndeterminateIcon` global config options. In contrast, the `mark` part only applies to states that do not have a configured icon.
+
+  Setting `color` on the `container` part has no effect because the icon sets its own color.
+
+  To change the thickness of the default checkmark, use the `--checkmark-width` CSS variable or set `stroke-width` on the `mark` part. These apply to each state (`checked` and `indeterminate`) unless an icon is configured for that state. For example, when `checkboxCheckedIcon` is configured, these properties do not apply to the checked state but continue to apply to the indeterminate state. Similarly, when `checkboxIndeterminateIcon` is configured, they do not apply to the indeterminate state but continue to apply to the checked state.
+
+  For a configured Ionicon drawn with a stroke, set `--ionicon-stroke-width` on the `icon` part. For a configured SVG, set `stroke-width` on the `icon` part; this applies unless the SVG sets its own `stroke-width`.
 
 <h4 id="version-10x-chip">Chip</h4>
 
@@ -498,3 +524,32 @@ Use the **parent's** thumbnail tokens instead:
 <h5>Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-thumbnail.md`, `ion-thumbnail.ios`.
+
+<h2 id="version-10x-framework-specific">Framework Specific</h2>
+
+<h4 id="version-10x-angular">Angular</h4>
+
+**Boolean Inputs Are Type Checked**
+
+Boolean inputs now declare an input transform, so attribute presence is an explicitly supported way to set them:
+
+```html
+<!-- Both set `button` to `true` -->
+<ion-item button></ion-item>
+<ion-item [button]="true"></ion-item>
+```
+
+Declaring the transform also makes Angular type check these inputs, which it did not do before. The generated proxies declare no class fields, so Angular had nothing to check a binding against and accepted any value. Bindings that pass a value outside `boolean | string | null | undefined` now fail to compile. The common case is a truthiness binding:
+
+```diff
+- <ion-item [button]="items.length"></ion-item>
++ <ion-item [button]="items.length > 0"></ion-item>
+```
+
+```
+error TS2322: Type 'number' is not assignable to type 'string | boolean | null | undefined'.
+```
+
+Coerce the expression to a boolean, with an explicit comparison or `!!value`. Bindings that already pass a boolean, a string, `null` or `undefined` are unaffected.
+
+Coercion also moves from Stencil to Angular, which changes the result for numbers. `0` and `NaN` previously became `false` and now become `true`, matching Angular's own `booleanAttribute`. An app without `strictTemplates` gets no compile error for the binding above, so an empty list now renders the item as tappable rather than plain. Coercing the expression fixes both the type error and the runtime change.

@@ -25,11 +25,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
           ion-checkbox {
             --checkmark-width: 7;
           }
-
-          /* The ionic theme sets the width of the svg not stroke-width */
-          ion-checkbox.ionic {
-            --checkmark-width: 22px;
-          }
         </style>
 
         <ion-checkbox checked>Checkmark Width</ion-checkbox>

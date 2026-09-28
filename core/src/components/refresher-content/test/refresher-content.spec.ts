@@ -1,4 +1,6 @@
+import { setMode } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
+import { caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../../global/config';
 import { RefresherContent } from '../refresher-content';
@@ -49,5 +51,38 @@ describe('refresher-content: custom html', () => {
     const refreshingContent = page.body.querySelector('.refresher-refreshing-text')!;
     expect(refreshingContent.textContent).toContain('Custom Refreshing Text');
     expect(refreshingContent.querySelector('button.custom-refreshing-html')).toBe(null);
+  });
+});
+
+/**
+ * The arrow is only rendered for the md and ionic themes.
+ */
+describe('refresher-content: arrow icon', () => {
+  beforeEach(() => {
+    config.reset({});
+    setMode(() => 'md');
+  });
+
+  const newArrowIcon = async () => {
+    const page = await newSpecPage({
+      components: [RefresherContent],
+      html: `<ion-refresher-content></ion-refresher-content>`,
+    });
+
+    return page.body.querySelector('.arrow-container ion-icon')!;
+  };
+
+  it('should use the default arrow icon', async () => {
+    const arrowIcon = await newArrowIcon();
+
+    expect(arrowIcon.getAttribute('icon')).toBe(caretBackSharp);
+  });
+
+  it('should use the arrow icon set in the config', async () => {
+    config.reset({ refresherArrowIcon: 'custom-arrow-icon' });
+
+    const arrowIcon = await newArrowIcon();
+
+    expect(arrowIcon.getAttribute('icon')).toBe('custom-arrow-icon');
   });
 });
