@@ -14,20 +14,16 @@ export { MenuController } from './providers/menu-controller';
 export { ModalController } from './providers/modal-controller';
 export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
-export {
-  DomController,
-  NavController,
-  Config,
-  Platform,
-  NavParams,
-  IonModalToken,
-  IonicRouteStrategy,
+export { IonModalToken } from './providers/modal-token';
+export { DomController, NavController, Config, Platform, NavParams, IonicRouteStrategy } from '@ionic/angular/common';
+export type {
   ViewWillEnter,
   ViewDidEnter,
   ViewWillLeave,
   ViewDidLeave,
+  ModalOptions,
+  PopoverOptions,
 } from '@ionic/angular/common';
-export type { ModalOptions, PopoverOptions } from '@ionic/angular/common';
 export { IonNav } from './navigation/nav';
 export {
   IonCheckbox,
@@ -51,11 +47,13 @@ export {
   createGesture,
   iosTransitionAnimation,
   mdTransitionAnimation,
+  IonicSafeString,
   IonicSlides,
   getPlatforms,
   isPlatform,
   getTimeGivenProgression,
-  // TYPES
+} from '@ionic/core/components';
+export type {
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
@@ -93,7 +91,6 @@ export {
   ItemReorderEventDetail,
   ItemReorderCustomEvent,
   ItemSlidingCustomEvent,
-  IonicSafeString,
   LoadingOptions,
   MenuCustomEvent,
   ModalDragEventDetail,

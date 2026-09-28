@@ -218,7 +218,7 @@ The `push` and `pull` properties have been disabled. They now log a deprecation 
 
 **Example 1: Swap two columns**
 
-**Version up to 8.x**
+**Version up to 9.x**
 
 ```html
 <ion-grid>
@@ -230,7 +230,7 @@ The `push` and `pull` properties have been disabled. They now log a deprecation 
 </ion-grid>
 ```
 
-**Version 9.x+**
+**Version 10.x+**
 
 ```html
 <ion-grid>
@@ -246,7 +246,7 @@ The `push` and `pull` properties have been disabled. They now log a deprecation 
 
 To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `size="3" pull="9"`:
 
-**Version up to 8.x**
+**Version up to 9.x**
 
 ```html
 <ion-grid>
@@ -257,7 +257,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-**Version 9.x+**
+**Version 10.x+**
 
 ```html
 <ion-grid>
@@ -270,6 +270,8 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 
 **Example 3: Push**
 
+**Version up to 9.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -283,7 +285,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-**Version 9.x+**
+**Version 10.x+**
 
 ```html
 <ion-grid>
@@ -300,6 +302,8 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 
 **Example 4: Push and Pull**
 
+**Version up to 9.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -313,7 +317,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-**Version 9.x+**
+**Version 10.x+**
 
 ```html
 <ion-grid>
