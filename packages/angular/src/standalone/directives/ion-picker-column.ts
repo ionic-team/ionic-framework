@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -19,7 +18,7 @@ import { defineCustomElement as defineIonPickerColumn } from '@ionic/core/compon
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', { name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'theme', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'theme', 'value'],
   outputs: ['ionChange'],
 })
 export class IonPickerColumn {

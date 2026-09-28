@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -18,7 +17,7 @@ import { defineCustomElement as defineIonHeader } from '@ionic/core/components/i
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', { name: 'divider', transform: nullableBooleanAttribute }, 'mode', 'scrollEffect', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }],
+  inputs: ['collapse', 'divider', 'mode', 'scrollEffect', 'theme', 'translucent'],
 })
 export class IonHeader {
   protected el: HTMLIonHeaderElement;

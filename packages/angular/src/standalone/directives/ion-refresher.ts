@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -19,7 +18,7 @@ import { defineCustomElement as defineIonRefresher } from '@ionic/core/component
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['closeDuration', { name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration', 'theme'],
+  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration', 'theme'],
   outputs: ['ionRefresh', 'ionPull', 'ionStart', 'ionPullStart', 'ionPullEnd'],
 })
 export class IonRefresher {

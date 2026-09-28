@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -18,7 +17,7 @@ import { defineCustomElement as defineIonBackdrop } from '@ionic/core/components
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', { name: 'stopPropagation', transform: nullableBooleanAttribute }, { name: 'tappable', transform: nullableBooleanAttribute }, 'theme', { name: 'visible', transform: nullableBooleanAttribute }],
+  inputs: ['mode', 'stopPropagation', 'tappable', 'theme', 'visible'],
   outputs: ['ionBackdropTap'],
 })
 export class IonBackdrop {

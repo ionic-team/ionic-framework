@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -18,7 +17,7 @@ import { defineCustomElement as defineIonRadio } from '@ionic/core/components/io
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alignment', 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'justify', 'labelPlacement', 'mode', 'name', 'theme', 'value'],
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'theme', 'value'],
   outputs: ['ionFocus', 'ionBlur'],
 })
 export class IonRadio {

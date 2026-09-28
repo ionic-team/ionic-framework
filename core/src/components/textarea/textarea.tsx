@@ -6,7 +6,6 @@ import {
   Element,
   Event,
   Host,
-  Listen,
   Method,
   Prop,
   State,
@@ -15,16 +14,16 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { ClickController, NotchController, StartContainerController } from '@utils/forms';
+import type { NotchController, StartContainerController } from '@utils/forms';
 import {
-  createClickController,
+  getSlottedClickContent,
   createNotchController,
   createStartContainerController,
   checkInvalidState,
   reportValidityToElementInternals,
 } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
+import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady, raf } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -34,6 +33,13 @@ import type { Color } from '../../interface';
 import { getCounterText } from '../input/input.utils';
 
 import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
+
+/**
+ * Content that handles its own click, so clicking it should not also activate
+ * the textarea.
+ */
+const INTERACTIVE_CONTENT =
+  'a[href], button, details, embed, iframe, select, textarea, input:not([type="hidden"]), audio[controls], video[controls], [contenteditable]:not([contenteditable="false"]), .ion-activatable, .ion-focusable';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -90,7 +96,6 @@ export class Textarea implements ComponentInterface {
   private notchSpacerEl: HTMLElement | undefined;
   private startContainerController?: StartContainerController;
   private startContainerEl: HTMLElement | undefined;
-  private clickController?: ClickController;
 
   /**
    * The value of the textarea when the textarea is focused.
@@ -387,15 +392,6 @@ export class Textarea implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<FocusEvent>;
 
-  /**
-   * This prevents the native input from emitting the click event.
-   * Instead, the click event from the ion-textarea is emitted.
-   */
-  @Listen('click', { capture: true })
-  onClickCapture(ev: Event) {
-    this.clickController?.handleClickCapture(ev);
-  }
-
   connectedCallback() {
     const { el } = this;
 
@@ -420,8 +416,6 @@ export class Textarea implements ComponentInterface {
     );
 
     this.startContainerController.calculateStartContainerWidth();
-
-    this.clickController = createClickController(el, () => this.nativeInput);
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
@@ -454,6 +448,9 @@ export class Textarea implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    this.disarmFocusRejection?.();
+    this.rejectingFocus = false;
+
     if (Build.isBrowser) {
       document.dispatchEvent(
         new CustomEvent('ionInputDidUnload', {
@@ -517,6 +514,9 @@ export class Textarea implements ComponentInterface {
    */
   @Method()
   async setFocus() {
+    // An explicit focus request is never the focus a gesture delegated here.
+    this.rejectingFocus = false;
+
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
@@ -676,6 +676,14 @@ export class Textarea implements ComponentInterface {
   };
 
   private onFocus = (ev: FocusEvent) => {
+    // The textarea was not the target of this gesture, so drop the focus without reporting it.
+
+    if (this.rejectingFocus) {
+      this.nativeInput?.blur();
+
+      return;
+    }
+
     this.hasFocus = true;
     this.focusedValue = this.value;
 
@@ -683,6 +691,10 @@ export class Textarea implements ComponentInterface {
   };
 
   private onBlur = (ev: FocusEvent) => {
+    if (!this.hasFocus) {
+      return;
+    }
+
     this.hasFocus = false;
 
     if (this.focusedValue !== this.value) {
@@ -774,9 +786,61 @@ export class Textarea implements ComponentInterface {
    */
   private clickReachedConsumer = false;
 
-  private onLabelPointerDown = () => {
+  /** Whether focus delegated to the native textarea belongs to slotted content instead. */
+  private rejectingFocus = false;
+  private disarmFocusRejection?: () => void;
+
+  /** Whether the click started on slotted content that handles its own click. */
+  private isInteractiveSlottedContent(ev: MouseEvent) {
+    const slotted = getSlottedClickContent(ev, this.el);
+
+    if (slotted === null) {
+      return false;
+    }
+
+    /**
+     * The composed path is used rather than `closest` so that a control which
+     * keeps its interactive element inside its own shadow root, such as
+     * `ion-datetime-button`, is still recognized.
+     */
+    const path = ev.composedPath();
+
+    return path.slice(0, path.indexOf(slotted) + 1).some((node) => {
+      const el = node as Node;
+
+      return el.nodeType === Node.ELEMENT_NODE && (el as Element).matches(INTERACTIVE_CONTENT);
+    });
+  }
+
+  private onLabelPointerDown = (ev: MouseEvent) => {
     this.clickReachedConsumer = false;
+
+    if (ev.button !== 0 || !this.isInteractiveSlottedContent(ev)) {
+      return;
+    }
+
+    this.armFocusRejection();
   };
+
+  /**
+   * The gesture ends with the click the browser resolves from it, which can
+   * land outside the label when the pointer is released off the content, and
+   * for a drag or a release outside the window never arrives at all.
+   */
+  private armFocusRejection() {
+    this.disarmFocusRejection?.();
+    this.rejectingFocus = true;
+
+    const events = ['click', 'dragstart', 'pointercancel'];
+    const disarm = () => {
+      this.disarmFocusRejection = undefined;
+      events.forEach((name) => document.removeEventListener(name, disarm));
+      raf(() => (this.rejectingFocus = false));
+    };
+
+    this.disarmFocusRejection = disarm;
+    events.forEach((name) => document.addEventListener(name, disarm));
+  }
 
   private onLabelClick = (ev: MouseEvent) => {
     const target = ev.target as HTMLElement;
@@ -809,6 +873,8 @@ export class Textarea implements ComponentInterface {
 
     if (!isSlotted) {
       ev.stopPropagation();
+
+      return;
     }
   };
 

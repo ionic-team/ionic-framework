@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -18,7 +17,7 @@ import { defineCustomElement as defineIonSelectModal } from '@ionic/core/compone
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'cancelIcon', transform: nullableBooleanAttribute }, 'cancelText', 'header', { name: 'multiple', transform: nullableBooleanAttribute }, 'options'],
+  inputs: ['cancelIcon', 'cancelText', 'header', 'multiple', 'options'],
 })
 export class IonSelectModal {
   protected el: HTMLIonSelectModalElement;

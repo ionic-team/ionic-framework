@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -19,7 +18,7 @@ import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/comp
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'position', { name: 'preserveRerenderScrollPosition', transform: nullableBooleanAttribute }, 'theme', 'threshold'],
+  inputs: ['disabled', 'mode', 'position', 'preserveRerenderScrollPosition', 'theme', 'threshold'],
   outputs: ['ionInfinite'],
 })
 export class IonInfiniteScroll {

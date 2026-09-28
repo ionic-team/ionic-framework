@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -18,7 +17,7 @@ import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'duration', 'mode', 'name', { name: 'paused', transform: nullableBooleanAttribute }, 'size', 'theme'],
+  inputs: ['color', 'duration', 'mode', 'name', 'paused', 'size', 'theme'],
 })
 export class IonSpinner {
   protected el: HTMLIonSpinnerElement;

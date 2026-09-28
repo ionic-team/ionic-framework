@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Output, NgZone } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import { Components } from '@ionic/core';
 
@@ -16,7 +15,7 @@ import { Components } from '@ionic/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'disabled', transform: nullableBooleanAttribute }, 'mode', { name: 'readonly', transform: nullableBooleanAttribute }, 'theme', 'toggleIcon', 'toggleIconSlot', 'value'],
+  inputs: ['disabled', 'mode', 'readonly', 'theme', 'toggleIcon', 'toggleIconSlot', 'value'],
   standalone: false
 })
 export class IonAccordion {
@@ -39,7 +38,7 @@ export declare interface IonAccordion extends Components.IonAccordion {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, { name: 'disabled', transform: nullableBooleanAttribute }, 'expand', 'mode', { name: 'multiple', transform: nullableBooleanAttribute }, { name: 'readonly', transform: nullableBooleanAttribute }, 'shape', 'theme', 'value'],
+  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'shape', 'theme', 'value'],
   outputs: ['ionChange'],
   standalone: false
 })
@@ -75,7 +74,7 @@ This event will not emit when programmatically setting the `value` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, { name: 'backdropDismiss', transform: nullableBooleanAttribute }, 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', { name: 'isOpen', transform: nullableBooleanAttribute }, { name: 'keyboardClose', transform: nullableBooleanAttribute }, 'leaveAnimation', 'mode', 'subHeader', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }, 'trigger'],
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'subHeader', 'theme', 'translucent', 'trigger'],
   outputs: ['ionActionSheetDidPresent', 'ionActionSheetWillPresent', 'ionActionSheetWillDismiss', 'ionActionSheetDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss'],
   standalone: false
 })
@@ -148,7 +147,7 @@ Shorthand for ionActionSheetDidDismiss.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, { name: 'backdropDismiss', transform: nullableBooleanAttribute }, 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'inputs', { name: 'isOpen', transform: nullableBooleanAttribute }, { name: 'keyboardClose', transform: nullableBooleanAttribute }, 'leaveAnimation', 'message', 'mode', 'subHeader', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }, 'trigger'],
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'inputs', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'subHeader', 'theme', 'translucent', 'trigger'],
   outputs: ['ionAlertDidPresent', 'ionAlertWillPresent', 'ionAlertWillDismiss', 'ionAlertDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss'],
   standalone: false
 })
@@ -244,7 +243,7 @@ export declare interface IonApp extends Components.IonApp {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'shape', 'size', 'theme'],
+  inputs: ['disabled', 'mode', 'shape', 'size', 'theme'],
   standalone: false
 })
 export class IonAvatar {
@@ -267,7 +266,7 @@ export declare interface IonAvatar extends Components.IonAvatar {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', { name: 'stopPropagation', transform: nullableBooleanAttribute }, { name: 'tappable', transform: nullableBooleanAttribute }, 'theme', { name: 'visible', transform: nullableBooleanAttribute }],
+  inputs: ['mode', 'stopPropagation', 'tappable', 'theme', 'visible'],
   outputs: ['ionBackdropTap'],
   standalone: false
 })
@@ -322,7 +321,7 @@ export declare interface IonBadge extends Components.IonBadge {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'active', transform: nullableBooleanAttribute }, 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', { name: 'separator', transform: nullableBooleanAttribute }, 'target', 'theme'],
+  inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target', 'theme'],
   outputs: ['ionFocus', 'ionBlur'],
   standalone: false
 })
@@ -392,7 +391,7 @@ export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['buttonType', 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', { name: 'strong', transform: nullableBooleanAttribute }, 'target', 'theme', 'type'],
+  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'theme', 'type'],
   outputs: ['ionFocus', 'ionBlur'],
   standalone: false
 })
@@ -429,7 +428,7 @@ export declare interface IonButton extends Components.IonButton {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'collapse', transform: nullableBooleanAttribute }, 'mode', 'theme'],
+  inputs: ['collapse', 'mode', 'theme'],
   standalone: false
 })
 export class IonButtons {
@@ -452,7 +451,7 @@ export declare interface IonButtons extends Components.IonButtons {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'button', transform: nullableBooleanAttribute }, 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'theme', 'type'],
+  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'theme', 'type'],
   standalone: false
 })
 export class IonCard {
@@ -498,7 +497,7 @@ export declare interface IonCardContent extends Components.IonCardContent {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }],
+  inputs: ['color', 'mode', 'theme', 'translucent'],
   standalone: false
 })
 export class IonCardHeader {
@@ -567,7 +566,7 @@ export declare interface IonCardTitle extends Components.IonCardTitle {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alignment', { name: 'checked', transform: nullableBooleanAttribute }, 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'errorText', 'helperText', { name: 'indeterminate', transform: nullableBooleanAttribute }, 'justify', 'labelPlacement', 'mode', 'name', { name: 'required', transform: nullableBooleanAttribute }, 'shape', 'size', 'theme', 'value'],
+  inputs: ['alignment', 'checked', 'color', 'disabled', 'errorText', 'helperText', 'indeterminate', 'justify', 'labelPlacement', 'mode', 'name', 'required', 'shape', 'size', 'theme', 'value'],
   outputs: ['ionChange', 'ionFocus', 'ionBlur'],
   standalone: false
 })
@@ -613,7 +612,7 @@ setting the `checked` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', { name: 'disabled', transform: nullableBooleanAttribute }, 'hue', 'mode', { name: 'outline', transform: nullableBooleanAttribute }, 'shape', 'size', 'theme'],
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme'],
   standalone: false
 })
 export class IonChip {
@@ -660,7 +659,7 @@ export declare interface IonCol extends Components.IonCol {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'fixedSlotPlacement', { name: 'forceOverscroll', transform: nullableBooleanAttribute }, { name: 'fullscreen', transform: nullableBooleanAttribute }, 'mode', { name: 'scrollEvents', transform: nullableBooleanAttribute }, { name: 'scrollX', transform: nullableBooleanAttribute }, { name: 'scrollY', transform: nullableBooleanAttribute }, 'theme'],
+  inputs: ['color', 'fixedSlotPlacement', 'forceOverscroll', 'fullscreen', 'mode', 'scrollEvents', 'scrollX', 'scrollY', 'theme'],
   outputs: ['ionScrollStart', 'ionScroll', 'ionScrollEnd'],
   standalone: false
 })
@@ -708,7 +707,7 @@ Set `scrollEvents` to `true` to enable.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', { name: 'disabled', transform: nullableBooleanAttribute }, 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', { name: 'multiple', transform: nullableBooleanAttribute }, 'name', { name: 'preferWheel', transform: nullableBooleanAttribute }, 'presentation', { name: 'readonly', transform: nullableBooleanAttribute }, { name: 'showAdjacentDays', transform: nullableBooleanAttribute }, { name: 'showClearButton', transform: nullableBooleanAttribute }, { name: 'showDefaultButtons', transform: nullableBooleanAttribute }, { name: 'showDefaultTimeLabel', transform: nullableBooleanAttribute }, { name: 'showDefaultTitle', transform: nullableBooleanAttribute }, 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showAdjacentDays', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
   outputs: ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur'],
   standalone: false
 })
@@ -758,7 +757,7 @@ This event will not emit when programmatically setting the `value` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'datetime', { name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'theme'],
+  inputs: ['color', 'datetime', 'disabled', 'mode', 'theme'],
   standalone: false
 })
 export class IonDatetimeButton {
@@ -781,7 +780,7 @@ export declare interface IonDatetimeButton extends Components.IonDatetimeButton 
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'inset', transform: nullableBooleanAttribute }, 'spacing'],
+  inputs: ['inset', 'spacing'],
   standalone: false
 })
 export class IonDivider {
@@ -805,7 +804,7 @@ export declare interface IonDivider extends Components.IonDivider {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'activated', transform: nullableBooleanAttribute }, { name: 'edge', transform: nullableBooleanAttribute }, 'horizontal', 'mode', 'theme', 'vertical'],
+  inputs: ['activated', 'edge', 'horizontal', 'mode', 'theme', 'vertical'],
   standalone: false
 })
 export class IonFab {
@@ -828,7 +827,7 @@ export declare interface IonFab extends Components.IonFab {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'activated', transform: nullableBooleanAttribute }, 'closeIcon', 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', { name: 'show', transform: nullableBooleanAttribute }, 'size', 'target', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }, 'type'],
+  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'theme', 'translucent', 'type'],
   outputs: ['ionFocus', 'ionBlur'],
   standalone: false
 })
@@ -865,7 +864,7 @@ export declare interface IonFabButton extends Components.IonFabButton {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'activated', transform: nullableBooleanAttribute }, 'mode', 'side', 'theme'],
+  inputs: ['activated', 'mode', 'side', 'theme'],
   standalone: false
 })
 export class IonFabList {
@@ -888,7 +887,7 @@ export declare interface IonFabList extends Components.IonFabList {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', 'mode', 'scrollEffect', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }],
+  inputs: ['collapse', 'mode', 'scrollEffect', 'theme', 'translucent'],
   standalone: false
 })
 export class IonFooter {
@@ -957,7 +956,7 @@ export declare interface IonGalleryItem extends Components.IonGalleryItem {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'fixed', transform: nullableBooleanAttribute }, 'mode', 'theme'],
+  inputs: ['fixed', 'mode', 'theme'],
   standalone: false
 })
 export class IonGrid {
@@ -980,7 +979,7 @@ export declare interface IonGrid extends Components.IonGrid {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', { name: 'divider', transform: nullableBooleanAttribute }, 'mode', 'scrollEffect', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }],
+  inputs: ['collapse', 'divider', 'mode', 'scrollEffect', 'theme', 'translucent'],
   standalone: false
 })
 export class IonHeader {
@@ -1003,7 +1002,7 @@ export declare interface IonHeader extends Components.IonHeader {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', { name: 'flipRtl', transform: nullableBooleanAttribute }, 'icon', 'ios', { name: 'lazy', transform: nullableBooleanAttribute }, 'md', 'mode', 'name', { name: 'sanitize', transform: nullableBooleanAttribute }, 'size', 'src'],
+  inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src'],
   standalone: false
 })
 export class IonIcon {
@@ -1069,7 +1068,7 @@ export declare interface IonImg extends Components.IonImg {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'position', { name: 'preserveRerenderScrollPosition', transform: nullableBooleanAttribute }, 'theme', 'threshold'],
+  inputs: ['disabled', 'mode', 'position', 'preserveRerenderScrollPosition', 'theme', 'threshold'],
   outputs: ['ionInfinite'],
   standalone: false
 })
@@ -1128,7 +1127,7 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autocapitalize', 'autocomplete', { name: 'autocorrect', transform: nullableBooleanAttribute }, { name: 'autofocus', transform: nullableBooleanAttribute }, { name: 'clearInput', transform: nullableBooleanAttribute }, 'clearInputIcon', { name: 'clearOnEdit', transform: nullableBooleanAttribute }, 'color', { name: 'counter', transform: nullableBooleanAttribute }, 'counterFormatter', 'debounce', { name: 'disabled', transform: nullableBooleanAttribute }, 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'max', 'maxlength', 'min', 'minlength', 'mode', { name: 'multiple', transform: nullableBooleanAttribute }, 'name', 'pattern', 'placeholder', { name: 'readonly', transform: nullableBooleanAttribute }, { name: 'required', transform: nullableBooleanAttribute }, 'shape', 'size', { name: 'spellcheck', transform: nullableBooleanAttribute }, 'step', 'theme', 'type', 'value'],
+  inputs: ['autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearInputIcon', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'size', 'spellcheck', 'step', 'theme', 'type', 'value'],
   outputs: ['ionInput', 'ionChange', 'ionBlur', 'ionFocus'],
   standalone: false
 })
@@ -1196,7 +1195,7 @@ This event will not emit when programmatically setting the `value` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autocapitalize', 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'fill', 'inputmode', 'length', 'mode', 'pattern', { name: 'readonly', transform: nullableBooleanAttribute }, 'separators', 'shape', 'size', 'theme', 'type', 'value'],
+  inputs: ['autocapitalize', 'color', 'disabled', 'fill', 'inputmode', 'length', 'mode', 'pattern', 'readonly', 'separators', 'shape', 'size', 'theme', 'type', 'value'],
   outputs: ['ionInput', 'ionChange', 'ionComplete', 'ionBlur', 'ionFocus'],
   standalone: false
 })
@@ -1288,7 +1287,7 @@ export declare interface IonInputPasswordToggle extends Components.IonInputPassw
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'button', transform: nullableBooleanAttribute }, 'color', { name: 'detail', transform: nullableBooleanAttribute }, 'detailIcon', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'theme', 'type'],
+  inputs: ['button', 'color', 'detail', 'detailIcon', 'disabled', 'download', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'theme', 'type'],
   standalone: false
 })
 export class IonItem {
@@ -1311,7 +1310,7 @@ export declare interface IonItem extends Components.IonItem {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', { name: 'sticky', transform: nullableBooleanAttribute }, 'theme'],
+  inputs: ['color', 'mode', 'sticky', 'theme'],
   standalone: false
 })
 export class IonItemDivider {
@@ -1357,7 +1356,7 @@ export declare interface IonItemGroup extends Components.IonItemGroup {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', { name: 'expandable', transform: nullableBooleanAttribute }, 'href', 'hue', 'mode', 'rel', 'shape', 'target', 'theme', 'type'],
+  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'hue', 'mode', 'rel', 'shape', 'target', 'theme', 'type'],
   standalone: false
 })
 export class IonItemOption {
@@ -1413,7 +1412,7 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'theme'],
+  inputs: ['disabled', 'mode', 'theme'],
   outputs: ['ionDrag'],
   standalone: false
 })
@@ -1469,7 +1468,7 @@ export declare interface IonLabel extends Components.IonLabel {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'inset', transform: nullableBooleanAttribute }, 'lines', 'mode', 'shape', 'theme'],
+  inputs: ['inset', 'lines', 'mode', 'shape', 'theme'],
   standalone: false
 })
 export class IonList {
@@ -1516,7 +1515,7 @@ export declare interface IonListHeader extends Components.IonListHeader {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, { name: 'backdropDismiss', transform: nullableBooleanAttribute }, 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', { name: 'isOpen', transform: nullableBooleanAttribute }, { name: 'keyboardClose', transform: nullableBooleanAttribute }, 'leaveAnimation', 'message', 'mode', { name: 'showBackdrop', transform: nullableBooleanAttribute }, 'spinner', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }, 'trigger'],
+  inputs: ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'theme', 'translucent', 'trigger'],
   outputs: ['ionLoadingDidPresent', 'ionLoadingWillPresent', 'ionLoadingWillDismiss', 'ionLoadingDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss'],
   standalone: false
 })
@@ -1589,7 +1588,7 @@ Shorthand for ionLoadingDidDismiss.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['contentId', { name: 'disabled', transform: nullableBooleanAttribute }, 'maxEdgeStart', 'menuId', 'mode', 'side', { name: 'swipeGesture', transform: nullableBooleanAttribute }, 'theme', 'type'],
+  inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'mode', 'side', 'swipeGesture', 'theme', 'type'],
   outputs: ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose'],
   standalone: false
 })
@@ -1637,7 +1636,7 @@ export declare interface IonMenu extends Components.IonMenu {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'autoHide', transform: nullableBooleanAttribute }, 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'menu', 'mode', 'theme', 'type'],
+  inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'theme', 'type'],
   standalone: false
 })
 export class IonMenuButton {
@@ -1660,7 +1659,7 @@ export declare interface IonMenuButton extends Components.IonMenuButton {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'autoHide', transform: nullableBooleanAttribute }, 'menu', 'mode', 'theme'],
+  inputs: ['autoHide', 'menu', 'mode', 'theme'],
   standalone: false
 })
 export class IonMenuToggle {
@@ -1753,7 +1752,7 @@ export declare interface IonPicker extends Components.IonPicker {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', { name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'theme', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'theme', 'value'],
   outputs: ['ionChange'],
   standalone: false
 })
@@ -1788,7 +1787,7 @@ This event will not emit when programmatically setting the `value` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', { name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'theme', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'theme', 'value'],
   standalone: false
 })
 export class IonPickerColumnOption {
@@ -1811,7 +1810,7 @@ export declare interface IonPickerColumnOption extends Components.IonPickerColum
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['buffer', 'color', 'mode', { name: 'reversed', transform: nullableBooleanAttribute }, 'shape', 'theme', 'type', 'value'],
+  inputs: ['buffer', 'color', 'mode', 'reversed', 'shape', 'theme', 'type', 'value'],
   standalone: false
 })
 export class IonProgressBar {
@@ -1834,7 +1833,7 @@ export declare interface IonProgressBar extends Components.IonProgressBar {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alignment', 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'justify', 'labelPlacement', 'mode', 'name', 'theme', 'value'],
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'theme', 'value'],
   outputs: ['ionFocus', 'ionBlur'],
   standalone: false
 })
@@ -1871,7 +1870,7 @@ export declare interface IonRadio extends Components.IonRadio {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'allowEmptySelection', transform: nullableBooleanAttribute }, 'compareWith', 'errorText', 'helperText', 'mode', 'name', 'theme', 'value'],
+  inputs: ['allowEmptySelection', 'compareWith', 'errorText', 'helperText', 'mode', 'name', 'theme', 'value'],
   outputs: ['ionChange'],
   standalone: false
 })
@@ -1906,7 +1905,7 @@ This event will not emit when programmatically setting the `value` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeBarStart', 'color', 'debounce', { name: 'disabled', transform: nullableBooleanAttribute }, { name: 'dualKnobs', transform: nullableBooleanAttribute }, 'label', 'labelPlacement', 'max', 'min', 'mode', 'name', { name: 'pin', transform: nullableBooleanAttribute }, 'pinFormatter', { name: 'snaps', transform: nullableBooleanAttribute }, 'step', 'theme', { name: 'ticks', transform: nullableBooleanAttribute }, 'value'],
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'label', 'labelPlacement', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'theme', 'ticks', 'value'],
   outputs: ['ionChange', 'ionInput', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd'],
   standalone: false
 })
@@ -1976,7 +1975,7 @@ mouse drag, touch gesture, or keyboard interaction.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['closeDuration', { name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration', 'theme'],
+  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration', 'theme'],
   outputs: ['ionRefresh', 'ionPull', 'ionStart', 'ionPullStart', 'ionPullEnd'],
   standalone: false
 })
@@ -2082,7 +2081,7 @@ export declare interface IonReorder extends Components.IonReorder {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'theme'],
+  inputs: ['disabled', 'mode', 'theme'],
   outputs: ['ionItemReorder', 'ionReorderStart', 'ionReorderMove', 'ionReorderEnd'],
   standalone: false
 })
@@ -2188,7 +2187,7 @@ export declare interface IonRow extends Components.IonRow {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, 'autocapitalize', 'autocomplete', { name: 'autocorrect', transform: nullableBooleanAttribute }, 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', { name: 'disabled', transform: nullableBooleanAttribute }, 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'searchIcon', 'shape', 'showCancelButton', 'showClearButton', 'size', { name: 'spellcheck', transform: nullableBooleanAttribute }, 'theme', 'type', 'value'],
+  inputs: ['animated', 'autocapitalize', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'searchIcon', 'shape', 'showCancelButton', 'showClearButton', 'size', 'spellcheck', 'theme', 'type', 'value'],
   outputs: ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus'],
   standalone: false
 })
@@ -2256,7 +2255,7 @@ This event will not emit when programmatically setting the `value` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', { name: 'disabled', transform: nullableBooleanAttribute }, 'mode', { name: 'scrollable', transform: nullableBooleanAttribute }, { name: 'selectOnFocus', transform: nullableBooleanAttribute }, { name: 'swipeGesture', transform: nullableBooleanAttribute }, 'theme', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'theme', 'value'],
   outputs: ['ionChange'],
   standalone: false
 })
@@ -2291,7 +2290,7 @@ This event will not emit when programmatically setting the `value` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['contentId', { name: 'disabled', transform: nullableBooleanAttribute }, 'layout', 'mode', 'theme', 'type', 'value'],
+  inputs: ['contentId', 'disabled', 'layout', 'mode', 'theme', 'type', 'value'],
   standalone: false
 })
 export class IonSegmentButton {
@@ -2336,7 +2335,7 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'disabled', transform: nullableBooleanAttribute }, { name: 'swipeGesture', transform: nullableBooleanAttribute }],
+  inputs: ['disabled', 'swipeGesture'],
   outputs: ['ionSegmentViewScroll'],
   standalone: false
 })
@@ -2370,7 +2369,7 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'cancelIcon', transform: nullableBooleanAttribute }, 'cancelText', 'color', 'compareWith', { name: 'disabled', transform: nullableBooleanAttribute }, 'errorText', 'expandedIcon', 'fill', 'helperText', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'mode', { name: 'multiple', transform: nullableBooleanAttribute }, 'name', 'okText', 'placeholder', { name: 'required', transform: nullableBooleanAttribute }, 'selectedText', 'shape', 'size', 'theme', 'toggleIcon', 'value'],
+  inputs: ['cancelIcon', 'cancelText', 'color', 'compareWith', 'disabled', 'errorText', 'expandedIcon', 'fill', 'helperText', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'required', 'selectedText', 'shape', 'size', 'theme', 'toggleIcon', 'value'],
   outputs: ['ionChange', 'ionCancel', 'ionDismiss', 'ionFocus', 'ionBlur'],
   standalone: false
 })
@@ -2425,7 +2424,7 @@ This event will not emit when programmatically setting the `value` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'cancelIcon', transform: nullableBooleanAttribute }, 'cancelText', 'header', { name: 'multiple', transform: nullableBooleanAttribute }, 'options'],
+  inputs: ['cancelIcon', 'cancelText', 'header', 'multiple', 'options'],
   standalone: false
 })
 export class IonSelectModal {
@@ -2448,7 +2447,7 @@ export declare interface IonSelectModal extends Components.IonSelectModal {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['description', { name: 'disabled', transform: nullableBooleanAttribute }, 'justify', 'labelPlacement', 'mode', 'theme', 'value'],
+  inputs: ['description', 'disabled', 'justify', 'labelPlacement', 'mode', 'theme', 'value'],
   standalone: false
 })
 export class IonSelectOption {
@@ -2471,7 +2470,7 @@ export declare interface IonSelectOption extends Components.IonSelectOption {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, 'mode', 'theme'],
+  inputs: ['animated', 'mode', 'theme'],
   standalone: false
 })
 export class IonSkeletonText {
@@ -2494,7 +2493,7 @@ export declare interface IonSkeletonText extends Components.IonSkeletonText {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'duration', 'mode', 'name', { name: 'paused', transform: nullableBooleanAttribute }, 'size', 'theme'],
+  inputs: ['color', 'duration', 'mode', 'name', 'paused', 'size', 'theme'],
   standalone: false
 })
 export class IonSpinner {
@@ -2517,7 +2516,7 @@ export declare interface IonSpinner extends Components.IonSpinner {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['contentId', { name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'theme', 'when'],
+  inputs: ['contentId', 'disabled', 'mode', 'theme', 'when'],
   outputs: ['ionSplitPaneVisible'],
   standalone: false
 })
@@ -2573,7 +2572,7 @@ export declare interface IonTab extends Components.IonTab {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'expand', 'mode', 'scrollEffect', 'selectedTab', 'shape', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }],
+  inputs: ['color', 'expand', 'mode', 'scrollEffect', 'selectedTab', 'shape', 'theme', 'translucent'],
   standalone: false
 })
 export class IonTabBar {
@@ -2596,7 +2595,7 @@ export declare interface IonTabBar extends Components.IonTabBar {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'disabled', transform: nullableBooleanAttribute }, 'download', 'href', 'layout', 'mode', 'rel', { name: 'selected', transform: nullableBooleanAttribute }, 'shape', 'tab', 'target', 'theme'],
+  inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'shape', 'tab', 'target', 'theme'],
   standalone: false
 })
 export class IonTabButton {
@@ -2643,7 +2642,7 @@ export declare interface IonText extends Components.IonText {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'autoGrow', transform: nullableBooleanAttribute }, 'autocapitalize', { name: 'autofocus', transform: nullableBooleanAttribute }, { name: 'clearOnEdit', transform: nullableBooleanAttribute }, 'color', 'cols', { name: 'counter', transform: nullableBooleanAttribute }, 'counterFormatter', 'debounce', { name: 'disabled', transform: nullableBooleanAttribute }, 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', { name: 'readonly', transform: nullableBooleanAttribute }, { name: 'required', transform: nullableBooleanAttribute }, 'rows', 'shape', 'size', { name: 'spellcheck', transform: nullableBooleanAttribute }, 'theme', 'value', 'wrap'],
+  inputs: ['autoGrow', 'autocapitalize', 'autofocus', 'clearOnEdit', 'color', 'cols', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'readonly', 'required', 'rows', 'shape', 'size', 'spellcheck', 'theme', 'value', 'wrap'],
   outputs: ['ionChange', 'ionInput', 'ionBlur', 'ionFocus'],
   standalone: false
 })
@@ -2748,7 +2747,7 @@ export declare interface IonTitle extends Components.IonTitle {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'hue', 'icon', { name: 'isOpen', transform: nullableBooleanAttribute }, { name: 'keyboardClose', transform: nullableBooleanAttribute }, 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'shape', 'swipeGesture', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }, 'trigger'],
+  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'hue', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'shape', 'swipeGesture', 'theme', 'translucent', 'trigger'],
   outputs: ['ionToastDidPresent', 'ionToastWillPresent', 'ionToastWillDismiss', 'ionToastDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss'],
   standalone: false
 })
@@ -2820,7 +2819,7 @@ Shorthand for ionToastDidDismiss.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alignment', { name: 'checked', transform: nullableBooleanAttribute }, 'color', { name: 'disabled', transform: nullableBooleanAttribute }, { name: 'enableOnOffLabels', transform: nullableBooleanAttribute }, 'errorText', 'helperText', 'justify', 'labelPlacement', 'mode', 'name', { name: 'required', transform: nullableBooleanAttribute }, 'theme', 'value'],
+  inputs: ['alignment', 'checked', 'color', 'disabled', 'enableOnOffLabels', 'errorText', 'helperText', 'justify', 'labelPlacement', 'mode', 'name', 'required', 'theme', 'value'],
   outputs: ['ionChange', 'ionFocus', 'ionBlur'],
   standalone: false
 })

@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -18,7 +17,7 @@ import { defineCustomElement as defineIonAvatar } from '@ionic/core/components/i
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'disabled', transform: nullableBooleanAttribute }, 'mode', 'shape', 'size', 'theme'],
+  inputs: ['disabled', 'mode', 'shape', 'size', 'theme'],
 })
 export class IonAvatar {
   protected el: HTMLIonAvatarElement;

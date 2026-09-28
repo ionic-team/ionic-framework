@@ -3,7 +3,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, EventEmitter, Output } from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
-import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
 
 import type { Components } from '@ionic/core/components';
 
@@ -19,7 +18,7 @@ import { defineCustomElement as defineIonLoading } from '@ionic/core/components/
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'animated', transform: nullableBooleanAttribute }, { name: 'backdropDismiss', transform: nullableBooleanAttribute }, 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', { name: 'isOpen', transform: nullableBooleanAttribute }, { name: 'keyboardClose', transform: nullableBooleanAttribute }, 'leaveAnimation', 'message', 'mode', { name: 'showBackdrop', transform: nullableBooleanAttribute }, 'spinner', 'theme', { name: 'translucent', transform: nullableBooleanAttribute }, 'trigger'],
+  inputs: ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'theme', 'translucent', 'trigger'],
   outputs: ['ionLoadingDidPresent', 'ionLoadingWillPresent', 'ionLoadingWillDismiss', 'ionLoadingDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss'],
 })
 export class IonLoading {
