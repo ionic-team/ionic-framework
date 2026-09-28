@@ -358,7 +358,21 @@ export class Header implements ComponentInterface {
         }}
         {...inheritedAttributes}
       >
-        {theme !== 'md' && translucent && <div class="header-background"></div>}
+        {theme !== 'md' && translucent && (
+          <div class="header-background">
+            {theme === 'ionic' && (
+              <div class="header-background-blur" aria-hidden="true">
+                <div class="header-background-blur-layer"></div>
+                <div class="header-background-blur-layer"></div>
+                <div class="header-background-blur-layer"></div>
+                <div class="header-background-blur-layer"></div>
+                <div class="header-background-blur-layer"></div>
+                <div class="header-background-blur-layer"></div>
+                <div class="header-background-blur-layer"></div>
+              </div>
+            )}
+          </div>
+        )}
         <slot></slot>
       </Host>
     );
