@@ -652,6 +652,15 @@ export const defaultTheme: DefaultTheme = {
             top: '5px',
           },
         },
+
+        xxl: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+        },
       },
     },
 
@@ -737,6 +746,17 @@ export const defaultTheme: DefaultTheme = {
           },
 
           width: '1140px',
+        },
+
+        xxl: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+
+          width: '1320px',
         },
       },
 

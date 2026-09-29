@@ -12,5 +12,5 @@ export type IonGridRecipe = {
 };
 
 // TODO(FW-7285): Replace with global breakpoints
-export const ION_GRID_BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+export const ION_GRID_BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
 export type IonGridBreakpoint = (typeof ION_GRID_BREAKPOINTS)[number];

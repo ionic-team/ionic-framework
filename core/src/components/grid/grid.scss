@@ -34,11 +34,17 @@
    * @prop --ion-grid-breakpoint-xl-padding-bottom: Bottom padding on xl screens
    * @prop --ion-grid-breakpoint-xl-padding-start: Start padding on xl screens
    *
+   * @prop --ion-grid-breakpoint-xxl-padding-top: Top padding on xxl screens
+   * @prop --ion-grid-breakpoint-xxl-padding-end: End padding on xxl screens
+   * @prop --ion-grid-breakpoint-xxl-padding-bottom: Bottom padding on xxl screens
+   * @prop --ion-grid-breakpoint-xxl-padding-start: Start padding on xxl screens
+   *
    * @prop --ion-grid-breakpoint-xs-width: Width of the fixed grid on xs screens
    * @prop --ion-grid-breakpoint-sm-width: Width of the fixed grid on sm screens
    * @prop --ion-grid-breakpoint-md-width: Width of the fixed grid on md screens
    * @prop --ion-grid-breakpoint-lg-width: Width of the fixed grid on lg screens
    * @prop --ion-grid-breakpoint-xl-width: Width of the fixed grid on xl screens
+   * @prop --ion-grid-breakpoint-xxl-width: Width of the fixed grid on xxl screens
    */
 
   @include grid.make-breakpoint-padding(vars.$grid-paddings);
