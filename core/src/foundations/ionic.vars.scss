@@ -1,56 +1,56 @@
 // Primitives
-$ion-primitives-neutral-100: var(--token-primitives-neutral-100, #f3f3f3);
-$ion-primitives-neutral-100-rgb: var(--token-primitives-neutral-100-rgb, 243, 243, 243);
-$ion-primitives-neutral-200: var(--token-primitives-neutral-200, #eae9e9);
-$ion-primitives-neutral-200-rgb: var(--token-primitives-neutral-200-rgb, 234, 233, 233);
-$ion-primitives-neutral-300: var(--token-primitives-neutral-300, #e0e0e0);
-$ion-primitives-neutral-300-rgb: var(--token-primitives-neutral-300-rgb, 224, 224, 224);
-$ion-primitives-neutral-400: var(--token-primitives-neutral-400, #d5d5d5);
-$ion-primitives-neutral-400-rgb: var(--token-primitives-neutral-400-rgb, 213, 213, 213);
-$ion-primitives-neutral-500: var(--token-primitives-neutral-500, #a2a2a2);
-$ion-primitives-neutral-500-rgb: var(--token-primitives-neutral-500-rgb, 162, 162, 162);
-$ion-primitives-neutral-600: var(--token-primitives-neutral-600, #8c8c8c);
-$ion-primitives-neutral-600-rgb: var(--token-primitives-neutral-600-rgb, 140, 140, 140);
-$ion-primitives-neutral-700: var(--token-primitives-neutral-700, #777777);
-$ion-primitives-neutral-700-rgb: var(--token-primitives-neutral-700-rgb, 119, 119, 119);
-$ion-primitives-neutral-800: var(--token-primitives-neutral-800, #626262);
-$ion-primitives-neutral-800-rgb: var(--token-primitives-neutral-800-rgb, 98, 98, 98);
-$ion-primitives-neutral-900: var(--token-primitives-neutral-900, #4e4e4e);
-$ion-primitives-neutral-900-rgb: var(--token-primitives-neutral-900-rgb, 78, 78, 78);
-$ion-primitives-neutral-1000: var(--token-primitives-neutral-1000, #3b3b3b);
-$ion-primitives-neutral-1000-rgb: var(--token-primitives-neutral-1000-rgb, 59, 59, 59);
-$ion-primitives-neutral-1100: var(--token-primitives-neutral-1100, #292929);
-$ion-primitives-neutral-1100-rgb: var(--token-primitives-neutral-1100-rgb, 41, 41, 41);
-$ion-primitives-neutral-1200: var(--token-primitives-neutral-1200, #242424);
-$ion-primitives-neutral-1200-rgb: var(--token-primitives-neutral-1200-rgb, 36, 36, 36);
+$ion-primitives-neutral-100: var(--token-primitives-neutral-100, #f6f7fa);
+$ion-primitives-neutral-100-rgb: var(--token-primitives-neutral-100-rgb, 246, 247, 250);
+$ion-primitives-neutral-200: var(--token-primitives-neutral-200, #ebeef2);
+$ion-primitives-neutral-200-rgb: var(--token-primitives-neutral-200-rgb, 235, 238, 242);
+$ion-primitives-neutral-300: var(--token-primitives-neutral-300, #e6eaee);
+$ion-primitives-neutral-300-rgb: var(--token-primitives-neutral-300-rgb, 230, 234, 238);
+$ion-primitives-neutral-400: var(--token-primitives-neutral-400, #d0d7df);
+$ion-primitives-neutral-400-rgb: var(--token-primitives-neutral-400-rgb, 208, 215, 223);
+$ion-primitives-neutral-500: var(--token-primitives-neutral-500, #9fa5ad);
+$ion-primitives-neutral-500-rgb: var(--token-primitives-neutral-500-rgb, 159, 165, 173);
+$ion-primitives-neutral-600: var(--token-primitives-neutral-600, #7e858e);
+$ion-primitives-neutral-600-rgb: var(--token-primitives-neutral-600-rgb, 126, 133, 142);
+$ion-primitives-neutral-700: var(--token-primitives-neutral-700, #727982);
+$ion-primitives-neutral-700-rgb: var(--token-primitives-neutral-700-rgb, 114, 121, 130);
+$ion-primitives-neutral-800: var(--token-primitives-neutral-800, #6c727a);
+$ion-primitives-neutral-800-rgb: var(--token-primitives-neutral-800-rgb, 108, 114, 122);
+$ion-primitives-neutral-900: var(--token-primitives-neutral-900, #575c63);
+$ion-primitives-neutral-900-rgb: var(--token-primitives-neutral-900-rgb, 87, 92, 99);
+$ion-primitives-neutral-1000: var(--token-primitives-neutral-1000, #383e45);
+$ion-primitives-neutral-1000-rgb: var(--token-primitives-neutral-1000-rgb, 56, 62, 69);
+$ion-primitives-neutral-1100: var(--token-primitives-neutral-1100, #2c3238);
+$ion-primitives-neutral-1100-rgb: var(--token-primitives-neutral-1100-rgb, 44, 50, 56);
+$ion-primitives-neutral-1200: var(--token-primitives-neutral-1200, #242528);
+$ion-primitives-neutral-1200-rgb: var(--token-primitives-neutral-1200-rgb, 36, 37, 40);
 $ion-primitives-base-white: var(--token-primitives-base-white, #ffffff);
 $ion-primitives-base-white-rgb: var(--token-primitives-base-white-rgb, 255, 255, 255);
-$ion-primitives-base-black: var(--token-primitives-base-black, #111111);
-$ion-primitives-base-black-rgb: var(--token-primitives-base-black-rgb, 17, 17, 17);
-$ion-primitives-red-100: var(--token-primitives-red-100, #fde1e1);
-$ion-primitives-red-100-rgb: var(--token-primitives-red-100-rgb, 253, 225, 225);
-$ion-primitives-red-200: var(--token-primitives-red-200, #ffd9d9);
-$ion-primitives-red-200-rgb: var(--token-primitives-red-200-rgb, 255, 217, 217);
-$ion-primitives-red-300: var(--token-primitives-red-300, #fcc1c1);
-$ion-primitives-red-300-rgb: var(--token-primitives-red-300-rgb, 252, 193, 193);
-$ion-primitives-red-400: var(--token-primitives-red-400, #faa1a1);
-$ion-primitives-red-400-rgb: var(--token-primitives-red-400-rgb, 250, 161, 161);
-$ion-primitives-red-500: var(--token-primitives-red-500, #f97d7d);
-$ion-primitives-red-500-rgb: var(--token-primitives-red-500-rgb, 249, 125, 125);
-$ion-primitives-red-600: var(--token-primitives-red-600, #f85151);
-$ion-primitives-red-600-rgb: var(--token-primitives-red-600-rgb, 248, 81, 81);
-$ion-primitives-red-700: var(--token-primitives-red-700, #e52929);
-$ion-primitives-red-700-rgb: var(--token-primitives-red-700-rgb, 229, 41, 41);
-$ion-primitives-red-800: var(--token-primitives-red-800, #bf2222);
-$ion-primitives-red-800-rgb: var(--token-primitives-red-800-rgb, 191, 34, 34);
-$ion-primitives-red-900: var(--token-primitives-red-900, #991b1b);
-$ion-primitives-red-900-rgb: var(--token-primitives-red-900-rgb, 153, 27, 27);
-$ion-primitives-red-1000: var(--token-primitives-red-1000, #761515);
-$ion-primitives-red-1000-rgb: var(--token-primitives-red-1000-rgb, 118, 21, 21);
-$ion-primitives-red-1100: var(--token-primitives-red-1100, #540f0f);
-$ion-primitives-red-1100-rgb: var(--token-primitives-red-1100-rgb, 84, 15, 15);
-$ion-primitives-red-1200: var(--token-primitives-red-1200, #330909);
-$ion-primitives-red-1200-rgb: var(--token-primitives-red-1200-rgb, 51, 9, 9);
+$ion-primitives-base-black: var(--token-primitives-base-black, #131518);
+$ion-primitives-base-black-rgb: var(--token-primitives-base-black-rgb, 19, 21, 24);
+$ion-primitives-red-100: var(--token-primitives-red-100, #ffeff1);
+$ion-primitives-red-100-rgb: var(--token-primitives-red-100-rgb, 255, 239, 241);
+$ion-primitives-red-200: var(--token-primitives-red-200, #fcd8dc);
+$ion-primitives-red-200-rgb: var(--token-primitives-red-200-rgb, 252, 216, 220);
+$ion-primitives-red-300: var(--token-primitives-red-300, #fab1b9);
+$ion-primitives-red-300-rgb: var(--token-primitives-red-300-rgb, 250, 177, 185);
+$ion-primitives-red-400: var(--token-primitives-red-400, #ee8f9a);
+$ion-primitives-red-400-rgb: var(--token-primitives-red-400-rgb, 238, 143, 154);
+$ion-primitives-red-500: var(--token-primitives-red-500, #ec7382);
+$ion-primitives-red-500-rgb: var(--token-primitives-red-500-rgb, 236, 115, 130);
+$ion-primitives-red-600: var(--token-primitives-red-600, #ef5264);
+$ion-primitives-red-600-rgb: var(--token-primitives-red-600-rgb, 239, 82, 100);
+$ion-primitives-red-700: var(--token-primitives-red-700, #e0243a);
+$ion-primitives-red-700-rgb: var(--token-primitives-red-700-rgb, 224, 36, 58);
+$ion-primitives-red-800: var(--token-primitives-red-800, #d2002b);
+$ion-primitives-red-800-rgb: var(--token-primitives-red-800-rgb, 210, 0, 43);
+$ion-primitives-red-900: var(--token-primitives-red-900, #ab0224);
+$ion-primitives-red-900-rgb: var(--token-primitives-red-900-rgb, 171, 2, 36);
+$ion-primitives-red-1000: var(--token-primitives-red-1000, #89031f);
+$ion-primitives-red-1000-rgb: var(--token-primitives-red-1000-rgb, 137, 3, 31);
+$ion-primitives-red-1100: var(--token-primitives-red-1100, #690117);
+$ion-primitives-red-1100-rgb: var(--token-primitives-red-1100-rgb, 105, 1, 23);
+$ion-primitives-red-1200: var(--token-primitives-red-1200, #580013);
+$ion-primitives-red-1200-rgb: var(--token-primitives-red-1200-rgb, 88, 0, 19);
 $ion-primitives-pumpkin-100: var(--token-primitives-pumpkin-100, #ffe0db);
 $ion-primitives-pumpkin-100-rgb: var(--token-primitives-pumpkin-100-rgb, 255, 224, 219);
 $ion-primitives-pumpkin-200: var(--token-primitives-pumpkin-200, #ffd6d0);
@@ -75,36 +75,36 @@ $ion-primitives-pumpkin-1100: var(--token-primitives-pumpkin-1100, #401802);
 $ion-primitives-pumpkin-1100-rgb: var(--token-primitives-pumpkin-1100-rgb, 64, 24, 2);
 $ion-primitives-pumpkin-1200: var(--token-primitives-pumpkin-1200, #210c01);
 $ion-primitives-pumpkin-1200-rgb: var(--token-primitives-pumpkin-1200-rgb, 33, 12, 1);
-$ion-primitives-orange-100: var(--token-primitives-orange-100, #ffe8db);
-$ion-primitives-orange-100-rgb: var(--token-primitives-orange-100-rgb, 255, 232, 219);
-$ion-primitives-orange-200: var(--token-primitives-orange-200, #ffe0d0);
-$ion-primitives-orange-200-rgb: var(--token-primitives-orange-200-rgb, 255, 224, 208);
-$ion-primitives-orange-300: var(--token-primitives-orange-300, #ffcfb1);
-$ion-primitives-orange-300-rgb: var(--token-primitives-orange-300-rgb, 255, 207, 177);
-$ion-primitives-orange-400: var(--token-primitives-orange-400, #ffb37b);
-$ion-primitives-orange-400-rgb: var(--token-primitives-orange-400-rgb, 255, 179, 123);
-$ion-primitives-orange-500: var(--token-primitives-orange-500, #ff9400);
-$ion-primitives-orange-500-rgb: var(--token-primitives-orange-500-rgb, 255, 148, 0);
-$ion-primitives-orange-600: var(--token-primitives-orange-600, #e18300);
-$ion-primitives-orange-600-rgb: var(--token-primitives-orange-600-rgb, 225, 131, 0);
-$ion-primitives-orange-700: var(--token-primitives-orange-700, #c37100);
-$ion-primitives-orange-700-rgb: var(--token-primitives-orange-700-rgb, 195, 113, 0);
-$ion-primitives-orange-800: var(--token-primitives-orange-800, #a45f00);
-$ion-primitives-orange-800-rgb: var(--token-primitives-orange-800-rgb, 164, 95, 0);
-$ion-primitives-orange-900: var(--token-primitives-orange-900, #844d00);
-$ion-primitives-orange-900-rgb: var(--token-primitives-orange-900-rgb, 132, 77, 0);
-$ion-primitives-orange-1000: var(--token-primitives-orange-1000, #633a00);
-$ion-primitives-orange-1000-rgb: var(--token-primitives-orange-1000-rgb, 99, 58, 0);
-$ion-primitives-orange-1100: var(--token-primitives-orange-1100, #422700);
-$ion-primitives-orange-1100-rgb: var(--token-primitives-orange-1100-rgb, 66, 39, 0);
-$ion-primitives-orange-1200: var(--token-primitives-orange-1200, #221400);
-$ion-primitives-orange-1200-rgb: var(--token-primitives-orange-1200-rgb, 34, 20, 0);
-$ion-primitives-yellow-100: var(--token-primitives-yellow-100, #fff3d5);
-$ion-primitives-yellow-100-rgb: var(--token-primitives-yellow-100-rgb, 255, 243, 213);
+$ion-primitives-orange-100: var(--token-primitives-orange-100, #fdf0ea);
+$ion-primitives-orange-100-rgb: var(--token-primitives-orange-100-rgb, 253, 240, 234);
+$ion-primitives-orange-200: var(--token-primitives-orange-200, #ffebde);
+$ion-primitives-orange-200-rgb: var(--token-primitives-orange-200-rgb, 255, 235, 222);
+$ion-primitives-orange-300: var(--token-primitives-orange-300, #ffd7be);
+$ion-primitives-orange-300-rgb: var(--token-primitives-orange-300-rgb, 255, 215, 190);
+$ion-primitives-orange-400: var(--token-primitives-orange-400, #f9be9d);
+$ion-primitives-orange-400-rgb: var(--token-primitives-orange-400-rgb, 249, 190, 157);
+$ion-primitives-orange-500: var(--token-primitives-orange-500, #f9aa84);
+$ion-primitives-orange-500-rgb: var(--token-primitives-orange-500-rgb, 249, 170, 132);
+$ion-primitives-orange-600: var(--token-primitives-orange-600, #fa9768);
+$ion-primitives-orange-600-rgb: var(--token-primitives-orange-600-rgb, 250, 151, 104);
+$ion-primitives-orange-700: var(--token-primitives-orange-700, #ff853b);
+$ion-primitives-orange-700-rgb: var(--token-primitives-orange-700-rgb, 255, 133, 59);
+$ion-primitives-orange-800: var(--token-primitives-orange-800, #d9711d);
+$ion-primitives-orange-800-rgb: var(--token-primitives-orange-800-rgb, 217, 113, 29);
+$ion-primitives-orange-900: var(--token-primitives-orange-900, #c15700);
+$ion-primitives-orange-900-rgb: var(--token-primitives-orange-900-rgb, 193, 87, 0);
+$ion-primitives-orange-1000: var(--token-primitives-orange-1000, #9f4904);
+$ion-primitives-orange-1000-rgb: var(--token-primitives-orange-1000-rgb, 159, 73, 4);
+$ion-primitives-orange-1100: var(--token-primitives-orange-1100, #562f1b);
+$ion-primitives-orange-1100-rgb: var(--token-primitives-orange-1100-rgb, 86, 47, 27);
+$ion-primitives-orange-1200: var(--token-primitives-orange-1200, #432110);
+$ion-primitives-orange-1200-rgb: var(--token-primitives-orange-1200-rgb, 67, 33, 16);
+$ion-primitives-yellow-100: var(--token-primitives-yellow-100, #fff5db);
+$ion-primitives-yellow-100-rgb: var(--token-primitives-yellow-100-rgb, 255, 245, 219);
 $ion-primitives-yellow-200: var(--token-primitives-yellow-200, #fff0c7);
 $ion-primitives-yellow-200-rgb: var(--token-primitives-yellow-200-rgb, 255, 240, 199);
-$ion-primitives-yellow-300: var(--token-primitives-yellow-300, #ffebb1);
-$ion-primitives-yellow-300-rgb: var(--token-primitives-yellow-300-rgb, 255, 235, 177);
+$ion-primitives-yellow-300: var(--token-primitives-yellow-300, #f9e2a1);
+$ion-primitives-yellow-300-rgb: var(--token-primitives-yellow-300-rgb, 249, 226, 161);
 $ion-primitives-yellow-400: var(--token-primitives-yellow-400, #ffe07b);
 $ion-primitives-yellow-400-rgb: var(--token-primitives-yellow-400-rgb, 255, 224, 123);
 $ion-primitives-yellow-500: var(--token-primitives-yellow-500, #ffd600);
@@ -115,62 +115,62 @@ $ion-primitives-yellow-700: var(--token-primitives-yellow-700, #df9c00);
 $ion-primitives-yellow-700-rgb: var(--token-primitives-yellow-700-rgb, 223, 156, 0);
 $ion-primitives-yellow-800: var(--token-primitives-yellow-800, #ba8200);
 $ion-primitives-yellow-800-rgb: var(--token-primitives-yellow-800-rgb, 186, 130, 0);
-$ion-primitives-yellow-900: var(--token-primitives-yellow-900, #966503);
-$ion-primitives-yellow-900-rgb: var(--token-primitives-yellow-900-rgb, 150, 101, 3);
-$ion-primitives-yellow-1000: var(--token-primitives-yellow-1000, #704b02);
-$ion-primitives-yellow-1000-rgb: var(--token-primitives-yellow-1000-rgb, 112, 75, 2);
+$ion-primitives-yellow-900: var(--token-primitives-yellow-900, #a57107);
+$ion-primitives-yellow-900-rgb: var(--token-primitives-yellow-900-rgb, 165, 113, 7);
+$ion-primitives-yellow-1000: var(--token-primitives-yellow-1000, #925f00);
+$ion-primitives-yellow-1000-rgb: var(--token-primitives-yellow-1000-rgb, 146, 95, 0);
 $ion-primitives-yellow-1100: var(--token-primitives-yellow-1100, #533802);
 $ion-primitives-yellow-1100-rgb: var(--token-primitives-yellow-1100-rgb, 83, 56, 2);
-$ion-primitives-yellow-1200: var(--token-primitives-yellow-1200, #2c1e02);
-$ion-primitives-yellow-1200-rgb: var(--token-primitives-yellow-1200-rgb, 44, 30, 2);
-$ion-primitives-lime-100: var(--token-primitives-lime-100, #ebfcd4);
-$ion-primitives-lime-100-rgb: var(--token-primitives-lime-100-rgb, 235, 252, 212);
-$ion-primitives-lime-200: var(--token-primitives-lime-200, #e4f7cb);
-$ion-primitives-lime-200-rgb: var(--token-primitives-lime-200-rgb, 228, 247, 203);
-$ion-primitives-lime-300: var(--token-primitives-lime-300, #d3efb2);
-$ion-primitives-lime-300-rgb: var(--token-primitives-lime-300-rgb, 211, 239, 178);
-$ion-primitives-lime-400: var(--token-primitives-lime-400, #bbe77d);
-$ion-primitives-lime-400-rgb: var(--token-primitives-lime-400-rgb, 187, 231, 125);
-$ion-primitives-lime-500: var(--token-primitives-lime-500, #a0df18);
-$ion-primitives-lime-500-rgb: var(--token-primitives-lime-500-rgb, 160, 223, 24);
-$ion-primitives-lime-600: var(--token-primitives-lime-600, #8dc515);
-$ion-primitives-lime-600-rgb: var(--token-primitives-lime-600-rgb, 141, 197, 21);
-$ion-primitives-lime-700: var(--token-primitives-lime-700, #7aab12);
-$ion-primitives-lime-700-rgb: var(--token-primitives-lime-700-rgb, 122, 171, 18);
-$ion-primitives-lime-800: var(--token-primitives-lime-800, #678f0f);
-$ion-primitives-lime-800-rgb: var(--token-primitives-lime-800-rgb, 103, 143, 15);
-$ion-primitives-lime-900: var(--token-primitives-lime-900, #53730c);
-$ion-primitives-lime-900-rgb: var(--token-primitives-lime-900-rgb, 83, 115, 12);
-$ion-primitives-lime-1000: var(--token-primitives-lime-1000, #3e5709);
-$ion-primitives-lime-1000-rgb: var(--token-primitives-lime-1000-rgb, 62, 87, 9);
-$ion-primitives-lime-1100: var(--token-primitives-lime-1100, #2a3a06);
-$ion-primitives-lime-1100-rgb: var(--token-primitives-lime-1100-rgb, 42, 58, 6);
-$ion-primitives-lime-1200: var(--token-primitives-lime-1200, #151e03);
-$ion-primitives-lime-1200-rgb: var(--token-primitives-lime-1200-rgb, 21, 30, 3);
-$ion-primitives-green-100: var(--token-primitives-green-100, #e2f9e4);
-$ion-primitives-green-100-rgb: var(--token-primitives-green-100-rgb, 226, 249, 228);
-$ion-primitives-green-200: var(--token-primitives-green-200, #d1f7d4);
-$ion-primitives-green-200-rgb: var(--token-primitives-green-200-rgb, 209, 247, 212);
-$ion-primitives-green-300: var(--token-primitives-green-300, #b3ebb7);
-$ion-primitives-green-300-rgb: var(--token-primitives-green-300-rgb, 179, 235, 183);
-$ion-primitives-green-400: var(--token-primitives-green-400, #7fe089);
-$ion-primitives-green-400-rgb: var(--token-primitives-green-400-rgb, 127, 224, 137);
-$ion-primitives-green-500: var(--token-primitives-green-500, #23d643);
-$ion-primitives-green-500-rgb: var(--token-primitives-green-500-rgb, 35, 214, 67);
-$ion-primitives-green-600: var(--token-primitives-green-600, #1fbd3b);
-$ion-primitives-green-600-rgb: var(--token-primitives-green-600-rgb, 31, 189, 59);
-$ion-primitives-green-700: var(--token-primitives-green-700, #1ba433);
-$ion-primitives-green-700-rgb: var(--token-primitives-green-700-rgb, 27, 164, 51);
-$ion-primitives-green-800: var(--token-primitives-green-800, #178a2b);
-$ion-primitives-green-800-rgb: var(--token-primitives-green-800-rgb, 23, 138, 43);
-$ion-primitives-green-900: var(--token-primitives-green-900, #126f23);
-$ion-primitives-green-900-rgb: var(--token-primitives-green-900-rgb, 18, 111, 35);
-$ion-primitives-green-1000: var(--token-primitives-green-1000, #0e531a);
-$ion-primitives-green-1000-rgb: var(--token-primitives-green-1000-rgb, 14, 83, 26);
-$ion-primitives-green-1100: var(--token-primitives-green-1100, #093811);
-$ion-primitives-green-1100-rgb: var(--token-primitives-green-1100-rgb, 9, 56, 17);
-$ion-primitives-green-1200: var(--token-primitives-green-1200, #051d09);
-$ion-primitives-green-1200-rgb: var(--token-primitives-green-1200-rgb, 5, 29, 9);
+$ion-primitives-yellow-1200: var(--token-primitives-yellow-1200, #3b2905);
+$ion-primitives-yellow-1200-rgb: var(--token-primitives-yellow-1200-rgb, 59, 41, 5);
+$ion-primitives-lime-100: var(--token-primitives-lime-100, #f3fecd);
+$ion-primitives-lime-100-rgb: var(--token-primitives-lime-100-rgb, 243, 254, 205);
+$ion-primitives-lime-200: var(--token-primitives-lime-200, #e9f7bb);
+$ion-primitives-lime-200-rgb: var(--token-primitives-lime-200-rgb, 233, 247, 187);
+$ion-primitives-lime-300: var(--token-primitives-lime-300, #deeeaa);
+$ion-primitives-lime-300-rgb: var(--token-primitives-lime-300-rgb, 222, 238, 170);
+$ion-primitives-lime-400: var(--token-primitives-lime-400, #d6e79a);
+$ion-primitives-lime-400-rgb: var(--token-primitives-lime-400-rgb, 214, 231, 154);
+$ion-primitives-lime-500: var(--token-primitives-lime-500, #c7d981);
+$ion-primitives-lime-500-rgb: var(--token-primitives-lime-500-rgb, 199, 217, 129);
+$ion-primitives-lime-600: var(--token-primitives-lime-600, #b1c564);
+$ion-primitives-lime-600-rgb: var(--token-primitives-lime-600-rgb, 177, 197, 100);
+$ion-primitives-lime-700: var(--token-primitives-lime-700, #9db229);
+$ion-primitives-lime-700-rgb: var(--token-primitives-lime-700-rgb, 157, 178, 41);
+$ion-primitives-lime-800: var(--token-primitives-lime-800, #6d7d05);
+$ion-primitives-lime-800-rgb: var(--token-primitives-lime-800-rgb, 109, 125, 5);
+$ion-primitives-lime-900: var(--token-primitives-lime-900, #606f00);
+$ion-primitives-lime-900-rgb: var(--token-primitives-lime-900-rgb, 96, 111, 0);
+$ion-primitives-lime-1000: var(--token-primitives-lime-1000, #4f5b01);
+$ion-primitives-lime-1000-rgb: var(--token-primitives-lime-1000-rgb, 79, 91, 1);
+$ion-primitives-lime-1100: var(--token-primitives-lime-1100, #384013);
+$ion-primitives-lime-1100-rgb: var(--token-primitives-lime-1100-rgb, 56, 64, 19);
+$ion-primitives-lime-1200: var(--token-primitives-lime-1200, #2a310b);
+$ion-primitives-lime-1200-rgb: var(--token-primitives-lime-1200-rgb, 42, 49, 11);
+$ion-primitives-green-100: var(--token-primitives-green-100, #edfff7);
+$ion-primitives-green-100-rgb: var(--token-primitives-green-100-rgb, 237, 255, 247);
+$ion-primitives-green-200: var(--token-primitives-green-200, #dcffef);
+$ion-primitives-green-200-rgb: var(--token-primitives-green-200-rgb, 220, 255, 239);
+$ion-primitives-green-300: var(--token-primitives-green-300, #cef4e4);
+$ion-primitives-green-300-rgb: var(--token-primitives-green-300-rgb, 206, 244, 228);
+$ion-primitives-green-400: var(--token-primitives-green-400, #b4decc);
+$ion-primitives-green-400-rgb: var(--token-primitives-green-400-rgb, 180, 222, 204);
+$ion-primitives-green-500: var(--token-primitives-green-500, #94d9bb);
+$ion-primitives-green-500-rgb: var(--token-primitives-green-500-rgb, 148, 217, 187);
+$ion-primitives-green-600: var(--token-primitives-green-600, #74c2a0);
+$ion-primitives-green-600-rgb: var(--token-primitives-green-600-rgb, 116, 194, 160);
+$ion-primitives-green-700: var(--token-primitives-green-700, #4aae83);
+$ion-primitives-green-700-rgb: var(--token-primitives-green-700-rgb, 74, 174, 131);
+$ion-primitives-green-800: var(--token-primitives-green-800, #038855);
+$ion-primitives-green-800-rgb: var(--token-primitives-green-800-rgb, 3, 136, 85);
+$ion-primitives-green-900: var(--token-primitives-green-900, #037046);
+$ion-primitives-green-900-rgb: var(--token-primitives-green-900-rgb, 3, 112, 70);
+$ion-primitives-green-1000: var(--token-primitives-green-1000, #055637);
+$ion-primitives-green-1000-rgb: var(--token-primitives-green-1000-rgb, 5, 86, 55);
+$ion-primitives-green-1100: var(--token-primitives-green-1100, #04462d);
+$ion-primitives-green-1100-rgb: var(--token-primitives-green-1100-rgb, 4, 70, 45);
+$ion-primitives-green-1200: var(--token-primitives-green-1200, #02311f);
+$ion-primitives-green-1200-rgb: var(--token-primitives-green-1200-rgb, 2, 49, 31);
 $ion-primitives-teal-100: var(--token-primitives-teal-100, #d5f9f1);
 $ion-primitives-teal-100-rgb: var(--token-primitives-teal-100-rgb, 213, 249, 241);
 $ion-primitives-teal-200: var(--token-primitives-teal-200, #c7f1e8);
@@ -209,18 +209,18 @@ $ion-primitives-aqua-600: var(--token-primitives-aqua-600, #22bbdc);
 $ion-primitives-aqua-600-rgb: var(--token-primitives-aqua-600-rgb, 34, 187, 220);
 $ion-primitives-aqua-700: var(--token-primitives-aqua-700, #1ea2bf);
 $ion-primitives-aqua-700-rgb: var(--token-primitives-aqua-700-rgb, 30, 162, 191);
-$ion-primitives-aqua-800: var(--token-primitives-aqua-800, #1988a0);
-$ion-primitives-aqua-800-rgb: var(--token-primitives-aqua-800-rgb, 25, 136, 160);
-$ion-primitives-aqua-900: var(--token-primitives-aqua-900, #146d81);
-$ion-primitives-aqua-900-rgb: var(--token-primitives-aqua-900-rgb, 20, 109, 129);
-$ion-primitives-aqua-1000: var(--token-primitives-aqua-1000, #0f5261);
-$ion-primitives-aqua-1000-rgb: var(--token-primitives-aqua-1000-rgb, 15, 82, 97);
+$ion-primitives-aqua-800: var(--token-primitives-aqua-800, #1893af);
+$ion-primitives-aqua-800-rgb: var(--token-primitives-aqua-800-rgb, 24, 147, 175);
+$ion-primitives-aqua-900: var(--token-primitives-aqua-900, #127f98);
+$ion-primitives-aqua-900-rgb: var(--token-primitives-aqua-900-rgb, 18, 127, 152);
+$ion-primitives-aqua-1000: var(--token-primitives-aqua-1000, #146172);
+$ion-primitives-aqua-1000-rgb: var(--token-primitives-aqua-1000-rgb, 20, 97, 114);
 $ion-primitives-aqua-1100: var(--token-primitives-aqua-1100, #0a3741);
 $ion-primitives-aqua-1100-rgb: var(--token-primitives-aqua-1100-rgb, 10, 55, 65);
 $ion-primitives-aqua-1200: var(--token-primitives-aqua-1200, #051c21);
 $ion-primitives-aqua-1200-rgb: var(--token-primitives-aqua-1200-rgb, 5, 28, 33);
-$ion-primitives-blue-100: var(--token-primitives-blue-100, #e9ecfc);
-$ion-primitives-blue-100-rgb: var(--token-primitives-blue-100-rgb, 233, 236, 252);
+$ion-primitives-blue-100: var(--token-primitives-blue-100, #f0f2ff);
+$ion-primitives-blue-100-rgb: var(--token-primitives-blue-100-rgb, 240, 242, 255);
 $ion-primitives-blue-200: var(--token-primitives-blue-200, #e4e8ff);
 $ion-primitives-blue-200-rgb: var(--token-primitives-blue-200-rgb, 228, 232, 255);
 $ion-primitives-blue-300: var(--token-primitives-blue-300, #d0d7fa);
@@ -229,8 +229,8 @@ $ion-primitives-blue-400: var(--token-primitives-blue-400, #b5c0f7);
 $ion-primitives-blue-400-rgb: var(--token-primitives-blue-400-rgb, 181, 192, 247);
 $ion-primitives-blue-500: var(--token-primitives-blue-500, #94a5f4);
 $ion-primitives-blue-500-rgb: var(--token-primitives-blue-500-rgb, 148, 165, 244);
-$ion-primitives-blue-600: var(--token-primitives-blue-600, #6986f2);
-$ion-primitives-blue-600-rgb: var(--token-primitives-blue-600-rgb, 105, 134, 242);
+$ion-primitives-blue-600: var(--token-primitives-blue-600, #6f8bf4);
+$ion-primitives-blue-600-rgb: var(--token-primitives-blue-600-rgb, 111, 139, 244);
 $ion-primitives-blue-700: var(--token-primitives-blue-700, #105cef);
 $ion-primitives-blue-700-rgb: var(--token-primitives-blue-700-rgb, 16, 92, 239);
 $ion-primitives-blue-800: var(--token-primitives-blue-800, #0f54da);
@@ -255,8 +255,8 @@ $ion-primitives-indigo-500: var(--token-primitives-indigo-500, #9d95e4);
 $ion-primitives-indigo-500-rgb: var(--token-primitives-indigo-500-rgb, 157, 149, 228);
 $ion-primitives-indigo-600: var(--token-primitives-indigo-600, #786bdd);
 $ion-primitives-indigo-600-rgb: var(--token-primitives-indigo-600-rgb, 120, 107, 221);
-$ion-primitives-indigo-700: var(--token-primitives-indigo-700, #411bd5);
-$ion-primitives-indigo-700-rgb: var(--token-primitives-indigo-700-rgb, 65, 27, 213);
+$ion-primitives-indigo-700: var(--token-primitives-indigo-700, #5832ed);
+$ion-primitives-indigo-700-rgb: var(--token-primitives-indigo-700-rgb, 88, 50, 237);
 $ion-primitives-indigo-800: var(--token-primitives-indigo-800, #3b19c3);
 $ion-primitives-indigo-800-rgb: var(--token-primitives-indigo-800-rgb, 59, 25, 195);
 $ion-primitives-indigo-900: var(--token-primitives-indigo-900, #3516ae);
@@ -339,30 +339,30 @@ $ion-primitives-magenta-1100: var(--token-primitives-magenta-1100, #892b7a);
 $ion-primitives-magenta-1100-rgb: var(--token-primitives-magenta-1100-rgb, 137, 43, 122);
 $ion-primitives-magenta-1200: var(--token-primitives-magenta-1200, #611e56);
 $ion-primitives-magenta-1200-rgb: var(--token-primitives-magenta-1200-rgb, 97, 30, 86);
-$ion-primitives-pink-100: var(--token-primitives-pink-100, #fdeaee);
-$ion-primitives-pink-100-rgb: var(--token-primitives-pink-100-rgb, 253, 234, 238);
-$ion-primitives-pink-200: var(--token-primitives-pink-200, #ffe3e9);
-$ion-primitives-pink-200-rgb: var(--token-primitives-pink-200-rgb, 255, 227, 233);
-$ion-primitives-pink-300: var(--token-primitives-pink-300, #fad3dc);
-$ion-primitives-pink-300-rgb: var(--token-primitives-pink-300-rgb, 250, 211, 220);
-$ion-primitives-pink-400: var(--token-primitives-pink-400, #f8b9c9);
-$ion-primitives-pink-400-rgb: var(--token-primitives-pink-400-rgb, 248, 185, 201);
-$ion-primitives-pink-500: var(--token-primitives-pink-500, #f69bb3);
-$ion-primitives-pink-500-rgb: var(--token-primitives-pink-500-rgb, 246, 155, 179);
-$ion-primitives-pink-600: var(--token-primitives-pink-600, #f3759a);
-$ion-primitives-pink-600-rgb: var(--token-primitives-pink-600-rgb, 243, 117, 154);
-$ion-primitives-pink-700: var(--token-primitives-pink-700, #f13b7d);
-$ion-primitives-pink-700-rgb: var(--token-primitives-pink-700-rgb, 241, 59, 125);
-$ion-primitives-pink-800: var(--token-primitives-pink-800, #dc3672);
-$ion-primitives-pink-800-rgb: var(--token-primitives-pink-800-rgb, 220, 54, 114);
-$ion-primitives-pink-900: var(--token-primitives-pink-900, #c53066);
-$ion-primitives-pink-900-rgb: var(--token-primitives-pink-900-rgb, 197, 48, 102);
-$ion-primitives-pink-1000: var(--token-primitives-pink-1000, #aa2a58);
-$ion-primitives-pink-1000-rgb: var(--token-primitives-pink-1000-rgb, 170, 42, 88);
-$ion-primitives-pink-1100: var(--token-primitives-pink-1100, #8b2248);
-$ion-primitives-pink-1100-rgb: var(--token-primitives-pink-1100-rgb, 139, 34, 72);
-$ion-primitives-pink-1200: var(--token-primitives-pink-1200, #621833);
-$ion-primitives-pink-1200-rgb: var(--token-primitives-pink-1200-rgb, 98, 24, 51);
+$ion-primitives-pink-100: var(--token-primitives-pink-100, #ffedf4);
+$ion-primitives-pink-100-rgb: var(--token-primitives-pink-100-rgb, 255, 237, 244);
+$ion-primitives-pink-200: var(--token-primitives-pink-200, #ffdae8);
+$ion-primitives-pink-200-rgb: var(--token-primitives-pink-200-rgb, 255, 218, 232);
+$ion-primitives-pink-300: var(--token-primitives-pink-300, #fdccde);
+$ion-primitives-pink-300-rgb: var(--token-primitives-pink-300-rgb, 253, 204, 222);
+$ion-primitives-pink-400: var(--token-primitives-pink-400, #f7bcd2);
+$ion-primitives-pink-400-rgb: var(--token-primitives-pink-400-rgb, 247, 188, 210);
+$ion-primitives-pink-500: var(--token-primitives-pink-500, #f0a8c3);
+$ion-primitives-pink-500-rgb: var(--token-primitives-pink-500-rgb, 240, 168, 195);
+$ion-primitives-pink-600: var(--token-primitives-pink-600, #fa8dc9);
+$ion-primitives-pink-600-rgb: var(--token-primitives-pink-600-rgb, 250, 141, 201);
+$ion-primitives-pink-700: var(--token-primitives-pink-700, #f45fb1);
+$ion-primitives-pink-700-rgb: var(--token-primitives-pink-700-rgb, 244, 95, 177);
+$ion-primitives-pink-800: var(--token-primitives-pink-800, #df1b87);
+$ion-primitives-pink-800-rgb: var(--token-primitives-pink-800-rgb, 223, 27, 135);
+$ion-primitives-pink-900: var(--token-primitives-pink-900, #cc0d7e);
+$ion-primitives-pink-900-rgb: var(--token-primitives-pink-900-rgb, 204, 13, 126);
+$ion-primitives-pink-1000: var(--token-primitives-pink-1000, #a70565);
+$ion-primitives-pink-1000-rgb: var(--token-primitives-pink-1000-rgb, 167, 5, 101);
+$ion-primitives-pink-1100: var(--token-primitives-pink-1100, #860853);
+$ion-primitives-pink-1100-rgb: var(--token-primitives-pink-1100-rgb, 134, 8, 83);
+$ion-primitives-pink-1200: var(--token-primitives-pink-1200, #69083d);
+$ion-primitives-pink-1200-rgb: var(--token-primitives-pink-1200-rgb, 105, 8, 61);
 
 // Scale
 $ion-scale-0: var(--token-scale-0, 0px);
@@ -398,9 +398,12 @@ $ion-scale-025: var(--token-scale-025, 1px);
 $ion-scale-050: var(--token-scale-050, 2px);
 $ion-scale-075: var(--token-scale-075, 3px);
 
+// Backdrop
+$ion-backdrop: var(--token-backdrop, rgba(0, 0, 0, 0.25098039215686274));
+
 // Semantics
 $ion-semantics-primary-100: var(--token-semantics-primary-100, $ion-primitives-blue-100);
-$ion-semantics-primary-100-rgb: var(--token-semantics-primary-100-rgb, 233, 236, 252);
+$ion-semantics-primary-100-rgb: var(--token-semantics-primary-100-rgb, 240, 242, 255);
 $ion-semantics-primary-200: var(--token-semantics-primary-200, $ion-primitives-blue-200);
 $ion-semantics-primary-200-rgb: var(--token-semantics-primary-200-rgb, 228, 232, 255);
 $ion-semantics-primary-300: var(--token-semantics-primary-300, $ion-primitives-blue-300);
@@ -410,7 +413,7 @@ $ion-semantics-primary-400-rgb: var(--token-semantics-primary-400-rgb, 181, 192,
 $ion-semantics-primary-500: var(--token-semantics-primary-500, $ion-primitives-blue-500);
 $ion-semantics-primary-500-rgb: var(--token-semantics-primary-500-rgb, 148, 165, 244);
 $ion-semantics-primary-600: var(--token-semantics-primary-600, $ion-primitives-blue-600);
-$ion-semantics-primary-600-rgb: var(--token-semantics-primary-600-rgb, 105, 134, 242);
+$ion-semantics-primary-600-rgb: var(--token-semantics-primary-600-rgb, 111, 139, 244);
 $ion-semantics-primary-700: var(--token-semantics-primary-700, $ion-primitives-blue-700);
 $ion-semantics-primary-700-rgb: var(--token-semantics-primary-700-rgb, 16, 92, 239);
 $ion-semantics-primary-800: var(--token-semantics-primary-800, $ion-primitives-blue-800);
@@ -426,7 +429,7 @@ $ion-semantics-primary-1200-rgb: var(--token-semantics-primary-1200-rgb, 7, 37, 
 $ion-semantics-primary-base: var(--token-semantics-primary-base, $ion-semantics-primary-700);
 $ion-semantics-primary-base-rgb: var(--token-semantics-primary-base-rgb, 16, 92, 239);
 $ion-semantics-info-100: var(--token-semantics-info-100, $ion-primitives-blue-100);
-$ion-semantics-info-100-rgb: var(--token-semantics-info-100-rgb, 233, 236, 252);
+$ion-semantics-info-100-rgb: var(--token-semantics-info-100-rgb, 240, 242, 255);
 $ion-semantics-info-200: var(--token-semantics-info-200, $ion-primitives-blue-200);
 $ion-semantics-info-200-rgb: var(--token-semantics-info-200-rgb, 228, 232, 255);
 $ion-semantics-info-300: var(--token-semantics-info-300, $ion-primitives-blue-300);
@@ -436,7 +439,7 @@ $ion-semantics-info-400-rgb: var(--token-semantics-info-400-rgb, 181, 192, 247);
 $ion-semantics-info-500: var(--token-semantics-info-500, $ion-primitives-blue-500);
 $ion-semantics-info-500-rgb: var(--token-semantics-info-500-rgb, 148, 165, 244);
 $ion-semantics-info-600: var(--token-semantics-info-600, $ion-primitives-blue-600);
-$ion-semantics-info-600-rgb: var(--token-semantics-info-600-rgb, 105, 134, 242);
+$ion-semantics-info-600-rgb: var(--token-semantics-info-600-rgb, 111, 139, 244);
 $ion-semantics-info-700: var(--token-semantics-info-700, $ion-primitives-blue-700);
 $ion-semantics-info-700-rgb: var(--token-semantics-info-700-rgb, 16, 92, 239);
 $ion-semantics-info-800: var(--token-semantics-info-800, $ion-primitives-blue-800);
@@ -452,63 +455,63 @@ $ion-semantics-info-1200-rgb: var(--token-semantics-info-1200-rgb, 7, 37, 97);
 $ion-semantics-info-base: var(--token-semantics-info-base, $ion-semantics-info-700);
 $ion-semantics-info-base-rgb: var(--token-semantics-info-base-rgb, 16, 92, 239);
 $ion-semantics-success-100: var(--token-semantics-success-100, $ion-primitives-green-100);
-$ion-semantics-success-100-rgb: var(--token-semantics-success-100-rgb, 226, 249, 228);
+$ion-semantics-success-100-rgb: var(--token-semantics-success-100-rgb, 237, 255, 247);
 $ion-semantics-success-200: var(--token-semantics-success-200, $ion-primitives-green-200);
-$ion-semantics-success-200-rgb: var(--token-semantics-success-200-rgb, 209, 247, 212);
+$ion-semantics-success-200-rgb: var(--token-semantics-success-200-rgb, 220, 255, 239);
 $ion-semantics-success-300: var(--token-semantics-success-300, $ion-primitives-green-300);
-$ion-semantics-success-300-rgb: var(--token-semantics-success-300-rgb, 179, 235, 183);
+$ion-semantics-success-300-rgb: var(--token-semantics-success-300-rgb, 206, 244, 228);
 $ion-semantics-success-400: var(--token-semantics-success-400, $ion-primitives-green-400);
-$ion-semantics-success-400-rgb: var(--token-semantics-success-400-rgb, 127, 224, 137);
+$ion-semantics-success-400-rgb: var(--token-semantics-success-400-rgb, 180, 222, 204);
 $ion-semantics-success-500: var(--token-semantics-success-500, $ion-primitives-green-500);
-$ion-semantics-success-500-rgb: var(--token-semantics-success-500-rgb, 35, 214, 67);
+$ion-semantics-success-500-rgb: var(--token-semantics-success-500-rgb, 148, 217, 187);
 $ion-semantics-success-600: var(--token-semantics-success-600, $ion-primitives-green-600);
-$ion-semantics-success-600-rgb: var(--token-semantics-success-600-rgb, 31, 189, 59);
+$ion-semantics-success-600-rgb: var(--token-semantics-success-600-rgb, 116, 194, 160);
 $ion-semantics-success-700: var(--token-semantics-success-700, $ion-primitives-green-700);
-$ion-semantics-success-700-rgb: var(--token-semantics-success-700-rgb, 27, 164, 51);
+$ion-semantics-success-700-rgb: var(--token-semantics-success-700-rgb, 74, 174, 131);
 $ion-semantics-success-800: var(--token-semantics-success-800, $ion-primitives-green-800);
-$ion-semantics-success-800-rgb: var(--token-semantics-success-800-rgb, 23, 138, 43);
+$ion-semantics-success-800-rgb: var(--token-semantics-success-800-rgb, 3, 136, 85);
 $ion-semantics-success-900: var(--token-semantics-success-900, $ion-primitives-green-900);
-$ion-semantics-success-900-rgb: var(--token-semantics-success-900-rgb, 18, 111, 35);
+$ion-semantics-success-900-rgb: var(--token-semantics-success-900-rgb, 3, 112, 70);
 $ion-semantics-success-1000: var(--token-semantics-success-1000, $ion-primitives-green-1000);
-$ion-semantics-success-1000-rgb: var(--token-semantics-success-1000-rgb, 14, 83, 26);
+$ion-semantics-success-1000-rgb: var(--token-semantics-success-1000-rgb, 5, 86, 55);
 $ion-semantics-success-1100: var(--token-semantics-success-1100, $ion-primitives-green-1100);
-$ion-semantics-success-1100-rgb: var(--token-semantics-success-1100-rgb, 9, 56, 17);
+$ion-semantics-success-1100-rgb: var(--token-semantics-success-1100-rgb, 4, 70, 45);
 $ion-semantics-success-1200: var(--token-semantics-success-1200, $ion-primitives-green-1200);
-$ion-semantics-success-1200-rgb: var(--token-semantics-success-1200-rgb, 5, 29, 9);
+$ion-semantics-success-1200-rgb: var(--token-semantics-success-1200-rgb, 2, 49, 31);
 $ion-semantics-success-base: var(--token-semantics-success-base, $ion-semantics-success-700);
-$ion-semantics-success-base-rgb: var(--token-semantics-success-base-rgb, 27, 164, 51);
+$ion-semantics-success-base-rgb: var(--token-semantics-success-base-rgb, 74, 174, 131);
 $ion-semantics-danger-100: var(--token-semantics-danger-100, $ion-primitives-red-100);
-$ion-semantics-danger-100-rgb: var(--token-semantics-danger-100-rgb, 253, 225, 225);
+$ion-semantics-danger-100-rgb: var(--token-semantics-danger-100-rgb, 255, 239, 241);
 $ion-semantics-danger-200: var(--token-semantics-danger-200, $ion-primitives-red-200);
-$ion-semantics-danger-200-rgb: var(--token-semantics-danger-200-rgb, 255, 217, 217);
+$ion-semantics-danger-200-rgb: var(--token-semantics-danger-200-rgb, 252, 216, 220);
 $ion-semantics-danger-300: var(--token-semantics-danger-300, $ion-primitives-red-300);
-$ion-semantics-danger-300-rgb: var(--token-semantics-danger-300-rgb, 252, 193, 193);
+$ion-semantics-danger-300-rgb: var(--token-semantics-danger-300-rgb, 250, 177, 185);
 $ion-semantics-danger-400: var(--token-semantics-danger-400, $ion-primitives-red-400);
-$ion-semantics-danger-400-rgb: var(--token-semantics-danger-400-rgb, 250, 161, 161);
+$ion-semantics-danger-400-rgb: var(--token-semantics-danger-400-rgb, 238, 143, 154);
 $ion-semantics-danger-500: var(--token-semantics-danger-500, $ion-primitives-red-500);
-$ion-semantics-danger-500-rgb: var(--token-semantics-danger-500-rgb, 249, 125, 125);
+$ion-semantics-danger-500-rgb: var(--token-semantics-danger-500-rgb, 236, 115, 130);
 $ion-semantics-danger-600: var(--token-semantics-danger-600, $ion-primitives-red-600);
-$ion-semantics-danger-600-rgb: var(--token-semantics-danger-600-rgb, 248, 81, 81);
+$ion-semantics-danger-600-rgb: var(--token-semantics-danger-600-rgb, 239, 82, 100);
 $ion-semantics-danger-700: var(--token-semantics-danger-700, $ion-primitives-red-700);
-$ion-semantics-danger-700-rgb: var(--token-semantics-danger-700-rgb, 229, 41, 41);
+$ion-semantics-danger-700-rgb: var(--token-semantics-danger-700-rgb, 224, 36, 58);
 $ion-semantics-danger-800: var(--token-semantics-danger-800, $ion-primitives-red-800);
-$ion-semantics-danger-800-rgb: var(--token-semantics-danger-800-rgb, 191, 34, 34);
+$ion-semantics-danger-800-rgb: var(--token-semantics-danger-800-rgb, 210, 0, 43);
 $ion-semantics-danger-900: var(--token-semantics-danger-900, $ion-primitives-red-900);
-$ion-semantics-danger-900-rgb: var(--token-semantics-danger-900-rgb, 153, 27, 27);
+$ion-semantics-danger-900-rgb: var(--token-semantics-danger-900-rgb, 171, 2, 36);
 $ion-semantics-danger-1000: var(--token-semantics-danger-1000, $ion-primitives-red-1000);
-$ion-semantics-danger-1000-rgb: var(--token-semantics-danger-1000-rgb, 118, 21, 21);
+$ion-semantics-danger-1000-rgb: var(--token-semantics-danger-1000-rgb, 137, 3, 31);
 $ion-semantics-danger-1100: var(--token-semantics-danger-1100, $ion-primitives-red-1100);
-$ion-semantics-danger-1100-rgb: var(--token-semantics-danger-1100-rgb, 84, 15, 15);
+$ion-semantics-danger-1100-rgb: var(--token-semantics-danger-1100-rgb, 105, 1, 23);
 $ion-semantics-danger-1200: var(--token-semantics-danger-1200, $ion-primitives-red-1200);
-$ion-semantics-danger-1200-rgb: var(--token-semantics-danger-1200-rgb, 51, 9, 9);
+$ion-semantics-danger-1200-rgb: var(--token-semantics-danger-1200-rgb, 88, 0, 19);
 $ion-semantics-danger-base: var(--token-semantics-danger-base, $ion-semantics-danger-700);
-$ion-semantics-danger-base-rgb: var(--token-semantics-danger-base-rgb, 229, 41, 41);
+$ion-semantics-danger-base-rgb: var(--token-semantics-danger-base-rgb, 224, 36, 58);
 $ion-semantics-warning-100: var(--token-semantics-warning-100, $ion-primitives-yellow-100);
-$ion-semantics-warning-100-rgb: var(--token-semantics-warning-100-rgb, 255, 243, 213);
+$ion-semantics-warning-100-rgb: var(--token-semantics-warning-100-rgb, 255, 245, 219);
 $ion-semantics-warning-200: var(--token-semantics-warning-200, $ion-primitives-yellow-200);
 $ion-semantics-warning-200-rgb: var(--token-semantics-warning-200-rgb, 255, 240, 199);
 $ion-semantics-warning-300: var(--token-semantics-warning-300, $ion-primitives-yellow-300);
-$ion-semantics-warning-300-rgb: var(--token-semantics-warning-300-rgb, 255, 235, 177);
+$ion-semantics-warning-300-rgb: var(--token-semantics-warning-300-rgb, 249, 226, 161);
 $ion-semantics-warning-400: var(--token-semantics-warning-400, $ion-primitives-yellow-400);
 $ion-semantics-warning-400-rgb: var(--token-semantics-warning-400-rgb, 255, 224, 123);
 $ion-semantics-warning-500: var(--token-semantics-warning-500, $ion-primitives-yellow-500);
@@ -520,324 +523,381 @@ $ion-semantics-warning-700-rgb: var(--token-semantics-warning-700-rgb, 223, 156,
 $ion-semantics-warning-800: var(--token-semantics-warning-800, $ion-primitives-yellow-800);
 $ion-semantics-warning-800-rgb: var(--token-semantics-warning-800-rgb, 186, 130, 0);
 $ion-semantics-warning-900: var(--token-semantics-warning-900, $ion-primitives-yellow-900);
-$ion-semantics-warning-900-rgb: var(--token-semantics-warning-900-rgb, 150, 101, 3);
+$ion-semantics-warning-900-rgb: var(--token-semantics-warning-900-rgb, 165, 113, 7);
 $ion-semantics-warning-1000: var(--token-semantics-warning-1000, $ion-primitives-yellow-1000);
-$ion-semantics-warning-1000-rgb: var(--token-semantics-warning-1000-rgb, 112, 75, 2);
+$ion-semantics-warning-1000-rgb: var(--token-semantics-warning-1000-rgb, 146, 95, 0);
 $ion-semantics-warning-1100: var(--token-semantics-warning-1100, $ion-primitives-yellow-1100);
 $ion-semantics-warning-1100-rgb: var(--token-semantics-warning-1100-rgb, 83, 56, 2);
 $ion-semantics-warning-1200: var(--token-semantics-warning-1200, $ion-primitives-yellow-1200);
-$ion-semantics-warning-1200-rgb: var(--token-semantics-warning-1200-rgb, 44, 30, 2);
+$ion-semantics-warning-1200-rgb: var(--token-semantics-warning-1200-rgb, 59, 41, 5);
 $ion-semantics-warning-base: var(--token-semantics-warning-base, $ion-semantics-warning-500);
 $ion-semantics-warning-base-rgb: var(--token-semantics-warning-base-rgb, 255, 214, 0);
 
 // Text
 $ion-text-default: var(--token-text-default, $ion-primitives-neutral-1200);
-$ion-text-default-rgb: var(--token-text-default-rgb, 36, 36, 36);
+$ion-text-default-rgb: var(--token-text-default-rgb, 36, 37, 40);
 $ion-text-subtle: var(--token-text-subtle, $ion-primitives-neutral-1000);
-$ion-text-subtle-rgb: var(--token-text-subtle-rgb, 59, 59, 59);
+$ion-text-subtle-rgb: var(--token-text-subtle-rgb, 56, 62, 69);
 $ion-text-subtlest: var(--token-text-subtlest, $ion-primitives-neutral-800);
-$ion-text-subtlest-rgb: var(--token-text-subtlest-rgb, 98, 98, 98);
-$ion-text-primary: var(--token-text-primary, $ion-semantics-primary-900);
-$ion-text-primary-rgb: var(--token-text-primary-rgb, 13, 75, 195);
+$ion-text-subtlest-rgb: var(--token-text-subtlest-rgb, 108, 114, 122);
 $ion-text-disabled: var(--token-text-disabled, $ion-primitives-neutral-500);
-$ion-text-disabled-rgb: var(--token-text-disabled-rgb, 162, 162, 162);
-$ion-text-danger: var(--token-text-danger, $ion-semantics-danger-900);
-$ion-text-danger-rgb: var(--token-text-danger-rgb, 153, 27, 27);
-$ion-text-info: var(--token-text-info, $ion-semantics-info-900);
-$ion-text-info-rgb: var(--token-text-info-rgb, 13, 75, 195);
-$ion-text-warning: var(--token-text-warning, $ion-semantics-warning-1000);
-$ion-text-warning-rgb: var(--token-text-warning-rgb, 112, 75, 2);
+$ion-text-disabled-rgb: var(--token-text-disabled-rgb, 159, 165, 173);
+$ion-text-primary: var(--token-text-primary, $ion-semantics-primary-800);
+$ion-text-primary-rgb: var(--token-text-primary-rgb, 15, 84, 218);
+$ion-text-info: var(--token-text-info, $ion-semantics-info-800);
+$ion-text-info-rgb: var(--token-text-info-rgb, 15, 84, 218);
+$ion-text-select: var(--token-text-select, $ion-semantics-primary-700);
+$ion-text-select-rgb: var(--token-text-select-rgb, 16, 92, 239);
 $ion-text-success: var(--token-text-success, $ion-semantics-success-900);
-$ion-text-success-rgb: var(--token-text-success-rgb, 18, 111, 35);
-$ion-text-link-default: var(--token-text-link-default, $ion-semantics-primary-900);
-$ion-text-link-default-rgb: var(--token-text-link-default-rgb, 13, 75, 195);
-$ion-text-link-press: var(--token-text-link-press, $ion-semantics-primary-1100);
-$ion-text-link-press-rgb: var(--token-text-link-press-rgb, 9, 53, 138);
-$ion-text-link-visited: var(--token-text-link-visited, $ion-semantics-primary-1100);
-$ion-text-link-visited-rgb: var(--token-text-link-visited-rgb, 9, 53, 138);
+$ion-text-success-rgb: var(--token-text-success-rgb, 3, 112, 70);
+$ion-text-danger: var(--token-text-danger, $ion-semantics-danger-800);
+$ion-text-danger-rgb: var(--token-text-danger-rgb, 210, 0, 43);
+$ion-text-warning: var(--token-text-warning, $ion-semantics-warning-1000);
+$ion-text-warning-rgb: var(--token-text-warning-rgb, 146, 95, 0);
 $ion-text-inverse: var(--token-text-inverse, $ion-primitives-base-white);
 $ion-text-inverse-rgb: var(--token-text-inverse-rgb, 255, 255, 255);
-$ion-text-select: var(--token-text-select, $ion-semantics-primary-800);
-$ion-text-select-rgb: var(--token-text-select-rgb, 15, 84, 218);
-$ion-text-extended-pumpkin: var(--token-text-extended-pumpkin, $ion-primitives-pumpkin-900);
-$ion-text-extended-pumpkin-rgb: var(--token-text-extended-pumpkin-rgb, 128, 48, 4);
-$ion-text-extended-orange: var(--token-text-extended-orange, $ion-primitives-orange-900);
-$ion-text-extended-orange-rgb: var(--token-text-extended-orange-rgb, 132, 77, 0);
-$ion-text-extended-lime: var(--token-text-extended-lime, $ion-primitives-lime-1000);
-$ion-text-extended-lime-rgb: var(--token-text-extended-lime-rgb, 62, 87, 9);
+$ion-text-light: var(--token-text-light, $ion-primitives-base-white);
+$ion-text-light-rgb: var(--token-text-light-rgb, 255, 255, 255);
+$ion-text-dark: var(--token-text-dark, $ion-primitives-base-black);
+$ion-text-dark-rgb: var(--token-text-dark-rgb, 19, 21, 24);
+$ion-text-link-default: var(--token-text-link-default, $ion-semantics-primary-800);
+$ion-text-link-default-rgb: var(--token-text-link-default-rgb, 15, 84, 218);
+$ion-text-link-hover: var(--token-text-link-hover, $ion-semantics-primary-900);
+$ion-text-link-hover-rgb: var(--token-text-link-hover-rgb, 13, 75, 195);
+$ion-text-link-press: var(--token-text-link-press, $ion-semantics-primary-1000);
+$ion-text-link-press-rgb: var(--token-text-link-press-rgb, 11, 65, 169);
+$ion-text-link-visited: var(--token-text-link-visited, $ion-semantics-primary-1000);
+$ion-text-link-visited-rgb: var(--token-text-link-visited-rgb, 11, 65, 169);
+$ion-text-extended-pumpkin: var(--token-text-extended-pumpkin, $ion-primitives-pumpkin-800);
+$ion-text-extended-pumpkin-rgb: var(--token-text-extended-pumpkin-rgb, 159, 60, 5);
+$ion-text-extended-orange: var(--token-text-extended-orange, $ion-primitives-orange-1000);
+$ion-text-extended-orange-rgb: var(--token-text-extended-orange-rgb, 159, 73, 4);
+$ion-text-extended-lime: var(--token-text-extended-lime, $ion-primitives-lime-900);
+$ion-text-extended-lime-rgb: var(--token-text-extended-lime-rgb, 96, 111, 0);
 $ion-text-extended-teal: var(--token-text-extended-teal, $ion-primitives-teal-900);
 $ion-text-extended-teal-rgb: var(--token-text-extended-teal-rgb, 0, 107, 95);
-$ion-text-extended-aqua: var(--token-text-extended-aqua, $ion-primitives-aqua-900);
-$ion-text-extended-aqua-rgb: var(--token-text-extended-aqua-rgb, 20, 109, 129);
-$ion-text-extended-indigo: var(--token-text-extended-indigo, $ion-primitives-indigo-900);
-$ion-text-extended-indigo-rgb: var(--token-text-extended-indigo-rgb, 53, 22, 174);
-$ion-text-extended-violet: var(--token-text-extended-violet, $ion-primitives-violet-900);
-$ion-text-extended-violet-rgb: var(--token-text-extended-violet-rgb, 101, 26, 197);
-$ion-text-extended-purple: var(--token-text-extended-purple, $ion-primitives-purple-1000);
-$ion-text-extended-purple-rgb: var(--token-text-extended-purple-rgb, 129, 42, 170);
-$ion-text-extended-magenta: var(--token-text-extended-magenta, $ion-primitives-magenta-1100);
-$ion-text-extended-magenta-rgb: var(--token-text-extended-magenta-rgb, 137, 43, 122);
-$ion-text-extended-pink: var(--token-text-extended-pink, $ion-primitives-pink-1000);
-$ion-text-extended-pink-rgb: var(--token-text-extended-pink-rgb, 170, 42, 88);
+$ion-text-extended-aqua: var(--token-text-extended-aqua, $ion-primitives-aqua-1000);
+$ion-text-extended-aqua-rgb: var(--token-text-extended-aqua-rgb, 20, 97, 114);
+$ion-text-extended-indigo: var(--token-text-extended-indigo, $ion-primitives-indigo-700);
+$ion-text-extended-indigo-rgb: var(--token-text-extended-indigo-rgb, 88, 50, 237);
+$ion-text-extended-violet: var(--token-text-extended-violet, $ion-primitives-violet-700);
+$ion-text-extended-violet-rgb: var(--token-text-extended-violet-rgb, 124, 32, 242);
+$ion-text-extended-purple: var(--token-text-extended-purple, $ion-primitives-purple-900);
+$ion-text-extended-purple-rgb: var(--token-text-extended-purple-rgb, 149, 49, 197);
+$ion-text-extended-magenta: var(--token-text-extended-magenta, $ion-primitives-magenta-900);
+$ion-text-extended-magenta-rgb: var(--token-text-extended-magenta-rgb, 193, 60, 172);
+$ion-text-extended-pink: var(--token-text-extended-pink, $ion-primitives-pink-900);
+$ion-text-extended-pink-rgb: var(--token-text-extended-pink-rgb, 204, 13, 126);
 
 // Bg
-$ion-bg-primary-base-default: var(--token-bg-primary-base-default, $ion-semantics-primary-base);
-$ion-bg-primary-base-default-rgb: var(--token-bg-primary-base-default-rgb, 16, 92, 239);
-$ion-bg-primary-base-press: var(--token-bg-primary-base-press, $ion-semantics-primary-900);
-$ion-bg-primary-base-press-rgb: var(--token-bg-primary-base-press-rgb, 13, 75, 195);
-$ion-bg-primary-subtle-default: var(--token-bg-primary-subtle-default, $ion-semantics-primary-100);
-$ion-bg-primary-subtle-default-rgb: var(--token-bg-primary-subtle-default-rgb, 233, 236, 252);
-$ion-bg-primary-subtle-press: var(--token-bg-primary-subtle-press, $ion-semantics-primary-300);
-$ion-bg-primary-subtle-press-rgb: var(--token-bg-primary-subtle-press-rgb, 208, 215, 250);
-$ion-bg-danger-base-default: var(--token-bg-danger-base-default, $ion-semantics-danger-800);
-$ion-bg-danger-base-default-rgb: var(--token-bg-danger-base-default-rgb, 191, 34, 34);
-$ion-bg-danger-base-press: var(--token-bg-danger-base-press, $ion-semantics-danger-1000);
-$ion-bg-danger-base-press-rgb: var(--token-bg-danger-base-press-rgb, 118, 21, 21);
-$ion-bg-danger-subtle-default: var(--token-bg-danger-subtle-default, $ion-semantics-danger-100);
-$ion-bg-danger-subtle-default-rgb: var(--token-bg-danger-subtle-default-rgb, 253, 225, 225);
-$ion-bg-danger-subtle-press: var(--token-bg-danger-subtle-press, $ion-semantics-danger-300);
-$ion-bg-danger-subtle-press-rgb: var(--token-bg-danger-subtle-press-rgb, 252, 193, 193);
-$ion-bg-success-base-default: var(--token-bg-success-base-default, $ion-semantics-success-900);
-$ion-bg-success-base-default-rgb: var(--token-bg-success-base-default-rgb, 18, 111, 35);
-$ion-bg-success-base-press: var(--token-bg-success-base-press, $ion-semantics-success-1100);
-$ion-bg-success-base-press-rgb: var(--token-bg-success-base-press-rgb, 9, 56, 17);
-$ion-bg-success-subtle-default: var(--token-bg-success-subtle-default, $ion-semantics-success-100);
-$ion-bg-success-subtle-default-rgb: var(--token-bg-success-subtle-default-rgb, 226, 249, 228);
-$ion-bg-success-subtle-press: var(--token-bg-success-subtle-press, $ion-semantics-success-300);
-$ion-bg-success-subtle-press-rgb: var(--token-bg-success-subtle-press-rgb, 179, 235, 183);
-$ion-bg-info-base-default: var(--token-bg-info-base-default, $ion-semantics-info-900);
-$ion-bg-info-base-default-rgb: var(--token-bg-info-base-default-rgb, 13, 75, 195);
-$ion-bg-info-base-press: var(--token-bg-info-base-press, $ion-semantics-info-1100);
-$ion-bg-info-base-press-rgb: var(--token-bg-info-base-press-rgb, 9, 53, 138);
-$ion-bg-info-subtle-default: var(--token-bg-info-subtle-default, $ion-semantics-info-100);
-$ion-bg-info-subtle-default-rgb: var(--token-bg-info-subtle-default-rgb, 233, 236, 252);
-$ion-bg-info-subtle-press: var(--token-bg-info-subtle-press, $ion-semantics-info-300);
-$ion-bg-info-subtle-press-rgb: var(--token-bg-info-subtle-press-rgb, 208, 215, 250);
-$ion-bg-warning-base-default: var(--token-bg-warning-base-default, $ion-semantics-warning-500);
-$ion-bg-warning-base-default-rgb: var(--token-bg-warning-base-default-rgb, 255, 214, 0);
-$ion-bg-warning-base-press: var(--token-bg-warning-base-press, $ion-semantics-warning-700);
-$ion-bg-warning-base-press-rgb: var(--token-bg-warning-base-press-rgb, 223, 156, 0);
-$ion-bg-warning-subtle-default: var(--token-bg-warning-subtle-default, $ion-semantics-warning-200);
-$ion-bg-warning-subtle-default-rgb: var(--token-bg-warning-subtle-default-rgb, 255, 240, 199);
-$ion-bg-warning-subtle-press: var(--token-bg-warning-subtle-press, $ion-semantics-warning-400);
-$ion-bg-warning-subtle-press-rgb: var(--token-bg-warning-subtle-press-rgb, 255, 224, 123);
 $ion-bg-body: var(--token-bg-body, $ion-primitives-base-white);
 $ion-bg-body-rgb: var(--token-bg-body-rgb, 255, 255, 255);
-$ion-bg-neutral-subtle-default: var(--token-bg-neutral-subtle-default, $ion-primitives-neutral-200);
-$ion-bg-neutral-subtle-default-rgb: var(--token-bg-neutral-subtle-default-rgb, 234, 233, 233);
-$ion-bg-neutral-subtle-press: var(--token-bg-neutral-subtle-press, $ion-primitives-neutral-400);
-$ion-bg-neutral-subtle-press-rgb: var(--token-bg-neutral-subtle-press-rgb, 213, 213, 213);
-$ion-bg-neutral-base-default: var(--token-bg-neutral-base-default, $ion-primitives-neutral-500);
-$ion-bg-neutral-base-default-rgb: var(--token-bg-neutral-base-default-rgb, 162, 162, 162);
-$ion-bg-neutral-base-press: var(--token-bg-neutral-base-press, $ion-primitives-neutral-700);
-$ion-bg-neutral-base-press-rgb: var(--token-bg-neutral-base-press-rgb, 119, 119, 119);
-$ion-bg-neutral-subtlest-default: var(--token-bg-neutral-subtlest-default, $ion-primitives-base-white);
-$ion-bg-neutral-subtlest-default-rgb: var(--token-bg-neutral-subtlest-default-rgb, 255, 255, 255);
-$ion-bg-neutral-subtlest-press: var(--token-bg-neutral-subtlest-press, $ion-primitives-neutral-200);
-$ion-bg-neutral-subtlest-press-rgb: var(--token-bg-neutral-subtlest-press-rgb, 234, 233, 233);
-$ion-bg-neutral-bold-default: var(--token-bg-neutral-bold-default, $ion-primitives-neutral-1000);
-$ion-bg-neutral-bold-default-rgb: var(--token-bg-neutral-bold-default-rgb, 59, 59, 59);
-$ion-bg-neutral-bold-press: var(--token-bg-neutral-bold-press, $ion-primitives-neutral-1200);
-$ion-bg-neutral-bold-press-rgb: var(--token-bg-neutral-bold-press-rgb, 36, 36, 36);
-$ion-bg-neutral-boldest-default: var(--token-bg-neutral-boldest-default, $ion-primitives-neutral-1200);
-$ion-bg-neutral-boldest-default-rgb: var(--token-bg-neutral-boldest-default-rgb, 36, 36, 36);
-$ion-bg-neutral-boldest-press: var(--token-bg-neutral-boldest-press, $ion-primitives-base-black);
-$ion-bg-neutral-boldest-press-rgb: var(--token-bg-neutral-boldest-press-rgb, 17, 17, 17);
 $ion-bg-surface-default: var(--token-bg-surface-default, $ion-primitives-base-white);
 $ion-bg-surface-default-rgb: var(--token-bg-surface-default-rgb, 255, 255, 255);
 $ion-bg-surface-inverse: var(--token-bg-surface-inverse, $ion-primitives-base-white);
 $ion-bg-surface-inverse-rgb: var(--token-bg-surface-inverse-rgb, 255, 255, 255);
-$ion-bg-input-default: var(--token-bg-input-default, $ion-primitives-base-white);
-$ion-bg-input-default-rgb: var(--token-bg-input-default-rgb, 255, 255, 255);
-$ion-bg-input-read-only: var(--token-bg-input-read-only, $ion-primitives-neutral-100);
-$ion-bg-input-read-only-rgb: var(--token-bg-input-read-only-rgb, 243, 243, 243);
-$ion-bg-input-press: var(--token-bg-input-press, $ion-primitives-neutral-200);
-$ion-bg-input-press-rgb: var(--token-bg-input-press-rgb, 234, 233, 233);
-$ion-bg-input-disabled: var(--token-bg-input-disabled, $ion-primitives-neutral-100);
-$ion-bg-input-disabled-rgb: var(--token-bg-input-disabled-rgb, 243, 243, 243);
-$ion-bg-input-bold-default: var(--token-bg-input-bold-default, $ion-primitives-neutral-200);
-$ion-bg-input-bold-default-rgb: var(--token-bg-input-bold-default-rgb, 234, 233, 233);
-$ion-bg-input-bold-press: var(--token-bg-input-bold-press, $ion-primitives-neutral-400);
-$ion-bg-input-bold-press-rgb: var(--token-bg-input-bold-press-rgb, 213, 213, 213);
-$ion-bg-input-bold-read-only: var(--token-bg-input-bold-read-only, $ion-primitives-neutral-300);
-$ion-bg-input-bold-read-only-rgb: var(--token-bg-input-bold-read-only-rgb, 224, 224, 224);
-$ion-bg-input-bold-disabled: var(--token-bg-input-bold-disabled, $ion-primitives-neutral-300);
-$ion-bg-input-bold-disabled-rgb: var(--token-bg-input-bold-disabled-rgb, 224, 224, 224);
+$ion-bg-surface-blur: var(--token-bg-surface-blur, rgba(255, 255, 255, 0.8));
+$ion-bg-primary-base-default: var(--token-bg-primary-base-default, $ion-semantics-primary-base);
+$ion-bg-primary-base-default-rgb: var(--token-bg-primary-base-default-rgb, 16, 92, 239);
+$ion-bg-primary-base-hover: var(--token-bg-primary-base-hover, $ion-semantics-primary-800);
+$ion-bg-primary-base-hover-rgb: var(--token-bg-primary-base-hover-rgb, 15, 84, 218);
+$ion-bg-primary-base-press: var(--token-bg-primary-base-press, $ion-semantics-primary-900);
+$ion-bg-primary-base-press-rgb: var(--token-bg-primary-base-press-rgb, 13, 75, 195);
+$ion-bg-primary-subtle-default: var(--token-bg-primary-subtle-default, $ion-semantics-primary-100);
+$ion-bg-primary-subtle-default-rgb: var(--token-bg-primary-subtle-default-rgb, 240, 242, 255);
+$ion-bg-primary-subtle-hover: var(--token-bg-primary-subtle-hover, $ion-semantics-primary-200);
+$ion-bg-primary-subtle-hover-rgb: var(--token-bg-primary-subtle-hover-rgb, 228, 232, 255);
+$ion-bg-primary-subtle-press: var(--token-bg-primary-subtle-press, $ion-semantics-primary-300);
+$ion-bg-primary-subtle-press-rgb: var(--token-bg-primary-subtle-press-rgb, 208, 215, 250);
+$ion-bg-neutral-subtlest-default: var(--token-bg-neutral-subtlest-default, $ion-primitives-base-white);
+$ion-bg-neutral-subtlest-default-rgb: var(--token-bg-neutral-subtlest-default-rgb, 255, 255, 255);
+$ion-bg-neutral-subtlest-hover: var(--token-bg-neutral-subtlest-hover, $ion-primitives-neutral-100);
+$ion-bg-neutral-subtlest-hover-rgb: var(--token-bg-neutral-subtlest-hover-rgb, 246, 247, 250);
+$ion-bg-neutral-subtlest-press: var(--token-bg-neutral-subtlest-press, $ion-primitives-neutral-200);
+$ion-bg-neutral-subtlest-press-rgb: var(--token-bg-neutral-subtlest-press-rgb, 235, 238, 242);
+$ion-bg-neutral-subtle-default: var(--token-bg-neutral-subtle-default, $ion-primitives-neutral-100);
+$ion-bg-neutral-subtle-default-rgb: var(--token-bg-neutral-subtle-default-rgb, 246, 247, 250);
+$ion-bg-neutral-subtle-hover: var(--token-bg-neutral-subtle-hover, $ion-primitives-neutral-200);
+$ion-bg-neutral-subtle-hover-rgb: var(--token-bg-neutral-subtle-hover-rgb, 235, 238, 242);
+$ion-bg-neutral-subtle-press: var(--token-bg-neutral-subtle-press, $ion-primitives-neutral-300);
+$ion-bg-neutral-subtle-press-rgb: var(--token-bg-neutral-subtle-press-rgb, 230, 234, 238);
+$ion-bg-neutral-base-default: var(--token-bg-neutral-base-default, $ion-primitives-neutral-300);
+$ion-bg-neutral-base-default-rgb: var(--token-bg-neutral-base-default-rgb, 230, 234, 238);
+$ion-bg-neutral-base-hover: var(--token-bg-neutral-base-hover, $ion-primitives-neutral-400);
+$ion-bg-neutral-base-hover-rgb: var(--token-bg-neutral-base-hover-rgb, 208, 215, 223);
+$ion-bg-neutral-base-press: var(--token-bg-neutral-base-press, $ion-primitives-neutral-500);
+$ion-bg-neutral-base-press-rgb: var(--token-bg-neutral-base-press-rgb, 159, 165, 173);
+$ion-bg-neutral-bold-default: var(--token-bg-neutral-bold-default, $ion-primitives-neutral-1000);
+$ion-bg-neutral-bold-default-rgb: var(--token-bg-neutral-bold-default-rgb, 56, 62, 69);
+$ion-bg-neutral-bold-hover: var(--token-bg-neutral-bold-hover, $ion-primitives-neutral-1100);
+$ion-bg-neutral-bold-hover-rgb: var(--token-bg-neutral-bold-hover-rgb, 44, 50, 56);
+$ion-bg-neutral-bold-press: var(--token-bg-neutral-bold-press, $ion-primitives-neutral-1200);
+$ion-bg-neutral-bold-press-rgb: var(--token-bg-neutral-bold-press-rgb, 36, 37, 40);
+$ion-bg-neutral-boldest-default: var(--token-bg-neutral-boldest-default, $ion-primitives-neutral-1200);
+$ion-bg-neutral-boldest-default-rgb: var(--token-bg-neutral-boldest-default-rgb, 36, 37, 40);
+$ion-bg-neutral-boldest-press: var(--token-bg-neutral-boldest-press, $ion-primitives-base-black);
+$ion-bg-neutral-boldest-press-rgb: var(--token-bg-neutral-boldest-press-rgb, 19, 21, 24);
+$ion-bg-info-base-default: var(--token-bg-info-base-default, $ion-primitives-blue-800);
+$ion-bg-info-base-default-rgb: var(--token-bg-info-base-default-rgb, 15, 84, 218);
+$ion-bg-info-base-hover: var(--token-bg-info-base-hover, $ion-primitives-blue-900);
+$ion-bg-info-base-hover-rgb: var(--token-bg-info-base-hover-rgb, 13, 75, 195);
+$ion-bg-info-base-press: var(--token-bg-info-base-press, $ion-primitives-blue-1000);
+$ion-bg-info-base-press-rgb: var(--token-bg-info-base-press-rgb, 11, 65, 169);
+$ion-bg-info-subtle-default: var(--token-bg-info-subtle-default, $ion-primitives-blue-100);
+$ion-bg-info-subtle-default-rgb: var(--token-bg-info-subtle-default-rgb, 240, 242, 255);
+$ion-bg-info-subtle-hover: var(--token-bg-info-subtle-hover, $ion-primitives-blue-200);
+$ion-bg-info-subtle-hover-rgb: var(--token-bg-info-subtle-hover-rgb, 228, 232, 255);
+$ion-bg-info-subtle-press: var(--token-bg-info-subtle-press, $ion-primitives-blue-300);
+$ion-bg-info-subtle-press-rgb: var(--token-bg-info-subtle-press-rgb, 208, 215, 250);
+$ion-bg-success-base-default: var(--token-bg-success-base-default, $ion-semantics-success-800);
+$ion-bg-success-base-default-rgb: var(--token-bg-success-base-default-rgb, 3, 136, 85);
+$ion-bg-success-base-hover: var(--token-bg-success-base-hover, $ion-semantics-success-900);
+$ion-bg-success-base-hover-rgb: var(--token-bg-success-base-hover-rgb, 3, 112, 70);
+$ion-bg-success-base-press: var(--token-bg-success-base-press, $ion-semantics-success-1000);
+$ion-bg-success-base-press-rgb: var(--token-bg-success-base-press-rgb, 5, 86, 55);
+$ion-bg-success-subtle-default: var(--token-bg-success-subtle-default, $ion-semantics-success-100);
+$ion-bg-success-subtle-default-rgb: var(--token-bg-success-subtle-default-rgb, 237, 255, 247);
+$ion-bg-success-subtle-hover: var(--token-bg-success-subtle-hover, $ion-semantics-success-200);
+$ion-bg-success-subtle-hover-rgb: var(--token-bg-success-subtle-hover-rgb, 220, 255, 239);
+$ion-bg-success-subtle-press: var(--token-bg-success-subtle-press, $ion-semantics-success-300);
+$ion-bg-success-subtle-press-rgb: var(--token-bg-success-subtle-press-rgb, 206, 244, 228);
+$ion-bg-warning-base-default: var(--token-bg-warning-base-default, $ion-primitives-yellow-500);
+$ion-bg-warning-base-default-rgb: var(--token-bg-warning-base-default-rgb, 255, 214, 0);
+$ion-bg-warning-base-hover: var(--token-bg-warning-base-hover, $ion-primitives-yellow-600);
+$ion-bg-warning-base-hover-rgb: var(--token-bg-warning-base-hover-rgb, 249, 189, 10);
+$ion-bg-warning-base-press: var(--token-bg-warning-base-press, $ion-primitives-yellow-700);
+$ion-bg-warning-base-press-rgb: var(--token-bg-warning-base-press-rgb, 223, 156, 0);
+$ion-bg-warning-subtle-default: var(--token-bg-warning-subtle-default, $ion-primitives-yellow-100);
+$ion-bg-warning-subtle-default-rgb: var(--token-bg-warning-subtle-default-rgb, 255, 245, 219);
+$ion-bg-warning-subtle-hover: var(--token-bg-warning-subtle-hover, $ion-primitives-yellow-200);
+$ion-bg-warning-subtle-hover-rgb: var(--token-bg-warning-subtle-hover-rgb, 255, 240, 199);
+$ion-bg-warning-subtle-press: var(--token-bg-warning-subtle-press, $ion-primitives-yellow-300);
+$ion-bg-warning-subtle-press-rgb: var(--token-bg-warning-subtle-press-rgb, 249, 226, 161);
+$ion-bg-danger-base-default: var(--token-bg-danger-base-default, $ion-semantics-danger-700);
+$ion-bg-danger-base-default-rgb: var(--token-bg-danger-base-default-rgb, 224, 36, 58);
+$ion-bg-danger-base-hover: var(--token-bg-danger-base-hover, $ion-semantics-danger-800);
+$ion-bg-danger-base-hover-rgb: var(--token-bg-danger-base-hover-rgb, 210, 0, 43);
+$ion-bg-danger-base-press: var(--token-bg-danger-base-press, $ion-semantics-danger-900);
+$ion-bg-danger-base-press-rgb: var(--token-bg-danger-base-press-rgb, 171, 2, 36);
+$ion-bg-danger-subtle-default: var(--token-bg-danger-subtle-default, $ion-semantics-danger-100);
+$ion-bg-danger-subtle-default-rgb: var(--token-bg-danger-subtle-default-rgb, 255, 239, 241);
+$ion-bg-danger-subtle-hover: var(--token-bg-danger-subtle-hover, $ion-semantics-danger-200);
+$ion-bg-danger-subtle-hover-rgb: var(--token-bg-danger-subtle-hover-rgb, 252, 216, 220);
+$ion-bg-danger-subtle-press: var(--token-bg-danger-subtle-press, $ion-semantics-danger-300);
+$ion-bg-danger-subtle-press-rgb: var(--token-bg-danger-subtle-press-rgb, 250, 177, 185);
 $ion-bg-select-default: var(--token-bg-select-default, $ion-semantics-primary-100);
-$ion-bg-select-default-rgb: var(--token-bg-select-default-rgb, 233, 236, 252);
+$ion-bg-select-default-rgb: var(--token-bg-select-default-rgb, 240, 242, 255);
+$ion-bg-select-hover: var(--token-bg-select-hover, $ion-semantics-primary-200);
+$ion-bg-select-hover-rgb: var(--token-bg-select-hover-rgb, 228, 232, 255);
 $ion-bg-select-press: var(--token-bg-select-press, $ion-semantics-primary-300);
 $ion-bg-select-press-rgb: var(--token-bg-select-press-rgb, 208, 215, 250);
+$ion-bg-input-default: var(--token-bg-input-default, $ion-primitives-base-white);
+$ion-bg-input-default-rgb: var(--token-bg-input-default-rgb, 255, 255, 255);
+$ion-bg-input-hover: var(--token-bg-input-hover, $ion-primitives-neutral-100);
+$ion-bg-input-hover-rgb: var(--token-bg-input-hover-rgb, 246, 247, 250);
+$ion-bg-input-press: var(--token-bg-input-press, $ion-primitives-neutral-200);
+$ion-bg-input-press-rgb: var(--token-bg-input-press-rgb, 235, 238, 242);
+$ion-bg-input-read-only: var(--token-bg-input-read-only, $ion-primitives-neutral-100);
+$ion-bg-input-read-only-rgb: var(--token-bg-input-read-only-rgb, 246, 247, 250);
+$ion-bg-input-disabled: var(--token-bg-input-disabled, $ion-primitives-neutral-100);
+$ion-bg-input-disabled-rgb: var(--token-bg-input-disabled-rgb, 246, 247, 250);
+$ion-bg-input-bold-default: var(--token-bg-input-bold-default, $ion-primitives-neutral-200);
+$ion-bg-input-bold-default-rgb: var(--token-bg-input-bold-default-rgb, 235, 238, 242);
+$ion-bg-input-bold-hover: var(--token-bg-input-bold-hover, $ion-primitives-neutral-300);
+$ion-bg-input-bold-hover-rgb: var(--token-bg-input-bold-hover-rgb, 230, 234, 238);
+$ion-bg-input-bold-press: var(--token-bg-input-bold-press, $ion-primitives-neutral-400);
+$ion-bg-input-bold-press-rgb: var(--token-bg-input-bold-press-rgb, 208, 215, 223);
+$ion-bg-input-bold-read-only: var(--token-bg-input-bold-read-only, $ion-primitives-neutral-300);
+$ion-bg-input-bold-read-only-rgb: var(--token-bg-input-bold-read-only-rgb, 230, 234, 238);
+$ion-bg-input-bold-disabled: var(--token-bg-input-bold-disabled, $ion-primitives-neutral-300);
+$ion-bg-input-bold-disabled-rgb: var(--token-bg-input-bold-disabled-rgb, 230, 234, 238);
+$ion-bg-skeleton-default: var(--token-bg-skeleton-default, $ion-primitives-neutral-200);
+$ion-bg-skeleton-default-rgb: var(--token-bg-skeleton-default-rgb, 235, 238, 242);
+$ion-bg-skeleton-pulse: var(--token-bg-skeleton-pulse, $ion-primitives-neutral-400);
+$ion-bg-skeleton-pulse-rgb: var(--token-bg-skeleton-pulse-rgb, 208, 215, 223);
 $ion-bg-extended-pumpkin-base-default: var(--token-bg-extended-pumpkin-base-default, $ion-primitives-pumpkin-700);
 $ion-bg-extended-pumpkin-base-default-rgb: var(--token-bg-extended-pumpkin-base-default-rgb, 189, 71, 5);
+$ion-bg-extended-pumpkin-base-hover: var(--token-bg-extended-pumpkin-base-hover, $ion-primitives-pumpkin-800);
+$ion-bg-extended-pumpkin-base-hover-rgb: var(--token-bg-extended-pumpkin-base-hover-rgb, 159, 60, 5);
 $ion-bg-extended-pumpkin-base-press: var(--token-bg-extended-pumpkin-base-press, $ion-primitives-pumpkin-900);
 $ion-bg-extended-pumpkin-base-press-rgb: var(--token-bg-extended-pumpkin-base-press-rgb, 128, 48, 4);
 $ion-bg-extended-pumpkin-subtle-default: var(--token-bg-extended-pumpkin-subtle-default, $ion-primitives-pumpkin-100);
 $ion-bg-extended-pumpkin-subtle-default-rgb: var(--token-bg-extended-pumpkin-subtle-default-rgb, 255, 224, 219);
+$ion-bg-extended-pumpkin-subtle-hover: var(--token-bg-extended-pumpkin-subtle-hover, $ion-primitives-pumpkin-200);
+$ion-bg-extended-pumpkin-subtle-hover-rgb: var(--token-bg-extended-pumpkin-subtle-hover-rgb, 255, 214, 208);
 $ion-bg-extended-pumpkin-subtle-press: var(--token-bg-extended-pumpkin-subtle-press, $ion-primitives-pumpkin-300);
 $ion-bg-extended-pumpkin-subtle-press-rgb: var(--token-bg-extended-pumpkin-subtle-press-rgb, 251, 189, 177);
-$ion-bg-extended-orange-base-default: var(--token-bg-extended-orange-base-default, $ion-primitives-orange-800);
-$ion-bg-extended-orange-base-default-rgb: var(--token-bg-extended-orange-base-default-rgb, 164, 95, 0);
-$ion-bg-extended-orange-base-press: var(--token-bg-extended-orange-base-press, $ion-primitives-orange-1000);
-$ion-bg-extended-orange-base-press-rgb: var(--token-bg-extended-orange-base-press-rgb, 99, 58, 0);
+$ion-bg-extended-orange-base-default: var(--token-bg-extended-orange-base-default, $ion-primitives-orange-900);
+$ion-bg-extended-orange-base-default-rgb: var(--token-bg-extended-orange-base-default-rgb, 193, 87, 0);
+$ion-bg-extended-orange-base-hover: var(--token-bg-extended-orange-base-hover, $ion-primitives-orange-1000);
+$ion-bg-extended-orange-base-hover-rgb: var(--token-bg-extended-orange-base-hover-rgb, 159, 73, 4);
+$ion-bg-extended-orange-base-press: var(--token-bg-extended-orange-base-press, $ion-primitives-orange-1100);
+$ion-bg-extended-orange-base-press-rgb: var(--token-bg-extended-orange-base-press-rgb, 86, 47, 27);
 $ion-bg-extended-orange-subtle-default: var(--token-bg-extended-orange-subtle-default, $ion-primitives-orange-100);
-$ion-bg-extended-orange-subtle-default-rgb: var(--token-bg-extended-orange-subtle-default-rgb, 255, 232, 219);
+$ion-bg-extended-orange-subtle-default-rgb: var(--token-bg-extended-orange-subtle-default-rgb, 253, 240, 234);
+$ion-bg-extended-orange-subtle-hover: var(--token-bg-extended-orange-subtle-hover, $ion-primitives-orange-200);
+$ion-bg-extended-orange-subtle-hover-rgb: var(--token-bg-extended-orange-subtle-hover-rgb, 255, 235, 222);
 $ion-bg-extended-orange-subtle-press: var(--token-bg-extended-orange-subtle-press, $ion-primitives-orange-300);
-$ion-bg-extended-orange-subtle-press-rgb: var(--token-bg-extended-orange-subtle-press-rgb, 255, 207, 177);
-$ion-bg-extended-lime-base-default: var(--token-bg-extended-lime-base-default, $ion-primitives-lime-900);
-$ion-bg-extended-lime-base-default-rgb: var(--token-bg-extended-lime-base-default-rgb, 83, 115, 12);
-$ion-bg-extended-lime-base-press: var(--token-bg-extended-lime-base-press, $ion-primitives-lime-1100);
-$ion-bg-extended-lime-base-press-rgb: var(--token-bg-extended-lime-base-press-rgb, 42, 58, 6);
+$ion-bg-extended-orange-subtle-press-rgb: var(--token-bg-extended-orange-subtle-press-rgb, 255, 215, 190);
+$ion-bg-extended-lime-base-default: var(--token-bg-extended-lime-base-default, $ion-primitives-lime-800);
+$ion-bg-extended-lime-base-default-rgb: var(--token-bg-extended-lime-base-default-rgb, 109, 125, 5);
+$ion-bg-extended-lime-base-hover: var(--token-bg-extended-lime-base-hover, $ion-primitives-lime-900);
+$ion-bg-extended-lime-base-hover-rgb: var(--token-bg-extended-lime-base-hover-rgb, 96, 111, 0);
+$ion-bg-extended-lime-base-press: var(--token-bg-extended-lime-base-press, $ion-primitives-lime-1000);
+$ion-bg-extended-lime-base-press-rgb: var(--token-bg-extended-lime-base-press-rgb, 79, 91, 1);
 $ion-bg-extended-lime-subtle-default: var(--token-bg-extended-lime-subtle-default, $ion-primitives-lime-100);
-$ion-bg-extended-lime-subtle-default-rgb: var(--token-bg-extended-lime-subtle-default-rgb, 235, 252, 212);
+$ion-bg-extended-lime-subtle-default-rgb: var(--token-bg-extended-lime-subtle-default-rgb, 243, 254, 205);
+$ion-bg-extended-lime-subtle-hover: var(--token-bg-extended-lime-subtle-hover, $ion-primitives-lime-200);
+$ion-bg-extended-lime-subtle-hover-rgb: var(--token-bg-extended-lime-subtle-hover-rgb, 233, 247, 187);
 $ion-bg-extended-lime-subtle-press: var(--token-bg-extended-lime-subtle-press, $ion-primitives-lime-300);
-$ion-bg-extended-lime-subtle-press-rgb: var(--token-bg-extended-lime-subtle-press-rgb, 211, 239, 178);
+$ion-bg-extended-lime-subtle-press-rgb: var(--token-bg-extended-lime-subtle-press-rgb, 222, 238, 170);
 $ion-bg-extended-teal-base-default: var(--token-bg-extended-teal-base-default, $ion-primitives-teal-800);
 $ion-bg-extended-teal-base-default-rgb: var(--token-bg-extended-teal-base-default-rgb, 0, 133, 118);
+$ion-bg-extended-teal-base-hover: var(--token-bg-extended-teal-base-hover, $ion-primitives-teal-900);
+$ion-bg-extended-teal-base-hover-rgb: var(--token-bg-extended-teal-base-hover-rgb, 0, 107, 95);
 $ion-bg-extended-teal-base-press: var(--token-bg-extended-teal-base-press, $ion-primitives-teal-1000);
 $ion-bg-extended-teal-base-press-rgb: var(--token-bg-extended-teal-base-press-rgb, 0, 81, 71);
 $ion-bg-extended-teal-subtle-default: var(--token-bg-extended-teal-subtle-default, $ion-primitives-teal-100);
 $ion-bg-extended-teal-subtle-default-rgb: var(--token-bg-extended-teal-subtle-default-rgb, 213, 249, 241);
+$ion-bg-extended-teal-subtle-hover: var(--token-bg-extended-teal-subtle-hover, $ion-primitives-teal-200);
+$ion-bg-extended-teal-subtle-hover-rgb: var(--token-bg-extended-teal-subtle-hover-rgb, 199, 241, 232);
 $ion-bg-extended-teal-subtle-press: var(--token-bg-extended-teal-subtle-press, $ion-primitives-teal-300);
 $ion-bg-extended-teal-subtle-press-rgb: var(--token-bg-extended-teal-subtle-press-rgb, 177, 231, 221);
 $ion-bg-extended-aqua-base-default: var(--token-bg-extended-aqua-base-default, $ion-primitives-aqua-900);
-$ion-bg-extended-aqua-base-default-rgb: var(--token-bg-extended-aqua-base-default-rgb, 20, 109, 129);
+$ion-bg-extended-aqua-base-default-rgb: var(--token-bg-extended-aqua-base-default-rgb, 18, 127, 152);
+$ion-bg-extended-aqua-base-hover: var(--token-bg-extended-aqua-base-hover, $ion-primitives-aqua-1000);
+$ion-bg-extended-aqua-base-hover-rgb: var(--token-bg-extended-aqua-base-hover-rgb, 20, 97, 114);
 $ion-bg-extended-aqua-base-press: var(--token-bg-extended-aqua-base-press, $ion-primitives-aqua-1100);
 $ion-bg-extended-aqua-base-press-rgb: var(--token-bg-extended-aqua-base-press-rgb, 10, 55, 65);
 $ion-bg-extended-aqua-subtle-default: var(--token-bg-extended-aqua-subtle-default, $ion-primitives-aqua-100);
 $ion-bg-extended-aqua-subtle-default-rgb: var(--token-bg-extended-aqua-subtle-default-rgb, 217, 245, 255);
+$ion-bg-extended-aqua-subtle-hover: var(--token-bg-extended-aqua-subtle-hover, $ion-primitives-aqua-200);
+$ion-bg-extended-aqua-subtle-hover-rgb: var(--token-bg-extended-aqua-subtle-hover-rgb, 203, 239, 252);
 $ion-bg-extended-aqua-subtle-press: var(--token-bg-extended-aqua-subtle-press, $ion-primitives-aqua-300);
 $ion-bg-extended-aqua-subtle-press-rgb: var(--token-bg-extended-aqua-subtle-press-rgb, 179, 233, 252);
 $ion-bg-extended-indigo-base-default: var(--token-bg-extended-indigo-base-default, $ion-primitives-indigo-700);
-$ion-bg-extended-indigo-base-default-rgb: var(--token-bg-extended-indigo-base-default-rgb, 65, 27, 213);
+$ion-bg-extended-indigo-base-default-rgb: var(--token-bg-extended-indigo-base-default-rgb, 88, 50, 237);
+$ion-bg-extended-indigo-base-hover: var(--token-bg-extended-indigo-base-hover, $ion-primitives-indigo-800);
+$ion-bg-extended-indigo-base-hover-rgb: var(--token-bg-extended-indigo-base-hover-rgb, 59, 25, 195);
 $ion-bg-extended-indigo-base-press: var(--token-bg-extended-indigo-base-press, $ion-primitives-indigo-900);
 $ion-bg-extended-indigo-base-press-rgb: var(--token-bg-extended-indigo-base-press-rgb, 53, 22, 174);
 $ion-bg-extended-indigo-subtle-default: var(--token-bg-extended-indigo-subtle-default, $ion-primitives-indigo-100);
 $ion-bg-extended-indigo-subtle-default-rgb: var(--token-bg-extended-indigo-subtle-default-rgb, 235, 232, 255);
+$ion-bg-extended-indigo-subtle-hover: var(--token-bg-extended-indigo-subtle-hover, $ion-primitives-indigo-200);
+$ion-bg-extended-indigo-subtle-hover-rgb: var(--token-bg-extended-indigo-subtle-hover-rgb, 230, 226, 254);
 $ion-bg-extended-indigo-subtle-press: var(--token-bg-extended-indigo-subtle-press, $ion-primitives-indigo-300);
 $ion-bg-extended-indigo-subtle-press-rgb: var(--token-bg-extended-indigo-subtle-press-rgb, 211, 209, 242);
 $ion-bg-extended-violet-base-default: var(--token-bg-extended-violet-base-default, $ion-primitives-violet-700);
 $ion-bg-extended-violet-base-default-rgb: var(--token-bg-extended-violet-base-default-rgb, 124, 32, 242);
+$ion-bg-extended-violet-base-hover: var(--token-bg-extended-violet-base-hover, $ion-primitives-violet-800);
+$ion-bg-extended-violet-base-hover-rgb: var(--token-bg-extended-violet-base-hover-rgb, 113, 29, 221);
 $ion-bg-extended-violet-base-press: var(--token-bg-extended-violet-base-press, $ion-primitives-violet-900);
 $ion-bg-extended-violet-base-press-rgb: var(--token-bg-extended-violet-base-press-rgb, 101, 26, 197);
 $ion-bg-extended-violet-subtle-default: var(--token-bg-extended-violet-subtle-default, $ion-primitives-violet-100);
 $ion-bg-extended-violet-subtle-default-rgb: var(--token-bg-extended-violet-subtle-default-rgb, 236, 230, 255);
+$ion-bg-extended-violet-subtle-hover: var(--token-bg-extended-violet-subtle-hover, $ion-primitives-violet-200);
+$ion-bg-extended-violet-subtle-hover-rgb: var(--token-bg-extended-violet-subtle-hover-rgb, 229, 222, 252);
 $ion-bg-extended-violet-subtle-press: var(--token-bg-extended-violet-subtle-press, $ion-primitives-violet-300);
 $ion-bg-extended-violet-subtle-press-rgb: var(--token-bg-extended-violet-subtle-press-rgb, 220, 209, 251);
 $ion-bg-extended-purple-base-default: var(--token-bg-extended-purple-base-default, $ion-primitives-purple-800);
 $ion-bg-extended-purple-base-default-rgb: var(--token-bg-extended-purple-base-default-rgb, 167, 55, 220);
+$ion-bg-extended-purple-base-hover: var(--token-bg-extended-purple-base-hover, $ion-primitives-purple-900);
+$ion-bg-extended-purple-base-hover-rgb: var(--token-bg-extended-purple-base-hover-rgb, 149, 49, 197);
 $ion-bg-extended-purple-base-press: var(--token-bg-extended-purple-base-press, $ion-primitives-purple-1000);
 $ion-bg-extended-purple-base-press-rgb: var(--token-bg-extended-purple-base-press-rgb, 129, 42, 170);
 $ion-bg-extended-purple-subtle-default: var(--token-bg-extended-purple-subtle-default, $ion-primitives-purple-100);
 $ion-bg-extended-purple-subtle-default-rgb: var(--token-bg-extended-purple-subtle-default-rgb, 245, 234, 253);
+$ion-bg-extended-purple-subtle-hover: var(--token-bg-extended-purple-subtle-hover, $ion-primitives-purple-200);
+$ion-bg-extended-purple-subtle-hover-rgb: var(--token-bg-extended-purple-subtle-hover-rgb, 242, 226, 255);
 $ion-bg-extended-purple-subtle-press: var(--token-bg-extended-purple-subtle-press, $ion-primitives-purple-300);
 $ion-bg-extended-purple-subtle-press-rgb: var(--token-bg-extended-purple-subtle-press-rgb, 233, 211, 250);
 $ion-bg-extended-magenta-base-default: var(--token-bg-extended-magenta-base-default, $ion-primitives-magenta-900);
 $ion-bg-extended-magenta-base-default-rgb: var(--token-bg-extended-magenta-base-default-rgb, 193, 60, 172);
+$ion-bg-extended-magenta-base-hover: var(--token-bg-extended-magenta-base-hover, $ion-primitives-magenta-1000);
+$ion-bg-extended-magenta-base-hover-rgb: var(--token-bg-extended-magenta-base-hover-rgb, 168, 52, 149);
 $ion-bg-extended-magenta-base-press: var(--token-bg-extended-magenta-base-press, $ion-primitives-magenta-1100);
 $ion-bg-extended-magenta-base-press-rgb: var(--token-bg-extended-magenta-base-press-rgb, 137, 43, 122);
 $ion-bg-extended-magenta-subtle-default: var(--token-bg-extended-magenta-subtle-default, $ion-primitives-magenta-100);
 $ion-bg-extended-magenta-subtle-default-rgb: var(--token-bg-extended-magenta-subtle-default-rgb, 255, 236, 251);
+$ion-bg-extended-magenta-subtle-hover: var(--token-bg-extended-magenta-subtle-hover, $ion-primitives-magenta-200);
+$ion-bg-extended-magenta-subtle-hover-rgb: var(--token-bg-extended-magenta-subtle-hover-rgb, 255, 229, 250);
 $ion-bg-extended-magenta-subtle-press: var(--token-bg-extended-magenta-subtle-press, $ion-primitives-magenta-300);
 $ion-bg-extended-magenta-subtle-press-rgb: var(--token-bg-extended-magenta-subtle-press-rgb, 249, 212, 241);
-$ion-bg-extended-pink-base-default: var(--token-bg-extended-pink-base-default, $ion-primitives-pink-900);
-$ion-bg-extended-pink-base-default-rgb: var(--token-bg-extended-pink-base-default-rgb, 197, 48, 102);
-$ion-bg-extended-pink-base-press: var(--token-bg-extended-pink-base-press, $ion-primitives-pink-1100);
-$ion-bg-extended-pink-base-press-rgb: var(--token-bg-extended-pink-base-press-rgb, 139, 34, 72);
+$ion-bg-extended-pink-base-default: var(--token-bg-extended-pink-base-default, $ion-primitives-pink-800);
+$ion-bg-extended-pink-base-default-rgb: var(--token-bg-extended-pink-base-default-rgb, 223, 27, 135);
+$ion-bg-extended-pink-base-hover: var(--token-bg-extended-pink-base-hover, $ion-primitives-pink-900);
+$ion-bg-extended-pink-base-hover-rgb: var(--token-bg-extended-pink-base-hover-rgb, 204, 13, 126);
+$ion-bg-extended-pink-base-press: var(--token-bg-extended-pink-base-press, $ion-primitives-pink-1000);
+$ion-bg-extended-pink-base-press-rgb: var(--token-bg-extended-pink-base-press-rgb, 167, 5, 101);
 $ion-bg-extended-pink-subtle-default: var(--token-bg-extended-pink-subtle-default, $ion-primitives-pink-100);
-$ion-bg-extended-pink-subtle-default-rgb: var(--token-bg-extended-pink-subtle-default-rgb, 253, 234, 238);
+$ion-bg-extended-pink-subtle-default-rgb: var(--token-bg-extended-pink-subtle-default-rgb, 255, 237, 244);
+$ion-bg-extended-pink-subtle-hover: var(--token-bg-extended-pink-subtle-hover, $ion-primitives-pink-200);
+$ion-bg-extended-pink-subtle-hover-rgb: var(--token-bg-extended-pink-subtle-hover-rgb, 255, 218, 232);
 $ion-bg-extended-pink-subtle-press: var(--token-bg-extended-pink-subtle-press, $ion-primitives-pink-300);
-$ion-bg-extended-pink-subtle-press-rgb: var(--token-bg-extended-pink-subtle-press-rgb, 250, 211, 220);
+$ion-bg-extended-pink-subtle-press-rgb: var(--token-bg-extended-pink-subtle-press-rgb, 253, 204, 222);
 
 // Icon
 $ion-icon-default: var(--token-icon-default, $ion-primitives-neutral-1200);
-$ion-icon-default-rgb: var(--token-icon-default-rgb, 36, 36, 36);
+$ion-icon-default-rgb: var(--token-icon-default-rgb, 36, 37, 40);
 $ion-icon-subtle: var(--token-icon-subtle, $ion-primitives-neutral-1000);
-$ion-icon-subtle-rgb: var(--token-icon-subtle-rgb, 59, 59, 59);
+$ion-icon-subtle-rgb: var(--token-icon-subtle-rgb, 56, 62, 69);
 $ion-icon-subtlest: var(--token-icon-subtlest, $ion-primitives-neutral-800);
-$ion-icon-subtlest-rgb: var(--token-icon-subtlest-rgb, 98, 98, 98);
+$ion-icon-subtlest-rgb: var(--token-icon-subtlest-rgb, 108, 114, 122);
 $ion-icon-disabled: var(--token-icon-disabled, $ion-primitives-neutral-500);
-$ion-icon-disabled-rgb: var(--token-icon-disabled-rgb, 162, 162, 162);
-$ion-icon-primary: var(--token-icon-primary, $ion-semantics-primary-900);
-$ion-icon-primary-rgb: var(--token-icon-primary-rgb, 13, 75, 195);
-$ion-icon-select: var(--token-icon-select, $ion-semantics-primary-800);
-$ion-icon-select-rgb: var(--token-icon-select-rgb, 15, 84, 218);
-$ion-icon-info: var(--token-icon-info, $ion-semantics-info-900);
-$ion-icon-info-rgb: var(--token-icon-info-rgb, 13, 75, 195);
-$ion-icon-success: var(--token-icon-success, $ion-semantics-success-900);
-$ion-icon-success-rgb: var(--token-icon-success-rgb, 18, 111, 35);
-$ion-icon-danger: var(--token-icon-danger, $ion-semantics-danger-900);
-$ion-icon-danger-rgb: var(--token-icon-danger-rgb, 153, 27, 27);
+$ion-icon-disabled-rgb: var(--token-icon-disabled-rgb, 159, 165, 173);
+$ion-icon-primary: var(--token-icon-primary, $ion-semantics-primary-800);
+$ion-icon-primary-rgb: var(--token-icon-primary-rgb, 15, 84, 218);
+$ion-icon-info: var(--token-icon-info, $ion-semantics-info-800);
+$ion-icon-info-rgb: var(--token-icon-info-rgb, 15, 84, 218);
+$ion-icon-select: var(--token-icon-select, $ion-semantics-primary-700);
+$ion-icon-select-rgb: var(--token-icon-select-rgb, 16, 92, 239);
+$ion-icon-success: var(--token-icon-success, $ion-semantics-success-800);
+$ion-icon-success-rgb: var(--token-icon-success-rgb, 3, 136, 85);
+$ion-icon-danger: var(--token-icon-danger, $ion-semantics-danger-800);
+$ion-icon-danger-rgb: var(--token-icon-danger-rgb, 210, 0, 43);
 $ion-icon-warning: var(--token-icon-warning, $ion-semantics-warning-1000);
-$ion-icon-warning-rgb: var(--token-icon-warning-rgb, 112, 75, 2);
+$ion-icon-warning-rgb: var(--token-icon-warning-rgb, 146, 95, 0);
 $ion-icon-inverse: var(--token-icon-inverse, $ion-primitives-base-white);
 $ion-icon-inverse-rgb: var(--token-icon-inverse-rgb, 255, 255, 255);
+$ion-icon-light: var(--token-icon-light, $ion-primitives-base-white);
+$ion-icon-light-rgb: var(--token-icon-light-rgb, 255, 255, 255);
+$ion-icon-dark: var(--token-icon-dark, $ion-primitives-base-black);
+$ion-icon-dark-rgb: var(--token-icon-dark-rgb, 19, 21, 24);
 $ion-icon-link-default: var(--token-icon-link-default, $ion-text-link-default);
-$ion-icon-link-default-rgb: var(--token-icon-link-default-rgb, 13, 75, 195);
+$ion-icon-link-default-rgb: var(--token-icon-link-default-rgb, 15, 84, 218);
+$ion-icon-link-hover: var(--token-icon-link-hover, $ion-text-link-hover);
+$ion-icon-link-hover-rgb: var(--token-icon-link-hover-rgb, 13, 75, 195);
 $ion-icon-link-press: var(--token-icon-link-press, $ion-text-link-press);
-$ion-icon-link-press-rgb: var(--token-icon-link-press-rgb, 9, 53, 138);
+$ion-icon-link-press-rgb: var(--token-icon-link-press-rgb, 11, 65, 169);
 $ion-icon-link-visited: var(--token-icon-link-visited, $ion-text-link-visited);
-$ion-icon-link-visited-rgb: var(--token-icon-link-visited-rgb, 9, 53, 138);
-$ion-icon-extended-pumpkin: var(--token-icon-extended-pumpkin, $ion-primitives-pumpkin-900);
-$ion-icon-extended-pumpkin-rgb: var(--token-icon-extended-pumpkin-rgb, 128, 48, 4);
-$ion-icon-extended-orange: var(--token-icon-extended-orange, $ion-primitives-orange-900);
-$ion-icon-extended-orange-rgb: var(--token-icon-extended-orange-rgb, 132, 77, 0);
-$ion-icon-extended-lime: var(--token-icon-extended-lime, $ion-primitives-lime-1000);
-$ion-icon-extended-lime-rgb: var(--token-icon-extended-lime-rgb, 62, 87, 9);
+$ion-icon-link-visited-rgb: var(--token-icon-link-visited-rgb, 11, 65, 169);
+$ion-icon-extended-pumpkin: var(--token-icon-extended-pumpkin, $ion-primitives-pumpkin-800);
+$ion-icon-extended-pumpkin-rgb: var(--token-icon-extended-pumpkin-rgb, 159, 60, 5);
+$ion-icon-extended-orange: var(--token-icon-extended-orange, $ion-primitives-orange-1000);
+$ion-icon-extended-orange-rgb: var(--token-icon-extended-orange-rgb, 159, 73, 4);
+$ion-icon-extended-lime: var(--token-icon-extended-lime, $ion-primitives-lime-900);
+$ion-icon-extended-lime-rgb: var(--token-icon-extended-lime-rgb, 96, 111, 0);
 $ion-icon-extended-teal: var(--token-icon-extended-teal, $ion-primitives-teal-900);
 $ion-icon-extended-teal-rgb: var(--token-icon-extended-teal-rgb, 0, 107, 95);
-$ion-icon-extended-aqua: var(--token-icon-extended-aqua, $ion-primitives-aqua-900);
-$ion-icon-extended-aqua-rgb: var(--token-icon-extended-aqua-rgb, 20, 109, 129);
-$ion-icon-extended-indigo: var(--token-icon-extended-indigo, $ion-primitives-indigo-900);
-$ion-icon-extended-indigo-rgb: var(--token-icon-extended-indigo-rgb, 53, 22, 174);
-$ion-icon-extended-violet: var(--token-icon-extended-violet, $ion-primitives-violet-900);
-$ion-icon-extended-violet-rgb: var(--token-icon-extended-violet-rgb, 101, 26, 197);
-$ion-icon-extended-purple: var(--token-icon-extended-purple, $ion-primitives-purple-1000);
-$ion-icon-extended-purple-rgb: var(--token-icon-extended-purple-rgb, 129, 42, 170);
-$ion-icon-extended-magenta: var(--token-icon-extended-magenta, $ion-primitives-magenta-1100);
-$ion-icon-extended-magenta-rgb: var(--token-icon-extended-magenta-rgb, 137, 43, 122);
-$ion-icon-extended-pink: var(--token-icon-extended-pink, $ion-primitives-pink-1000);
-$ion-icon-extended-pink-rgb: var(--token-icon-extended-pink-rgb, 170, 42, 88);
+$ion-icon-extended-aqua: var(--token-icon-extended-aqua, $ion-primitives-aqua-1000);
+$ion-icon-extended-aqua-rgb: var(--token-icon-extended-aqua-rgb, 20, 97, 114);
+$ion-icon-extended-indigo: var(--token-icon-extended-indigo, $ion-primitives-indigo-700);
+$ion-icon-extended-indigo-rgb: var(--token-icon-extended-indigo-rgb, 88, 50, 237);
+$ion-icon-extended-violet: var(--token-icon-extended-violet, $ion-primitives-violet-700);
+$ion-icon-extended-violet-rgb: var(--token-icon-extended-violet-rgb, 124, 32, 242);
+$ion-icon-extended-purple: var(--token-icon-extended-purple, $ion-primitives-purple-900);
+$ion-icon-extended-purple-rgb: var(--token-icon-extended-purple-rgb, 149, 49, 197);
+$ion-icon-extended-magenta: var(--token-icon-extended-magenta, $ion-primitives-magenta-900);
+$ion-icon-extended-magenta-rgb: var(--token-icon-extended-magenta-rgb, 193, 60, 172);
+$ion-icon-extended-pink: var(--token-icon-extended-pink, $ion-primitives-pink-900);
+$ion-icon-extended-pink-rgb: var(--token-icon-extended-pink-rgb, 204, 13, 126);
 
 // State
+$ion-state-press: var(--token-state-press, rgba(0, 0, 0, 0.07058823529411765));
+$ion-state-hover: var(--token-state-hover, rgba(0, 0, 0, 0.0392156862745098));
 $ion-state-disabled: var(--token-state-disabled, rgba(255, 255, 255, 0.6));
-$ion-state-press: var(--token-state-press, rgba(36, 36, 36, 0.08));
 
 // Border
-$ion-border-default: var(--token-border-default, $ion-primitives-neutral-400);
-$ion-border-default-rgb: var(--token-border-default-rgb, 213, 213, 213);
-$ion-border-boldest: var(--token-border-boldest, $ion-primitives-neutral-1200);
-$ion-border-boldest-rgb: var(--token-border-boldest-rgb, 36, 36, 36);
-$ion-border-subtle: var(--token-border-subtle, $ion-primitives-neutral-100);
-$ion-border-subtle-rgb: var(--token-border-subtle-rgb, 243, 243, 243);
-$ion-border-subtlest: var(--token-border-subtlest, $ion-primitives-base-white);
-$ion-border-subtlest-rgb: var(--token-border-subtlest-rgb, 255, 255, 255);
-$ion-border-primary: var(--token-border-primary, $ion-semantics-primary-base);
-$ion-border-primary-rgb: var(--token-border-primary-rgb, 16, 92, 239);
-$ion-border-success: var(--token-border-success, $ion-semantics-success-900);
-$ion-border-success-rgb: var(--token-border-success-rgb, 18, 111, 35);
-$ion-border-warning: var(--token-border-warning, $ion-semantics-warning-900);
-$ion-border-warning-rgb: var(--token-border-warning-rgb, 150, 101, 3);
-$ion-border-disabled: var(--token-border-disabled, $ion-primitives-neutral-300);
-$ion-border-disabled-rgb: var(--token-border-disabled-rgb, 224, 224, 224);
-$ion-border-focus-0: var(--token-border-focus-0, none);
-$ion-border-focus-default: var(--token-border-focus-default, $ion-primitives-blue-400);
-$ion-border-focus-default-rgb: var(--token-border-focus-default-rgb, 181, 192, 247);
-$ion-border-focus-error: var(--token-border-focus-error, $ion-primitives-red-400);
-$ion-border-focus-error-rgb: var(--token-border-focus-error-rgb, 250, 161, 161);
-$ion-border-danger-default: var(--token-border-danger-default, $ion-semantics-danger-800);
-$ion-border-danger-default-rgb: var(--token-border-danger-default-rgb, 191, 34, 34);
-$ion-border-danger-press: var(--token-border-danger-press, $ion-semantics-danger-1000);
-$ion-border-danger-press-rgb: var(--token-border-danger-press-rgb, 118, 21, 21);
-$ion-border-input-default: var(--token-border-input-default, $ion-primitives-neutral-600);
-$ion-border-input-default-rgb: var(--token-border-input-default-rgb, 140, 140, 140);
-$ion-border-input-press: var(--token-border-input-press, $ion-primitives-neutral-800);
-$ion-border-input-press-rgb: var(--token-border-input-press-rgb, 98, 98, 98);
-$ion-border-input-read-only: var(--token-border-input-read-only, $ion-primitives-neutral-800);
-$ion-border-input-read-only-rgb: var(--token-border-input-read-only-rgb, 98, 98, 98);
-$ion-border-style-none: var(--token-border-style-none, none);
-$ion-border-style-solid: var(--token-border-style-solid, solid);
-$ion-border-style-dashed: var(--token-border-style-dashed, dashed);
-$ion-border-style-dotted: var(--token-border-style-dotted, dotted);
 $ion-border-size-0: var(--token-border-size-0, $ion-scale-0);
 $ion-border-size-025: var(--token-border-size-025, $ion-scale-025);
 $ion-border-size-050: var(--token-border-size-050, $ion-scale-050);
@@ -850,8 +910,42 @@ $ion-border-radius-400: var(--token-border-radius-400, $ion-scale-400);
 $ion-border-radius-500: var(--token-border-radius-500, $ion-scale-500);
 $ion-border-radius-800: var(--token-border-radius-800, $ion-scale-800);
 $ion-border-radius-1000: var(--token-border-radius-1000, $ion-scale-1000);
-$ion-border-radius-full: var(--token-border-radius-full, 999px);
 $ion-border-radius-025: var(--token-border-radius-025, $ion-scale-050);
+$ion-border-radius-full: var(--token-border-radius-full, 999px);
+$ion-border-default: var(--token-border-default, $ion-primitives-neutral-400);
+$ion-border-default-rgb: var(--token-border-default-rgb, 208, 215, 223);
+$ion-border-subtle: var(--token-border-subtle, $ion-primitives-neutral-300);
+$ion-border-subtle-rgb: var(--token-border-subtle-rgb, 230, 234, 238);
+$ion-border-subtlest: var(--token-border-subtlest, $ion-primitives-base-white);
+$ion-border-subtlest-rgb: var(--token-border-subtlest-rgb, 255, 255, 255);
+$ion-border-disabled: var(--token-border-disabled, $ion-primitives-neutral-300);
+$ion-border-disabled-rgb: var(--token-border-disabled-rgb, 230, 234, 238);
+$ion-border-boldest: var(--token-border-boldest, $ion-primitives-neutral-1200);
+$ion-border-boldest-rgb: var(--token-border-boldest-rgb, 36, 37, 40);
+$ion-border-primary: var(--token-border-primary, $ion-semantics-primary-base);
+$ion-border-primary-rgb: var(--token-border-primary-rgb, 16, 92, 239);
+$ion-border-info: var(--token-border-info, $ion-semantics-info-500);
+$ion-border-info-rgb: var(--token-border-info-rgb, 148, 165, 244);
+$ion-border-success: var(--token-border-success, $ion-semantics-success-500);
+$ion-border-success-rgb: var(--token-border-success-rgb, 148, 217, 187);
+$ion-border-warning: var(--token-border-warning, $ion-semantics-warning-300);
+$ion-border-warning-rgb: var(--token-border-warning-rgb, 249, 226, 161);
+$ion-border-focus-default: var(--token-border-focus-default, $ion-semantics-primary-400);
+$ion-border-focus-default-rgb: var(--token-border-focus-default-rgb, 181, 192, 247);
+$ion-border-focus-error: var(--token-border-focus-error, $ion-primitives-red-400);
+$ion-border-focus-error-rgb: var(--token-border-focus-error-rgb, 238, 143, 154);
+$ion-border-danger-default: var(--token-border-danger-default, $ion-semantics-danger-600);
+$ion-border-danger-default-rgb: var(--token-border-danger-default-rgb, 239, 82, 100);
+$ion-border-danger-press: var(--token-border-danger-press, $ion-semantics-danger-700);
+$ion-border-danger-press-rgb: var(--token-border-danger-press-rgb, 224, 36, 58);
+$ion-border-input-default: var(--token-border-input-default, $ion-primitives-neutral-400);
+$ion-border-input-default-rgb: var(--token-border-input-default-rgb, 208, 215, 223);
+$ion-border-input-hover: var(--token-border-input-hover, $ion-primitives-neutral-500);
+$ion-border-input-hover-rgb: var(--token-border-input-hover-rgb, 159, 165, 173);
+$ion-border-input-press: var(--token-border-input-press, $ion-primitives-neutral-600);
+$ion-border-input-press-rgb: var(--token-border-input-press-rgb, 126, 133, 142);
+$ion-border-input-read-only: var(--token-border-input-read-only, $ion-primitives-neutral-600);
+$ion-border-input-read-only-rgb: var(--token-border-input-read-only-rgb, 126, 133, 142);
 
 // Font
 $ion-font-family: var(
@@ -876,6 +970,7 @@ $ion-font-weight-semi-bold: var(--token-font-weight-semi-bold, 600);
 $ion-font-weight-bold: var(--token-font-weight-bold, 700);
 $ion-font-weight-extra-bold: var(--token-font-weight-extra-bold, 800);
 $ion-font-weight-black: var(--token-font-weight-black, 900);
+$ion-font-size-250: var(--token-font-size-250, 0.625rem);
 $ion-font-size-275: var(--token-font-size-275, 0.6875rem);
 $ion-font-size-300: var(--token-font-size-300, 0.75rem);
 $ion-font-size-350: var(--token-font-size-350, 0.875rem);
@@ -888,19 +983,18 @@ $ion-font-size-650: var(--token-font-size-650, 1.625rem);
 $ion-font-size-700: var(--token-font-size-700, 1.75rem);
 $ion-font-size-800: var(--token-font-size-800, 2rem);
 $ion-font-size-900: var(--token-font-size-900, 2.25rem);
-$ion-font-letter-spacing-0: var(--token-font-letter-spacing-0, 0%);
-$ion-font-letter-spacing-1: var(--token-font-letter-spacing-1, 1%);
-$ion-font-letter-spacing-2: var(--token-font-letter-spacing-2, 1.5%);
-$ion-font-line-height-300: var(--token-font-line-height-300, $ion-scale-300);
-$ion-font-line-height-400: var(--token-font-line-height-400, $ion-scale-400);
-$ion-font-line-height-500: var(--token-font-line-height-500, $ion-scale-500);
-$ion-font-line-height-600: var(--token-font-line-height-600, $ion-scale-600);
-$ion-font-line-height-700: var(--token-font-line-height-700, $ion-scale-700);
-$ion-font-line-height-800: var(--token-font-line-height-800, $ion-scale-800);
-$ion-font-line-height-900: var(--token-font-line-height-900, $ion-scale-900);
-$ion-font-line-height-1100: var(--token-font-line-height-1100, $ion-scale-1100);
-$ion-font-line-height-1200: var(--token-font-line-height-1200, $ion-scale-1200);
-$ion-font-line-height-full: var(--token-font-line-height-full, 100%);
+$ion-font-line-height-300: var(--token-font-line-height-300, 0.75rem);
+$ion-font-line-height-400: var(--token-font-line-height-400, 1rem);
+$ion-font-line-height-500: var(--token-font-line-height-500, 1.25rem);
+$ion-font-line-height-600: var(--token-font-line-height-600, 1.5rem);
+$ion-font-line-height-700: var(--token-font-line-height-700, 1.75rem);
+$ion-font-line-height-800: var(--token-font-line-height-800, 2rem);
+$ion-font-line-height-900: var(--token-font-line-height-900, 2.25rem);
+$ion-font-line-height-1100: var(--token-font-line-height-1100, 2.75rem);
+$ion-font-line-height-1200: var(--token-font-line-height-1200, 3rem);
+$ion-font-letter-spacing-0: var(--token-font-letter-spacing-0, 0);
+$ion-font-letter-spacing-100: var(--token-font-letter-spacing-100, 0.01em);
+$ion-font-letter-spacing-150: var(--token-font-letter-spacing-150, 0.015em);
 
 // Space
 $ion-space-0: var(--token-space-0, $ion-scale-0);
@@ -916,42 +1010,70 @@ $ion-space-700: var(--token-space-700, $ion-scale-700);
 $ion-space-800: var(--token-space-800, $ion-scale-800);
 $ion-space-900: var(--token-space-900, $ion-scale-900);
 $ion-space-1000: var(--token-space-1000, $ion-scale-1000);
+$ion-space-1100: var(--token-space-1100, $ion-scale-1100);
 $ion-space-1200: var(--token-space-1200, $ion-scale-1200);
+$ion-space-1400: var(--token-space-1400, $ion-scale-1400);
+$ion-space-1600: var(--token-space-1600, $ion-scale-1600);
+$ion-space-1800: var(--token-space-1800, $ion-scale-1800);
+$ion-space-2000: var(--token-space-2000, $ion-scale-2000);
+$ion-space-2400: var(--token-space-2400, $ion-scale-2400);
+$ion-space-2800: var(--token-space-2800, $ion-scale-2800);
+$ion-space-3200: var(--token-space-3200, $ion-scale-3200);
+$ion-space-3400: var(--token-space-3400, $ion-scale-3400);
+$ion-space-3600: var(--token-space-3600, $ion-scale-3600);
+$ion-space-4000: var(--token-space-4000, $ion-scale-4000);
+$ion-space-5000: var(--token-space-5000, $ion-scale-5000);
+$ion-space-6200: var(--token-space-6200, $ion-scale-6200);
+$ion-space-7400: var(--token-space-7400, $ion-scale-7400);
+$ion-space-9000: var(--token-space-9000, $ion-scale-9000);
 $ion-space-050: var(--token-space-050, $ion-scale-050);
 
 // Shadow
-$ion-shadow-1: var(--token-shadow-1, rgba(0, 0, 0, 0.04));
-$ion-shadow-2: var(--token-shadow-2, rgba(0, 0, 0, 0.05));
-$ion-shadow-3: var(--token-shadow-3, rgba(0, 0, 0, 0.07));
-$ion-shadow-4: var(--token-shadow-4, rgba(0, 0, 0, 0.08));
-$ion-shadow-5: var(--token-shadow-5, rgba(0, 0, 0, 0.12));
-$ion-shadow-6: var(--token-shadow-6, rgba(0, 0, 0, 0.16));
-$ion-shadow-7: var(--token-shadow-7, rgba(0, 0, 0, 0.18));
+$ion-shadow-1: var(--token-shadow-1, rgba(0, 0, 0, 0.0392156862745098));
+$ion-shadow-2: var(--token-shadow-2, rgba(0, 0, 0, 0.050980392156862744));
+$ion-shadow-3: var(--token-shadow-3, rgba(0, 0, 0, 0.07058823529411765));
+$ion-shadow-4: var(--token-shadow-4, rgba(0, 0, 0, 0.0784313725490196));
+$ion-shadow-5: var(--token-shadow-5, rgba(0, 0, 0, 0.12156862745098039));
+$ion-shadow-6: var(--token-shadow-6, rgba(0, 0, 0, 0.1607843137254902));
+$ion-shadow-7: var(--token-shadow-7, rgba(0, 0, 0, 0.1803921568627451));
+$ion-shadow-blur-4: var(--token-shadow-blur-4, 4px);
+$ion-shadow-blur-5: var(--token-shadow-blur-5, 5px);
+$ion-shadow-blur-7: var(--token-shadow-blur-7, 7px);
+$ion-shadow-blur-9: var(--token-shadow-blur-9, 9px);
+$ion-shadow-blur-12: var(--token-shadow-blur-12, 12px);
+$ion-shadow-blur-25: var(--token-shadow-blur-25, 25px);
+$ion-shadow-blur-32: var(--token-shadow-blur-32, 32px);
+$ion-shadow-blur-48: var(--token-shadow-blur-48, 48px);
+$ion-shadow-offset-0: var(--token-shadow-offset-0, 0px);
+$ion-shadow-offset-1: var(--token-shadow-offset-1, 1px);
+$ion-shadow-offset-2: var(--token-shadow-offset-2, 2px);
+$ion-shadow-offset-3: var(--token-shadow-offset-3, 3px);
+$ion-shadow-offset-6: var(--token-shadow-offset-6, 6px);
+$ion-shadow-offset-8: var(--token-shadow-offset-8, 8px);
+$ion-shadow-offset-15: var(--token-shadow-offset-15, 15px);
+$ion-shadow-spread-0: var(--token-shadow-spread-0, 0px);
 
 // Elevation
-$ion-elevation-1: var(--token-elevation-1, 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 3px 9px 0px rgba(0, 0, 0, 0.07));
-$ion-elevation-2: var(--token-elevation-2, 0px 1px 5px 0px rgba(0, 0, 0, 0.05), 0px 8px 25px 0px rgba(0, 0, 0, 0.08));
-$ion-elevation-3: var(--token-elevation-3, 0px 2px 7px 0px rgba(0, 0, 0, 0.05), 0px 6px 32px 0px rgba(0, 0, 0, 0.16));
-$ion-elevation-4: var(--token-elevation-4, 0px 3px 12px 0px rgba(0, 0, 0, 0.12), 0px 15px 48px 0px rgba(0, 0, 0, 0.18));
-
-// Transition
-$ion-transition-curve-linear: var(--token-transition-curve-linear, linear);
-$ion-transition-curve-quick: var(--token-transition-curve-quick, cubic-bezier(0, 0, 0.2, 1));
-$ion-transition-curve-smooth: var(--token-transition-curve-smooth, cubic-bezier(0.25, 1, 0.5, 1));
-$ion-transition-curve-spring: var(--token-transition-curve-spring, cubic-bezier(0.16, 1, 0.3, 1));
-$ion-transition-curve-base: var(--token-transition-curve-base, cubic-bezier(0.4, 0, 1, 1));
-$ion-transition-curve-expressive: var(--token-transition-curve-expressive, cubic-bezier(0.4, 0, 0.2, 1));
-$ion-transition-curve-bounce: var(--token-transition-curve-bounce, cubic-bezier(0.47, 0, 0.23, 1.38));
-$ion-transition-time-0: var(--token-transition-time-0, 0ms);
-$ion-transition-time-100: var(--token-transition-time-100, 100ms);
-$ion-transition-time-150: var(--token-transition-time-150, 150ms);
-$ion-transition-time-200: var(--token-transition-time-200, 200ms);
-$ion-transition-time-250: var(--token-transition-time-250, 250ms);
-$ion-transition-time-300: var(--token-transition-time-300, 300ms);
-$ion-transition-time-350: var(--token-transition-time-350, 350ms);
-$ion-transition-time-500: var(--token-transition-time-500, 500ms);
-$ion-transition-time-1000: var(--token-transition-time-1000, 1000ms);
-$ion-transition-time-1500: var(--token-transition-time-1500, 1500ms);
+$ion-elevation-1: var(
+  --token-elevation-1,
+  $ion-shadow-offset-0 $ion-shadow-offset-3 $ion-shadow-blur-9 $ion-shadow-spread-0 $ion-shadow-3,
+  $ion-shadow-offset-0 $ion-shadow-offset-0 $ion-shadow-blur-4 $ion-shadow-spread-0 $ion-shadow-1
+);
+$ion-elevation-2: var(
+  --token-elevation-2,
+  $ion-shadow-offset-0 $ion-shadow-offset-8 $ion-shadow-blur-25 $ion-shadow-spread-0 $ion-shadow-4,
+  $ion-shadow-offset-0 $ion-shadow-offset-1 $ion-shadow-blur-5 $ion-shadow-spread-0 $ion-shadow-2
+);
+$ion-elevation-3: var(
+  --token-elevation-3,
+  $ion-shadow-offset-0 $ion-shadow-offset-6 $ion-shadow-blur-32 $ion-shadow-spread-0 $ion-shadow-6,
+  $ion-shadow-offset-0 $ion-shadow-offset-2 $ion-shadow-blur-7 $ion-shadow-spread-0 $ion-shadow-2
+);
+$ion-elevation-4: var(
+  --token-elevation-4,
+  $ion-shadow-offset-0 $ion-shadow-offset-15 $ion-shadow-blur-48 $ion-shadow-spread-0 $ion-shadow-7,
+  $ion-shadow-offset-0 $ion-shadow-offset-3 $ion-shadow-blur-12 $ion-shadow-spread-0 $ion-shadow-5
+);
 
 // Z-index
 $ion-z-index-0: var(--token-z-index-0, 0);
@@ -963,511 +1085,490 @@ $ion-z-index-500: var(--token-z-index-500, 500);
 $ion-z-index-bottom: var(--token-z-index-bottom, -99999);
 $ion-z-index-top: var(--token-z-index-top, 99999);
 
-// Rectangular
-$ion-rectangular-2xs: var(--token-rectangular-2xs, $ion-border-radius-0);
-$ion-rectangular-xs: var(--token-rectangular-xs, $ion-border-radius-0);
-$ion-rectangular-sm: var(--token-rectangular-sm, $ion-border-radius-0);
-$ion-rectangular-md: var(--token-rectangular-md, $ion-border-radius-0);
-$ion-rectangular-lg: var(--token-rectangular-lg, $ion-border-radius-0);
-$ion-rectangular-xl: var(--token-rectangular-xl, $ion-border-radius-0);
-$ion-rectangular-2xl: var(--token-rectangular-2xl, $ion-border-radius-0);
+// Transition
+$ion-transition-time-0: var(--token-transition-time-0, 0ms);
+$ion-transition-time-100: var(--token-transition-time-100, 100ms);
+$ion-transition-time-150: var(--token-transition-time-150, 150ms);
+$ion-transition-time-200: var(--token-transition-time-200, 200ms);
+$ion-transition-time-300: var(--token-transition-time-300, 300ms);
+$ion-transition-time-500: var(--token-transition-time-500, 500ms);
+$ion-transition-time-1000: var(--token-transition-time-1000, 1000ms);
+$ion-transition-time-1500: var(--token-transition-time-1500, 1500ms);
+$ion-transition-curve-linear: var(--token-transition-curve-linear, linear);
+$ion-transition-curve-quick: var(--token-transition-curve-quick, cubic-bezier(0, 0, 0.2, 1));
+$ion-transition-curve-smooth: var(--token-transition-curve-smooth, cubic-bezier(0.25, 1, 0.5, 1));
+$ion-transition-curve-spring: var(--token-transition-curve-spring, cubic-bezier(0.16, 1, 0.3, 1));
+$ion-transition-curve-base: var(--token-transition-curve-base, cubic-bezier(0.4, 0, 1, 1));
+$ion-transition-curve-expressive: var(--token-transition-curve-expressive, cubic-bezier(0.4, 0, 0.2, 1));
+$ion-transition-curve-bounce: var(--token-transition-curve-bounce, cubic-bezier(0.47, 0, 0.23, 1.38));
 
-// Round
-$ion-round-2xs: var(--token-round-2xs, $ion-border-radius-full);
-$ion-round-xs: var(--token-round-xs, $ion-border-radius-full);
-$ion-round-sm: var(--token-round-sm, $ion-border-radius-full);
-$ion-round-md: var(--token-round-md, $ion-border-radius-full);
-$ion-round-lg: var(--token-round-lg, $ion-border-radius-300);
-$ion-round-xl: var(--token-round-xl, $ion-border-radius-400);
-$ion-round-2xl: var(--token-round-2xl, $ion-border-radius-1000);
+// Blur
+$ion-blur: var(--token-blur, 12px);
 
-// Soft
-$ion-soft-2xs: var(--token-soft-2xs, $ion-border-radius-100);
-$ion-soft-xs: var(--token-soft-xs, $ion-border-radius-200);
-$ion-soft-sm: var(--token-soft-sm, $ion-border-radius-300);
-$ion-soft-md: var(--token-soft-md, $ion-border-radius-400);
-$ion-soft-lg: var(--token-soft-lg, $ion-border-radius-200);
-$ion-soft-xl: var(--token-soft-xl, $ion-border-radius-200);
-$ion-soft-2xl: var(--token-soft-2xl, $ion-border-radius-400);
+// Shape
+$ion-shape-2xs: var(--token-shape-2xs, 4px);
+$ion-shape-xs: var(--token-shape-xs, 8px);
+$ion-shape-sm: var(--token-shape-sm, 12px);
+$ion-shape-md: var(--token-shape-md, 16px);
+$ion-shape-lg: var(--token-shape-lg, 8px);
+$ion-shape-xl: var(--token-shape-xl, 12px);
+$ion-shape-2xl: var(--token-shape-2xl, 16px);
+$ion-shape-rectangular-2xs: var(--token-shape-rectangular-2xs, 0px);
+$ion-shape-rectangular-xs: var(--token-shape-rectangular-xs, 0px);
+$ion-shape-rectangular-sm: var(--token-shape-rectangular-sm, 0px);
+$ion-shape-rectangular-md: var(--token-shape-rectangular-md, 0px);
+$ion-shape-rectangular-lg: var(--token-shape-rectangular-lg, 0px);
+$ion-shape-rectangular-xl: var(--token-shape-rectangular-xl, 0px);
+$ion-shape-rectangular-2xl: var(--token-shape-rectangular-2xl, 0px);
+$ion-shape-round-2xs: var(--token-shape-round-2xs, 999px);
+$ion-shape-round-xs: var(--token-shape-round-xs, 999px);
+$ion-shape-round-sm: var(--token-shape-round-sm, 999px);
+$ion-shape-round-md: var(--token-shape-round-md, 999px);
+$ion-shape-round-lg: var(--token-shape-round-lg, 12px);
+$ion-shape-round-xl: var(--token-shape-round-xl, 16px);
+$ion-shape-round-2xl: var(--token-shape-round-2xl, 40px);
+$ion-shape-soft-2xs: var(--token-shape-soft-2xs, 4px);
+$ion-shape-soft-xs: var(--token-shape-soft-xs, 8px);
+$ion-shape-soft-sm: var(--token-shape-soft-sm, 12px);
+$ion-shape-soft-md: var(--token-shape-soft-md, 16px);
+$ion-shape-soft-lg: var(--token-shape-soft-lg, 8px);
+$ion-shape-soft-xl: var(--token-shape-soft-xl, 12px);
+$ion-shape-soft-2xl: var(--token-shape-soft-2xl, 16px);
 
 // Typography
 
-$ion-display-sm-regular: (
-  font-size: $ion-font-size-800,
-  font-style: normal,
-  font-weight: $ion-font-weight-regular,
-  letter-spacing: $ion-font-letter-spacing-0,
-  line-height: $ion-font-line-height-1100,
-  text-transform: none,
-  text-decoration: none,
-);
-
-$ion-display-sm-light: (
-  font-size: $ion-font-size-800,
+$ion-display-lg-light: (
+  font-family: $ion-font-family,
+  font-size: $ion-font-size-900,
   font-style: normal,
   font-weight: $ion-font-weight-light,
   letter-spacing: $ion-font-letter-spacing-0,
-  line-height: $ion-font-line-height-1100,
-  text-transform: none,
-  text-decoration: none,
+  line-height: $ion-font-line-height-1200,
 );
 
 $ion-display-lg-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-900,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-1200,
-  text-transform: none,
-  text-decoration: none,
 );
 
-$ion-display-lg-light: (
-  font-size: $ion-font-size-900,
+$ion-display-sm-light: (
+  font-family: $ion-font-family,
+  font-size: $ion-font-size-800,
   font-style: normal,
   font-weight: $ion-font-weight-light,
   letter-spacing: $ion-font-letter-spacing-0,
-  line-height: $ion-font-line-height-1200,
-  text-transform: none,
-  text-decoration: none,
+  line-height: $ion-font-line-height-1100,
+);
+
+$ion-display-sm-regular: (
+  font-family: $ion-font-family,
+  font-size: $ion-font-size-800,
+  font-style: normal,
+  font-weight: $ion-font-weight-regular,
+  letter-spacing: $ion-font-letter-spacing-0,
+  line-height: $ion-font-line-height-1100,
 );
 
 $ion-heading-h1-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-700,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-900,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h1-medium: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-700,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-900,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h1-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-700,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-900,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h1-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-700,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-900,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h2-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-650,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-900,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h2-medium: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-650,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-900,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h2-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-650,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-900,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h2-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-650,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-900,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h3-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-600,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-800,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h3-medium: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-600,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-800,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h3-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-600,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-800,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h3-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-600,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-800,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h4-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-550,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h4-medium: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-550,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h4-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-550,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h4-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-550,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h5-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-500,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h5-medium: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-500,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h5-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-500,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h5-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-500,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h6-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-450,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h6-medium: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-450,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h6-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-450,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-heading-h6-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-450,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-700,
-  text-transform: none,
-  text-decoration: none,
-);
-
-$ion-body-action-lg: (
-  font-size: $ion-font-size-500,
-  font-style: normal,
-  font-weight: $ion-font-weight-medium,
-  letter-spacing: $ion-font-letter-spacing-1,
-  line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
-);
-
-$ion-body-action-md: (
-  font-size: $ion-font-size-400,
-  font-style: normal,
-  font-weight: $ion-font-weight-medium,
-  letter-spacing: $ion-font-letter-spacing-1,
-  line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
-);
-
-$ion-body-action-sm: (
-  font-size: $ion-font-size-350,
-  font-style: normal,
-  font-weight: $ion-font-weight-medium,
-  letter-spacing: $ion-font-letter-spacing-1,
-  line-height: $ion-font-line-height-500,
-  text-transform: none,
-  text-decoration: none,
-);
-
-$ion-body-action-xs: (
-  font-size: $ion-font-size-300,
-  font-style: normal,
-  font-weight: $ion-font-weight-medium,
-  letter-spacing: $ion-font-letter-spacing-1,
-  line-height: $ion-font-line-height-500,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-lg-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-400,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-lg-medium: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-400,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-lg-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-400,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-lg-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-400,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-md-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-350,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-md-medium: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-350,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-md-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-350,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-md-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-350,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-600,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-sm-regular: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-300,
   font-style: normal,
   font-weight: $ion-font-weight-regular,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-500,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-sm-medium: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-300,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-500,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-sm-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-300,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-500,
-  text-transform: none,
-  text-decoration: none,
 );
 
 $ion-body-sm-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-300,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
   letter-spacing: $ion-font-letter-spacing-0,
   line-height: $ion-font-line-height-500,
-  text-transform: none,
-  text-decoration: none,
 );
 
-$ion-overline-regular: (
-  font-size: $ion-font-size-300,
+$ion-body-action-lg: (
+  font-family: $ion-font-family,
+  font-size: $ion-font-size-500,
   font-style: normal,
-  font-weight: $ion-font-weight-regular,
-  letter-spacing: $ion-font-letter-spacing-2,
-  line-height: $ion-font-line-height-500,
-  text-transform: uppercase,
-  text-decoration: none,
+  font-weight: $ion-font-weight-medium,
+  letter-spacing: $ion-font-letter-spacing-100,
+  line-height: $ion-font-line-height-600,
 );
 
-$ion-overline-medium: (
+$ion-body-action-md: (
+  font-family: $ion-font-family,
+  font-size: $ion-font-size-400,
+  font-style: normal,
+  font-weight: $ion-font-weight-medium,
+  letter-spacing: $ion-font-letter-spacing-100,
+  line-height: $ion-font-line-height-600,
+);
+
+$ion-body-action-sm: (
+  font-family: $ion-font-family,
+  font-size: $ion-font-size-350,
+  font-style: normal,
+  font-weight: $ion-font-weight-medium,
+  letter-spacing: $ion-font-letter-spacing-100,
+  line-height: $ion-font-line-height-500,
+);
+
+$ion-body-action-xs: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-300,
   font-style: normal,
   font-weight: $ion-font-weight-medium,
-  letter-spacing: $ion-font-letter-spacing-2,
+  letter-spacing: $ion-font-letter-spacing-100,
+  line-height: $ion-font-line-height-500,
+);
+
+$ion-overline-regular: (
+  font-family: $ion-font-family,
+  font-size: $ion-font-size-300,
+  font-style: normal,
+  font-weight: $ion-font-weight-regular,
+  letter-spacing: $ion-font-letter-spacing-150,
   line-height: $ion-font-line-height-500,
   text-transform: uppercase,
-  text-decoration: none,
+);
+
+$ion-overline-medium: (
+  font-family: $ion-font-family,
+  font-size: $ion-font-size-300,
+  font-style: normal,
+  font-weight: $ion-font-weight-medium,
+  letter-spacing: $ion-font-letter-spacing-150,
+  line-height: $ion-font-line-height-500,
+  text-transform: uppercase,
 );
 
 $ion-overline-semi-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-300,
   font-style: normal,
   font-weight: $ion-font-weight-semi-bold,
-  letter-spacing: $ion-font-letter-spacing-2,
+  letter-spacing: $ion-font-letter-spacing-150,
   line-height: $ion-font-line-height-500,
   text-transform: uppercase,
-  text-decoration: none,
 );
 
 $ion-overline-bold: (
+  font-family: $ion-font-family,
   font-size: $ion-font-size-300,
   font-style: normal,
   font-weight: $ion-font-weight-bold,
-  letter-spacing: $ion-font-letter-spacing-2,
+  letter-spacing: $ion-font-letter-spacing-150,
   line-height: $ion-font-line-height-500,
   text-transform: uppercase,
-  text-decoration: none,
 );

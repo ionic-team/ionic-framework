@@ -4,7 +4,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
-- [Version 9.x](#version-9x)
+- [Version 10.x](#version-10x)
+- [Version 9.x](./BREAKING_ARCHIVE/v9.md)
 - [Version 8.x](./BREAKING_ARCHIVE/v8.md)
 - [Version 7.x](./BREAKING_ARCHIVE/v7.md)
 - [Version 6.x](./BREAKING_ARCHIVE/v6.md)
@@ -12,43 +13,46 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Version 4.x](./BREAKING_ARCHIVE/v4.md)
 - [Legacy](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md)
 
-## Version 9.x
+## Version 10.x
 
-- [Global Styles](#version-9x-global-styles)
-- [Components](#version-9x-components)
-  - [Button](#version-9x-button)
-  - [Card](#version-9x-card)
-  - [Chip](#version-9x-chip)
-  - [Col](#version-9x-col)
-  - [Content](#version-9x-content)
-  - [Datetime](#version-9x-datetime)
-  - [Grid](#version-9x-grid)
-  - [Image](#version-9x-image)
-  - [Input Otp](#version-9x-input-otp)
-  - [Item Divider](#version-9x-item-divider)
-  - [Menu Toggle](#version-9x-menu-toggle)
-  - [Radio Group](#version-9x-radio-group)
-  - [Ripple Effect](#version-9x-ripple-effect)
-  - [Row](#version-9x-row)
-  - [Skeleton Text](#version-9x-skeleton-text)
-  - [Spinner](#version-9x-spinner)
-  - [Text](#version-9x-text)
-  - [Textarea](#version-9x-textarea)
-  - [Thumbnail](#version-9x-thumbnail)
+- [Global Styles](#version-10x-global-styles)
+- [Components](#version-10x-components)
+  - [Button](#version-10x-button)
+  - [Card](#version-10x-card)
+  - [Checkbox](#version-10x-checkbox)
+  - [Chip](#version-10x-chip)
+  - [Col](#version-10x-col)
+  - [Content](#version-10x-content)
+  - [Datetime](#version-10x-datetime)
+  - [Grid](#version-10x-grid)
+  - [Image](#version-10x-image)
+  - [Input Otp](#version-10x-input-otp)
+  - [Item Divider](#version-10x-item-divider)
+  - [Menu Toggle](#version-10x-menu-toggle)
+  - [Radio Group](#version-10x-radio-group)
+  - [Ripple Effect](#version-10x-ripple-effect)
+  - [Row](#version-10x-row)
+  - [Skeleton Text](#version-10x-skeleton-text)
+  - [Spinner](#version-10x-spinner)
+  - [Text](#version-10x-text)
+  - [Textarea](#version-10x-textarea)
+  - [Thumbnail](#version-10x-thumbnail)
+- [Framework Specific](#version-10x-framework-specific)
+  - [Angular](#version-10x-angular)
 
-<h2 id="version-9x-global-styles">Global Styles</h2>
+<h2 id="version-10x-global-styles">Global Styles</h2>
 
-<h4 id="version-9x-color-steps">Color Steps</h4>
+<h4 id="version-10x-color-steps">Color Steps</h4>
 
 - The deprecated color step CSS variables, `--ion-color-step-[number]`, have been removed and should be replaced with either `--ion-background-color-step-[number]` or `--ion-text-color-step-[number]` depending on the specific use case, as outlined in the [migration guide](https://ionicframework.com/docs/updating/8-0#step-color-tokens).
 
-<h2 id="version-9x-components">Components</h2>
+<h2 id="version-10x-components">Components</h2>
 
-<h4 id="version-9x-button">Button</h4>
+<h4 id="version-10x-button">Button</h4>
 
 - The `border-radius` of the `ios` and `md` button now defaults to `6px` and `999px` instead of `14px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"` for `md` and override the `--border-radius` CSS variable for `ios` to `14px`, or set it to a different value entirely.
 
-<h4 id="version-9x-card">Card</h4>
+<h4 id="version-10x-card">Card</h4>
 
 - **ion-card**: The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
 
@@ -80,7 +84,30 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   }
   ```
 
-<h4 id="version-9x-chip">Chip</h4>
+<h4 id="version-10x-checkbox">Checkbox</h4>
+
+- The `container` CSS shadow part is now the element that wraps the checkmark instead of the `svg` element that draws it. The part still controls the checkbox's size, border, and background, so existing styles for those properties are unaffected.
+
+  SVG-specific properties such as `fill`, `stroke` and `stroke-width` no longer have any effect through `::part(container)` because `container` is no longer an SVG element. To set the color of the checkmark, use the `icon` part instead:
+
+  ```diff
+  - ion-checkbox::part(container) {
+  -   stroke: purple;
+  - }
+  + ion-checkbox::part(icon) {
+  +   color: purple;
+  + }
+  ```
+
+  The `--checkmark-color` CSS variable can also be used to set the checkmark color. Both `::part(icon)` and `--checkmark-color` apply to the default checkmark as well as to an icon set with the `checkboxCheckedIcon` or `checkboxIndeterminateIcon` global config options. In contrast, the `mark` part only applies to states that do not have a configured icon.
+
+  Setting `color` on the `container` part has no effect because the icon sets its own color.
+
+  To change the thickness of the default checkmark, use the `--checkmark-width` CSS variable or set `stroke-width` on the `mark` part. These apply to each state (`checked` and `indeterminate`) unless an icon is configured for that state. For example, when `checkboxCheckedIcon` is configured, these properties do not apply to the checked state but continue to apply to the indeterminate state. Similarly, when `checkboxIndeterminateIcon` is configured, they do not apply to the indeterminate state but continue to apply to the checked state.
+
+  For a configured Ionicon drawn with a stroke, set `--ionicon-stroke-width` on the `icon` part. For a configured SVG, set `stroke-width` on the `icon` part; this applies unless the SVG sets its own `stroke-width`.
+
+<h4 id="version-10x-chip">Chip</h4>
 
 - Component CSS variables have been removed. The component now utilizes the centralized Ionic Theming system. Global updates should be managed via the theme tokens file, while component-specific overrides are handled through localized CSS variables.
    - `--color` is replaced by `IonChip.hue.bold.solid.default` for global styles and `--ion-chip-hue-bold-solid-default-color` for component-specific styles if the chip has a bold hue and solid fill.
@@ -91,26 +118,26 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - Specific theme classes (e.g., `ion-chip.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 - The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `IonChip.shape.round.border.radius` to specify a different value for global styles and `--ion-chip-shape-round-border-radius` for component-specific styles.
 
-<h4 id="version-9x-col">Col</h4>
+<h4 id="version-10x-col">Col</h4>
 
 The following breaking changes apply to `ion-col`:
 
-1. `--ion-grid-column-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens in the `col` namespace. <sup>[1](#version-9x-col-padding-variables)</sup>
-2. Theme classes (`ion-col.md`, `ion-col.ios`) are no longer supported. <sup>[2](#version-9x-col-theme-classes)</sup>
+1. `--ion-grid-column-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens in the `col` namespace. <sup>[1](#version-10x-col-padding-variables)</sup>
+2. Theme classes (`ion-col.md`, `ion-col.ios`) are no longer supported. <sup>[2](#version-10x-col-theme-classes)</sup>
 
-<h5 id="version-9x-col-padding-variables">Padding variables</h5>
+<h5 id="version-10x-col-padding-variables">Padding variables</h5>
 
 Column padding was a single value per breakpoint and is now set per-side, and the variables have moved from the `grid` namespace to the `col` namespace. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--ion-grid-column-padding-{bp}` | `IonCol.breakpoint.{bp}.padding.{top\|end\|bottom\|start}` | `--ion-col-breakpoint-{bp}-padding-{top\|end\|bottom\|start}` |
 
-<h5 id="version-9x-col-theme-classes">Theme classes</h5>
+<h5 id="version-10x-col-theme-classes">Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-col.md`, `ion-col.ios`.
 
-<h4 id="version-9x-content">Content</h4>
+<h4 id="version-10x-content">Content</h4>
 
 The following breaking changes apply to `ion-content`:
 
@@ -123,7 +150,7 @@ The following breaking changes apply to `ion-content`:
 
 `--background` and `--color` have been removed. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--background` | `IonContent.background` | `--ion-content-default-background` |
 | `--color` | `IonContent.color` | `--ion-content-default-color` |
@@ -132,7 +159,7 @@ The following breaking changes apply to `ion-content`:
 
 New code should use the token-based API:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--padding-top` | `IonContent.padding.top` | `--ion-content-padding-top` |
 | `--padding-end` | `IonContent.padding.end` | `--ion-content-padding-end` |
@@ -146,7 +173,7 @@ New code should use the token-based API:
 
 The following CSS variables were previously documented `@prop`s on `ion-content` and have been renamed to the `--internal-*` namespace, removing them from the public API:
 
-| Old (8.x) | New |
+| Old (9.x) | New |
 |---|---|
 | `--keyboard-offset` | `--internal-keyboard-offset` |
 | `--offset-top` | `--internal-offset-top` |
@@ -158,40 +185,40 @@ These are managed by `ion-content` itself (keyboard avoidance and header/footer 
 
 Remove any instances that target the theme classes: `ion-content.md`, `ion-content.ios`.
 
-<h4 id="version-9x-datetime">Datetime</h4>
+<h4 id="version-10x-datetime">Datetime</h4>
 
 - The `ion-buttons` component has been removed from the internal implementation of `ion-datetime` and is no longer required when passing custom buttons to the `slot="buttons"`. When providing custom buttons, use a `div` element instead of `ion-buttons`. While existing code using `ion-buttons` may continue to work visually, future updates to the `ion-buttons` component may cause any styles you rely on to break.
 
-<h4 id="version-9x-grid">Grid</h4>
+<h4 id="version-10x-grid">Grid</h4>
 
 The following breaking changes apply to `ion-grid`:
 
-1. `--ion-grid-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens. <sup>[1](#version-9x-grid-padding-variables)</sup>
-2. `--ion-grid-width-*` CSS variables for the fixed grid have been replaced with per-breakpoint tokens. <sup>[2](#version-9x-grid-fixed-width-variables)</sup>
-3. The `push` and `pull` properties have been deprecated. <sup>[3](#version-9x-grid-deprecated-push-and-pull-properties)</sup>
-4. Theme classes (`ion-grid.md`, `ion-grid.ios`) are no longer supported. <sup>[4](#version-9x-grid-theme-classes)</sup>
+1. `--ion-grid-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens. <sup>[1](#version-10x-grid-padding-variables)</sup>
+2. `--ion-grid-width-*` CSS variables for the fixed grid have been replaced with per-breakpoint tokens. <sup>[2](#version-10x-grid-fixed-width-variables)</sup>
+3. The `push` and `pull` properties have been deprecated. <sup>[3](#version-10x-grid-deprecated-push-and-pull-properties)</sup>
+4. Theme classes (`ion-grid.md`, `ion-grid.ios`) are no longer supported. <sup>[4](#version-10x-grid-theme-classes)</sup>
 
-<h5 id="version-9x-grid-padding-variables">Padding variables</h5>
+<h5 id="version-10x-grid-padding-variables">Padding variables</h5>
 
 Grid padding was a single value per breakpoint and is now set per-side. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--ion-grid-padding-{bp}` | `IonGrid.breakpoint.{bp}.padding.{top\|end\|bottom\|start}` | `--ion-grid-breakpoint-{bp}-padding-{top\|end\|bottom\|start}` |
 
-<h5 id="version-9x-grid-fixed-width-variables">Fixed width variables</h5>
+<h5 id="version-10x-grid-fixed-width-variables">Fixed width variables</h5>
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--ion-grid-width-{bp}` | `IonGrid.breakpoint.{bp}.width` | `--ion-grid-breakpoint-{bp}-width` |
 
-<h5 id="version-9x-grid-deprecated-push-and-pull-properties">Deprecated <code>push</code> and <code>pull</code> properties</h5>
+<h5 id="version-10x-grid-deprecated-push-and-pull-properties">Deprecated <code>push</code> and <code>pull</code> properties</h5>
 
 The `push` and `pull` properties have been disabled. They now log a deprecation warning and no longer affect layout. Use the `order` property to achieve a similar result.
 
 **Example 1: Swap two columns**
 
-**Version up to 8.x**
+**Version up to 9.x**
 
 ```html
 <ion-grid>
@@ -203,7 +230,7 @@ The `push` and `pull` properties have been disabled. They now log a deprecation 
 </ion-grid>
 ```
 
-**Version 9.x+**
+**Version 10.x+**
 
 ```html
 <ion-grid>
@@ -219,7 +246,7 @@ The `push` and `pull` properties have been disabled. They now log a deprecation 
 
 To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `size="3" pull="9"`:
 
-**Version up to 8.x**
+**Version up to 9.x**
 
 ```html
 <ion-grid>
@@ -230,7 +257,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-**Version 9.x+**
+**Version 10.x+**
 
 ```html
 <ion-grid>
@@ -243,6 +270,8 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 
 **Example 3: Push**
 
+**Version up to 9.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -256,7 +285,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-**Version 9.x+**
+**Version 10.x+**
 
 ```html
 <ion-grid>
@@ -273,6 +302,8 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 
 **Example 4: Push and Pull**
 
+**Version up to 9.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -286,7 +317,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-**Version 9.x+**
+**Version 10.x+**
 
 ```html
 <ion-grid>
@@ -301,11 +332,11 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-<h5 id="version-9x-grid-theme-classes">Theme classes</h5>
+<h5 id="version-10x-grid-theme-classes">Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-grid.md`, `ion-grid.ios`.
 
-<h4 id="version-9x-image">Image</h4>
+<h4 id="version-10x-image">Image</h4>
 
 The following breaking changes apply to `ion-img`:
 
@@ -315,13 +346,13 @@ The following breaking changes apply to `ion-img`:
 
 Remove any instances that target the theme classes: `ion-img.md`, `ion-img.ios`.
 
-<h4 id="version-9x-input-otp">Input Otp</h4>
+<h4 id="version-10x-input-otp">Input Otp</h4>
 
 Converted `ion-input-otp` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 If you were targeting the internals of `ion-input-otp` in your CSS, you will need to target the `group`, `container`, `native`, `separator` or `description` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
-<h4 id="version-9x-item-divider">Item Divider</h4>
+<h4 id="version-10x-item-divider">Item Divider</h4>
 
 - Component CSS variables have been removed. The component now utilizes the centralized Ionic Theming system. Global updates should be managed via the theme tokens file, while component-specific overrides are handled through localized CSS variables.
    - `--background` is replaced by `IonItemDivider.background` for global styles and `--ion-item-divider-background` for component-specific overrides.
@@ -336,7 +367,7 @@ If you were targeting the internals of `ion-input-otp` in your CSS, you will nee
    - `--inner-padding-start` is replaced by `IonItemDivider.inner.padding.start` for global styles and `--ion-item-divider-inner-padding-start` for component-specific overrides.
 - Specific theme classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
-<h4 id="version-9x-menu-toggle">Menu Toggle</h4>
+<h4 id="version-10x-menu-toggle">Menu Toggle</h4>
 
 The following breaking changes apply to `ion-menu-toggle`:
 
@@ -346,7 +377,7 @@ The following breaking changes apply to `ion-menu-toggle`:
 
 Remove any instances that target the theme classes: `ion-menu-toggle.md`, `ion-menu-toggle.ios`.
 
-<h4 id="version-9x-radio-group">Radio Group</h4>
+<h4 id="version-10x-radio-group">Radio Group</h4>
 
 Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
@@ -354,48 +385,48 @@ If you were targeting the internals of `ion-radio-group` in your CSS, you will n
 
 Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
 
-<h4 id="version-9x-ripple-effect">Ripple Effect</h4>
+<h4 id="version-10x-ripple-effect">Ripple Effect</h4>
 
 The following breaking changes apply to `ion-ripple-effect`:
 
-1. The previously undocumented `--ripple-opacity` CSS variable has been renamed to `--ion-ripple-effect-opacity`. <sup>[1](#version-9x-ripple-effect-opacity-variable)</sup>
-2. Theme classes (`ion-ripple-effect.md`, `ion-ripple-effect.ios`) are no longer supported. <sup>[2](#version-9x-ripple-effect-theme-classes)</sup>
+1. The previously undocumented `--ripple-opacity` CSS variable has been renamed to `--ion-ripple-effect-opacity`. <sup>[1](#version-10x-ripple-effect-opacity-variable)</sup>
+2. Theme classes (`ion-ripple-effect.md`, `ion-ripple-effect.ios`) are no longer supported. <sup>[2](#version-10x-ripple-effect-theme-classes)</sup>
 
-<h5 id="version-9x-ripple-effect-opacity-variable">Opacity variable</h5>
+<h5 id="version-10x-ripple-effect-opacity-variable">Opacity variable</h5>
 
 The ripple fade opacity is now part of the centralized Ionic Theming system. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--ripple-opacity` | `IonRippleEffect.opacity` | `--ion-ripple-effect-opacity` |
 
-<h5 id="version-9x-ripple-effect-theme-classes">Theme classes</h5>
+<h5 id="version-10x-ripple-effect-theme-classes">Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-ripple-effect.md`, `ion-ripple-effect.ios`.
 
-<h4 id="version-9x-row">Row</h4>
+<h4 id="version-10x-row">Row</h4>
 
 The following breaking changes apply to `ion-row`:
 
-1. Theme classes (`ion-row.md`, `ion-row.ios`) are no longer supported. <sup>[1](#version-9x-row-theme-classes)</sup>
+1. Theme classes (`ion-row.md`, `ion-row.ios`) are no longer supported. <sup>[1](#version-10x-row-theme-classes)</sup>
 
-<h5 id="version-9x-row-theme-classes">Theme classes</h5>
+<h5 id="version-10x-row-theme-classes">Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-row.md`, `ion-row.ios`.
 
-<h4 id="version-9x-skeleton-text">Skeleton Text</h4>
+<h4 id="version-10x-skeleton-text">Skeleton Text</h4>
 
 The following breaking changes apply to `ion-skeleton-text`:
 
-1. `--background` and `--background-rgb` CSS variables have been replaced with per-state background tokens, each split into an RGB value and an alpha. <sup>[1](#version-9x-skeleton-text-replaced-css-variables)</sup>
-2. `--border-radius` has been replaced. <sup>[1](#version-9x-skeleton-text-replaced-css-variables)</sup>
-3. Theme classes (`ion-skeleton-text.md`, `ion-skeleton-text.ios`) are no longer supported. <sup>[2](#version-9x-skeleton-text-theme-classes)</sup>
+1. `--background` and `--background-rgb` CSS variables have been replaced with per-state background tokens, each split into an RGB value and an alpha. <sup>[1](#version-10x-skeleton-text-replaced-css-variables)</sup>
+2. `--border-radius` has been replaced. <sup>[1](#version-10x-skeleton-text-replaced-css-variables)</sup>
+3. Theme classes (`ion-skeleton-text.md`, `ion-skeleton-text.ios`) are no longer supported. <sup>[2](#version-10x-skeleton-text-theme-classes)</sup>
 
-<h5 id="version-9x-skeleton-text-replaced-css-variables">Replaced CSS variables</h5>
+<h5 id="version-10x-skeleton-text-replaced-css-variables">Replaced CSS variables</h5>
 
 The background is now defined per state (resting and animated), and each state exposes an RGB value plus an alpha so the color and its opacity can be set independently. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--background-rgb` | `IonSkeletonText.default.background.rgb` | `--ion-skeleton-text-default-background-rgb` |
 | `--background-rgb` | `IonSkeletonText.animated.background.rgb` | `--ion-skeleton-text-animated-background-rgb` |
@@ -406,11 +437,11 @@ The previously fixed opacities are now adjustable through new per-state alpha to
 > [!NOTE]
 > `--background` (the resting color) has been removed with no one-to-one replacement; set `--ion-skeleton-text-default-background-rgb` (and optionally `--ion-skeleton-text-default-background-alpha`) instead. The single `--background-rgb` variable previously tinted both the resting fill and the animated shimmer. It is now split per state, so set both `--ion-skeleton-text-default-background-rgb` and `--ion-skeleton-text-animated-background-rgb` to recolor both.
 
-<h5 id="version-9x-skeleton-text-theme-classes">Theme classes</h5>
+<h5 id="version-10x-skeleton-text-theme-classes">Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-skeleton-text.md`, `ion-skeleton-text.ios`.
 
-<h4 id="version-9x-spinner">Spinner</h4>
+<h4 id="version-10x-spinner">Spinner</h4>
 
 - Component CSS variables have been removed. The component now utilizes the centralized Ionic Theming system. Global updates should be managed via the theme tokens file, while component-specific overrides are handled through localized CSS variables.
    - `--color` is replaced by `IonSpinner.color` for global styles and
@@ -419,7 +450,7 @@ Remove any instances that target the theme classes: `ion-skeleton-text.md`, `ion
   - `.spinner-[spinner-name]` → `.spinner-name-[spinner-name]`
 - Specific theme classes (e.g., `ion-spinner.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
-<h4 id="version-9x-text">Text</h4>
+<h4 id="version-10x-text">Text</h4>
 
 The following breaking changes apply to `ion-text`:
 
@@ -441,25 +472,40 @@ When `color` is set, the text color now reads from a token instead of `--ion-col
 
 Remove any instances that target the theme classes: `ion-text.md`, `ion-text.ios`.
 
-<h4 id="version-9x-textarea">Textarea</h4>
+<h4 id="version-10x-textarea">Textarea</h4>
 
 Converted `ion-textarea` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
-If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, or `bottom` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, `bottom`, `start`, `control`, or `end` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
-<h4 id="version-9x-thumbnail">Thumbnail</h4>
+The internal wrappers that Ionic 9 introduced are no longer reachable as descendants. Slotted content stays in the light DOM, so it is still reachable directly:
+
+```diff
+-ion-textarea .textarea-control .native-wrapper { }
++ion-textarea::part(container) { }
+
+-ion-textarea .textarea-start [slot="start"] { }
++ion-textarea [slot="start"] { }
+
+-ion-textarea .textarea-end [slot="end"] { }
++ion-textarea [slot="end"] { }
+```
+
+To style the wrappers themselves rather than the slotted content, use `part="start"` and `part="end"`.
+
+<h4 id="version-10x-thumbnail">Thumbnail</h4>
 
 The following breaking changes apply to `ion-thumbnail`:
 
-1. `--size` has been split into separate `--ion-thumbnail-width` and `--ion-thumbnail-height` CSS variables. <sup>[1](#version-9x-thumbnail-replaced-css-variables)</sup>
-2. `--border-radius` has been replaced. <sup>[1](#version-9x-thumbnail-replaced-css-variables)</sup>
-3. Theme classes (`ion-thumbnail.md`, `ion-thumbnail.ios`) are no longer supported. <sup>[2](#version-9x-thumbnail-theme-classes)</sup>
+1. `--size` has been split into separate `--ion-thumbnail-width` and `--ion-thumbnail-height` CSS variables. <sup>[1](#version-10x-thumbnail-replaced-css-variables)</sup>
+2. `--border-radius` has been replaced. <sup>[1](#version-10x-thumbnail-replaced-css-variables)</sup>
+3. Theme classes (`ion-thumbnail.md`, `ion-thumbnail.ios`) are no longer supported. <sup>[2](#version-10x-thumbnail-theme-classes)</sup>
 
-<h5 id="version-9x-thumbnail-replaced-css-variables">Replaced CSS variables</h5>
+<h5 id="version-10x-thumbnail-replaced-css-variables">Replaced CSS variables</h5>
 
 `--size` and `--border-radius` have been replaced. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--size` | `IonThumbnail.width` | `--ion-thumbnail-width` |
 | `--size` | `IonThumbnail.height` | `--ion-thumbnail-height` |
@@ -468,7 +514,7 @@ The following breaking changes apply to `ion-thumbnail`:
 > [!NOTE]
 > Code that previously set `--size: 48px` on `ion-thumbnail` must now set both `--ion-thumbnail-width: 48px` and `--ion-thumbnail-height: 48px`.
 
-<h5 id="version-9x-thumbnail-slotted">Slotted inside `ion-item` or `ion-item-divider`</h5>
+<h5 id="version-10x-thumbnail-slotted">Slotted inside `ion-item` or `ion-item-divider`</h5>
 
 When `ion-thumbnail` is slotted inside a parent component, the parent owns the sizing.
 
@@ -482,3 +528,32 @@ Use the **parent's** thumbnail tokens instead:
 <h5>Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-thumbnail.md`, `ion-thumbnail.ios`.
+
+<h2 id="version-10x-framework-specific">Framework Specific</h2>
+
+<h4 id="version-10x-angular">Angular</h4>
+
+**Boolean Inputs Are Type Checked**
+
+Boolean inputs now declare an input transform, so attribute presence is an explicitly supported way to set them:
+
+```html
+<!-- Both set `button` to `true` -->
+<ion-item button></ion-item>
+<ion-item [button]="true"></ion-item>
+```
+
+Declaring the transform also makes Angular type check these inputs, which it did not do before. The generated proxies declare no class fields, so Angular had nothing to check a binding against and accepted any value. Bindings that pass a value outside `boolean | string | null | undefined` now fail to compile. The common case is a truthiness binding:
+
+```diff
+- <ion-item [button]="items.length"></ion-item>
++ <ion-item [button]="items.length > 0"></ion-item>
+```
+
+```
+error TS2322: Type 'number' is not assignable to type 'string | boolean | null | undefined'.
+```
+
+Coerce the expression to a boolean, with an explicit comparison or `!!value`. Bindings that already pass a boolean, a string, `null` or `undefined` are unaffected.
+
+Coercion also moves from Stencil to Angular, which changes the result for numbers. `0` and `NaN` previously became `false` and now become `true`, matching Angular's own `booleanAttribute`. An app without `strictTemplates` gets no compile error for the binding above, so an empty list now renders the item as tappable rather than plain. Coercing the expression fixes both the type error and the runtime change.

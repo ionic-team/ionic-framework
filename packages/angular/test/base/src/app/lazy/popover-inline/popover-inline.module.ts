@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from "@ionic/angular/lazy";
 import { PopoverInlineRoutingModule } from "./popover-inline-routing.module";
 import { PopoverInlineComponent } from "./popover-inline.component";
 

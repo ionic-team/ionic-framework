@@ -30,7 +30,7 @@ export const mergeRefs = (
 
 export const createForwardRef = <PropType, ElementType>(ReactComponent: any, displayName: string) => {
   const forwardRef = (
-    props: StencilReactExternalProps<PropType, ElementType>,
+    props: React.PropsWithoutRef<StencilReactExternalProps<PropType, ElementType>>,
     ref: StencilReactForwardedRef<ElementType>
   ) => {
     return <ReactComponent {...props} forwardedRef={ref} />;

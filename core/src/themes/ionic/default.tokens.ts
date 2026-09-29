@@ -195,8 +195,9 @@ export const defaultTheme: DefaultTheme = {
             },
 
             icon: {
-              width: 'var(--ion-scaling-xxxxs)',
-              height: 'var(--ion-scaling-xxxxs)',
+              font: {
+                size: 'var(--ion-scaling-xxxxs)',
+              },
             },
           },
 
@@ -235,8 +236,9 @@ export const defaultTheme: DefaultTheme = {
             },
 
             icon: {
-              width: 'var(--ion-scaling-xxxs)',
-              height: 'var(--ion-scaling-xxxs)',
+              font: {
+                size: 'var(--ion-scaling-xxxs)',
+              },
             },
           },
 
@@ -275,8 +277,9 @@ export const defaultTheme: DefaultTheme = {
             },
 
             icon: {
-              width: 'var(--ion-scaling-xxs)',
-              height: 'var(--ion-scaling-xxs)',
+              font: {
+                size: 'var(--ion-scaling-xxs)',
+              },
             },
           },
 

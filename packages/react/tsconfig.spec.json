@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    /*
+     * ts-jest transpiles each test file in isolation, which relies on the
+     * language-service path that crashes under TypeScript 6. isolatedModules
+     * switches ts-jest to transpileModule and avoids that path. It lives here
+     * rather than in tsconfig.json so the rollup build is not forced to adopt
+     * the isolatedModules authoring rules (for example export type).
+     */
+    "isolatedModules": true
+  }
+}

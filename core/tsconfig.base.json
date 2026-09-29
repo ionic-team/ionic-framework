@@ -1,0 +1,38 @@
+{
+  /*
+   * Shared base TypeScript configuration extended by every Ionic package and
+   * the repo root.
+   *
+   * This base lives in core/ rather than at the repo root because core is the
+   * only package guaranteed to be present in every build context. The Vercel
+   * preview builds core in isolation, mounted separately from the full repo
+   * clone, so a config at the repo root is not reachable from core's build.
+   * Since every package already depends on core, placing the base here lets all
+   * packages and the repo root extend it with a relative path that resolves in
+   * every environment.
+   */
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "declaration": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "lib": [
+      "dom",
+      "es2022"
+    ],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "pretty": true,
+    "removeComments": false,
+    "strictPropertyInitialization": false,
+    "target": "es2022"
+  }
+}

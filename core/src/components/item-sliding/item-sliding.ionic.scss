@@ -3,7 +3,7 @@
 
 // Transition utility classes
 .item-sliding-transition-open .item {
-  transition: transform globals.$ion-transition-time-250 globals.$ion-transition-curve-smooth;
+  transition: transform globals.$ion-transition-time-200 globals.$ion-transition-curve-smooth;
 }
 
 .item-sliding-transition-snapback .item {

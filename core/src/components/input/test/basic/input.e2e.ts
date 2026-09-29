@@ -200,7 +200,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       // Verify the click was triggered exactly once
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
-      // Verify that the event target is the checkbox and not the item
+      // Verify that the event target is the input and not the item
       const event = clickEvent.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-input');
     });
@@ -238,9 +238,148 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       // Verify the click was triggered exactly once
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
-      // Verify that the event target is the checkbox and not the item
+      // Verify that the event target is the input and not the item
       const event = clickEvent.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-input');
+    });
+
+    test('should trigger onclick only once when the input is itself slotted', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-input slot="end" label="Click Me" value="Test Value"></ion-input>
+        </ion-item>
+      `,
+        config
+      );
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('label.input-wrapper').click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+
+    test('should propagate clicks from start slot button to parent', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="parent" onclick="window.parentClicks = (window.parentClicks || 0) + 1">
+          Parent Container
+          <ion-input value="test@ionic.io" label="Email">
+            <ion-button slot="start" onclick="window.buttonClicks = (window.buttonClicks || 0) + 1">Icon</ion-button>
+          </ion-input>
+        </div>
+      `,
+        config
+      );
+
+      const button = page.locator('ion-button[slot="start"]');
+      const parent = page.locator('#parent');
+
+      // Click the button in the start slot
+      await button.click();
+
+      // The button's own click handler should have fired
+      let buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+
+      // The parent's click handler should also have fired
+      let parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(1);
+
+      // Click on the parent container (far right to avoid the start button)
+      await parent.click({ position: { x: 250, y: 50 } });
+
+      // Parent should have incremented
+      parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(2);
+
+      // Button should NOT have incremented
+      buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+    });
+
+    test('should propagate clicks from end slot button to parent', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="parent" onclick="window.parentClicks = (window.parentClicks || 0) + 1">
+          Parent Container
+          <ion-input value="test@ionic.io" label="Email">
+            <ion-button slot="end" onclick="window.buttonClicks = (window.buttonClicks || 0) + 1">Toggle</ion-button>
+          </ion-input>
+        </div>
+      `,
+        config
+      );
+
+      const button = page.locator('ion-button[slot="end"]');
+      const parent = page.locator('#parent');
+
+      // Click the button in the end slot
+      await button.click();
+
+      // The button's own click handler should have fired
+      let buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+
+      // The parent's click handler should also have fired
+      let parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(1);
+
+      // Click on the parent container (far left to avoid the end button)
+      await parent.click({ position: { x: 10, y: 50 } });
+
+      // Parent should have incremented
+      parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(2);
+
+      // Button should NOT have incremented
+      buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+    });
+  });
+});
+
+/**
+ * The solid and outline fills are only supported by `md` mode. These
+ * are the only fills that get padding which can cause a double click.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: click'), () => {
+    ['solid', 'outline'].forEach((fill) => {
+      test(`should trigger onclick only once when clicking the ${fill} wrapper padding`, async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-input
+            label="Click Me"
+            value="Test Value"
+            label-placement="floating"
+            fill="${fill}"
+          ></ion-input>
+        `,
+          config
+        );
+
+        const clickEvent = await page.spyOnEvent('click');
+        const wrapper = page.locator('label.input-wrapper');
+
+        await wrapper.click({
+          position: {
+            x: 5,
+            y: 5,
+          },
+        });
+
+        expect(clickEvent).toHaveReceivedEventTimes(1);
+
+        const event = clickEvent.events[0];
+        expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-input');
+      });
     });
   });
 });
@@ -346,6 +485,164 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
       await pageUtils.pressKeys('Tab');
       await expect(clearButton).toBeFocused();
       await expect(clearButton).toBeVisible();
+    });
+
+    test('should clear the value when the input blurs between pointerdown and click', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="abc"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      const nativeInput = input.locator('input');
+      const clearButton = input.locator('.input-clear-icon');
+
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
+      await expect(clearButton).toBeVisible();
+
+      const box = (await clearButton.boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+
+      // Some browsers blur anyway, despite the `preventDefault` on `pointerdown`.
+      await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+      await page.waitForChanges();
+
+      await page.mouse.up();
+      await page.waitForChanges();
+
+      await expect(input).toHaveJSProperty('value', '');
+      await expect(nativeInput).toBeFocused();
+
+      // Clearing stops the click from bubbling, so it has to end the press itself.
+      await input.evaluate((el: HTMLIonInputElement) => (el.value = 'abc'));
+      await page.waitForChanges();
+      await expect(clearButton).toBeVisible();
+
+      await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+      await page.waitForChanges();
+
+      await expect(clearButton).not.toBeVisible();
+    });
+
+    test('should hide the clear button when the press is abandoned', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="abc"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      const nativeInput = input.locator('input');
+      const clearButton = input.locator('.input-clear-icon');
+
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
+      await expect(clearButton).toBeVisible();
+
+      const box = (await clearButton.boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+      await page.waitForChanges();
+
+      // Releasing off the button sends the click to an ancestor, not the button.
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2 + 200);
+      await page.mouse.up();
+      await page.waitForChanges();
+
+      await expect(input).toHaveJSProperty('value', 'abc');
+      await expect(clearButton).not.toBeVisible();
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions/modes
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: slotted click'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input label="Email">
+          <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+          <ion-button slot="end" aria-label="Show password">
+            <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+          </ion-button>
+          <ion-checkbox slot="end" aria-label="Remember"></ion-checkbox>
+          <ion-radio slot="end" aria-label="Preferred"></ion-radio>
+          <ion-toggle slot="end" aria-label="Notify"></ion-toggle>
+        </ion-input>
+      `,
+        config
+      );
+    });
+
+    test('should emit one click and focus the input when a slotted icon is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-icon[slot="start"]').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      const event = clickEvent.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
+
+      await expect(page.locator('ion-input input.native-input')).toBeFocused();
+    });
+
+    test('should emit one click without focusing the input when a slotted button is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-button[slot="end"]').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      await expect(page.locator('ion-input input.native-input')).not.toBeFocused();
+    });
+
+    /**
+     * Browsers skip the label forwarding when a click lands on interactive
+     * content, so activating a slotted control leaves the input alone.
+     */
+    ['ion-checkbox', 'ion-radio', 'ion-toggle'].forEach((tag) => {
+      test(`should activate a slotted ${tag} without focusing the input`, async ({ page }) => {
+        const control = page.locator(tag);
+
+        await control.click();
+        await page.waitForChanges();
+
+        await expect(control).toHaveAttribute('aria-checked', 'true');
+        await expect(page.locator('ion-input input.native-input')).not.toBeFocused();
+      });
+    });
+
+    test('should emit one click when the input is clicked after slotted content', async ({ page }) => {
+      /**
+       * Clicking a slotted button does not produce a forwarded click for the
+       * input to ignore, so the following click on the input itself must
+       * still be emitted.
+       */
+      await page.locator('ion-button[slot="end"]').click();
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-input input.native-input').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
     });
   });
 });

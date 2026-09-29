@@ -1,9 +1,9 @@
-import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createAttributeController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAttributes, raf, openURL } from '@utils/helpers';
+import { openURL, raf } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
@@ -11,6 +11,8 @@ import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
+
+const INDICATOR_CONTROL_SELECTOR = 'ion-checkbox, ion-radio, ion-toggle';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -37,13 +39,16 @@ import type { RouterDirection } from '../router/utils/interface';
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
-  private inheritedAriaAttributes: Attributes = {};
+  private indicatorControlObserver?: MutationObserver;
+  private didLoad = false;
+  private ariaController?: AttributeController;
 
   @Element() el!: HTMLIonItemElement;
 
   @State() multipleInputs = false;
   @State() focusable = true;
   @State() isInteractive = false;
+  @State() hasSlottedIndicatorControl = false;
 
   /**
    * The color to use from your application's color palette.
@@ -170,18 +175,48 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   connectedCallback() {
     this.hasStartEl();
+
+    /**
+     * `componentDidLoad` doesn't run again when the item is moved, so re-arm the
+     * observer and re-read the light DOM, which may have changed while detached.
+     */
+    if (this.didLoad) {
+      this.watchForIndicatorControls();
+      this.updateInteractivityOnSlotChange();
+    }
+
+    this.ariaController?.init();
   }
 
   componentWillLoad() {
-    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+    /**
+     * Only the initial copy takes the attribute off the host, so an `aria-label` written
+     * after load names both the native element and the Host, which is a `listitem` when
+     * the item is in an `ion-list`. The two names always agree, so a screen reader just
+     * reads it twice.
+     */
+    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
   }
 
   componentDidLoad() {
     raf(() => {
       this.setMultipleInputs();
       this.setIsInteractive();
+      this.setHasSlottedIndicatorControl();
       this.focusable = this.isFocusable();
     });
+
+    this.watchForIndicatorControls();
+    this.didLoad = true;
+  }
+
+  disconnectedCallback() {
+    if (this.indicatorControlObserver) {
+      this.indicatorControlObserver.disconnect();
+      this.indicatorControlObserver = undefined;
+    }
+
+    this.ariaController?.destroy();
   }
 
   private totalNestedInputs() {
@@ -226,10 +261,61 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.isInteractive = covers.length > 0 || inputs.length > 0 || clickables.length > 0;
   }
 
+  /**
+   * `slotchange` only fires for nodes assigned directly to a slot, so a control
+   * inside a slotted wrapper (`<div><ion-toggle>`) never reaches
+   * `updateInteractivityOnSlotChange`. The light DOM is observed instead.
+   *
+   * The callback runs the whole handler because a control below a wrapper can also
+   * make the item multi-input, which is what decides whether the controls draw
+   * their own indicator at all.
+   *
+   * `:host(:has())` would avoid the observer, but the `:has()` fallback in
+   * `core.scss` is still open as FW-6106 and it's unreliable for slotted content
+   * in Android WebView. Worth revisiting when FW-6106 closes.
+   */
+  private watchForIndicatorControls() {
+    if (!Build.isBrowser || typeof MutationObserver === 'undefined') {
+      return;
+    }
+
+    // `Node.moveBefore` relocates the item without either callback firing, so
+    // never leave a previous observer behind
+    this.indicatorControlObserver?.disconnect();
+
+    this.indicatorControlObserver = new MutationObserver((records) => {
+      // The subtree observer also fires for text and hidden input churn, so only
+      // re-read the DOM when a control was added or removed
+      if (records.some(touchesIndicatorControl)) {
+        this.updateInteractivityOnSlotChange();
+      }
+    });
+    this.indicatorControlObserver.observe(this.el, { childList: true, subtree: true });
+  }
+
+  // These controls paint a focus indicator that overhangs their own bounds, and
+  // only the default slot is clipped, so only a control there needs extra room.
+  private setHasSlottedIndicatorControl() {
+    const controls = this.el.querySelectorAll<HTMLElement>(INDICATOR_CONTROL_SELECTOR);
+
+    this.hasSlottedIndicatorControl = Array.from(controls).some((control) => {
+      // The control isn't always a direct child, so walk up to the element the item
+      // slots, which is the one carrying the slot name.
+      let slotted: HTMLElement | null = control;
+
+      while (slotted !== null && slotted.parentElement !== this.el) {
+        slotted = slotted.parentElement;
+      }
+
+      return slotted !== null && !slotted.getAttribute('slot');
+    });
+  }
+
   // slot change listener updates state to reflect how/if item should be interactive
   private updateInteractivityOnSlotChange = () => {
     this.setIsInteractive();
     this.setMultipleInputs();
+    this.setHasSlottedIndicatorControl();
   };
 
   // If the item contains an input including a checkbox, datetime, select, or radio
@@ -281,25 +367,19 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return controls[0];
   }
 
-  get itemDetailIcon() {
+  /**
+   * Get the icon to use for the detail icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get itemDetailIcon(): string {
     // Return the icon if it is explicitly set
     if (this.detailIcon != null) {
       return this.detailIcon;
     }
 
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronForward,
-      ionic: caretRightRegular,
-      md: chevronForward,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured item detail icon or the default icon
-    return config.get('itemDetailIcon', defaultIcon);
+    return config.get('itemDetailIcon', chevronForward);
   }
 
   /**
@@ -307,7 +387,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * the icon is a variation of chevron.
    */
   get shouldFlipIcon() {
-    return this.itemDetailIcon === chevronForward || this.itemDetailIcon === caretRightRegular;
+    return this.itemDetailIcon === chevronForward;
   }
 
   render() {
@@ -324,9 +404,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       target,
       routerAnimation,
       routerDirection,
-      inheritedAriaAttributes,
       multipleInputs,
     } = this;
+    const inheritedAriaAttributes = this.ariaController?.attributes ?? {};
     const childStyles = {} as StyleEventDetail;
     const theme = getIonTheme(this);
     const clickable = this.isClickable();
@@ -406,6 +486,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const firstInteractiveNeedsPointerCursor =
       firstInteractive !== undefined && !['ION-INPUT', 'ION-TEXTAREA'].includes(firstInteractive.tagName);
 
+    /**
+     * A control in a single-input item defers its indicator to the item, so there's
+     * nothing to clip and nothing to make room for. It draws its own indicator in a
+     * multi-input item, and in a clickable item, which is a second tab stop.
+     */
+    const slottedIndicatorNeedsRoom = this.hasSlottedIndicatorControl && (multipleInputs || this.isClickable());
+
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -421,6 +508,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-disabled': disabled,
             'in-list': inList,
             'item-multiple-inputs': this.multipleInputs,
+            'item-focus-indicator-room': slottedIndicatorNeedsRoom,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
             'item-rtl': document.dir === 'rtl',
@@ -459,3 +547,16 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     );
   }
 }
+
+const isIndicatorControl = (node: Node): boolean => {
+  if (node.nodeType !== Node.ELEMENT_NODE) {
+    return false;
+  }
+
+  const el = node as Element;
+
+  return el.matches(INDICATOR_CONTROL_SELECTOR) || el.querySelector(INDICATOR_CONTROL_SELECTOR) !== null;
+};
+
+const touchesIndicatorControl = (record: MutationRecord): boolean =>
+  Array.from(record.addedNodes).some(isIndicatorControl) || Array.from(record.removedNodes).some(isIndicatorControl);

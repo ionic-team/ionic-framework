@@ -1,7 +1,10 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: indeterminate'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/checkbox/test/indeterminate`, config);

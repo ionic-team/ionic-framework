@@ -15,4 +15,24 @@ describe('Dynamic IonPage Classnames', () => {
     cy.get('.other-class');
     cy.ionPageVisible('dynamic-ionpage-classnames');
   });
+
+  it('should preserve framework-added classes like can-go-back when className prop changes', () => {
+    const page = '[data-pageid="dynamic-ionpage-classnames"]';
+
+    // Navigate from home to create history (triggers can-go-back class)
+    cy.visit(`http://localhost:${port}/`);
+    cy.ionPageVisible('home');
+    cy.contains('Dynamic IonPage Classnames').click();
+    cy.ionPageVisible('dynamic-ionpage-classnames');
+
+    cy.get(page).should('have.class', 'initial-class');
+    cy.get(page).should('have.class', 'can-go-back');
+
+    cy.contains('Add Class').click();
+
+    cy.get(page).should('have.class', 'other-class');
+    cy.get(page).should('not.have.class', 'initial-class');
+    cy.get(page).should('have.class', 'can-go-back');
+    cy.ionPageVisible('dynamic-ionpage-classnames');
+  });
 });

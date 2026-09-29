@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonModal } from '@ionic/angular/standalone';
+import { IonModal } from '@ionic/angular';
 
 @Component({
   selector: 'app-test',
@@ -8,4 +8,6 @@ import { IonModal } from '@ionic/angular/standalone';
   imports: [IonModal]
 })
 export class ModalComponent {
+  /* Reaches the input as `undefined`, the way an unresolved `async` pipe would. */
+  unsetFocusTrap: boolean | undefined = undefined;
 }

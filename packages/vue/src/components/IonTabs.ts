@@ -11,16 +11,12 @@ import {
 
 import { IonTab } from "../proxies";
 
+import type { TabBarData } from "./IonTabBar";
+
 const WILL_CHANGE = "ionTabsWillChange";
 const DID_CHANGE = "ionTabsDidChange";
 
 // TODO(FW-2969): types
-
-interface TabBarData {
-  hasRouterOutlet: boolean;
-  _tabsWillChange: Function;
-  _tabsDidChange: Function;
-}
 
 /**
  * Vue 3.2.38 fixed an issue where Web Component
@@ -48,7 +44,8 @@ const isTab = (node: VNode): boolean => {
   }
 
   return (
-    node.type && ((node.type as any).name === "ion-tab" || node.type === IonTab)
+    !!node.type &&
+    ((node.type as any).name === "ion-tab" || node.type === IonTab)
   );
 };
 
@@ -87,8 +84,8 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
       "tabBarData",
       shallowRef<TabBarData>({
         hasRouterOutlet: !!routerOutlet,
-        _tabsWillChange: (tab: string) => emit(WILL_CHANGE, { tab }),
-        _tabsDidChange: (tab: string) => emit(DID_CHANGE, { tab }),
+        _tabsWillChange: (tab) => emit(WILL_CHANGE, { tab }),
+        _tabsDidChange: (tab) => emit(DID_CHANGE, { tab }),
       })
     );
 

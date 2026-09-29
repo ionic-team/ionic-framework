@@ -155,7 +155,7 @@ export class Toolbar implements ComponentInterface {
               return true;
             }
             // Check for nested images
-            return el.querySelector('img, ion-img');
+            return el.querySelector('img, ion-img') !== null;
           });
 
           // Temporarily allow slot to size to content by setting flex-basis

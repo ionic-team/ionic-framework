@@ -86,6 +86,14 @@ const renderClonedContent = (id: string, content: HTMLElement, className: string
   const Tag = useSpan ? 'span' : 'div';
   const keyPrefix = `${className}-${id}`;
 
+  /**
+   * Do not remove. This is the only sanitization pass for callers that pass
+   * an `HTMLElement` straight to `renderOptionLabel` (e.g. vanilla JS)
+   * without going through `getOptionContent`, which sanitizes upstream.
+   * `cloneToVNode` does pure structural conversion and no security
+   * filtering, so dropping this call would reopen an XSS hole on the
+   * direct `HTMLElement` path.
+   */
   sanitizeDOMTree(content);
 
   return (

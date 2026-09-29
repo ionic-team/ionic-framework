@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ComponentRef, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
-import { IonButton, ModalController } from '@ionic/angular/standalone';
+import { IonButton, ModalController } from '@ionic/angular';
 
 import { DynamicComponentWrapperComponent } from './dynamic-component-wrapper.component';
 import { DynamicModalContentComponent } from './dynamic-modal-content.component';

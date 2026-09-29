@@ -57,7 +57,6 @@ This guide shows you how to test the local Ionic Framework build with a new Angu
 
 5. Create a tarball:
     ```sh
-    cd dist
     npm pack
     ```
 
@@ -72,7 +71,7 @@ This guide shows you how to test the local Ionic Framework build with a new Angu
     ```sh
     # Change to whichever directory you want the app in
     cd ~/Documents/
-    ng new my-app --style=css --ssr=false --zoneless=false
+    ng new my-app --style=css --ssr=false
     cd my-app
     ```
 
@@ -99,16 +98,43 @@ The local Ionic Framework build is now active in the Angular app. Changes to the
 
 This is where logic that is shared between lazy loaded and standalone components live. For example, the lazy loaded IonPopover and standalone IonPopover components extend from a base IonPopover implementation that exists in this directory.
 
-**Note:** This directory exposes internal APIs and is only accessed in the `standalone` and `src` submodules. Ionic developers should never import directly from `@ionic/angular/common`. Instead, they should import from `@ionic/angular` or `@ionic/angular/standalone`.
+**Note:** This directory exposes internal APIs and is only accessed in the `standalone` and `lazy` submodules. Ionic developers should never import directly from `@ionic/angular/common`. Instead, they should import from `@ionic/angular` or `@ionic/angular/lazy`.
 
 **standalone**
 
-This is where the standalone component implementations live. It was added as a separate entry point to avoid any lazy loaded logic from accidentally being pulled in to the final build. Having a separate directory allows the lazy loaded implementation to remain accessible from `@ionic/angular` for backwards compatibility.
+This is where the standalone component implementations live. It was added as a separate entry point to avoid any lazy loaded logic from accidentally being pulled in to the final build. Having a separate directory allows the lazy loaded implementation to remain accessible from `@ionic/angular/lazy` for backwards compatibility.
 
-Ionic developers can access this by importing from `@ionic/angular/standalone`.
+Ionic developers can access this by importing from `@ionic/angular`.
 
-**src**
+**lazy**
 
 This is where the lazy loaded component implementations live.
 
-Ionic developers can access this by importing from `@ionic/angular`.
+Ionic developers can access this by importing from `@ionic/angular/lazy`.
+
+> [!CAUTION]
+> The lazy loaded build, including `IonicModule`, is deprecated and will be removed in a future major version. New code should use the standalone components and `provideIonicAngular()` imported from `@ionic/angular`.
+
+## Change Detection Strategy
+
+Every `@Component` in `src` must declare `changeDetection` explicitly, and `npm run test` enforces it. See the [Change Detection guide](https://github.com/ionic-team/ionic-framework/blob/main/docs/angular/change-detection.md).
+
+## Package Validation
+
+`npm run validate` executes several subtasks: installs node modules, lints, builds the package, and runs package tests. `npm run test` can also run the package tests directly. For E2E tests, see [Angular Testing documentation](/docs/angular/testing.md).
+
+### Testing Package Exports
+
+To check that all exports from `package.json` point to files that exist, and that all Ionic components have exports, run `node ./scripts/verify-exports.js` or `npm run test.package`.
+
+### Testing Code Splitting
+
+If an app imports standalone components from `@ionic/angular`, esbuild bundles them together, so a landing page could include components it never uses. If components are instead imported from `@ionic/angular/<component-name>`, esbuild is able to bundle pages with only the components they need. The app in `packages/angular/test/code-split` is used to verify that this code splitting is working.
+
+To run the test, run `node ./scripts/test-code-split.js` or run `npm run test.code-split`. This builds the code-split app and checks if `IonToggle` is excluded from the landing page's bundle.
+
+### Testing Schematics
+
+The schematics files are used when Ionic-Angular is added to a project with `ng add`. The schematics test verifies schematics are included in the package by creating a new starter app and adding the locally built Ionic-Angular package to it.
+
+To run the test, run `node ./scripts/verify-schematics.js` or run `npm run test.schematics`.

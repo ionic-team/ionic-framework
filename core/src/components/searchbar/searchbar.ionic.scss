@@ -28,8 +28,7 @@
 // -----------------------------------------
 
 .searchbar-search-icon {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  font-size: globals.$ion-font-size-400;
 }
 
 // Searchbar Input Field
@@ -52,7 +51,7 @@
 
   background-color: transparent;
 
-  font-size: globals.$ion-scale-400;
+  font-size: globals.$ion-font-size-400;
 
   contain: strict;
 }
@@ -89,7 +88,7 @@
 .searchbar-cancel-button:focus-visible ion-icon {
   @include globals.border-radius(globals.$ion-border-radius-100);
 
-  outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
+  outline: globals.$ion-border-size-050 solid globals.$ion-border-focus-default;
 
   opacity: 1;
 }
@@ -128,7 +127,7 @@
 
 /* Focus */
 :host(.searchbar-has-focus) .searchbar-input {
-  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
 }
 
 :host(.searchbar-has-focus) .searchbar-search-icon,
@@ -348,9 +347,7 @@
 :host(.searchbar-size-large) .searchbar-cancel-button {
   width: globals.$ion-scale-500;
   height: globals.$ion-scale-500;
-}
 
-:host(.searchbar-size-large) .searchbar-cancel-button {
   font-size: globals.$ion-font-size-500;
 }
 

@@ -1,6 +1,8 @@
 import type { EventEmitter } from '@stencil/core';
-import { focusElements } from '@utils/focus-visible';
+import { win } from '@utils/browser';
+import { focusElements, isKeyboardMode } from '@utils/focus-visible';
 import { printIonError } from '@utils/logging';
+import { isRTL } from '@utils/rtl';
 
 import type { Side } from '../components/menu/menu-interface';
 import type { RouterDirection } from '../components/router/utils/interface';
@@ -110,8 +112,8 @@ export type Attributes = { [key: string]: any };
  * helper function should be called in componentWillLoad and assigned to a variable
  * that is later used in the render function.
  *
- * This does not need to be reactive as changing attributes on the host element
- * does not trigger a re-render.
+ * This copies once. Use `createAttributeController` instead when the attributes can
+ * change after load, since a host attribute change does not trigger a re-render.
  */
 export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) => {
   const attributeObject: Attributes = {};
@@ -133,8 +135,10 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
  * List of available ARIA attributes + `role`.
  * Removed deprecated attributes.
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
+ *
+ * @internal Exported for `attribute-controller.ts`, which needs the same set.
  */
-const ariaAttributes = [
+export const ariaAttributes = [
   'role',
   'aria-activedescendant',
   'aria-atomic',
@@ -209,6 +213,55 @@ export const addEventListener = (el: any, eventName: string, callback: any, opts
 
 export const removeEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
   return el.removeEventListener(eventName, callback, opts);
+};
+
+/**
+ * Calls back when a CSS custom property that resolves to a length changes,
+ * which no event covers. The probe inherits the property from `hostEl` and
+ * uses it as its height, turning a property change into a size change that
+ * `ResizeObserver` can detect.
+ *
+ * The callback receives the probe's height. For length values, this matches
+ * the resolved property value. For other values, such as `fit-content`, the
+ * probe remains at zero, so the value only signals that the property changed.
+ * Percentages resolve against the probe's containing block, not the element
+ * where the property is ultimately used.
+ *
+ * Pass `initialValue` when the caller has already read the property so that
+ * changes occurring before the observer's first delivery are not missed.
+ * Without it, the first delivery establishes the baseline.
+ */
+export const onCustomPropertyChange = (
+  hostEl: HTMLElement | null | undefined,
+  property: string,
+  callback: (value: number) => void,
+  initialValue?: number
+): (() => void) => {
+  const doc = win?.document;
+  if (!doc || !hostEl || typeof ResizeObserver === 'undefined') {
+    return () => undefined;
+  }
+
+  const probe = doc.createElement('div');
+  probe.style.cssText = `position:fixed;visibility:hidden;pointer-events:none;top:0;left:0;width:0;height:var(${property},0px);`;
+  hostEl.appendChild(probe);
+
+  let lastHeight = initialValue;
+  const observer = new ResizeObserver((entries) => {
+    const { height } = entries[0].contentRect;
+
+    if (lastHeight !== undefined && height !== lastHeight) {
+      callback(height);
+    }
+
+    lastHeight = height;
+  });
+  observer.observe(probe);
+
+  return () => {
+    observer.disconnect();
+    probe.remove();
+  };
 };
 
 /**
@@ -315,6 +368,20 @@ export const focusVisibleElement = (el: HTMLElement) => {
 };
 
 /**
+ * Focuses an element a focus trap is redirecting focus to. Only draws the
+ * keyboard focus indicator when the user is navigating with a keyboard, so a
+ * redirect caused by a tap or click does not leave the element looking as
+ * though it was tabbed to.
+ */
+export const focusRedirectedElement = (el: HTMLElement) => {
+  if (isKeyboardMode()) {
+    focusVisibleElement(el);
+  } else {
+    el.focus();
+  }
+};
+
+/**
  * Clears the keyboard focus ring (`ion-focused`) that the focus-visible
  * utility may have applied to elements during a programmatic focus.
  *
@@ -396,18 +463,22 @@ export const pointerCoord = (ev: any): { x: number; y: number } => {
 
 /**
  * @hidden
- * Given a side, return if it should be on the end
- * based on the value of dir
- * @param side the side
- * @param isRTL whether the application dir is rtl
+ * Given a side, returns whether it resolves to the end side for the current
+ * direction. In RTL `start` is the end side, and in LTR `end` is.
+ *
+ * @param side The current side before being redefined based on the direction.
+ * @param hostEl The component's host element. The direction is resolved from
+ * it or its nearest ancestor that declares one. When omitted, the direction
+ * is resolved from the document.
  */
-export const isEndSide = (side: Side): boolean => {
-  const isRTL = document.dir === 'rtl';
+export const isEndSide = (side: Side, hostEl?: HTMLElement): boolean => {
+  const rtl = isRTL(hostEl);
+
   switch (side) {
     case 'start':
-      return isRTL;
+      return rtl;
     case 'end':
-      return !isRTL;
+      return !rtl;
     default:
       throw new Error(`"${side}" is not a valid value for [side]. Use "start" or "end" instead.`);
   }

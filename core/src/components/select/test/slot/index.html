@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Select - Slots</title>
+    <title>Select - Slot</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -35,6 +35,28 @@
           padding: 0;
         }
       }
+
+      .required {
+        color: red;
+      }
+
+      .hint {
+        font-size: 12px;
+        color: #6f7378;
+        max-width: 60ch;
+      }
+
+      .counts {
+        font-size: 12px;
+        color: #6f7378;
+
+        margin-top: 6px;
+      }
+
+      /* Hide the backdrop for action sheets */
+      ion-action-sheet.select-action-sheet ion-backdrop {
+        opacity: 0 !important;
+      }
     </style>
   </head>
 
@@ -42,7 +64,7 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Select - Slots</ion-title>
+          <ion-title>Select - Slot</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -50,7 +72,13 @@
         <div class="grid">
           <div class="grid-item">
             <h2>No Fill / Start Label / Justify Start</h2>
-            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="start" justify="start">
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="start"
+              justify="start"
+              interface="action-sheet"
+            >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
               <ion-select-option value="supreme">Supreme</ion-select-option>
@@ -69,6 +97,7 @@
               label-placement="start"
               justify="start"
               fill="solid"
+              interface="action-sheet"
             >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
@@ -88,6 +117,7 @@
               label-placement="start"
               justify="start"
               fill="outline"
+              interface="action-sheet"
             >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
@@ -101,7 +131,13 @@
 
           <div class="grid-item">
             <h2>No Fill / Start Label / Justify End</h2>
-            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="start" justify="end">
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="start"
+              justify="end"
+              interface="action-sheet"
+            >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
               <ion-select-option value="supreme">Supreme</ion-select-option>
@@ -120,6 +156,7 @@
               label-placement="start"
               justify="end"
               fill="solid"
+              interface="action-sheet"
             >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
@@ -139,6 +176,7 @@
               label-placement="start"
               justify="end"
               fill="outline"
+              interface="action-sheet"
             >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
@@ -157,6 +195,7 @@
               placeholder="Select a pizza"
               label-placement="start"
               justify="space-between"
+              interface="action-sheet"
             >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
@@ -176,6 +215,7 @@
               label-placement="start"
               justify="space-between"
               fill="solid"
+              interface="action-sheet"
             >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
@@ -195,6 +235,7 @@
               label-placement="start"
               justify="space-between"
               fill="outline"
+              interface="action-sheet"
             >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
@@ -208,7 +249,12 @@
 
           <div class="grid-item">
             <h2>No Fill / Floating Label</h2>
-            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="floating">
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="floating"
+              interface="action-sheet"
+            >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
               <ion-select-option value="supreme">Supreme</ion-select-option>
@@ -221,7 +267,13 @@
 
           <div class="grid-item">
             <h2>Solid / Floating Label</h2>
-            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="floating" fill="solid">
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="floating"
+              fill="solid"
+              interface="action-sheet"
+            >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
               <ion-select-option value="supreme">Supreme</ion-select-option>
@@ -234,7 +286,69 @@
 
           <div class="grid-item">
             <h2>Outline / Floating Label</h2>
-            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="floating" fill="outline">
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="floating"
+              fill="outline"
+              interface="action-sheet"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Stacked Label</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="stacked"
+              interface="action-sheet"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Stacked Label</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="stacked"
+              fill="solid"
+              interface="action-sheet"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Stacked Label</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="stacked"
+              fill="outline"
+              interface="action-sheet"
+            >
               <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
               <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
               <ion-select-option value="supreme">Supreme</ion-select-option>
@@ -245,7 +359,302 @@
             </ion-select>
           </div>
         </div>
+
+        <h1>Overflowing Slots</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Fill / Start Label / No Slot</h2>
+            <ion-select label-placement="start" label="Email Email Email Email Email Email" style="width: 260px">
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Start Label / Start Slot</h2>
+            <ion-select label-placement="start" label="Email Email Email Email Email Email" style="width: 260px">
+              <div slot="start" style="height: 10px; width: 150px; background: lightpink"></div>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Start Label / End Slot</h2>
+            <ion-select label-placement="start" label="Email Email Email Email Email Email" style="width: 260px">
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <div slot="end" style="height: 10px; width: 150px; background: lightblue"></div>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / No Slot</h2>
+            <ion-select
+              label-placement="start"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / Start Slot</h2>
+            <ion-select
+              label-placement="start"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="start" style="height: 10px; width: 150px; background: lightpink"></div>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / End Slot</h2>
+            <ion-select
+              label-placement="start"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <div slot="end" style="height: 10px; width: 150px; background: lightblue"></div>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label / No Slot</h2>
+            <ion-select
+              label-placement="floating"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label / Start Slot</h2>
+            <ion-select
+              label-placement="floating"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <div slot="start" style="height: 10px; width: 150px; background: lightpink"></div>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label / End Slot</h2>
+            <ion-select
+              label-placement="floating"
+              fill="outline"
+              label="Email Email Email Email Email Email"
+              style="width: 260px"
+            >
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <div slot="end" style="height: 10px; width: 150px; background: lightblue"></div>
+            </ion-select>
+          </div>
+        </div>
+
+        <h1>Click Propagation</h1>
+        <p class="hint">
+          Each click on the host is counted, and the target of each is logged to the console. One physical click should
+          count once. Click the padding strip (the gap between the border and the text), the label, the input text, and
+          the slotted button, and compare.
+        </p>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Fill</h2>
+            <ion-select class="propagation" label-placement="floating" label="Favorite Pizza">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+            <div class="counts">host: <b class="host-count">0</b></div>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid (16px padding)</h2>
+            <ion-select class="propagation" label-placement="floating" fill="solid" label="Favorite Pizza">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+            <div class="counts">host: <b class="host-count">0</b></div>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline (16px padding)</h2>
+            <ion-select class="propagation" label-placement="floating" fill="outline" label="Favorite Pizza">
+              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+            <div class="counts">host: <b class="host-count">0</b></div>
+          </div>
+        </div>
+
+        <ion-button onclick="resetClickCounts()">Reset Counts</ion-button>
+
+        <h1>Async Slot Content</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Outline / Async Label</h2>
+            <ion-select id="outline-async" label-placement="floating" fill="outline" interface="action-sheet">
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Async Decorations</h2>
+            <ion-select
+              id="async-decorations"
+              label-placement="floating"
+              fill="outline"
+              label="Favorite Pizza"
+              interface="action-sheet"
+            >
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+        <ion-button onclick="addSlot()">Add Slotted Content</ion-button>
+        <ion-button onclick="updateSlot()">Update Slotted Content</ion-button>
+        <ion-button onclick="removeSlot()">Remove Slotted Content</ion-button>
+        <ion-button onclick="addValueToAll()">Add Value to All</ion-button>
       </ion-content>
     </ion-app>
+
+    <script>
+      const outlineAsync = document.querySelector('#outline-async');
+      const asyncDecos = document.querySelector('#async-decorations');
+
+      const getSlottedLabel = () => {
+        return outlineAsync.querySelector('[slot="label"]');
+      };
+
+      const getSlottedStartDeco = () => {
+        return asyncDecos.querySelector('[slot="start"]');
+      };
+
+      const getSlottedEndDeco = () => {
+        return asyncDecos.querySelector('[slot="end"]');
+      };
+
+      const addSlot = () => {
+        if (getSlottedLabel() === null) {
+          const labelEl = document.createElement('div');
+          labelEl.slot = 'label';
+          labelEl.innerHTML = 'Email <span class="required">*</span>';
+
+          outlineAsync.appendChild(labelEl);
+        }
+
+        if (getSlottedStartDeco() === null) {
+          const startEl = document.createElement('div');
+          startEl.slot = 'start';
+          startEl.innerHTML = 'Start';
+
+          asyncDecos.insertAdjacentElement('afterbegin', startEl);
+        }
+
+        if (getSlottedEndDeco() === null) {
+          const endEl = document.createElement('div');
+          endEl.slot = 'end';
+          endEl.innerHTML = 'End';
+
+          asyncDecos.insertAdjacentElement('beforeend', endEl);
+        }
+      };
+
+      const removeSlot = () => {
+        const slottedLabel = getSlottedLabel();
+        if (slottedLabel !== null) {
+          slottedLabel.remove();
+        }
+
+        const slottedStartDeco = getSlottedStartDeco();
+        if (slottedStartDeco !== null) {
+          slottedStartDeco.remove();
+        }
+
+        const slottedEndDeco = getSlottedEndDeco();
+        if (slottedEndDeco !== null) {
+          slottedEndDeco.remove();
+        }
+      };
+
+      const updateSlot = () => {
+        const slottedContent = getSlottedLabel();
+
+        if (slottedContent !== null) {
+          slottedContent.textContent = 'This is my really really really long text';
+        }
+      };
+
+      document.querySelectorAll('ion-select.propagation').forEach((select) => {
+        const count = select.closest('.grid-item').querySelector('.host-count');
+
+        select.addEventListener('click', (ev) => {
+          count.textContent = Number(count.textContent) + 1;
+
+          // The deepest target crosses shadow boundaries, so log it from the composed path
+          console.log(`host (${select.getAttribute('fill') ?? 'none'})`, ev.composedPath()[0]);
+        });
+      });
+
+      const resetClickCounts = () => {
+        document.querySelectorAll('.host-count').forEach((el) => (el.textContent = '0'));
+        console.clear();
+      };
+
+      const addValueToAll = () => {
+        const selects = document.querySelectorAll('ion-select');
+        selects.forEach((select) => {
+          select.value = 'pepperoni';
+        });
+      };
+    </script>
   </body>
 </html>

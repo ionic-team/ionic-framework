@@ -1,3 +1,4 @@
+import { printIonWarning } from "@ionic/core/components";
 import type { ComponentInternalInstance } from "vue";
 import { getCurrentInstance } from "vue";
 
@@ -35,8 +36,8 @@ const injectHook = (
 
     return wrappedHook;
   } else {
-    console.warn(
-      "[@ionic/vue]: Ionic Lifecycle Hooks can only be used during execution of setup()."
+    printIonWarning(
+      "Ionic Lifecycle Hooks can only be used during execution of setup()."
     );
   }
 };
@@ -47,7 +48,12 @@ const createHook = <T extends Function = () => any>(
   return (
     hook: T,
     target: ComponentInternalInstance | null = getCurrentInstance()
-  ) => injectHook(lifecycle, hook, target);
+    /**
+     * `injectHook` returns undefined when called outside of `setup()`, but
+     * that path only warns. Keep the published `Function` return so enabling
+     * `strict` does not widen this to `Function | undefined` for consumers.
+     */
+  ): Function => injectHook(lifecycle, hook, target) as Function;
 };
 
 export const onIonViewWillEnter = createHook(LifecycleHooks.WillEnter);

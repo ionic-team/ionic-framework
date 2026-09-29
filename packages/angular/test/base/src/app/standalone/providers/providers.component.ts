@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Config } from '@ionic/angular/standalone';
+import { Config } from '@ionic/angular';
 
 @Component({
   selector: 'app-providers',

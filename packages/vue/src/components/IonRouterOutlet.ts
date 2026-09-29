@@ -1,5 +1,6 @@
 import type { AnimationBuilder } from "@ionic/core/components";
 import {
+  printIonWarning,
   LIFECYCLE_DID_ENTER,
   LIFECYCLE_DID_LEAVE,
   LIFECYCLE_WILL_ENTER,
@@ -20,7 +21,7 @@ import {
 import type { InjectionKey, Ref } from "vue";
 import { matchedRouteKey, routeLocationKey, useRoute } from "vue-router";
 
-import { fireLifecycle, generateId, getConfig } from "../utils";
+import { fireLifecycle, generateId } from "../utils";
 
 // TODO(FW-2969): types
 
@@ -34,6 +35,12 @@ const isViewVisible = (enteringEl: HTMLElement) => {
 const viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
   name: "IonRouterOutlet",
+  props: {
+    swipeGesture: {
+      type: Boolean,
+      default: undefined,
+    },
+  },
   setup() {
     defineCustomElement();
 
@@ -53,7 +60,8 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     const ionRouter: any = inject("navManager");
     const viewStacks: any = inject("viewStacks");
 
-    const components = shallowRef([]);
+    // TODO(FW-2969): type
+    const components = shallowRef<any[]>([]);
 
     let skipTransition = false;
 
@@ -127,12 +135,6 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     );
 
     const canStart = () => {
-      const config = getConfig();
-      const swipeEnabled =
-        config &&
-        config.get("swipeBackEnabled", ionRouterOutlet.value.mode === "ios");
-      if (!swipeEnabled) return false;
-
       const stack = viewStacks.getViewStack(id);
       if (!stack || stack.length <= 1) return false;
 
@@ -291,7 +293,7 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
        * methods to work properly.
        */
       if (enteringEl === undefined) {
-        console.warn(`[@ionic/vue Warning]: The view you are trying to render for path ${routeInfo.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected.
+        printIonWarning(`The view you are trying to render for path ${routeInfo.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected.
 
 See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
       }
@@ -547,9 +549,18 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
   render() {
     const { components, registerIonPage, injectedRoute } = this;
 
+    /**
+     * Forward props selectively to avoid setting undefined values
+     * that would override the web component's config-based defaults.
+     */
+    const routerOutletProps: Record<string, any> = { ref: "ionRouterOutlet" };
+    if (this.$props.swipeGesture !== undefined) {
+      routerOutletProps.swipeGesture = this.$props.swipeGesture;
+    }
+
     return h(
       "ion-router-outlet",
-      { ref: "ionRouterOutlet" },
+      routerOutletProps,
       components &&
         components.map((c: any) => {
           let props = {

@@ -136,9 +136,18 @@ export class Range implements ComponentInterface {
   @Prop() label?: string;
 
   /**
-   * Show two knobs.
+   * If `true`, the range shows two knobs and `value` is an object with `lower`
+   * and `upper` properties. If `false`, the range shows one knob and `value` is
+   * a number.
    */
   @Prop() dualKnobs = false;
+
+  @Watch('dualKnobs')
+  protected dualKnobsChanged() {
+    if (!this.noUpdate) {
+      this.updateRatio();
+    }
+  }
 
   /**
    * Minimum integer value of the range.

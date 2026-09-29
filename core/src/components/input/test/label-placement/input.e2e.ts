@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, expectFieldCellsShareARow, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('input: label placement start'), () => {
@@ -130,7 +130,7 @@ configs().forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * This style only appears on MD
+ * The solid and outline fills are only supported by `md` mode.
  */
 configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: label with fill'), () => {
@@ -144,6 +144,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
       const input = page.locator('ion-input');
       await expect(input).toHaveScreenshot(screenshot(`input-placement-floating-long-label-outline`));
     });
+
     test('long label should truncate with solid', async ({ page }) => {
       await page.setContent(
         `
@@ -153,6 +154,61 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
       );
       const input = page.locator('ion-input');
       await expect(input).toHaveScreenshot(screenshot(`input-placement-floating-long-label-solid`));
+    });
+
+    /**
+     * The floating label must be positioned relative to `.input-wrapper` so its
+     * width is not constrained when the input width collapses. These tests cover
+     * both cases: a long label should retain the same available width despite
+     * wide start content, and a short label should not collapse when the start
+     * content takes up most of the input's width.
+     */
+    test('start slot content should not shrink the label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-input id="plain" fill="outline" label-placement="floating" value="x" label="Email Email Email Email Email Email"></ion-input>
+          <ion-input id="wide-start" fill="outline" label-placement="floating" value="x" label="Email Email Email Email Email Email">
+            <div slot="start" style="width: 120px; height: 24px"></div>
+          </ion-input>
+        </div>
+      `,
+        config
+      );
+
+      const labelWidth = (id: string) =>
+        page.locator(`${id} .label-text`).evaluate((el: HTMLElement) => ({
+          available: el.clientWidth,
+          wanted: el.scrollWidth,
+        }));
+
+      const plain = await labelWidth('#plain');
+      const wideStart = await labelWidth('#wide-start');
+
+      // The label is long enough that it has to truncate in both cases
+      expect(plain.wanted).toBeGreaterThan(plain.available);
+
+      expect(wideStart.available).toBe(plain.available);
+    });
+
+    test('start slot content should not collapse a short label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="width: 200px">
+          <ion-input fill="outline" label-placement="floating" value="x" label="Email">
+            <div slot="start" style="width: 170px; height: 24px"></div>
+          </ion-input>
+        </div>
+      `,
+        config
+      );
+
+      const label = await page.locator('.label-text').evaluate((el: HTMLElement) => ({
+        available: el.clientWidth,
+        wanted: el.scrollWidth,
+      }));
+
+      expect(label.available).toBe(label.wanted);
     });
   });
 });
@@ -229,6 +285,56 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const input = page.locator('ion-input');
 
       await expect(input).toHaveScreenshot(screenshot(`input-label-layering`));
+    });
+  });
+});
+
+/**
+ * The ionic theme supports only the stacked and floating placements, and the
+ * placement does not vary by mode, so `ionic-md` stands in for both. These
+ * comparisons are along the inline axis, which would need inverting under rtl.
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: label placement'), () => {
+    for (const placement of ['stacked', 'floating'] as const) {
+      test(`label should sit above the field with a ${placement} placement`, async ({ page }) => {
+        await page.setContent(
+          `<ion-input label="Email" label-placement="${placement}" value="hi@ionic.io"></ion-input>`,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        const label = await input.locator('.label-text-wrapper').boundingBox();
+        const native = await input.locator('.native-wrapper').boundingBox();
+
+        expect(label).not.toBeNull();
+        expect(native).not.toBeNull();
+
+        // Above, in its own row.
+        expect(label!.y + label!.height).toBeLessThanOrEqual(native!.y);
+
+        // Starts at the field's inline edge.
+        expect(label!.x).toBeLessThanOrEqual(native!.x);
+
+        await expectFieldCellsShareARow(input, 'input');
+      });
+    }
+
+    /**
+     * The target area is taller than the medium field on purpose, and is held
+     * off the row by a negative block margin so it cannot grow it.
+     */
+    test('target area should not grow the medium field', async ({ page }) => {
+      await page.setContent(`<ion-input label="Email" value="hi@ionic.io"></ion-input>`, config);
+
+      const wrapper = page.locator('ion-input').locator('.input-wrapper');
+
+      const [boxHeight, targetHeight] = await wrapper.evaluate((el) => [
+        parseFloat(getComputedStyle(el, '::before').height),
+        parseFloat(getComputedStyle(el, '::after').height),
+      ]);
+
+      expect(targetHeight).toBeGreaterThan(boxHeight);
     });
   });
 });

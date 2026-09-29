@@ -1,5 +1,3 @@
-import caretLeftRegular from '@phosphor-icons/core/assets/regular/caret-left.svg';
-import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { startFocusVisible } from '@utils/focus-visible';
@@ -140,12 +138,6 @@ export class Datetime implements ComponentInterface {
   private todayParts!: DatetimeParts;
   private defaultParts!: DatetimeParts;
   private loadTimeout: ReturnType<typeof setTimeout> | undefined;
-  /**
-   * Set true only by `visibleCallback`. Lets `hiddenCallback` ignore the
-   * synthetic "not intersecting" entry IntersectionObserver fires on
-   * `observe()` when the host mounts offscreen.
-   */
-  private hasBeenIntersecting = false;
 
   private prevPresentation: string | null = null;
 
@@ -183,9 +175,9 @@ export class Datetime implements ComponentInterface {
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
+   * For more information on colors, refer to [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color = 'primary';
+  @Prop() color?: Color;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -607,6 +599,18 @@ export class Datetime implements ComponentInterface {
     if (closeOverlay) {
       this.closeParentOverlay(CANCEL_ROLE);
     }
+  }
+
+  /**
+   * Returns the default parts the datetime falls back to when no value is set:
+   * today's date and time snapped to the closest value allowed by the
+   * component's constraints (`min`, `max`, and the `*Values` props).
+   *
+   * @internal
+   */
+  @Method()
+  async getDefaultPart(): Promise<DatetimeParts> {
+    return this.defaultParts;
   }
 
   private warnIfIncorrectValueUsage = () => {
@@ -1108,7 +1112,6 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible = undefined;
     }
     this.loadTimeoutCleanup();
-    this.hasBeenIntersecting = false;
   }
 
   /**
@@ -1147,12 +1150,21 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const rect = this.el.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) {
+    if (!this.hasLayoutBox()) {
       return;
     }
 
     this.markReady();
+  };
+
+  /**
+   * Whether the datetime is on screen. A modal or popover hides its contents
+   * with `display: none`, which leaves the host without a layout box.
+   */
+  private hasLayoutBox = () => {
+    const { width, height } = this.el.getBoundingClientRect();
+
+    return width > 0 && height > 0;
   };
 
   private markReady = () => {
@@ -1192,12 +1204,15 @@ export class Datetime implements ComponentInterface {
      * areas will not have the correct values snapped into place.
      */
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
+      /**
+       * The browser can batch several observations into one callback, so
+       * only the last entry describes the datetime now.
+       */
+      const ev = entries[entries.length - 1];
       if (!ev.isIntersecting) {
         return;
       }
 
-      this.hasBeenIntersecting = true;
       this.markReady();
     };
     const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01, root: el });
@@ -1233,16 +1248,23 @@ export class Datetime implements ComponentInterface {
      * we did originally has been lost.
      */
     const hiddenCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
+      const ev = entries[entries.length - 1];
       if (ev.isIntersecting) {
         return;
       }
 
-      // Ignore the initial "not intersecting" entry IntersectionObserver fires on observe().
-      if (!this.hasBeenIntersecting) {
+      /**
+       * WebKit reports a datetime that is still on screen as not
+       * intersecting, and it doesn't deliver that entry to every observer on
+       * the same root and target, so `visibleCallback` may never hear about
+       * it and add `datetime-ready` back. That is what left the calendar
+       * blank in #30933. Checking the host instead of trusting the entry
+       * also covers the synthetic "not intersecting" entry `observe()` fires
+       * when the datetime mounts offscreen.
+       */
+      if (this.hasLayoutBox()) {
         return;
       }
-      this.hasBeenIntersecting = false;
 
       this.destroyInteractionListeners();
 
@@ -1560,10 +1582,11 @@ export class Datetime implements ComponentInterface {
 
     const left = (nextMonth as HTMLElement).offsetWidth * 2;
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? -1 : 1),
-      behavior: 'smooth',
+      behavior: scrollMode,
     });
   };
 
@@ -1580,10 +1603,11 @@ export class Datetime implements ComponentInterface {
 
     const left = (prevMonth as HTMLElement).offsetWidth * 2;
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? 1 : -1),
-      behavior: 'smooth',
+      behavior: scrollMode,
     });
   };
 
@@ -1704,8 +1728,6 @@ export class Datetime implements ComponentInterface {
   private renderCombinedDatePickerColumn() {
     const { defaultParts, disabled, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
-    const activePart = this.getActivePartsWithFallback();
-
     /**
      * By default, generate a range of 3 months:
      * Previous month, current month, and next month
@@ -1789,8 +1811,11 @@ export class Datetime implements ComponentInterface {
           const { value } = ev.detail;
           const findPart = parts.find(({ month, day, year }) => value === `${year}-${month}-${day}`);
 
+          // Read live so parts a sibling column just committed are included.
+          const activePart = this.getActivePartsWithFallback();
+
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             ...findPart,
           });
 
@@ -1804,6 +1829,7 @@ export class Datetime implements ComponentInterface {
       >
         {items.map((item) => (
           <ion-picker-column-option
+            color={this.color}
             part={item.value === todayString ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={item.value}
             disabled={item.disabled}
@@ -1895,7 +1921,6 @@ export class Datetime implements ComponentInterface {
 
     const { disabled, workingParts } = this;
 
-    const activePart = this.getActivePartsWithFallback();
     const pickerColumnValue = (workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined;
 
     return (
@@ -1907,8 +1932,11 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={pickerColumnValue}
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
+          const activePart = this.getActivePartsWithFallback();
+
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             day: ev.detail.value,
           });
 
@@ -1922,6 +1950,7 @@ export class Datetime implements ComponentInterface {
       >
         {days.map((day) => (
           <ion-picker-column-option
+            color={this.color}
             part={day.value === pickerColumnValue ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={day.value}
             disabled={day.disabled}
@@ -1941,8 +1970,6 @@ export class Datetime implements ComponentInterface {
 
     const { disabled, workingParts } = this;
 
-    const activePart = this.getActivePartsWithFallback();
-
     return (
       <ion-picker-column
         part={WHEEL_PART}
@@ -1952,21 +1979,28 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={workingParts.month}
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
+          const activePart = this.getActivePartsWithFallback();
+
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             month: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            month: ev.detail.value,
-          });
+          // Month wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              month: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
       >
         {months.map((month) => (
           <ion-picker-column-option
+            color={this.color}
             part={month.value === workingParts.month ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={month.value}
             disabled={month.disabled}
@@ -1985,8 +2019,6 @@ export class Datetime implements ComponentInterface {
 
     const { disabled, workingParts } = this;
 
-    const activePart = this.getActivePartsWithFallback();
-
     return (
       <ion-picker-column
         part={WHEEL_PART}
@@ -1996,21 +2028,28 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={workingParts.year}
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
+          const activePart = this.getActivePartsWithFallback();
+
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             year: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            year: ev.detail.value,
-          });
+          // Year wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              year: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
       >
         {years.map((year) => (
           <ion-picker-column-option
+            color={this.color}
             part={year.value === workingParts.year ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={year.value}
             disabled={year.disabled}
@@ -2057,7 +2096,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHourPickerColumn(hoursData: WheelColumnOption[]) {
-    const { disabled, workingParts } = this;
+    const { disabled } = this;
     if (hoursData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -2071,8 +2110,9 @@ export class Datetime implements ComponentInterface {
         value={activePart.hour}
         numericInput
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             hour: ev.detail.value,
           });
 
@@ -2086,6 +2126,7 @@ export class Datetime implements ComponentInterface {
       >
         {hoursData.map((hour) => (
           <ion-picker-column-option
+            color={this.color}
             part={hour.value === activePart.hour ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={hour.value}
             disabled={hour.disabled}
@@ -2098,7 +2139,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMinutePickerColumn(minutesData: WheelColumnOption[]) {
-    const { disabled, workingParts } = this;
+    const { disabled } = this;
     if (minutesData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -2112,8 +2153,9 @@ export class Datetime implements ComponentInterface {
         value={activePart.minute}
         numericInput
         onIonChange={(ev: CustomEvent) => {
+          // Read live so parts a sibling column just committed are included.
           this.setWorkingParts({
-            ...workingParts,
+            ...this.workingParts,
             minute: ev.detail.value,
           });
 
@@ -2127,6 +2169,7 @@ export class Datetime implements ComponentInterface {
       >
         {minutesData.map((minute) => (
           <ion-picker-column-option
+            color={this.color}
             part={minute.value === activePart.minute ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
             key={minute.value}
             disabled={minute.disabled}
@@ -2139,7 +2182,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderDayPeriodPickerColumn(dayPeriodData: WheelColumnOption[]) {
-    const { disabled, workingParts } = this;
+    const { disabled } = this;
     if (dayPeriodData.length === 0) {
       return [];
     }
@@ -2156,10 +2199,12 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={activePart.ampm}
         onIonChange={(ev: CustomEvent) => {
-          const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
+          // Read live so parts a sibling column just committed are included.
+          const currentParts = this.workingParts;
+          const hour = calculateHourFromAMPM(currentParts, ev.detail.value);
 
           this.setWorkingParts({
-            ...workingParts,
+            ...currentParts,
             ampm: ev.detail.value,
             hour,
           });
@@ -2175,6 +2220,7 @@ export class Datetime implements ComponentInterface {
       >
         {dayPeriodData.map((dayPeriod) => (
           <ion-picker-column-option
+            color={this.color}
             part={
               dayPeriod.value === activePart.ampm ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART
             }
@@ -2726,87 +2772,45 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Get the icon to use for the next icon.
-   * Otherwise, use the icon set in the config.
+   * Use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
   get datetimeNextIcon(): string {
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronForward,
-      ionic: caretRightRegular,
-      md: chevronForward,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured datetime next icon or the default icon
-    return config.get('datetimeNextIcon', defaultIcon);
+    return config.get('datetimeNextIcon', chevronForward);
   }
 
   /**
    * Get the icon to use for the previous icon.
-   * Otherwise, use the icon set in the config.
+   * Use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
   get datetimePreviousIcon(): string {
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronBack,
-      ionic: caretLeftRegular,
-      md: chevronBack,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured datetime previous icon or the default icon
-    return config.get('datetimePreviousIcon', defaultIcon);
+    return config.get('datetimePreviousIcon', chevronBack);
   }
 
   /**
    * Get the icon to use for the show month and year icon.
-   * Otherwise, use the icon set in the config.
+   * Use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
   get datetimeCollapsedIcon(): string | undefined {
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
+    const defaultIcon = theme === 'ios' ? chevronForward : caretDownSharp;
 
-    const defaultIcons = {
-      ios: chevronForward,
-      ionic: undefined,
-      md: caretDownSharp,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured datetime show month and year icon or the default icon
     return config.get('datetimeCollapsedIcon', defaultIcon);
   }
 
   /**
    * Get the icon to use for the hide month and year icon.
-   * Otherwise, use the icon set in the config.
+   * Use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
   get datetimeExpandedIcon(): string | undefined {
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
+    const defaultIcon = theme === 'ios' ? chevronDown : caretUpSharp;
 
-    const defaultIcons = {
-      ios: chevronDown,
-      ionic: undefined,
-      md: caretUpSharp,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured datetime hide month and year icon or the default icon
     return config.get('datetimeExpandedIcon', defaultIcon);
   }
 

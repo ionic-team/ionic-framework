@@ -1,8 +1,9 @@
 {
-  "extends": "../../tsconfig",
+  "extends": "../../core/tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./packages/angular-server",
-    "module": "es2015",
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
     "rootDir": "src",
     "outDir": "dist"
   },

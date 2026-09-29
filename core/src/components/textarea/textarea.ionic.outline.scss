@@ -8,40 +8,6 @@
   --border-color: #{globals.$ion-border-input-default};
 }
 
-// Textarea Fill: Outline, Textarea Wrapper
-// ----------------------------------------------------------------
-
-:host(.textarea-fill-outline) .textarea-wrapper {
-  background: initial;
-}
-
-:host(.textarea-fill-outline) .textarea-wrapper-inner {
-  /**
-   * The border should be relative to the inner wrapper
-   * so that it does not include the label.
-   */
-  position: relative;
-}
-
-// Textarea Fill: Outline, Outline Container
-// ----------------------------------------------------------------
-
-:host(.textarea-fill-outline) .textarea-outline {
-  @include globals.position(0, 0, 0, 0);
-  @include globals.border-radius(var(--border-radius));
-
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  pointer-events: none;
-
-  border: var(--border-width) var(--border-style) var(--border-color);
-
-  background: var(--background);
-}
-
 // Textarea Fill: Outline, Bottom Content
 // ----------------------------------------------------------------
 

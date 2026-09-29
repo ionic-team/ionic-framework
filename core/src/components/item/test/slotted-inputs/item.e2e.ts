@@ -172,3 +172,64 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('item: focus indicator room'), () => {
+    test('should reserve room for a control added inside a slotted wrapper', async ({ page }) => {
+      // A control can appear inside an already slotted wrapper after the item renders,
+      // and the item still has to make room for its focus indicator.
+      await page.setContent(
+        `
+        <ion-item button>
+          <div id="wrapper"></div>
+        </ion-item>
+      `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      await expect(item).not.toHaveClass(/item-focus-indicator-room/);
+
+      await page.evaluate(() => {
+        document.querySelector('#wrapper')!.appendChild(document.createElement('ion-toggle'));
+      });
+
+      await expect(item).toHaveClass(/item-focus-indicator-room/);
+
+      await page.evaluate(() => {
+        document.querySelector('ion-toggle')!.remove();
+      });
+
+      await expect(item).not.toHaveClass(/item-focus-indicator-room/);
+    });
+
+    test('should mark the item multi-input when a control is added inside a slotted wrapper', async ({ page }) => {
+      // Whether a control draws its own indicator depends on this class, so it has to
+      // track the same mutations the room does.
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-checkbox>One</ion-checkbox>
+          <div id="wrapper"></div>
+        </ion-item>
+      `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      await expect(item).not.toHaveClass(/item-multiple-inputs/);
+
+      await page.evaluate(() => {
+        document.querySelector('#wrapper')!.appendChild(document.createElement('ion-checkbox'));
+      });
+
+      await expect(item).toHaveClass(/item-multiple-inputs/);
+      await expect(item).toHaveClass(/item-focus-indicator-room/);
+    });
+  });
+});

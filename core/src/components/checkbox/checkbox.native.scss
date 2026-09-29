@@ -6,9 +6,6 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --checkbox-background: Background of the checkbox icon
-   */
   --checkbox-background-checked: #{ion-color(primary, base)};
   --border-color-checked: #{ion-color(primary, base)};
   --checkmark-color: #{ion-color(primary, contrast)};
@@ -21,6 +18,32 @@
   --checkbox-background-checked: #{current-color(base)};
   --border-color-checked: #{current-color(base)};
   --checkmark-color: #{current-color(contrast)};
+}
+
+// Checkbox: Keyboard Focus
+// ---------------------------------------------
+
+:host(.ion-focused) .native-wrapper::after {
+  @include border-radius(50%);
+
+  display: block;
+  position: absolute;
+
+  width: $checkbox-focus-ring-size;
+  height: $checkbox-focus-ring-size;
+
+  background: $checkbox-background-color-focused;
+
+  content: "";
+  opacity: 0.2;
+
+  // The indicator overhangs the control, so it must not take pointer events;
+  // otherwise it widens the hit area and swallows clicks aimed past the control.
+  pointer-events: none;
+
+  // Centered with insets because `transform` is physical and breaks in RTL.
+  inset-block-start: calc(50% - #{$checkbox-focus-ring-size} / 2);
+  inset-inline-start: calc(50% - #{$checkbox-focus-ring-size} / 2);
 }
 
 // Checkboxes that are not slotted inside an item and are not used with a
@@ -38,27 +61,12 @@
   @include margin(null, null, $checkbox-item-label-margin-bottom, null);
 }
 
+// Checkbox Icon
+// ----------------------------------------------------------------
+
 .checkbox-icon {
-  @include border-radius(var(--border-radius));
-
-  width: var(--size);
-  height: var(--size);
-
-  transition: var(--transition);
-
-  border-width: var(--border-width);
-  border-style: var(--border-style);
-  border-color: var(--border-color);
-
-  background: var(--checkbox-background);
-
-  box-sizing: border-box;
-}
-
-.checkbox-icon path {
-  fill: none;
-  stroke: var(--checkmark-color);
-  stroke-width: var(--checkmark-width);
+  width: 100%;
+  height: 100%;
 }
 
 // Checkbox Bottom Content

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory containing test application versions
-# (e.g. reactrouter5, reactrouter6, etc.)
+# (e.g. reactrouter6-react18, reactrouter6-react19, etc.)
 APPS_DIR="apps"
 
 # Base application template that all test apps are built from

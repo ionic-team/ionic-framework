@@ -45,6 +45,9 @@
           <ion-button id="create-and-present-toast" onclick="createAndPresentToast()"
             >Create and Present Toast</ion-button
           >
+          <ion-button id="create-and-present-focus-trap" onclick="createAndPresentFocusTrapModal()"
+            >Create and Present Focus Trap Modal</ion-button
+          >
         </ion-content>
       </div>
     </ion-app>
@@ -126,6 +129,61 @@
         });
 
         await toast.present();
+      };
+
+      /*
+        Presents a modal for checking the focus trap's redirect by hand. Both
+        routes move focus to the input behind the modal, which the trap
+        redirects back to the checkbox. Only the keyboard route should leave an
+        indicator there.
+      */
+      const createAndPresentFocusTrapModal = async () => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <ion-content class="ion-padding">
+            <ion-checkbox>Dark Mode</ion-checkbox>
+
+            <ion-button id="modal-move-focus">Move focus outside</ion-button>
+
+            <p>Pointer: click the button above. Expect false below.</p>
+
+            <p>Keyboard: reopen the modal, press Tab twice to reach the button, then Enter. Expect true below.</p>
+
+            <p id="focus-trap-status">indicator on the checkbox: not checked yet</p>
+
+            <p>
+              The indicator is a faint wash, so the reading above is the reliable
+              check. Reopen the modal between the two routes, since a click leaves
+              the focus utility out of keyboard mode.
+            </p>
+          </ion-content>
+        `;
+
+        const report = () => {
+          const checkbox = div.querySelector('ion-checkbox');
+          const status = div.querySelector('#focus-trap-status');
+          status.textContent = `indicator on the checkbox: ${checkbox.classList.contains('ion-focused')}`;
+        };
+
+        /*
+          The reading is deferred a frame because `setFocus` is async, so the
+          trap has not redirected focus back yet when it returns.
+        */
+        const moveFocusOutside = () => {
+          document.querySelector('#root-input').setFocus();
+          requestAnimationFrame(report);
+        };
+
+        const moveFocusButton = div.querySelector('ion-button#modal-move-focus');
+        moveFocusButton.onclick = moveFocusOutside;
+
+        const modal = await modalController.create({
+          component: div,
+        });
+
+        await modal.present();
+
+        return modal;
       };
 
       const createNestedOverlayModal = async () => {

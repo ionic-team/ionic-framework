@@ -1012,7 +1012,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       // Create a spy function in page context
       await page.setContent(
         `
-        <ion-select aria-label="Fruit" interface="alert">
+        <ion-select label="Fruit" interface="alert">
           <ion-select-option value="apple">Apple</ion-select-option>
           <ion-select-option value="banana">Banana</ion-select-option>
         </ion-select>
@@ -1022,11 +1022,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       // Track calls to the exposed function
       const clickEvent = await page.spyOnEvent('click');
-      const input = page.locator('label.select-wrapper');
+      const select = page.locator('label.select-wrapper');
 
       // Use position to make sure we click into the label enough to trigger
       // what would be the double click
-      await input.click({
+      await select.click({
         position: {
           x: 5,
           y: 5,
@@ -1036,9 +1036,195 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       // Verify the click was triggered exactly once
       expect(clickEvent).toHaveReceivedEventTimes(1);
 
-      // Verify that the event target is the checkbox and not the item
+      // Verify that the event target is the select and not the item
       const event = clickEvent.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-select');
+    });
+
+    test('should trigger onclick only once when clicking the wrapper', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30165',
+      });
+      // Create a spy function in page context
+      await page.setContent(
+        `
+        <ion-select label="Fruit" label-placement="floating" interface="alert">
+          <ion-select-option value="apple">Apple</ion-select-option>
+          <ion-select-option value="banana">Banana</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      // Track calls to the exposed function
+      const clickEvent = await page.spyOnEvent('click');
+      const select = page.locator('div.native-wrapper');
+
+      // Use position to make sure we click into the label enough to trigger
+      // what would be the double click
+      await select.click({
+        position: {
+          x: 1,
+          y: 1,
+        },
+      });
+
+      // Verify the click was triggered exactly once
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      // Verify that the event target is the select and not the item
+      const event = clickEvent.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-select');
+    });
+
+    test('should trigger onclick only once when the select is itself slotted', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-select slot="end" label="Fruit" interface="alert">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-item>
+      `,
+        config
+      );
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('label.select-wrapper').click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+
+    test('should propagate clicks from start slot button to parent', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="parent" onclick="window.parentClicks = (window.parentClicks || 0) + 1">
+          Parent Container
+          <ion-select label="Fruit" value="apple">
+            <ion-button slot="start" onclick="window.buttonClicks = (window.buttonClicks || 0) + 1">Icon</ion-button>
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </div>
+      `,
+        config
+      );
+
+      const button = page.locator('ion-button[slot="start"]');
+      const parent = page.locator('#parent');
+
+      // Click the button in the start slot
+      await button.click();
+
+      // The button's own click handler should have fired
+      let buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+
+      // The parent's click handler should also have fired
+      let parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(1);
+
+      // Click on the parent container (far right to avoid the start button)
+      await parent.click({ position: { x: 250, y: 50 } });
+
+      // Parent should have incremented
+      parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(2);
+
+      // Button should NOT have incremented
+      buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+    });
+
+    test('should propagate clicks from end slot button to parent', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="parent" onclick="window.parentClicks = (window.parentClicks || 0) + 1">
+          Parent Container
+          <ion-select label="Fruit" value="apple">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+            <ion-button slot="end" onclick="window.buttonClicks = (window.buttonClicks || 0) + 1">Toggle</ion-button>
+          </ion-select>
+        </div>
+      `,
+        config
+      );
+
+      const button = page.locator('ion-button[slot="end"]');
+      const parent = page.locator('#parent');
+
+      // Click the button in the end slot
+      await button.click();
+
+      // The button's own click handler should have fired
+      let buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+
+      // The parent's click handler should also have fired
+      let parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(1);
+
+      // Click on the parent container (far left to avoid the end button)
+      await parent.click({ position: { x: 10, y: 50 } });
+
+      // Parent should have incremented
+      parentClicks = await page.evaluate(() => (window as any).parentClicks);
+      expect(parentClicks).toBe(2);
+
+      // Button should NOT have incremented
+      buttonClicks = await page.evaluate(() => (window as any).buttonClicks);
+      expect(buttonClicks).toBe(1);
+    });
+  });
+});
+
+/**
+ * The solid and outline fills are only supported by `md` mode. These
+ * are the only fills that get padding which can cause a double click.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: click'), () => {
+    ['solid', 'outline'].forEach((fill) => {
+      test(`should trigger onclick only once when clicking the ${fill} wrapper padding`, async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-select
+            label="Fruit"
+            label-placement="floating"
+            value="apple"
+            fill="${fill}"
+          >
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        `,
+          config
+        );
+
+        const clickEvent = await page.spyOnEvent('click');
+        const wrapper = page.locator('label.select-wrapper');
+
+        await wrapper.click({
+          position: {
+            x: 5,
+            y: 5,
+          },
+        });
+
+        expect(clickEvent).toHaveReceivedEventTimes(1);
+
+        const event = clickEvent.events[0];
+        expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-select');
+      });
     });
   });
 });
@@ -1505,6 +1691,113 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(ionChange).toHaveReceivedEventTimes(1);
     });
 
+    test('should not fire ionChange when confirming the already-selected alert option', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="alert" value="apple">
+          <ion-select-option value="apple">Apple</ion-select-option>
+          <ion-select-option value="banana">Banana</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      const alert = page.locator('ion-alert');
+      const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
+
+      await confirmButton.click();
+      await ionAlertDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+      await expect(select).toHaveJSProperty('value', 'apple');
+    });
+
+    test('should not fire ionChange when confirming the already-selected alert options (multiple)', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="alert" multiple="true">
+          <ion-select-option value="apple">Apple</ion-select-option>
+          <ion-select-option value="banana">Banana</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const select = page.locator('ion-select') as E2ELocator;
+      await select.evaluate((el: HTMLIonSelectElement) => (el.value = ['apple', 'banana']));
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      const alert = page.locator('ion-alert');
+      const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
+
+      await confirmButton.click();
+      await ionAlertDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+    });
+
+    test('should not fire ionChange when tapping the already-selected action-sheet option', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="action-sheet" value="apple">
+          <ion-select-option value="apple">Apple</ion-select-option>
+          <ion-select-option value="banana">Banana</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionActionSheetDidPresent.next();
+
+      const actionSheet = page.locator('ion-action-sheet');
+      const selectedButton = actionSheet.locator('.action-sheet-button[aria-checked="true"]');
+
+      await selectedButton.click();
+      await ionActionSheetDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+      await expect(select).toHaveJSProperty('value', 'apple');
+    });
+
     test('should not fire when programmatically setting a valid value', async ({ page }) => {
       await page.setContent(
         `
@@ -1567,6 +1860,203 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await confirmButton.click();
 
       await expect(select).toHaveClass(/has-focus/);
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions/modes
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: slotted click'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select label="Fruit" interface="alert">
+          <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+          <ion-button slot="end" aria-label="Clear selection">
+            <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+          </ion-button>
+          <input slot="end" type="checkbox" aria-label="Favorite" />
+          <ion-checkbox slot="end" aria-label="Favorite"></ion-checkbox>
+          <ion-radio slot="end" aria-label="Preferred"></ion-radio>
+          <ion-toggle slot="end" aria-label="Notify"></ion-toggle>
+          <a slot="end" href="#navigated">Details</a>
+          <div slot="end">
+            <button type="button">Nested</button>
+            <span>Nested</span>
+          </div>
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+    });
+
+    /**
+     * Decorative slotted content behaves the same as clicking the select
+     * itself, so it opens the overlay.
+     */
+    test('should emit one click and open the select when a slotted icon is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-icon[slot="start"]').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      const event = clickEvent.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
+
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should emit one click without opening the select when a slotted button is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-button[slot="end"]').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      /**
+       * Opening is asynchronous, so an assertion that the select stayed closed
+       * passes on its first poll while the select is still on its way open.
+       * Pending renders are flushed first so the expanded class is applied by
+       * the time it is checked.
+       *
+       * Focus is not asserted here. WebKit forwards focus from the wrapping
+       * label to the select's own control even when the click lands on
+       * interactive slotted content, so the select reports focus there while
+       * Chromium and Firefox leave it on the slotted button.
+       */
+      await page.waitForChanges();
+
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    test('should activate slotted form controls without opening the select', async ({ page }) => {
+      const checkbox = page.locator('input[slot="end"][type="checkbox"]');
+
+      await checkbox.click();
+      await page.waitForChanges();
+
+      await expect(checkbox).toBeChecked();
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    /**
+     * A radio outside a radio group keeps the tabindex of -1 that the group
+     * would otherwise raise, so it is the control that regressed while the
+     * interactive check relied on a focusability selector.
+     */
+    ['ion-checkbox', 'ion-radio', 'ion-toggle'].forEach((tag) => {
+      test(`should activate a slotted ${tag} without opening the select`, async ({ page }) => {
+        const control = page.locator(tag);
+
+        await control.click();
+        await page.waitForChanges();
+
+        await expect(control).toHaveAttribute('aria-checked', 'true');
+        await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+      });
+    });
+
+    test('should follow a slotted link without opening the select', async ({ page }) => {
+      await page.locator('a[slot="end"]').click();
+      await page.waitForChanges();
+
+      expect(new URL(page.url()).hash).toBe('#navigated');
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    /**
+     * Whether the select opens follows the content that was clicked, not the
+     * slotted wrapper around it, so the same wrapper produces both results.
+     */
+    test('should not open the select when interactive content inside a slotted wrapper is clicked', async ({
+      page,
+    }) => {
+      await page.locator('div[slot="end"] button').click();
+      await page.waitForChanges();
+
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    test('should open the select when decorative content inside a slotted wrapper is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('div[slot="end"] span').click();
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should open when the select is clicked after slotted content', async ({ page }) => {
+      /**
+       * Clicking a slotted button does not produce a forwarded click for the
+       * select to ignore, so the following click on the select itself must
+       * still open it.
+       */
+      await page.locator('ion-button[slot="end"]').click();
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-select').click({ position: { x: 5, y: 5 } });
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+  });
+
+  /**
+   * A select slotted into an item carries slot="end" on its own host, so the
+   * host is excluded when looking for the slotted content a click started on.
+   * Without that the select would read every click on itself as a slotted
+   * click and would never open.
+   */
+  test.describe(title('select: slotted click in item'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-select slot="end" label="Fruit" interface="alert">
+            <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+            <ion-button slot="end" aria-label="Clear selection">
+              <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-select-option value="apple">Apple</ion-select-option>
+          </ion-select>
+        </ion-item>
+      `,
+        config
+      );
+    });
+
+    test('should open when the select itself is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-select').click({ position: { x: 5, y: 5 } });
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should open when a slotted icon is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-icon[slot="start"]').click();
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should not open when a slotted button is clicked', async ({ page }) => {
+      await page.locator('ion-button[slot="end"]').click();
+      await page.waitForChanges();
+
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
     });
   });
 });

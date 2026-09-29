@@ -1,5 +1,3 @@
-import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
-import dotsThreeRegular from '@phosphor-icons/core/assets/regular/dots-three.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
@@ -135,36 +133,22 @@ export class Breadcrumb implements ComponentInterface {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
-  get breadcrumbCollapsedIcon() {
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: ellipsisHorizontal,
-      ionic: dotsThreeRegular,
-      md: ellipsisHorizontal,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured breadcrumb collapsed icon or the default icon
-    return config.get('breadcrumbCollapsedIcon', defaultIcon);
+  /**
+   * Get the icon to use for the collapsed icon.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get breadcrumbCollapsedIcon(): string {
+    return config.get('breadcrumbCollapsedIcon', ellipsisHorizontal);
   }
 
-  get breadcrumbSeparatorIcon() {
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronForwardOutline,
-      ionic: caretRightRegular,
-      md: chevronForwardOutline,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured breadcrumb separator icon or the default icon
-    return config.get('breadcrumbSeparatorIcon', defaultIcon);
+  /**
+   * Get the icon to use for the separator icon.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get breadcrumbSeparatorIcon(): string {
+    return config.get('breadcrumbSeparatorIcon', chevronForwardOutline);
   }
 
   private isClickable(): boolean {

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ModalController } from "@ionic/angular/standalone";
+import { ModalController } from "@ionic/angular";
 import { ModalComponent } from "./modal/modal.component";
 
 @Injectable({

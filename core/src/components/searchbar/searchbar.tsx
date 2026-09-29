@@ -1,8 +1,6 @@
-import arrowLeftRegular from '@phosphor-icons/core/assets/regular/arrow-left.svg';
-import magnifyingGlassRegular from '@phosphor-icons/core/assets/regular/magnifying-glass.svg';
-import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { createClearButtonPressController } from '@utils/forms';
 import { debounceEvent, raf, waitForComponentReady, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
@@ -48,6 +46,13 @@ export class Searchbar implements ComponentInterface {
 
   @State() focused = false;
   @State() noAnimate = true;
+
+  /** Keeps the clear button mounted for the duration of a press. */
+  @State() isClearButtonPressed = false;
+
+  private readonly clearButtonPressController = createClearButtonPressController(
+    (isPressed) => (this.isClearButtonPressed = isPressed)
+  );
 
   /**
    * lang and dir are globally enumerated attributes.
@@ -100,7 +105,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Set the input's autocorrect property.
    */
-  @Prop() autocorrect: 'on' | 'off' = 'off';
+  @Prop() autocorrect: boolean = false;
 
   /**
    * Set the cancel button icon. Only available when the theme is `"md"`.
@@ -320,6 +325,8 @@ export class Searchbar implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    this.clearButtonPressController.destroy();
+
     if (this.loadTimeout) {
       clearTimeout(this.loadTimeout);
     }
@@ -394,6 +401,8 @@ export class Searchbar implements ComponentInterface {
    * Clears the input field and triggers the control change.
    */
   private onClearInput = async (shouldFocus?: boolean) => {
+    this.clearButtonPressController.release();
+
     if (this.clearTimeout) {
       clearTimeout(this.clearTimeout);
     }
@@ -661,13 +670,17 @@ export class Searchbar implements ComponentInterface {
    * Determines whether or not the clear button should be visible onscreen.
    * Clear button should be shown if one of two conditions applies:
    * 1. `showClearButton` is set to `always`.
-   * 2. `showClearButton` is set to `focus`, and the searchbar has been focused.
+   * 2. `showClearButton` is set to `focus`, and the searchbar has been
+   *    focused or a clear button press is still in flight.
    * Unless the `theme` is `ionic` and the searchbar is disabled.
    */
   private shouldShowClearButton(): boolean {
     const theme = getIonTheme(this);
 
-    if (this.showClearButton === 'never' || (this.showClearButton === 'focus' && !this.focused)) {
+    if (
+      this.showClearButton === 'never' ||
+      (this.showClearButton === 'focus' && !this.focused && !this.isClearButtonPressed)
+    ) {
       return false;
     }
 
@@ -722,18 +735,10 @@ export class Searchbar implements ComponentInterface {
       return this.clearIcon;
     }
 
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: closeCircle,
-      ionic: xRegular,
-      md: closeSharp,
-    };
+    const defaultIcon = theme === 'ios' ? closeCircle : closeSharp;
 
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured searchbar clear icon or the default icon
     return config.get('searchbarClearIcon', defaultIcon);
   }
 
@@ -750,18 +755,10 @@ export class Searchbar implements ComponentInterface {
       return this.searchIcon;
     }
 
-    // Determine the theme and map to default icons
+    // Determine the theme and map to the default icon
     const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: searchOutline,
-      ionic: magnifyingGlassRegular,
-      md: searchSharp,
-    };
+    const defaultIcon = theme === 'ios' ? searchOutline : searchSharp;
 
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured searchbar search icon or the default icon
     return config.get('searchbarSearchIcon', defaultIcon);
   }
 
@@ -777,19 +774,7 @@ export class Searchbar implements ComponentInterface {
       return this.cancelButtonIcon;
     }
 
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: arrowBackSharp,
-      ionic: arrowLeftRegular,
-      md: arrowBackSharp,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured searchbar cancel icon, the back button icon or the default icon
-    return config.get('searchbarCancelIcon', config.get('backButtonIcon', defaultIcon));
+    return config.get('searchbarCancelIcon', config.get('backButtonIcon', arrowBackSharp));
   }
 
   render() {
@@ -861,7 +846,7 @@ export class Searchbar implements ComponentInterface {
             value={this.getValue()}
             autoCapitalize={autocapitalize === 'default' ? undefined : autocapitalize}
             autoComplete={this.autocomplete}
-            autoCorrect={this.autocorrect}
+            autoCorrect={this.autocorrect ? 'on' : 'off'}
             spellcheck={this.spellcheck}
             {...this.inheritedAttributes}
           />
@@ -883,14 +868,8 @@ export class Searchbar implements ComponentInterface {
               type="button"
               no-blur
               class="searchbar-clear-button"
-              onPointerDown={(ev) => {
-                /**
-                 * This prevents mobile browsers from
-                 * blurring the input when the clear
-                 * button is activated.
-                 */
-                ev.preventDefault();
-              }}
+              onPointerDown={this.clearButtonPressController.onPointerDown}
+              onPointerCancel={this.clearButtonPressController.release}
               onClick={() => this.onClearInput(true)}
             >
               <ion-icon

@@ -421,5 +421,179 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       // verify focus is in correct location
       await expect(input).toBeFocused();
     });
+
+    // Focus the role="dialog" wrapper on present so screen readers can enter.
+    test('should focus the modal wrapper on present', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-7611',
+      });
+      await page.setContent(
+        `
+        <ion-modal>
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const modal = page.locator('ion-modal');
+      const wrapper = page.locator('ion-modal .modal-wrapper');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+
+      await expect(wrapper).toHaveAttribute('role', 'dialog');
+      await expect(wrapper).toBeFocused();
+    });
+
+    test('should focus the sheet modal wrapper on present', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-7611',
+      });
+      await page.setContent(
+        `
+        <ion-modal initial-breakpoint="0.5" breakpoints="[0, 0.5, 1]">
+          <ion-content>Sheet Modal Content</ion-content>
+        </ion-modal>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const modal = page.locator('ion-modal');
+      const wrapper = page.locator('ion-modal .modal-wrapper');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+
+      await expect(wrapper).toHaveAttribute('role', 'dialog');
+      await expect(wrapper).toBeFocused();
+    });
+
+    test('should focus the sheet modal wrapper on present when handleBehavior is cycle', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-7611',
+      });
+      // present()'s wrapper focus must survive the cycle-handle focus redirect.
+      await page.setContent(
+        `
+        <ion-modal initial-breakpoint="0.5" breakpoints="[0, 0.5, 1]" handle-behavior="cycle">
+          <ion-content>Sheet Modal Content</ion-content>
+        </ion-modal>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const modal = page.locator('ion-modal');
+      const wrapper = page.locator('ion-modal .modal-wrapper');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+
+      await expect(wrapper).toHaveAttribute('role', 'dialog');
+      await expect(wrapper).toBeFocused();
+    });
+
+    test('should focus the card modal wrapper on present', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-7611',
+      });
+      await page.setContent(
+        `
+        <div class="ion-page">
+          <ion-content>Root Content</ion-content>
+        </div>
+        <ion-modal>
+          <ion-content>Card Modal Content</ion-content>
+        </ion-modal>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const modal = page.locator('ion-modal');
+      const wrapper = page.locator('ion-modal .modal-wrapper');
+
+      await modal.evaluate((el: HTMLIonModalElement) => {
+        el.presentingElement = document.querySelector<HTMLElement>('.ion-page')!;
+        return el.present();
+      });
+      await ionModalDidPresent.next();
+
+      await expect(wrapper).toHaveAttribute('role', 'dialog');
+      await expect(wrapper).toBeFocused();
+    });
+
+    /*
+     * The focus trap redirects focus back into the overlay when focus lands
+     * outside of it. The indicator should only follow that redirect during
+     * keyboard navigation.
+     *
+     * The button is the modal's first focusable, so it is where the trap
+     * redirects focus to. It has to be something that can actually take focus,
+     * or the redirect is a no-op and the tests prove nothing. `ion-app` is
+     * required to apply the focused styles.
+     */
+    const redirectContent = `
+      <ion-app>
+        <ion-button id="open-modal">Show Modal</ion-button>
+        <div tabindex="0">Outside Element</div>
+        <ion-modal trigger="open-modal">
+          <ion-content>
+            <ion-button id="inside-modal">Inside Modal</ion-button>
+          </ion-content>
+        </ion-modal>
+      </ion-app>
+    `;
+
+    test('should not show a focus indicator when focus is redirected after a pointer interaction', async ({ page }) => {
+      await page.setContent(redirectContent, config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const insideButton = page.locator('ion-modal ion-button#inside-modal');
+
+      // Opening with a click leaves the focus utility in pointer mode.
+      await page.locator('ion-button#open-modal').click();
+      await ionModalDidPresent.next();
+
+      await page.locator('ion-app > div[tabindex="0"]').evaluate((el: HTMLElement) => el.focus());
+
+      /*
+       * The trap focuses the element before applying the indicator, and applies
+       * it through an async method. Waiting for focus to land and flushing a
+       * frame makes a missing indicator a real absence rather than an assertion
+       * that ran too early.
+       */
+      await expect(insideButton).toBeFocused();
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+
+      await expect(insideButton).not.toHaveClass(/ion-focused/);
+    });
+
+    test('should show a focus indicator when focus is redirected during keyboard navigation', async ({
+      page,
+      pageUtils,
+    }) => {
+      await page.setContent(redirectContent, config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const insideButton = page.locator('ion-modal ion-button#inside-modal');
+
+      await page.locator('ion-button#open-modal').click();
+      await ionModalDidPresent.next();
+
+      // Shift turns keyboard mode back on without moving focus.
+      await pageUtils.pressKeys('Shift');
+      await page.locator('ion-app > div[tabindex="0"]').evaluate((el: HTMLElement) => el.focus());
+
+      await expect(insideButton).toBeFocused();
+      await expect(insideButton).toHaveClass(/ion-focused/);
+    });
   });
 });

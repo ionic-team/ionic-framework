@@ -1,14 +1,18 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
-import { findIonContent, getScrollElement } from '@utils/content';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { findIonContent } from '@utils/content';
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
+import { printIonWarning } from '@utils/logging';
+import type { ScrollHideController } from '@utils/scroll-hide-controller';
+import { createScrollHideController } from '@utils/scroll-hide-controller';
 import { createColorClasses } from '@utils/theme';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
-import type { TabBarChangedEventDetail } from './tab-bar-interface';
+import type { TabBarChangedEventDetail, TabBarScrollEffect } from './tab-bar-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -27,16 +31,13 @@ export class TabBar implements ComponentInterface {
   private keyboardCtrl: KeyboardController | null = null;
   private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
   private didLoad = false;
-  private scrollEl?: HTMLElement;
-  private contentScrollCallback?: () => void;
-  private lastScrollTop = 0;
-  private scrollDirectionChangeTop = 0;
+  private scrollHideCtrl?: ScrollHideController;
+  private scrollHideCtrlPromise: Promise<ScrollHideController> | null = null;
+  private hasWarnedFooter = false;
 
   @Element() el!: HTMLElement;
 
   @State() keyboardVisible = false;
-
-  @State() scrollHidden = false;
 
   /**
    * The color to use from your application's color palette.
@@ -65,11 +66,20 @@ export class TabBar implements ComponentInterface {
   }
 
   /**
-   * If `true`, the tab bar will be hidden when the user scrolls down
-   * and shown when the user scrolls up.
-   * Only applies when the theme is `"ionic"` and `expand` is `"compact"`.
+   * Describes the scroll effect that will be applied to the tab bar.
+   * `"hide"` slides the tab bar out of view when scrolling down and back in
+   * when scrolling up.
+   *
+   * Note: `"hide"` is ignored when the tab bar is nested inside an
+   * `ion-footer` to avoid leaving an empty footer visible on screen.
+   * Set `scroll-effect="hide"` on the footer instead so the entire
+   * footer hides together.
    */
-  @Prop() hideOnScroll = false;
+  @Prop({ reflect: true }) scrollEffect?: TabBarScrollEffect;
+  @Watch('scrollEffect')
+  scrollEffectChanged() {
+    this.checkScrollEffect();
+  }
 
   /**
    * If `true`, the tab bar will be translucent.
@@ -111,19 +121,22 @@ export class TabBar implements ComponentInterface {
 
   componentDidLoad() {
     this.ionTabBarLoaded.emit();
-    // Set the flag to indicate the component has loaded
-    // This allows the watcher to emit changes from this point forward
     this.didLoad = true;
 
-    // Emit the initial selected tab after the component is fully loaded
-    // This ensures all child components (ion-tab-button) are ready
     if (this.selectedTab !== undefined) {
       this.ionTabBarChanged.emit({
         tab: this.selectedTab,
       });
     }
 
-    this.setupHideOnScroll();
+    this.checkScrollEffect();
+  }
+
+  private checkScrollEffect() {
+    this.destroyScrollEffect();
+    if (this.scrollEffect === 'hide') {
+      this.setupScrollEffect();
+    }
   }
 
   async connectedCallback() {
@@ -138,6 +151,18 @@ export class TabBar implements ComponentInterface {
       }
 
       this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
+
+      // Toggle aria-hidden imperatively for the keyboard case.
+      // scroll-effect hide also sets aria-hidden via setHidden,
+      // so keeping a single imperative path avoids render() clearing
+      // the scroll-set attribute on re-render.
+      const shouldHide = keyboardOpen && this.el.getAttribute('slot') !== 'top';
+      const isScrollHidden = this.scrollHideCtrl?.isHidden() ?? false;
+      if (shouldHide || isScrollHidden) {
+        this.el.setAttribute('aria-hidden', 'true');
+      } else {
+        this.el.removeAttribute('aria-hidden');
+      }
     });
     this.keyboardCtrlPromise = promise;
 
@@ -157,6 +182,8 @@ export class TabBar implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    this.destroyScrollEffect();
+
     if (this.keyboardCtrlPromise) {
       this.keyboardCtrlPromise.then((ctrl) => ctrl.destroy());
       this.keyboardCtrlPromise = null;
@@ -166,80 +193,58 @@ export class TabBar implements ComponentInterface {
       this.keyboardCtrl.destroy();
       this.keyboardCtrl = null;
     }
-
-    this.destroyHideOnScroll();
   }
 
-  private setupHideOnScroll() {
-    const theme = getIonTheme(this);
-    if (theme !== 'ionic' || !this.hideOnScroll || this.expand !== 'compact') {
+  private setupScrollEffect = async () => {
+    // When nested inside ion-footer, the tab-bar should not hide
+    // independently — doing so would leave an empty footer behind.
+    // The footer should own the scroll effect instead.
+    if (this.el.closest('ion-footer')) {
+      if (!this.hasWarnedFooter) {
+        this.hasWarnedFooter = true;
+        printIonWarning(
+          `[ion-tab-bar] - scroll-effect="hide" is ignored when nested inside <ion-footer>. ` +
+            `Set scroll-effect="hide" on the <ion-footer> instead.`,
+          this.el
+        );
+      }
       return;
     }
 
-    const footerEl = this.el.closest('ion-footer');
-    const pageEl = footerEl?.closest('ion-page, .ion-page') ?? this.el.closest('ion-page, .ion-page');
+    const appRootSelector = config.get('appRootSelector', 'ion-app');
+    const pageEl = this.el.closest(`${appRootSelector}, ion-page, .ion-page, page-inner`);
     const contentEl = pageEl ? findIonContent(pageEl) : null;
 
     if (!contentEl) {
       return;
     }
 
-    this.initScrollListener(contentEl);
-  }
+    const setupPromise = createScrollHideController(contentEl, {
+      el: this.el,
+      cssVar: '--internal-tab-bar-hide-height',
+      hiddenClass: 'tab-bar-scroll-hidden',
+      contentPartnerClass: 'content-tab-bar-hide-scroll-partner',
+      contentHiddenClass: 'content-tab-bar-hide-scroll-hidden',
+      shouldKeepAriaHidden: () => this.keyboardVisible && this.el.getAttribute('slot') !== 'top',
+    });
+    this.scrollHideCtrlPromise = setupPromise;
 
-  private async initScrollListener(contentEl: HTMLElement) {
-    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
+    const controller = await setupPromise;
 
-    this.contentScrollCallback = () => {
-      readTask(() => {
-        const scrollTop = scrollEl.scrollTop;
-        const shouldHide = this.checkScrollStatus(scrollTop);
-
-        if (shouldHide !== this.scrollHidden) {
-          writeTask(() => {
-            this.scrollHidden = shouldHide;
-          });
-        }
-
-        this.lastScrollTop = scrollTop;
-      });
-    };
-
-    scrollEl.addEventListener('scroll', this.contentScrollCallback, { passive: true });
-  }
-
-  private destroyHideOnScroll() {
-    if (this.scrollEl && this.contentScrollCallback) {
-      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
-      this.contentScrollCallback = undefined;
+    if (this.scrollHideCtrlPromise === setupPromise) {
+      this.scrollHideCtrlPromise = null;
+      controller.init();
+      this.scrollHideCtrl = controller;
     }
-  }
+  };
 
-  private checkScrollStatus(scrollTop: number): boolean {
-    // Always visible within the first 80px of scroll
-    const visibleZone = 80;
-    // Hides after 60px of continuous downward scrolling only, when scrolling up threashold should be 0px
-    const scrollThresholdHide = 60;
+  private destroyScrollEffect() {
+    this.scrollHideCtrlPromise = null;
 
-    if (scrollTop <= visibleZone) {
-      return false;
+    if (this.scrollHideCtrl) {
+      this.scrollHideCtrl.destroy();
+      this.scrollHideCtrl = undefined;
     }
-
-    const isScrollingDown = scrollTop > this.lastScrollTop;
-    const wasScrollingDown = this.lastScrollTop > this.scrollDirectionChangeTop;
-
-    if (isScrollingDown !== wasScrollingDown) {
-      this.scrollDirectionChangeTop = this.lastScrollTop;
-    }
-
-    const delta = Math.abs(scrollTop - this.scrollDirectionChangeTop);
-    const threshold = isScrollingDown ? scrollThresholdHide : 0;
-
-    if (delta < threshold) {
-      return this.scrollHidden;
-    }
-
-    return isScrollingDown;
   }
 
   private getShape(): string | undefined {
@@ -259,7 +264,7 @@ export class TabBar implements ComponentInterface {
   }
 
   render() {
-    const { color, translucent, keyboardVisible, scrollHidden, expand, hideOnScroll } = this;
+    const { color, translucent, keyboardVisible, scrollEffect, expand } = this;
     const theme = getIonTheme(this);
     const shape = this.getShape();
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
@@ -267,13 +272,11 @@ export class TabBar implements ComponentInterface {
     return (
       <Host
         role="tablist"
-        aria-hidden={shouldHide ? 'true' : null}
         class={createColorClasses(color, {
           [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
-          'tab-bar-hide-on-scroll': hideOnScroll,
-          'tab-bar-scroll-hidden': scrollHidden,
+          'tab-bar-scroll-effect-hide': scrollEffect === 'hide',
           [`tab-bar-${expand}`]: true,
           [`tab-bar-${shape}`]: shape !== undefined,
         })}

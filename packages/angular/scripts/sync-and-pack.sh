@@ -25,6 +25,6 @@ npm run build
 
 # Pack @ionic/angular
 echo "\n📦 Packing @ionic/angular..."
-npm pack ./dist
+npm pack
 
 echo "\n✅ Packed ionic-angular package!\n   $(pwd)/$(ls ionic-angular-*.tgz | head -1)\n"

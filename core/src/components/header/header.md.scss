@@ -8,8 +8,30 @@
   box-shadow: $header-md-box-shadow;
 }
 
+/**
+ * The condense header should blend seamlessly with the
+ * main header above it, so remove the box-shadow.
+ */
 .header-md.header-collapse-condense {
-  display: none;
+  box-shadow: none;
+}
+
+/**
+ * When the condense header is active (large title visible),
+ * the main header's box-shadow should be hidden so it blends
+ * with the condense header below it.
+ */
+.header-md.header-collapse-condense-inactive:not(.header-collapse-condense) {
+  box-shadow: none;
+}
+
+/**
+ * The fade effect fades the toolbar background via --opacity-scale,
+ * but box-shadow is not affected by that variable. Remove it so
+ * the shadow doesn't persist when the background is faded out.
+ */
+.header-md.header-collapse-fade {
+  box-shadow: none;
 }
 
 .header-md.ion-no-border {

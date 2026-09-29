@@ -15,6 +15,7 @@ on:
         options:
           - dev
           - production
+          - migrate
       version:
         description: 'Which version should be published? (Only for production releases)'
         required: false
@@ -28,7 +29,7 @@ on:
           - premajor
           - prerelease
       tag:
-        description: 'Which npm tag should this be published to? (Only for production releases)'
+        description: 'Which npm tag should this be published to? (Only for production and migrate releases)'
         required: false
         type: choice
         default: latest
@@ -67,6 +68,16 @@ jobs:
       id-token: write
     uses: ./.github/workflows/dev-build.yml
     secrets: inherit
+
+  run-migrate:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.release-type == 'migrate' }}
+    permissions:
+      contents: read
+      id-token: write
+    uses: ./.github/workflows/release-migrate.yml
+    secrets: inherit
+    with:
+      tag: ${{ inputs.tag }}
 
   run-production:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.release-type == 'production' }}

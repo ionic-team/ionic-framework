@@ -1,5 +1,37 @@
 import { camelToDashCase } from './case';
 
+// Enumerated attributes where the literal string "false" is meaningful and
+// differs from the attribute being absent, so they must not be stripped like
+// HTML boolean attributes. These are the dash-cased attribute names produced by
+// camelToDashCase (e.g. the `spellCheck` prop renders as `spell-check`), so the
+// entries must match that form. aria-* and data-* are handled by prefix below.
+const NON_BOOLEAN_FALSE_ATTRIBUTES = new Set(['draggable', 'translate', 'spell-check', 'content-editable']);
+
+/**
+ * React serializes a boolean prop set to `false` (e.g. `disabled={false}`) as
+ * the string attribute `disabled="false"`. For HTML boolean attributes the mere
+ * presence means "true", so assistive tech treats the element as
+ * disabled/readonly even though Ionic renders it as interactive. The @lit/react
+ * runtime fixes this for the generated components on v9, but the hand-rolled
+ * wrappers (createReactComponent, createRoutingComponent, ...) render attributes
+ * directly and sync props through attachProps, so we strip the stray attribute
+ * here after the property has been assigned.
+ *
+ * TODO(FW-7629): React 19 added full custom-element support and no longer
+ * serializes a `false` boolean prop to a `="false"` attribute, so this stripping
+ * can be removed once React 18 support is dropped.
+ */
+const isStaleFalseBooleanAttribute = (attribute: string) =>
+  !attribute.startsWith('aria-') && !attribute.startsWith('data-') && !NON_BOOLEAN_FALSE_ATTRIBUTES.has(attribute);
+
+/**
+ * Assigning `undefined` or `null` to a reflected prop like `id` writes the stringified value, so
+ * the element ends up with `id="undefined"` or `id="null"`. Only native properties are cleaned up
+ * here: a nullish component prop still has to reach the component, and Stencil clears the
+ * attribute for props declared `reflect: true`.
+ */
+const isNativeElementProperty = (name: string) => name in HTMLElement.prototype;
+
 export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // some test frameworks don't render DOM elements, so we test here to make sure we are dealing with DOM first
   if (node instanceof Element) {
@@ -28,10 +60,22 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
           syncEvent(node, eventNameLc, newProps[name]);
         }
       } else {
-        (node as any)[name] = newProps[name];
-        const propType = typeof newProps[name];
+        const value = newProps[name];
+        (node as any)[name] = value;
+        if ((value === undefined || value === null) && isNativeElementProperty(name)) {
+          // Remove both spellings: the property reflects `accesskey`, and dash-casing writes `access-key`.
+          node.removeAttribute(name);
+          node.removeAttribute(camelToDashCase(name));
+          return;
+        }
+        const propType = typeof value;
         if (propType === 'string') {
-          node.setAttribute(camelToDashCase(name), newProps[name]);
+          node.setAttribute(camelToDashCase(name), value);
+        } else if (value === false) {
+          const attribute = camelToDashCase(name);
+          if (isStaleFalseBooleanAttribute(attribute)) {
+            node.removeAttribute(attribute);
+          }
         }
       }
     });

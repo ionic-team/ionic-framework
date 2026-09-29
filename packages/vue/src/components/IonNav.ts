@@ -8,7 +8,7 @@ import { VueDelegate } from "../framework-delegate";
 export const IonNav = /*@__PURE__*/ defineComponent<JSX.IonNav>(
   (props: JSX.IonNav) => {
     defineCustomElement();
-    const views = shallowRef([]);
+    const views = shallowRef<VNode[]>([]);
 
     /**
      * Allows us to create the component

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, ModalController } from '@ionic/angular/standalone';
-import type { ModalOptions } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, ModalController } from '@ionic/angular';
+import type { ModalOptions } from '@ionic/angular';
 import { GenericModalComponent } from './modal/modal.component';
 
 @Component({

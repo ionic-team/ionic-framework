@@ -38,8 +38,7 @@
    * @prop --ion-badge-size-small-content-font-size: Font size of the `small` size when badge has content
    * @prop --ion-badge-size-small-content-font-weight: Font weight of the `small` size when badge has content
    * @prop --ion-badge-size-small-content-line-height: Line height of the `small` size when badge has content
-   * @prop --ion-badge-size-small-content-icon-width: Width of the slotted `ion-icon` of the `small` size
-   * @prop --ion-badge-size-small-content-icon-height: Height of the slotted `ion-icon` of the `small` size
+   * @prop --ion-badge-size-small-content-icon-font-size: Size of the slotted `ion-icon` of the `small` size
    * @prop --ion-badge-size-medium-content-height: Height of the `medium` size when badge has content
    * @prop --ion-badge-size-medium-content-min-height: Minimum height of the `medium` size when badge has content
    * @prop --ion-badge-size-medium-content-min-width: Minimum width of the `medium` size when badge has content
@@ -51,8 +50,7 @@
    * @prop --ion-badge-size-medium-content-font-size: Font size of the `medium` size when badge has content
    * @prop --ion-badge-size-medium-content-font-weight: Font weight of the `medium` size when badge has content
    * @prop --ion-badge-size-medium-content-line-height: Line height of the `medium` size when badge has content
-   * @prop --ion-badge-size-medium-content-icon-width: Width of the slotted `ion-icon` of the `medium` size
-   * @prop --ion-badge-size-medium-content-icon-height: Height of the slotted `ion-icon` of the `medium` size
+   * @prop --ion-badge-size-medium-content-icon-font-size: Size of the slotted `ion-icon` of the `medium` size
    * @prop --ion-badge-size-large-content-height: Height of the `large` size when badge has content
    * @prop --ion-badge-size-large-content-min-height: Minimum height of the `large` size when badge has content
    * @prop --ion-badge-size-large-content-min-width: Minimum width of the `large` size when badge has content
@@ -64,8 +62,7 @@
    * @prop --ion-badge-size-large-content-font-size: Font size of the `large` size when badge has content
    * @prop --ion-badge-size-large-content-font-weight: Font weight of the `large` size when badge has content
    * @prop --ion-badge-size-large-content-line-height: Line height of the `large` size when badge has content
-   * @prop --ion-badge-size-large-content-icon-width: Width of the slotted `ion-icon` of the `large` size
-   * @prop --ion-badge-size-large-content-icon-height: Height of the slotted `ion-icon` of the `large` size
+   * @prop --ion-badge-size-large-content-icon-font-size: Size of the slotted `ion-icon` of the `large` size
    *
    * Sizes: Dot (empty with no text or icon)
    * @prop --ion-badge-size-small-dot-height: Height of the `small` size when badge is empty
@@ -177,8 +174,7 @@
 }
 
 :host(.badge-size-small) ::slotted(ion-icon) {
-  width: var(--ion-badge-size-small-content-icon-width, revert-layer);
-  height: var(--ion-badge-size-small-content-icon-height, revert-layer);
+  font-size: var(--ion-badge-size-small-content-icon-font-size, revert-layer);
 }
 
 // Medium
@@ -202,8 +198,7 @@
 }
 
 :host(.badge-size-medium) ::slotted(ion-icon) {
-  width: var(--ion-badge-size-medium-content-icon-width, revert-layer);
-  height: var(--ion-badge-size-medium-content-icon-height, revert-layer);
+  font-size: var(--ion-badge-size-medium-content-icon-font-size, revert-layer);
 }
 
 // Large
@@ -227,8 +222,7 @@
 }
 
 :host(.badge-size-large) ::slotted(ion-icon) {
-  width: var(--ion-badge-size-large-content-icon-width, revert-layer);
-  height: var(--ion-badge-size-large-content-icon-height, revert-layer);
+  font-size: var(--ion-badge-size-large-content-icon-font-size, revert-layer);
 }
 
 // Badge Sizes: Dot (empty with no text or icon)

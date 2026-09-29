@@ -1,0 +1,34 @@
+/* tslint:disable */
+/* auto-generated angular directive proxies */
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
+
+import { ProxyCmp } from './angular-component-lib/utils';
+import { nullableBooleanAttribute } from './angular-component-lib/boolean-attribute';
+
+import type { Components } from '@ionic/core/components';
+
+import { defineCustomElement as defineIonItemOption } from '@ionic/core/components/ion-item-option.js';
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonItemOption,
+  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'hue', 'mode', 'rel', 'shape', 'target', 'theme', 'type']
+})
+@Component({
+  selector: 'ion-item-option',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', { name: 'expandable', transform: nullableBooleanAttribute }, 'href', 'hue', 'mode', 'rel', 'shape', 'target', 'theme', 'type'],
+})
+export class IonItemOption {
+  protected el: HTMLIonItemOptionElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonItemOption extends Components.IonItemOption {}
+
+

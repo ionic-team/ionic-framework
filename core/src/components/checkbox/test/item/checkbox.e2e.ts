@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { applyKeyboardFocus, configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: item with list'), () => {
@@ -124,6 +124,113 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`checkbox-stacked-label-in-item`));
+    });
+  });
+
+  test.describe(title('checkbox: multiple inputs in item'), () => {
+    test('should not have visual regressions with multiple checkboxes in an item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-item>
+              <ion-checkbox justify="start">Checkbox 1</ion-checkbox>
+              <ion-checkbox justify="start">Checkbox 2</ion-checkbox>
+            </ion-item>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`checkbox-multiple-in-item`));
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('checkbox: focus in item'), () => {
+    test('should render focus indicator in an item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-checkbox>Unchecked</ion-checkbox>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const checkbox = page.locator('ion-checkbox');
+      const item = page.locator('ion-item');
+
+      await applyKeyboardFocus(page, checkbox, item);
+
+      await expect(item).toHaveScreenshot(screenshot(`checkbox-in-item-focus`));
+    });
+
+    test('should render focus indicator for a checked checkbox in an item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-checkbox checked>Checked</ion-checkbox>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const checkbox = page.locator('ion-checkbox');
+      const item = page.locator('ion-item');
+
+      await applyKeyboardFocus(page, checkbox, item);
+
+      await expect(item).toHaveScreenshot(screenshot(`checkbox-checked-in-item-focus`));
+    });
+
+    test('should render focus indicator for a checkbox in a clickable item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item button>
+            <ion-checkbox>Unchecked</ion-checkbox>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const checkbox = page.locator('ion-checkbox');
+      const item = page.locator('ion-item');
+
+      await applyKeyboardFocus(page, checkbox);
+
+      await expect(item).toHaveScreenshot(screenshot(`checkbox-in-clickable-item-focus`));
+    });
+
+    test('should render focus indicator for a checkbox in a multi-input item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-checkbox justify="start">Checkbox 1</ion-checkbox>
+            <ion-checkbox justify="start">Checkbox 2</ion-checkbox>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const checkbox = page.locator('ion-checkbox').first();
+
+      await applyKeyboardFocus(page, checkbox);
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`checkbox-multiple-in-item-focus`));
     });
   });
 });

@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { applyKeyboardFocus, configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: item'), () => {
@@ -95,6 +95,121 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       );
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`radio-stacked-label-in-item`));
+    });
+  });
+});
+
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('radio: multiple inputs in item'), () => {
+    test('should not have visual regressions with multiple radios in an item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-item>
+              <ion-radio-group value="1"><ion-radio value="1" justify="start">Radio 1</ion-radio></ion-radio-group>
+              <ion-radio-group value="2"><ion-radio value="2" justify="start">Radio 2</ion-radio></ion-radio-group>
+            </ion-item>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`radio-multiple-in-item`));
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('radio: focus in item'), () => {
+    test('should render focus indicator in an item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-radio-group>
+              <ion-radio value="a">Unchecked</ion-radio>
+            </ion-radio-group>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      const item = page.locator('ion-item');
+
+      await applyKeyboardFocus(page, radio, item);
+
+      await expect(item).toHaveScreenshot(screenshot(`radio-in-item-focus`));
+    });
+
+    test('should render focus indicator for a checked radio in an item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-radio-group value="a">
+              <ion-radio value="a">Checked</ion-radio>
+            </ion-radio-group>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      const item = page.locator('ion-item');
+
+      await applyKeyboardFocus(page, radio, item);
+
+      await expect(item).toHaveScreenshot(screenshot(`radio-checked-in-item-focus`));
+    });
+
+    test('should render focus indicator for a radio in a clickable item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item button>
+            <ion-radio-group>
+              <ion-radio value="a">Unchecked</ion-radio>
+            </ion-radio-group>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      const item = page.locator('ion-item');
+
+      await applyKeyboardFocus(page, radio);
+
+      await expect(item).toHaveScreenshot(screenshot(`radio-in-clickable-item-focus`));
+    });
+
+    test('should render focus indicator for a radio in a multi-input item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-radio-group value="a"><ion-radio value="a" justify="start">Radio 1</ion-radio></ion-radio-group>
+            <ion-radio-group value="b"><ion-radio value="b" justify="start">Radio 2</ion-radio></ion-radio-group>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio').first();
+
+      await applyKeyboardFocus(page, radio);
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`radio-multiple-in-item-focus`));
     });
   });
 });

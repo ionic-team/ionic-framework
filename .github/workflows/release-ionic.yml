@@ -23,7 +23,7 @@ jobs:
   release-core:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - uses: ./.github/actions/publish-npm
       with:
         scope: '@ionic/core'
@@ -48,7 +48,7 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Restore @ionic/docs built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -67,7 +67,7 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -81,19 +81,18 @@ jobs:
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/angular'
-        folder: './dist'
     - name: Cache Built @ionic/angular
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-angular
         output: packages/angular/AngularBuild.zip
-        paths: packages/angular/dist
+        paths: packages/angular/dist packages/angular/css
 
   release-react:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -118,7 +117,7 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -143,7 +142,7 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -163,7 +162,7 @@ jobs:
     needs: [release-react]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -188,7 +187,7 @@ jobs:
     needs: [release-vue]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:

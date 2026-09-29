@@ -8,10 +8,8 @@ import {
   IonMenu,
   IonMenuToggle,
 } from '@ionic/react';
-import React from 'react';
 import { heartOutline, heartSharp, mailOutline, mailSharp } from 'ionicons/icons';
-
-interface MenuProps {}
+import React from 'react';
 
 interface AppPage {
   url: string;
@@ -53,7 +51,7 @@ const appPages: AppPage[] = [
   },
 ];
 
-const Menu: React.FunctionComponent<MenuProps> = () => {
+const Menu: React.FunctionComponent = () => {
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
