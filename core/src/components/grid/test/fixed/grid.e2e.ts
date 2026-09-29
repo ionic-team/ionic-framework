@@ -1,30 +1,24 @@
 import { expect } from '@playwright/test';
+import type { ScreenBreakpoint } from '@utils/breakpoints';
+import { DEFAULT_SCREEN_BREAKPOINTS, SCREEN_BREAKPOINT_NAMES } from '@utils/breakpoints';
 import { configs, test } from '@utils/test/playwright';
 
 import { defaultTheme as mdTheme } from '../../../../themes/md/default.tokens';
-import { SIZE_TO_MEDIA } from '../../../../utils/media';
-import { ION_GRID_BREAKPOINTS } from '../../grid.interface';
 
 const ionGridBreakpoints = mdTheme.components!.IonGrid!.breakpoint!;
 
 /**
- * Parse the min-width (in px) out of each `SIZE_TO_MEDIA` entry. These are
- * the same activation thresholds `matchBreakpoint` evaluates at runtime and
- * that `$screen-breakpoints` defines on the SCSS side.
- */
-const minWidthFor = (bp: (typeof ION_GRID_BREAKPOINTS)[number]): number => {
-  const match = (SIZE_TO_MEDIA[bp] as string).match(/\(min-width:\s*(\d+)px\)/);
-  return match ? parseInt(match[1], 10) : 0;
-};
-
-/**
  * Viewport width that activates each breakpoint. `max(400, minWidth)` lands
- * exactly on the threshold for sm/md/lg/xl (firing only that breakpoint's
- * rule and nothing above it) while giving xs a renderable non-zero viewport.
+ * exactly on the threshold for sm and up (firing only that breakpoint's rule
+ * and nothing above it) while giving xs a renderable non-zero viewport.
+ *
+ * The default screen breakpoints are used rather than the resolved ones,
+ * since the test page does not override them and `$screen-breakpoints`
+ * defines the same values on the SCSS side.
  */
 const VIEWPORT_AT_BREAKPOINT = Object.fromEntries(
-  ION_GRID_BREAKPOINTS.map((bp) => [bp, Math.max(400, minWidthFor(bp))])
-) as Record<(typeof ION_GRID_BREAKPOINTS)[number], number>;
+  SCREEN_BREAKPOINT_NAMES.map((bp) => [bp, Math.max(400, DEFAULT_SCREEN_BREAKPOINTS[bp])])
+) as Record<ScreenBreakpoint, number>;
 
 /**
  * This behavior does not vary across modes/directions.
@@ -35,7 +29,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.goto('/src/components/grid/test/fixed', config);
     });
 
-    for (const breakpoint of ION_GRID_BREAKPOINTS) {
+    for (const breakpoint of SCREEN_BREAKPOINT_NAMES) {
       test(`fixed grid matches the ${breakpoint} width token`, async ({ page }) => {
         const viewportWidth = VIEWPORT_AT_BREAKPOINT[breakpoint];
         await page.setViewportSize({ width: viewportWidth, height: 800 });

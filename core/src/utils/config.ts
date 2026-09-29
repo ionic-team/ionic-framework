@@ -2,6 +2,7 @@ import type { SpinnerTypes } from '../components/spinner/spinner-configs';
 import type { TabButtonLayout } from '../components/tab-bar/tab-bar-interface';
 import type { AnimationBuilder, Mode, Theme } from '../interface';
 
+import type { ScreenBreakpoints } from './breakpoints';
 import type { LogLevel } from './logging';
 import type { PlatformConfig } from './platform';
 
@@ -44,6 +45,16 @@ export interface IonicConfig {
    * - `"ionic"` - **EXPERIMENTAL** Ionic's upcoming new design system
    */
   theme?: Theme;
+
+  /**
+   * Overrides the widths at which the global screen breakpoints activate,
+   * used by responsive components such as `ion-col` and `ion-gallery`.
+   *
+   * Values must be unitless pixel widths (`768`, not `'768px'`) and must
+   * increase from `xs` through `xxl`. Only the breakpoints being customized
+   * need to be provided. Unspecified breakpoints retain their default values.
+   */
+  screenBreakpoints?: Partial<ScreenBreakpoints>;
 
   /**
    * Wherever ionic will respond to hardware go back buttons in an Android device.
