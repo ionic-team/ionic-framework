@@ -33,6 +33,12 @@ $grid-paddings: (
     bottom: var(--ion-grid-breakpoint-xl-padding-bottom),
     start: var(--ion-grid-breakpoint-xl-padding-start),
   ),
+  xxl: (
+    top: var(--ion-grid-breakpoint-xxl-padding-top),
+    end: var(--ion-grid-breakpoint-xxl-padding-end),
+    bottom: var(--ion-grid-breakpoint-xxl-padding-bottom),
+    start: var(--ion-grid-breakpoint-xxl-padding-start),
+  ),
 );
 
 /// @prop - Per-breakpoint fixed grid width values
@@ -42,4 +48,5 @@ $grid-widths: (
   md: var(--ion-grid-breakpoint-md-width),
   lg: var(--ion-grid-breakpoint-lg-width),
   xl: var(--ion-grid-breakpoint-xl-width),
+  xxl: var(--ion-grid-breakpoint-xxl-width),
 );
