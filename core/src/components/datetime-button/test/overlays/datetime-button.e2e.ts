@@ -24,6 +24,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await dateButton.click();
       await ionModalDidPresent.next();
 
+      /**
+       * The calendar body is hidden until the datetime adds the
+       * `datetime-ready` class, which happens a frame after the
+       * IntersectionObserver reports the datetime as visible. Without
+       * this wait the screenshot can capture an empty calendar grid.
+       */
+      await page.locator('ion-datetime.datetime-ready').waitFor();
+
       await expect(page).toHaveScreenshot(screenshot(`datetime-overlay-modal`));
     });
 
@@ -43,6 +51,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const dateButton = page.locator('ion-datetime-button #date-button');
       await dateButton.click();
       await ionPopoverDidPresent.next();
+
+      /**
+       * The calendar body is hidden until the datetime adds the
+       * `datetime-ready` class, which happens a frame after the
+       * IntersectionObserver reports the datetime as visible. Without
+       * this wait the screenshot can capture an empty calendar grid.
+       */
+      await page.locator('ion-datetime.datetime-ready').waitFor();
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-overlay-popover`));
     });
