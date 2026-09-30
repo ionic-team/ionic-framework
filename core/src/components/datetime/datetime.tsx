@@ -1077,24 +1077,103 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Finds the month block closest to the top of the scroll container. This is
-   * the month the user is looking at, so it drives both `workingParts` and the
-   * decision to re-center the window.
+   * The month at the top of the list: the month the user is looking at, which
+   * drives both `workingParts` and the decision to re-center the window.
+   *
+   * Computed from the first rendered month's offset rather than by finding
+   * the nearest rendered block, because the viewport can be over the runway,
+   * where no month is rendered yet. Every block is the same height, so the
+   * month under the viewport follows by arithmetic even there.
+   *
+   * A spliced list is not contiguous, so during a glide the nearest rendered
+   * block is used instead.
    */
-  private getNearestVerticalMonth(calendarBodyRef: HTMLElement): HTMLElement | undefined {
+  private getVerticalMonthAtTop(calendarBodyRef: HTMLElement): DatetimeParts | undefined {
     const containerTop = calendarBodyRef.getBoundingClientRect().top;
-    let nearest: HTMLElement | undefined;
-    let nearestDistance = Infinity;
-
-    calendarBodyRef.querySelectorAll<HTMLElement>('.calendar-month').forEach((monthEl) => {
-      const distance = Math.abs(monthEl.getBoundingClientRect().top - containerTop);
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        nearest = monthEl;
-      }
+    const monthEls = calendarBodyRef.querySelectorAll<HTMLElement>('.calendar-month');
+    const partsOf = (el: HTMLElement) => ({
+      month: Number(el.dataset.month),
+      year: Number(el.dataset.year),
+      day: null,
     });
 
-    return nearest;
+    if (this.verticalSplice !== undefined) {
+      let nearest: HTMLElement | undefined;
+      let nearestDistance = Infinity;
+      monthEls.forEach((monthEl) => {
+        const distance = Math.abs(monthEl.getBoundingClientRect().top - containerTop);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearest = monthEl;
+        }
+      });
+      return nearest ? partsOf(nearest) : undefined;
+    }
+
+    if (monthEls.length === 0 || monthEls[0].offsetHeight === 0) {
+      return undefined;
+    }
+
+    const first = monthEls[0];
+    const blockHeight = first.offsetHeight;
+
+    const monthsFromFirst = Math.round((containerTop - first.getBoundingClientRect().top) / blockHeight);
+    let index = monthIndex(partsOf(first)) + monthsFromFirst;
+
+    // The runway only spans the range, so this is a backstop.
+    index = Math.min(Math.max(index, this.verticalRangeStart), this.verticalRangeEnd);
+
+    return monthFromIndex(index);
+  }
+
+  /**
+   * The months the vertical list spans: `min` to `max`, or
+   * VERTICAL_DEFAULT_RANGE_YEARS either side of today where one is not set.
+   */
+  private get verticalRangeStart() {
+    const { minParts, defaultParts } = this;
+    return minParts !== undefined ? monthIndex(minParts) : monthIndex(defaultParts) - VERTICAL_DEFAULT_RANGE_YEARS * 12;
+  }
+
+  private get verticalRangeEnd() {
+    const { maxParts, defaultParts } = this;
+    return maxParts !== undefined ? monthIndex(maxParts) : monthIndex(defaultParts) + VERTICAL_DEFAULT_RANGE_YEARS * 12;
+  }
+
+  /**
+   * How many months of empty runway sit before or after a month list: every
+   * month between it and the edge of the range.
+   *
+   * Covering the whole range is what keeps every month at its true position
+   * in the scroll content. When the window moves, the runway on each side
+   * grows or shrinks by exactly the months the window gave up or took, so
+   * the content above the viewport keeps its height and a re-center needs no
+   * scroll correction. That matters because WebKit ends a fling the moment
+   * `scrollTop` is written: with a runway capped at a year, every re-center
+   * corrected the scroll position, and on iOS the list stopped as soon as the
+   * finger lifted. At a real `min` or `max` the runway is zero, so the list
+   * still stops there.
+   */
+  private verticalRunwayBefore(months: DatetimeParts[]) {
+    return Math.max(0, monthIndex(months[0]) - this.verticalRangeStart);
+  }
+
+  private verticalRunwayAfter(months: DatetimeParts[]) {
+    return Math.max(0, this.verticalRangeEnd - monthIndex(months[months.length - 1]));
+  }
+
+  /**
+   * Where a month's block starts in the scroll content of a month list,
+   * including the runway above it. Corrections are the difference between
+   * this before and after a rebuild, rather than a count of months shifted,
+   * because a rebuild that reaches `min` or `max` also adds or removes the
+   * runway. A month outside a contiguous list gets its position by
+   * arithmetic, which is how a re-center from over the runway is corrected.
+   */
+  private verticalOffsetOf(months: DatetimeParts[], target: DatetimeParts, blockHeight: number) {
+    const found = months.findIndex(({ month, year }) => month === target.month && year === target.year);
+    const index = found !== -1 ? found : monthIndex(target) - monthIndex(months[0]);
+    return (this.verticalRunwayBefore(months) + index) * blockHeight;
   }
 
   private initializeVerticalCalendarListener = (calendarBodyRef: HTMLElement) => {
@@ -1130,6 +1209,26 @@ export class Datetime implements ComponentInterface {
       let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
       const scrollCallback = () => {
+        /**
+         * Re-centering cannot wait for the scroll to settle. A fling carries
+         * far further than the window reaches, about 13 months against the
+         * 2.5 left either side of the center, so a debounced re-center let it
+         * run into the last rendered month and stop dead. Checking on every
+         * scroll event keeps months ahead of the fling. It writes nothing:
+         * the runway spans the whole range, so a re-center needs no scroll
+         * correction. That matters because WebKit ends a fling on any
+         * `scrollTop` write. Refer to `verticalRunwayBefore`.
+         *
+         * Skipped while a correction is still waiting to be applied, so that
+         * scroll events in between do not queue a second one on top of it.
+         */
+        if (this.verticalGlideTarget === undefined && this.pendingVerticalScrollCorrection === undefined) {
+          const visible = this.getVerticalMonthAtTop(calendarBodyRef);
+          if (visible) {
+            this.recenterVerticalWindow(calendarBodyRef, visible);
+          }
+        }
+
         if (scrollTimeout) {
           clearTimeout(scrollTimeout);
         }
@@ -1143,16 +1242,12 @@ export class Datetime implements ComponentInterface {
             return;
           }
 
-          const nearest = this.getNearestVerticalMonth(calendarBodyRef);
-          if (!nearest) {
+          const visible = this.getVerticalMonthAtTop(calendarBodyRef);
+          if (!visible) {
             return;
           }
 
-          const month = Number(nearest.dataset.month);
-          const year = Number(nearest.dataset.year);
-          if (Number.isNaN(month) || Number.isNaN(year)) {
-            return;
-          }
+          const { month, year } = visible;
 
           /**
            * While a day in the grid has focus and is still on screen, its
@@ -1218,24 +1313,22 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const nearest = this.getNearestVerticalMonth(calendarBodyRef);
-    const visible = nearest
-      ? { month: Number(nearest.dataset.month), year: Number(nearest.dataset.year), day: null }
-      : undefined;
-    const indexOf = (months: DatetimeParts[]) =>
-      visible ? months.findIndex(({ month, year }) => month === visible.month && year === visible.year) : -1;
-
-    const previousIndex = indexOf(this.generateVerticalMonths());
+    const visible = this.getVerticalMonthAtTop(calendarBodyRef);
+    const previousMonths = this.generateVerticalMonths();
     this.verticalWindowRadius = radius;
-    const nextIndex = indexOf(this.generateVerticalMonths());
+    const nextMonths = this.generateVerticalMonths();
 
     /**
      * Skipped while the initial scroll is still pending: that positions the
      * list absolutely once the window renders, and a relative correction on
      * top of it would land a month off.
      */
-    if (previousIndex !== -1 && nextIndex !== -1 && this.pendingVerticalInitialScroll === undefined) {
-      this.queueVerticalCorrection((nextIndex - previousIndex) * blockHeight, this.generateVerticalMonths());
+    if (visible !== undefined && this.pendingVerticalInitialScroll === undefined) {
+      this.queueVerticalCorrection(
+        this.verticalOffsetOf(nextMonths, visible, blockHeight) -
+          this.verticalOffsetOf(previousMonths, visible, blockHeight),
+        nextMonths
+      );
       this.captureVerticalFocus(calendarBodyRef);
     }
   }
@@ -1269,15 +1362,16 @@ export class Datetime implements ComponentInterface {
    */
   private recenterVerticalWindow(calendarBodyRef: HTMLElement, visible: DatetimeParts) {
     const months = this.generateVerticalMonths();
-    const index = months.findIndex(({ month, year }) => month === visible.month && year === visible.year);
-    if (index === -1) {
+    const blockHeight = this.getVerticalBlockHeight(calendarBodyRef);
+    if (months.length === 0 || blockHeight === 0) {
       return;
     }
 
-    const blockHeight = this.getVerticalBlockHeight(calendarBodyRef);
-    if (blockHeight === 0) {
-      return;
-    }
+    /**
+     * Counted by arithmetic, so a visible month still over the runway, before
+     * or after the rendered months, gets an index outside the list.
+     */
+    const index = monthIndex(visible) - monthIndex(months[0]);
 
     /**
      * The end is checked against the last visible month, not the top one.
@@ -1296,11 +1390,11 @@ export class Datetime implements ComponentInterface {
      * Work out where the visible month will sit in the rebuilt window before
      * committing to it. If nothing moves there is no point re-rendering.
      */
-    const previousLeading = index;
     const rebuilt = this.generateVerticalMonthsAround(visible);
-    const rebuiltLeading = rebuilt.findIndex(({ month, year }) => month === visible.month && year === visible.year);
+    const correction =
+      this.verticalOffsetOf(rebuilt, visible, blockHeight) - this.verticalOffsetOf(months, visible, blockHeight);
 
-    if (rebuiltLeading === -1 || rebuiltLeading === previousLeading) {
+    if (correction === 0 && verticalListSignature(rebuilt) === verticalListSignature(months)) {
       return;
     }
 
@@ -1311,7 +1405,7 @@ export class Datetime implements ComponentInterface {
      * the scroll listener would fire again on the result. `componentDidRender`
      * applies it once the DOM matches.
      */
-    this.queueVerticalCorrection((rebuiltLeading - previousLeading) * blockHeight, rebuilt);
+    this.queueVerticalCorrection(correction, rebuilt);
     this.captureVerticalFocus(calendarBodyRef);
     this.verticalWindowCenter = { ...visible };
   }
@@ -1373,13 +1467,12 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const nearest = this.getNearestVerticalMonth(calendarBodyRef);
-    if (!nearest) {
+    const visible = this.getVerticalMonthAtTop(calendarBodyRef);
+    if (!visible) {
       return;
     }
 
     this.cancelVerticalGlide();
-    const visible = { month: Number(nearest.dataset.month), year: Number(nearest.dataset.year), day: null };
     this.verticalWindowCenter = visible;
     this.pendingVerticalInitialScroll = { ...visible };
   }
@@ -1468,14 +1561,18 @@ export class Datetime implements ComponentInterface {
    */
   private glideToVerticalMonth(calendarBodyRef: HTMLElement, target: DatetimeParts): boolean {
     const blockHeight = this.getVerticalBlockHeight(calendarBodyRef);
-    const anchorEl = this.getNearestVerticalMonth(calendarBodyRef);
-    if (blockHeight === 0 || !anchorEl) {
+    const anchorParts = this.getVerticalMonthAtTop(calendarBodyRef);
+    if (blockHeight === 0 || !anchorParts) {
       return false;
     }
 
+    /**
+     * An anchor still over the runway is not rendered, so there is nothing to
+     * splice next to; the caller jumps instead.
+     */
     const current = this.generateVerticalMonths();
     const anchorIndex = current.findIndex(
-      ({ month, year }) => month === Number(anchorEl.dataset.month) && year === Number(anchorEl.dataset.year)
+      ({ month, year }) => month === anchorParts.month && year === anchorParts.year
     );
     if (anchorIndex === -1) {
       return false;
@@ -1504,7 +1601,10 @@ export class Datetime implements ComponentInterface {
        * within the current window instead can stop short, because a target
        * near the end of it has too few months below to reach the top.
        */
-      this.queueVerticalCorrection((anchorInAround - anchorIndex) * blockHeight, aroundTarget);
+      this.queueVerticalCorrection(
+        this.verticalOffsetOf(aroundTarget, anchor, blockHeight) - this.verticalOffsetOf(current, anchor, blockHeight),
+        aroundTarget
+      );
       this.verticalWindowCenter = { ...targetMonth };
     } else if (monthIndex(target) > monthIndex(anchor)) {
       /**
@@ -1534,7 +1634,10 @@ export class Datetime implements ComponentInterface {
         .filter((parts) => monthIndex(parts) < monthIndex(anchor));
       const splice = [...leading, ...current.slice(anchorIndex)];
       this.verticalSplice = splice;
-      this.queueVerticalCorrection((leading.length - anchorIndex) * blockHeight, splice);
+      this.queueVerticalCorrection(
+        this.verticalOffsetOf(splice, anchor, blockHeight) - this.verticalOffsetOf(current, anchor, blockHeight),
+        splice
+      );
     }
 
     // `componentDidRender` starts the glide once the spliced list exists.
@@ -1594,14 +1697,14 @@ export class Datetime implements ComponentInterface {
    */
   private finishVerticalGlide(calendarBodyRef: HTMLElement, target: DatetimeParts) {
     const blockHeight = this.getVerticalBlockHeight(calendarBodyRef);
-    const index = this.generateVerticalMonths().findIndex(
-      ({ month, year }) => month === target.month && year === target.year
-    );
+    const current = this.generateVerticalMonths();
     const rebuilt = this.generateVerticalMonthsAround(target);
-    const rebuiltIndex = rebuilt.findIndex(({ month, year }) => month === target.month && year === target.year);
 
-    if (index !== -1 && rebuiltIndex !== -1 && blockHeight > 0) {
-      this.queueVerticalCorrection((rebuiltIndex - index) * blockHeight, rebuilt);
+    if (blockHeight > 0) {
+      this.queueVerticalCorrection(
+        this.verticalOffsetOf(rebuilt, target, blockHeight) - this.verticalOffsetOf(current, target, blockHeight),
+        rebuilt
+      );
     }
 
     this.captureVerticalFocus(calendarBodyRef);
@@ -2080,7 +2183,17 @@ export class Datetime implements ComponentInterface {
         const before = this.verticalScrollTopBeforeRender ?? body.scrollTop;
         this.pendingVerticalScrollCorrection = undefined;
         this.verticalScrollTopBeforeRender = undefined;
-        body.scrollTop = before + pendingVerticalScrollCorrection.amount;
+
+        /**
+         * A re-center within the range needs no correction, and the write is
+         * skipped rather than made with zero: WebKit ends a fling on any
+         * `scrollTop` write, even one that does not move the list. The
+         * correction is still queued, so that a second re-center does not
+         * start while this render is pending.
+         */
+        if (pendingVerticalScrollCorrection.amount !== 0) {
+          body.scrollTop = before + pendingVerticalScrollCorrection.amount;
+        }
       }
     }
 
@@ -3522,15 +3635,42 @@ export class Datetime implements ComponentInterface {
   private renderCalendarBody() {
     return (
       <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
-        {(this.isVerticalNavigation
-          ? this.generateVerticalMonths()
-          : generateMonths(this.workingParts, this.forceRenderDate)
-        ).map(({ month, year }) => {
-          return this.renderMonth(month, year);
-        })}
+        {this.isVerticalNavigation
+          ? this.renderVerticalMonths()
+          : generateMonths(this.workingParts, this.forceRenderDate).map(({ month, year }) => {
+              return this.renderMonth(month, year);
+            })}
       </div>
     );
   }
+  /**
+   * The vertical months, with empty runway before and after them. A fling
+   * travels further than the rendered months reach, and on a slow device the
+   * re-center that extends them can take longer to render than the fling
+   * takes to arrive, so without runway the fling stops dead at the last
+   * rendered month. This is how virtualized lists on the web avoid the same
+   * wall: the scroll range stays longer than what is rendered, and the user
+   * may briefly see blank space instead of hitting a false end.
+   */
+  private renderVerticalMonths() {
+    const months = this.generateVerticalMonths();
+    const runway = (key: string, count: number) =>
+      count > 0 && (
+        <div
+          key={key}
+          class="calendar-runway"
+          aria-hidden="true"
+          style={{ height: `calc(var(--internal-month-block-height) * ${count})` }}
+        ></div>
+      );
+
+    return [
+      runway('runway-before', this.verticalRunwayBefore(months)),
+      ...months.map(({ month, year }) => this.renderMonth(month, year)),
+      runway('runway-after', this.verticalRunwayAfter(months)),
+    ];
+  }
+
   private renderCalendar(theme: Theme) {
     return (
       <div class="datetime-calendar" key="datetime-calendar">
@@ -3874,9 +4014,22 @@ const VERTICAL_RECENTER_THRESHOLD = 1;
 /** Quiet period after the last scroll event that ends a glide without `scrollend`. */
 const VERTICAL_GLIDE_SETTLE_MS = 150;
 
+/**
+ * How far the vertical list reaches either side of today when `min` or `max`
+ * is not set. At the largest theme's block height that is about 800,000px of
+ * scroll content, well within what browsers support.
+ */
+const VERTICAL_DEFAULT_RANGE_YEARS = 100;
+
 /** Identifies a rendered month list by its first month and its length. */
 const verticalListSignature = (months: DatetimeParts[]) =>
   months.length === 0 ? '' : `${months[0].year}-${months[0].month}:${months.length}`;
 
 /** Months since year 0, for ordering months without a day. */
 const monthIndex = ({ month, year }: DatetimeParts) => year * 12 + month;
+
+/** The inverse of `monthIndex`. */
+const monthFromIndex = (index: number): DatetimeParts => {
+  const year = Math.floor((index - 1) / 12);
+  return { month: index - year * 12, year, day: null };
+};

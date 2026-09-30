@@ -302,7 +302,19 @@
 }
 
 :host(.datetime-navigation-vertical) .calendar-body {
+
+  /**
+   * The default height is a flex basis rather than a fixed height, so it is
+   * only a default. Left at its natural size, the datetime is exactly this
+   * tall. Given a height, for example `height: 100%` inside a full-screen
+   * modal, the list grows or shrinks to fill whatever the header and footer
+   * leave. `min-height: 0` lets it shrink below the default in a short
+   * container instead of overflowing it.
+   */
+  flex: 1 1 var(--internal-calendar-body-height);
   flex-flow: column;
+
+  min-height: 0;
 
   /**
    * Cleared explicitly. The shared rule sets `x mandatory` for the pager.
@@ -326,18 +338,15 @@
    * would not, so anchoring is turned off to make the correction the only one.
    */
   overflow-anchor: none;
+}
 
-  /**
-   * The default height is a flex basis rather than a fixed height, so it is
-   * only a default. Left at its natural size, the datetime is exactly this
-   * tall. Given a height, for example `height: 100%` inside a full-screen
-   * modal, the list grows or shrinks to fill whatever the header and footer
-   * leave. `min-height: 0` lets it shrink below the default in a short
-   * container instead of overflowing it.
-   */
-  flex: 1 1 var(--internal-calendar-body-height);
-
-  min-height: 0;
+/**
+ * Empty space beyond the rendered months, so a fling does not stop dead at
+ * the last one. Its height is set inline from the same constant the scroll
+ * arithmetic uses.
+ */
+:host(.datetime-navigation-vertical) .calendar-runway {
+  flex-shrink: 0;
 }
 
 /**
