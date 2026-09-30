@@ -177,6 +177,23 @@
   justify-content: space-between;
 }
 
+/**
+ * Announcement text for the visible month. Present for assistive technology
+ * only; the month itself is already on screen in the header.
+ */
+:host .calendar-month-year-announce {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  clip-path: inset(50%);
+}
+
 // Calendar / Header / Days of Week
 // -----------------------------------
 
@@ -255,42 +272,138 @@
 }
 
 /**
- * Vertical navigation stacks the same three-month window on the Y axis.
- * `scroll-snap-align` and `scroll-snap-stop` on .calendar-month are
- * axis-agnostic, so only the container changes.
+ * Vertical navigation is a continuously scrolling list of months rather than
+ * a pager, following Material's vertical date picker. There are no snap
+ * points: the list comes to rest wherever the gesture leaves it, which is
+ * what keeps part of the next month visible and makes the arrows unnecessary.
  */
+:host(.datetime-navigation-vertical) {
+  /**
+   * Vertical has a definite default height rather than filling its parent.
+   * Material only gets away with filling because its vertical picker is
+   * always a full-screen dialog; ion-datetime also renders standalone, where
+   * there is nothing to fill and the list would otherwise render every month
+   * in the window at once.
+   *
+   * The default shows one whole month plus the next month's heading and two
+   * of its weeks. That second heading is the point: it says which month comes
+   * next, and it is what tells the user the list scrolls at all now that the
+   * arrows can be hidden.
+   *
+   * Overriding --internal-day-height per theme is what keeps this in step
+   * with each theme's day sizing.
+   */
+  --internal-month-heading-height: 40px;
+  --internal-day-height: 42px;
+  --internal-month-block-height: calc(var(--internal-month-heading-height) + 6 * var(--internal-day-height));
+  --internal-calendar-body-height: calc(
+    var(--internal-month-block-height) + var(--internal-month-heading-height) + 2 * var(--internal-day-height)
+  );
+}
+
 :host(.datetime-navigation-vertical) .calendar-body {
   flex-flow: column;
 
-  scroll-snap-type: y mandatory;
+  /**
+   * Cleared explicitly. The shared rule sets `x mandatory` for the pager.
+   */
+  scroll-snap-type: none;
 
   overflow-x: hidden;
   overflow-y: scroll;
 
   /**
-   * Without this the page scrolls once the user reaches either end of the
-   * three-month window mid-gesture. On the X axis this is invisible because
-   * the page does not scroll sideways.
+   * Without this the page scrolls once the list reaches either end
+   * mid-gesture. On the X axis this is invisible because the page does not
+   * scroll sideways.
    */
   overscroll-behavior-y: contain;
 
   /**
-   * Stacking three months would otherwise make the body three months tall,
-   * and on iOS it would also push the host past its 350px min-height, which
-   * is what gives the calendar its height in the first place. The value is
-   * measured from the horizontal layout on init. Refer to
-   * `initializeCalendarListener`.
+   * Re-centering and gliding correct the scroll position themselves after
+   * rebuilding the months above the viewport. Chromium and Firefox would also
+   * compensate through scroll anchoring, doubling the shift, while WebKit
+   * would not, so anchoring is turned off to make the correction the only one.
    */
-  height: var(--internal-calendar-body-height, auto);
+  overflow-anchor: none;
+
+  /**
+   * The default height is a flex basis rather than a fixed height, so it is
+   * only a default. Left at its natural size, the datetime is exactly this
+   * tall. Given a height, for example `height: 100%` inside a full-screen
+   * modal, the list grows or shrinks to fill whatever the header and footer
+   * leave. `min-height: 0` lets it shrink below the default in a short
+   * container instead of overflowing it.
+   */
+  flex: 1 1 var(--internal-calendar-body-height);
+
+  min-height: 0;
 }
 
 /**
- * Pinning each month to the body's height keeps one month per scroll page,
- * which is what makes the snap points land on month boundaries. It also
- * gives the iOS month grid the definite height it sizes itself against.
+ * The flex column between the host and the body. Its default `min-height:
+ * auto` holds it at the body's default height, which would stop the body
+ * shrinking in a container shorter than that.
+ */
+:host(.datetime-navigation-vertical) .datetime-calendar {
+  min-height: 0;
+}
+
+/**
+ * Every month occupies the same height whether it spans four weeks or six.
+ * That uniformity is what lets the window re-center by arithmetic instead of
+ * measuring a sub-month offset, and it is what Material does too.
+ *
+ * The explicit height also stops the iOS grid collapsing: it sizes itself
+ * with `height: calc(100% - padding)`, so without a definite height on the
+ * month its rows shrink to their content.
  */
 :host(.datetime-navigation-vertical) .calendar-body .calendar-month {
-  height: 100%;
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+
+  flex-shrink: 0;
+
+  height: var(--internal-month-block-height);
+}
+
+:host(.datetime-navigation-vertical) .calendar-body .calendar-month-grid {
+  /**
+   * The month is a fixed-height flex column of heading then grid. iOS sizes
+   * this grid with `height: calc(100% - padding)` of the month, which asks
+   * for almost the whole block and squeezes the heading. In vertical the
+   * heading keeps its height and the grid takes whatever is left, so rows
+   * land on the theme's day height instead of being stretched.
+   */
+  flex: 1 1 auto;
+
+  grid-template-rows: repeat(6, 1fr);
+
+  height: auto;
+  min-height: 0;
+}
+
+/**
+ * Each month carries its own heading, because more than one is visible at a
+ * time and the shared header could not describe them all.
+ */
+:host(.datetime-navigation-vertical) .calendar-month-heading {
+  @include padding(0, 16px, 0, 16px);
+
+  display: flex;
+
+  /**
+   * Without this the grid shrinks the heading below its set height and the
+   * day rows stretch to fill the difference.
+   */
+  flex-shrink: 0;
+
+  align-items: center;
+
+  height: var(--internal-month-heading-height);
+
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 /**

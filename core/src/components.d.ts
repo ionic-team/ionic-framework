@@ -1252,7 +1252,7 @@ export namespace Components {
          */
         "reset": (startDate?: string) => Promise<void>;
         /**
-          * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
+          * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled. Has no effect when `navigationOrientation` is `"vertical"`.
           * @default false
          */
         "showAdjacentDays": boolean;
@@ -1276,11 +1276,6 @@ export namespace Components {
           * @default false
          */
         "showDefaultTitle": boolean;
-        /**
-          * If `true`, the previous and next month buttons will be rendered in the calendar header. Set this to `false` to navigate by swipe alone, which is the usual pairing for `navigationOrientation="vertical"`.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
-          * @default true
-         */
-        "showNavigationButtons": boolean;
         /**
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
           * @default 'fixed'
@@ -7189,7 +7184,7 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
-          * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
+          * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled. Has no effect when `navigationOrientation` is `"vertical"`.
           * @default false
          */
         "showAdjacentDays"?: boolean;
@@ -7213,11 +7208,6 @@ declare namespace LocalJSX {
           * @default false
          */
         "showDefaultTitle"?: boolean;
-        /**
-          * If `true`, the previous and next month buttons will be rendered in the calendar header. Set this to `false` to navigate by swipe alone, which is the usual pairing for `navigationOrientation="vertical"`.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
-          * @default true
-         */
-        "showNavigationButtons"?: boolean;
         /**
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
           * @default 'fixed'
@@ -10745,7 +10735,6 @@ declare namespace LocalJSX {
         "showDefaultTitle": boolean;
         "showDefaultButtons": boolean;
         "showClearButton": boolean;
-        "showNavigationButtons": boolean;
         "showDefaultTimeLabel": boolean;
         "hourCycle": DatetimeHourCycle;
         "size": 'cover' | 'fixed';

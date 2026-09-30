@@ -221,3 +221,10 @@
 
   justify-content: flex-end;
 }
+
+// Calendar / Vertical navigation
+// -----------------------------------
+
+:host(.datetime-navigation-vertical) {
+  --internal-day-height: #{$datetime-md-day-height};
+}

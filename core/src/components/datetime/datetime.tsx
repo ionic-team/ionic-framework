@@ -186,6 +186,54 @@ export class Datetime implements ComponentInterface {
   @State() forceRenderDate?: DatetimeParts;
 
   /**
+   * The month the vertical window is built around. Distinct from
+   * `workingParts`, which follows the month nearest the top of the list and
+   * therefore changes constantly while scrolling. Re-centering the window is
+   * a re-render, so it only happens when the user nears an edge.
+   */
+  @State() verticalWindowCenter?: DatetimeParts;
+
+  /**
+   * Scroll adjustment owed once a rebuilt window has actually rendered, with
+   * the month list it was computed for. Refer to `queueVerticalCorrection`.
+   */
+  private pendingVerticalScrollCorrection?: { amount: number; expected: string };
+
+  /** The list's scroll position just before the patch that rebuilds it. */
+  private verticalScrollTopBeforeRender?: number;
+
+  /** Month to bring to the top of the list once the window has rendered. */
+  private pendingVerticalInitialScroll?: DatetimeParts;
+
+  /**
+   * Months rendered in place of the window while gliding to a month the
+   * window does not contain. Refer to `glideToVerticalMonth`.
+   */
+  @State() verticalSplice?: DatetimeParts[];
+
+  /** Month a glide is heading to. Set for the whole glide. */
+  private verticalGlideTarget?: DatetimeParts;
+
+  /** Month to start gliding to once the spliced list has rendered. */
+  private pendingVerticalGlide?: DatetimeParts;
+
+  /** Removes the listeners that detect the end of a glide. */
+  private stopVerticalGlide?: () => void;
+
+  /**
+   * Months rendered either side of the window center. Grows with the height
+   * of the list, so a datetime filling a tall container still has months
+   * beyond the visible ones to scroll into. Refer to `resizeVerticalWindow`.
+   */
+  @State() verticalWindowRadius = VERTICAL_WINDOW_RADIUS;
+
+  /** Day to give focus back to once a rebuilt window has rendered. */
+  private pendingVerticalRefocus?: DatetimeParts;
+
+  /** Month on screen when the month/year picker opened. */
+  private verticalMonthAtPickerOpen?: DatetimeParts;
+
+  /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, refer to [theming](/docs/theming/basics).
@@ -240,6 +288,7 @@ export class Datetime implements ComponentInterface {
    * If `true`, the datetime calendar displays a six-week (42-day) layout,
    * including days from the previous and next months to fill the grid.
    * These adjacent days are selectable unless disabled.
+   * Has no effect when `navigationOrientation` is `"vertical"`.
    */
   @Prop() showAdjacentDays = false;
 
@@ -261,6 +310,7 @@ export class Datetime implements ComponentInterface {
   @Watch('min')
   protected minChanged() {
     this.processMinParts();
+    this.holdVerticalPosition();
   }
 
   /**
@@ -276,6 +326,7 @@ export class Datetime implements ComponentInterface {
   @Watch('max')
   protected maxChanged() {
     this.processMaxParts();
+    this.holdVerticalPosition();
   }
 
   /**
@@ -307,6 +358,16 @@ export class Datetime implements ComponentInterface {
    */
   private get isVerticalNavigation() {
     return this.isGridStyle && this.navigationOrientation === 'vertical';
+  }
+
+  /**
+   * Vertical never renders adjacent days. A continuous list shows the
+   * neighbouring month in full right beside the current one, so an adjacent
+   * day would put the same date on screen twice, and selecting it would
+   * highlight both. Neither Material nor iOS renders them either.
+   */
+  private get rendersAdjacentDays() {
+    return this.showAdjacentDays && !this.isVerticalNavigation;
   }
 
   /**
@@ -479,17 +540,6 @@ export class Datetime implements ComponentInterface {
    * default buttons will not be rendered.
    */
   @Prop() showClearButton = false;
-
-  /**
-   * If `true`, the previous and next month buttons will be rendered in the
-   * calendar header. Set this to `false` to navigate by swipe alone, which
-   * is the usual pairing for `navigationOrientation="vertical"`.
-   *
-   * This has no effect when a wheel picker is rendered, or when `presentation`
-   * is one of the following values: `"time"`, `"month"`, `"month-year"`, or
-   * `"year"`.
-   */
-  @Prop() showNavigationButtons = true;
 
   /**
    * If `true`, the default "Time" label will be rendered
@@ -783,8 +833,25 @@ export class Datetime implements ComponentInterface {
     /**
      * Get a reference to the month
      * element we are currently viewing.
+     *
+     * Horizontal always shows the middle of its three months, so the second
+     * element is stable. Vertical's window is wider and moves as the user
+     * scrolls, so the second element is some other month entirely; there the
+     * working month is looked up by its date at the moment focus moves.
      */
-    const currentMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(2)')!;
+    const getCurrentMonth = () =>
+      this.isVerticalNavigation
+        ? calendarBodyRef.querySelector(
+            `.calendar-month[data-month="${this.workingParts.month}"][data-year="${this.workingParts.year}"]`
+          )
+        : calendarBodyRef.querySelector('.calendar-month:nth-of-type(2)');
+
+    const focusCurrentWorkingDay = () => {
+      const currentMonth = getCurrentMonth();
+      if (currentMonth) {
+        this.focusWorkingDay(currentMonth);
+      }
+    };
 
     /**
      * When focusing the calendar body, we want to pass focus
@@ -805,7 +872,7 @@ export class Datetime implements ComponentInterface {
         return;
       }
 
-      this.focusWorkingDay(currentMonth);
+      focusCurrentWorkingDay();
     };
     const mo = new MutationObserver(checkCalendarBodyFocus);
     mo.observe(calendarBodyRef, { attributeFilter: ['class'], attributeOldValue: true });
@@ -884,10 +951,29 @@ export class Datetime implements ComponentInterface {
       });
 
       /**
+       * Horizontal renders around `workingParts`, so the target month always
+       * exists by the next frame. Vertical's window does not follow it, so a
+       * month past the edge of the window, such as a year away with
+       * Shift+PageDown, has to be rendered and scrolled to first.
+       */
+      if (this.isVerticalNavigation && !getCurrentMonth()) {
+        this.cancelVerticalGlide();
+        this.verticalWindowCenter = { month: partsToFocus.month, year: partsToFocus.year, day: null };
+        this.pendingVerticalInitialScroll = { ...this.verticalWindowCenter };
+
+        /**
+         * The focused day's month is not in the new window at all, so its
+         * node is removed rather than moved. Parking and refocusing on the
+         * target keeps focus inside the component across the swap.
+         */
+        this.pendingVerticalRefocus = { ...partsToFocus };
+      }
+
+      /**
        * Give view a chance to re-render
        * then move focus to the new working day
        */
-      requestAnimationFrame(() => this.focusWorkingDay(currentMonth));
+      requestAnimationFrame(focusCurrentWorkingDay);
     });
   };
 
@@ -943,35 +1029,609 @@ export class Datetime implements ComponentInterface {
   };
 
   /**
-   * Measures one scroll page for vertical navigation and pins the calendar
-   * body to it, returning the measured height.
+   * Builds the list of months rendered in vertical mode.
    *
-   * The height has to be measured in the horizontal layout, because that is
-   * the only layout that produces it. Stacking three months vertically makes
-   * the body three months tall, and on iOS it also pushes the host past the
-   * 350px min-height that gives the calendar its height, which collapses the
-   * month grid to its content. Dropping the class restores the row layout so
-   * the existing flex chain resolves the same height it would have used on
-   * the X axis.
+   * Horizontal mode renders exactly three months because only one is ever
+   * visible. Vertical shows more than one at a time, so the window has to be
+   * wider than the viewport plus enough margin either side that the user can
+   * scroll without immediately hitting the end.
    *
-   * This runs inside a writeTask, so the swap and the measurement are in one
-   * synchronous block and the intermediate layout is never painted.
+   * Every block is the same height, so shifting this window by n months moves
+   * the content by exactly n block heights. Refer to `recenterVerticalWindow`.
    */
-  private setVerticalPageHeight = (calendarBodyRef: HTMLElement) => {
-    const { el } = this;
+  /**
+   * The window deliberately does not follow `workingParts`. That value tracks
+   * the month nearest the top of the list and so changes throughout a scroll;
+   * rebuilding the window on every change would shift the content under the
+   * user and feed the scroll listener its own output. The center moves only
+   * when `recenterVerticalWindow` decides it should.
+   */
+  private generateVerticalMonths(): DatetimeParts[] {
+    return this.verticalSplice ?? this.generateVerticalMonthsAround(this.verticalWindowCenter ?? this.workingParts);
+  }
 
-    el.classList.remove(NAVIGATION_VERTICAL_CLASS);
-    const pageHeight = calendarBodyRef.clientHeight;
-    el.classList.add(NAVIGATION_VERTICAL_CLASS);
+  private generateVerticalMonthsAround(center: DatetimeParts): DatetimeParts[] {
+    const { minParts, maxParts } = this;
 
-    calendarBodyRef.style.setProperty('--internal-calendar-body-height', `${pageHeight}px`);
+    const months: DatetimeParts[] = [center];
 
-    return pageHeight;
+    let previous = center;
+    for (let i = 0; i < this.verticalWindowRadius; i++) {
+      previous = getPreviousMonth(previous);
+      if (minParts !== undefined && isBefore(previous, { ...minParts, day: 1 })) {
+        break;
+      }
+      months.unshift(previous);
+    }
+
+    let next = center;
+    for (let i = 0; i < this.verticalWindowRadius; i++) {
+      next = getNextMonth(next);
+      if (maxParts !== undefined && isAfter(next, { ...maxParts, day: 1 })) {
+        break;
+      }
+      months.push(next);
+    }
+
+    return months;
+  }
+
+  /**
+   * Finds the month block closest to the top of the scroll container. This is
+   * the month the user is looking at, so it drives both `workingParts` and the
+   * decision to re-center the window.
+   */
+  private getNearestVerticalMonth(calendarBodyRef: HTMLElement): HTMLElement | undefined {
+    const containerTop = calendarBodyRef.getBoundingClientRect().top;
+    let nearest: HTMLElement | undefined;
+    let nearestDistance = Infinity;
+
+    calendarBodyRef.querySelectorAll<HTMLElement>('.calendar-month').forEach((monthEl) => {
+      const distance = Math.abs(monthEl.getBoundingClientRect().top - containerTop);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearest = monthEl;
+      }
+    });
+
+    return nearest;
+  }
+
+  private initializeVerticalCalendarListener = (calendarBodyRef: HTMLElement) => {
+    /**
+     * Pin the window now that `workingParts` reflects the resolved value. Up
+     * to this point the window follows it, which is what puts the right month
+     * on screen for the first render. From here it must stop following, or
+     * every scroll would rebuild the window under the user.
+     */
+    if (this.verticalWindowCenter === undefined) {
+      this.verticalWindowCenter = { ...this.workingParts };
+    }
+
+    /**
+     * Deferred for the same reason as the re-center correction: pinning the
+     * window above schedules a render, and the month elements this needs to
+     * measure do not exist until it completes.
+     */
+    this.pendingVerticalInitialScroll = { ...this.workingParts };
+
+    /**
+     * On first load the pin above schedules a render, and `componentDidRender`
+     * applies the scroll. Re-initializing does not: the listeners are rebuilt
+     * each time the datetime becomes visible, such as when a modal reopens,
+     * and there the window is already pinned, so nothing renders. The body
+     * lost its scroll position while hidden, so without this the list opens
+     * at the top of the window instead of on the working month. Whichever of
+     * the two runs first consumes the pending scroll.
+     */
+    raf(() => this.applyPendingVerticalInitialScroll());
+
+    writeTask(() => {
+      let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+
+      const scrollCallback = () => {
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
+
+        scrollTimeout = setTimeout(() => {
+          /**
+           * A glide owns the scroll position until it ends. Re-centering
+           * mid-glide would rebuild the spliced list under the animation.
+           */
+          if (this.verticalGlideTarget !== undefined) {
+            return;
+          }
+
+          const nearest = this.getNearestVerticalMonth(calendarBodyRef);
+          if (!nearest) {
+            return;
+          }
+
+          const month = Number(nearest.dataset.month);
+          const year = Number(nearest.dataset.year);
+          if (Number.isNaN(month) || Number.isNaN(year)) {
+            return;
+          }
+
+          /**
+           * While a day in the grid has focus and is still on screen, its
+           * month is the working month, not whichever month is at the top.
+           * Focusing a day nudges the list, and without this the listener
+           * would overwrite the month the keyboard just moved to, so the
+           * header and the announcement would name the wrong month. Once the
+           * focused day scrolls out of view, the top of the list takes over.
+           */
+          const { workingParts } = this;
+          const focusIsOnScreen = this.hasVisibleFocusedDay(calendarBodyRef);
+          if (!focusIsOnScreen && (month !== workingParts.month || year !== workingParts.year)) {
+            this.setWorkingParts({ ...workingParts, month, year });
+          }
+
+          /**
+           * The window follows what is on screen regardless of focus, because
+           * it exists to keep months rendered around the visible area.
+           */
+          this.recenterVerticalWindow(calendarBodyRef, { month, year, day: null });
+        }, 50);
+      };
+
+      calendarBodyRef.addEventListener('scroll', scrollCallback);
+
+      /**
+       * The list's height is only a default: a datetime sized by its
+       * container can be any height, and can change, such as on rotation.
+       */
+      const resizeObserver =
+        typeof ResizeObserver !== 'undefined'
+          ? new ResizeObserver(() => this.resizeVerticalWindow(calendarBodyRef))
+          : undefined;
+      resizeObserver?.observe(calendarBodyRef);
+
+      this.destroyCalendarListener = () => {
+        calendarBodyRef.removeEventListener('scroll', scrollCallback);
+        resizeObserver?.disconnect();
+      };
+    });
   };
+
+  /**
+   * Sizes the window to the list. Seven months is enough when about one and
+   * a half are visible, but a datetime filling a tall container shows three
+   * or more, and the window then has too few months beyond the visible ones
+   * for re-centering to keep ahead of the user. The radius is kept at least
+   * one more than the number of visible months, which is what lets a
+   * re-center around the top month leave room below the last visible one.
+   *
+   * Growing the window adds months above the visible one, so the list is
+   * corrected the same way a re-center is.
+   */
+  private resizeVerticalWindow(calendarBodyRef: HTMLElement) {
+    const blockHeight = this.getVerticalBlockHeight(calendarBodyRef);
+    if (blockHeight === 0 || this.verticalGlideTarget !== undefined) {
+      return;
+    }
+
+    const visibleMonths = Math.ceil(calendarBodyRef.clientHeight / blockHeight);
+    const radius = Math.max(VERTICAL_WINDOW_RADIUS, visibleMonths + 1);
+    if (radius === this.verticalWindowRadius) {
+      return;
+    }
+
+    const nearest = this.getNearestVerticalMonth(calendarBodyRef);
+    const visible = nearest
+      ? { month: Number(nearest.dataset.month), year: Number(nearest.dataset.year), day: null }
+      : undefined;
+    const indexOf = (months: DatetimeParts[]) =>
+      visible ? months.findIndex(({ month, year }) => month === visible.month && year === visible.year) : -1;
+
+    const previousIndex = indexOf(this.generateVerticalMonths());
+    this.verticalWindowRadius = radius;
+    const nextIndex = indexOf(this.generateVerticalMonths());
+
+    /**
+     * Skipped while the initial scroll is still pending: that positions the
+     * list absolutely once the window renders, and a relative correction on
+     * top of it would land a month off.
+     */
+    if (previousIndex !== -1 && nextIndex !== -1 && this.pendingVerticalInitialScroll === undefined) {
+      this.queueVerticalCorrection((nextIndex - previousIndex) * blockHeight, this.generateVerticalMonths());
+      this.captureVerticalFocus(calendarBodyRef);
+    }
+  }
+
+  /**
+   * Queues a scroll correction for `componentDidRender`, tied to the month
+   * list it was computed for.
+   *
+   * Two things made applying it on the next `componentDidRender` unreliable.
+   * A render already in flight when the window changes still commits the old
+   * months, and its `componentDidRender` would apply the correction to them:
+   * growing the window from seven months to eleven clamped a two-month
+   * correction to the seven-month scroll range. And when the rebuilt list is
+   * shorter, the browser clamps the scroll position during the patch, before
+   * the correction runs: after a glide the list lost 140px that way. So the
+   * correction waits until the DOM shows the expected list, and is applied to
+   * the position read just before the patch.
+   */
+  private queueVerticalCorrection(amount: number, expected: DatetimeParts[]) {
+    this.pendingVerticalScrollCorrection = { amount, expected: verticalListSignature(expected) };
+  }
+
+  /**
+   * Widens the window around `visible` once the user is within
+   * VERTICAL_RECENTER_THRESHOLD months of either end of it.
+   *
+   * Regenerating the window shifts every block, so the scroll position has to
+   * be corrected or the calendar appears to jump. Because every block is the
+   * same height, the correction is exactly the number of months added above
+   * multiplied by the block height, with no measuring of sub-month offsets.
+   */
+  private recenterVerticalWindow(calendarBodyRef: HTMLElement, visible: DatetimeParts) {
+    const months = this.generateVerticalMonths();
+    const index = months.findIndex(({ month, year }) => month === visible.month && year === visible.year);
+    if (index === -1) {
+      return;
+    }
+
+    const blockHeight = this.getVerticalBlockHeight(calendarBodyRef);
+    if (blockHeight === 0) {
+      return;
+    }
+
+    /**
+     * The end is checked against the last visible month, not the top one.
+     * In a list taller than two months, the top month can never come within
+     * the threshold of the end, because the list runs out of scroll first,
+     * so a top-based check never re-centers and scrolling simply stops.
+     */
+    const lastVisible = index + Math.ceil(calendarBodyRef.clientHeight / blockHeight) - 1;
+    const nearStart = index <= VERTICAL_RECENTER_THRESHOLD;
+    const nearEnd = lastVisible >= months.length - 1 - VERTICAL_RECENTER_THRESHOLD;
+    if (!nearStart && !nearEnd) {
+      return;
+    }
+
+    /**
+     * Work out where the visible month will sit in the rebuilt window before
+     * committing to it. If nothing moves there is no point re-rendering.
+     */
+    const previousLeading = index;
+    const rebuilt = this.generateVerticalMonthsAround(visible);
+    const rebuiltLeading = rebuilt.findIndex(({ month, year }) => month === visible.month && year === visible.year);
+
+    if (rebuiltLeading === -1 || rebuiltLeading === previousLeading) {
+      return;
+    }
+
+    /**
+     * The correction cannot be applied here. Setting the center schedules a
+     * re-render, and the new blocks are not in the DOM until it completes, so
+     * adjusting scrollTop now would move the list against stale content and
+     * the scroll listener would fire again on the result. `componentDidRender`
+     * applies it once the DOM matches.
+     */
+    this.queueVerticalCorrection((rebuiltLeading - previousLeading) * blockHeight, rebuilt);
+    this.captureVerticalFocus(calendarBodyRef);
+    this.verticalWindowCenter = { ...visible };
+  }
+
+  /**
+   * Remembers the focused day before the window is rebuilt, so
+   * `componentDidRender` can give focus back to it.
+   *
+   * Rebuilding the window makes Stencil move the surviving month nodes, and
+   * moving a focused element blurs it. That is not only a pointer problem:
+   * keyboard focus near either end of the window scrolls the list into a
+   * re-center, so without this every second or third PageDown dropped focus.
+   *
+   * Only a day still on screen is restored. One the user has scrolled away
+   * from with a pointer is left blurred, because restoring focus would pull
+   * it back against their own scroll.
+   */
+  private captureVerticalFocus(calendarBodyRef: HTMLElement) {
+    if (!this.hasVisibleFocusedDay(calendarBodyRef)) {
+      return;
+    }
+
+    const active = this.el.shadowRoot?.activeElement as HTMLElement | null | undefined;
+    if (active) {
+      this.pendingVerticalRefocus = getPartsFromCalendarDay(active);
+    }
+  }
+
+  private restoreVerticalFocus(calendarBodyRef: HTMLElement) {
+    const { pendingVerticalRefocus: parts } = this;
+    this.pendingVerticalRefocus = undefined;
+    if (parts === undefined || parts.day === null) {
+      return;
+    }
+
+    /**
+     * Scoped to the day's own month, since the same date can also render as
+     * an adjacent day in a neighbour's grid.
+     */
+    const dayEl = calendarBodyRef.querySelector<HTMLElement>(
+      `.calendar-month[data-month="${parts.month}"][data-year="${parts.year}"] .calendar-day[data-month="${parts.month}"][data-day="${parts.day}"][data-year="${parts.year}"]`
+    );
+
+    if (dayEl && this.el.shadowRoot?.activeElement !== dayEl) {
+      dayEl.focus({ preventScroll: true });
+    }
+  }
+
+  /**
+   * Keeps the month on screen in place when `min` or `max` changes at
+   * runtime. The window is clamped to the bounds, so a change can add or
+   * remove months above the visible one, which would otherwise shift the
+   * list. Horizontal keeps showing its month, even one now out of range, and
+   * vertical matches that: the window stays centered on the visible month.
+   */
+  private holdVerticalPosition() {
+    const { calendarBodyRef } = this;
+    if (!this.isVerticalNavigation || !calendarBodyRef || this.verticalWindowCenter === undefined) {
+      return;
+    }
+
+    const nearest = this.getNearestVerticalMonth(calendarBodyRef);
+    if (!nearest) {
+      return;
+    }
+
+    this.cancelVerticalGlide();
+    const visible = { month: Number(nearest.dataset.month), year: Number(nearest.dataset.year), day: null };
+    this.verticalWindowCenter = visible;
+    this.pendingVerticalInitialScroll = { ...visible };
+  }
+
+  /**
+   * Retries the initial positioning until the calendar body has a height to
+   * scroll within. Used when `componentDidRender` fires before layout settles.
+   */
+  private applyPendingVerticalInitialScroll() {
+    const { calendarBodyRef, pendingVerticalInitialScroll } = this;
+    if (!calendarBodyRef || pendingVerticalInitialScroll === undefined) {
+      return;
+    }
+
+    if (calendarBodyRef.clientHeight === 0 || calendarBodyRef.scrollHeight <= calendarBodyRef.clientHeight) {
+      raf(() => this.applyPendingVerticalInitialScroll());
+      return;
+    }
+
+    this.pendingVerticalInitialScroll = undefined;
+    this.scrollToVerticalMonth(calendarBodyRef, pendingVerticalInitialScroll, 'instant');
+  }
+
+  private hasVisibleFocusedDay(calendarBodyRef: HTMLElement): boolean {
+    const active = this.el.shadowRoot?.activeElement as HTMLElement | null | undefined;
+    if (!active || !active.classList.contains('calendar-day')) {
+      return false;
+    }
+
+    const day = active.getBoundingClientRect();
+    const body = calendarBodyRef.getBoundingClientRect();
+    return day.bottom > body.top && day.top < body.bottom;
+  }
+
+  private getVerticalBlockHeight(calendarBodyRef: HTMLElement): number {
+    const first = calendarBodyRef.querySelector<HTMLElement>('.calendar-month');
+    return first ? first.offsetHeight : 0;
+  }
+
+  /**
+   * Scrolls a month block to the top of the list. Used on init, by the
+   * prev/next buttons, and by `animateToDate` when a value change forces a
+   * month that is already in the window.
+   *
+   * Returns the offset the list is heading to, clamped to its scroll range,
+   * or undefined if the month is not rendered.
+   */
+  private scrollToVerticalMonth(
+    calendarBodyRef: HTMLElement,
+    target: DatetimeParts,
+    behavior: ScrollBehavior
+  ): number | undefined {
+    const targetEl = calendarBodyRef.querySelector<HTMLElement>(
+      `.calendar-month[data-month="${target.month}"][data-year="${target.year}"]`
+    );
+
+    if (!targetEl) {
+      return undefined;
+    }
+
+    /**
+     * Deliberately not `offsetTop`. That is measured from the nearest
+     * positioned ancestor, which is not the scroll container, so it includes
+     * the header and silently scrolls to the wrong month. Measuring against
+     * the container's own box is correct regardless of what is positioned.
+     */
+    const top =
+      targetEl.getBoundingClientRect().top - calendarBodyRef.getBoundingClientRect().top + calendarBodyRef.scrollTop;
+
+    calendarBodyRef.scrollTo({ top, left: 0, behavior });
+
+    return Math.min(Math.max(top, 0), calendarBodyRef.scrollHeight - calendarBodyRef.clientHeight);
+  }
+
+  /**
+   * Animates a value change to any month, however far away, as a glide of
+   * one screenful. The same trick horizontal uses in `animateToDate`, adapted
+   * to a list: the target is spliced in just past the months on screen, the
+   * list glides to it, and the normal window is rebuilt around it afterwards.
+   *
+   * Scrolling the real distance is not an option. The window only holds a
+   * few months, so it would have to re-center many times mid-animation, and
+   * each correction would visibly jump.
+   *
+   * Returns false when the list cannot be measured, so the caller jumps.
+   */
+  private glideToVerticalMonth(calendarBodyRef: HTMLElement, target: DatetimeParts): boolean {
+    const blockHeight = this.getVerticalBlockHeight(calendarBodyRef);
+    const anchorEl = this.getNearestVerticalMonth(calendarBodyRef);
+    if (blockHeight === 0 || !anchorEl) {
+      return false;
+    }
+
+    const current = this.generateVerticalMonths();
+    const anchorIndex = current.findIndex(
+      ({ month, year }) => month === Number(anchorEl.dataset.month) && year === Number(anchorEl.dataset.year)
+    );
+    if (anchorIndex === -1) {
+      return false;
+    }
+
+    const targetMonth = { month: target.month, year: target.year, day: null };
+    this.verticalGlideTarget = targetMonth;
+
+    const anchor = current[anchorIndex];
+    const aroundTarget = this.generateVerticalMonthsAround(targetMonth);
+    const targetIndex = aroundTarget.findIndex(({ month, year }) => month === target.month && year === target.year);
+    const anchorInAround = aroundTarget.findIndex(({ month, year }) => month === anchor.month && year === anchor.year);
+
+    /**
+     * Months on screen, counting a partly visible one. The splice keeps this
+     * many real months in view at every point of the glide: about two
+     * standalone, three or more when the datetime fills a tall container.
+     */
+    const visibleMonths = Math.ceil(calendarBodyRef.clientHeight / blockHeight);
+
+    if (anchorInAround !== -1) {
+      /**
+       * Near: the window around the target already contains the visible
+       * month, so no splice is needed. The window is still rebuilt around
+       * the target before gliding, holding the visible month still. Gliding
+       * within the current window instead can stop short, because a target
+       * near the end of it has too few months below to reach the top.
+       */
+      this.queueVerticalCorrection((anchorInAround - anchorIndex) * blockHeight, aroundTarget);
+      this.verticalWindowCenter = { ...targetMonth };
+    } else if (monthIndex(target) > monthIndex(anchor)) {
+      /**
+       * Forward: keep everything up to the last visible month, then continue
+       * with the target, and glide the visible months away. Nothing above the
+       * visible month changes, so the list does not move before the glide,
+       * and nothing on screen is swapped when it starts.
+       */
+      this.verticalSplice = [
+        ...current.slice(0, Math.min(anchorIndex + visibleMonths, current.length)),
+        ...aroundTarget.slice(targetIndex),
+      ];
+    } else {
+      /**
+       * Backward: the target, its predecessors, and enough months after it
+       * to fill the screen go above the visible month. That changes how many
+       * blocks sit above it, so the list is corrected to hold the visible
+       * month still before gliding up.
+       *
+       * The glide therefore ends with only the target's real successors in
+       * view and the old months scrolled out of it. With only the target
+       * spliced in, the old months would still be on screen when the glide
+       * ends, and the rebuild afterwards would visibly swap them.
+       */
+      const leading = aroundTarget
+        .slice(0, targetIndex + visibleMonths)
+        .filter((parts) => monthIndex(parts) < monthIndex(anchor));
+      const splice = [...leading, ...current.slice(anchorIndex)];
+      this.verticalSplice = splice;
+      this.queueVerticalCorrection((leading.length - anchorIndex) * blockHeight, splice);
+    }
+
+    // `componentDidRender` starts the glide once the spliced list exists.
+    this.pendingVerticalGlide = targetMonth;
+    return true;
+  }
+
+  private startVerticalGlide(calendarBodyRef: HTMLElement, target: DatetimeParts) {
+    const destination = this.scrollToVerticalMonth(calendarBodyRef, target, 'smooth');
+
+    /**
+     * `scrollend` is the precise signal, but not every supported browser
+     * fires it, so a quiet period after the last scroll event also ends the
+     * glide. The timer also covers a glide that turns out to need no scroll,
+     * and one the user interrupts.
+     */
+    let settleTimeout = setTimeout(() => finish(), VERTICAL_GLIDE_SETTLE_MS);
+
+    const onScroll = () => {
+      clearTimeout(settleTimeout);
+      settleTimeout = setTimeout(() => finish(), VERTICAL_GLIDE_SETTLE_MS);
+    };
+
+    /**
+     * Only a `scrollend` at the destination ends the glide. A backward glide
+     * is preceded by an instant correction, and the browser reports the end
+     * of that too, just after this listener is added. Finishing on it would
+     * rebuild the window mid-glide and cut the animation short.
+     */
+    const onScrollEnd = () => {
+      if (destination === undefined || Math.abs(calendarBodyRef.scrollTop - destination) <= 1) {
+        finish();
+      }
+    };
+
+    const stop = () => {
+      clearTimeout(settleTimeout);
+      calendarBodyRef.removeEventListener('scroll', onScroll);
+      calendarBodyRef.removeEventListener('scrollend', onScrollEnd);
+      this.stopVerticalGlide = undefined;
+    };
+
+    const finish = () => {
+      stop();
+      this.finishVerticalGlide(calendarBodyRef, target);
+    };
+
+    calendarBodyRef.addEventListener('scroll', onScroll);
+    calendarBodyRef.addEventListener('scrollend', onScrollEnd);
+    this.stopVerticalGlide = stop;
+  }
+
+  /**
+   * Swaps the spliced list for the normal window around the target. Month
+   * containers are keyed, so the target block survives the swap, and the
+   * correction for the blocks added or removed above it keeps it in place.
+   */
+  private finishVerticalGlide(calendarBodyRef: HTMLElement, target: DatetimeParts) {
+    const blockHeight = this.getVerticalBlockHeight(calendarBodyRef);
+    const index = this.generateVerticalMonths().findIndex(
+      ({ month, year }) => month === target.month && year === target.year
+    );
+    const rebuilt = this.generateVerticalMonthsAround(target);
+    const rebuiltIndex = rebuilt.findIndex(({ month, year }) => month === target.month && year === target.year);
+
+    if (index !== -1 && rebuiltIndex !== -1 && blockHeight > 0) {
+      this.queueVerticalCorrection((rebuiltIndex - index) * blockHeight, rebuilt);
+    }
+
+    this.captureVerticalFocus(calendarBodyRef);
+    this.verticalGlideTarget = undefined;
+    this.verticalSplice = undefined;
+    this.verticalWindowCenter = { ...target };
+  }
+
+  /** Abandons a glide in progress and restores the normal window. */
+  private cancelVerticalGlide() {
+    this.stopVerticalGlide?.();
+    this.verticalGlideTarget = undefined;
+    this.pendingVerticalGlide = undefined;
+    this.verticalSplice = undefined;
+  }
 
   private initializeCalendarListener = () => {
     const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
+      return;
+    }
+
+    /**
+     * Vertical mode is a continuously scrolling list rather than a pager, so
+     * it shares none of the snap detection below. It only has to keep
+     * `workingParts` pointing at the month nearest the top of the list, and
+     * widen the window before the user reaches either end of it.
+     */
+    if (this.isVerticalNavigation) {
+      this.initializeVerticalCalendarListener(calendarBodyRef);
       return;
     }
 
@@ -1005,19 +1665,14 @@ export class Datetime implements ComponentInterface {
      * if element is not in viewport. Use scrollLeft instead.
      */
     writeTask(() => {
-      if (this.isVerticalNavigation) {
-        calendarBodyRef.scrollTop = this.setVerticalPageHeight(calendarBodyRef);
-      } else {
-        calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-      }
+      calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
 
       const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
         const box = calendarBodyRef.getBoundingClientRect();
 
         /**
-         * If the current scroll position is at the start of the container
-         * (all the way to the left, or all the way up when navigating
-         * vertically) then we have scrolled to the previous month.
+         * If the current scroll position is all the way to the left
+         * then we have scrolled to the previous month.
          * Otherwise, assume that we have scrolled to the next
          * month. We have a tolerance of 2px to account for
          * sub pixel rendering.
@@ -1026,9 +1681,7 @@ export class Datetime implements ComponentInterface {
          * swipe and abort (i.e. we swiped but we are still on the current month).
          */
         let condition: boolean;
-        if (this.isVerticalNavigation) {
-          condition = calendarBodyRef.scrollTop <= 2;
-        } else if (isRTL(this.el)) {
+        if (isRTL(this.el)) {
           condition = calendarBodyRef.scrollLeft >= -2;
         } else {
           condition = calendarBodyRef.scrollLeft <= 2;
@@ -1047,8 +1700,7 @@ export class Datetime implements ComponentInterface {
          * sub pixel rendering.
          */
         const monthBox = month.getBoundingClientRect();
-        const edgeDelta = this.isVerticalNavigation ? monthBox.y - box.y : monthBox.x - box.x;
-        if (Math.abs(edgeDelta) > 2) return;
+        if (Math.abs(monthBox.x - box.x) > 2) return;
 
         /**
          * If we're force-rendering a month, assume we've
@@ -1130,11 +1782,7 @@ export class Datetime implements ComponentInterface {
             year,
           });
 
-          if (this.isVerticalNavigation) {
-            calendarBodyRef.scrollTop = calendarBodyRef.clientHeight;
-          } else {
-            calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-          }
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
           calendarBodyRef.style.removeProperty('overflow');
 
           if (this.resolveForceDateScrolling) {
@@ -1375,7 +2023,94 @@ export class Datetime implements ComponentInterface {
    * When the presentation is changed, all calendar content is recreated,
    * so we need to re-init behavior with the new elements.
    */
+  componentWillRender() {
+    /**
+     * Park focus on the calendar body while the window is rebuilt, as
+     * horizontal does when it swaps months. Moving the focused day's node
+     * would otherwise blur it to nothing, and the host would emit `ionBlur`
+     * and then `ionFocus` when `componentDidRender` gives focus back. The
+     * body keeps focus inside the component throughout.
+     *
+     * Done here, immediately before the patch, rather than when the rebuild
+     * is scheduled. Parked any earlier, the body's own focus handling hands
+     * focus back to the old day node before the patch moves it.
+     */
+    const { calendarBodyRef, pendingVerticalRefocus } = this;
+
+    if (this.pendingVerticalScrollCorrection !== undefined && calendarBodyRef) {
+      this.verticalScrollTopBeforeRender = calendarBodyRef.scrollTop;
+    }
+
+    const active = this.el.shadowRoot?.activeElement;
+    if (pendingVerticalRefocus !== undefined && calendarBodyRef && active?.classList.contains('calendar-day')) {
+      calendarBodyRef.focus({ preventScroll: true });
+    }
+  }
+
   componentDidRender() {
+    /**
+     * Applied here rather than where it is calculated, because the re-centered
+     * window only exists in the DOM once this render has completed.
+     */
+    const { pendingVerticalInitialScroll, pendingVerticalScrollCorrection } = this;
+    if (pendingVerticalInitialScroll !== undefined && this.calendarBodyRef) {
+      /**
+       * Only once the body can actually scroll. Run earlier, the requested
+       * offset is clamped to a container that has not been given its height
+       * yet, which silently lands the list at the wrong month.
+       */
+      const body = this.calendarBodyRef;
+      if (body.scrollHeight > body.clientHeight && body.clientHeight > 0) {
+        this.pendingVerticalInitialScroll = undefined;
+        this.scrollToVerticalMonth(body, pendingVerticalInitialScroll, 'instant');
+      } else {
+        raf(() => this.applyPendingVerticalInitialScroll());
+      }
+    }
+
+    if (pendingVerticalScrollCorrection !== undefined && this.calendarBodyRef) {
+      const body = this.calendarBodyRef;
+      const months = Array.from(body.querySelectorAll<HTMLElement>('.calendar-month')).map((el) => ({
+        month: Number(el.dataset.month),
+        year: Number(el.dataset.year),
+        day: null,
+      }));
+
+      if (verticalListSignature(months) === pendingVerticalScrollCorrection.expected) {
+        const before = this.verticalScrollTopBeforeRender ?? body.scrollTop;
+        this.pendingVerticalScrollCorrection = undefined;
+        this.verticalScrollTopBeforeRender = undefined;
+        body.scrollTop = before + pendingVerticalScrollCorrection.amount;
+      }
+    }
+
+    // After the correction, so the day is refocused where it will stay.
+    if (
+      this.pendingVerticalRefocus !== undefined &&
+      this.pendingVerticalScrollCorrection === undefined &&
+      this.calendarBodyRef
+    ) {
+      this.restoreVerticalFocus(this.calendarBodyRef);
+    }
+
+    // After the correction, so a backward glide starts from a list held still.
+    const { pendingVerticalGlide } = this;
+    /**
+     * Also waits for the target's month to be in the DOM. A forward splice
+     * queues no correction, so without this a render already in flight could
+     * start the glide before the spliced months exist.
+     */
+    if (
+      pendingVerticalGlide !== undefined &&
+      this.pendingVerticalScrollCorrection === undefined &&
+      this.calendarBodyRef?.querySelector(
+        `.calendar-month[data-month="${pendingVerticalGlide.month}"][data-year="${pendingVerticalGlide.year}"]`
+      )
+    ) {
+      this.pendingVerticalGlide = undefined;
+      this.startVerticalGlide(this.calendarBodyRef, pendingVerticalGlide);
+    }
+
     const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel, forceRenderDate } = this;
 
     /**
@@ -1407,12 +2142,8 @@ export class Datetime implements ComponentInterface {
        * the scroll callback in this file does not fire,
        * and the resolveForceDateScrolling promise never resolves.
        */
-      if (workingMonth && forceRenderDate === undefined) {
-        if (this.isVerticalNavigation) {
-          calendarBodyRef.scrollTop = calendarBodyRef.clientHeight;
-        } else {
-          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-        }
+      if (workingMonth && forceRenderDate === undefined && !this.isVerticalNavigation) {
+        calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
       }
     }
 
@@ -1427,6 +2158,7 @@ export class Datetime implements ComponentInterface {
     this.prevNavigationOrientation = navigationOrientation;
 
     if (didChangeOrientation) {
+      this.cancelVerticalGlide();
       this.destroyInteractionListeners();
       this.initializeListeners();
     }
@@ -1529,6 +2261,41 @@ export class Datetime implements ComponentInterface {
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
 
+    /**
+     * Vertical never animates through `animateToDate`. That mechanism belongs
+     * to the pager: it steps one month with `nextMonth`/`prevMonth` and waits
+     * on a promise only the horizontal listener resolves, so it cannot reach a
+     * month the window has not rendered. Vertical glides instead, under the
+     * same conditions horizontal animates, and otherwise jumps.
+     */
+    if (this.isVerticalNavigation && didChangeMonth) {
+      /**
+       * A second value change mid-glide jumps rather than splicing a list
+       * that is itself spliced.
+       */
+      const wasGliding = this.verticalGlideTarget !== undefined;
+      this.cancelVerticalGlide();
+
+      this.setWorkingParts({ month, day, year, hour, minute, ampm });
+
+      const { calendarBodyRef } = this;
+      const canGlide =
+        !wasGliding &&
+        bodyIsVisible &&
+        !showMonthAndYear &&
+        calendarBodyRef !== undefined &&
+        this.verticalWindowCenter !== undefined &&
+        config.getBoolean('animated', true);
+
+      if (canGlide && this.glideToVerticalMonth(calendarBodyRef, targetValue)) {
+        return;
+      }
+
+      this.verticalWindowCenter = { ...targetValue };
+      this.pendingVerticalInitialScroll = { ...targetValue };
+      return;
+    }
+
     if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
       /**
        * Only animate if:
@@ -1589,6 +2356,13 @@ export class Datetime implements ComponentInterface {
     if (navigationOrientation === 'vertical' && !this.isGridStyle) {
       printIonWarning(
         `[ion-datetime] - navigationOrientation="vertical" only applies to the calendar grid, so it has no effect with preferWheel="true" or presentation="${presentation}".`,
+        el
+      );
+    }
+
+    if (this.isVerticalNavigation && this.showAdjacentDays) {
+      printIonWarning(
+        '[ion-datetime] - showAdjacentDays has no effect when navigationOrientation="vertical". A continuous list already shows the neighbouring months in full.',
         el
       );
     }
@@ -1687,11 +2461,7 @@ export class Datetime implements ComponentInterface {
      * used on both axes.
      */
     if (this.isVerticalNavigation) {
-      calendarBodyRef.scrollTo({
-        top: calendarBodyRef.clientHeight * 2,
-        left: 0,
-        behavior: scrollMode,
-      });
+      this.scrollToVerticalMonth(calendarBodyRef, getNextMonth(this.workingParts), scrollMode);
       return;
     }
 
@@ -1718,11 +2488,7 @@ export class Datetime implements ComponentInterface {
     const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
 
     if (this.isVerticalNavigation) {
-      calendarBodyRef.scrollTo({
-        top: calendarBodyRef.clientHeight * -2,
-        left: 0,
-        behavior: scrollMode,
-      });
+      this.scrollToVerticalMonth(calendarBodyRef, getPreviousMonth(this.workingParts), scrollMode);
       return;
     }
 
@@ -1736,7 +2502,35 @@ export class Datetime implements ComponentInterface {
   };
 
   private toggleMonthAndYearView = () => {
-    this.showMonthAndYear = !this.showMonthAndYear;
+    const opening = !this.showMonthAndYear;
+    this.showMonthAndYear = opening;
+
+    if (!this.isVerticalNavigation) {
+      return;
+    }
+
+    if (opening) {
+      this.cancelVerticalGlide();
+      this.verticalMonthAtPickerOpen = { ...this.workingParts };
+      return;
+    }
+
+    /**
+     * The picker's wheels only set `workingParts`. Horizontal renders around
+     * that, so closing the picker shows the chosen month. Vertical's window
+     * does not follow `workingParts`, so it is moved explicitly, and only if
+     * the choice changed: an unchanged close keeps the exact scroll position.
+     * It jumps rather than glides, as horizontal does here.
+     */
+    const { verticalMonthAtPickerOpen: before, workingParts } = this;
+    this.verticalMonthAtPickerOpen = undefined;
+    if (before && before.month === workingParts.month && before.year === workingParts.year) {
+      return;
+    }
+
+    const chosen = { month: workingParts.month, year: workingParts.year, day: null };
+    this.verticalWindowCenter = chosen;
+    this.pendingVerticalInitialScroll = { ...chosen };
   };
 
   /**
@@ -2389,6 +3183,21 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div class="calendar-header" part="calendar-header">
+        {/*
+          Announces the visible month when `workingParts` changes.
+
+          Rendered in both orientations rather than vertical only. Horizontal
+          has the same gap today, and fixing it for one axis would make the
+          two behave differently for assistive technology. It matters most in
+          vertical, where months slide past continuously and the gesture
+          alone tells a screen reader user nothing.
+
+          `aria-atomic` with a single region that is overwritten means a fast
+          scroll announces the month landed on, not every month crossed.
+        */}
+        <div class="calendar-month-year-announce" aria-live="polite" aria-atomic="true">
+          {getMonthAndYear(this.locale, this.workingParts)}
+        </div>
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
             <button
@@ -2417,7 +3226,14 @@ export class Datetime implements ComponentInterface {
             </button>
           </div>
 
-          {this.showNavigationButtons && (
+          {/*
+            Vertical never renders the arrows. Neither native reference does:
+            Material's vertical picker and the iOS Calendar month view both
+            rely on the next month being partly visible, which already tells
+            the user the list scrolls. PageUp and PageDown still move by a
+            month from a focused day.
+          */}
+          {!this.isVerticalNavigation && (
             <div class="calendar-next-prev">
               <ion-button
                 aria-label="Previous month"
@@ -2490,23 +3306,50 @@ export class Datetime implements ComponentInterface {
 
     const activePart = this.getActivePartsWithFallback();
 
+    const isVertical = this.isVerticalNavigation;
+    const monthHeadingId = `${this.inputId}-month-${year}-${month}`;
+
     return (
       <div
-        // Non-visible months should be hidden from screen readers
-        aria-hidden={!isWorkingMonth ? 'true' : null}
+        /**
+         * Horizontal only ever shows one month, so the other two are hidden
+         * from screen readers. Vertical shows several at once, so every month
+         * in the window is real content.
+         */
+        aria-hidden={!isVertical && !isWorkingMonth ? 'true' : null}
         class={{
           'calendar-month': true,
           // Prevents scroll snap swipe gestures for months outside of the min/max bounds
-          'calendar-month-disabled': !isWorkingMonth && swipeDisabled,
+          'calendar-month-disabled': !isVertical && !isWorkingMonth && swipeDisabled,
         }}
+        data-month={month}
+        data-year={year}
+        /**
+         * Horizontal deliberately reuses its three containers by position:
+         * the scroll reset depends on the middle one staying put while its
+         * contents change. Vertical cannot, because its window shifts by
+         * several months at a time, and a reused container would keep focus
+         * while repainting as a different month. Keying by date keeps July
+         * as July, so a focused day stays the day the user moved to.
+         */
+        key={isVertical ? `${year}-${month}` : undefined}
       >
-        <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showAdjacentDays).map((dateObject, index) => {
+        {isVertical && (
+          <div class="calendar-month-heading" id={monthHeadingId} part="month-heading">
+            {getMonthAndYear(this.locale, { month, year, day: null })}
+          </div>
+        )}
+        <div
+          class="calendar-month-grid"
+          role={isVertical ? 'group' : undefined}
+          aria-labelledby={isVertical ? monthHeadingId : null}
+        >
+          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.rendersAdjacentDays).map((dateObject, index) => {
             const { day, dayOfWeek, isAdjacentDay } = dateObject;
-            const { el, highlightedDates, isDateEnabled, multiple, showAdjacentDays } = this;
+            const { el, highlightedDates, isDateEnabled, multiple, rendersAdjacentDays } = this;
             let _month = month;
             let _year = year;
-            if (showAdjacentDays && isAdjacentDay && day !== null) {
+            if (rendersAdjacentDays && isAdjacentDay && day !== null) {
               if (day > 20) {
                 // Leading with the adjacent day from the previous month
                 // if its a adjacent day and is higher than '20' (last week even in feb)
@@ -2679,7 +3522,10 @@ export class Datetime implements ComponentInterface {
   private renderCalendarBody() {
     return (
       <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
-        {generateMonths(this.workingParts, this.forceRenderDate).map(({ month, year }) => {
+        {(this.isVerticalNavigation
+          ? this.generateVerticalMonths()
+          : generateMonths(this.workingParts, this.forceRenderDate)
+        ).map(({ month, year }) => {
           return this.renderMonth(month, year);
         })}
       </div>
@@ -2693,6 +3539,7 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
+
   private renderTimeLabel() {
     const hasSlottedTimeLabel = this.el.querySelector('[slot="time-label"]') !== null;
     if (!hasSlottedTimeLabel && !this.showDefaultTimeLabel) {
@@ -3012,3 +3859,24 @@ const WHEEL_PART = 'wheel';
 const WHEEL_ITEM_PART = 'wheel-item';
 const WHEEL_ITEM_ACTIVE_PART = `active`;
 const NAVIGATION_VERTICAL_CLASS = 'datetime-navigation-vertical';
+
+/**
+ * How many months the vertical window holds either side of its center. Has to
+ * cover the visible area plus enough margin that the user can scroll without
+ * immediately reaching the end. Refer to the design doc's open question on
+ * tuning this against a real device.
+ */
+const VERTICAL_WINDOW_RADIUS = 3;
+
+/** How close to an edge of the window the user can get before it re-centers. */
+const VERTICAL_RECENTER_THRESHOLD = 1;
+
+/** Quiet period after the last scroll event that ends a glide without `scrollend`. */
+const VERTICAL_GLIDE_SETTLE_MS = 150;
+
+/** Identifies a rendered month list by its first month and its length. */
+const verticalListSignature = (months: DatetimeParts[]) =>
+  months.length === 0 ? '' : `${months[0].year}-${months[0].month}:${months.length}`;
+
+/** Months since year 0, for ordering months without a day. */
+const monthIndex = ({ month, year }: DatetimeParts) => year * 12 + month;

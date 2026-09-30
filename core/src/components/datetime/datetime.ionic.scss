@@ -253,3 +253,15 @@
   align-items: stretch;
   gap: globals.$ion-space-200;
 }
+
+// Calendar / Vertical navigation
+// -----------------------------------
+
+:host(.datetime-navigation-vertical) {
+  /**
+   * Matches the day button height, so a month block reserves exactly the
+   * space six rows of buttons need. Without this the theme falls back to the
+   * shared default and the buttons overflow their rows.
+   */
+  --internal-day-height: #{globals.$ion-scale-1200};
+}

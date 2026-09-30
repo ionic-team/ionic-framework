@@ -31,11 +31,6 @@
         }
       }
 
-      ion-datetime {
-        box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25), 0px 8px 16px rgba(0, 0, 0, 0.25);
-        border-radius: 8px;
-      }
-
       /* Tall filler so the page itself scrolls, to expose scroll chaining. */
       .filler {
         height: 70vh;
@@ -79,27 +74,6 @@
           </div>
 
           <div class="grid-item">
-            <h2>Vertical, no arrows (the design)</h2>
-            <ion-datetime
-              id="vertical-no-arrows"
-              presentation="date"
-              navigation-orientation="vertical"
-              show-navigation-buttons="false"
-              value="2022-06-03"
-            ></ion-datetime>
-          </div>
-
-          <div class="grid-item">
-            <h2>Horizontal, no arrows (prop is orientation independent)</h2>
-            <ion-datetime
-              id="horizontal-no-arrows"
-              presentation="date"
-              show-navigation-buttons="false"
-              value="2022-06-03"
-            ></ion-datetime>
-          </div>
-
-          <div class="grid-item">
             <h2>Vertical, min/max (Mar 2022 to Sep 2022)</h2>
             <ion-datetime
               presentation="date"
@@ -111,8 +85,9 @@
           </div>
 
           <div class="grid-item">
-            <h2>Vertical, adjacent days + firstDayOfWeek=1</h2>
+            <h2>Vertical, firstDayOfWeek=1, showAdjacentDays ignored (warns)</h2>
             <ion-datetime
+              id="vertical-adjacent"
               presentation="date"
               navigation-orientation="vertical"
               value="2022-06-03"
@@ -172,6 +147,54 @@
           </div>
 
           <div class="grid-item">
+            <h2>Vertical, programmatic value</h2>
+            <ion-datetime
+              id="vertical-programmatic"
+              presentation="date"
+              navigation-orientation="vertical"
+              value="2022-06-03"
+            ></ion-datetime>
+            <button onclick="setValue('2022-06-20')">On screen (Jun 20 2022)</button>
+            <button onclick="setValue('2022-08-15')">Near (Aug 15 2022)</button>
+            <button onclick="setValue('2027-03-15')">Far forward (Mar 15 2027)</button>
+            <button onclick="setValue('2019-11-15')">Far back (Nov 15 2019)</button>
+            <button onclick="resetValue()">reset()</button>
+            <div>
+              <span>value: <span id="programmatic-value">2022-06-03</span></span>
+            </div>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, multiple</h2>
+            <ion-datetime
+              id="vertical-multiple"
+              presentation="date"
+              navigation-orientation="vertical"
+              multiple="true"
+            ></ion-datetime>
+            <button onclick="setMultiple(['2022-06-01', '2022-06-02', '2022-06-03'])">Peeking month (Jun 1-3 2022)</button>
+            <button onclick="setMultiple(['2022-03-01', '2022-04-01', '2022-05-01'])">Separate months (Mar-May 2022)</button>
+            <button onclick="setMultiple(['2024-11-05', '2024-11-12'])">Far forward (Nov 2024)</button>
+            <div>
+              <span>value: <span id="multiple-value"></span></span>
+            </div>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, full height of its parent (modal)</h2>
+            <button id="open-full-height">Open modal</button>
+            <ion-modal trigger="open-full-height">
+              <ion-datetime
+                id="vertical-full-height"
+                presentation="date"
+                navigation-orientation="vertical"
+                value="2022-06-03"
+                style="height: 100%"
+              ></ion-datetime>
+            </ion-modal>
+          </div>
+
+          <div class="grid-item">
             <h2>Runtime toggle (re-init path)</h2>
             <ion-datetime id="toggleable" presentation="date" value="2022-06-03"></ion-datetime>
             <button onclick="toggleOrientation()">Toggle orientation</button>
@@ -186,6 +209,38 @@
     </ion-app>
 
     <script>
+      const programmatic = document.querySelector('#vertical-programmatic');
+      const programmaticValue = document.querySelector('#programmatic-value');
+
+      programmatic.addEventListener('ionChange', (ev) => {
+        programmaticValue.textContent = ev.detail.value ?? 'none';
+      });
+
+      function setValue(value) {
+        programmatic.value = value;
+        programmaticValue.textContent = value;
+      }
+
+      async function resetValue() {
+        await programmatic.reset();
+        programmaticValue.textContent = programmatic.value ?? 'none';
+      }
+
+      const multiple = document.querySelector('#vertical-multiple');
+      const multipleValue = document.querySelector('#multiple-value');
+
+      multiple.addEventListener('ionChange', (ev) => {
+        multipleValue.textContent = ev.detail.value?.join(', ') || 'none';
+      });
+
+      function setMultiple(dates) {
+        multiple.value = dates;
+        multipleValue.textContent = dates.join(', ');
+      }
+
+      // Same starting dates as the multiple test suite.
+      setMultiple(['2022-03-01', '2022-04-01', '2022-05-01']);
+
       function toggleOrientation() {
         const datetime = document.querySelector('#toggleable');
         const next = datetime.navigationOrientation === 'vertical' ? 'horizontal' : 'vertical';

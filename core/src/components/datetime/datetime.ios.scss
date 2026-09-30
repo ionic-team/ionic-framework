@@ -366,3 +366,10 @@
 ::slotted([slot="buttons"]) {
   width: 100%;
 }
+
+// Calendar / Vertical navigation
+// -----------------------------------
+
+:host(.datetime-navigation-vertical) {
+  --internal-day-height: #{$datetime-ios-day-height};
+}
