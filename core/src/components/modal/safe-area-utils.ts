@@ -1,5 +1,6 @@
 import { win } from '@utils/browser';
-import { raf } from '@utils/helpers';
+import { onCustomPropertyChange, raf } from '@utils/helpers';
+import { getOverlaySizeType } from '@utils/overlays';
 
 type SafeAreaValue = '0px' | 'inherit';
 
@@ -15,6 +16,17 @@ export interface SafeAreaConfig {
 }
 
 /**
+ * Indicates whether the modal spans the viewport on each axis.
+ *
+ * `vertical` means the modal reaches both the top and bottom edges.
+ * `horizontal` means the modal reaches both the left and right edges.
+ */
+export interface ModalCoveredAxes {
+  vertical: boolean;
+  horizontal: boolean;
+}
+
+/**
  * Context information about the modal used to determine safe-area behavior.
  */
 export interface ModalSafeAreaContext {
@@ -23,49 +35,22 @@ export interface ModalSafeAreaContext {
   presentingElement?: HTMLElement;
   breakpoints?: number[];
   currentBreakpoint?: number;
+
   /**
-   * Only consulted by `getInitialSafeAreaConfig()`. Callers that only use the
-   * context for non-initial paths can omit this. See `hasCustomModalDimensions()`.
+   * Only used by `getInitialSafeAreaConfig()` to predict safe-area
+   * requirements before the modal is presented. Callers that only use
+   * the context for non-initial paths can omit this.
    */
-  hasCustomDimensions?: boolean;
+  coveredAxes?: ModalCoveredAxes;
 }
 
-/**
- * These thresholds match the SCSS media query breakpoints in modal.vars.scss
- * that trigger the centered dialog layout (non-fullscreen modal).
- *
- * SCSS defines two height breakpoints: $modal-inset-min-height-small (600px)
- * and $modal-inset-min-height-large (768px). We use the smaller one because
- * that's the threshold where the modal transitions from fullscreen to centered
- * dialog — the larger breakpoint only increases the dialog's height.
- */
-const MODAL_INSET_MIN_WIDTH = 768;
-const MODAL_INSET_MIN_HEIGHT = 600;
 const EDGE_THRESHOLD = 5;
-
-/**
- * CSS values for `--width` / `--height` that are treated as fullscreen
- * (modal touches the corresponding screen edges). Empty string means the
- * property was not overridden. See `hasCustomModalDimensions()`.
- */
-const FULLSCREEN_SIZE_VALUES = new Set(['', '100%', '100vw', '100vh', '100dvw', '100dvh', '100svw', '100svh']);
 
 /**
  * Cache for resolved root safe-area-top value, invalidated once per frame.
  */
 let cachedRootSafeAreaTop: number | null = null;
 let cacheInvalidationScheduled = false;
-
-/**
- * Determines if the current viewport meets the CSS media query conditions
- * that cause regular modals to render as centered dialogs instead of fullscreen.
- * Matches: @media (min-width: 768px) and (min-height: 600px)
- */
-const isCenteredDialogViewport = (): boolean => {
-  if (!win) return false;
-  return win.matchMedia(`(min-width: ${MODAL_INSET_MIN_WIDTH}px) and (min-height: ${MODAL_INSET_MIN_HEIGHT}px)`)
-    .matches;
-};
 
 /**
  * Resolves the current root --ion-safe-area-top value to pixels.
@@ -105,59 +90,72 @@ export const getRootSafeAreaTop = (): number => {
 };
 
 /**
- * Calls back when the resolved root `--ion-safe-area-top` changes, which no
- * event and no window resize covers. The probe's height tracks the variable, so
- * a change to it becomes a size change the observer can see.
+ * Calls back when the resolved root `--ion-safe-area-top` changes. The value
+ * the caller already applied is passed as the baseline, so a change between
+ * that read and the observer starting is still reported.
  */
 export const onRootSafeAreaTopChange = (callback: (safeAreaTop: number) => void): (() => void) => {
-  const doc = win?.document;
-  if (!doc?.body || typeof ResizeObserver === 'undefined') {
-    return () => undefined;
-  }
-
-  const probe = doc.createElement('div');
-  probe.style.cssText =
-    'position:fixed;visibility:hidden;pointer-events:none;top:0;left:0;width:0;' +
-    'height:var(--ion-safe-area-top,0px);';
-  doc.body.appendChild(probe);
-
-  /**
-   * Seeded with the value the caller has already applied, so a change that
-   * lands before the observer's first delivery still gets reported. Comparing
-   * against an unset value instead would consume that first delivery and treat
-   * the new inset as the baseline.
-   */
-  let lastHeight = getRootSafeAreaTop();
-  const observer = new ResizeObserver((entries) => {
-    const { height } = entries[0].contentRect;
-    if (height !== lastHeight) {
-      lastHeight = height;
-      callback(height);
-    }
-  });
-  observer.observe(probe);
-
-  return () => {
-    observer.disconnect();
-    probe.remove();
-  };
+  return onCustomPropertyChange(win?.document?.body, '--ion-safe-area-top', callback, getRootSafeAreaTop());
 };
 
 /**
- * True when the modal host declares BOTH a non-fullscreen `--width` AND a
- * non-fullscreen `--height` (i.e. a centered-dialog-like modal that doesn't
- * touch any screen edge).
+ * Determines which viewport axes the modal spans so safe-area requirements
+ * can be predicted independently for each axis.
  *
- * The conservative "both axes" check avoids mis-zeroing safe-area for
- * partial-custom modals where the modal still touches top/bottom edges
- * (e.g. only `--width` overridden). Partial cases fall through to the
- * existing position-based post-animation correction.
+ * A modal that spans an axis reaches both edges on that axis and needs the
+ * corresponding safe-area insets. A modal that does not span an axis reaches
+ * neither edge on that axis.
+ *
+ * When both `--width` and `--height` are `fullscreen`, coverage can be
+ * determined directly. Otherwise, coverage is based on the rendered wrapper,
+ * including cases where content sizing or `--max-height` causes the modal
+ * to reach the viewport.
  */
-export const hasCustomModalDimensions = (hostEl: HTMLElement): boolean => {
+export const getModalCoveredAxes = (hostEl: HTMLElement): ModalCoveredAxes => {
   const styles = getComputedStyle(hostEl);
-  const width = styles.getPropertyValue('--width').trim();
-  const height = styles.getPropertyValue('--height').trim();
-  return !FULLSCREEN_SIZE_VALUES.has(width) && !FULLSCREEN_SIZE_VALUES.has(height);
+  const width = getOverlaySizeType(styles.getPropertyValue('--width'));
+  const height = getOverlaySizeType(styles.getPropertyValue('--height'));
+
+  if (width === 'fullscreen' && height === 'fullscreen') {
+    return { vertical: true, horizontal: true };
+  }
+
+  return measureCoveredAxes(hostEl);
+};
+
+/**
+ * Measures the modal wrapper to determine whether it spans the viewport
+ * on each axis.
+ *
+ * The wrapper has no box while the modal is hidden, so `overlay-hidden`
+ * is temporarily removed to allow the wrapper to be measured. The class
+ * is restored in the same task before the browser can paint.
+ *
+ * Only the wrapper's size is measured. Its position is affected by the
+ * enter animation, which initially translates it by its own height, while
+ * the translation does not affect its measured size.
+ */
+const measureCoveredAxes = (hostEl: HTMLElement): ModalCoveredAxes => {
+  const wrapperEl = hostEl.shadowRoot?.querySelector('.modal-wrapper');
+  if (wrapperEl == null || win === undefined) {
+    return { vertical: false, horizontal: false };
+  }
+
+  const wasHidden = hostEl.classList.contains('overlay-hidden');
+  if (wasHidden) {
+    hostEl.classList.remove('overlay-hidden');
+  }
+
+  const { width, height } = wrapperEl.getBoundingClientRect();
+
+  if (wasHidden) {
+    hostEl.classList.add('overlay-hidden');
+  }
+
+  return {
+    vertical: height >= win.innerHeight - EDGE_THRESHOLD,
+    horizontal: width >= win.innerWidth - EDGE_THRESHOLD,
+  };
 };
 
 /**
@@ -195,27 +193,24 @@ export const getInitialSafeAreaConfig = (context: ModalSafeAreaContext): SafeAre
     };
   }
 
-  // On viewports that meet the centered dialog media query breakpoints,
-  // regular modals render as centered dialogs (not fullscreen), so they
-  // don't touch any screen edges and don't need safe-area insets. Also
-  // applies to phone viewports when the modal declares custom --width and
-  // --height; these don't touch screen edges either, so the initial
-  // prediction must be zero to avoid a post-animation correction flash.
-  if (isCenteredDialogViewport() || context.hasCustomDimensions) {
-    return {
-      top: '0px',
-      bottom: '0px',
-      left: '0px',
-      right: '0px',
-    };
-  }
+  /**
+   * Each axis is evaluated independently because a modal can span one axis
+   * without spanning the other. This allows the initial safe-area configuration
+   * to match the modal's expected dimensions and avoids correcting an incorrect
+   * pair of insets after presentation.
+   *
+   * A modal can span the horizontal axis while remaining inset vertically, or
+   * span the vertical axis while remaining inset horizontally. Wide viewports
+   * can also render regular modals as centered dialogs, while content-sized
+   * modals may still be clamped to the viewport.
+   */
+  const { vertical, horizontal } = context.coveredAxes ?? { vertical: true, horizontal: true };
 
-  // Fullscreen modals on phone - inherit all safe areas
   return {
-    top: 'inherit',
-    bottom: 'inherit',
-    left: 'inherit',
-    right: 'inherit',
+    top: vertical ? 'inherit' : '0px',
+    bottom: vertical ? 'inherit' : '0px',
+    left: horizontal ? 'inherit' : '0px',
+    right: horizontal ? 'inherit' : '0px',
   };
 };
 

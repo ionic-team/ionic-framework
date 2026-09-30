@@ -62,6 +62,9 @@
     "webpack": "^5.61.0",
     "webpack-cli": "^4.9.2"
   },
+  "overrides": {
+    "postcss": "^8.5.23"
+  },
   "engines": {
     "node": ">=20"
   }

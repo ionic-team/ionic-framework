@@ -8,6 +8,7 @@ import {
   Listen,
   Method,
   Prop,
+  State,
   Watch,
   forceUpdate,
   h,
@@ -15,6 +16,7 @@ import {
 } from '@stencil/core';
 import { componentOnReady, hasLazyBuild, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { getOverlaySizeType } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -76,6 +78,11 @@ export class Content implements ComponentInterface {
   };
 
   @Element() el!: HTMLIonContentElement;
+
+  /**
+   * Whether the host is sized to its content.
+   */
+  @State() sizeToContent = false;
 
   /**
    * The color to use from your application's color palette.
@@ -148,6 +155,7 @@ export class Content implements ComponentInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.sizeToContent = this.readSizeToContent();
   }
 
   connectedCallback() {
@@ -190,6 +198,7 @@ export class Content implements ComponentInterface {
 
     // Re-observe on reattach, since componentDidLoad only fires once.
     this.setupFullscreenResizeObserver();
+    this.updateSizeToContent();
   }
 
   componentDidLoad() {
@@ -258,6 +267,17 @@ export class Content implements ComponentInterface {
     this.fullscreenResizeObserver.observe(this.el);
   }
 
+  /**
+   * Picks up an overlay that is no longer sized the way the last render
+   * assumed, re-rendering only when the answer changes. Read in a `readTask`
+   * because resolving the custom property forces a style recalculation.
+   */
+  private updateSizeToContent() {
+    readTask(() => {
+      this.sizeToContent = this.readSizeToContent();
+    });
+  }
+
   private destroyFullscreenResizeObserver() {
     if (this.fullscreenResizeObserver !== undefined) {
       this.fullscreenResizeObserver.disconnect();
@@ -310,6 +330,34 @@ export class Content implements ComponentInterface {
     return forceOverscroll === undefined ? mode === 'ios' && isPlatform('ios') : forceOverscroll;
   }
 
+  /**
+   * Reads whether to size the component to its content height. Forces a style
+   * recalculation, so it belongs in a read task or before the first render.
+   *
+   * This applies inside popovers and modals with a content-based `--height`,
+   * where the overlay does not provide the content with a definite height
+   * to fill.
+   *
+   * Only `--height` is consulted. Styling the wrapper directly, such as
+   * `ion-modal::part(content) { height: fit-content; }`, does not change
+   * `--height` and therefore cannot be observed. `--height` is the only
+   * supported way to opt into content-based sizing.
+   */
+  private readSizeToContent() {
+    if (hostContext('ion-popover', this.el)) {
+      return true;
+    }
+
+    const modal = this.el.closest('ion-modal');
+    if (modal === null) {
+      return false;
+    }
+
+    const height = getComputedStyle(modal).getPropertyValue('--height');
+
+    return getOverlaySizeType(height) === 'content';
+  }
+
   private resize() {
     /**
      * Only force update if the component is rendered in a browser context.
@@ -320,6 +368,13 @@ export class Content implements ComponentInterface {
      * TODO: Remove if STENCIL-834 determines Stencil will account for this.
      */
     if (Build.isBrowser) {
+      /**
+       * A window resize can cross a media query that changes the modal's
+       * `--height`. The content's own offsets are unchanged, so neither branch
+       * below re-renders and the class from the last render would go stale.
+       */
+      this.updateSizeToContent();
+
       if (this.fullscreen) {
         readTask(() => this.readDimensions());
       } else if (this.cTop !== 0 || this.cBottom !== 0) {
@@ -330,14 +385,16 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Recalculate content dimensions. Called by overlays (e.g., popover) when
-   * sibling elements like headers or footers have finished rendering and their
-   * heights are available, ensuring accurate offset-top calculations.
+   * Recalculates the content dimensions and whether it should size itself to
+   * its content. Called by overlays when something they own changes, such as
+   * a header finishing its render or `--height` being updated.
+   *
    * @internal
    */
   @Method()
   async recalculateDimensions(): Promise<void> {
     readTask(() => this.readDimensions());
+    this.updateSizeToContent();
   }
 
   private readDimensions() {
@@ -538,7 +595,7 @@ export class Content implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'content-fullscreen': this.fullscreen,
-          'content-sizing': hostContext('ion-popover', this.el),
+          'content-sizing': this.sizeToContent,
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,
         })}

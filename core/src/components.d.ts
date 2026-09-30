@@ -867,7 +867,7 @@ export namespace Components {
          */
         "getScrollElement": () => Promise<HTMLElement>;
         /**
-          * Recalculate content dimensions. Called by overlays (e.g., popover) when sibling elements like headers or footers have finished rendering and their heights are available, ensuring accurate offset-top calculations.
+          * Recalculates the content dimensions and whether it should size itself to its content. Called by overlays when something they own changes, such as a header finishing its render or `--height` being updated.
          */
         "recalculateDimensions": () => Promise<void>;
         /**

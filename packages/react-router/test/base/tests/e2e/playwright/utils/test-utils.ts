@@ -17,6 +17,41 @@ export function withTestingMode(path: string): string {
   return `${path}${separator}ionic:_testing=true`;
 }
 
+/** Clear the recorded events so an assertion only sees the navigation under test. */
+export async function resetLifecycleEvents(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    (window as any).lifecycleEvents = [];
+  });
+}
+
+/**
+ * Read `window.lifecycleEvents` once two consecutive reads match, so an event
+ * arriving just behind the expected ones is included rather than missed.
+ *
+ * An empty array never settles, so only use this where events are expected.
+ */
+export async function settledLifecycleEvents(page: Page): Promise<string[]> {
+  let previous: string[] | undefined;
+  let current: string[] = [];
+
+  try {
+    await expect
+      .poll(async () => {
+        current = await page.evaluate(() => ((window as any).lifecycleEvents ?? []) as string[]);
+        const settled = current.length > 0 && previous !== undefined && current.join('|') === previous.join('|');
+        previous = current;
+        return settled;
+      })
+      .toBe(true);
+  } catch (error) {
+    // The poll only yields a boolean, so report what was actually seen. A failing
+    // `page.evaluate` ends up here too, so keep the original as the cause.
+    throw new Error(`Lifecycle events never settled. Last read: ${JSON.stringify(current)}`, { cause: error });
+  }
+
+  return current;
+}
+
 let peakCounterId = 0;
 
 /**

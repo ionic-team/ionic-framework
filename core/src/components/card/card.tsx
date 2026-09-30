@@ -1,8 +1,8 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Element, Component, Host, Prop, h } from '@stencil/core';
+import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createAttributeController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAttributes } from '@utils/helpers';
 import { createColorClasses, openURL } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -23,7 +23,7 @@ import type { RouterDirection } from '../router/utils/interface';
   shadow: true,
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
-  private inheritedAriaAttributes: Attributes = {};
+  private ariaController?: AttributeController;
 
   @Element() el!: HTMLElement;
   /**
@@ -88,7 +88,20 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() target: string | undefined;
 
   componentWillLoad() {
-    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+    /**
+     * Only the initial copy takes the attribute off the host, so an `aria-label` written
+     * after load stays on the host too. That's harmless here, because unlike `ion-item`
+     * the card host renders no role of its own, so nothing reads the leftover copy.
+     */
+    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+  }
+
+  connectedCallback() {
+    this.ariaController?.init();
+  }
+
+  disconnectedCallback() {
+    this.ariaController?.destroy();
   }
 
   private isClickable(): boolean {
@@ -101,7 +114,8 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (!clickable) {
       return [<slot></slot>];
     }
-    const { href, routerAnimation, routerDirection, inheritedAriaAttributes } = this;
+    const { href, routerAnimation, routerDirection } = this;
+    const inheritedAriaAttributes = this.ariaController?.attributes ?? {};
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
     const attrs =
       TagType === 'button'
