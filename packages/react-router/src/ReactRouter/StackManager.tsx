@@ -4,6 +4,12 @@
  * particularly with animations and swipe gestures.
  */
 
+import {
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+} from '@ionic/core/components';
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { IonRoute, RouteManagerContext, StackContext, createDebugLogger, generateId, getConfig } from '@ionic/react';
 import React from 'react';
@@ -86,6 +92,19 @@ const revealIonPageForSwipeBack = (element: HTMLElement | undefined): void => {
     element.style.removeProperty('display');
     element.classList.remove('ion-page-hidden');
     element.removeAttribute('aria-hidden');
+  }
+};
+
+type ViewLifecycleEvent =
+  | typeof LIFECYCLE_WILL_ENTER
+  | typeof LIFECYCLE_DID_ENTER
+  | typeof LIFECYCLE_WILL_LEAVE
+  | typeof LIFECYCLE_DID_LEAVE;
+
+/** Dispatches a view lifecycle event the way core's `lifecycle()` does. */
+const dispatchLifecycleEvent = (element: HTMLElement | undefined, eventName: ViewLifecycleEvent): void => {
+  if (element) {
+    element.dispatchEvent(new CustomEvent(eventName, { bubbles: false, cancelable: false }));
   }
 };
 
@@ -367,12 +386,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
     allViewsInOutlet.forEach((viewItem) => {
       if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewWillLeave', { bubbles: false, cancelable: false })
-        );
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewDidLeave', { bubbles: false, cancelable: false })
-        );
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_WILL_LEAVE);
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_DID_LEAVE);
       }
     });
 
@@ -409,12 +424,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         return;
       }
       if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewWillLeave', { bubbles: false, cancelable: false })
-        );
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewDidLeave', { bubbles: false, cancelable: false })
-        );
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_WILL_LEAVE);
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_DID_LEAVE);
       }
       this.context.unMountViewItem(viewItem);
     });
@@ -1782,10 +1793,36 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           // Bail out if the component unmounted during waitForComponentsReady
           if (!this._isMounted) return;
 
+          const isCurrent = myGeneration === this.transitionGeneration;
+          // A page the newest transition is entering is not leaving after all.
+          const isLeaving = isCurrent || leavingEl !== this.transitionEnteringElement;
+          // Already hidden means the leave events have fired. This checks the class rather
+          // than `isViewVisible` because a nested outlet marks its leaving page
+          // `visibility: hidden` before we get here and still needs `ionViewDidLeave`.
+          const announceLeaving = isLeaving && !leavingEl.classList.contains('ion-page-hidden');
+
+          /**
+           * Dispatch the lifecycle events, since we skipped `commit()`. Only the
+           * newest transition fires the entering events, and the class swap follows
+           * all four so the ordering matches core's `transition()`.
+           *
+           * These run after `waitForComponentsReady` because on a first mount the
+           * page has not attached its listeners yet.
+           */
+          if (announceLeaving) {
+            dispatchLifecycleEvent(leavingEl, LIFECYCLE_WILL_LEAVE);
+          }
+          if (isCurrent) {
+            dispatchLifecycleEvent(enteringEl, LIFECYCLE_WILL_ENTER);
+            dispatchLifecycleEvent(enteringEl, LIFECYCLE_DID_ENTER);
+          }
+          if (announceLeaving) {
+            dispatchLifecycleEvent(leavingEl, LIFECYCLE_DID_LEAVE);
+          }
+
           // Swap visibility synchronously - show entering, hide leaving
-          // Skip hiding if a newer transition already made leavingEl the entering view
           enteringEl.classList.remove('ion-page-invisible');
-          if (myGeneration === this.transitionGeneration || leavingEl !== this.transitionEnteringElement) {
+          if (isLeaving) {
             leavingEl.classList.add('ion-page-hidden');
             leavingEl.setAttribute('aria-hidden', 'true');
           }
