@@ -8,7 +8,7 @@
 import type { RouteInfo, ViewItem } from '@ionic/react';
 import { generateId, IonRoute, ViewLifeCycleManager, ViewStacks } from '@ionic/react';
 import React from 'react';
-import type { PathMatch } from 'react-router';
+import type { PathMatch } from 'react-router-dom';
 import { Navigate, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
 import { analyzeRouteChildren, computeParentPath } from './utils/computeParentPath';
@@ -119,13 +119,13 @@ const getFallbackParamsFromViewItems = (
 };
 
 /**
- * Builds the matches array for RouteContext.
+ * Builds the matches array for RouteContext. The leaf `pathname` uses the absolute base,
+ * because the raw match is relative for a route without a leading slash, which breaks
+ * relative links, and includes a splat's tail, which loops an index `<Navigate>`.
  */
 const buildContextMatches = (
   parentMatches: RouteContextMatch[],
   combinedParams: RouteParams,
-  routeMatch: PathMatch<string> | undefined,
-  routeInfoPathname: string,
   absolutePathnameBase: string,
   viewItem: ViewItem,
   routeElement: React.ReactElement,
@@ -135,7 +135,7 @@ const buildContextMatches = (
     ...parentMatches,
     {
       params: combinedParams,
-      pathname: routeMatch?.pathname || routeInfoPathname,
+      pathname: absolutePathnameBase,
       pathnameBase: absolutePathnameBase,
       route: {
         id: viewItem.id,
@@ -563,8 +563,6 @@ export class ReactRouterViewStack extends ViewStacks {
           const contextMatches = buildContextMatches(
             parentMatches,
             combinedParams,
-            routeMatch,
-            routeInfo.pathname,
             absolutePathnameBase,
             viewItem,
             routeElement,

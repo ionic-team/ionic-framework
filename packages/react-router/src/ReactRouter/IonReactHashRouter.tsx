@@ -3,13 +3,13 @@
  * React applications.
  */
 
-import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef, useCallback } from 'react';
-import type { HashRouterProps } from 'react-router-dom';
+import type { HashRouterProps, Location as HistoryLocation, NavigationType as HistoryAction } from 'react-router-dom';
 import { HashRouter, useLocation, useNavigationType } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
+import { withTransitionDefaults } from './utils/transitionDefaults';
 
 const RouterContent = ({ children }: PropsWithChildren<{}>) => {
   const location = useLocation();
@@ -48,7 +48,7 @@ const RouterContent = ({ children }: PropsWithChildren<{}>) => {
 
 export const IonReactHashRouter = ({ children, ...routerProps }: PropsWithChildren<HashRouterProps>) => {
   return (
-    <HashRouter {...routerProps}>
+    <HashRouter {...withTransitionDefaults(routerProps)}>
       <RouterContent>{children}</RouterContent>
     </HashRouter>
   );

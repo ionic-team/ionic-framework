@@ -8,8 +8,7 @@ import {
 } from '@ionic/react';
 import React, { useState } from 'react';
 import type { ReactElement } from 'react';
-import { Route, Navigate } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, Route } from 'react-router-dom';
 
 import TestDescription from '../../components/TestDescription';
 

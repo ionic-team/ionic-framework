@@ -1,5 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
-const external = ['react', 'react-dom', 'react-router', 'react-router-dom', 'history', 'tslib'];
+const external = ['react', 'react-dom', 'react-router-dom', 'tslib'];
 
 export default {
   input: 'src/index.ts',

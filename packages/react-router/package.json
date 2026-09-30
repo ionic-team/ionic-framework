@@ -24,11 +24,13 @@
     "build.watch": "npm run compile -- --watch",
     "clean": "rimraf dist",
     "compile": "rollup -c",
-    "eslint": "eslint src",
-    "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
+    "eslint": "eslint src type-tests",
+    "prettier": "prettier \"./{src,type-tests}/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "npm run typecheck.rr6 && npm run typecheck.rr7",
+    "typecheck.rr6": "tsc --noEmit",
+    "typecheck.rr7": "tsc --noEmit -p tsconfig.rr7.json",
     "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
@@ -44,8 +46,13 @@
   "peerDependencies": {
     "react": "^18 || ^19",
     "react-dom": "^18 || ^19",
-    "react-router": ">=6.4.0 <7",
-    "react-router-dom": ">=6.4.0 <7"
+    "react-router": ">=6.4.0 <7 || >=7.15.0 <8",
+    "react-router-dom": ">=6.4.0 <7 || >=7.15.0 <8"
+  },
+  "peerDependenciesMeta": {
+    "react-router": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -60,12 +67,12 @@
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",
     "eslint-plugin-import": "^2.31.0",
-    "history": "^5.3.0",
     "prettier": "^2.8.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.30.0",
     "react-router-dom": "^6.30.0",
+    "react-router-dom-v7": "npm:react-router-dom@^7.18.4",
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
     "typescript": "^6.0.0"

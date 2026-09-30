@@ -15,17 +15,14 @@ import type {
   RouterOptions,
 } from '@ionic/react';
 import { LocationHistory, NavManager, RouteManagerContext, generateId, getConfig } from '@ionic/react';
-import type { Action as HistoryAction, Location } from 'history';
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
+import type { Location as HistoryLocation, NavigationType as HistoryAction } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { IonRouteInner } from './IonRouteInner';
 import { ReactRouterViewStack } from './ReactRouterViewStack';
 import StackManager from './StackManager';
-
-// Use Location directly - state is typed as `unknown` in history v5
-type HistoryLocation = Location;
 
 export interface LocationState {
   direction?: RouterDirection;

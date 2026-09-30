@@ -10,7 +10,7 @@ import {
   IonBackButton,
 } from '@ionic/react';
 import React from 'react';
-import { Route } from 'react-router';
+import { Route } from 'react-router-dom';
 
 import TestDescription from '../../components/TestDescription';
 

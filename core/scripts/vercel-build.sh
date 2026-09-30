@@ -268,7 +268,8 @@ build_vue_test() {
 
 build_react_router_test() {
   local APP
-  APP=$(pick_app "${REPO_ROOT}/packages/react-router/test") || {
+  # React Router 6 apps only, since reactrouter7-* sorts above them.
+  APP=$(pick_app "${REPO_ROOT}/packages/react-router/test" '^reactrouter6-') || {
     echo "[react-router] No test app found, skipping."
     return 0
   }

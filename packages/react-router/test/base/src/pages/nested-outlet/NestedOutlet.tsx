@@ -8,7 +8,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import React, { useEffect } from 'react';
-import { Route, Navigate } from 'react-router';
+import { Route, Navigate } from 'react-router-dom';
 
 import TestDescription from '../../components/TestDescription';
 

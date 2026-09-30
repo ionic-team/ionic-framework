@@ -14,7 +14,7 @@ import {
 } from '@ionic/react';
 import { triangle, square } from 'ionicons/icons';
 import React, { useState, useCallback } from 'react';
-import { Route, Navigate } from 'react-router';
+import { Route, Navigate } from 'react-router-dom';
 
 import TestDescription from '../../components/TestDescription';
 
