@@ -1,25 +1,9 @@
-import { IonApp, setupIonicReact, LogLevel, IonRouterOutlet } from '@ionic/react';
+import { IonApp, IonRouterOutlet } from '@ionic/react';
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
 
-/* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
-
-/* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
-import '@ionic/react/css/display.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-
-/* Theme variables */
-import './theme/variables.css';
+/* Ionic CSS and setupIonicReact */
+import './ionic-setup';
 import Main from './pages/Main';
 
 import { IonReactRouter } from '@ionic/react-router';
@@ -66,14 +50,16 @@ import { Step1, Step2, Step3, Step4 } from './pages/replace-params/ReplaceParams
 import { ParamSwipeBack, ParamSwipeBackB } from './pages/param-swipe-back/ParamSwipeBack';
 import TabLifecycle from './pages/tab-lifecycle/TabLifecycle';
 import TabLifecycleOutside from './pages/tab-lifecycle/TabLifecycleOutside';
-import { RouterLinkModifierClick, RouterLinkModifierClickTarget } from './pages/router-link-modifier-click/RouterLinkModifierClick';
+import {
+  RouterLinkModifierClick,
+  RouterLinkModifierClickTarget,
+} from './pages/router-link-modifier-click/RouterLinkModifierClick';
 import { NavigateRootPageA, NavigateRootPageB, NavigateRootPageC } from './pages/navigate-root/NavigateRoot';
 import SuspenseOutlet from './pages/suspense-outlet/SuspenseOutlet';
 import { PropsUpdateDirect, PropsUpdateRoutesWrapper } from './pages/props-update/PropsUpdate';
 import DisabledButton from './pages/disabled-button/DisabledButton';
-
-// Debug logs on so failing specs include the navigation diagnostics.
-setupIonicReact({ logLevel: LogLevel.DEBUG });
+import SplatSibling from './pages/splat-sibling/SplatSibling';
+import { EmptyPathSibling, IndexSibling } from './pages/index-sibling/IndexSibling';
 
 const App: React.FC = () => {
   return (
@@ -142,6 +128,9 @@ const App: React.FC = () => {
           <Route path="/suspense-outlet/*" element={<SuspenseOutlet />} />
           <Route path="/props-update-routes/*" element={<PropsUpdateRoutesWrapper />} />
           <Route path="/props-update-direct/*" element={<PropsUpdateDirect />} />
+          <Route path="/splat-sibling/*" element={<SplatSibling />} />
+          <Route path="/index-sibling/*" element={<IndexSibling />} />
+          <Route path="/empty-path-sibling/*" element={<EmptyPathSibling />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
