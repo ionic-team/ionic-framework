@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.6](https://github.com/ionic-team/ionic-framework/compare/v9.0.5...v9.0.6) (2026-09-30)
+
+### Bug Fixes
+
+* **react-router:** dispatch view lifecycle events on non-animated transitions ([#31497](https://github.com/ionic-team/ionic-framework/issues/31497)) ([f01e9a7](https://github.com/ionic-team/ionic-framework/commit/f01e9a754d1267e2cdd60aae5d292ebbf2ef3deb)), closes [#31479](https://github.com/ionic-team/ionic-framework/issues/31479)
+* **react-router:** keep splat route page mounted when a sibling route is pushed ([#31481](https://github.com/ionic-team/ionic-framework/issues/31481)) ([1130c2c](https://github.com/ionic-team/ionic-framework/commit/1130c2cc259c914a0a11fbe0976f4163de8d0e6e)), closes [#31477](https://github.com/ionic-team/ionic-framework/issues/31477)
+
+
 ## [9.0.5](https://github.com/ionic-team/ionic-framework/compare/v9.0.4...v9.0.5) (2026-09-23)
 
 ### Bug Fixes

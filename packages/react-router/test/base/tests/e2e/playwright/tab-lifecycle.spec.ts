@@ -1,5 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { ionPageVisible, ionTabClick, trackPeakMatchCount, withTestingMode } from './utils/test-utils';
+import {
+  ionPageVisible,
+  ionTabClick,
+  resetLifecycleEvents,
+  settledLifecycleEvents,
+  trackPeakMatchCount,
+  withTestingMode,
+} from './utils/test-utils';
 
 test.describe('Tab Lifecycle Events', () => {
   test.beforeEach(async ({ page }) => {
@@ -17,12 +24,12 @@ test.describe('Tab Lifecycle Events', () => {
     await page.goto(withTestingMode('/tab-lifecycle/home'));
     await ionPageVisible(page, 'tab-lifecycle-home');
 
-    await page.evaluate(() => { (window as any).lifecycleEvents = []; });
+    await resetLifecycleEvents(page);
 
     await page.locator('#go-outside').click();
     await ionPageVisible(page, 'tab-lifecycle-outside');
 
-    const events = await page.evaluate(() => (window as any).lifecycleEvents as string[]);
+    const events = await settledLifecycleEvents(page);
     expect(events).toContain('home:ionViewWillLeave');
     expect(events).toContain('home:ionViewDidLeave');
   });
@@ -39,12 +46,12 @@ test.describe('Tab Lifecycle Events', () => {
     await ionTabClick(page, 'Settings');
     await ionPageVisible(page, 'tab-lifecycle-settings');
 
-    await page.evaluate(() => { (window as any).lifecycleEvents = []; });
+    await resetLifecycleEvents(page);
 
     await page.locator('#go-outside-settings').click();
     await ionPageVisible(page, 'tab-lifecycle-outside');
 
-    const events = await page.evaluate(() => (window as any).lifecycleEvents as string[]);
+    const events = await settledLifecycleEvents(page);
     expect(events).toContain('settings:ionViewWillLeave');
     expect(events).toContain('settings:ionViewDidLeave');
   });
@@ -61,14 +68,61 @@ test.describe('Tab Lifecycle Events', () => {
     await page.locator('#go-outside').click();
     await ionPageVisible(page, 'tab-lifecycle-outside');
 
-    await page.evaluate(() => { (window as any).lifecycleEvents = []; });
+    await resetLifecycleEvents(page);
 
     await page.locator('#go-back-to-tabs').click();
     await ionPageVisible(page, 'tab-lifecycle-home');
 
-    const events = await page.evaluate(() => (window as any).lifecycleEvents as string[]);
+    const events = await settledLifecycleEvents(page);
     expect(events).toContain('home:ionViewWillEnter');
     expect(events).toContain('home:ionViewDidEnter');
+  });
+
+  test('should fire enter and leave events when switching tabs', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/31479',
+    });
+
+    await page.goto(withTestingMode('/tab-lifecycle/home'));
+    await ionPageVisible(page, 'tab-lifecycle-home');
+
+    await resetLifecycleEvents(page);
+
+    await ionTabClick(page, 'Settings');
+    await ionPageVisible(page, 'tab-lifecycle-settings');
+
+    expect(await settledLifecycleEvents(page)).toEqual([
+      'home:ionViewWillLeave',
+      'settings:ionViewWillEnter',
+      'settings:ionViewDidEnter',
+      'home:ionViewDidLeave',
+    ]);
+  });
+
+  test('should fire enter and leave events when switching back to a visited tab', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/31479',
+    });
+
+    await page.goto(withTestingMode('/tab-lifecycle/home'));
+    await ionPageVisible(page, 'tab-lifecycle-home');
+
+    await ionTabClick(page, 'Settings');
+    await ionPageVisible(page, 'tab-lifecycle-settings');
+
+    await resetLifecycleEvents(page);
+
+    await ionTabClick(page, 'Home');
+    await ionPageVisible(page, 'tab-lifecycle-home');
+
+    expect(await settledLifecycleEvents(page)).toEqual([
+      'settings:ionViewWillLeave',
+      'home:ionViewWillEnter',
+      'home:ionViewDidEnter',
+      'settings:ionViewDidLeave',
+    ]);
   });
 
   // A duplicate tab page, even briefly, fails this spec's page assertions on a
