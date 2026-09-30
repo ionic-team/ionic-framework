@@ -34,9 +34,6 @@ const Main: React.FC = () => {
           <IonItem routerLink="/relative-paths">
             <IonLabel>Relative Paths</IonLabel>
           </IonItem>
-          <IonItem routerLink="/relative-links-deep">
-            <IonLabel>Relative Links (deep route)</IonLabel>
-          </IonItem>
           <IonItem routerLink="/nested-outlet">
             <IonLabel>Nested Outlet</IonLabel>
           </IonItem>
@@ -211,6 +208,9 @@ const Main: React.FC = () => {
           </IonItem>
           <IonItem routerLink="/disabled-button">
             <IonLabel>Disabled Button</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/relative-links-deep">
+            <IonLabel>Relative Links (deep route)</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>
