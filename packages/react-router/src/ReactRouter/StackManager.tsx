@@ -4,6 +4,12 @@
  * particularly with animations and swipe gestures.
  */
 
+import {
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+} from '@ionic/core/components';
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { IonRoute, RouteManagerContext, StackContext, createDebugLogger, generateId, getConfig } from '@ionic/react';
 import React from 'react';
@@ -88,7 +94,11 @@ const revealIonPageForSwipeBack = (element: HTMLElement | undefined): void => {
   }
 };
 
-type ViewLifecycleEvent = 'ionViewWillEnter' | 'ionViewDidEnter' | 'ionViewWillLeave' | 'ionViewDidLeave';
+type ViewLifecycleEvent =
+  | typeof LIFECYCLE_WILL_ENTER
+  | typeof LIFECYCLE_DID_ENTER
+  | typeof LIFECYCLE_WILL_LEAVE
+  | typeof LIFECYCLE_DID_LEAVE;
 
 /** Dispatches a view lifecycle event the way core's `lifecycle()` does. */
 const dispatchLifecycleEvent = (element: HTMLElement | undefined, eventName: ViewLifecycleEvent): void => {
@@ -366,8 +376,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
     allViewsInOutlet.forEach((viewItem) => {
       if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
-        dispatchLifecycleEvent(viewItem.ionPageElement, 'ionViewWillLeave');
-        dispatchLifecycleEvent(viewItem.ionPageElement, 'ionViewDidLeave');
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_WILL_LEAVE);
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_DID_LEAVE);
       }
     });
 
@@ -404,8 +414,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         return;
       }
       if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
-        dispatchLifecycleEvent(viewItem.ionPageElement, 'ionViewWillLeave');
-        dispatchLifecycleEvent(viewItem.ionPageElement, 'ionViewDidLeave');
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_WILL_LEAVE);
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_DID_LEAVE);
       }
       this.context.unMountViewItem(viewItem);
     });
@@ -1755,14 +1765,14 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
            * page has not attached its listeners yet.
            */
           if (announceLeaving) {
-            dispatchLifecycleEvent(leavingEl, 'ionViewWillLeave');
+            dispatchLifecycleEvent(leavingEl, LIFECYCLE_WILL_LEAVE);
           }
           if (isCurrent) {
-            dispatchLifecycleEvent(enteringEl, 'ionViewWillEnter');
-            dispatchLifecycleEvent(enteringEl, 'ionViewDidEnter');
+            dispatchLifecycleEvent(enteringEl, LIFECYCLE_WILL_ENTER);
+            dispatchLifecycleEvent(enteringEl, LIFECYCLE_DID_ENTER);
           }
           if (announceLeaving) {
-            dispatchLifecycleEvent(leavingEl, 'ionViewDidLeave');
+            dispatchLifecycleEvent(leavingEl, LIFECYCLE_DID_LEAVE);
           }
 
           // Swap visibility synchronously - show entering, hide leaving

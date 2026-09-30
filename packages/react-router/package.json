@@ -37,6 +37,7 @@
     "dist/"
   ],
   "dependencies": {
+    "@ionic/core": "^9.0.5",
     "@ionic/react": "^9.0.5",
     "tslib": "*"
   },
