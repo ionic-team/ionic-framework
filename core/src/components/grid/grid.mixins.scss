@@ -5,33 +5,65 @@
 // Responsive Mixins
 // --------------------------------------------------
 
-// Creates a fixed width for the grid based on the screen size
-// ---------------------------------------------------------------------------------
+/// Breakpoint styles are emitted twice.
+///
+/// CSS media queries cannot read custom properties, so the `screenBreakpoints`
+/// config cannot change a `@media` threshold. The component resolves the active
+/// breakpoint in JavaScript and reflects it on the host as a `screen-breakpoint`
+/// attribute, which this mixin uses to select the appropriate styles.
+///
+/// The `@media` copy provides a baseline before the component hydrates and when
+/// JavaScript does not run. It is scoped to hosts that have not reported a
+/// breakpoint yet, so the two copies do not conflict.
+///
+/// @param {list} $breakpoints - Breakpoint names to emit rules for, in
+///   ascending order so the last matching rule wins.
+/// @param {string} $host - Additional compound selector for the host,
+///   e.g. `.grid-fixed`.
+/// @content Declarations for the matched breakpoint, which is passed to
+///   the block.
+@mixin each-breakpoint($breakpoints, $host: "") {
+  @each $breakpoint in $breakpoints {
+    @include mixins.media-breakpoint-up($breakpoint, globals.$screen-breakpoints) {
+      :host(#{$host}:not([screen-breakpoint])) {
+        @content ($breakpoint);
+      }
+    }
 
-@mixin make-grid-widths($widths, $breakpoints: globals.$screen-breakpoints) {
-  @each $breakpoint, $width in $widths {
-    @include mixins.media-breakpoint-up($breakpoint, $breakpoints) {
-      width: $width;
+    :host(#{$host}[screen-breakpoint="#{$breakpoint}"]) {
+      @content ($breakpoint);
     }
   }
-
-  max-width: 100%;
 }
 
-// Adds padding to the element based on breakpoints
-// ---------------------------------------------------------------------------------
+/// Creates a fixed width for the grid based on the screen size.
+///
+/// @param {map} $widths - Width to apply, keyed by breakpoint name.
+/// @param {string} $host - Additional compound selector for the host.
+@mixin make-grid-widths($widths, $host: ".grid-fixed") {
+  @include each-breakpoint(map.keys($widths), $host) using ($breakpoint) {
+    width: map.get($widths, $breakpoint);
+  }
 
-@mixin make-breakpoint-padding($paddings) {
-  @each $breakpoint in map.keys($paddings) {
-    @include mixins.media-breakpoint-up($breakpoint, globals.$screen-breakpoints) {
-      $padding: map.get($paddings, $breakpoint);
+  :host(#{$host}) {
+    max-width: 100%;
+  }
+}
 
-      @include mixins.padding(
-        map.get($padding, top),
-        map.get($padding, end),
-        map.get($padding, bottom),
-        map.get($padding, start)
-      );
-    }
+/// Adds padding to the element based on breakpoints.
+///
+/// @param {map} $paddings - Padding to apply, keyed by breakpoint name, each
+///   a map of `top`, `end`, `bottom` and `start`.
+/// @param {string} $host - Additional compound selector for the host.
+@mixin make-breakpoint-padding($paddings, $host: "") {
+  @include each-breakpoint(map.keys($paddings), $host) using ($breakpoint) {
+    $padding: map.get($paddings, $breakpoint);
+
+    @include mixins.padding(
+      map.get($padding, top),
+      map.get($padding, end),
+      map.get($padding, bottom),
+      map.get($padding, start)
+    );
   }
 }

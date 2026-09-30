@@ -17,6 +17,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+import { IonColValue } from "./components/col/col.interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { FooterScrollEffect } from "./components/footer/footer-interface";
@@ -63,6 +64,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+export { IonColValue } from "./components/col/col.interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { FooterScrollEffect } from "./components/footer/footer-interface";
@@ -916,51 +918,61 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
+          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 0, md: 2 }`), in which case the value for the largest matching breakpoint is used.
          */
-        "offset"?: string;
+        "offset"?: IonColValue;
         /**
           * The amount to offset the column for lg screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ lg: 2 }`).
          */
         "offsetLg"?: string;
         /**
           * The amount to offset the column for md screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ md: 2 }`).
          */
         "offsetMd"?: string;
         /**
           * The amount to offset the column for sm screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ sm: 2 }`).
          */
         "offsetSm"?: string;
         /**
           * The amount to offset the column for xl screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ xl: 2 }`).
          */
         "offsetXl"?: string;
         /**
           * The amount to offset the column for xs screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ xs: 2 }`).
          */
         "offsetXs"?: string;
         /**
-          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 2, md: 1 }`), in which case the value for the largest matching breakpoint is used.
          */
-        "order"?: string;
+        "order"?: IonColValue;
         /**
           * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ lg: 1 }`).
          */
         "orderLg"?: string;
         /**
           * The order of the column for md screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ md: 1 }`).
          */
         "orderMd"?: string;
         /**
           * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ sm: 1 }`).
          */
         "orderSm"?: string;
         /**
           * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ xl: 1 }`).
          */
         "orderXl"?: string;
         /**
           * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ xs: 1 }`).
          */
         "orderXs"?: string;
         /**
@@ -1024,27 +1036,32 @@ export namespace Components {
          */
         "pushXs"?: string;
         /**
-          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 12, md: 6 }`), in which case the value for the largest matching breakpoint is used.  An empty string or `null` at a breakpoint resets the column to the default flex layout from that breakpoint up (e.g. `{ xs: 12, md: null }`).
          */
-        "size"?: string;
+        "size"?: IonColValue;
         /**
           * The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ lg: 4 }`).
          */
         "sizeLg"?: string;
         /**
           * The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ md: 6 }`).
          */
         "sizeMd"?: string;
         /**
           * The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ sm: 6 }`).
          */
         "sizeSm"?: string;
         /**
           * The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ xl: 3 }`).
          */
         "sizeXl"?: string;
         /**
           * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ xs: 12 }`).
          */
         "sizeXs"?: string;
     }
@@ -6792,51 +6809,61 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
+          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 0, md: 2 }`), in which case the value for the largest matching breakpoint is used.
          */
-        "offset"?: string;
+        "offset"?: IonColValue;
         /**
           * The amount to offset the column for lg screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ lg: 2 }`).
          */
         "offsetLg"?: string;
         /**
           * The amount to offset the column for md screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ md: 2 }`).
          */
         "offsetMd"?: string;
         /**
           * The amount to offset the column for sm screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ sm: 2 }`).
          */
         "offsetSm"?: string;
         /**
           * The amount to offset the column for xl screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ xl: 2 }`).
          */
         "offsetXl"?: string;
         /**
           * The amount to offset the column for xs screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ xs: 2 }`).
          */
         "offsetXs"?: string;
         /**
-          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 2, md: 1 }`), in which case the value for the largest matching breakpoint is used.
          */
-        "order"?: string;
+        "order"?: IonColValue;
         /**
           * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ lg: 1 }`).
          */
         "orderLg"?: string;
         /**
           * The order of the column for md screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ md: 1 }`).
          */
         "orderMd"?: string;
         /**
           * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ sm: 1 }`).
          */
         "orderSm"?: string;
         /**
           * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ xl: 1 }`).
          */
         "orderXl"?: string;
         /**
           * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ xs: 1 }`).
          */
         "orderXs"?: string;
         /**
@@ -6900,27 +6927,32 @@ declare namespace LocalJSX {
          */
         "pushXs"?: string;
         /**
-          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 12, md: 6 }`), in which case the value for the largest matching breakpoint is used.  An empty string or `null` at a breakpoint resets the column to the default flex layout from that breakpoint up (e.g. `{ xs: 12, md: null }`).
          */
-        "size"?: string;
+        "size"?: IonColValue;
         /**
           * The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ lg: 4 }`).
          */
         "sizeLg"?: string;
         /**
           * The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ md: 6 }`).
          */
         "sizeMd"?: string;
         /**
           * The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ sm: 6 }`).
          */
         "sizeSm"?: string;
         /**
           * The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ xl: 3 }`).
          */
         "sizeXl"?: string;
         /**
           * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ xs: 12 }`).
          */
         "sizeXs"?: string;
     }

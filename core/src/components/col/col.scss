@@ -41,7 +41,6 @@
     (100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-row-gap, 0px)) / var(--ion-grid-columns, 12)
   );
 
-  @include grid.make-breakpoint-padding(vars.$grid-column-paddings);
   @include mixins.margin(0);
 
   box-sizing: border-box;
@@ -54,6 +53,8 @@
 
   overflow: auto;
 }
+
+@include grid.make-breakpoint-padding(vars.$grid-column-paddings);
 
 :host(.col-auto) {
   flex: 0 0 auto;
