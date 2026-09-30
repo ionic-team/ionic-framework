@@ -776,6 +776,16 @@ export const createIonRouter = (
     const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
       const delta = routeInfo.position! - currentHistoryPosition;
+      /**
+       * Memory history doesn't store a position in `history.state`, so
+       * `delta` is NaN and there's nothing to traverse. Replace instead.
+       */
+      if (Number.isNaN(delta)) {
+        if (originalHref) {
+          handleNavigate(originalHref, "pop", "back", undefined, tab);
+        }
+        return;
+      }
       if (delta !== 0) {
         router.go(delta);
         return;
