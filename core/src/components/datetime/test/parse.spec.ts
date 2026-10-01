@@ -1,4 +1,12 @@
-import { clampDate, getPartsFromCalendarDay, parseAmPm, parseDate, parseMinParts, parseMaxParts } from '../utils/parse';
+import {
+  clampDate,
+  getPartsFromCalendarDay,
+  parseAmPm,
+  parseDate,
+  parseDateInput,
+  parseMinParts,
+  parseMaxParts,
+} from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {
@@ -229,5 +237,48 @@ describe('parseMaxParts()', () => {
     expect(parseMaxParts(undefined as any, today)).toEqual(undefined);
     expect(parseMaxParts(null as any, today)).toEqual(undefined);
     expect(parseMaxParts('foo', today)).toEqual(undefined);
+  });
+});
+
+describe('parseDateInput()', () => {
+  it('should parse a date in the locale order', () => {
+    expect(parseDateInput('en-US', '06/03/2022')).toEqual({ month: 6, day: 3, year: 2022 });
+    expect(parseDateInput('de-DE', '03.06.2022')).toEqual({ month: 6, day: 3, year: 2022 });
+    expect(parseDateInput('fr-CA', '2022-06-03')).toEqual({ month: 6, day: 3, year: 2022 });
+  });
+
+  it('should accept a missing trailing separator', () => {
+    // The mask never adds ko-KR's final ".".
+    expect(parseDateInput('ko-KR', '2022. 06. 03')).toEqual({ month: 6, day: 3, year: 2022 });
+    expect(parseDateInput('ko-KR', '2022. 06. 03.')).toEqual({ month: 6, day: 3, year: 2022 });
+  });
+
+  it('should accept a month and day without padding', () => {
+    expect(parseDateInput('en-US', '6/3/2022')).toEqual({ month: 6, day: 3, year: 2022 });
+  });
+
+  it('should not accept a date that is still being typed', () => {
+    expect(parseDateInput('en-US', '')).toEqual(undefined);
+    expect(parseDateInput('en-US', '06/')).toEqual(undefined);
+    expect(parseDateInput('en-US', '06/03/')).toEqual(undefined);
+    expect(parseDateInput('en-US', '06/03/202')).toEqual(undefined);
+  });
+
+  it('should not accept a date that does not exist', () => {
+    expect(parseDateInput('en-US', '13/01/2022')).toEqual(undefined);
+    expect(parseDateInput('en-US', '00/01/2022')).toEqual(undefined);
+    expect(parseDateInput('en-US', '02/30/2022')).toEqual(undefined);
+    expect(parseDateInput('en-US', '06/00/2022')).toEqual(undefined);
+  });
+
+  it('should accept February 29 only in a leap year', () => {
+    expect(parseDateInput('en-US', '02/29/2024')).toEqual({ month: 2, day: 29, year: 2024 });
+    expect(parseDateInput('en-US', '02/29/2023')).toEqual(undefined);
+  });
+
+  it('should not accept letters or extra numbers', () => {
+    expect(parseDateInput('en-US', '06/03/2022a')).toEqual(undefined);
+    expect(parseDateInput('en-US', '06/03/2022/1')).toEqual(undefined);
+    expect(parseDateInput('en-US', '006/03/2022')).toEqual(undefined);
   });
 });

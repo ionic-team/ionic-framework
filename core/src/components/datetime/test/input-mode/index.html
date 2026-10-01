@@ -42,14 +42,6 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <!-- TEMP: mode/theme switcher for testing on devices. Remove before the PR. -->
-        <div id="temp-switcher" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px">
-          <button data-mode="md" data-theme="md">md</button>
-          <button data-mode="ios" data-theme="ios">ios</button>
-          <button data-mode="md" data-theme="ionic">ionic (md)</button>
-          <button data-mode="ios" data-theme="ionic">ionic (ios)</button>
-          <span id="temp-current" style="align-self: center; font-size: 12px; color: #6f7378"></span>
-        </div>
         <div class="grid">
           <div class="grid-item">
             <h2>Horizontal</h2>
@@ -118,19 +110,6 @@
     </ion-app>
 
     <script>
-      // TEMP: mode/theme switcher for testing on devices. Remove before the PR.
-      const params = new URLSearchParams(location.search);
-      document.querySelector('#temp-current').textContent = `mode=${params.get('ionic:mode') ?? 'default'}, theme=${
-        params.get('ionic:theme') ?? 'default'
-      }`;
-      document.querySelectorAll('#temp-switcher button').forEach((button) => {
-        button.addEventListener('click', () => {
-          params.set('ionic:mode', button.dataset.mode);
-          params.set('ionic:theme', button.dataset.theme);
-          location.search = params.toString();
-        });
-      });
-
       document.querySelector('#weekdays').isDateEnabled = (dateString) => {
         const day = new Date(`${dateString}T00:00:00`).getDay();
         return day !== 0 && day !== 6;

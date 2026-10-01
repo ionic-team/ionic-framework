@@ -1,6 +1,9 @@
 import type { DatetimeParts } from '../datetime-interface';
 import {
+  applyDateInputMask,
+  formatDateInput,
   generateDayAriaLabel,
+  getDateInputFormat,
   getFormattedHour,
   addTimePadding,
   getMonthAndYear,
@@ -210,5 +213,82 @@ describe('stripTimeZone', () => {
       hour: 'numeric',
       minute: 'numeric',
     });
+  });
+});
+
+describe('getDateInputFormat()', () => {
+  it('should return the order and placeholder for en-US', () => {
+    expect(getDateInputFormat('en-US')).toEqual({
+      segments: [
+        { type: 'month' },
+        { type: 'literal', value: '/' },
+        { type: 'day' },
+        { type: 'literal', value: '/' },
+        { type: 'year' },
+      ],
+      placeholder: 'mm/dd/yyyy',
+    });
+  });
+
+  it('should follow the locale order and separators', () => {
+    expect(getDateInputFormat('de-DE').placeholder).toEqual('dd.mm.yyyy');
+    expect(getDateInputFormat('en-GB').placeholder).toEqual('dd/mm/yyyy');
+    expect(getDateInputFormat('fr-CA').placeholder).toEqual('yyyy-mm-dd');
+    expect(getDateInputFormat('ko-KR').placeholder).toEqual('yyyy. mm. dd.');
+  });
+
+  it('should drop bidirectional marks from the separators', () => {
+    // ar-EG writes a right-to-left mark before each "/".
+    expect(getDateInputFormat('ar-EG').placeholder).toEqual('dd/mm/yyyy');
+  });
+});
+
+describe('formatDateInput()', () => {
+  it('should pad the month and day', () => {
+    expect(formatDateInput('en-US', { month: 6, day: 3, year: 2022 })).toEqual('06/03/2022');
+  });
+
+  it('should follow the locale order and separators', () => {
+    expect(formatDateInput('de-DE', { month: 6, day: 3, year: 2022 })).toEqual('03.06.2022');
+    expect(formatDateInput('fr-CA', { month: 6, day: 3, year: 2022 })).toEqual('2022-06-03');
+  });
+
+  it('should use Latin digits in every locale', () => {
+    expect(formatDateInput('ar-EG', { month: 6, day: 3, year: 2022 })).toEqual('03/06/2022');
+  });
+});
+
+describe('applyDateInputMask()', () => {
+  it('should add each separator once the segment before it is full', () => {
+    expect(applyDateInputMask('en-US', '0')).toEqual('0');
+    expect(applyDateInputMask('en-US', '06')).toEqual('06/');
+    expect(applyDateInputMask('en-US', '060')).toEqual('06/0');
+    expect(applyDateInputMask('en-US', '0603')).toEqual('06/03/');
+    expect(applyDateInputMask('en-US', '06032022')).toEqual('06/03/2022');
+  });
+
+  it('should keep only the digits', () => {
+    expect(applyDateInputMask('en-US', '06//')).toEqual('06/');
+    expect(applyDateInputMask('en-US', '06/a1')).toEqual('06/1');
+  });
+
+  it('should stop at the end of the format', () => {
+    expect(applyDateInputMask('en-US', '0603202299')).toEqual('06/03/2022');
+  });
+
+  it('should follow the locale order and separators', () => {
+    expect(applyDateInputMask('de-DE', '03062022')).toEqual('03.06.2022');
+    expect(applyDateInputMask('fr-CA', '2022')).toEqual('2022-');
+    expect(applyDateInputMask('fr-CA', '20220603')).toEqual('2022-06-03');
+  });
+
+  it('should not add a trailing separator', () => {
+    // ko-KR ends with ".", which would otherwise be added after the day.
+    expect(applyDateInputMask('ko-KR', '20220603')).toEqual('2022. 06. 03');
+  });
+
+  it('should return an empty string when there are no digits', () => {
+    expect(applyDateInputMask('en-US', '')).toEqual('');
+    expect(applyDateInputMask('en-US', '/')).toEqual('');
   });
 });
