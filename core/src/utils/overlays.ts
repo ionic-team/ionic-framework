@@ -1,7 +1,7 @@
 import { doc } from '@utils/browser';
 import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
-import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
+import { addCloseWatcherCondition, shouldUseCloseWatcher, updateCloseWatcher } from '@utils/hardware-back-button';
 import { printIonError, printIonWarning } from '@utils/logging';
 
 import { config } from '../global/config';
@@ -34,6 +34,12 @@ import {
 
 let lastOverlayIndex = 0;
 let lastId = 0;
+
+/**
+ * Every overlay except toast, which doesn't trap
+ * focus or close on back.
+ */
+const NON_TOAST_OVERLAYS = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-popover';
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
@@ -186,7 +192,7 @@ const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, over
  * Should NOT include: Toast
  */
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
-  const lastOverlay = getPresentedOverlay(doc, 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-popover');
+  const lastOverlay = getPresentedOverlay(doc, NON_TOAST_OVERLAYS);
   const target = ev.target as HTMLElement | null;
 
   /**
@@ -383,6 +389,12 @@ const connectListeners = (doc: Document) => {
       true
     );
 
+    /**
+     * Whether the overlay actually dismisses is checked at press time,
+     * since `backdropDismiss` can change while it's open.
+     */
+    addCloseWatcherCondition(() => getPresentedOverlay(doc, NON_TOAST_OVERLAYS) !== undefined);
+
     // handle back-button click
     doc.addEventListener('ionBackButton', (ev) => {
       const lastOverlay = getPresentedOverlay(doc);
@@ -525,7 +537,8 @@ export const setRootAriaHidden = (hidden = false) => {
  * Cleans up root `aria-hidden` and `backdrop-no-scroll` when
  * an overlay is removed from the DOM without going through
  * the `dismiss()` flow (e.g., when a framework unmounts the
- * overlay during a route change).
+ * overlay during a route change). Also releases the
+ * CloseWatcher if nothing is left to close.
  *
  * Should be called from an overlay's `disconnectedCallback`
  * when the overlay was still presented at the time of removal.
@@ -534,6 +547,8 @@ export const cleanupRootFocusTrapAccessibility = () => {
   if (typeof document === 'undefined') {
     return;
   }
+
+  updateCloseWatcher();
 
   const remainingOverlays = getPresentedOverlays(document);
   const hasRemainingLocking = remainingOverlays.some((o) => locksAppRoot(o as OverlayWithFocusTrapProps));
@@ -559,7 +574,9 @@ const applyRootLock = (el: OverlayWithFocusTrapProps) => {
 
 /**
  * Re-applies the root lock that `cleanupRootFocusTrapAccessibility()` released.
- * Call from `connectedCallback` when the overlay is still presented.
+ * Call from `connectedCallback` when the overlay is still presented. Also
+ * re-arms the CloseWatcher, which every overlay needs, so that happens
+ * before the `locksAppRoot` check.
  *
  * A synchronous move keeps the overlay connected, so the lock survives. A
  * detach with a re-insert in a later task releases it, which is the shape a
@@ -569,6 +586,8 @@ export const restoreRootFocusTrapAccessibility = (overlayEl: HTMLIonOverlayEleme
   if (typeof document === 'undefined') {
     return;
   }
+
+  updateCloseWatcher();
 
   const el = overlayEl as OverlayWithFocusTrapProps;
   if (!locksAppRoot(el)) {
@@ -828,6 +847,12 @@ export const dismiss = async <OverlayDismissOptions>(
 
   overlay.el.remove();
 
+  /**
+   * Release the back button if nothing
+   * else is left to close.
+   */
+  updateCloseWatcher();
+
   return true;
 };
 
@@ -843,6 +868,13 @@ const overlayAnimation = async (
 ): Promise<boolean> => {
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
+
+  /**
+   * Removing `overlay-hidden` makes the overlay count
+   * as presented, so back can dismiss it while it
+   * animates in.
+   */
+  updateCloseWatcher();
 
   const aniRoot = overlay.el;
   const animation = animationBuilder(aniRoot, opts);
