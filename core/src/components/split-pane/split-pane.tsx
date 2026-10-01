@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { getScreenBreakpointMediaQuery } from '@utils/breakpoints';
 import { printIonWarning } from '@utils/logging';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -8,14 +9,29 @@ import { getIonTheme } from '../../global/ionic-global';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
-// TODO(FW-7285): Replace with global breakpoints
-const QUERY: { [key: string]: string } = {
-  xs: '(min-width: 0px)',
-  sm: '(min-width: 576px)',
-  md: '(min-width: 768px)',
-  lg: '(min-width: 992px)',
-  xl: '(min-width: 1200px)',
-  never: '',
+
+/**
+ * The shortcut expression that keeps the split pane hidden at every size.
+ */
+const NEVER = 'never';
+
+/**
+ * Resolve the `when` property to the media query to listen on. A shortcut
+ * expression is expanded to the `min-width` query of the matching global
+ * screen breakpoint, so it reflects any `screenBreakpoints` config the
+ * application has set. Anything else is treated as a media query and used
+ * as-is.
+ *
+ * @param when The `when` property value.
+ * @return The media query to listen on, or an empty string when the split
+ * pane should never be shown.
+ */
+const getMediaQuery = (when: string): string => {
+  if (when === NEVER) {
+    return '';
+  }
+
+  return getScreenBreakpointMediaQuery(when) ?? when;
 };
 
 /**
@@ -55,8 +71,14 @@ export class SplitPane implements ComponentInterface {
    * When the split-pane should be shown.
    * Can be a CSS media query expression, or a shortcut expression.
    * Can also be a boolean expression.
+   *
+   * The shortcut expressions are the names of the global screen breakpoints
+   * (`"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"` and `"xxl"`), which expand to the
+   * `min-width` media query for that breakpoint, plus `"never"`, which keeps
+   * the split pane hidden at every size. The width each breakpoint activates
+   * at can be changed with the `screenBreakpoints` config.
    */
-  @Prop() when: string | boolean = QUERY['lg'];
+  @Prop() when: string | boolean = 'lg';
 
   /**
    * Expression to be called when the split-pane visibility has changed
@@ -118,7 +140,7 @@ export class SplitPane implements ComponentInterface {
     }
 
     // When query is a string, let's find first if it is a shortcut
-    const mediaQuery = QUERY[query] || query;
+    const mediaQuery = getMediaQuery(query);
 
     // Media query is empty or null, we hide it
     if (mediaQuery.length === 0) {

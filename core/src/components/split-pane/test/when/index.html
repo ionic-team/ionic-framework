@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Split Pane - When</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script>
+      /**
+       * Override the global screen breakpoints. `md` is moved well below its
+       * default of 768 so a viewport that would only match `xs` or `sm` by
+       * default matches `md` here.
+       *
+       * This must run before `scripts.js` and the Ionic bundle so the values
+       * are picked up by `initialize()`.
+       */
+      const SCREEN_BREAKPOINTS = {
+        xs: 0,
+        sm: 200,
+        md: 400,
+        lg: 600,
+        xl: 800,
+        xxl: 1000,
+      };
+
+      window.Ionic = {
+        config: {
+          screenBreakpoints: SCREEN_BREAKPOINTS,
+        },
+      };
+    </script>
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      /* Stays on screen while the window is resized */
+      #breakpoint-readout {
+        position: fixed;
+        z-index: 100;
+
+        /* A heads-up display: it overlays the demo but never blocks it */
+        pointer-events: none;
+
+        inset-block-end: 16px;
+        inset-inline-end: 16px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        min-width: 92px;
+        padding: 10px 14px;
+
+        border-radius: 10px;
+
+        background-color: #1b1b1b;
+        box-shadow: 0 2px 10px rgb(0 0 0 / 35%);
+
+        color: #fff;
+        font-family: monospace;
+        line-height: 1.1;
+      }
+
+      #active-breakpoint {
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+      }
+
+      #breakpoint-readout small {
+        opacity: 0.7;
+        font-size: 0.8rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-split-pane id="split-pane" when="md" content-id="main">
+        <ion-menu side="start" content-id="main">
+          <ion-content class="ion-padding">Menu</ion-content>
+        </ion-menu>
+
+        <div class="ion-page" id="main">
+          <ion-content class="ion-padding">
+            Main content. The split pane is shown at <code>md</code> and above, which this page configures as 400px.
+          </ion-content>
+        </div>
+      </ion-split-pane>
+
+      <div id="breakpoint-readout" aria-live="polite">
+        <span id="active-breakpoint">…</span>
+        <small><span id="viewport-width">–</span>px</small>
+      </div>
+    </ion-app>
+
+    <script>
+      /**
+       * Resolve the active breakpoint from the same map the config was set
+       * from, so the readout cannot drift from what the components resolve.
+       * The largest matching breakpoint wins, which is how a `min-width`
+       * query resolves.
+       */
+      const label = document.getElementById('active-breakpoint');
+      const width = document.getElementById('viewport-width');
+
+      const getActiveBreakpoint = () => {
+        return Object.keys(SCREEN_BREAKPOINTS)
+          .filter((breakpoint) => window.matchMedia(`(min-width: ${SCREEN_BREAKPOINTS[breakpoint]}px)`).matches)
+          .pop();
+      };
+
+      const showActiveBreakpoint = () => {
+        label.textContent = getActiveBreakpoint() ?? 'none';
+        width.textContent = window.innerWidth;
+      };
+
+      window.addEventListener('resize', showActiveBreakpoint);
+
+      customElements.whenDefined('ion-split-pane').then(showActiveBreakpoint);
+    </script>
+  </body>
+</html>

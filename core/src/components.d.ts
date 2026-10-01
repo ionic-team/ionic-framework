@@ -3878,8 +3878,8 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default '(min-width: 992px)'
+          * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.  The shortcut expressions are the names of the global screen breakpoints (`"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"` and `"xxl"`), which expand to the `min-width` media query for that breakpoint, plus `"never"`, which keeps the split pane hidden at every size. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
+          * @default 'lg'
          */
         "when": string | boolean;
     }
@@ -9848,8 +9848,8 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default '(min-width: 992px)'
+          * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.  The shortcut expressions are the names of the global screen breakpoints (`"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"` and `"xxl"`), which expand to the `min-width` media query for that breakpoint, plus `"never"`, which keeps the split pane hidden at every size. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
+          * @default 'lg'
          */
         "when"?: string | boolean;
     }
