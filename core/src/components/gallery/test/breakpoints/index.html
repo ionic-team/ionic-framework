@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gallery - Breakpoints</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script>
+      /**
+       * Override the global screen breakpoints. Every one is moved well below
+       * its default, so a viewport that would only match `xs` or `sm` by
+       * default matches a larger breakpoint here.
+       *
+       * This must run before `scripts.js` and the Ionic bundle so the values
+       * are picked up by `initialize()`.
+       */
+      const SCREEN_BREAKPOINTS = {
+        xs: 0,
+        sm: 200,
+        md: 400,
+        lg: 600,
+        xl: 800,
+        xxl: 1000,
+      };
+
+      window.Ionic = {
+        config: {
+          screenBreakpoints: SCREEN_BREAKPOINTS,
+        },
+      };
+    </script>
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      /**
+       * The gallery fills the viewport, so resizing the window moves it
+       * through the breakpoints the way it does on the grid and split pane
+       * pages. Because a gallery resolves against its own width rather than
+       * the viewport, the handle in its lower corner can be dragged to narrow
+       * it without touching the window size.
+       */
+      #gallery-sizer {
+        width: 100%;
+        min-width: 120px;
+        max-width: 100%;
+
+        overflow: hidden;
+        resize: horizontal;
+      }
+
+      ion-gallery-item,
+      ion-gallery-item img {
+        border-radius: 16px;
+      }
+
+      ion-gallery-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+
+      ion-gallery-item:nth-child(1) {
+        background: #ff6b6b;
+      }
+
+      ion-gallery-item:nth-child(2) {
+        background: #4ecdc4;
+      }
+
+      ion-gallery-item:nth-child(3) {
+        background: #ffe66d;
+        color: #333;
+      }
+
+      ion-gallery-item:nth-child(4) {
+        background: #5f27cd;
+      }
+
+      ion-gallery-item:nth-child(5) {
+        background: #7f8c8d;
+      }
+
+      ion-gallery-item:nth-child(6) {
+        background: #ff9f43;
+      }
+
+      ion-gallery-item:nth-child(7) {
+        background: #ff3f34;
+      }
+
+      ion-gallery-item:nth-child(8) {
+        background: #2ecc71;
+      }
+
+      ion-gallery-item:nth-child(9) {
+        background: #34495e;
+      }
+
+      ion-gallery-item:nth-child(10) {
+        background: #1abc9c;
+      }
+
+      ion-gallery-item:nth-child(11) {
+        background: #e67e22;
+      }
+
+      ion-gallery-item:nth-child(12) {
+        background: #9b59b6;
+      }
+
+      .legend {
+        /**
+         * The global stylesheet collapses tables, and padding does not apply
+         * to a collapsed table, so `ion-padding-start` would be ignored.
+         */
+        border-collapse: separate;
+        border-spacing: 0;
+
+        margin-bottom: 16px;
+        font-size: 0.85em;
+      }
+
+      .legend th,
+      .legend td {
+        padding: 2px 16px 2px 0;
+        text-align: start;
+      }
+
+      .legend th {
+        color: #666;
+        font-weight: normal;
+      }
+
+      .note {
+        color: #666;
+        font-size: 0.8em;
+      }
+
+      /* Stays on screen while the window is resized */
+      #breakpoint-readout {
+        position: fixed;
+        z-index: 100;
+
+        /* A heads-up display: it overlays the demo but never blocks it */
+        pointer-events: none;
+
+        inset-block-end: 16px;
+        inset-inline-end: 16px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        min-width: 92px;
+        padding: 10px 14px;
+
+        border-radius: 10px;
+
+        background-color: #1b1b1b;
+        box-shadow: 0 2px 10px rgb(0 0 0 / 35%);
+
+        color: #fff;
+        font-family: monospace;
+        line-height: 1.1;
+      }
+
+      #active-breakpoint {
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+      }
+
+      #breakpoint-readout small {
+        opacity: 0.7;
+        font-size: 0.8rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <p class="ion-padding-start">
+          Resize the window to step through the breakpoints, or drag the handle in the gallery's lower corner to narrow
+          the gallery on its own &mdash; it resolves against its own width, not the window's.
+        </p>
+
+        <table class="legend ion-padding-start">
+          <tr>
+            <th>Breakpoint</th>
+            <th>Activates at</th>
+            <th>Columns</th>
+          </tr>
+          <tr>
+            <td>xs</td>
+            <td>0px</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>sm</td>
+            <td>200px</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>md</td>
+            <td>400px</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>lg</td>
+            <td>600px</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>xl</td>
+            <td>800px</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>xxl</td>
+            <td>1000px</td>
+            <td>10</td>
+          </tr>
+        </table>
+
+        <p class="ion-padding-start note">
+          Columns come from <code>{ xs: 1, md: 3 }</code>. The breakpoints it does not set fall back to the gallery's
+          own defaults.
+        </p>
+
+        <div id="gallery-sizer">
+          <ion-gallery id="gallery">
+            <ion-gallery-item>One</ion-gallery-item>
+            <ion-gallery-item>Two</ion-gallery-item>
+            <ion-gallery-item>Three</ion-gallery-item>
+            <ion-gallery-item>Four</ion-gallery-item>
+            <ion-gallery-item>Five</ion-gallery-item>
+            <ion-gallery-item>Six</ion-gallery-item>
+            <ion-gallery-item>Seven</ion-gallery-item>
+            <ion-gallery-item>Eight</ion-gallery-item>
+            <ion-gallery-item>Nine</ion-gallery-item>
+            <ion-gallery-item>Ten</ion-gallery-item>
+            <ion-gallery-item>Eleven</ion-gallery-item>
+            <ion-gallery-item>Twelve</ion-gallery-item>
+          </ion-gallery>
+        </div>
+      </ion-content>
+
+      <div id="breakpoint-readout" aria-live="polite">
+        <span id="active-breakpoint">…</span>
+        <small><span id="gallery-width">–</span>px</small>
+      </div>
+    </ion-app>
+
+    <script>
+      // A breakpoint object can only be set as a JavaScript property
+      const gallery = document.getElementById('gallery');
+      gallery.columns = { xs: 1, md: 3 };
+
+      /**
+       * Resolve the active breakpoint from the same map the config was set
+       * from, so the readout cannot drift from what the gallery resolves.
+       *
+       * The width compared against is the gallery's own, not the viewport's,
+       * which is why this measures the element rather than using `matchMedia`
+       * the way the grid and split pane pages do.
+       */
+      const label = document.getElementById('active-breakpoint');
+      const width = document.getElementById('gallery-width');
+
+      const showActiveBreakpoint = () => {
+        const galleryWidth = Math.round(gallery.getBoundingClientRect().width);
+
+        label.textContent =
+          Object.keys(SCREEN_BREAKPOINTS)
+            .filter((breakpoint) => galleryWidth >= SCREEN_BREAKPOINTS[breakpoint])
+            .pop() ?? 'none';
+        width.textContent = galleryWidth;
+      };
+
+      new ResizeObserver(showActiveBreakpoint).observe(gallery);
+
+      customElements.whenDefined('ion-gallery').then(showActiveBreakpoint);
+    </script>
+  </body>
+</html>
