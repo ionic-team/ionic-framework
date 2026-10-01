@@ -6,6 +6,14 @@ import { resetBreakpointListeners, resetScreenBreakpoints } from '@utils/breakpo
 import { Col } from '../col';
 import type { IonColValue } from '../col.interface';
 
+/**
+ * The default widths the assertions below are written against:
+ *
+ * | xs | sm  | md  | lg  | xl   | xxl  |
+ * | -- | --- | --- | --- | ---- | ---- |
+ * | 0  | 576 | 768 | 992 | 1200 | 1400 |
+ */
+
 describe('ion-col', () => {
   describe('class', () => {
     it('sets --internal-col-span for size="N"', async () => {
@@ -392,8 +400,8 @@ describe('ion-col', () => {
     });
 
     describe('with overridden screen breakpoints', () => {
-      const setScreenBreakpoints = (breakpoints: Record<string, number>) => {
-        config.set('screenBreakpoints', breakpoints as any);
+      const setScreenBreakpoints = (value: unknown) => {
+        config.set('screenBreakpoints', value as any);
         resetScreenBreakpoints();
       };
 
