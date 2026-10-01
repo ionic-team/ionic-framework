@@ -918,7 +918,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 0, md: 2 }`), in which case the value for the largest matching breakpoint is used.
+          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 0, md: 2 }`), in which case the value for the largest matching breakpoint is used.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
         "offset"?: IonColValue;
         /**
@@ -947,7 +947,7 @@ export namespace Components {
          */
         "offsetXs"?: string;
         /**
-          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 2, md: 1 }`), in which case the value for the largest matching breakpoint is used.
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 2, md: 1 }`), in which case the value for the largest matching breakpoint is used.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
         "order"?: IonColValue;
         /**
@@ -1036,7 +1036,7 @@ export namespace Components {
          */
         "pushXs"?: string;
         /**
-          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 12, md: 6 }`), in which case the value for the largest matching breakpoint is used.  An empty string or `null` at a breakpoint resets the column to the default flex layout from that breakpoint up (e.g. `{ xs: 12, md: null }`).
+          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 12, md: 6 }`), in which case the value for the largest matching breakpoint is used.  An empty string or `null` at a breakpoint resets the column to the default flex layout from that breakpoint up (e.g. `{ xs: 12, md: null }`).  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
         "size"?: IonColValue;
         /**
@@ -1546,7 +1546,7 @@ export namespace Components {
     }
     interface IonGrid {
         /**
-          * If `true`, the grid will have a fixed width based on the screen size.
+          * If `true`, the grid will have a fixed width based on the screen size.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
           * @default false
          */
         "fixed": boolean;
@@ -6809,7 +6809,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 0, md: 2 }`), in which case the value for the largest matching breakpoint is used.
+          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 0, md: 2 }`), in which case the value for the largest matching breakpoint is used.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
         "offset"?: IonColValue;
         /**
@@ -6838,7 +6838,7 @@ declare namespace LocalJSX {
          */
         "offsetXs"?: string;
         /**
-          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 2, md: 1 }`), in which case the value for the largest matching breakpoint is used.
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 2, md: 1 }`), in which case the value for the largest matching breakpoint is used.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
         "order"?: IonColValue;
         /**
@@ -6927,7 +6927,7 @@ declare namespace LocalJSX {
          */
         "pushXs"?: string;
         /**
-          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 12, md: 6 }`), in which case the value for the largest matching breakpoint is used.  An empty string or `null` at a breakpoint resets the column to the default flex layout from that breakpoint up (e.g. `{ xs: 12, md: null }`).
+          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 12, md: 6 }`), in which case the value for the largest matching breakpoint is used.  An empty string or `null` at a breakpoint resets the column to the default flex layout from that breakpoint up (e.g. `{ xs: 12, md: null }`).  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
         "size"?: IonColValue;
         /**
@@ -7418,7 +7418,7 @@ declare namespace LocalJSX {
     }
     interface IonGrid {
         /**
-          * If `true`, the grid will have a fixed width based on the screen size.
+          * If `true`, the grid will have a fixed width based on the screen size.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
           * @default false
          */
         "fixed"?: boolean;
