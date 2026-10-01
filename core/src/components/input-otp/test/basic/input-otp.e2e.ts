@@ -71,13 +71,37 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await verifyInputValues(inputOtp, ['1', '2', '3', '4', '5', '6', '7', '8']);
     });
 
-    test('should synchronize the value when length changes', async ({ page }) => {
+    test('should synchronize the value when length changes', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31484',
+      });
+
       await page.setContent(`<ion-input-otp length="4" value="1234">Description</ion-input-otp>`, config);
 
       const inputOtp = page.locator('ion-input-otp');
       await inputOtp.evaluate((el) => el.setAttribute('length', '2'));
 
       await verifyInputValues(inputOtp, ['1', '2']);
+    });
+
+    test('should add empty input boxes when length increases', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31484',
+      });
+
+      await page.setContent(`<ion-input-otp length="2" value="12">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.length = 4;
+      });
+
+      const inputBoxes = page.locator('ion-input-otp input');
+      await expect(inputBoxes).toHaveCount(4);
+
+      await verifyInputValues(inputOtp, ['1', '2', '', '']);
     });
 
     test('should accept numbers only by default', async ({ page }) => {
@@ -1040,6 +1064,36 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionChange.next();
       await expect(ionChange).toHaveReceivedEvent();
       await expect(ionChange).toHaveReceivedEventTimes(1);
+    });
+
+    test('should emit ionChange event when blurring with a new value after length decreases', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31484',
+      });
+
+      await page.setContent(`<ion-input-otp length="4">Description</ion-input-otp>`, config);
+
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.length = 2;
+      });
+      await page.waitForChanges();
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('12');
+
+      // Click outside the input to trigger the blur event
+      await page.mouse.click(0, 0);
+
+      await ionChange.next();
+      await expect(ionChange).toHaveReceivedEventDetail({ value: '12', event: { isTrusted: true } });
     });
 
     test('should not emit ionChange event when blurring with the same value', async ({ page }) => {
