@@ -125,6 +125,20 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(await paddingTop()).toBe('100px');
     });
 
+    /**
+     * The subscription listens on `matchMedia`, so crossing a threshold has to
+     * take effect on the next frame rather than after a resize debounce.
+     */
+    test('should update without a resize debounce when a threshold is crossed', async ({ page }) => {
+      const grid = page.locator('#padding-grid');
+
+      await expect(grid).toHaveAttribute('screen-breakpoint', 'sm');
+
+      await page.setViewportSize({ width: 500, height: 800 });
+
+      await expect(grid).toHaveAttribute('screen-breakpoint', 'md', { timeout: 250 });
+    });
+
     test('should resolve back down when the screen narrows again', async ({ page }) => {
       const grid = page.locator('#padding-grid');
 

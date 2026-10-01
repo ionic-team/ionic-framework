@@ -17,6 +17,11 @@ describe('ion-grid', () => {
   let listeners: Array<() => void>;
   let width: number;
 
+  const setScreenBreakpoints = (value: unknown) => {
+    config.set('screenBreakpoints', value as any);
+    resetScreenBreakpoints();
+  };
+
   /**
    * `newSpecPage` replaces `window.matchMedia` with its own mock, so the grid
    * has to be appended after this is installed for `connectedCallback` to
@@ -56,14 +61,12 @@ describe('ion-grid', () => {
   };
 
   beforeEach(() => {
-    config.set('screenBreakpoints', undefined as any);
-    resetScreenBreakpoints();
+    setScreenBreakpoints(undefined);
     resetBreakpointListeners();
   });
 
   afterEach(() => {
-    config.set('screenBreakpoints', undefined as any);
-    resetScreenBreakpoints();
+    setScreenBreakpoints(undefined);
     resetBreakpointListeners();
   });
 
@@ -81,26 +84,26 @@ describe('ion-grid', () => {
       expect(grid.getAttribute('screen-breakpoint')).toBe(expected);
     });
 
-    it('reflects the configured widths rather than the defaults', async () => {
-      // Lower sm too, so the override stays in ascending order
-      config.set('screenBreakpoints', { sm: 300, md: 400 } as any);
-      resetScreenBreakpoints();
+    describe('with overridden screen breakpoints', () => {
+      it('reflects the configured widths rather than the defaults', async () => {
+        // Lower sm too, so the override stays in ascending order
+        setScreenBreakpoints({ sm: 300, md: 400 });
 
-      const { grid } = await renderGrid(500);
+        const { grid } = await renderGrid(500);
 
-      // 500 is below the default md of 768, but at or above the configured 400
-      expect(grid.getAttribute('screen-breakpoint')).toBe('md');
-    });
+        // 500 is below the default md of 768, but at or above the configured 400
+        expect(grid.getAttribute('screen-breakpoint')).toBe('md');
+      });
 
-    it('omits the attribute when no breakpoint matches', async () => {
-      // xs normally matches at any width, so raise every breakpoint above the
-      // viewport, keeping them in ascending order
-      config.set('screenBreakpoints', { xs: 2000, sm: 2100, md: 2200, lg: 2300, xl: 2400, xxl: 2500 } as any);
-      resetScreenBreakpoints();
+      it('omits the attribute when no breakpoint matches', async () => {
+        // xs normally matches at any width, so raise every breakpoint above the
+        // viewport, keeping them in ascending order
+        setScreenBreakpoints({ xs: 2000, sm: 2100, md: 2200, lg: 2300, xl: 2400, xxl: 2500 });
 
-      const { grid } = await renderGrid(100);
+        const { grid } = await renderGrid(100);
 
-      expect(grid.hasAttribute('screen-breakpoint')).toBe(false);
+        expect(grid.hasAttribute('screen-breakpoint')).toBe(false);
+      });
     });
 
     it('re-renders with the new breakpoint when a threshold is crossed', async () => {
