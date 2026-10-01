@@ -46,6 +46,9 @@ export class Col implements ComponentInterface {
    * Can be a single value that applies at every screen size, or an object of
    * screen breakpoint values (e.g. `{ xs: 0, md: 2 }`), in which case the value
    * for the largest matching breakpoint is used.
+   *
+   * The width each breakpoint activates at can be changed with the
+   * `screenBreakpoints` config.
    */
   @Prop() offset?: IonColValue;
 
@@ -107,6 +110,9 @@ export class Col implements ComponentInterface {
    * Can be a single value that applies at every screen size, or an object of
    * screen breakpoint values (e.g. `{ xs: 2, md: 1 }`), in which case the value
    * for the largest matching breakpoint is used.
+   *
+   * The width each breakpoint activates at can be changed with the
+   * `screenBreakpoints` config.
    */
   @Prop() order?: IonColValue;
 
@@ -296,6 +302,9 @@ export class Col implements ComponentInterface {
    *
    * An empty string or `null` at a breakpoint resets the column to the default
    * flex layout from that breakpoint up (e.g. `{ xs: 12, md: null }`).
+   *
+   * The width each breakpoint activates at can be changed with the
+   * `screenBreakpoints` config.
    */
   @Prop() size?: IonColValue;
 
