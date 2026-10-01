@@ -188,5 +188,46 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
       expect(padding).toEqual({ top: '2px', end: '2px', bottom: '2px', start: '2px' });
     });
+
+    test('should apply custom column padding at the xxl breakpoint', async ({ page }) => {
+      await page.setViewportSize({ width: 1440, height: 800 });
+      await page.setContent(
+        `
+          <style>
+            ion-col {
+              --ion-col-breakpoint-xs-padding-top: 2px;
+              --ion-col-breakpoint-xs-padding-end: 2px;
+              --ion-col-breakpoint-xs-padding-bottom: 2px;
+              --ion-col-breakpoint-xs-padding-start: 2px;
+
+              --ion-col-breakpoint-xxl-padding-top: 9px;
+              --ion-col-breakpoint-xxl-padding-end: 9px;
+              --ion-col-breakpoint-xxl-padding-bottom: 9px;
+              --ion-col-breakpoint-xxl-padding-start: 9px;
+            }
+          </style>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col>col</ion-col>
+            </ion-row>
+          </ion-grid>
+        `,
+        config
+      );
+
+      const padding = await page.locator('ion-col').evaluate((col) => {
+        const styles = getComputedStyle(col);
+
+        return {
+          top: styles.paddingTop,
+          end: styles.paddingInlineEnd,
+          bottom: styles.paddingBottom,
+          start: styles.paddingInlineStart,
+        };
+      });
+
+      expect(padding).toEqual({ top: '9px', end: '9px', bottom: '9px', start: '9px' });
+    });
   });
 });

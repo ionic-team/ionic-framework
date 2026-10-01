@@ -25,16 +25,24 @@ const VIEWPORT_AT_BREAKPOINT = Object.fromEntries(
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('grid: fixed'), () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/grid/test/fixed', config);
-    });
-
     for (const breakpoint of SCREEN_BREAKPOINT_NAMES) {
       test(`fixed grid matches the ${breakpoint} width token`, async ({ page }) => {
         const viewportWidth = VIEWPORT_AT_BREAKPOINT[breakpoint];
+
+        // Size the viewport before loading so the first render already
+        // resolves to this breakpoint. Resizing an open page would instead
+        // depend on the re-render landing before the measurement below.
         await page.setViewportSize({ width: viewportWidth, height: 800 });
+        await page.goto('/src/components/grid/test/fixed', config);
 
         const grid = page.locator('ion-grid');
+
+        // Assert the breakpoint before measuring. A grid that has not resolved
+        // one yet still has the xs token applied, which is 100%, so the width
+        // assertion below would fail with the viewport width instead of
+        // naming the breakpoint.
+        await expect(grid).toHaveAttribute('screen-breakpoint', breakpoint);
+
         const measuredWidth = await grid.evaluate((el) => el.getBoundingClientRect().width);
 
         const expected = ionGridBreakpoints[breakpoint]!.width!;

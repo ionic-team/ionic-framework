@@ -1,19 +1,21 @@
+import type { BreakpointMap, ScreenBreakpoint } from '@utils/breakpoints';
+
 import type { IonPadding } from '../../themes/themes.interfaces';
-import { ION_GRID_BREAKPOINTS } from '../grid/grid.interface';
 
 export type IonColRecipe = {
   breakpoint?: {
-    [K in IonColBreakpoint]?: {
+    [K in ScreenBreakpoint]?: {
       padding?: IonPadding;
     };
   };
 };
 
-// TODO(FW-7285): Replace with global breakpoints
-export const ION_COL_BREAKPOINTS = ION_GRID_BREAKPOINTS;
-export type IonColBreakpoint = (typeof ION_COL_BREAKPOINTS)[number];
+export type IonColBreakpointValues = BreakpointMap<string | number | null>;
 
-export type IonColProperty = 'size' | 'order' | 'offset';
+export type IonColValue = string | number | IonColBreakpointValues;
+
+export const ION_COL_PROPERTIES = ['size', 'order', 'offset'] as const;
+export type IonColProperty = (typeof ION_COL_PROPERTIES)[number];
 
 export type IonColStyle = {
   '--internal-col-margin'?: string;
