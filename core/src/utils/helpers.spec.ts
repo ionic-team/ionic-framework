@@ -6,16 +6,6 @@ describe('isEndSide', () => {
     document.body.innerHTML = '';
   });
 
-  it('should use document direction when no host element is provided', () => {
-    document.dir = 'ltr';
-    expect(isEndSide('start')).toBe(false);
-    expect(isEndSide('end')).toBe(true);
-
-    document.dir = 'rtl';
-    expect(isEndSide('start')).toBe(true);
-    expect(isEndSide('end')).toBe(false);
-  });
-
   // https://github.com/ionic-team/ionic-framework/issues/30226
   it('should use the nearest ancestor dir attribute', () => {
     document.dir = 'ltr';
@@ -27,6 +17,19 @@ describe('isEndSide', () => {
     app.appendChild(menu);
     document.body.appendChild(app);
 
+    expect(isEndSide('start', menu)).toBe(true);
+    expect(isEndSide('end', menu)).toBe(false);
+  });
+
+  it('should fall back to the document dir when no ancestor declares one', () => {
+    const menu = document.createElement('ion-menu');
+    document.body.appendChild(menu);
+
+    document.dir = 'ltr';
+    expect(isEndSide('start', menu)).toBe(false);
+    expect(isEndSide('end', menu)).toBe(true);
+
+    document.dir = 'rtl';
     expect(isEndSide('start', menu)).toBe(true);
     expect(isEndSide('end', menu)).toBe(false);
   });
