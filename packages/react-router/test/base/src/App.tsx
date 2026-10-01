@@ -56,6 +56,7 @@ import {
 } from './pages/router-link-modifier-click/RouterLinkModifierClick';
 import { NavigateRootPageA, NavigateRootPageB, NavigateRootPageC } from './pages/navigate-root/NavigateRoot';
 import SuspenseOutlet from './pages/suspense-outlet/SuspenseOutlet';
+import OutletUnmountBeforeReady from './pages/outlet-unmount-before-ready/OutletUnmountBeforeReady';
 import { PropsUpdateDirect, PropsUpdateRoutesWrapper } from './pages/props-update/PropsUpdate';
 import DisabledButton from './pages/disabled-button/DisabledButton';
 import SplatSibling from './pages/splat-sibling/SplatSibling';
@@ -126,6 +127,7 @@ const App: React.FC = () => {
           <Route path="/navigate-root/page-b" element={<NavigateRootPageB />} />
           <Route path="/navigate-root/page-c" element={<NavigateRootPageC />} />
           <Route path="/suspense-outlet/*" element={<SuspenseOutlet />} />
+          <Route path="/outlet-unmount-before-ready" element={<OutletUnmountBeforeReady />} />
           <Route path="/props-update-routes/*" element={<PropsUpdateRoutesWrapper />} />
           <Route path="/props-update-direct/*" element={<PropsUpdateDirect />} />
           <Route path="/splat-sibling/*" element={<SplatSibling />} />
