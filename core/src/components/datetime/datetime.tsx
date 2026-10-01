@@ -404,7 +404,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Vertical never renders adjacent days. A continuous list shows the
-   * neighbouring month in full right beside the current one, so an adjacent
+   * neighboring month in full right beside the current one, so an adjacent
    * day would put the same date on screen twice, and selecting it would
    * highlight both. Neither Material nor iOS renders them either.
    */
@@ -1497,7 +1497,7 @@ export class Datetime implements ComponentInterface {
 
     /**
      * Scoped to the day's own month, since the same date can also render as
-     * an adjacent day in a neighbour's grid.
+     * an adjacent day in a neighbor's grid.
      */
     const dayEl = calendarBodyRef.querySelector<HTMLElement>(
       `.calendar-month[data-month="${parts.month}"][data-year="${parts.year}"] .calendar-day[data-month="${parts.month}"][data-day="${parts.day}"][data-year="${parts.year}"]`
@@ -2551,7 +2551,7 @@ export class Datetime implements ComponentInterface {
 
     if (this.isVerticalNavigation && this.showAdjacentDays) {
       printIonWarning(
-        '[ion-datetime] - showAdjacentDays has no effect when navigationOrientation="vertical". A continuous list already shows the neighbouring months in full.',
+        '[ion-datetime] - showAdjacentDays has no effect when navigationOrientation="vertical". A continuous list already shows the neighboring months in full.',
         el
       );
     }
