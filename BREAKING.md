@@ -34,6 +34,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Row](#version-10x-row)
   - [Skeleton Text](#version-10x-skeleton-text)
   - [Spinner](#version-10x-spinner)
+  - [Split Pane](#version-10x-split-pane)
   - [Text](#version-10x-text)
   - [Textarea](#version-10x-textarea)
   - [Thumbnail](#version-10x-thumbnail)
@@ -495,6 +496,10 @@ Remove any instances that target the theme classes: `ion-skeleton-text.md`, `ion
 - CSS classes now include the property name to improve clarity.
   - `.spinner-[spinner-name]` → `.spinner-name-[spinner-name]`
 - Specific theme classes (e.g., `ion-spinner.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
+
+<h4 id="version-10x-split-pane">Split Pane</h4>
+
+- The default value of the `when` property changed from `'(min-width: 992px)'` to the equivalent `'lg'` shortcut. The default behavior is unchanged, but the shortcut now resolves through the global `screenBreakpoints` config, so overriding `lg` also changes when the split pane becomes visible. Code that compares `when` against the literal `'(min-width: 992px)'` should be updated.
 
 <h4 id="version-10x-text">Text</h4>
 
