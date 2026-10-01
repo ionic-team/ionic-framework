@@ -23,7 +23,8 @@ import {
  * too.
  *
  * Viewport widths in the window tests are picked to sit inside a single band,
- * so 800 resolves to `md` because 768 <= 800 < 992.
+ * so 800 resolves to `md` because 768 <= 800 < 992. The one exception is the
+ * boundary test in `getActiveBreakpoint()`, which is on the edges on purpose.
  */
 const EXPECTED_DEFAULT_SCREEN_BREAKPOINTS = {
   xs: 0,
@@ -408,7 +409,7 @@ describe('screen breakpoints against the window', () => {
   describe('getActiveBreakpoint()', () => {
     it.each([
       [500, 'xs'],
-      [576, 'sm'],
+      [600, 'sm'],
       [800, 'md'],
       [1000, 'lg'],
       [1300, 'xl'],
@@ -417,6 +418,28 @@ describe('screen breakpoints against the window', () => {
       setWidth(viewport);
 
       expect(getActiveBreakpoint()).toBe(expected);
+    });
+
+    /**
+     * `min-width` is inclusive, so the width a breakpoint activates at belongs
+     * to that breakpoint and the pixel below it belongs to the one under it.
+     * Every other case sits inside a band, so these are the only assertions
+     * covering the edges.
+     */
+    it.each([
+      ['sm', 576, 'xs'],
+      ['md', 768, 'sm'],
+      ['lg', 992, 'md'],
+      ['xl', 1200, 'lg'],
+      ['xxl', 1400, 'xl'],
+    ])('should activate %p at exactly %ipx and %p below it', (breakpoint, threshold, below) => {
+      setWidth(threshold as number);
+
+      expect(getActiveBreakpoint()).toBe(breakpoint);
+
+      setWidth((threshold as number) - 1);
+
+      expect(getActiveBreakpoint()).toBe(below);
     });
 
     it('should return undefined when no breakpoint matches', () => {
