@@ -230,9 +230,6 @@ export class Datetime implements ComponentInterface {
   /** Day to give focus back to once a rebuilt window has rendered. */
   private pendingVerticalRefocus?: DatetimeParts;
 
-  /** Month on screen when the month/year picker opened. */
-  private verticalMonthAtPickerOpen?: DatetimeParts;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -559,6 +556,8 @@ export class Datetime implements ComponentInterface {
 
   /**
    * If `cover`, the `ion-datetime` will expand to cover the full width of its container.
+   * When `navigationOrientation` is `"vertical"`, it will also expand to cover the full
+   * height of its container.
    * If `fixed`, the `ion-datetime` will have a fixed width.
    */
   @Prop() size: 'cover' | 'fixed' = 'fixed';
@@ -580,9 +579,12 @@ export class Datetime implements ComponentInterface {
   /**
    * The axis the calendar grid uses to navigate between months.
    *
-   * `"horizontal"` pages left and right. `"vertical"` pages up and down.
-   * Both snap one month at a time, and the previous/next buttons work in
-   * either orientation.
+   * `"horizontal"` pages left and right one month at a time, with the
+   * month/year toggle and the previous/next buttons in the calendar header.
+   * `"vertical"` scrolls continuously through stacked months and renders
+   * neither the month/year toggle nor the previous/next buttons. It has a
+   * default height, and fills its container with `size="cover"` or when a
+   * height is set on the datetime.
    *
    * This has no effect when a wheel picker is rendered, or when `presentation`
    * is one of the following values: `"time"`, `"month"`, `"month-year"`, or
@@ -2274,6 +2276,14 @@ export class Datetime implements ComponentInterface {
       this.cancelVerticalGlide();
       this.destroyInteractionListeners();
       this.initializeListeners();
+
+      /**
+       * Vertical renders no month/year toggle, so a picker left open when
+       * switching from horizontal would have no way to close.
+       */
+      if (this.isVerticalNavigation) {
+        this.showMonthAndYear = false;
+      }
     }
 
     if (prevPresentation === null) {
@@ -2615,35 +2625,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private toggleMonthAndYearView = () => {
-    const opening = !this.showMonthAndYear;
-    this.showMonthAndYear = opening;
-
-    if (!this.isVerticalNavigation) {
-      return;
-    }
-
-    if (opening) {
-      this.cancelVerticalGlide();
-      this.verticalMonthAtPickerOpen = { ...this.workingParts };
-      return;
-    }
-
-    /**
-     * The picker's wheels only set `workingParts`. Horizontal renders around
-     * that, so closing the picker shows the chosen month. Vertical's window
-     * does not follow `workingParts`, so it is moved explicitly, and only if
-     * the choice changed: an unchanged close keeps the exact scroll position.
-     * It jumps rather than glides, as horizontal does here.
-     */
-    const { verticalMonthAtPickerOpen: before, workingParts } = this;
-    this.verticalMonthAtPickerOpen = undefined;
-    if (before && before.month === workingParts.month && before.year === workingParts.year) {
-      return;
-    }
-
-    const chosen = { month: workingParts.month, year: workingParts.year, day: null };
-    this.verticalWindowCenter = chosen;
-    this.pendingVerticalInitialScroll = { ...chosen };
+    this.showMonthAndYear = !this.showMonthAndYear;
   };
 
   /**
@@ -3311,42 +3293,44 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-year-announce" aria-live="polite" aria-atomic="true">
           {getMonthAndYear(this.locale, this.workingParts)}
         </div>
-        <div class="calendar-action-buttons">
-          <div class="calendar-month-year">
-            <button
-              class={{
-                'calendar-month-year-toggle': true,
-                'ion-activatable': true,
-                'ion-focusable': true,
-              }}
-              part="month-year-button"
-              disabled={disabled}
-              aria-label={this.showMonthAndYear ? 'Hide year picker' : 'Show year picker'}
-              onClick={() => this.toggleMonthAndYearView()}
-            >
-              <span id="toggle-wrapper">
-                {getMonthAndYear(this.locale, this.workingParts)}
-                {theme !== 'ionic' && (
-                  <ion-icon
-                    aria-hidden="true"
-                    icon={this.showMonthAndYear ? datetimeExpandedIcon : datetimeCollapsedIcon}
-                    lazy={false}
-                    flipRtl={true}
-                  ></ion-icon>
-                )}
-              </span>
-              {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-            </button>
-          </div>
+        {/*
+          Vertical renders no action row: neither the month/year toggle nor
+          the previous/next buttons. Material's vertical picker drops both,
+          each month carries its own heading, and the next month being partly
+          visible already tells the user the list scrolls. Big date jumps move
+          to the default title instead. PageUp and PageDown still move by a
+          month from a focused day. The announcement above and the
+          day-of-week row below stay.
+        */}
+        {!this.isVerticalNavigation && (
+          <div class="calendar-action-buttons">
+            <div class="calendar-month-year">
+              <button
+                class={{
+                  'calendar-month-year-toggle': true,
+                  'ion-activatable': true,
+                  'ion-focusable': true,
+                }}
+                part="month-year-button"
+                disabled={disabled}
+                aria-label={this.showMonthAndYear ? 'Hide year picker' : 'Show year picker'}
+                onClick={() => this.toggleMonthAndYearView()}
+              >
+                <span id="toggle-wrapper">
+                  {getMonthAndYear(this.locale, this.workingParts)}
+                  {theme !== 'ionic' && (
+                    <ion-icon
+                      aria-hidden="true"
+                      icon={this.showMonthAndYear ? datetimeExpandedIcon : datetimeCollapsedIcon}
+                      lazy={false}
+                      flipRtl={true}
+                    ></ion-icon>
+                  )}
+                </span>
+                {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+              </button>
+            </div>
 
-          {/*
-            Vertical never renders the arrows. Neither native reference does:
-            Material's vertical picker and the iOS Calendar month view both
-            rely on the next month being partly visible, which already tells
-            the user the list scrolls. PageUp and PageDown still move by a
-            month from a focused day.
-          */}
-          {!this.isVerticalNavigation && (
             <div class="calendar-next-prev">
               <ion-button
                 aria-label="Previous month"
@@ -3379,8 +3363,8 @@ export class Datetime implements ComponentInterface {
                 ></ion-icon>
               </ion-button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
         <div class="calendar-days-of-week" aria-hidden="true" part="calendar-days-of-week">
           {getDaysOfWeek(this.locale, theme, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;

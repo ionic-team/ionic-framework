@@ -194,3 +194,79 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: navigation orientation: scroll position'), () => {
+    /**
+     * WebKit ends a flick the moment `scrollTop` is written, even a write that
+     * does not move the list. So nothing may write the scroll position while
+     * the user is scrolling, or flicks on iOS stop as soon as the finger lifts.
+     * This checks the cause, since a test cannot produce a real flick.
+     */
+    test('should not write the scroll position while the user scrolls', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const calendarBody = page.locator('ion-datetime .calendar-body');
+
+      await calendarBody.evaluate((el: HTMLElement) => {
+        const writes: string[] = [];
+        (window as any).scrollPositionWrites = writes;
+
+        const scrollTop = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollTop')!;
+
+        /**
+         * The test scrolls through the browser's own setter, which bypasses
+         * the recording below, so only the component's writes are counted.
+         * It still fires real scroll events, as a user's scroll would.
+         */
+        (window as any).scrollAsUser = (delta: number) => scrollTop.set!.call(el, scrollTop.get!.call(el) + delta);
+
+        Object.defineProperty(el, 'scrollTop', {
+          get() {
+            return scrollTop.get!.call(this);
+          },
+          set(value: number) {
+            writes.push(`scrollTop = ${value}`);
+            scrollTop.set!.call(this, value);
+          },
+        });
+
+        for (const method of ['scrollTo', 'scrollBy'] as const) {
+          const original = el[method].bind(el) as (...args: unknown[]) => void;
+          (el as any)[method] = (...args: unknown[]) => {
+            writes.push(method);
+            original(...args);
+          };
+        }
+      });
+
+      const firstRenderedMonth = () =>
+        calendarBody.evaluate((el: HTMLElement) => {
+          const month = el.querySelector<HTMLElement>('.calendar-month')!;
+          return `${month.dataset.year}-${month.dataset.month}`;
+        });
+
+      const windowBefore = await firstRenderedMonth();
+
+      // Scroll through about a year of months, which re-centers the window several times.
+      for (let i = 0; i < 12; i++) {
+        await page.evaluate(() => (window as any).scrollAsUser(300));
+        await page.waitForChanges();
+      }
+
+      // The window must have re-centered, or the test would pass without exercising anything.
+      expect(await firstRenderedMonth()).not.toBe(windowBefore);
+
+      expect(await page.evaluate(() => (window as any).scrollPositionWrites)).toEqual([]);
+    });
+  });
+});

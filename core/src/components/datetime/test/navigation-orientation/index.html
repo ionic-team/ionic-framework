@@ -147,6 +147,16 @@
           </div>
 
           <div class="grid-item">
+            <h2>Vertical, show-default-title</h2>
+            <ion-datetime
+              presentation="date"
+              navigation-orientation="vertical"
+              value="2022-06-03"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
             <h2>Vertical, programmatic value</h2>
             <ion-datetime
               id="vertical-programmatic"
@@ -181,11 +191,25 @@
           </div>
 
           <div class="grid-item">
-            <h2>Vertical, full height of its parent (modal)</h2>
+            <h2>Vertical, size="cover" (full-screen modal)</h2>
             <button id="open-full-height">Open modal</button>
             <ion-modal trigger="open-full-height">
               <ion-datetime
                 id="vertical-full-height"
+                presentation="date"
+                navigation-orientation="vertical"
+                value="2022-06-03"
+                size="cover"
+              ></ion-datetime>
+            </ion-modal>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, height set directly (modal)</h2>
+            <button id="open-css-height">Open modal</button>
+            <ion-modal trigger="open-css-height">
+              <ion-datetime
+                id="vertical-css-height"
                 presentation="date"
                 navigation-orientation="vertical"
                 value="2022-06-03"

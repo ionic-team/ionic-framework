@@ -1227,7 +1227,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * The axis the calendar grid uses to navigate between months.  `"horizontal"` pages left and right. `"vertical"` pages up and down. Both snap one month at a time, and the previous/next buttons work in either orientation.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
+          * The axis the calendar grid uses to navigate between months.  `"horizontal"` pages left and right one month at a time, with the month/year toggle and the previous/next buttons in the calendar header. `"vertical"` scrolls continuously through stacked months and renders neither the month/year toggle nor the previous/next buttons. It has a default height, and fills its container with `size="cover"` or when a height is set on the datetime.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
           * @default 'horizontal'
          */
         "navigationOrientation": DatetimeNavigationOrientation;
@@ -1277,7 +1277,7 @@ export namespace Components {
          */
         "showDefaultTitle": boolean;
         /**
-          * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
+          * If `cover`, the `ion-datetime` will expand to cover the full width of its container. When `navigationOrientation` is `"vertical"`, it will also expand to cover the full height of its container. If `fixed`, the `ion-datetime` will have a fixed width.
           * @default 'fixed'
          */
         "size": 'cover' | 'fixed';
@@ -7136,7 +7136,7 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
-          * The axis the calendar grid uses to navigate between months.  `"horizontal"` pages left and right. `"vertical"` pages up and down. Both snap one month at a time, and the previous/next buttons work in either orientation.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
+          * The axis the calendar grid uses to navigate between months.  `"horizontal"` pages left and right one month at a time, with the month/year toggle and the previous/next buttons in the calendar header. `"vertical"` scrolls continuously through stacked months and renders neither the month/year toggle nor the previous/next buttons. It has a default height, and fills its container with `size="cover"` or when a height is set on the datetime.  This has no effect when a wheel picker is rendered, or when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
           * @default 'horizontal'
          */
         "navigationOrientation"?: DatetimeNavigationOrientation;
@@ -7209,7 +7209,7 @@ declare namespace LocalJSX {
          */
         "showDefaultTitle"?: boolean;
         /**
-          * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
+          * If `cover`, the `ion-datetime` will expand to cover the full width of its container. When `navigationOrientation` is `"vertical"`, it will also expand to cover the full height of its container. If `fixed`, the `ion-datetime` will have a fixed width.
           * @default 'fixed'
          */
         "size"?: 'cover' | 'fixed';

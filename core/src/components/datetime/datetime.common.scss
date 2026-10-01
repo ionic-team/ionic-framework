@@ -25,6 +25,16 @@
   width: 100%;
 }
 
+/**
+ * Horizontal shows a single month, so its height is fixed and `cover` can
+ * only cover the width. Vertical can stretch both ways, so `cover` also
+ * fills the container's height. Without a definite container height this
+ * resolves to auto, and the list falls back to its default height.
+ */
+:host(.datetime-size-cover.datetime-navigation-vertical) {
+  height: 100%;
+}
+
 :host(:not(.datetime-ready)) .datetime-year {
   position: absolute;
   pointer-events: none;
@@ -302,7 +312,6 @@
 }
 
 :host(.datetime-navigation-vertical) .calendar-body {
-
   /**
    * The default height is a flex basis rather than a fixed height, so it is
    * only a default. Left at its natural size, the datetime is exactly this
