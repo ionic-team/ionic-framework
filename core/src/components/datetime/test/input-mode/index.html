@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Input Mode</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Input Mode</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <!-- TEMP: mode/theme switcher for testing on devices. Remove before the PR. -->
+        <div id="temp-switcher" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px">
+          <button data-mode="md" data-theme="md">md</button>
+          <button data-mode="ios" data-theme="ios">ios</button>
+          <button data-mode="md" data-theme="ionic">ionic (md)</button>
+          <button data-mode="ios" data-theme="ionic">ionic (ios)</button>
+          <span id="temp-current" style="align-self: center; font-size: 12px; color: #6f7378"></span>
+        </div>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Horizontal</h2>
+            <ion-datetime presentation="date" show-default-title="true" value="2022-06-03"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical</h2>
+            <ion-datetime
+              presentation="date"
+              navigation-orientation="vertical"
+              show-default-title="true"
+              value="2022-06-03"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>No value</h2>
+            <ion-datetime presentation="date" show-default-title="true"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>min/max (Mar 2022 to Sep 2022)</h2>
+            <ion-datetime
+              presentation="date"
+              show-default-title="true"
+              value="2022-06-03"
+              min="2022-03-01"
+              max="2022-09-30"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Weekends disabled</h2>
+            <ion-datetime id="weekdays" presentation="date" show-default-title="true" value="2022-06-03"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>presentation="date-time"</h2>
+            <ion-datetime presentation="date-time" show-default-title="true" value="2022-06-03T09:30:00"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>locale="de-DE"</h2>
+            <ion-datetime
+              presentation="date"
+              show-default-title="true"
+              locale="de-DE"
+              value="2022-06-03"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Slotted title</h2>
+            <ion-datetime presentation="date" value="2022-06-03">
+              <span slot="title">Departure</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>multiple (no toggle)</h2>
+            <ion-datetime presentation="date" show-default-title="true" multiple="true"></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // TEMP: mode/theme switcher for testing on devices. Remove before the PR.
+      const params = new URLSearchParams(location.search);
+      document.querySelector('#temp-current').textContent = `mode=${params.get('ionic:mode') ?? 'default'}, theme=${
+        params.get('ionic:theme') ?? 'default'
+      }`;
+      document.querySelectorAll('#temp-switcher button').forEach((button) => {
+        button.addEventListener('click', () => {
+          params.set('ionic:mode', button.dataset.mode);
+          params.set('ionic:theme', button.dataset.theme);
+          location.search = params.toString();
+        });
+      });
+
+      document.querySelector('#weekdays').isDateEnabled = (dateString) => {
+        const day = new Date(`${dateString}T00:00:00`).getDay();
+        return day !== 0 && day !== 6;
+      };
+    </script>
+  </body>
+</html>

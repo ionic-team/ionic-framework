@@ -261,6 +261,98 @@ const getDateTimeFormat = (locale: string, options: Intl.DateTimeFormatOptions) 
 };
 
 /**
+ * The pieces of a typed date, in the order the locale writes them.
+ */
+export type DateInputSegment = { type: 'month' | 'day' | 'year' } | { type: 'literal'; value: string };
+
+/**
+ * Given a locale, return how a date is typed in the input mode's date field:
+ * the order of the month, day and year, the separators between them, and the
+ * placeholder Material shows, such as `mm/dd/yyyy` in `en-US` or
+ * `dd.mm.yyyy` in `de-DE`.
+ *
+ * Digits are always Latin, so the field reads the same in every locale.
+ */
+export const getDateInputFormat = (locale: string) => {
+  const parts = new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    timeZone: 'UTC',
+    numberingSystem: 'latn',
+  } as Intl.DateTimeFormatOptions).formatToParts(new Date(Date.UTC(2000, 10, 22)));
+
+  const segments: DateInputSegment[] = [];
+  for (const part of parts) {
+    if (part.type === 'month' || part.type === 'day' || part.type === 'year') {
+      segments.push({ type: part.type });
+    } else if (part.type === 'literal') {
+      // Bidirectional marks are invisible, and nobody types them.
+      const value = part.value.replace(/[\u200e\u200f]/g, '');
+      if (value !== '') {
+        segments.push({ type: 'literal', value });
+      }
+    }
+  }
+
+  const placeholders = { month: 'mm', day: 'dd', year: 'yyyy' };
+  const placeholder = segments.map((s) => (s.type === 'literal' ? s.value : placeholders[s.type])).join('');
+
+  return { segments, placeholder };
+};
+
+/**
+ * Formats text typed in the input mode's date field the way Material does as
+ * the user types: only the digits are kept, they fill the locale's segments
+ * in order, and each separator is added as soon as the segment before it is
+ * full. Typing `0603` in `en-US` gives `06/03/`.
+ */
+export const applyDateInputMask = (locale: string, text: string) => {
+  const { segments } = getDateInputFormat(locale);
+  const lengths = { month: 2, day: 2, year: 4 };
+  let digits = text.replace(/\D/g, '');
+  let masked = '';
+
+  for (let i = 0; i < segments.length; i++) {
+    const segment = segments[i];
+
+    if (segment.type === 'literal') {
+      // A trailing separator, such as the final "." in `ko-KR`, is never added.
+      if (segments.slice(i + 1).some((s) => s.type !== 'literal')) {
+        masked += segment.value;
+      }
+      continue;
+    }
+
+    const length = lengths[segment.type];
+    masked += digits.slice(0, length);
+
+    // The separator after a segment only appears once the segment is full.
+    if (digits.length < length) {
+      break;
+    }
+    digits = digits.slice(length);
+  }
+
+  return masked;
+};
+
+/**
+ * Given a locale and a date, return it as it would be typed in the input
+ * mode's date field, such as `06/03/2022` in `en-US`.
+ */
+export const formatDateInput = (locale: string, refParts: DatetimeParts) => {
+  const { segments } = getDateInputFormat(locale);
+  const values = {
+    month: String(refParts.month).padStart(2, '0'),
+    day: String(refParts.day).padStart(2, '0'),
+    year: String(refParts.year).padStart(4, '0'),
+  };
+
+  return segments.map((s) => (s.type === 'literal' ? s.value : values[s.type])).join('');
+};
+
+/**
  * Gets a localized version of "Today"
  * Falls back to "Today" in English for
  * browsers that do not support RelativeTimeFormat.

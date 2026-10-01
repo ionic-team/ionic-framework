@@ -188,6 +188,16 @@ export interface IonicConfig {
   datetimeCollapsedIcon?: string;
 
   /**
+   * Overrides the icon of the header button that switches to typing a date, for all `ion-datetime` components.
+   */
+  datetimeInputModeIcon?: string;
+
+  /**
+   * Overrides the icon of the header button that switches back to the calendar, for all `ion-datetime` components.
+   */
+  datetimeCalendarModeIcon?: string;
+
+  /**
    * Overrides the close icon for all `ion-fab-button` components.
    */
   fabButtonCloseIcon?: string;

@@ -3,6 +3,7 @@ import { printIonWarning } from '@utils/logging';
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore } from './comparison';
+import { getDateInputFormat } from './format';
 import { getNumDaysInMonth } from './helpers';
 
 const ISO_8601_REGEXP =
@@ -234,4 +235,41 @@ export const parseMinParts = (min: string, todayParts: DatetimeParts): DatetimeP
     hour: hour ?? 0,
     minute: minute ?? 0,
   };
+};
+
+/**
+ * Given a locale and the text typed in the input mode's date field, return
+ * the date it names, or `undefined` if it is not a complete, real date in the
+ * locale's order. The year must have all four digits, so a date is not
+ * accepted while it is still being typed.
+ */
+export const parseDateInput = (
+  locale: string,
+  text: string
+): { month: number; day: number; year: number } | undefined => {
+  const numbers = text.trim().match(/\d+/g);
+  if (numbers === null || numbers.length !== 3 || /[a-z]/i.test(text)) {
+    return;
+  }
+
+  const order = getDateInputFormat(locale)
+    .segments.filter((s) => s.type !== 'literal')
+    .map((s) => s.type as 'month' | 'day' | 'year');
+
+  const values: Record<string, string> = {};
+  order.forEach((type, i) => (values[type] = numbers[i]));
+
+  if (values.year.length !== 4 || values.month.length > 2 || values.day.length > 2) {
+    return;
+  }
+
+  const year = parseInt(values.year, 10);
+  const month = parseInt(values.month, 10);
+  const day = parseInt(values.day, 10);
+
+  if (month < 1 || month > 12 || day < 1 || day > getNumDaysInMonth(month, year)) {
+    return;
+  }
+
+  return { month, day, year };
 };

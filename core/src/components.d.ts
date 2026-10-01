@@ -1272,7 +1272,7 @@ export namespace Components {
          */
         "showDefaultTimeLabel": boolean;
         /**
-          * If `true`, a header will be shown above the calendar picker. This will include both the slotted title, and the selected date.
+          * If `true`, a header will be shown above the calendar picker. This will include both the slotted title, and the selected date.  With a grid style presentation and without `multiple`, the header also has an input mode toggle, which swaps the calendar for a date field to type the date in.
           * @default false
          */
         "showDefaultTitle": boolean;
@@ -7204,7 +7204,7 @@ declare namespace LocalJSX {
          */
         "showDefaultTimeLabel"?: boolean;
         /**
-          * If `true`, a header will be shown above the calendar picker. This will include both the slotted title, and the selected date.
+          * If `true`, a header will be shown above the calendar picker. This will include both the slotted title, and the selected date.  With a grid style presentation and without `multiple`, the header also has an input mode toggle, which swaps the calendar for a date field to type the date in.
           * @default false
          */
         "showDefaultTitle"?: boolean;

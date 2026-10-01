@@ -6,7 +6,15 @@ import { printIonError, printIonWarning } from '@utils/logging';
 import { FOCUS_TRAP_DISABLE_CLASS } from '@utils/overlays';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
-import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
+import {
+  calendarClearOutline,
+  caretDownSharp,
+  caretUpSharp,
+  chevronBack,
+  chevronDown,
+  chevronForward,
+  pencilOutline,
+} from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
@@ -37,7 +45,15 @@ import {
   getTimeColumnsData,
   getCombinedDateColumnData,
 } from './utils/data';
-import { formatValue, getLocalizedDateTime, getLocalizedTime, getMonthAndYear } from './utils/format';
+import {
+  applyDateInputMask,
+  formatDateInput,
+  formatValue,
+  getDateInputFormat,
+  getLocalizedDateTime,
+  getLocalizedTime,
+  getMonthAndYear,
+} from './utils/format';
 import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -61,6 +77,7 @@ import {
   getPartsFromCalendarDay,
   parseAmPm,
   parseDate,
+  parseDateInput,
   parseMaxParts,
   parseMinParts,
 } from './utils/parse';
@@ -95,6 +112,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @part month-year-button - The button that opens the month/year picker when
  * using a grid style layout.
  * @part navigation-button - The buttons used to navigate to the next or previous month when using a grid style layout.
+ * @part input-mode-toggle - The button in the header that switches between the calendar and typing a date.
  * @part previous-button - The button used to navigate to the previous month when using a grid style layout.
  * @part next-button - The button used to navigate to the next month when using a grid style layout.
  * @part calendar-days-of-week - The container for the day-of-the-week header (both weekdays and weekends) when using a grid style layout.
@@ -157,6 +175,19 @@ export class Datetime implements ComponentInterface {
   private resolveForceDateScrolling?: () => void;
 
   @State() showMonthAndYear = false;
+
+  /**
+   * Whether the header's input mode is on, which swaps the calendar for a
+   * date field. Refer to `toggleInputMode`.
+   */
+  @State() inputMode = false;
+
+  // The text in the input mode's date field, and why it was rejected, if it was.
+  @State() dateInputText = '';
+  @State() dateInputError?: string;
+
+  // Set on leaving input mode, so `componentDidRender` rebuilds the calendar listeners.
+  private pendingCalendarModeReturn = false;
 
   @State() activeParts: DatetimeParts | DatetimeParts[] = [];
 
@@ -348,6 +379,20 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
+   * The header offers an input mode, following Material's date picker, for
+   * the grid presentations. It types a single date, so `multiple` has none,
+   * as Material has no multi-date input.
+   */
+  private get hasInputModeToggle() {
+    const hasHeader = this.showDefaultTitle || this.el.querySelector('[slot="title"]') !== null;
+    return hasHeader && this.isGridStyle && !this.multiple;
+  }
+
+  private get isInputMode() {
+    return this.inputMode && this.hasInputModeToggle;
+  }
+
+  /**
    * Vertical navigation only applies to the calendar grid, so it is gated
    * behind the same check as the grid itself. Everything that branches on
    * the navigation axis should use this rather than reading the prop, so
@@ -515,6 +560,10 @@ export class Datetime implements ComponentInterface {
    * If `true`, a header will be shown above the calendar
    * picker. This will include both the slotted title, and
    * the selected date.
+   *
+   * With a grid style presentation and without `multiple`, the header also
+   * has an input mode toggle, which swaps the calendar for a date field to
+   * type the date in.
    */
   @Prop() showDefaultTitle = false;
 
@@ -1288,6 +1337,9 @@ export class Datetime implements ComponentInterface {
       this.destroyCalendarListener = () => {
         calendarBodyRef.removeEventListener('scroll', scrollCallback);
         resizeObserver?.disconnect();
+
+        // As in horizontal, a debounced update must not run once the listener is gone.
+        clearTimeout(scrollTimeout);
       };
     });
   };
@@ -1940,6 +1992,14 @@ export class Datetime implements ComponentInterface {
 
       this.destroyCalendarListener = () => {
         calendarBodyRef.removeEventListener('scroll', scrollCallback);
+
+        /**
+         * A scroll still being debounced would otherwise read the month after
+         * the listener is gone. Input mode destroys the listener and hides the
+         * body, which resets its scroll position, so the late read took the
+         * reset for a swipe to the previous month.
+         */
+        clearTimeout(scrollTimeout);
       };
     });
   };
@@ -2153,6 +2213,12 @@ export class Datetime implements ComponentInterface {
   }
 
   componentDidRender() {
+    if (this.pendingCalendarModeReturn) {
+      this.pendingCalendarModeReturn = false;
+      this.destroyInteractionListeners();
+      this.initializeListeners();
+    }
+
     /**
      * Applied here rather than where it is calculated, because the re-centered
      * window only exists in the DOM once this render has completed.
@@ -2610,6 +2676,141 @@ export class Datetime implements ComponentInterface {
   private toggleMonthAndYearView = () => {
     this.showMonthAndYear = !this.showMonthAndYear;
   };
+
+  /**
+   * Swaps the calendar for a date field and back, like the pencil in
+   * Material's date picker header. The calendar stays rendered but hidden
+   * under the field, so the datetime keeps its height and returning only has
+   * to move it to a typed date. Its listeners are rebuilt on the way back,
+   * which positions both orientations on the working month.
+   */
+  private toggleInputMode = () => {
+    if (!this.inputMode) {
+      const activePart = this.getActivePart();
+      this.dateInputText = activePart?.day != null ? formatDateInput(this.locale, activePart) : '';
+      this.dateInputError = undefined;
+      this.showMonthAndYear = false;
+      this.cancelVerticalGlide();
+      this.destroyInteractionListeners();
+      this.inputMode = true;
+      return;
+    }
+
+    /**
+     * Vertical's window does not follow `workingParts`, so a date typed far
+     * from the list needs the window rebuilt around it before it renders.
+     */
+    if (this.isVerticalNavigation) {
+      const { month, year } = this.workingParts;
+      this.verticalWindowCenter = { month, year, day: null };
+    }
+
+    this.inputMode = false;
+    this.pendingCalendarModeReturn = true;
+  };
+
+  /**
+   * Adds the separators as the user types, as Material's date field does.
+   * Only while the text grows with the cursor at the end: reformatting on a
+   * deletion would put back a separator the user just removed, and
+   * reformatting an edit in the middle would move the cursor to the end.
+   */
+  private maskDateInput(ev: CustomEvent): string {
+    const typed: string = ev.detail.value ?? '';
+    const nativeInput = (ev.detail.event as Event | undefined)?.target as HTMLInputElement | undefined;
+    const cursorAtEnd = nativeInput === undefined || nativeInput.selectionEnd === typed.length;
+
+    if (typed.length <= this.dateInputText.length || !cursorAtEnd) {
+      return typed;
+    }
+
+    const masked = applyDateInputMask(this.locale, typed);
+
+    /**
+     * Set on the field as well as through state. When the masked text equals
+     * the previous state, such as after a stray separator is dropped, the
+     * render would pass the field the same value and leave its text as typed.
+     */
+    if (masked !== typed) {
+      (ev.target as HTMLIonInputElement).value = masked;
+    }
+
+    return masked;
+  }
+
+  /**
+   * Selects a date typed in input mode, as tapping it in the calendar would.
+   * `showFormatError` is false while the user is still typing, so a partial
+   * date is not flagged before it is finished.
+   */
+  private commitDateInput = (text: string, showFormatError: boolean) => {
+    this.dateInputText = text;
+    this.dateInputError = undefined;
+
+    if (text.trim() === '') {
+      return;
+    }
+
+    const parts = parseDateInput(this.locale, text);
+    if (parts === undefined) {
+      if (showFormatError) {
+        this.dateInputError = `Invalid format. Use: ${getDateInputFormat(this.locale).placeholder}`;
+      }
+      return;
+    }
+
+    if (!this.isDateSelectable(parts)) {
+      this.dateInputError = `Out of range: ${text.trim()}`;
+      return;
+    }
+
+    /**
+     * The date is selected as soon as it is complete, so the field's change
+     * on blur would select it a second time and emit `ionChange` twice.
+     */
+    const activePart = this.getActivePart();
+    if (activePart !== undefined && isSameDay(activePart, parts)) {
+      return;
+    }
+
+    this.setWorkingParts({ ...this.workingParts, ...parts });
+    this.setActiveParts({ ...this.getActivePartsWithFallback(), ...parts });
+  };
+
+  /**
+   * Whether a typed date could be tapped in the calendar: inside `min` and
+   * `max`, allowed by `dayValues`, `monthValues` and `yearValues`, and
+   * enabled by `isDateEnabled`.
+   */
+  private isDateSelectable(parts: { month: number; day: number; year: number }) {
+    const { minParts, maxParts, parsedDayValues, parsedMonthValues, parsedYearValues, isDateEnabled } = this;
+
+    if (isDayDisabled(parts, minParts, maxParts, parsedDayValues)) {
+      return false;
+    }
+
+    if (parsedMonthValues !== undefined && !parsedMonthValues.includes(parts.month)) {
+      return false;
+    }
+
+    if (parsedYearValues !== undefined && !parsedYearValues.includes(parts.year)) {
+      return false;
+    }
+
+    if (isDateEnabled !== undefined) {
+      try {
+        return isDateEnabled(convertDataToISO(parts));
+      } catch (e) {
+        printIonError(
+          '[ion-datetime] - Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+          this.el,
+          e
+        );
+      }
+    }
+
+    return true;
+  }
 
   /**
    * Universal render methods
@@ -3643,6 +3844,7 @@ export class Datetime implements ComponentInterface {
       <div class="datetime-calendar" key="datetime-calendar">
         {this.renderCalendarHeader(theme)}
         {this.renderCalendarBody()}
+        {this.isInputMode && this.renderDateInput()}
       </div>
     );
   }
@@ -3758,16 +3960,93 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const selectedDate = showExpandedHeader && (
+      <div class="datetime-selected-date" part="datetime-selected-date">
+        {this.getHeaderSelectedDateText()}
+      </div>
+    );
+
     return (
       <div class="datetime-header" part="datetime-header">
         <div class="datetime-title" part="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {showExpandedHeader && (
-          <div class="datetime-selected-date" part="datetime-selected-date">
-            {this.getHeaderSelectedDateText()}
+        {showExpandedHeader && this.hasInputModeToggle ? (
+          <div class="datetime-selected-date-row">
+            {selectedDate}
+            {this.renderInputModeToggle()}
           </div>
+        ) : (
+          selectedDate
         )}
+      </div>
+    );
+  }
+
+  /**
+   * The pencil in Material's date picker header. In input mode it becomes a
+   * calendar, which switches back.
+   */
+  private renderInputModeToggle() {
+    const { isInputMode, disabled } = this;
+
+    return (
+      <ion-button
+        class="datetime-input-mode-toggle"
+        part="input-mode-toggle"
+        fill="clear"
+        aria-label={isInputMode ? 'Switch to calendar input mode' : 'Switch to text input mode'}
+        disabled={disabled}
+        onClick={this.toggleInputMode}
+      >
+        <ion-icon
+          aria-hidden="true"
+          slot="icon-only"
+          icon={isInputMode ? this.datetimeCalendarModeIcon : this.datetimeInputModeIcon}
+          lazy={false}
+        ></ion-icon>
+      </ion-button>
+    );
+  }
+
+  /**
+   * The date field shown in place of the calendar in input mode, laid over
+   * the hidden calendar so the datetime keeps its height. A range picker,
+   * refer to 0007, adds a second field for the end date here.
+   */
+  private renderDateInput() {
+    const { dateInputError, disabled, readonly } = this;
+    const theme = getIonTheme(this);
+    const hasError = dateInputError !== undefined;
+    const { placeholder } = getDateInputFormat(this.locale);
+
+    return (
+      <div class="datetime-input" key="datetime-input">
+        <ion-input
+          class={{ 'ion-touched': hasError, 'ion-invalid': hasError }}
+          label="Date"
+          labelPlacement={theme === 'md' ? 'floating' : 'stacked'}
+          fill={theme === 'md' ? 'outline' : undefined}
+          placeholder={placeholder}
+          maxlength={placeholder.length}
+          value={this.dateInputText}
+          errorText={dateInputError}
+          disabled={disabled}
+          readonly={readonly}
+          /**
+           * The field's events are composed, so they would reach the app as
+           * events of the datetime itself. Its `ionChange` especially would
+           * look like the datetime's, with the typed text as the value.
+           */
+          onIonInput={(ev: CustomEvent) => {
+            ev.stopPropagation();
+            this.commitDateInput(this.maskDateInput(ev), false);
+          }}
+          onIonChange={(ev: CustomEvent) => {
+            ev.stopPropagation();
+            this.commitDateInput(ev.detail.value ?? '', true);
+          }}
+        ></ion-input>
       </div>
     );
   }
@@ -3894,6 +4173,24 @@ export class Datetime implements ComponentInterface {
     return config.get('datetimeExpandedIcon', defaultIcon);
   }
 
+  /**
+   * Get the icon for the header button that switches to typing a date.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get datetimeInputModeIcon(): string {
+    return config.get('datetimeInputModeIcon', pencilOutline);
+  }
+
+  /**
+   * Get the icon for the header button that switches back to the calendar.
+   * Use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get datetimeCalendarModeIcon(): string {
+    return config.get('datetimeCalendarModeIcon', calendarClearOutline);
+  }
+
   render() {
     const {
       name,
@@ -3931,6 +4228,7 @@ export class Datetime implements ComponentInterface {
             ['datetime-disabled']: disabled,
             'show-month-and-year': shouldShowMonthAndYear,
             'month-year-picker-open': monthYearPickerOpen,
+            'datetime-input-mode': this.isInputMode,
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,

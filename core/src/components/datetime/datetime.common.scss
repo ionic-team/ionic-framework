@@ -152,6 +152,59 @@
   overflow: hidden;
 }
 
+// Header input mode
+// -----------------------------------
+
+/**
+ * The input mode toggle sits at the end of the selected date's row, as the
+ * pencil does in Material's date picker header.
+ */
+:host .datetime-selected-date-row {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+:host .datetime-selected-date-row .datetime-selected-date {
+  flex: 1;
+
+  min-width: 0;
+}
+
+/**
+ * The toggle takes the header's text color rather than the button's primary
+ * color, which would disappear against md's primary header.
+ */
+:host .datetime-input-mode-toggle {
+  --color: currentColor;
+
+  @include margin(0);
+
+  color: inherit;
+}
+
+/**
+ * Input mode hides the calendar without taking it out of the layout, and
+ * lays the date field over it, so the datetime keeps its height when the
+ * toggle is pressed. Hidden this way rather than with `display: none`, the
+ * body also keeps its scroll position, and its days cannot take focus.
+ */
+:host(.datetime-input-mode) .datetime-calendar {
+  position: relative;
+
+  visibility: hidden;
+}
+
+:host .datetime-input {
+  @include position(0, 0, null, 0);
+  @include padding(16px);
+
+  position: absolute;
+
+  visibility: visible;
+}
+
 // Calendar / Footer / Action Buttons
 // -----------------------------------
 

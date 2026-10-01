@@ -73,6 +73,21 @@
   color: globals.$ion-primitives-neutral-1000;
 }
 
+/**
+ * The header is a fixed-height column aligned to the start, so the row has
+ * to stretch to put the toggle at the end. The toggle keeps its full touch
+ * target but lets it overflow the row vertically, so it does not grow the
+ * header.
+ */
+:host .datetime-header .datetime-selected-date-row {
+  align-items: center;
+  align-self: stretch;
+}
+
+:host .datetime-header .datetime-input-mode-toggle {
+  @include globals.margin(calc(-1 * #{globals.$ion-space-300}), 0);
+}
+
 // Calendar Header
 // -----------------------------------
 
