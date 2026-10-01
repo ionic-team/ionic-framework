@@ -421,14 +421,14 @@ export const createSheetGesture = (
     animation.progressStep(offset);
 
     const snapBreakpoint = usePhysicsBasedGesture
-      ? calculateVelocitySnapBreakpoint(detail.deltaY, detail.velocityY, detail.currentY)
+      ? calculateVelocitySnapBreakpoint(detail.deltaY, detail.velocityY)
       : calculatePositionSnapBreakpoint(detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
-      progress: calculateProgress(detail.currentY),
+      progress: calculateProgress(detail.deltaY),
       snapBreakpoint: snapBreakpoint,
     };
 
@@ -437,7 +437,7 @@ export const createSheetGesture = (
 
   const onEnd = (detail: GestureDetail) => {
     const snapBreakpoint = usePhysicsBasedGesture
-      ? calculateVelocitySnapBreakpoint(detail.deltaY, detail.velocityY, detail.currentY)
+      ? calculateVelocitySnapBreakpoint(detail.deltaY, detail.velocityY)
       : calculatePositionSnapBreakpoint(detail.deltaY);
 
     /**
@@ -454,7 +454,7 @@ export const createSheetGesture = (
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
-      progress: calculateProgress(detail.currentY),
+      progress: calculateProgress(detail.deltaY),
       snapBreakpoint,
       isDismissing,
     };
@@ -681,15 +681,9 @@ export const createSheetGesture = (
    */
   const calculatePositionSnapBreakpoint = (deltaY: number): number => {
     /**
-     * Calculates the real-time vertical position of the modal.
-     * We combine the wrapper's current bounding box position with the
-     * gesture's deltaY to account for the physical movement during the drag.
+     * How far open the sheet is once the drag is applied, as a 0 to 1 value.
      */
-    const currentY = wrapperEl.getBoundingClientRect().top + deltaY;
-    /**
-     * Convert that pixel position back into a 0 to 1 progress value.
-     */
-    const currentProgress = calculateProgress(currentY);
+    const currentProgress = calculateProgress(deltaY);
 
     /**
      * Find and return the defined breakpoint that is closest to the
@@ -714,15 +708,14 @@ export const createSheetGesture = (
    *
    * @param deltaY The change in Y position since gesture started
    * @param velocityY The velocity in pixels per millisecond
-   * @param currentY The current Y position of the gesture
    * @returns The snap breakpoint value
    */
-  const calculateVelocitySnapBreakpoint = (deltaY: number, velocityY: number, currentY: number): number => {
+  const calculateVelocitySnapBreakpoint = (deltaY: number, velocityY: number): number => {
     // Convert velocity from px/ms to px/s for easier threshold comparison
     const velocityYPerSecond = velocityY * 1000;
 
     // Calculate current progress (0 = fully closed, 1 = fully expanded)
-    const currentProgress = calculateProgress(currentY);
+    const currentProgress = calculateProgress(deltaY);
 
     // Rule 1: Fast downward flick always dismisses
     if (velocityYPerSecond > 500) {
@@ -762,70 +755,24 @@ export const createSheetGesture = (
    * A value closer to 1 means the modal is closer to being opened,
    * while a value closer to 0 means the modal is closer to being closed.
    *
-   * @param currentY The current Y position of the gesture
+   * This is measured from the drag rather than the pointer position, against
+   * the sheet's own height. Measuring against the viewport would report a
+   * sheet that does not fill the screen (a customized `--height`) as partly
+   * closed while it is fully open.
+   *
+   * @param deltaY The change in Y position since the gesture started
    * @returns The progress of the sheet gesture
    */
-  const calculateProgress = (currentY: number): number => {
-    const minBreakpoint = breakpoints[0];
-    const maxBreakpoint = breakpoints[breakpoints.length - 1];
-
+  const calculateProgress = (deltaY: number): number => {
     /**
-     * The lowest point the sheet can be dragged to aka the point at which
-     * the sheet is fully closed.
+     * The sheet starts the gesture open at currentBreakpoint, and dragging
+     * down by the full sheet height would close it completely.
      */
-    const maxY = convertBreakpointToY(minBreakpoint);
-    /**
-     * The highest point the sheet can be dragged to aka the point at which
-     * the sheet is fully open.
-     */
-    const minY = convertBreakpointToY(maxBreakpoint);
-    // The total distance between the fully open and fully closed positions.
-    const totalDistance = maxY - minY;
-    // The distance from the current position to the fully closed position.
-    const distanceFromBottom = maxY - currentY;
-    /**
-     * The progress represents how far the sheet is from the bottom relative
-     * to the total distance. When the user starts swiping up, the progress
-     * should be close to 1, and when the user has swiped all the way down,
-     * the progress should be close to 0.
-     */
-    const progress = distanceFromBottom / totalDistance;
+    const progress = currentBreakpoint - deltaY / height;
     // Round to the nearest thousandth to avoid returning very small decimal
     const roundedProgress = Math.round(progress * 1000) / 1000;
 
-    return Math.max(0, Math.min(1, roundedProgress));
-  };
-
-  /**
-   * Converts a breakpoint value (0 to 1) into a pixel Y coordinate
-   * on the screen.
-   *
-   * @param breakpoint The breakpoint value (e.g., 0.5 for half-open)
-   * @returns The pixel Y coordinate on the screen
-   */
-  const convertBreakpointToY = (breakpoint: number): number => {
-    const rect = baseEl.getBoundingClientRect();
-    const modalHeight = rect.height;
-    // The bottom of the screen.
-    const viewportBottom = window.innerHeight;
-    /**
-     * The active height is how much of the modal is actually showing
-     * on the screen for this specific breakpoint.
-     */
-    const activeHeight = modalHeight * breakpoint;
-
-    /**
-     * To find the Y coordinate, start at the bottom of the screen
-     * and move up by the active height of the modal.
-     *
-     * A breakpoint of 1.0 means the active height is the full modal height
-     * (fully open). A breakpoint of 0.0 means the active height is 0
-     * (fully closed).
-     *
-     * Since screen Y coordinates get smaller as you go up, we subtract the
-     * active height from the viewport bottom.
-     */
-    return viewportBottom - activeHeight;
+    return clamp(0, roundedProgress, 1);
   };
 
   const gesture = createGesture({
