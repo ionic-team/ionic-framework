@@ -1,196 +1,408 @@
+import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * The month shown in the shared header is the observable side of
- * `workingParts`, so it is what these tests assert against.
+ * The month whose block starts at the top of the list, as "year-month". It is
+ * what the user sees first, so it is what scrolling and re-centering must keep
+ * stable.
  */
-const getVisibleMonth = (page: E2EPage) => page.locator('ion-datetime#vertical .calendar-month-year-toggle');
+const getMonthAtTop = (datetime: Locator) =>
+  datetime.locator('.calendar-body').evaluate((body: HTMLElement) => {
+    const top = body.getBoundingClientRect().top;
+    const month = Array.from(body.querySelectorAll<HTMLElement>('.calendar-month')).find(
+      (el) => Math.abs(el.getBoundingClientRect().top - top) < 1
+    );
+    return month ? `${month.dataset.year}-${month.dataset.month}` : undefined;
+  });
 
-const getCalendarBody = (page: E2EPage) => page.locator('ion-datetime#vertical .calendar-body');
+const getFirstRenderedMonth = (datetime: Locator) =>
+  datetime.locator('.calendar-body').evaluate((body: HTMLElement) => {
+    const month = body.querySelector<HTMLElement>('.calendar-month')!;
+    return `${month.dataset.year}-${month.dataset.month}`;
+  });
 
-configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+const scrollByMonths = (datetime: Locator, months: number) =>
+  datetime.locator('.calendar-body').evaluate((body: HTMLElement, months: number) => {
+    body.scrollTop += months * body.querySelector<HTMLElement>('.calendar-month')!.offsetHeight;
+  }, months);
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: navigation orientation'), () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/datetime/test/navigation-orientation', config);
-      await page.locator('ion-datetime#vertical').waitFor({ state: 'visible' });
-    });
+    test('should scroll on the y axis without snapping', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
 
-    test('should scroll on the y axis, not the x axis', async ({ page }) => {
-      const body = getCalendarBody(page);
-
-      const metrics = await body.evaluate((el) => ({
-        scrollsVertically: el.scrollHeight > el.clientHeight,
-        scrollsHorizontally: el.scrollWidth > el.clientWidth,
+      const metrics = await page.locator('ion-datetime .calendar-body').evaluate((body: HTMLElement) => ({
+        scrollsVertically: body.scrollHeight > body.clientHeight,
+        scrollsHorizontally: body.scrollWidth > body.clientWidth,
+        snapType: getComputedStyle(body).scrollSnapType,
+        snapAlign: getComputedStyle(body.querySelector('.calendar-month')!).scrollSnapAlign,
       }));
 
-      expect(metrics.scrollsVertically).toBe(true);
-      expect(metrics.scrollsHorizontally).toBe(false);
+      expect(metrics).toEqual({
+        scrollsVertically: true,
+        scrollsHorizontally: false,
+        snapType: 'none',
+        snapAlign: 'none',
+      });
     });
 
-    test('should start scrolled to the working month', async ({ page }) => {
-      const body = getCalendarBody(page);
+    test('should start with the working month at the top', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      expect(await getMonthAtTop(page.locator('ion-datetime'))).toBe('2022-6');
+    });
+
+    test('should keep the month at the top as the window re-centers', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const datetime = page.locator('ion-datetime');
+      const windowBefore = await getFirstRenderedMonth(datetime);
 
       /**
-       * The window is three months and the working month is the middle one,
-       * so the initial offset is exactly one month down.
+       * A month at a time for over a year, which re-centers the window several
+       * times. A re-center that shifted the list would leave the wrong month
+       * at the top.
        */
-      const offset = await body.evaluate((el) => {
-        const month = el.querySelector('.calendar-month') as HTMLElement;
-        return { scrollTop: el.scrollTop, monthHeight: month.clientHeight };
-      });
+      for (let i = 1; i <= 14; i++) {
+        await scrollByMonths(datetime, 1);
+        await page.waitForChanges();
 
-      expect(offset.monthHeight).toBeGreaterThan(0);
-      expect(Math.abs(offset.scrollTop - offset.monthHeight)).toBeLessThanOrEqual(2);
+        const date = new Date(2022, 5 + i, 1);
+        await expect.poll(() => getMonthAtTop(datetime)).toBe(`${date.getFullYear()}-${date.getMonth() + 1}`);
+      }
+
+      // The window must have re-centered, or the test would pass without exercising anything.
+      expect(await getFirstRenderedMonth(datetime)).not.toBe(windowBefore);
     });
 
-    test('should snap one month at a time', async ({ page }) => {
-      const body = getCalendarBody(page);
+    test('should announce the month at the top', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
 
-      await expect(getVisibleMonth(page)).toHaveText(/June 2022/);
+      const datetime = page.locator('ion-datetime');
+      const announce = datetime.locator('.calendar-month-year-announce');
 
-      await body.evaluate((el) => {
-        el.scrollTo({ top: el.scrollTop + el.clientHeight, behavior: 'instant' });
-      });
+      await expect(announce).toHaveText('June 2022');
 
-      await expect(getVisibleMonth(page)).toHaveText(/July 2022/);
+      await scrollByMonths(datetime, 1);
 
-      await body.evaluate((el) => {
-        el.scrollTo({ top: el.scrollTop - el.clientHeight, behavior: 'instant' });
-      });
-
-      await expect(getVisibleMonth(page)).toHaveText(/June 2022/);
-    });
-
-    test('should re-center the window after the month changes', async ({ page }) => {
-      const body = getCalendarBody(page);
-
-      await body.evaluate((el) => {
-        el.scrollTo({ top: el.scrollTop + el.clientHeight, behavior: 'instant' });
-      });
-
-      await expect(getVisibleMonth(page)).toHaveText(/July 2022/);
-
-      /**
-       * Once the window regenerates around July, the scroll position must be
-       * back at the middle month so there is a month of runway either way.
-       */
-      const offset = await body.evaluate((el) => {
-        const month = el.querySelector('.calendar-month') as HTMLElement;
-        return { scrollTop: el.scrollTop, monthHeight: month.clientHeight };
-      });
-
-      expect(Math.abs(offset.scrollTop - offset.monthHeight)).toBeLessThanOrEqual(2);
+      await expect(announce).toHaveText('July 2022');
     });
 
     test('should contain scroll rather than chaining it to the page', async ({ page }) => {
-      const body = getCalendarBody(page);
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
 
-      const overscroll = await body.evaluate((el) => getComputedStyle(el).overscrollBehaviorY);
-
-      expect(overscroll).toBe('contain');
+      await expect(page.locator('ion-datetime .calendar-body')).toHaveCSS('overscroll-behavior-y', 'contain');
     });
 
-    test('should render at the same height as horizontal', async ({ page }) => {
-      const vertical = page.locator('ion-datetime#vertical');
-      const horizontal = page.locator('.grid-item:nth-of-type(1) ion-datetime');
+    test('should end the list at min and max', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          presentation="date"
+          navigation-orientation="vertical"
+          value="2022-06-03"
+          min="2022-03-01"
+          max="2022-09-30"
+        ></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
 
-      const verticalBox = await vertical.boundingBox();
-      const horizontalBox = await horizontal.boundingBox();
+      const datetime = page.locator('ion-datetime');
+      const body = datetime.locator('.calendar-body');
 
-      expect(verticalBox).not.toBeNull();
-      expect(horizontalBox).not.toBeNull();
-      expect(Math.abs(verticalBox!.height - horizontalBox!.height)).toBeLessThanOrEqual(2);
+      /**
+       * The last month rendered and how far its bottom sits from the bottom of
+       * the list, as "year-month:gap". There is no runway past a real min or
+       * max, so at either end the list stops exactly at that month.
+       */
+      const getLastMonthAtBottom = () =>
+        body.evaluate((el: HTMLElement) => {
+          const months = el.querySelectorAll<HTMLElement>('.calendar-month');
+          const last = months[months.length - 1];
+          const gap = el.getBoundingClientRect().bottom - last.getBoundingClientRect().bottom;
+          return `${last.dataset.year}-${last.dataset.month}:${Math.round(gap)}`;
+        });
+
+      await body.evaluate((el: HTMLElement) => (el.scrollTop = 0));
+      await expect.poll(() => getMonthAtTop(datetime)).toBe('2022-3');
+
+      await body.evaluate((el: HTMLElement) => (el.scrollTop = el.scrollHeight));
+      await expect.poll(getLastMonthAtBottom).toBe('2022-9:0');
     });
 
-    test('should keep the horizontal default unchanged', async ({ page }) => {
-      const body = page.locator('.grid-item:nth-of-type(1) ion-datetime .calendar-body');
+    test('should not render the month/year toggle or the previous/next buttons', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime id="horizontal" presentation="date" value="2022-06-03"></ion-datetime>
+        <ion-datetime id="vertical" presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('#horizontal.datetime-ready').waitFor();
+      await page.locator('#vertical.datetime-ready').waitFor();
 
-      const metrics = await body.evaluate((el) => ({
-        scrollsHorizontally: el.scrollWidth > el.clientWidth,
-        scrollsVertically: el.scrollHeight > el.clientHeight,
-        snapType: getComputedStyle(el).scrollSnapType,
-      }));
+      const horizontal = page.locator('#horizontal');
+      const vertical = page.locator('#vertical');
 
-      expect(metrics.scrollsHorizontally).toBe(true);
-      expect(metrics.scrollsVertically).toBe(false);
-      expect(metrics.snapType).toBe('x mandatory');
+      await expect(horizontal.locator('.calendar-month-year-toggle')).toBeVisible();
+      await expect(horizontal.locator('.calendar-next-prev ion-button')).toHaveCount(2);
+
+      await expect(vertical.locator('.calendar-action-buttons')).toHaveCount(0);
+
+      // The day-of-week row stays, since every month below shares it.
+      await expect(vertical.locator('.calendar-days-of-week')).toBeVisible();
     });
 
     /**
-     * The three presentations that render a calendar grid. Vertical paging is
-     * gated behind `isGridStyle`, so each one has to be covered: `date-time`
-     * and `time-date` also render a time row, which shares the height the
-     * calendar body is measured against.
+     * `date-time` and `time-date` also render a time row, which shares the
+     * height the list is measured against.
      */
     ['date', 'date-time', 'time-date'].forEach((presentation) => {
-      test(`should page vertically for presentation="${presentation}"`, async ({ page }) => {
-        const body = page.locator(`ion-datetime#vertical-${presentation} .calendar-body`);
+      test(`should scroll vertically for presentation="${presentation}"`, async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-datetime
+            presentation="${presentation}"
+            navigation-orientation="vertical"
+            value="2022-06-03T09:30:00"
+          ></ion-datetime>
+        `,
+          config
+        );
+        await page.locator('.datetime-ready').waitFor();
 
-        await expect(body).toHaveCSS('scroll-snap-type', 'y mandatory');
+        const datetime = page.locator('ion-datetime');
+        const scrollsVertically = await datetime
+          .locator('.calendar-body')
+          .evaluate((body: HTMLElement) => body.scrollHeight > body.clientHeight);
 
-        const metrics = await body.evaluate((el) => ({
-          scrollsVertically: el.scrollHeight > el.clientHeight,
-          scrollsHorizontally: el.scrollWidth > el.clientWidth,
-          scrollTop: el.scrollTop,
-          clientHeight: el.clientHeight,
-        }));
-
-        expect(metrics.scrollsVertically).toBe(true);
-        expect(metrics.scrollsHorizontally).toBe(false);
-
-        // Starts on the middle month of the three-month window.
-        expect(Math.abs(metrics.scrollTop - metrics.clientHeight)).toBeLessThanOrEqual(2);
+        expect(scrollsVertically).toBe(true);
+        expect(await getMonthAtTop(datetime)).toBe('2022-6');
       });
     });
 
-    test('should not render the navigation buttons in vertical', async ({ page }) => {
-      await expect(page.locator('ion-datetime#vertical .calendar-next-prev ion-button')).toHaveCount(0);
+    test('should move by month and by year with the keyboard', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const datetime = page.locator('ion-datetime');
+      const day = (year: number, month: number, date: number) =>
+        datetime.locator(`.calendar-day[data-year="${year}"][data-month="${month}"][data-day="${date}"]`);
+
+      await day(2022, 6, 3).focus();
+
+      await page.keyboard.press('PageDown');
+      await expect(day(2022, 7, 3)).toBeFocused();
+
+      // A year away is outside the rendered window, so it has to be rendered and scrolled to first.
+      await page.keyboard.press('Shift+PageDown');
+      await expect(day(2023, 7, 3)).toBeFocused();
+      await expect.poll(() => getMonthAtTop(datetime)).toBe('2023-7');
     });
 
-    test('should keep the navigation buttons in horizontal', async ({ page }) => {
-      await expect(page.locator('.grid-item:nth-of-type(1) ion-datetime .calendar-next-prev ion-button')).toHaveCount(
-        2
+    test('should scroll to a value set programmatically', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const datetime = page.locator('ion-datetime');
+      const setValue = (value: string) =>
+        datetime.evaluate((el: HTMLIonDatetimeElement, value: string) => (el.value = value), value);
+
+      // A day already at the top of the list does not move it.
+      await setValue('2022-06-20');
+      await page.waitForChanges();
+      expect(await getMonthAtTop(datetime)).toBe('2022-6');
+
+      await setValue('2027-03-15');
+      await expect.poll(() => getMonthAtTop(datetime)).toBe('2027-3');
+
+      await setValue('2019-11-15');
+      await expect.poll(() => getMonthAtTop(datetime)).toBe('2019-11');
+    });
+
+    test('should close the month/year picker when switched to vertical', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const datetime = page.locator('ion-datetime');
+
+      /**
+       * Horizontal positions its first month with a scroll, and its listener
+       * reads the month from that scroll 50ms later. Opening the picker before
+       * then hides the body, the listener reads its scroll position as 0, and
+       * takes it as a swipe to the previous month. No user opens the picker
+       * that fast, so the test waits for the listener rather than racing it.
+       */
+      await page.waitForTimeout(100);
+
+      await datetime.locator('.calendar-month-year-toggle').click();
+      await expect(datetime).toHaveClass(/show-month-and-year/);
+
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.navigationOrientation = 'vertical'));
+      await page.waitForChanges();
+
+      /**
+       * Vertical has no toggle to close the picker with, so leaving it open
+       * would leave the user stuck in it.
+       */
+      await expect(datetime).not.toHaveClass(/show-month-and-year/);
+      await expect(datetime.locator('.calendar-body')).toHaveCSS('scroll-snap-type', 'none');
+      await expect.poll(() => getMonthAtTop(datetime)).toBe('2022-6');
+    });
+
+    test('should ignore showAdjacentDays and warn', async ({ page }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime
+          presentation="date"
+          navigation-orientation="vertical"
+          value="2022-06-03"
+          show-adjacent-days="true"
+        ></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      await expect(page.locator('ion-datetime .calendar-day-adjacent-day')).toHaveCount(0);
+
+      expect(logs.length).toBe(1);
+      expect(logs[0]).toContain(
+        '[ion-datetime] - showAdjacentDays has no effect when navigationOrientation="vertical".'
       );
     });
 
-    test('should keep the month/year toggle in vertical', async ({ page }) => {
-      await expect(getVisibleMonth(page)).toBeVisible();
-      await expect(getVisibleMonth(page)).toHaveText(/June 2022/);
+    test('should fill its container with size="cover"', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="height: 800px">
+          <ion-datetime
+            id="cover"
+            presentation="date"
+            navigation-orientation="vertical"
+            value="2022-06-03"
+            size="cover"
+          ></ion-datetime>
+        </div>
+        <ion-datetime id="default" presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('#cover.datetime-ready').waitFor();
+      await page.locator('#default.datetime-ready').waitFor();
+
+      const cover = await page.locator('#cover').boundingBox();
+      const coverBody = await page.locator('#cover .calendar-body').boundingBox();
+      const defaultBody = await page.locator('#default .calendar-body').boundingBox();
+
+      expect(cover!.height).toBeCloseTo(800, 0);
+      expect(coverBody!.height).toBeGreaterThan(defaultBody!.height);
     });
 
-    test('should navigate months by keyboard in vertical', async ({ page }) => {
-      /**
-       * Focusing the body passes focus to the working day, which is what the
-       * PageUp/PageDown handler acts on.
-       */
-      await getCalendarBody(page).focus();
+    test('should fill a height set on the datetime', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          presentation="date"
+          navigation-orientation="vertical"
+          value="2022-06-03"
+          style="height: 800px"
+        ></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
 
-      await page.keyboard.press('PageDown');
-      await expect(getVisibleMonth(page)).toHaveText(/July 2022/);
+      const datetime = await page.locator('ion-datetime').boundingBox();
+      const header = await page.locator('ion-datetime .calendar-header').boundingBox();
+      const body = await page.locator('ion-datetime .calendar-body').boundingBox();
 
-      await page.keyboard.press('PageUp');
-      await expect(getVisibleMonth(page)).toHaveText(/June 2022/);
+      expect(datetime!.height).toBeCloseTo(800, 0);
+      expect(header!.height + body!.height).toBeCloseTo(800, 0);
     });
 
-    test('should rebuild the listener when the orientation changes at runtime', async ({ page }) => {
-      const datetime = page.locator('ion-datetime#toggleable');
-      const body = datetime.locator('.calendar-body');
+    test('should keep its default height with size="cover" in a container without a height', async ({ page }) => {
+      await page.setContent(
+        `
+        <div>
+          <ion-datetime
+            id="cover"
+            presentation="date"
+            navigation-orientation="vertical"
+            value="2022-06-03"
+            size="cover"
+          ></ion-datetime>
+        </div>
+        <ion-datetime id="default" presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('#cover.datetime-ready').waitFor();
+      await page.locator('#default.datetime-ready').waitFor();
 
-      await expect(body).toHaveCSS('scroll-snap-type', 'x mandatory');
+      const coverBody = await page.locator('#cover .calendar-body').boundingBox();
+      const defaultBody = await page.locator('#default .calendar-body').boundingBox();
 
-      await page.click('button:has-text("Toggle orientation")');
-      await expect(body).toHaveCSS('scroll-snap-type', 'y mandatory');
-
-      const metrics = await body.evaluate((el) => ({
-        scrollsVertically: el.scrollHeight > el.clientHeight,
-        scrollTop: el.scrollTop,
-        monthHeight: (el.querySelector('.calendar-month') as HTMLElement).clientHeight,
-      }));
-
-      expect(metrics.scrollsVertically).toBe(true);
-      expect(Math.abs(metrics.scrollTop - metrics.monthHeight)).toBeLessThanOrEqual(2);
+      expect(coverBody!.height).toBeCloseTo(defaultBody!.height, 0);
     });
   });
 });
