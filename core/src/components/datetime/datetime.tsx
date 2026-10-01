@@ -1150,7 +1150,7 @@ export class Datetime implements ComponentInterface {
    * in the scroll content. When the window moves, the runway on each side
    * grows or shrinks by exactly the months the window gave up or took, so
    * the content above the viewport keeps its height and a re-center needs no
-   * scroll correction. That matters because WebKit ends a fling the moment
+   * scroll correction. That matters because WebKit ends a flick the moment
    * `scrollTop` is written: with a runway capped at a year, every re-center
    * corrected the scroll position, and on iOS the list stopped as soon as the
    * finger lifted. At a real `min` or `max` the runway is zero, so the list
@@ -1212,13 +1212,13 @@ export class Datetime implements ComponentInterface {
 
       const scrollCallback = () => {
         /**
-         * Re-centering cannot wait for the scroll to settle. A fling carries
+         * Re-centering cannot wait for the scroll to settle. A flick carries
          * far further than the window reaches, about 13 months against the
          * 2.5 left either side of the center, so a debounced re-center let it
          * run into the last rendered month and stop dead. Checking on every
-         * scroll event keeps months ahead of the fling. It writes nothing:
+         * scroll event keeps months ahead of the flick. It writes nothing:
          * the runway spans the whole range, so a re-center needs no scroll
-         * correction. That matters because WebKit ends a fling on any
+         * correction. That matters because WebKit ends a flick on any
          * `scrollTop` write. Refer to `verticalRunwayBefore`.
          *
          * Skipped while a correction is still waiting to be applied, so that
@@ -2188,7 +2188,7 @@ export class Datetime implements ComponentInterface {
 
         /**
          * A re-center within the range needs no correction, and the write is
-         * skipped rather than made with zero: WebKit ends a fling on any
+         * skipped rather than made with zero: WebKit ends a flick on any
          * `scrollTop` write, even one that does not move the list. The
          * correction is still queued, so that a second re-center does not
          * start while this render is pending.
@@ -2576,20 +2576,9 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
-
-    /**
-     * Overshooting by two months lets the browser clamp to the end of the
-     * scroll range, which is where the next month sits. The same trick is
-     * used on both axes.
-     */
-    if (this.isVerticalNavigation) {
-      this.scrollToVerticalMonth(calendarBodyRef, getNextMonth(this.workingParts), scrollMode);
-      return;
-    }
-
     const left = (nextMonth as HTMLElement).offsetWidth * 2;
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? -1 : 1),
@@ -2608,15 +2597,9 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
-
-    if (this.isVerticalNavigation) {
-      this.scrollToVerticalMonth(calendarBodyRef, getPreviousMonth(this.workingParts), scrollMode);
-      return;
-    }
-
     const left = (prevMonth as HTMLElement).offsetWidth * 2;
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? 1 : -1),
@@ -3628,10 +3611,10 @@ export class Datetime implements ComponentInterface {
     );
   }
   /**
-   * The vertical months, with empty runway before and after them. A fling
+   * The vertical months, with empty runway before and after them. A flick
    * travels further than the rendered months reach, and on a slow device the
-   * re-center that extends them can take longer to render than the fling
-   * takes to arrive, so without runway the fling stops dead at the last
+   * re-center that extends them can take longer to render than the flick
+   * takes to arrive, so without runway the flick stops dead at the last
    * rendered month. This is how virtualized lists on the web avoid the same
    * wall: the scroll range stays longer than what is rendered, and the user
    * may briefly see blank space instead of hitting a false end.
@@ -3644,7 +3627,7 @@ export class Datetime implements ComponentInterface {
           key={key}
           class="calendar-runway"
           aria-hidden="true"
-          style={{ height: `calc(var(--internal-month-block-height) * ${count})` }}
+          style={{ '--internal-runway-months': `${count}` }}
         ></div>
       );
 

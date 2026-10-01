@@ -23,3 +23,9 @@ $datetime-md-day-width: 42px;
 
 /// @prop - Height of the calendar day
 $datetime-md-day-height: $datetime-md-day-width;
+
+/// @prop - Top and bottom padding of each month's grid of days
+$datetime-md-month-grid-padding-vertical: 4px;
+
+/// @prop - Height of each month's heading when navigating vertically
+$datetime-md-vertical-month-heading-height: 40px;

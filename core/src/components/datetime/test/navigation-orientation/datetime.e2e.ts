@@ -196,6 +196,105 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 /**
+ * The vertical sizes each theme is expected to render. A month block is the
+ * heading plus its grid: six week rows inside the grid's top and bottom
+ * padding, which matches horizontal. The list's default height is one block
+ * plus the start of the next month, its heading and two of its weeks.
+ */
+const VERTICAL_SIZES = {
+  md: { heading: 40, gridPadding: 4, row: 42 },
+  ios: { heading: 40, gridPadding: 8, row: 40 },
+  ionic: { heading: 40, gridPadding: 0, row: 48 },
+};
+
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: navigation orientation: layout'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          presentation="date"
+          navigation-orientation="vertical"
+          value="2022-06-03"
+          min="2022-01-01"
+          max="2022-12-31"
+        ></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+    });
+
+    test('should render one month and the start of the next', async ({ page }) => {
+      await expect(page.locator('ion-datetime')).toHaveScreenshot(
+        screenshot('datetime-navigation-orientation-vertical')
+      );
+    });
+
+    /**
+     * Each theme sets its vertical sizes in its own stylesheet, from its own
+     * heading and day height, and the scroll arithmetic assumes every month is
+     * exactly one block tall. A style change that is not carried through to
+     * the vertical rules breaks that silently: the list still scrolls, but
+     * re-centering and gliding land on the wrong month. So the rendered sizes
+     * are checked against each other, not only against these numbers.
+     */
+    test('should size every month as one block of a heading and six rows', async ({ page }) => {
+      const layout = await page.locator('ion-datetime .calendar-body').evaluate((body: HTMLElement) => {
+        const months = Array.from(body.querySelectorAll<HTMLElement>('.calendar-month'));
+        const bodyTop = body.getBoundingClientRect().top - body.scrollTop;
+
+        return {
+          body: body.getBoundingClientRect().height,
+          scrollHeight: body.scrollHeight,
+          scrollTop: body.scrollTop,
+          months: months.map((month) => ({
+            key: `${month.dataset.year}-${month.dataset.month}`,
+            top: month.getBoundingClientRect().top - bodyTop,
+            height: month.getBoundingClientRect().height,
+            heading: month.querySelector<HTMLElement>('.calendar-month-heading')!.getBoundingClientRect().height,
+            rows: getComputedStyle(month.querySelector('.calendar-month-grid')!)
+              .gridTemplateRows.split(' ')
+              .map((row) => parseFloat(row)),
+          })),
+        };
+      });
+
+      const { heading, gridPadding, row } = VERTICAL_SIZES[config.theme];
+      const block = heading + 2 * gridPadding + 6 * row;
+
+      expect(layout.months.length).toBeGreaterThan(0);
+
+      for (const month of layout.months) {
+        expect(month.heading).toBeCloseTo(heading, 0);
+        expect(month.rows).toEqual(Array(6).fill(row));
+        expect(month.height).toBeCloseTo(block, 0);
+      }
+
+      expect(layout.body).toBeCloseTo(block + heading + gridPadding + 2 * row, 0);
+
+      /**
+       * Every month of the range takes one block, rendered or runway, so the
+       * position of a month is its index in the range times the block height.
+       * This is the arithmetic re-centering and gliding rely on.
+       */
+      expect(layout.scrollHeight).toBeCloseTo(12 * block, 0);
+
+      for (const month of layout.months) {
+        const index = Number(month.key.split('-')[1]) - 1;
+        expect(month.top).toBeCloseTo(index * block, 0);
+      }
+
+      // The working month starts at the top of the list.
+      expect(layout.scrollTop).toBeCloseTo(5 * block, 0);
+    });
+  });
+});
+
+/**
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {

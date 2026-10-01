@@ -287,40 +287,16 @@
  * points: the list comes to rest wherever the gesture leaves it, which is
  * what keeps part of the next month visible and makes the arrows unnecessary.
  */
-:host(.datetime-navigation-vertical) {
-  /**
-   * Vertical has a definite default height rather than filling its parent.
-   * Material only gets away with filling because its vertical picker is
-   * always a full-screen dialog; ion-datetime also renders standalone, where
-   * there is nothing to fill and the list would otherwise render every month
-   * in the window at once.
-   *
-   * The default shows one whole month plus the next month's heading and two
-   * of its weeks. That second heading is the point: it says which month comes
-   * next, and it is what tells the user the list scrolls at all now that the
-   * arrows can be hidden.
-   *
-   * Overriding --internal-day-height per theme is what keeps this in step
-   * with each theme's day sizing.
-   */
-  --internal-month-heading-height: 40px;
-  --internal-day-height: 42px;
-  --internal-month-block-height: calc(var(--internal-month-heading-height) + 6 * var(--internal-day-height));
-  --internal-calendar-body-height: calc(
-    var(--internal-month-block-height) + var(--internal-month-heading-height) + 2 * var(--internal-day-height)
-  );
-}
-
 :host(.datetime-navigation-vertical) .calendar-body {
   /**
-   * The default height is a flex basis rather than a fixed height, so it is
-   * only a default. Left at its natural size, the datetime is exactly this
-   * tall. Given a height, for example `height: 100%` inside a full-screen
-   * modal, the list grows or shrinks to fill whatever the header and footer
-   * leave. `min-height: 0` lets it shrink below the default in a short
-   * container instead of overflowing it.
+   * The default height is a flex basis, set by each theme from its own month
+   * heading and day height, rather than a fixed height, so it is only a
+   * default. Left at its natural size, the datetime is exactly that tall.
+   * Given a height, such as with `size="cover"`, the list grows or shrinks to
+   * fill whatever the header and footer leave. `min-height: 0` lets it shrink
+   * below the default in a short container instead of overflowing it.
    */
-  flex: 1 1 var(--internal-calendar-body-height);
+  flex: 1 1 auto;
   flex-flow: column;
 
   min-height: 0;
@@ -350,9 +326,9 @@
 }
 
 /**
- * Empty space beyond the rendered months, so a fling does not stop dead at
- * the last one. Its height is set inline from the same constant the scroll
- * arithmetic uses.
+ * Empty space beyond the rendered months, so a flick does not stop dead at
+ * the last one. The number of months it stands in for is set inline as
+ * `--internal-runway-months`, and each theme turns that into a height.
  */
 :host(.datetime-navigation-vertical) .calendar-runway {
   flex-shrink: 0;
@@ -382,7 +358,7 @@
 
   flex-shrink: 0;
 
-  height: var(--internal-month-block-height);
+  // Its height is set per theme, from the theme's heading and day height.
 }
 
 :host(.datetime-navigation-vertical) .calendar-body .calendar-month-grid {
@@ -418,7 +394,7 @@
 
   align-items: center;
 
-  height: var(--internal-month-heading-height);
+  // Its height is set per theme, alongside the month block it is part of.
 
   font-size: 1rem;
   font-weight: 600;

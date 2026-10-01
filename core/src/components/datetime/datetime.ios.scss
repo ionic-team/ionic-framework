@@ -370,6 +370,39 @@
 // Calendar / Vertical navigation
 // -----------------------------------
 
-:host(.datetime-navigation-vertical) {
-  --internal-day-height: #{$datetime-ios-day-height};
+/**
+ * Every vertical size comes from this theme's month heading, day height and
+ * month grid padding. The grid keeps the same padding as horizontal, so the
+ * days sit the same distance below the heading in either orientation.
+ *
+ * A month is its heading plus its grid of six week rows, however many weeks
+ * it spans. The list's default height shows one whole month plus the start of
+ * the next, its heading and two of its weeks, which is what tells the user
+ * the list scrolls.
+ */
+$datetime-ios-vertical-month-height: calc(
+  #{$datetime-ios-vertical-month-heading-height} + 2 * #{$datetime-ios-padding * 0.5} + 6 * #{$datetime-ios-day-height}
+);
+
+:host(.datetime-navigation-vertical) .calendar-body {
+  flex-basis: calc(
+    #{$datetime-ios-vertical-month-height} + #{$datetime-ios-vertical-month-heading-height} + #{$datetime-ios-padding *
+      0.5} + 2 * #{$datetime-ios-day-height}
+  );
+}
+
+:host(.datetime-navigation-vertical) .calendar-month-heading {
+  height: $datetime-ios-vertical-month-heading-height;
+}
+
+:host(.datetime-navigation-vertical) .calendar-body .calendar-month {
+  height: $datetime-ios-vertical-month-height;
+}
+
+/**
+ * The runway stands in for months that are not rendered, so it is a whole
+ * number of months tall.
+ */
+:host(.datetime-navigation-vertical) .calendar-runway {
+  height: calc(#{$datetime-ios-vertical-month-height} * var(--internal-runway-months));
 }
