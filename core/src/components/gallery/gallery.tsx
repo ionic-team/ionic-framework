@@ -1,5 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, Watch, h } from '@stencil/core';
+import type { ScreenBreakpoint } from '@utils/breakpoints';
+import { SCREEN_BREAKPOINT_NAMES, getScreenBreakpoints, isBreakpointMap } from '@utils/breakpoints';
 import { isCssVariable, isValidLengthPercentage } from '@utils/css-value-validation';
 import { raf } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -8,19 +10,6 @@ import { getIonTheme } from '../../global/ionic-global';
 
 import { DEFAULT_COLUMNS, DEFAULT_GAP } from './gallery-constants';
 import type { GalleryBreakpoints, GalleryColumns, GalleryGap } from './gallery-interface';
-
-// TODO(FW-7285): Replace with global breakpoints
-const BREAKPOINTS = {
-  xs: 0,
-  sm: 576,
-  md: 768,
-  lg: 992,
-  xl: 1200,
-  xxl: 1400,
-};
-
-type GalleryBreakpoint = keyof typeof BREAKPOINTS;
-const BREAKPOINT_ORDER: GalleryBreakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
 /**
  * The tag of the component used to wrap each gallery item.
@@ -74,6 +63,11 @@ export class Gallery implements ComponentInterface {
   /**
    * The number of columns to display. Can be set as a number or an object of
    * breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
+   *
+   * A breakpoint is matched against the gallery's own width rather than the
+   * width of the screen, so a narrow gallery on a wide screen resolves to a
+   * small breakpoint. The width each breakpoint activates at can be changed
+   * with the `screenBreakpoints` config.
    */
   @Prop() columns: GalleryColumns = DEFAULT_COLUMNS;
 
@@ -84,6 +78,11 @@ export class Gallery implements ComponentInterface {
    * values). Can also be set as a breakpoint map
    * (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept
    * space-separated values or CSS keyword values like `inherit`, `auto`, etc.
+   *
+   * A breakpoint is matched against the gallery's own width rather than the
+   * width of the screen, so a narrow gallery on a wide screen resolves to a
+   * small breakpoint. The width each breakpoint activates at can be changed
+   * with the `screenBreakpoints` config.
    */
   @Prop() gap: GalleryGap = DEFAULT_GAP;
 
@@ -268,13 +267,6 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Check if the value is a breakpoint map object.
-   */
-  private isBreakpointMap(value: unknown): value is GalleryBreakpoints {
-    return typeof value === 'object' && value !== null && !Array.isArray(value);
-  }
-
-  /**
    * Check if the breakpoint map has any invalid values for the provided
    * sanitizer. A breakpoint map is invalid when there are no valid breakpoint
    * keys set (e.g. `{}` or `{ colums: 3 }`), or when a value under a
@@ -286,7 +278,7 @@ export class Gallery implements ComponentInterface {
   ) {
     let hasBreakpointEntry = false;
 
-    for (const breakpoint of BREAKPOINT_ORDER) {
+    for (const breakpoint of SCREEN_BREAKPOINT_NAMES) {
       const value = breakpointMap[breakpoint];
       if (value !== undefined) {
         hasBreakpointEntry = true;
@@ -302,23 +294,27 @@ export class Gallery implements ComponentInterface {
   /**
    * Resolve a responsive value from a breakpoint map.
    * Uses a breakpoint-specific default when custom values are missing/invalid.
+   *
+   * Note that the breakpoints are compared against the gallery's own width
+   * rather than the width of the screen.
    */
   private resolveFromBreakpoints<T>(
     width: number,
     breakpointMap: GalleryBreakpoints,
     sanitizeProvided: (value: string | number | undefined) => T | undefined,
-    getSanitizedDefault: (breakpoint: GalleryBreakpoint) => T | undefined
+    getSanitizedDefault: (breakpoint: ScreenBreakpoint) => T | undefined
   ) {
+    const breakpoints = getScreenBreakpoints();
     let resolvedValue: T | undefined;
 
-    for (const bp of BREAKPOINT_ORDER) {
+    for (const bp of SCREEN_BREAKPOINT_NAMES) {
       const providedValue = breakpointMap[bp];
       const sanitizedProvided = sanitizeProvided(providedValue);
       const sanitizedDefault = getSanitizedDefault(bp);
       const resolved =
         providedValue === undefined || sanitizedProvided === undefined ? sanitizedDefault : sanitizedProvided;
 
-      if (resolved !== undefined && width >= BREAKPOINTS[bp]) {
+      if (resolved !== undefined && width >= breakpoints[bp]) {
         resolvedValue = resolved;
       }
     }
@@ -414,7 +410,7 @@ export class Gallery implements ComponentInterface {
    */
   private getColumnsForWidth(width: number) {
     const { columns } = this;
-    const isBreakpointColumns = this.isBreakpointMap(columns);
+    const isBreakpointColumns = isBreakpointMap<string | number>(columns);
     const hasInvalidBreakpointColumns =
       isBreakpointColumns && this.hasInvalidBreakpointMap(columns, (value) => this.sanitizeColumns(value));
 
@@ -440,7 +436,7 @@ export class Gallery implements ComponentInterface {
     const { gap } = this;
     const providedGap = gap ?? DEFAULT_GAP;
 
-    const isBreakpointGap = this.isBreakpointMap(providedGap);
+    const isBreakpointGap = isBreakpointMap<string | number>(providedGap);
     const hasInvalidBreakpointGap =
       isBreakpointGap && this.hasInvalidBreakpointMap(providedGap, (value) => this.sanitizeGap(value));
     const sanitizedGap = isBreakpointGap

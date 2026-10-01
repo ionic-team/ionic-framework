@@ -1,11 +1,6 @@
-export interface GalleryBreakpoints<T = string | number> {
-  xs?: T;
-  sm?: T;
-  md?: T;
-  lg?: T;
-  xl?: T;
-  xxl?: T;
-}
+import type { BreakpointMap } from '@utils/breakpoints';
 
-export type GalleryColumns = GalleryBreakpoints | string | number;
-export type GalleryGap = GalleryBreakpoints | string | number;
+export type GalleryBreakpoints = BreakpointMap<string | number>;
+
+export type GalleryColumns = string | number | GalleryBreakpoints;
+export type GalleryGap = string | number | GalleryBreakpoints;
