@@ -15,6 +15,9 @@ export class Grid implements ComponentInterface {
 
   /**
    * If `true`, the grid will have a fixed width based on the screen size.
+   *
+   * The width each breakpoint activates at can be changed with the
+   * `screenBreakpoints` config.
    */
   @Prop() fixed = false;
 
