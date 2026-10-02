@@ -9,6 +9,16 @@ import { getBackdropValueForSheet } from '../utils';
 
 import { calculateSpringStep, canSwipeOnContent, handleCanDismiss } from './utils';
 
+/** Gesture velocity is measured in pixels per millisecond. */
+const MILLISECONDS_PER_SECOND = 1000;
+
+/** Flick velocities that decide the snap outright, in pixels per second. */
+const DISMISS_VELOCITY = 500;
+const KEEP_OPEN_VELOCITY = -400;
+
+/** How far below the current breakpoint a drag must end to dismiss the sheet. */
+const DISMISS_PROGRESS_RATIO = 0.4;
+
 export interface MoveSheetToBreakpointOptions {
   /**
    * The breakpoint value to move the sheet to.
@@ -682,10 +692,11 @@ export const createSheetGesture = (
    * @returns The snap breakpoint value
    */
   const calculateSnapBreakpoint = (deltaY: number, velocityY: number): number => {
-    const hasIntermediateBreakpoints = breakpoints.length > 2;
-    const isFlickingUp = velocityY * 1000 < -400;
+    const isDraggingDown = deltaY > 0;
+    const isFlickingUp = velocityY * MILLISECONDS_PER_SECOND < KEEP_OPEN_VELOCITY;
+    const canOnlyOpenOrClose = minBreakpoint === 0 && breakpoints.length === 2;
 
-    if (deltaY > 0 && minBreakpoint === 0 && !hasIntermediateBreakpoints && !isFlickingUp && !canDismissBlocksGesture) {
+    if (isDraggingDown && canOnlyOpenOrClose && !isFlickingUp && !canDismissBlocksGesture) {
       return 0;
     }
 
@@ -732,18 +743,18 @@ export const createSheetGesture = (
    */
   const calculateVelocitySnapBreakpoint = (deltaY: number, velocityY: number): number => {
     // Convert velocity from px/ms to px/s for easier threshold comparison
-    const velocityYPerSecond = velocityY * 1000;
+    const velocityYPerSecond = velocityY * MILLISECONDS_PER_SECOND;
 
     // Calculate current progress (0 = fully closed, 1 = fully expanded)
     const currentProgress = calculateProgress(deltaY);
 
     // Rule 1: Fast downward flick always dismisses
-    if (velocityYPerSecond > 500) {
+    if (velocityYPerSecond > DISMISS_VELOCITY) {
       return minBreakpoint;
     }
 
     // Rule 2: Fast upward flick moves to next breakpoint above
-    if (velocityYPerSecond < -400) {
+    if (velocityYPerSecond < KEEP_OPEN_VELOCITY) {
       // Find next breakpoint above current position
       const nextBreakpoint = breakpoints.find((bp) => bp > currentProgress);
       // If no breakpoint above, stay at max breakpoint
@@ -757,7 +768,7 @@ export const createSheetGesture = (
       const percentageBelowSnap = distanceBelowSnap / currentBreakpoint;
 
       // If dragged more than 40% below and not flicking up, dismiss
-      if (percentageBelowSnap > 0.4 && velocityYPerSecond <= 400) {
+      if (percentageBelowSnap > DISMISS_PROGRESS_RATIO && velocityYPerSecond <= 400) {
         return 0;
       }
     }
