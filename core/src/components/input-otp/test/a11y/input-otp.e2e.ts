@@ -46,6 +46,27 @@ configs().forEach(({ title, config }) => {
       await expect(inputBoxes.nth(3)).toHaveAttribute('aria-hidden', 'true');
     });
 
+    test('should update aria-hidden when length increases', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31484',
+      });
+
+      await page.setContent(`<ion-input-otp length="2"></ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.length = 4;
+      });
+
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      await expect(inputBoxes.nth(0)).toHaveAttribute('aria-hidden', 'false');
+      await expect(inputBoxes.nth(1)).toHaveAttribute('aria-hidden', 'true');
+      await expect(inputBoxes.nth(2)).toHaveAttribute('aria-hidden', 'true');
+      await expect(inputBoxes.nth(3)).toHaveAttribute('aria-hidden', 'true');
+    });
+
     test('should update aria-hidden when typing a value', async ({ page }) => {
       await page.setContent(`<ion-input-otp></ion-input-otp>`, config);
 
