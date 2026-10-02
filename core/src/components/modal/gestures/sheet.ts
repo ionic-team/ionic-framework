@@ -671,8 +671,11 @@ export const createSheetGesture = (
    * Decides where the sheet should settle for the current drag.
    *
    * A sheet that only opens and closes has one place to go on a downward drag,
-   * so any drag the gesture recognises dismisses it. Sheets with breakpoints in
+   * so any drag the gesture recognizes dismisses it. Sheets with breakpoints in
    * between snap to the nearest one, since dragging is also how they resize.
+   *
+   * An upward flick still wins, and `canDismiss` keeps its own threshold so a
+   * stray drag cannot trigger the callback.
    *
    * @param deltaY The change in Y position since the gesture started
    * @param velocityY The velocity in pixels per millisecond
@@ -680,8 +683,9 @@ export const createSheetGesture = (
    */
   const calculateSnapBreakpoint = (deltaY: number, velocityY: number): number => {
     const hasIntermediateBreakpoints = breakpoints.length > 2;
+    const isFlickingUp = velocityY * 1000 < -400;
 
-    if (deltaY > 0 && minBreakpoint === 0 && !hasIntermediateBreakpoints) {
+    if (deltaY > 0 && minBreakpoint === 0 && !hasIntermediateBreakpoints && !isFlickingUp && !canDismissBlocksGesture) {
       return 0;
     }
 
@@ -699,9 +703,6 @@ export const createSheetGesture = (
    * @returns The snap breakpoint value.
    */
   const calculatePositionSnapBreakpoint = (deltaY: number): number => {
-    /**
-     * How far open the sheet is once the drag is applied, as a 0 to 1 value.
-     */
     const currentProgress = calculateProgress(deltaY);
 
     /**
@@ -774,19 +775,11 @@ export const createSheetGesture = (
    * A value closer to 1 means the modal is closer to being opened,
    * while a value closer to 0 means the modal is closer to being closed.
    *
-   * This is measured from the drag rather than the pointer position, against
-   * the sheet's own height. Measuring against the viewport would report a
-   * sheet that does not fill the screen (a customized `--height`) as partly
-   * closed while it is fully open.
-   *
    * @param deltaY The change in Y position since the gesture started
    * @returns The progress of the sheet gesture
    */
   const calculateProgress = (deltaY: number): number => {
-    /**
-     * The sheet starts the gesture open at currentBreakpoint, and dragging
-     * down by the full sheet height would close it completely.
-     */
+    // The inverse of the step applied to the animation in onMove.
     const progress = currentBreakpoint - deltaY / height;
     // Round to the nearest thousandth to avoid returning very small decimal
     const roundedProgress = Math.round(progress * 1000) / 1000;
