@@ -9,14 +9,21 @@ import { getBackdropValueForSheet } from '../utils';
 
 import { calculateSpringStep, canSwipeOnContent, handleCanDismiss } from './utils';
 
-/** Gesture velocity is measured in pixels per millisecond. */
+/** Gesture velocity arrives in pixels per millisecond; the thresholds below are per second. */
 const MILLISECONDS_PER_SECOND = 1000;
 
-/** Flick velocities that decide the snap outright, in pixels per second. */
+/**
+ * Flick speeds fast enough to decide the outcome on their own, in pixels per
+ * second. Both are magnitudes. Y grows downwards, so the upward threshold is
+ * negated where it is compared.
+ */
 const DISMISS_VELOCITY = 500;
-const KEEP_OPEN_VELOCITY = -400;
+const KEEP_OPEN_VELOCITY = 400;
 
-/** How far below the current breakpoint a drag must end to dismiss the sheet. */
+/**
+ * How far below its starting breakpoint a slow drag has to end to dismiss the
+ * sheet. 0.4 means the user dragged 40% of the way down from where they started.
+ */
 const DISMISS_PROGRESS_RATIO = 0.4;
 
 export interface MoveSheetToBreakpointOptions {
@@ -95,6 +102,11 @@ export const createSheetGesture = (
   const contentEl = baseEl.querySelector('ion-content');
   // Cache the initial value so the gesture restores it instead of forcing scrolling on.
   const initialContentScrollY = contentEl?.scrollY ?? true;
+  /**
+   * The height of the sheet the user actually sees. This comes from the wrapper
+   * rather than the host element, which is stretched to the full viewport no
+   * matter how tall the sheet itself is.
+   */
   const height = wrapperEl.clientHeight;
   let currentBreakpoint = initialBreakpoint;
   let offset = 0;
@@ -678,14 +690,19 @@ export const createSheetGesture = (
   };
 
   /**
-   * Decides where the sheet should settle for the current drag.
+   * Decides which breakpoint the sheet should settle on for the current drag.
    *
-   * A sheet that only opens and closes has one place to go on a downward drag,
-   * so any drag the gesture recognizes dismisses it. Sheets with breakpoints in
-   * between snap to the nearest one, since dragging is also how they resize.
+   * A sheet whose only breakpoints are 0 and 1 has nowhere to go on a downward
+   * drag except closed, so any drag the gesture recognizes closes it. Sheets
+   * with breakpoints in between snap to the nearest one instead, because
+   * dragging is how the user resizes them.
    *
-   * An upward flick still wins, and `canDismiss` keeps its own threshold so a
-   * stray drag cannot trigger the callback.
+   * Two cases opt back out of that shortcut and use the normal thresholds:
+   * - An upward flick, so a drag that wanders downwards before flicking back up
+   *   reopens the sheet rather than closing it.
+   * - `canDismiss`, which asks the application whether closing is allowed. Going
+   *   through the usual thresholds means a few stray pixels cannot trigger that
+   *   callback.
    *
    * @param deltaY The change in Y position since the gesture started
    * @param velocityY The velocity in pixels per millisecond
@@ -693,7 +710,7 @@ export const createSheetGesture = (
    */
   const calculateSnapBreakpoint = (deltaY: number, velocityY: number): number => {
     const isDraggingDown = deltaY > 0;
-    const isFlickingUp = velocityY * MILLISECONDS_PER_SECOND < KEEP_OPEN_VELOCITY;
+    const isFlickingUp = velocityY * MILLISECONDS_PER_SECOND < -KEEP_OPEN_VELOCITY;
     const canOnlyOpenOrClose = minBreakpoint === 0 && breakpoints.length === 2;
 
     if (isDraggingDown && canOnlyOpenOrClose && !isFlickingUp && !canDismissBlocksGesture) {
@@ -754,7 +771,7 @@ export const createSheetGesture = (
     }
 
     // Rule 2: Fast upward flick moves to next breakpoint above
-    if (velocityYPerSecond < KEEP_OPEN_VELOCITY) {
+    if (velocityYPerSecond < -KEEP_OPEN_VELOCITY) {
       // Find next breakpoint above current position
       const nextBreakpoint = breakpoints.find((bp) => bp > currentProgress);
       // If no breakpoint above, stay at max breakpoint
@@ -767,7 +784,12 @@ export const createSheetGesture = (
       const distanceBelowSnap = currentBreakpoint - currentProgress;
       const percentageBelowSnap = distanceBelowSnap / currentBreakpoint;
 
-      // If dragged more than 40% below and not flicking up, dismiss
+      /**
+       * The velocity check reads as "not flicking up", but upward flicks are
+       * negative and already satisfy it. What it excludes in practice is a
+       * downward drag faster than 400 px/s but not fast enough to trip the
+       * dismissal above, which falls through to the nearest breakpoint instead.
+       */
       if (percentageBelowSnap > DISMISS_PROGRESS_RATIO && velocityYPerSecond <= 400) {
         return 0;
       }
@@ -778,19 +800,22 @@ export const createSheetGesture = (
   };
 
   /**
-   * Calculates the progress of the swipe gesture.
-   *
-   * The progress is a value between 0 and 1 that represents how far
-   * the swipe has progressed towards closing the modal.
-   *
-   * A value closer to 1 means the modal is closer to being opened,
-   * while a value closer to 0 means the modal is closer to being closed.
+   * Calculates how open the sheet is part way through a gesture, on the same
+   * 0 to 1 scale as the breakpoints: 1 is fully open and 0 is fully closed.
    *
    * @param deltaY The change in Y position since the gesture started
    * @returns The progress of the sheet gesture
    */
   const calculateProgress = (deltaY: number): number => {
-    // The inverse of the step applied to the animation in onMove.
+    /**
+     * Start from how open the sheet was when the gesture began, then subtract
+     * the fraction of the sheet's height the user has dragged. Dragging down is
+     * positive, so it lowers the progress.
+     *
+     * This is the inverse of the step applied to the animation in onMove, which
+     * keeps the breakpoint the sheet snaps to in agreement with the position it
+     * is drawn at.
+     */
     const progress = currentBreakpoint - deltaY / height;
     // Round to the nearest thousandth to avoid returning very small decimal
     const roundedProgress = Math.round(progress * 1000) / 1000;
