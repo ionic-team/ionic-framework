@@ -420,9 +420,7 @@ export const createSheetGesture = (
     offset = clamp(0.0001, processedStep, maxStep);
     animation.progressStep(offset);
 
-    const snapBreakpoint = usePhysicsBasedGesture
-      ? calculateVelocitySnapBreakpoint(detail.deltaY, detail.velocityY)
-      : calculatePositionSnapBreakpoint(detail.deltaY);
+    const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY, detail.velocityY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
@@ -436,9 +434,7 @@ export const createSheetGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
-    const snapBreakpoint = usePhysicsBasedGesture
-      ? calculateVelocitySnapBreakpoint(detail.deltaY, detail.velocityY)
-      : calculatePositionSnapBreakpoint(detail.deltaY);
+    const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY, detail.velocityY);
 
     /**
      * `snapBreakpoint === 0` is not enough on its own. `canDismiss: false`
@@ -669,6 +665,29 @@ export const createSheetGesture = (
         )
         .progressEnd(1, 0, animated ? duration : 0);
     });
+  };
+
+  /**
+   * Decides where the sheet should settle for the current drag.
+   *
+   * A sheet that only opens and closes has one place to go on a downward drag,
+   * so any drag the gesture recognises dismisses it. Sheets with breakpoints in
+   * between snap to the nearest one, since dragging is also how they resize.
+   *
+   * @param deltaY The change in Y position since the gesture started
+   * @param velocityY The velocity in pixels per millisecond
+   * @returns The snap breakpoint value
+   */
+  const calculateSnapBreakpoint = (deltaY: number, velocityY: number): number => {
+    const hasIntermediateBreakpoints = breakpoints.length > 2;
+
+    if (deltaY > 0 && minBreakpoint === 0 && !hasIntermediateBreakpoints) {
+      return 0;
+    }
+
+    return usePhysicsBasedGesture
+      ? calculateVelocitySnapBreakpoint(deltaY, velocityY)
+      : calculatePositionSnapBreakpoint(deltaY);
   };
 
   /**
