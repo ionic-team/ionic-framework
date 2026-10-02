@@ -16,7 +16,7 @@ import {
 } from '@ionic/react';
 import { triangle, ellipse, square, rocket } from 'ionicons/icons';
 import React from 'react';
-import { Route, Navigate } from 'react-router';
+import { Route, Navigate } from 'react-router-dom';
 
 import { Menu } from './Menu';
 import TestDescription from '../../components/TestDescription';

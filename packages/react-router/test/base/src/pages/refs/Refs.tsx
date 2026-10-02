@@ -8,7 +8,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React, { useRef } from "react";
-import { Route } from "react-router";
+import { Route } from "react-router-dom";
 
 import TestDescription from '../../components/TestDescription';
 

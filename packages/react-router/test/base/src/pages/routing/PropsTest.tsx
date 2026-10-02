@@ -8,7 +8,7 @@ import {
   IonRouterOutlet,
 } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
-import { Route } from 'react-router';
+import { Route } from 'react-router-dom';
 
 const PropsTest: React.FC = () => {
   const [count, setCount] = useState(1);

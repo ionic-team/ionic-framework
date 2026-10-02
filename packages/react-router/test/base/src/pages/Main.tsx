@@ -209,6 +209,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/disabled-button">
             <IonLabel>Disabled Button</IonLabel>
           </IonItem>
+          <IonItem routerLink="/relative-links-deep">
+            <IonLabel>Relative Links (deep route)</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

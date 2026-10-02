@@ -5,7 +5,7 @@ import {
   IonSplitPane,
 } from '@ionic/react';
 import React from 'react';
-import { Route, Navigate } from 'react-router';
+import { Route, Navigate } from 'react-router-dom';
 
 import Favorites from './Favorites';
 import Menu from './Menu';

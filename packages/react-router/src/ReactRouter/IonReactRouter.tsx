@@ -5,13 +5,17 @@
  * navigation events.
  */
 
-import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef, useCallback } from 'react';
-import type { BrowserRouterProps } from 'react-router-dom';
+import type {
+  BrowserRouterProps,
+  Location as HistoryLocation,
+  NavigationType as HistoryAction,
+} from 'react-router-dom';
 import { BrowserRouter, useLocation, useNavigationType } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
+import { withTransitionDefaults } from './utils/transitionDefaults';
 
 /**
  * This component acts as a bridge to ensure React Router hooks like
@@ -58,7 +62,7 @@ const RouterContent = ({ children }: PropsWithChildren<{}>) => {
 
 export const IonReactRouter = ({ children, ...browserRouterProps }: PropsWithChildren<BrowserRouterProps>) => {
   return (
-    <BrowserRouter {...browserRouterProps}>
+    <BrowserRouter {...withTransitionDefaults(browserRouterProps)}>
       <RouterContent>{children}</RouterContent>
     </BrowserRouter>
   );

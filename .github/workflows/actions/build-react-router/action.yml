@@ -29,7 +29,7 @@ runs:
       shell: bash
       working-directory: ./packages/react-router
     # The rollup build reports type errors as warnings and still succeeds, so
-    # this step is what keeps the package type-clean.
+    # this step keeps the package type-clean on both React Router majors.
     - name: 🔎 Typecheck
       run: npm run typecheck
       shell: bash

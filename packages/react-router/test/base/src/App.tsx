@@ -17,6 +17,7 @@ import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
 import NestedOutlet from './pages/nested-outlet/NestedOutlet';
 import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
 import NestedParams from './pages/nested-params/NestedParams';
+import RelativeLinksDeep from './pages/relative-links-deep/RelativeLinksDeep';
 import RelativePaths from './pages/relative-paths/RelativePaths';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
 import Params from './pages/params/Params';
@@ -92,6 +93,7 @@ const App: React.FC = () => {
           <Route path="/overlays" element={<Overlays />} />
           <Route path="/params/:id" element={<Params />} />
           <Route path="/nested-params/*" element={<NestedParams />} />
+          <Route path="/relative-links-deep/*" element={<RelativeLinksDeep />} />
           {/* Test root-level relative path - no leading slash */}
           <Route path="relative-paths/*" element={<RelativePaths />} />
           <Route path="/nested-tabs-relative-links/*" element={<NestedTabsRelativeLinks />} />

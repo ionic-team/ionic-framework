@@ -1,7 +1,7 @@
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage, IonContent } from '@ionic/react';
 import { triangle, ellipse, square } from 'ionicons/icons';
 import React from 'react';
-import { Route, Navigate } from 'react-router';
+import { Route, Navigate } from 'react-router-dom';
 
 import Details from './Details';
 import SettingsDetails from './SettingsDetails';
