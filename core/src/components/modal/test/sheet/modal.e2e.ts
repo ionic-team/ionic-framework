@@ -632,7 +632,7 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
       await page.click('#short-sheet');
       await ionModalDidPresent.next();
     });
-    
+
     test('should not dismiss when dragged upwards', async ({ page }) => {
       const ionDragEnd = await page.spyOnEvent('ionDragEnd');
 
@@ -649,7 +649,7 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
       expect(dragEndEvent.detail.isDismissing).toBe(false);
       await expect(page.locator('ion-modal')).toBeVisible();
     });
-    
+
     test('should dismiss when dragged downwards', async ({ page }) => {
       const ionDragEnd = await page.spyOnEvent('ionDragEnd');
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
