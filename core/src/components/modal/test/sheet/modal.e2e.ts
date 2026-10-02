@@ -623,6 +623,54 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
     });
   });
 
+  test.describe(title('sheet modal: no intermediate breakpoints'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/modal/test/sheet', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#short-sheet');
+      await ionModalDidPresent.next();
+    });
+
+    test('should not dismiss when dragged upwards', async ({ page }) => {
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      const header = page.locator('.modal-sheet ion-header');
+
+      /**
+       * The sheet is already fully open, so dragging up cannot take it anywhere.
+       * It has to stay open no matter how fast the drag was.
+       */
+      await dragElementBy(header, page, 0, -50);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.isDismissing).toBe(false);
+      await expect(page.locator('ion-modal')).toBeVisible();
+    });
+
+    test('should dismiss when dragged downwards', async ({ page }) => {
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      const header = page.locator('.modal-sheet ion-header');
+
+      /**
+       * This drag covers well under half the sheet, so snapping to the nearest
+       * breakpoint would reopen it. A sheet that only opens and closes has
+       * nowhere else to go, so it dismisses instead.
+       */
+      await dragElementBy(header, page, 0, 30);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.isDismissing).toBe(true);
+
+      await ionModalDidDismiss.next();
+    });
+  });
+
   test.describe(title('sheet modal: late breakpoints binding'), () => {
     test('should not crash when swiped after breakpoints are set after the modal loads', async ({ page }) => {
       const pageErrors: string[] = [];

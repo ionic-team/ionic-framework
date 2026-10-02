@@ -21,6 +21,14 @@
         --height: 50%;
       }
 
+      /**
+       * Shorter than the midpoint of the viewport, which is where the sheet
+       * position and the drag distance disagree the most.
+       */
+      .short-sheet {
+        --height: 40%;
+      }
+
       .custom-handle::part(handle) {
         top: -16px;
         background: rgba(255, 255, 255, 0.53);
@@ -130,6 +138,12 @@
           </button>
           <button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })">
             Present Sheet Modal (Custom Height)
+          </button>
+          <button
+            id="short-sheet"
+            onclick="presentModal({ cssClass: 'short-sheet', initialBreakpoint: 1, breakpoints: [0, 1] })"
+          >
+            Present Sheet Modal (Short, No Intermediate Breakpoints)
           </button>
           <button
             id="handle-behavior-cycle-modal"
