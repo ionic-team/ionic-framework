@@ -525,6 +525,11 @@ export class Content implements ComponentInterface {
 
         this.observerResizeRaf = requestAnimationFrame(() => {
           this.observerResizeRaf = null;
+
+          if (this.el.offsetParent === null) {
+            return;
+          }
+
           this.resize();
         });
       });
@@ -552,7 +557,9 @@ export class Content implements ComponentInterface {
 
         if (shouldUpdate) {
           this.refreshResizeObserver();
-          this.resize();
+          if (this.el.offsetParent !== null) {
+            this.resize();
+          }
         }
       });
 
