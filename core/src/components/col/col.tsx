@@ -420,6 +420,9 @@ export class Col implements ComponentInterface {
     const used: string[] = [];
     const ignored: string[] = [];
 
+    const describeProperties = (names: string[]) =>
+      `The ${names.join(', ')} ${names.length === 1 ? 'property is' : 'properties are'}`;
+
     for (const property of ION_COL_PROPERTIES) {
       for (const breakpoint of Object.keys(this.getLegacyBreakpointValues(property))) {
         const name = `${property}-${breakpoint}`;
@@ -434,9 +437,9 @@ export class Col implements ComponentInterface {
     if (used.length > 0 && !this.hasWarnedDeprecatedProps) {
       this.hasWarnedDeprecatedProps = true;
       printIonWarning(
-        `[ion-col] - The ${used.join(
-          ', '
-        )} properties are deprecated. Set the "size", "order" and "offset" properties to an object of screen breakpoint values instead (e.g. size={{ xs: 12, md: 6 }}), which is also the only way to target the "xxl" breakpoint.`,
+        `[ion-col] - ${describeProperties(
+          used
+        )} deprecated. Set the "size", "order" and "offset" properties to an object of screen breakpoint values instead (e.g. col.size = { xs: 12, md: 6 }), which is also the only way to target the "xxl" breakpoint.`,
         this.el
       );
     }
@@ -444,9 +447,9 @@ export class Col implements ComponentInterface {
     if (ignored.length > 0 && !this.hasWarnedIgnoredProps) {
       this.hasWarnedIgnoredProps = true;
       printIonWarning(
-        `[ion-col] - The ${ignored.join(
-          ', '
-        )} properties are ignored because the matching property is set to an object of screen breakpoint values, which takes precedence.`,
+        `[ion-col] - ${describeProperties(
+          ignored
+        )} ignored because the matching property is set to an object of screen breakpoint values, which takes precedence.`,
         this.el
       );
     }
