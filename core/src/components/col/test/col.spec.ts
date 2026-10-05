@@ -584,6 +584,24 @@ describe('ion-col', () => {
         expect(col.style.getPropertyValue('--internal-col-span')).toBe('6');
       });
 
+      it('re-resolves when reconnected after a threshold was crossed', async () => {
+        const { page, col } = await renderSubscribedCol();
+        const host = page.body.querySelector('#host')!;
+
+        expect(col.style.getPropertyValue('--internal-col-span')).toBe('12');
+
+        col.remove();
+        await page.waitForChanges();
+
+        resize(800);
+        await page.waitForChanges();
+
+        host.appendChild(col);
+        await page.waitForChanges();
+
+        expect(col.style.getPropertyValue('--internal-col-span')).toBe('6');
+      });
+
       it('stops re-rendering once the column is disconnected', async () => {
         const { page, col } = await renderSubscribedCol();
 

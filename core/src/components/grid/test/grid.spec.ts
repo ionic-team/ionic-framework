@@ -130,6 +130,24 @@ describe('ion-grid', () => {
     });
   });
 
+  it('re-resolves when reconnected after a threshold was crossed', async () => {
+    const { page, grid } = await renderGrid(320);
+    const host = page.body.querySelector('#host')!;
+
+    expect(grid.getAttribute('screen-breakpoint')).toBe('xs');
+
+    grid.remove();
+    await page.waitForChanges();
+
+    resize(1300);
+    await page.waitForChanges();
+
+    host.appendChild(grid);
+    await page.waitForChanges();
+
+    expect(grid.getAttribute('screen-breakpoint')).toBe('xl');
+  });
+
   it('applies grid-fixed only when fixed is set', async () => {
     const { page, grid } = await renderGrid(800);
 
