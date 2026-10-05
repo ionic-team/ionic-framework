@@ -19,8 +19,9 @@ const minWidthFor = (bp: (typeof ION_GRID_BREAKPOINTS)[number]): number => {
 
 /**
  * Viewport width that activates each breakpoint. `max(400, minWidth)` lands
- * exactly on the threshold for sm/md/lg/xl (firing only that breakpoint's
- * rule and nothing above it) while giving xs a renderable non-zero viewport.
+ * exactly on the threshold for every breakpoint above xs (firing only that
+ * breakpoint's rule and nothing above it) while giving xs a renderable non-zero
+ * viewport.
  */
 const VIEWPORT_AT_BREAKPOINT = Object.fromEntries(
   ION_GRID_BREAKPOINTS.map((bp) => [bp, Math.max(400, minWidthFor(bp))])
