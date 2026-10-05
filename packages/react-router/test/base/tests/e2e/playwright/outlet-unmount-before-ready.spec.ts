@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { ionPageVisible, withTestingMode } from './utils/test-utils';
 
 test.describe('Outlet Unmount Before Ready', () => {
-  test('does not throw when an ionPage outlet unmounts before it is ready', async ({ page }, testInfo) => {
+  test('should not throw when an ionPage outlet unmounts before it is ready', async ({ page }, testInfo) => {
     testInfo.annotations.push({
       type: 'issue',
       description: 'https://github.com/ionic-team/ionic-framework/issues/31513',
