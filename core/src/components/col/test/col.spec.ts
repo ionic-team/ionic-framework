@@ -3,6 +3,8 @@ import { forceUpdate } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { resetBreakpointListeners, resetScreenBreakpoints } from '@utils/breakpoints';
+// TODO(FW-7557): Remove this when the deprecated props are removed.
+import { resetColDeprecationWarnings } from '../col.deprecations';
 import { Col } from '../col';
 import type { IonColValue } from '../col.interface';
 
@@ -15,6 +17,13 @@ import type { IonColValue } from '../col.interface';
  */
 
 describe('ion-col', () => {
+  // TODO(FW-7557): Remove this when the deprecated props are removed.
+  // Warnings are printed once per page, so they must be forgotten between
+  // cases or only the first test to trigger one would see it.
+  beforeEach(() => {
+    resetColDeprecationWarnings();
+  });
+
   describe('class', () => {
     it('sets --internal-col-span for size="N"', async () => {
       const page = await newSpecPage({
@@ -223,6 +232,18 @@ describe('ion-col', () => {
       };
     };
 
+    // TODO(FW-7557): Remove this when the deprecated props are removed.
+    /** Render several columns at one screen width, for the page-level warnings. */
+    const renderCols = async (screenWidth: number, html: string) => {
+      const page = await newSpecPage({ components: [Col], html: `<ion-row>${html}</ion-row>` });
+
+      setScreenWidth(screenWidth);
+      page.body.querySelectorAll('ion-col').forEach((col) => forceUpdate(col));
+      await page.waitForChanges();
+
+      return page;
+    };
+
     /**
      * Render a column at the given screen width. Breakpoint objects passed
      * in `props` are applied as JavaScript properties, which is the only way
@@ -386,6 +407,74 @@ describe('ion-col', () => {
         await renderCol(800, `<ion-col size="12"></ion-col>`);
 
         expect(consoleWarnSpy).not.toHaveBeenCalled();
+      });
+
+      /**
+       * The warning offers the breakpoint object that replaces the properties
+       * actually set on the column, so these assert the generated example
+       * rather than just that something was printed.
+       */
+      it('offers the unsuffixed value as the xs entry', async () => {
+        await renderCol(800, `<ion-col size="3" size-md="6"></ion-col>`);
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          expect.stringContaining('col.size = { xs: 3, md: 6 }'),
+          expect.anything()
+        );
+      });
+
+      it('omits the xs entry when no unsuffixed value is set', async () => {
+        await renderCol(800, `<ion-col size-lg="4"></ion-col>`);
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(expect.stringContaining('col.size = { lg: 4 }'), expect.anything());
+      });
+
+      it('quotes a value that is not a number', async () => {
+        await renderCol(800, `<ion-col size="auto" size-md="6"></ion-col>`);
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          expect.stringContaining('col.size = { xs: "auto", md: 6 }'),
+          expect.anything()
+        );
+      });
+
+      it('names every breakpoint set for one property', async () => {
+        await renderCol(800, `<ion-col size-sm="6" size-lg="4"></ion-col>`);
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          expect.stringContaining('The size-sm, size-lg properties are deprecated'),
+          expect.anything()
+        );
+      });
+
+      it('warns once per property so each example matches its own', async () => {
+        await renderCol(800, `<ion-col size="3" size-md="6" order="2" order-md="1"></ion-col>`);
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          expect.stringContaining('col.size = { xs: 3, md: 6 }'),
+          expect.anything()
+        );
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          expect.stringContaining('col.order = { xs: 2, md: 1 }'),
+          expect.anything()
+        );
+      });
+
+      /**
+       * Applications tend to use the deprecated properties on every column in
+       * a grid, so the same warning is printed once for the page rather than
+       * once per column.
+       */
+      it('prints one warning for columns that would repeat it', async () => {
+        await renderCols(800, `<ion-col size-md="6"></ion-col><ion-col size-md="6"></ion-col>`);
+
+        expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('still warns separately for columns with different values', async () => {
+        await renderCols(800, `<ion-col size-md="6"></ion-col><ion-col size-md="4"></ion-col>`);
+
+        expect(consoleWarnSpy).toHaveBeenCalledTimes(2);
       });
 
       it('is ignored, with a warning, when the property is a breakpoint object', async () => {
