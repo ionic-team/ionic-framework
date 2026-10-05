@@ -26,6 +26,12 @@ export class Grid implements ComponentInterface {
 
   connectedCallback() {
     this.unsubscribeBreakpoint = onBreakpointChange(() => forceUpdate(this));
+
+    /**
+     * Re-resolve the breakpoint in case the screen size changed to a new
+     * breakpoint while the component was disconnected.
+     */
+    forceUpdate(this);
   }
 
   disconnectedCallback() {
