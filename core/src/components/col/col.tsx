@@ -7,18 +7,14 @@ import {
   onBreakpointChange,
   resolveBreakpointMap,
 } from '@utils/breakpoints';
-import { printIonWarning } from '@utils/logging';
 
-import type { IonColBreakpointValues, IonColProperty, IonColStyle, IonColValue } from './col.interface';
-import { ION_COL_PROPERTIES } from './col.interface';
-
-// TODO(FW-7557): Remove this in v11.
-/**
- * The breakpoints the deprecated suffixed properties (e.g. `size-md`) cover.
- * `xxl` is absent by design: it is only reachable through the breakpoint object
- * form, so no new suffixed properties are introduced for it.
- */
-const LEGACY_BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+// TODO(FW-7557): Remove this import in v11.
+import {
+  getLegacyBreakpointValues,
+  warnDeprecatedBreakpointProps,
+  warnDeprecatedPushPullProps,
+} from './col.deprecations';
+import type { IonColProperty, IonColStyle, IonColValue } from './col.interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -30,12 +26,6 @@ const LEGACY_BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 })
 export class Col implements ComponentInterface {
   private unsubscribeBreakpoint?: () => void;
-
-  // TODO(FW-7557): Remove these in v11.
-  // Keep track of which deprecation warnings have been printed so they are
-  // not repeated on every re-render or screen resize.
-  private hasWarnedDeprecatedProps = false;
-  private hasWarnedIgnoredProps = false;
 
   @Element() el!: HTMLIonColElement;
 
@@ -372,26 +362,6 @@ export class Col implements ComponentInterface {
     this.unsubscribeBreakpoint = undefined;
   }
 
-  // TODO(FW-7557): Remove this in v11.
-  /**
-   * Collect the values set through the deprecated suffixed properties (e.g.
-   * `size-md`) into a breakpoint object.
-   */
-  private getLegacyBreakpointValues(property: IonColProperty): IonColBreakpointValues {
-    const values: IonColBreakpointValues = {};
-
-    for (const breakpoint of LEGACY_BREAKPOINTS) {
-      const suffixed = `${property}${breakpoint.charAt(0).toUpperCase()}${breakpoint.slice(1)}` as keyof this;
-      const value = this[suffixed] as string | undefined;
-
-      if (value !== undefined) {
-        values[breakpoint] = value;
-      }
-    }
-
-    return values;
-  }
-
   /**
    * Resolve the value of a responsive property for the current screen size. A
    * breakpoint object takes precedence over the deprecated suffixed properties,
@@ -404,55 +374,10 @@ export class Col implements ComponentInterface {
       return resolveBreakpointMap(value, matchBreakpoint);
     }
 
-    const legacyValues = this.getLegacyBreakpointValues(property);
+    const legacyValues = getLegacyBreakpointValues(this, property);
     const matchedLegacy = resolveBreakpointMap(legacyValues, matchBreakpoint);
 
     return matchedLegacy !== undefined ? matchedLegacy : (value as string | number | undefined);
-  }
-
-  // TODO(FW-7557): Remove this in v11.
-  /**
-   * Warn when a deprecated suffixed property is set, and again if one is being
-   * silently ignored because the matching property is also set to a breakpoint
-   * object.
-   */
-  private warnDeprecatedBreakpointProps() {
-    const used: string[] = [];
-    const ignored: string[] = [];
-
-    const describeProperties = (names: string[]) =>
-      `The ${names.join(', ')} ${names.length === 1 ? 'property is' : 'properties are'}`;
-
-    for (const property of ION_COL_PROPERTIES) {
-      for (const breakpoint of Object.keys(this.getLegacyBreakpointValues(property))) {
-        const name = `${property}-${breakpoint}`;
-        used.push(name);
-
-        if (isBreakpointMap(this[property])) {
-          ignored.push(name);
-        }
-      }
-    }
-
-    if (used.length > 0 && !this.hasWarnedDeprecatedProps) {
-      this.hasWarnedDeprecatedProps = true;
-      printIonWarning(
-        `[ion-col] - ${describeProperties(
-          used
-        )} deprecated. Set the "size", "order" and "offset" properties to an object of screen breakpoint values instead (e.g. col.size = { xs: 12, md: 6 }), which is also the only way to target the "xxl" breakpoint.`,
-        this.el
-      );
-    }
-
-    if (ignored.length > 0 && !this.hasWarnedIgnoredProps) {
-      this.hasWarnedIgnoredProps = true;
-      printIonWarning(
-        `[ion-col] - ${describeProperties(
-          ignored
-        )} ignored because the matching property is set to an object of screen breakpoint values, which takes precedence.`,
-        this.el
-      );
-    }
   }
 
   /**
@@ -509,31 +434,13 @@ export class Col implements ComponentInterface {
   // TODO(FW-7557): Remove this in v11 — it exists only to warn about
   // the deprecated breakpoint properties.
   componentWillRender() {
-    this.warnDeprecatedBreakpointProps();
+    warnDeprecatedBreakpointProps(this, this.el);
   }
 
   // TODO(FW-7557): Remove this in v11 — it exists only to warn about
   // the deprecated pull and push properties.
   componentDidLoad() {
-    if (
-      this.pull ||
-      this.pullLg ||
-      this.pullMd ||
-      this.pullSm ||
-      this.pullXl ||
-      this.pullXs ||
-      this.push ||
-      this.pushLg ||
-      this.pushMd ||
-      this.pushSm ||
-      this.pushXl ||
-      this.pushXs
-    ) {
-      printIonWarning(
-        '[ion-col] - The pull and push properties are deprecated and no longer work, in favor of the order and size properties.',
-        this.el
-      );
-    }
+    warnDeprecatedPushPullProps(this, this.el);
   }
 
   render() {
