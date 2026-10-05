@@ -51,12 +51,12 @@ describe('screen breakpoints', () => {
   });
 
   describe('getScreenBreakpoints()', () => {
-    it('returns the defaults when no config is set', () => {
+    it('should return the defaults when no config is set', () => {
       expect(getScreenBreakpoints()).toEqual(EXPECTED_DEFAULT_SCREEN_BREAKPOINTS);
       expect(consoleWarnSpy).not.toHaveBeenCalled();
     });
 
-    it('merges a partial override over the defaults', () => {
+    it('should merge a partial override over the defaults', () => {
       setScreenBreakpoints({ md: 720, lg: 1024 });
 
       expect(getScreenBreakpoints()).toEqual({
@@ -67,7 +67,7 @@ describe('screen breakpoints', () => {
       expect(consoleWarnSpy).not.toHaveBeenCalled();
     });
 
-    it('accepts a full override of every breakpoint', () => {
+    it('should accept a full override of every breakpoint', () => {
       const breakpoints = { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1536, xxl: 1920 };
       setScreenBreakpoints(breakpoints);
 
@@ -75,28 +75,28 @@ describe('screen breakpoints', () => {
       expect(consoleWarnSpy).not.toHaveBeenCalled();
     });
 
-    it('leaves the defaults untouched given a partial override', () => {
+    it('should leave the defaults untouched given a partial override', () => {
       setScreenBreakpoints({ md: 720 });
       getScreenBreakpoints();
 
       expect(DEFAULT_SCREEN_BREAKPOINTS).toEqual(EXPECTED_DEFAULT_SCREEN_BREAKPOINTS);
     });
 
-    it('leaves the defaults untouched given no config at all', () => {
+    it('should leave the defaults untouched given no config at all', () => {
       setScreenBreakpoints(undefined);
       getScreenBreakpoints();
 
       expect(DEFAULT_SCREEN_BREAKPOINTS).toEqual(EXPECTED_DEFAULT_SCREEN_BREAKPOINTS);
     });
 
-    it('leaves the defaults untouched given a config that is not an object', () => {
+    it('should leave the defaults untouched given a config that is not an object', () => {
       setScreenBreakpoints('nonsense');
       getScreenBreakpoints();
 
       expect(DEFAULT_SCREEN_BREAKPOINTS).toEqual(EXPECTED_DEFAULT_SCREEN_BREAKPOINTS);
     });
 
-    it('caches the resolved breakpoints so warnings are only printed once', () => {
+    it('should cache the resolved breakpoints so warnings are only printed once', () => {
       setScreenBreakpoints({ md: '768px' });
 
       getScreenBreakpoints();
@@ -106,7 +106,7 @@ describe('screen breakpoints', () => {
       expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
     });
 
-    it('re-resolves when the config object is replaced', () => {
+    it('should re-resolve when the config object is replaced', () => {
       config.set('screenBreakpoints', { md: 700 } as any);
       expect(getScreenBreakpoints().md).toBe(700);
 
@@ -114,7 +114,7 @@ describe('screen breakpoints', () => {
       expect(getScreenBreakpoints().md).toBe(800);
     });
 
-    it('does not re-resolve when the existing config object is mutated in place', () => {
+    it('should not re-resolve when the existing config object is mutated in place', () => {
       const screenBreakpoints = { md: 700 };
       config.set('screenBreakpoints', screenBreakpoints as any);
       expect(getScreenBreakpoints().md).toBe(700);
@@ -134,7 +134,7 @@ describe('screen breakpoints', () => {
         ['Infinity', Infinity],
         ['null', null],
         ['a boolean', true],
-      ])('falls back to the default when the value is %s', (_description, value) => {
+      ])('should fall back to the default when the value is %s', (_description, value) => {
         setScreenBreakpoints({ md: value });
 
         expect(getScreenBreakpoints().md).toBe(DEFAULT_SCREEN_BREAKPOINTS.md);
@@ -143,7 +143,7 @@ describe('screen breakpoints', () => {
         );
       });
 
-      it('keeps the other valid overrides', () => {
+      it('should keep the other valid overrides', () => {
         setScreenBreakpoints({ md: '768px', lg: 1024 });
 
         expect(getScreenBreakpoints()).toEqual({
@@ -154,7 +154,7 @@ describe('screen breakpoints', () => {
     });
 
     describe('with an unknown breakpoint name', () => {
-      it('ignores the name and warns that breakpoints cannot be renamed', () => {
+      it('should ignore the name and warns that breakpoints cannot be renamed', () => {
         setScreenBreakpoints({ small: 500, xxxl: 2000 });
 
         expect(getScreenBreakpoints()).toEqual(DEFAULT_SCREEN_BREAKPOINTS);
@@ -172,7 +172,7 @@ describe('screen breakpoints', () => {
         ['a number', 768],
         ['an array', [0, 576, 768]],
         ['null', null],
-      ])('falls back to the defaults when the config is %s', (_description, value) => {
+      ])('should fall back to the defaults when the config is %s', (_description, value) => {
         setScreenBreakpoints(value);
 
         expect(getScreenBreakpoints()).toEqual(DEFAULT_SCREEN_BREAKPOINTS);
@@ -181,7 +181,7 @@ describe('screen breakpoints', () => {
     });
 
     describe('with breakpoints that are not in ascending order', () => {
-      it('uses the provided values but warns', () => {
+      it('should use the provided values but warns', () => {
         setScreenBreakpoints({ md: 1000 });
 
         expect(getScreenBreakpoints().md).toBe(1000);
@@ -190,7 +190,7 @@ describe('screen breakpoints', () => {
         );
       });
 
-      it('does not warn when adjacent breakpoints are equal', () => {
+      it('should not warn when adjacent breakpoints are equal', () => {
         setScreenBreakpoints({ md: 576 });
 
         expect(getScreenBreakpoints().md).toBe(576);
@@ -200,43 +200,43 @@ describe('screen breakpoints', () => {
   });
 
   describe('getScreenBreakpointValue()', () => {
-    it('returns the width the breakpoint activates at', () => {
+    it('should return the width the breakpoint activates at', () => {
       expect(getScreenBreakpointValue('lg')).toBe(992);
     });
 
-    it('reflects an override', () => {
+    it('should reflect an override', () => {
       setScreenBreakpoints({ lg: 1024 });
 
       expect(getScreenBreakpointValue('lg')).toBe(1024);
     });
 
-    it.each([['xxxl'], [''], [undefined], [null], [0]])('returns undefined for %p', (value) => {
+    it.each([['xxxl'], [''], [undefined], [null], [0]])('should return undefined for %p', (value) => {
       expect(getScreenBreakpointValue(value)).toBeUndefined();
     });
   });
 
   describe('getScreenBreakpointMediaQuery()', () => {
-    it('builds a min-width query from the breakpoint width', () => {
+    it('should build a min-width query from the breakpoint width', () => {
       expect(getScreenBreakpointMediaQuery('md')).toBe('(min-width: 768px)');
     });
 
-    it('reflects an override', () => {
+    it('should reflect an override', () => {
       setScreenBreakpoints({ md: 720 });
 
       expect(getScreenBreakpointMediaQuery('md')).toBe('(min-width: 720px)');
     });
 
-    it('returns undefined when the name is not a screen breakpoint', () => {
+    it('should return undefined when the name is not a screen breakpoint', () => {
       expect(getScreenBreakpointMediaQuery('xxxl')).toBeUndefined();
     });
   });
 
   describe('isBreakpointMap()', () => {
-    it('returns true for an object', () => {
+    it('should return true for an object', () => {
       expect(isBreakpointMap({ xs: 12, md: 6 })).toBe(true);
     });
 
-    it('returns true for an empty object', () => {
+    it('should return true for an empty object', () => {
       expect(isBreakpointMap({})).toBe(true);
     });
 
@@ -249,33 +249,33 @@ describe('screen breakpoints', () => {
       ['undefined', undefined],
       ['null', null],
       ['an array', [1, 2]],
-    ])('returns false for %s', (_description, value) => {
+    ])('should return false for %s', (_description, value) => {
       expect(isBreakpointMap(value)).toBe(false);
     });
   });
 
   describe('resolveBreakpointMap()', () => {
-    it('returns the value for the largest matching breakpoint', () => {
+    it('should return the value for the largest matching breakpoint', () => {
       const resolved = resolveBreakpointMap({ xs: 12, md: 6, xl: 3 }, (bp) => ['xs', 'sm', 'md'].includes(bp));
 
       expect(resolved).toBe(6);
     });
 
-    it('skips breakpoints with no value set', () => {
+    it('should skip breakpoints with no value set', () => {
       const resolved = resolveBreakpointMap({ xs: 12, xxl: 1 }, () => true);
 
       expect(resolved).toBe(1);
     });
 
-    it('returns undefined when no breakpoint matches', () => {
+    it('should return undefined when no breakpoint matches', () => {
       expect(resolveBreakpointMap({ lg: 4 }, () => false)).toBeUndefined();
     });
 
-    it('returns undefined for an empty map', () => {
+    it('should return undefined for an empty map', () => {
       expect(resolveBreakpointMap({}, () => true)).toBeUndefined();
     });
 
-    it('resolves regardless of the order the keys were written in', () => {
+    it('should resolve regardless of the order the keys were written in', () => {
       const resolved = resolveBreakpointMap({ xl: 3, xs: 12, md: 6 }, () => true);
 
       expect(resolved).toBe(3);
@@ -348,29 +348,29 @@ describe('screen breakpoints against the window', () => {
   });
 
   describe('matchBreakpoint()', () => {
-    it.each([[undefined], ['']])('always matches for %p, so unqualified values apply everywhere', (value) => {
+    it.each([[undefined], ['']])('should always match for %p, so unqualified values apply everywhere', (value) => {
       expect(matchBreakpoint(value)).toBe(true);
     });
 
-    it('matches a breakpoint at or below the current width', () => {
+    it('should match a breakpoint at or below the current width', () => {
       setWidth(800);
 
       expect(matchBreakpoint('xs')).toBe(true);
       expect(matchBreakpoint('md')).toBe(true);
     });
 
-    it('does not match a breakpoint above the current width', () => {
+    it('should not match a breakpoint above the current width', () => {
       setWidth(800);
 
       expect(matchBreakpoint('lg')).toBe(false);
       expect(matchBreakpoint('xxl')).toBe(false);
     });
 
-    it('does not match a name that is not a screen breakpoint', () => {
+    it('should not match a name that is not a screen breakpoint', () => {
       expect(matchBreakpoint('xxxl')).toBe(false);
     });
 
-    it('reflects the configured widths rather than the defaults', () => {
+    it('should reflect the configured widths rather than the defaults', () => {
       config.set('screenBreakpoints', { md: 400 } as any);
       resetScreenBreakpoints();
       setWidth(500);
@@ -379,7 +379,7 @@ describe('screen breakpoints against the window', () => {
       expect(matchBreakpoint('md')).toBe(true);
     });
 
-    it('does not match when matchMedia is unavailable', () => {
+    it('should not match when matchMedia is unavailable', () => {
       (window as any).matchMedia = undefined;
 
       expect(matchBreakpoint('md')).toBe(false);
@@ -394,13 +394,13 @@ describe('screen breakpoints against the window', () => {
       [1000, 'lg'],
       [1300, 'xl'],
       [1500, 'xxl'],
-    ])('returns %p -> %p', (viewport, expected) => {
+    ])('should return %p -> %p', (viewport, expected) => {
       setWidth(viewport);
 
       expect(getActiveBreakpoint()).toBe(expected);
     });
 
-    it('returns undefined when no breakpoint matches', () => {
+    it('should return undefined when no breakpoint matches', () => {
       // xs normally matches at any width, so raise it above the viewport too
       config.set('screenBreakpoints', { xs: 2000 } as any);
       resetScreenBreakpoints();
@@ -409,7 +409,7 @@ describe('screen breakpoints against the window', () => {
       expect(getActiveBreakpoint()).toBeUndefined();
     });
 
-    it('reflects the configured widths', () => {
+    it('should reflect the configured widths', () => {
       config.set('screenBreakpoints', { xxl: 900 } as any);
       resetScreenBreakpoints();
       setWidth(1000);
@@ -419,7 +419,7 @@ describe('screen breakpoints against the window', () => {
   });
 
   describe('onBreakpointChange()', () => {
-    it('notifies the subscriber when a threshold is crossed', () => {
+    it('should notify the subscriber when a threshold is crossed', () => {
       const callback = jest.fn();
       onBreakpointChange(callback);
 
@@ -428,7 +428,7 @@ describe('screen breakpoints against the window', () => {
       expect(callback).toHaveBeenCalled();
     });
 
-    it('does not notify when the width changes without crossing a threshold', () => {
+    it('should not notify when the width changes without crossing a threshold', () => {
       const callback = jest.fn();
       onBreakpointChange(callback);
 
@@ -438,7 +438,7 @@ describe('screen breakpoints against the window', () => {
       expect(callback).not.toHaveBeenCalled();
     });
 
-    it('notifies every subscriber', () => {
+    it('should notify every subscriber', () => {
       const first = jest.fn();
       const second = jest.fn();
       onBreakpointChange(first);
@@ -450,7 +450,7 @@ describe('screen breakpoints against the window', () => {
       expect(second).toHaveBeenCalled();
     });
 
-    it('stops notifying after the returned function is called', () => {
+    it('should stop notifying after the returned function is called', () => {
       const callback = jest.fn();
       const unsubscribe = onBreakpointChange(callback);
 
@@ -460,7 +460,7 @@ describe('screen breakpoints against the window', () => {
       expect(callback).not.toHaveBeenCalled();
     });
 
-    it('keeps notifying the remaining subscribers after one unsubscribes', () => {
+    it('should keep notifying the remaining subscribers after one unsubscribes', () => {
       const staying = jest.fn();
       const leaving = jest.fn();
       onBreakpointChange(staying);
@@ -472,7 +472,7 @@ describe('screen breakpoints against the window', () => {
       expect(leaving).not.toHaveBeenCalled();
     });
 
-    it('creates one media query per breakpoint however many subscribers there are', () => {
+    it('should create one media query per breakpoint however many subscribers there are', () => {
       onBreakpointChange(jest.fn());
       onBreakpointChange(jest.fn());
       onBreakpointChange(jest.fn());
@@ -480,7 +480,7 @@ describe('screen breakpoints against the window', () => {
       expect(queries).toHaveLength(SCREEN_BREAKPOINT_NAMES.length);
     });
 
-    it('survives unsubscribing after the listeners have been torn down', () => {
+    it('should survive unsubscribing after the listeners have been torn down', () => {
       const unsubscribe = onBreakpointChange(jest.fn());
 
       resetBreakpointListeners();
@@ -489,7 +489,7 @@ describe('screen breakpoints against the window', () => {
       expect(() => unsubscribe()).not.toThrow();
     });
 
-    it('returns a callable no-op when matchMedia is unavailable', () => {
+    it('should return a callable no-op when matchMedia is unavailable', () => {
       (window as any).matchMedia = undefined;
       const callback = jest.fn();
 
