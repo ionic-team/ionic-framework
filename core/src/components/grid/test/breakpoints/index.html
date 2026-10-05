@@ -49,12 +49,14 @@
           <tr>
             <th>Breakpoint</th>
             <th>Activates at</th>
-            <th>Padding (top/bottom)</th>
+            <th>Grid padding</th>
+            <th>Column padding</th>
             <th>Fixed width</th>
             <th>Columns</th>
           </tr>
           <tr>
             <td>xs</td>
+            <td>0px</td>
             <td>0px</td>
             <td>0px</td>
             <td>100%</td>
@@ -64,6 +66,7 @@
             <td>sm</td>
             <td>200px</td>
             <td>12px</td>
+            <td>6px</td>
             <td>180px</td>
             <td>6</td>
           </tr>
@@ -71,6 +74,7 @@
             <td>md</td>
             <td>400px</td>
             <td>28px</td>
+            <td>14px</td>
             <td>360px</td>
             <td>4</td>
           </tr>
@@ -78,6 +82,7 @@
             <td>lg</td>
             <td>600px</td>
             <td>48px</td>
+            <td>24px</td>
             <td>560px</td>
             <td>3</td>
           </tr>
@@ -85,6 +90,7 @@
             <td>xl</td>
             <td>800px</td>
             <td>72px</td>
+            <td>36px</td>
             <td>760px</td>
             <td>2</td>
           </tr>
@@ -92,6 +98,7 @@
             <td>xxl</td>
             <td>1000px</td>
             <td>100px</td>
+            <td>50px</td>
             <td>960px</td>
             <td>1</td>
           </tr>
@@ -176,22 +183,74 @@
       </div>
 
       <style>
-        /* Distinct padding per breakpoint, so the active one is obvious */
+        /* Distinct grid padding per breakpoint. */
         #padding-grid {
           --ion-grid-breakpoint-xs-padding-top: 0px;
+          --ion-grid-breakpoint-xs-padding-end: 0px;
           --ion-grid-breakpoint-xs-padding-bottom: 0px;
+          --ion-grid-breakpoint-xs-padding-start: 0px;
+
           --ion-grid-breakpoint-sm-padding-top: 12px;
+          --ion-grid-breakpoint-sm-padding-end: 12px;
           --ion-grid-breakpoint-sm-padding-bottom: 12px;
+          --ion-grid-breakpoint-sm-padding-start: 12px;
+
           --ion-grid-breakpoint-md-padding-top: 28px;
+          --ion-grid-breakpoint-md-padding-end: 28px;
           --ion-grid-breakpoint-md-padding-bottom: 28px;
+          --ion-grid-breakpoint-md-padding-start: 28px;
+
           --ion-grid-breakpoint-lg-padding-top: 48px;
+          --ion-grid-breakpoint-lg-padding-end: 48px;
           --ion-grid-breakpoint-lg-padding-bottom: 48px;
+          --ion-grid-breakpoint-lg-padding-start: 48px;
+
           --ion-grid-breakpoint-xl-padding-top: 72px;
+          --ion-grid-breakpoint-xl-padding-end: 72px;
           --ion-grid-breakpoint-xl-padding-bottom: 72px;
+          --ion-grid-breakpoint-xl-padding-start: 72px;
+
           --ion-grid-breakpoint-xxl-padding-top: 100px;
+          --ion-grid-breakpoint-xxl-padding-end: 100px;
           --ion-grid-breakpoint-xxl-padding-bottom: 100px;
+          --ion-grid-breakpoint-xxl-padding-start: 100px;
 
           background-color: #cddc8b;
+        }
+
+        /* Distinct column padding per breakpoint. */
+        #padding-grid ion-col {
+          --ion-col-breakpoint-xs-padding-top: 0px;
+          --ion-col-breakpoint-xs-padding-end: 0px;
+          --ion-col-breakpoint-xs-padding-bottom: 0px;
+          --ion-col-breakpoint-xs-padding-start: 0px;
+
+          --ion-col-breakpoint-sm-padding-top: 6px;
+          --ion-col-breakpoint-sm-padding-end: 6px;
+          --ion-col-breakpoint-sm-padding-bottom: 6px;
+          --ion-col-breakpoint-sm-padding-start: 6px;
+
+          --ion-col-breakpoint-md-padding-top: 14px;
+          --ion-col-breakpoint-md-padding-end: 14px;
+          --ion-col-breakpoint-md-padding-bottom: 14px;
+          --ion-col-breakpoint-md-padding-start: 14px;
+
+          --ion-col-breakpoint-lg-padding-top: 24px;
+          --ion-col-breakpoint-lg-padding-end: 24px;
+          --ion-col-breakpoint-lg-padding-bottom: 24px;
+          --ion-col-breakpoint-lg-padding-start: 24px;
+
+          --ion-col-breakpoint-xl-padding-top: 36px;
+          --ion-col-breakpoint-xl-padding-end: 36px;
+          --ion-col-breakpoint-xl-padding-bottom: 36px;
+          --ion-col-breakpoint-xl-padding-start: 36px;
+
+          --ion-col-breakpoint-xxl-padding-top: 50px;
+          --ion-col-breakpoint-xxl-padding-end: 50px;
+          --ion-col-breakpoint-xxl-padding-bottom: 50px;
+          --ion-col-breakpoint-xxl-padding-start: 50px;
+
+          background-color: #f3b062;
         }
 
         /* Fixed widths that fit inside the configured thresholds */

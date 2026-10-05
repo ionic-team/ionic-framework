@@ -22,20 +22,20 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     const cases = [
       // xs is 0 under both, but its fixed width is 100% so it tracks the
       // viewport
-      { width: 150, breakpoint: 'xs', padding: '0px', fixedWidth: 150, size: '12' },
+      { width: 150, breakpoint: 'xs', padding: '0px', fixedWidth: 150, size: '12', colPadding: '0px' },
       // sm under the override, xs by default
-      { width: 350, breakpoint: 'sm', padding: '12px', fixedWidth: 180, size: '6' },
+      { width: 350, breakpoint: 'sm', padding: '12px', fixedWidth: 180, size: '6', colPadding: '6px' },
       // md under the override, xs by default (below the 576 default sm)
-      { width: 500, breakpoint: 'md', padding: '28px', fixedWidth: 360, size: '4' },
+      { width: 500, breakpoint: 'md', padding: '28px', fixedWidth: 360, size: '4', colPadding: '14px' },
       // lg under the override, sm by default
-      { width: 650, breakpoint: 'lg', padding: '48px', fixedWidth: 560, size: '3' },
+      { width: 650, breakpoint: 'lg', padding: '48px', fixedWidth: 560, size: '3', colPadding: '24px' },
       // xl under the override, md by default
-      { width: 850, breakpoint: 'xl', padding: '72px', fixedWidth: 760, size: '2' },
+      { width: 850, breakpoint: 'xl', padding: '72px', fixedWidth: 760, size: '2', colPadding: '36px' },
       // xxl under the override, lg by default
-      { width: 1100, breakpoint: 'xxl', padding: '100px', fixedWidth: 960, size: '1' },
+      { width: 1100, breakpoint: 'xxl', padding: '100px', fixedWidth: 960, size: '1', colPadding: '50px' },
     ];
 
-    for (const { width, breakpoint, padding, fixedWidth, size } of cases) {
+    for (const { width, breakpoint, padding, fixedWidth, size, colPadding } of cases) {
       test(`should resolve the ${breakpoint} breakpoint at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
         await page.goto('/src/components/grid/test/breakpoints', config);
@@ -61,6 +61,23 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         // Allow 1px tolerance for sub-pixel rounding in the browser.
         expect(measuredWidth).toBeGreaterThanOrEqual(fixedWidth - 1);
         expect(measuredWidth).toBeLessThanOrEqual(fixedWidth + 1);
+      });
+
+      /**
+       * `ion-col` selects its padding on the `screen-breakpoint` attribute it
+       * reflects, so this covers the attribute reaching CSS rather than just
+       * the values resolved in JavaScript.
+       */
+      test(`should apply the ${breakpoint} column padding at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await page.goto('/src/components/grid/test/breakpoints', config);
+
+        const paddingTop = await page
+          .locator('#padding-grid ion-col')
+          .first()
+          .evaluate((col) => getComputedStyle(col).paddingTop);
+
+        expect(paddingTop).toBe(colPadding);
       });
 
       test(`should resolve the column size object at ${width}px`, async ({ page }) => {
