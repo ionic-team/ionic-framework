@@ -377,7 +377,7 @@ describe('ion-col', () => {
         await renderCol(800, `<ion-col size="12" size-md="6"></ion-col>`);
 
         expect(consoleWarnSpy).toHaveBeenCalledWith(
-          expect.stringContaining('[ion-col] - The size-md properties are deprecated'),
+          expect.stringContaining('[ion-col] - The size-md property is deprecated'),
           expect.anything()
         );
       });
@@ -393,7 +393,7 @@ describe('ion-col', () => {
 
         expect(col.style.getPropertyValue('--internal-col-span')).toBe('12');
         expect(consoleWarnSpy).toHaveBeenCalledWith(
-          expect.stringContaining('[ion-col] - The size-md properties are ignored'),
+          expect.stringContaining('[ion-col] - The size-md property is ignored'),
           expect.anything()
         );
       });
