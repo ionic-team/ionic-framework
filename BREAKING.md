@@ -290,11 +290,11 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 ```html
 <ion-grid>
   <ion-row>
-    <ion-col size="auto" order="2" order-md="2">
-      <div>ion-col size="auto" order="2" order-md="2"</div>
+    <ion-col size="auto" order="2">
+      <div>ion-col size="auto" order="2"</div>
     </ion-col>
-    <ion-col size="auto" order="1" order-md="1">
-      <div>ion-col size="auto" order="1" order-md="1"</div>
+    <ion-col size="auto" order="1">
+      <div>ion-col size="auto" order="1"</div>
     </ion-col>
   </ion-row>
 </ion-grid>
