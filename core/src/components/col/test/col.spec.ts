@@ -584,6 +584,26 @@ describe('ion-col', () => {
         expect(col.style.getPropertyValue('--internal-col-span')).toBe('6');
       });
 
+      /**
+       * The column's per-breakpoint padding is selected on in CSS through this
+       * attribute, so losing it would silently fall back to the compiled
+       * `@media` thresholds and ignore the `screenBreakpoints` config.
+       */
+      it('reflects the resolved breakpoint on the host', async () => {
+        const { col } = await renderSubscribedCol();
+
+        expect(col.getAttribute('screen-breakpoint')).toBe('xs');
+      });
+
+      it('updates the reflected breakpoint when a threshold is crossed', async () => {
+        const { page, col } = await renderSubscribedCol();
+
+        resize(800);
+        await page.waitForChanges();
+
+        expect(col.getAttribute('screen-breakpoint')).toBe('md');
+      });
+
       it('re-resolves when reconnected after a threshold was crossed', async () => {
         const { page, col } = await renderSubscribedCol();
         const host = page.body.querySelector('#host')!;
