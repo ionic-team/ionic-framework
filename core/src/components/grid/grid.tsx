@@ -17,7 +17,10 @@ export class Grid implements ComponentInterface {
    * If `true`, the grid will have a fixed width based on the screen size.
    *
    * The width each breakpoint activates at can be changed with the
-   * `screenBreakpoints` config.
+   * `screenBreakpoints` config. The default widths assume the default
+   * thresholds, so lowering a threshold without lowering its width leaves the
+   * grid clamped by `max-width: 100%` and no longer fixed. Set the matching
+   * `--ion-grid-breakpoint-*-width` variables alongside the config.
    */
   @Prop() fixed = false;
 

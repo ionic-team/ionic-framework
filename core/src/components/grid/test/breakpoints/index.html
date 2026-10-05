@@ -43,10 +43,59 @@
       </ion-header>
 
       <ion-content class="grid-demo">
-        <p class="ion-padding-start">
-          Configured breakpoints: xs 0, sm 200, md 400, lg 600, xl 800, xxl 1000. Resize the window to step through
-          them.
-        </p>
+        <p class="ion-padding-start">Resize the window to step through the configured breakpoints.</p>
+
+        <table class="legend ion-padding-start">
+          <tr>
+            <th>Breakpoint</th>
+            <th>Activates at</th>
+            <th>Padding (top/bottom)</th>
+            <th>Fixed width</th>
+            <th>Columns</th>
+          </tr>
+          <tr>
+            <td>xs</td>
+            <td>0px</td>
+            <td>0px</td>
+            <td>100%</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>sm</td>
+            <td>200px</td>
+            <td>12px</td>
+            <td>180px</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>md</td>
+            <td>400px</td>
+            <td>28px</td>
+            <td>360px</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>lg</td>
+            <td>600px</td>
+            <td>48px</td>
+            <td>560px</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>xl</td>
+            <td>800px</td>
+            <td>72px</td>
+            <td>760px</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>xxl</td>
+            <td>1000px</td>
+            <td>100px</td>
+            <td>960px</td>
+            <td>1</td>
+          </tr>
+        </table>
 
         <h2 class="ion-padding-start">Responsive padding</h2>
         <ion-grid id="padding-grid">
@@ -192,6 +241,29 @@
         #breakpoint-readout small {
           opacity: 0.7;
           font-size: 0.8rem;
+        }
+
+        .legend {
+          /**
+           * The global stylesheet collapses tables, and padding does not apply
+           * to a collapsed table, so `ion-padding-start` would be ignored.
+           */
+          border-collapse: separate;
+          border-spacing: 0;
+
+          margin-bottom: 16px;
+          font-size: 0.85em;
+        }
+
+        .legend th,
+        .legend td {
+          padding: 2px 16px 2px 0;
+          text-align: start;
+        }
+
+        .legend th {
+          color: #666;
+          font-weight: normal;
         }
 
         .note {
