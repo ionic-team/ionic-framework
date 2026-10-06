@@ -13,8 +13,7 @@ import {
 } from '@ionic/react';
 import { triangle, square } from 'ionicons/icons';
 import React from 'react';
-import { Route, Navigate } from 'react-router';
-import { useSearchParams } from 'react-router-dom';
+import { Navigate, Route, useSearchParams } from 'react-router-dom';
 
 import TestDescription from '../../components/TestDescription';
 

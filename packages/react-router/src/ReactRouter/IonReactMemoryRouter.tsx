@@ -4,13 +4,13 @@
  * isn't available or desirable.
  */
 
-import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef, useCallback } from 'react';
-import type { MemoryRouterProps } from 'react-router';
-import { MemoryRouter, useLocation, useNavigationType } from 'react-router';
+import type { MemoryRouterProps, Location as HistoryLocation, NavigationType as HistoryAction } from 'react-router-dom';
+import { MemoryRouter, useLocation, useNavigationType } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
+import { withTransitionDefaults } from './utils/transitionDefaults';
 
 const RouterContent = ({ children }: PropsWithChildren<{}>) => {
   const location = useLocation();
@@ -49,7 +49,7 @@ const RouterContent = ({ children }: PropsWithChildren<{}>) => {
 
 export const IonReactMemoryRouter = ({ children, ...routerProps }: PropsWithChildren<MemoryRouterProps>) => {
   return (
-    <MemoryRouter {...routerProps}>
+    <MemoryRouter {...withTransitionDefaults(routerProps)}>
       <RouterContent>{children}</RouterContent>
     </MemoryRouter>
   );

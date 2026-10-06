@@ -1,0 +1,13 @@
+{
+  /* Type-checks against React Router 7 through the `react-router-dom-v7` alias. */
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx", "type-tests/**/*.ts", "type-tests/**/*.tsx"],
+  "compilerOptions": {
+    "noEmit": true,
+    /* Widened from `src` to cover `type-tests/`. */
+    "rootDir": ".",
+    "paths": {
+      "react-router-dom": ["./node_modules/react-router-dom-v7"]
+    }
+  }
+}

@@ -11,8 +11,7 @@ import {
   IonBackButton,
 } from '@ionic/react';
 import React from 'react';
-import { Route } from 'react-router';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Route, useNavigate, useParams } from 'react-router-dom';
 
 import TestDescription from '../../components/TestDescription';
 

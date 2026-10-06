@@ -1,10 +1,31 @@
 # React Router Testing
 
-Ionic Framework supports React Router v6 across multiple versions of React. As a result, we need to verify that Ionic routing works correctly with each of these React versions.
+Ionic Framework supports React Router 6.4+ and 7.15+. The test apps below run Ionic routing against both React Router majors and React 18 and 19.
+
+| App | React Router | React | Notes |
+| --- | --- | --- | --- |
+| `reactrouter6-react18` | 6 | 18 | Default for `test_runner.sh` |
+| `reactrouter6-react19` | 6 | 19 | Pinned to React 19.0.0 |
+| `reactrouter7-react19` | 7.15+ | 19 | Pinned to React 19.0.0 |
+
+The apps don't depend on `@ionic/react` or `@ionic/react-router` directly or carry `overrides`, so `npm run sync` checks the peer ranges the package actually ships. Don't add them back, since a registry dependency needs an override that masks those ranges.
 
 ## Type Checking
 
 Run `npm run typecheck` in `packages/react-router` to check types. The rollup build only reports type errors as warnings, so a passing build does not mean the types are clean.
+
+The `typecheck` script runs against both supported React Router majors and fails if either does:
+
+| Script | Config | Resolves `react-router-dom` to |
+| --- | --- | --- |
+| `typecheck.rr6` | `tsconfig.json` | `devDependencies`' `react-router-dom`, currently 6.x |
+| `typecheck.rr7` | `tsconfig.rr7.json` | the `react-router-dom-v7` npm alias, currently 7.x |
+
+Only one copy of a package name can live in `node_modules`, so React Router 7 is installed under the npm alias `react-router-dom-v7` and `tsconfig.rr7.json` points `react-router-dom` at it with a `paths` entry. The alias has its own `react-router` nested underneath, which is what React Router 7's `export * from 'react-router'` resolves to. A direct `react-router` import from `src/` skips the mapping and still resolves to 6.x, so an ESLint `no-restricted-imports` rule bans it.
+
+Both majors need checking because the router props differ, `future` on 6 and `useTransitions` on 7, so code that reads either one compiles on its own major and breaks on the other. That's also why `type-tests/rr7-transition-prop.ts` only runs in the React Router 7 lane.
+
+To bump the React Router 7 version under test, run `npm install --save-dev "react-router-dom-v7@npm:react-router-dom@^X.Y.Z"`.
 
 ## Syncing Local Changes
 
@@ -20,7 +41,7 @@ From here you can either build the application or start a local dev server. When
 
 ## Running the Test Suites
 
-`packages/react-router/scripts/test_runner.sh` orchestrates the React Router test suites end to end: it builds `@ionic/core`, `@ionic/react`, and `@ionic/react-router`, builds the test app, syncs local packages, starts the dev server, and runs Cypress and Playwright in sequence. By default it uses the `reactrouter6-react18` app; pass `--app reactrouter6-react19` to test against the latest supported React version.
+`packages/react-router/scripts/test_runner.sh` orchestrates the React Router test suites end to end: it builds `@ionic/core`, `@ionic/react`, and `@ionic/react-router`, builds the test app, syncs local packages, starts the dev server, and runs Cypress and Playwright in sequence. By default it uses the `reactrouter6-react18` app. Pass `--app` with any name from the table above (for example `--app reactrouter7-react19`) to test a different combination.
 
 ```shell
 # Full run (build + Cypress + Playwright)
@@ -43,7 +64,7 @@ Useful flags:
 | `--skip-build` | Reuse existing `packages/react-router/test/build/<app>/` instead of rebuilding |
 | `--playwright-only` | Run only the Playwright e2e suite |
 | `--spec <pattern>` | Filter Playwright specs by file path |
-| `--app <name>` | Pick a different app variant from `packages/react-router/test/apps/` (default: `reactrouter6-react18`; use `reactrouter6-react19` for the latest supported React version) |
+| `--app <name>` | Pick a different app variant from `packages/react-router/test/apps/` (default `reactrouter6-react18`, or `reactrouter7-react19` to test React Router 7) |
 | `--serve` | Start the dev server only and open the browser |
 
 ## Debug Logging in E2E Runs
@@ -92,5 +113,6 @@ As we add support for new versions of React, we will also need to update this di
 2. Update the application to the latest version of React.
 3. Make note of any files that changed during the upgrade (`package.json`, `package-lock.json`, etc).
 4. Copy the changed files to a new directory in `apps`.
-5. Add a new entry to the matrix for `test-react-router-e2e` in `./github/workflows/build.yml`. This will allow the new test app to run against all PRs.
-6. Commit these changes and push.
+5. Add a new entry to the `test-react-router-e2e` matrix in both `.github/workflows/build.yml` and `.github/workflows/stencil-nightly.yml`, since the nightly workflow keeps its own copy of the matrix.
+6. The Vercel preview (`build_react_router_test` in `core/scripts/vercel-build.sh`) takes the highest `reactrouter6-*` app, so a new React Router 6 app becomes the preview automatically. A new React Router major only does if you widen that `pick_app` filter.
+7. Commit these changes and push.

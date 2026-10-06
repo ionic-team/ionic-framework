@@ -7,7 +7,7 @@ import {
   IonContent,
 } from '@ionic/react';
 import React, { useRef, useEffect, useState } from 'react';
-import { Route } from 'react-router';
+import { Route } from 'react-router-dom';
 
 import TestDescription from '../../components/TestDescription';
 
