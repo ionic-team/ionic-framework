@@ -16,6 +16,7 @@ import {
   provide,
   watch,
   shallowRef,
+  onMounted,
   onUnmounted,
 } from "vue";
 import type { InjectionKey, Ref } from "vue";
@@ -64,6 +65,14 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     const components = shallowRef<any[]>([]);
 
     let skipTransition = false;
+
+    /**
+     * The view that was given leave hooks when the page hosting
+     * this outlet left. It's still visible in this outlet, so
+     * coming back to a different view would otherwise fire its
+     * leave hooks a second time.
+     */
+    let leftWithParent: any;
 
     // The base url for this router outlet
     let parentOutletPath: string;
@@ -306,6 +315,10 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         );
       }
 
+      const leavingViewAlreadyLeft =
+        leavingViewItem !== undefined && leavingViewItem === leftWithParent;
+      leftWithParent = undefined;
+
       /**
        * If the entering view is already
        * visible, then no transition is needed.
@@ -346,11 +359,13 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
-        fireLifecycle(
-          leavingViewItem.vueComponent,
-          leavingViewItem.vueComponentRef,
-          LIFECYCLE_WILL_LEAVE
-        );
+        if (!leavingViewAlreadyLeft) {
+          fireLifecycle(
+            leavingViewItem.vueComponent,
+            leavingViewItem.vueComponentRef,
+            LIFECYCLE_WILL_LEAVE
+          );
+        }
 
         /**
          * If we are going back from a page that
@@ -414,11 +429,13 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
           viewStacks.mountIntermediaryViews(id, leavingViewItem, delta);
         }
 
-        fireLifecycle(
-          leavingViewItem.vueComponent,
-          leavingViewItem.vueComponentRef,
-          LIFECYCLE_DID_LEAVE
-        );
+        if (!leavingViewAlreadyLeft) {
+          fireLifecycle(
+            leavingViewItem.vueComponent,
+            leavingViewItem.vueComponentRef,
+            LIFECYCLE_DID_LEAVE
+          );
+        }
       } else {
         /**
          * If there is no leaving element, just show
@@ -503,6 +520,85 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
      * we will see cached view data.
      */
     onUnmounted(() => viewStacks.clear(id));
+
+    /**
+     * The view picked on the parent's `ionViewWillLeave`, so the parent's
+     * `ionViewDidLeave` fires on the same one.
+     */
+    let leavingWithParent: any;
+
+    /**
+     * Core dispatches lifecycle events with `bubbles: false` on the page
+     * the parent outlet is transitioning. When that page hosts this outlet
+     * (such as a page containing `ion-tabs`), the page visible in this
+     * outlet never gets leave hooks, so fire them in step with the parent
+     * page. The events are also dispatched on the page so an outlet
+     * nested inside it forwards them in turn.
+     */
+    const forwardParentLeave = (ev: Event) => {
+      if (ev.type === LIFECYCLE_WILL_LEAVE) {
+        const activeViewItem = viewStacks
+          .getViewStack(id)
+          ?.find(
+            (viewItem: any) =>
+              viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)
+          );
+        leavingWithParent =
+          activeViewItem !== leftWithParent ? activeViewItem : undefined;
+      }
+
+      const viewItem = leavingWithParent;
+      if (!viewItem) {
+        return;
+      }
+
+      const lifecycle = ev.type as
+        | typeof LIFECYCLE_WILL_LEAVE
+        | typeof LIFECYCLE_DID_LEAVE;
+      fireLifecycle(viewItem.vueComponent, viewItem.vueComponentRef, lifecycle);
+      viewItem.ionPageElement.dispatchEvent(
+        new CustomEvent(lifecycle, { bubbles: false, cancelable: false })
+      );
+
+      if (lifecycle === LIFECYCLE_DID_LEAVE) {
+        leftWithParent = viewItem;
+        leavingWithParent = undefined;
+      }
+    };
+
+    /**
+     * The page in the parent outlet that contains this outlet, if any.
+     */
+    const getParentPageElement = (): HTMLElement | undefined => {
+      let el: HTMLElement = ionRouterOutlet.value;
+      while (
+        el.parentElement &&
+        el.parentElement.tagName !== "ION-ROUTER-OUTLET"
+      ) {
+        el = el.parentElement;
+      }
+      return el.parentElement ? el : undefined;
+    };
+
+    let unbindParentLifecycle: (() => void) | undefined;
+
+    onMounted(() => {
+      const parentPageEl = getParentPageElement();
+      if (!parentPageEl) {
+        return;
+      }
+
+      const events = [LIFECYCLE_WILL_LEAVE, LIFECYCLE_DID_LEAVE];
+      events.forEach((eventName) =>
+        parentPageEl.addEventListener(eventName, forwardParentLeave)
+      );
+      unbindParentLifecycle = () =>
+        events.forEach((eventName) =>
+          parentPageEl.removeEventListener(eventName, forwardParentLeave)
+        );
+    });
+
+    onUnmounted(() => unbindParentLifecycle?.());
 
     const registerIonPage = (viewItem: any, ionPageEl: HTMLElement) => {
       const oldIonPageEl = viewItem.ionPageElement;

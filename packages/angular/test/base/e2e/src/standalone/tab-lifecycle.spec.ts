@@ -1,0 +1,234 @@
+import { test, expect, type Page } from '@playwright/test';
+
+import { ionPageHidden, ionPageVisible } from '../../utils/test-utils';
+
+const getLifecycleEvents = async (page: Page, pageName?: string): Promise<string[]> => {
+  const events: string[] = await page.evaluate(() => (window as any).lifecycleEvents ?? []);
+  return pageName ? events.filter((event) => event.startsWith(`${pageName}:`)) : events;
+};
+
+const clearLifecycleEvents = (page: Page) => page.evaluate(() => ((window as any).lifecycleEvents = []));
+
+/**
+ * Drags far enough from the left edge to start the swipe back gesture, then
+ * returns to the edge before releasing so the gesture is cancelled.
+ * Calling `ionSwipeToGoBack(page, false)` won't work because it doesn't move at all.
+ */
+const cancelledSwipeBack = async (page: Page) => {
+  const box = (await page.locator('ion-router-outlet').first().boundingBox())!;
+  const y = box.y + box.height / 2;
+
+  await page.mouse.move(box.x + 2, y);
+  await page.mouse.down();
+  for (const x of [10, 20, 40, 60, 80, 100, 60, 30, 10, 2]) {
+    await page.mouse.move(box.x + x, y);
+    await page.waitForTimeout(25);
+  }
+  await page.mouse.up();
+};
+
+/**
+ * Verifies that the active tab's page, and a page in an outlet nested inside
+ * it, get leave events when navigating out of the tabs, get enter events when
+ * coming back, and never get leave events twice.
+ */
+test.describe('Tabs: active tab lifecycle when leaving and returning to the tabs', () => {
+  test('should fire ionViewWillLeave and ionViewDidLeave on the active tab page', async ({ page }, testInfo) => {
+    testInfo.annotations.push({ type: 'issue', description: 'FW-7148' });
+
+    await page.goto('/standalone/tab-lifecycle/home');
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+    await expect.poll(() => getLifecycleEvents(page)).toEqual(['home:ionViewWillEnter', 'home:ionViewDidEnter']);
+    await clearLifecycleEvents(page);
+
+    await page.locator('#go-outside-home').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+
+    await expect.poll(() => getLifecycleEvents(page)).toEqual(['home:ionViewWillLeave', 'home:ionViewDidLeave']);
+  });
+
+  test('should fire leave events on the active tab page each time the tabs are left', async ({ page }) => {
+    await page.goto('/standalone/tab-lifecycle/home');
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+
+    await page.locator('#go-outside-home').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('home:ionViewDidLeave');
+
+    await page.locator('app-tab-lifecycle-outside ion-back-button').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('home:ionViewDidEnter');
+    await clearLifecycleEvents(page);
+
+    await page.locator('#go-outside-home').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+
+    await expect.poll(() => getLifecycleEvents(page)).toEqual(['home:ionViewWillLeave', 'home:ionViewDidLeave']);
+  });
+
+  test('should fire each event once on the active tab page when the tabs page also re-dispatches them', async ({
+    page,
+  }) => {
+    await page.goto('/standalone/tab-lifecycle/home?propagate=true');
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('tabs:ionViewDidEnter');
+    await clearLifecycleEvents(page);
+
+    await page.locator('#go-outside-home').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('tabs:ionViewDidLeave');
+    expect(await getLifecycleEvents(page, 'home')).toEqual(['home:ionViewWillLeave', 'home:ionViewDidLeave']);
+    await clearLifecycleEvents(page);
+
+    await page.locator('app-tab-lifecycle-outside ion-back-button').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('tabs:ionViewDidEnter');
+    expect(await getLifecycleEvents(page, 'home')).toEqual(['home:ionViewWillEnter', 'home:ionViewDidEnter']);
+  });
+
+  test('should fire ionViewWillLeave on the active tab page when a swipe back from the tabs is cancelled', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await page.goto('/standalone?ionic:mode=ios');
+
+    await page.locator('ion-item[routerLink="/standalone/tab-lifecycle"]').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+    await ionPageHidden(page, 'app-home-page');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('home:ionViewDidEnter');
+    await clearLifecycleEvents(page);
+
+    await cancelledSwipeBack(page);
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+    await page.waitForFunction(() => document.getAnimations().length === 0);
+
+    expect(await getLifecycleEvents(page, 'home')).toEqual(['home:ionViewWillLeave']);
+  });
+
+  test('should not fire leave events on a previously visited tab that is hidden', async ({ page }) => {
+    await page.goto('/standalone/tab-lifecycle/home');
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+
+    await page.locator('ion-tab-button[tab="settings"]').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-settings');
+    await expect
+      .poll(() => getLifecycleEvents(page, 'settings'))
+      .toEqual(['settings:ionViewWillEnter', 'settings:ionViewDidEnter']);
+    await clearLifecycleEvents(page);
+
+    await page.locator('#go-outside-settings').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+
+    await expect.poll(() => getLifecycleEvents(page)).toEqual(['settings:ionViewWillLeave', 'settings:ionViewDidLeave']);
+  });
+
+  test('should fire ionViewWillEnter and ionViewDidEnter on the active tab page when going back to the tabs', async ({
+    page,
+  }, testInfo) => {
+    testInfo.annotations.push({ type: 'issue', description: 'FW-7148' });
+
+    await page.goto('/standalone/tab-lifecycle/home');
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+
+    await page.locator('#go-outside-home').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('home:ionViewDidLeave');
+    await clearLifecycleEvents(page);
+
+    await page.locator('app-tab-lifecycle-outside ion-back-button').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+
+    await expect.poll(() => getLifecycleEvents(page)).toEqual(['home:ionViewWillEnter', 'home:ionViewDidEnter']);
+  });
+
+  test('should not fire leave events again on the tab that was left when returning to a different tab', async ({
+    page,
+  }) => {
+    await page.goto('/standalone/tab-lifecycle/home');
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+
+    await page.locator('#go-outside-home').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('home:ionViewDidLeave');
+    await clearLifecycleEvents(page);
+
+    await page.locator('#go-to-settings').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-settings');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('settings:ionViewDidEnter');
+
+    expect(await getLifecycleEvents(page, 'home')).toEqual([]);
+  });
+
+  test('should fire ionViewWillLeave and ionViewDidLeave on a page in an outlet nested inside the active tab', async ({
+    page,
+  }, testInfo) => {
+    testInfo.annotations.push({ type: 'issue', description: 'FW-7148' });
+
+    await page.goto('/standalone/tab-lifecycle/nested');
+    await ionPageVisible(page, 'app-tab-lifecycle-inner');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('inner:ionViewDidEnter');
+    await clearLifecycleEvents(page);
+
+    await page.locator('#go-outside-inner').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+
+    await expect.poll(() => getLifecycleEvents(page)).toEqual(['inner:ionViewWillLeave', 'inner:ionViewDidLeave']);
+  });
+
+  test('should fire ionViewWillEnter and ionViewDidEnter on a page in a nested outlet when going back to the tabs', async ({
+    page,
+  }, testInfo) => {
+    testInfo.annotations.push({ type: 'issue', description: 'FW-7148' });
+
+    await page.goto('/standalone/tab-lifecycle/nested');
+    await ionPageVisible(page, 'app-tab-lifecycle-inner');
+
+    await page.locator('#go-outside-inner').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('inner:ionViewDidLeave');
+    await clearLifecycleEvents(page);
+
+    await page.locator('app-tab-lifecycle-outside ion-back-button').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-inner');
+
+    await expect.poll(() => getLifecycleEvents(page, 'inner')).toEqual(['inner:ionViewWillEnter', 'inner:ionViewDidEnter']);
+  });
+
+  test('should not fire leave events again on a page in a nested outlet when returning to a different tab', async ({
+    page,
+  }) => {
+    await page.goto('/standalone/tab-lifecycle/nested');
+    await ionPageVisible(page, 'app-tab-lifecycle-inner');
+
+    await page.locator('#go-outside-inner').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-outside');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('inner:ionViewDidLeave');
+    await clearLifecycleEvents(page);
+
+    await page.locator('#go-to-settings').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-settings');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('settings:ionViewDidEnter');
+
+    expect(await getLifecycleEvents(page, 'inner')).toEqual([]);
+  });
+
+  test('should fire leave and enter events on a page in a nested outlet when switching tabs', async ({
+    page,
+  }, testInfo) => {
+    testInfo.annotations.push({ type: 'issue', description: 'FW-7148' });
+
+    await page.goto('/standalone/tab-lifecycle/nested');
+    await ionPageVisible(page, 'app-tab-lifecycle-inner');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('inner:ionViewDidEnter');
+    await clearLifecycleEvents(page);
+
+    await page.locator('ion-tab-button[tab="settings"]').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-settings');
+    await expect.poll(() => getLifecycleEvents(page, 'inner')).toEqual(['inner:ionViewWillLeave', 'inner:ionViewDidLeave']);
+    await clearLifecycleEvents(page);
+
+    await page.locator('ion-tab-button[tab="nested"]').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-inner');
+    await expect.poll(() => getLifecycleEvents(page, 'inner')).toEqual(['inner:ionViewWillEnter', 'inner:ionViewDidEnter']);
+  });
+});
