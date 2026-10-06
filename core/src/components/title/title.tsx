@@ -2,20 +2,18 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonTheme } from '../../global/ionic-global';
+import { config } from '../../global/config';
 import type { Color, StyleEventDetail } from '../../interface';
+import type { Hue } from '../../themes/themes.interfaces';
+
+import type { IonTitleSize } from './title.interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-title',
-  styleUrls: {
-    ios: 'title.ios.scss',
-    md: 'title.md.scss',
-    ionic: 'title.ionic.scss',
-  },
+  styleUrl: 'title.scss',
   shadow: true,
 })
 export class ToolbarTitle implements ComponentInterface {
@@ -29,9 +27,19 @@ export class ToolbarTitle implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * The size of the toolbar title.
+   * Set to `"bold"` for a title with vibrant, bold colors or to `"subtle"` for
+   * a title with muted, subtle colors.
+   *
+   * Defaults to `"bold"` if both the hue property and theme config are unset.
    */
-  @Prop() size?: 'large' | 'small';
+  @Prop() hue?: Hue;
+
+  /**
+   * The size of the toolbar title.
+   *
+   * Defaults to `"medium"` if both the size property and theme config are unset.
+   */
+  @Prop() size?: IonTitleSize;
 
   /**
    * Emitted when the styles change.
@@ -49,27 +57,39 @@ export class ToolbarTitle implements ComponentInterface {
   }
 
   private emitStyle() {
-    const size = this.getSize();
-
     this.ionStyle.emit({
-      [`title-${size}`]: true,
+      [`title-size-${this.sizeValue}`]: true,
     });
   }
 
-  private getSize() {
-    return this.size !== undefined ? this.size : 'default';
+  /**
+   * Gets the title size. Uses the `size` property if set, otherwise
+   * checks the theme config and falls back to 'medium' if neither is provided.
+   */
+  get sizeValue(): IonTitleSize {
+    const sizeConfig = config.getObjectValue('IonTitle.size', 'medium') as IonTitleSize;
+
+    return this.size || sizeConfig;
+  }
+
+  /**
+   * Gets the title hue. Uses the `hue` property if set, otherwise
+   * checks the theme config and falls back to 'bold' if neither is provided.
+   */
+  get hueValue(): Hue {
+    const hueConfig = config.getObjectValue('IonTitle.hue', 'bold') as Hue;
+
+    return this.hue || hueConfig;
   }
 
   render() {
-    const theme = getIonTheme(this);
-    const size = this.getSize();
+    const { hueValue, sizeValue } = this;
 
     return (
       <Host
         class={createColorClasses(this.color, {
-          [theme]: true,
-          [`title-${size}`]: true,
-          'title-rtl': document.dir === 'rtl',
+          [`title-size-${sizeValue}`]: true,
+          [`title-hue-${hueValue}`]: true,
         })}
       >
         <div class="toolbar-title">

@@ -45,6 +45,11 @@ export const defaultTheme: DefaultTheme = {
       IonText: {
         hue: 'bold',
       },
+
+      IonTitle: {
+        hue: 'bold',
+        size: 'medium',
+      },
     },
   },
 
@@ -1005,6 +1010,84 @@ export const defaultTheme: DefaultTheme = {
 
       border: {
         radius: 'var(--ion-radii-xxxxs)',
+      },
+    },
+
+    IonTitle: {
+      boxSizing: 'border-box',
+      pointerEvents: 'none',
+
+      font: {
+        family: 'var(--ion-font-family)',
+      },
+
+      hue: {
+        bold: {
+          semantic: {
+            default: {
+              color: currentColor('base'),
+            },
+          },
+        },
+
+        subtle: {
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letter: {
+        spacing: '0',
+      },
+
+      size: {
+        small: {
+          font: {
+            size: dynamicFont(global.root, 18),
+            weight: 'var(--ion-font-weight-medium)',
+          },
+
+          line: {
+            height: dynamicFont(global.root, 28),
+          },
+        },
+
+        medium: {
+          font: {
+            size: dynamicFont(global.root, 18),
+            weight: 'var(--ion-font-weight-medium)',
+          },
+
+          line: {
+            height: dynamicFont(global.root, 28),
+          },
+        },
+
+        large: {
+          alignItems: 'center',
+
+          font: {
+            size: dynamicFont(global.root, 28),
+            weight: 'var(--ion-font-weight-medium)',
+          },
+
+          inner: {
+            width: '100%',
+          },
+
+          line: {
+            height: dynamicFont(global.root, 36),
+          },
+
+          transform: {
+            origin: {
+              x: '50%',
+            },
+          },
+        },
       },
     },
   },

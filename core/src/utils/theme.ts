@@ -752,6 +752,16 @@ export const dynamicFont = (
 };
 
 /**
+ * Rounds away floating point noise in a scaled pixel size,
+ * so `13 * 1.8` becomes `23.4` instead of `23.400000000000002`.
+ *
+ * @internal
+ * @param size - The scaled pixel value.
+ * @returns The value rounded to four decimal places.
+ */
+const roundScaledSize = (size: number): number => Number(size.toFixed(4));
+
+/**
  * Converts a pixel value to a dynamic unit (defaulting to rem)
  * but imposes a minimum font size using CSS max().
  *
@@ -773,7 +783,34 @@ export const dynamicFontMin = (
   unit: string | undefined = baselineUnit
 ): string => {
   const baseScale = dynamicFont(configRootFontSize, size, unit);
-  const minSize = size * minScale;
+  const minSize = roundScaledSize(size * minScale);
 
   return `max(${minSize}px, ${baseScale})`;
+};
+
+/**
+ * Converts a pixel value to a dynamic unit (defaulting to rem)
+ * but imposes a maximum font size using CSS min().
+ *
+ * Examples based on a root font size of 16px:
+ * - `dynamicFontMax('16px', 1.2, 17)` returns `'min(1.0625rem, 20.4px)'`
+ * - The rem value scales with root font size, up to 120% of 17px = 20.4px
+ *
+ * @internal
+ * @param configRootFontSize - The root font size from the theme config.
+ * @param maxScale - The maximum scale of the font (e.g. 1.2 for 120%).
+ * @param size - The numeric pixel value.
+ * @param unit - The CSS unit string.
+ * @returns A string containing the CSS min() function with the dynamic font value and the maximum pixel value (e.g., 'min(1.0625rem, 20.4px)').
+ */
+export const dynamicFontMax = (
+  configRootFontSize: string | number,
+  maxScale: number,
+  size: number,
+  unit: string | undefined = baselineUnit
+): string => {
+  const baseScale = dynamicFont(configRootFontSize, size, unit);
+  const maxSize = roundScaledSize(size * maxScale);
+
+  return `min(${baseScale}, ${maxSize}px)`;
 };
