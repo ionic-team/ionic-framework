@@ -59,7 +59,7 @@
   @include globals.padding-horizontal(globals.$ion-space-200);
 }
 
-:host(.toolbar-title-large) ::slotted(ion-title) {
+:host(.toolbar-title-size-large) ::slotted(ion-title) {
   @include globals.padding-horizontal(globals.$ion-space-400);
 }
 

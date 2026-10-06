@@ -50,6 +50,11 @@ export const defaultTheme: DefaultTheme = {
       IonText: {
         hue: 'bold',
       },
+
+      IonTitle: {
+        hue: 'bold',
+        size: 'medium',
+      },
     },
   },
 
@@ -1155,6 +1160,91 @@ export const defaultTheme: DefaultTheme = {
 
       border: {
         radius: 'var(--ion-radii-xxxxs)',
+      },
+    },
+
+    IonTitle: {
+      hue: {
+        bold: {
+          semantic: {
+            default: {
+              color: currentColor('base'),
+            },
+          },
+        },
+
+        subtle: {
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letter: {
+        spacing: '0.0125em',
+      },
+
+      size: {
+        small: {
+          height: '100%',
+          width: '100%',
+
+          font: {
+            size: dynamicFont(global.root, 15),
+            weight: 'var(--ion-font-weight-normal)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-xl)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-xl)',
+          },
+        },
+
+        medium: {
+          font: {
+            size: dynamicFont(global.root, 20),
+            weight: 'var(--ion-font-weight-medium)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-xl)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-xl)',
+          },
+        },
+
+        large: {
+          alignItems: 'center',
+          height: '100%',
+          width: '100%',
+
+          font: {
+            size: dynamicFont(global.root, 28),
+            weight: 'var(--ion-font-weight-normal)',
+          },
+
+          inner: {
+            width: '100%',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-xl)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-xl)',
+          },
+
+          transform: {
+            origin: {
+              x: '50%',
+            },
+          },
+        },
       },
     },
   },

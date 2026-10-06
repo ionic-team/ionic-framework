@@ -1,4 +1,4 @@
-import { rgba, currentColor, clamp, mix, dynamicFont, dynamicFontMin, ionColor } from '../../utils/theme';
+import { rgba, currentColor, clamp, mix, dynamicFont, dynamicFontMax, dynamicFontMin, ionColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -46,6 +46,11 @@ export const defaultTheme: DefaultTheme = {
 
       IonText: {
         hue: 'bold',
+      },
+
+      IonTitle: {
+        hue: 'bold',
+        size: 'medium',
       },
     },
   },
@@ -1030,6 +1035,122 @@ export const defaultTheme: DefaultTheme = {
 
       border: {
         radius: 'var(--ion-radii-xxxxs)',
+      },
+    },
+
+    IonTitle: {
+      boxSizing: 'border-box',
+      pointerEvents: 'none',
+
+      hue: {
+        bold: {
+          semantic: {
+            default: {
+              color: currentColor('base'),
+            },
+          },
+        },
+
+        subtle: {
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      position: {
+        top: 'var(--ion-spacing-0)',
+        start: 'var(--ion-spacing-0)',
+      },
+
+      size: {
+        small: {
+          height: '100%',
+          position: 'relative',
+          width: '100%',
+
+          font: {
+            size: dynamicFontMax(global.root, 1.8, 13),
+            weight: 'var(--ion-font-weight-normal)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xs)',
+            end: '9px',
+            bottom: 'var(--ion-spacing-lg)',
+            start: '9px',
+          },
+
+          text: {
+            align: 'center',
+          },
+        },
+
+        medium: {
+          height: '100%',
+          position: 'absolute',
+          width: '100%',
+
+          font: {
+            size: dynamicFontMax(global.root, 1.2, 17),
+            weight: 'var(--ion-font-weight-semi-bold)',
+          },
+
+          padding: {
+            top: 'var(--padding-top)',
+            end: '90px',
+            bottom: 'var(--padding-bottom)',
+            start: '90px',
+          },
+
+          text: {
+            align: 'center',
+          },
+        },
+
+        large: {
+          alignItems: 'flex-end',
+          height: '100%',
+          minWidth: '100%',
+          position: 'static',
+          width: '100%',
+
+          font: {
+            size: dynamicFontMax(global.root, 1.8, 34),
+            weight: 'var(--ion-font-weight-bold)',
+          },
+
+          inner: {
+            /**
+             * During a page transition
+             * if the large title and the back button
+             * texts match up, the back button should be
+             * scaled to roughly match the dimensions of
+             * the large title text. The following line
+             * ensures that the scale values are accurate.
+             */
+            width: 'auto',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-md)',
+            bottom: 'var(--ion-spacing-xxs)',
+            start: 'var(--ion-spacing-md)',
+          },
+
+          text: {
+            align: 'start',
+          },
+
+          transform: {
+            origin: {
+              x: '0%',
+            },
+          },
+        },
       },
     },
   },

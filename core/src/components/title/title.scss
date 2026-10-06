@@ -1,0 +1,225 @@
+@use "../../themes/mixins" as mixins;
+
+// Title
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --ion-title-position-top: Top offset of the title, when a theme positions it
+   * @prop --ion-title-position-end: Right offset if direction is left-to-right, and left offset if direction is right-to-left of the title, when a theme positions it
+   * @prop --ion-title-position-bottom: Bottom offset of the title, when a theme positions it
+   * @prop --ion-title-position-start: Left offset if direction is left-to-right, and right offset if direction is right-to-left of the title, when a theme positions it
+   * @prop --ion-title-box-sizing: Box sizing of the title
+   * @prop --ion-title-color: Text color of the title when no semantic color is applied
+   * @prop --ion-title-font-family: Font family of the title
+   * @prop --ion-title-letter-spacing: Letter spacing of the title
+   * @prop --ion-title-pointer-events: Pointer events of the title host; the title text always accepts pointer events
+   *
+   * @prop --ion-title-size-small-font-size: Font size of the small title
+   * @prop --ion-title-size-small-font-weight: Font weight of the small title
+   * @prop --ion-title-size-small-height: Height of the small title
+   * @prop --ion-title-size-small-line-height: Line height of the small title
+   * @prop --ion-title-size-small-padding-top: Top padding of the small title
+   * @prop --ion-title-size-small-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the small title
+   * @prop --ion-title-size-small-padding-bottom: Bottom padding of the small title
+   * @prop --ion-title-size-small-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the small title
+   * @prop --ion-title-size-small-position: Position of the small title
+   * @prop --ion-title-size-small-text-align: Text alignment of the small title
+   * @prop --ion-title-size-small-width: Width of the small title
+   *
+   * @prop --ion-title-size-medium-font-size: Font size of the medium title
+   * @prop --ion-title-size-medium-font-weight: Font weight of the medium title
+   * @prop --ion-title-size-medium-height: Height of the medium title
+   * @prop --ion-title-size-medium-line-height: Line height of the medium title
+   * @prop --ion-title-size-medium-padding-top: Top padding of the medium title
+   * @prop --ion-title-size-medium-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the medium title
+   * @prop --ion-title-size-medium-padding-bottom: Bottom padding of the medium title
+   * @prop --ion-title-size-medium-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the medium title
+   * @prop --ion-title-size-medium-position: Position of the medium title
+   * @prop --ion-title-size-medium-text-align: Text alignment of the medium title
+   * @prop --ion-title-size-medium-width: Width of the medium title
+   *
+   * @prop --ion-title-size-large-align-items: Vertical alignment of the large title text
+   * @prop --ion-title-size-large-font-size: Font size of the large title
+   * @prop --ion-title-size-large-font-weight: Font weight of the large title
+   * @prop --ion-title-size-large-height: Height of the large title
+   * @prop --ion-title-size-large-inner-width: Width of the large title text, measured by the iOS page transition
+   * @prop --ion-title-size-large-line-height: Line height of the large title
+   * @prop --ion-title-size-large-min-width: Minimum width of the large title
+   * @prop --ion-title-size-large-padding-top: Top padding of the large title
+   * @prop --ion-title-size-large-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the large title
+   * @prop --ion-title-size-large-padding-bottom: Bottom padding of the large title
+   * @prop --ion-title-size-large-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the large title
+   * @prop --ion-title-size-large-position: Position of the large title
+   * @prop --ion-title-size-large-text-align: Text alignment of the large title
+   * @prop --ion-title-size-large-transform-origin-x: Horizontal origin the large title scales from when the header collapses, in the reading direction
+   * @prop --ion-title-size-large-width: Width of the large title
+   *
+   * @prop --ion-title-hue-bold-semantic-default-color: Text color of the `bold` hue when a semantic color is applied
+   * @prop --ion-title-hue-subtle-semantic-default-color: Text color of the `subtle` hue when a semantic color is applied
+   */
+  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  @include mixins.position(
+    var(--ion-title-position-top),
+    var(--ion-title-position-end),
+    var(--ion-title-position-bottom),
+    var(--ion-title-position-start)
+  );
+
+  display: flex;
+
+  flex: 1;
+  align-items: center;
+
+  transform: translateZ(0);
+
+  box-sizing: var(--ion-title-box-sizing);
+
+  color: var(--ion-title-color);
+
+  // Inherits the toolbar's font when no theme sets a title font
+  font-family: var(--ion-title-font-family, inherit);
+
+  letter-spacing: var(--ion-title-letter-spacing);
+
+  pointer-events: var(--ion-title-pointer-events);
+}
+
+.toolbar-title {
+  display: block;
+
+  width: 100%;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+// Title: Small
+// --------------------------------------------------
+
+:host(.title-size-small) {
+  @include mixins.padding(
+    var(--ion-title-size-small-padding-top),
+    var(--ion-title-size-small-padding-end),
+    var(--ion-title-size-small-padding-bottom),
+    var(--ion-title-size-small-padding-start)
+  );
+
+  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  position: var(--ion-title-size-small-position);
+
+  width: var(--ion-title-size-small-width);
+  height: var(--ion-title-size-small-height);
+
+  font-size: var(--ion-title-size-small-font-size);
+  font-weight: var(--ion-title-size-small-font-weight);
+
+  line-height: var(--ion-title-size-small-line-height);
+
+  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  text-align: var(--ion-title-size-small-text-align);
+}
+
+:host(.title-size-small) .toolbar-title {
+  white-space: normal;
+}
+
+// Title: Medium
+// --------------------------------------------------
+
+:host(.title-size-medium) {
+  // TODO: ios side padding changes when ion-toolbar titlePlacement works in every theme
+  @include mixins.padding(
+    var(--ion-title-size-medium-padding-top),
+    var(--ion-title-size-medium-padding-end),
+    var(--ion-title-size-medium-padding-bottom),
+    var(--ion-title-size-medium-padding-start)
+  );
+
+  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  position: var(--ion-title-size-medium-position);
+
+  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  width: var(--ion-title-size-medium-width);
+  height: var(--ion-title-size-medium-height);
+
+  font-size: var(--ion-title-size-medium-font-size);
+  font-weight: var(--ion-title-size-medium-font-weight);
+
+  line-height: var(--ion-title-size-medium-line-height);
+
+  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  text-align: var(--ion-title-size-medium-text-align);
+}
+
+// Title: Large
+// --------------------------------------------------
+
+:host(.title-size-large) {
+  @include mixins.padding(
+    var(--ion-title-size-large-padding-top),
+    var(--ion-title-size-large-padding-end),
+    var(--ion-title-size-large-padding-bottom),
+    var(--ion-title-size-large-padding-start)
+  );
+
+  position: var(--ion-title-size-large-position);
+
+  align-items: var(--ion-title-size-large-align-items);
+
+  width: var(--ion-title-size-large-width);
+  min-width: var(--ion-title-size-large-min-width);
+  height: var(--ion-title-size-large-height);
+
+  font-size: var(--ion-title-size-large-font-size);
+  font-weight: var(--ion-title-size-large-font-weight);
+
+  line-height: var(--ion-title-size-large-line-height);
+
+  text-align: var(--ion-title-size-large-text-align);
+}
+
+/**
+ * FW-7295: the header collapse scales the large title text from this
+ * origin, and the iOS page transition measures the text's width.
+ */
+:host(.title-size-large) {
+  @include mixins.transform-origin(var(--ion-title-size-large-transform-origin-x), center);
+}
+
+:host(.title-size-large) .toolbar-title {
+  @include mixins.transform-origin(inherit);
+
+  width: var(--ion-title-size-large-inner-width);
+}
+
+/**
+ * FW-7295: the iOS page transition moves a copy of the large title out of
+ * its toolbar, so restore the color and font it would have inherited.
+ */
+:host(.title-size-large.ion-cloned-element) {
+  color: var(--ion-title-color, var(--ion-text-color, #000));
+
+  /**
+   * Same tokens as the title, but a different fallback: the copy sits
+   * outside the toolbar, so `inherit` would pick up the overlay's font.
+   */
+  font-family: var(--ion-title-font-family, var(--ion-font-family));
+}
+
+// Title: Hue
+// --------------------------------------------------
+
+// Keep these after the cloned rule so a colored large title's copy keeps its color
+
+:host(.title-hue-bold.ion-color) {
+  color: var(--ion-title-hue-bold-semantic-default-color);
+}
+
+:host(.title-hue-subtle.ion-color) {
+  color: var(--ion-title-hue-subtle-semantic-default-color);
+}

@@ -77,12 +77,12 @@
 // Toolbar: Large Title
 // --------------------------------------------------
 
-:host(.toolbar-title-large) .toolbar-container {
+:host(.toolbar-title-size-large) .toolbar-container {
   flex-wrap: wrap;
   align-items: flex-start;
 }
 
-:host(.toolbar-title-large) .toolbar-content ion-title {
+:host(.toolbar-title-size-large) .toolbar-content ion-title {
   flex: 1;
   order: map-get($toolbar-order-ios, title-large);
 

@@ -37,6 +37,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Text](#version-10x-text)
   - [Textarea](#version-10x-textarea)
   - [Thumbnail](#version-10x-thumbnail)
+  - [Title](#version-10x-title)
+  - [Toolbar](#version-10x-toolbar)
 - [Framework Specific](#version-10x-framework-specific)
   - [Angular](#version-10x-angular)
 
@@ -528,6 +530,72 @@ Use the **parent's** thumbnail tokens instead:
 <h5>Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-thumbnail.md`, `ion-thumbnail.ios`.
+
+<h4 id="version-10x-title">Title</h4>
+
+The following breaking changes apply to `ion-title`:
+
+1. `--color` has been replaced. <sup>[1](#version-10x-title-replaced-css-variables)</sup>
+2. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[2](#version-10x-title-hue)</sup>
+3. The size classes now include the property name, and a title without `size` is now `medium`. <sup>[3](#version-10x-title-size-classes)</sup>
+4. The `title-rtl` class has been removed. <sup>[4](#version-10x-title-rtl-class)</sup>
+5. Theme classes (`ion-title.md`, `ion-title.ios`) are no longer supported. <sup>[5](#version-10x-title-theme-classes)</sup>
+
+<h5 id="version-10x-title-replaced-css-variables">Replaced CSS variables</h5>
+
+Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--color` | `IonTitle.color` | `--ion-title-color` |
+
+<h5 id="version-10x-title-hue">New `hue` property and color tokens</h5>
+
+A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`, which preserves prior behavior when `color` is set.
+
+When `color` is set, the title color now reads from a token instead of `--ion-color-base` directly. Global overrides should use the theme tokens; component-specific overrides use the corresponding CSS variables:
+
+| Hue | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| `bold` | `IonTitle.hue.bold.semantic.default.color` | `--ion-title-hue-bold-semantic-default-color` |
+| `subtle` | `IonTitle.hue.subtle.semantic.default.color` | `--ion-title-hue-subtle-semantic-default-color` |
+
+<h5 id="version-10x-title-size-classes">Size classes</h5>
+
+The classes `ion-title` adds for its size now include the property name. A title without `size` is now `medium`, which can also be set explicitly:
+
+| Old (9.x) | New |
+|---|---|
+| `title-default` | `title-size-medium` |
+| `title-small` | `title-size-small` |
+| `title-large` | `title-size-large` |
+
+`ion-toolbar` builds its own classes from these, so they change as well:
+
+| Old (9.x) | New |
+|---|---|
+| `toolbar-title-default` | `toolbar-title-size-medium` |
+| `toolbar-title-small` | `toolbar-title-size-small` |
+| `toolbar-title-large` | `toolbar-title-size-large` |
+
+<h5 id="version-10x-title-rtl-class">`title-rtl` class</h5>
+
+`ion-title` no longer adds the `title-rtl` class. Use the `:dir(rtl)` pseudo-class instead:
+
+```diff
+-ion-title.title-rtl { }
++ion-title:dir(rtl) { }
+```
+
+<h5 id="version-10x-title-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-title.md`, `ion-title.ios`.
+
+<h4 id="version-10x-toolbar">Toolbar</h4>
+
+The following breaking changes apply to `ion-toolbar`:
+
+1. The classes it adds for a slotted title's size now include the property name. <sup>[1](#version-10x-title-size-classes)</sup>
 
 <h2 id="version-10x-framework-specific">Framework Specific</h2>
 

@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonTitle } from '@ionic/core/components/io
 
 @ProxyCmp({
   defineCustomElementFn: defineIonTitle,
-  inputs: ['color', 'mode', 'size', 'theme']
+  inputs: ['color', 'hue', 'mode', 'size']
 })
 @Component({
   selector: 'ion-title',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'size', 'theme'],
+  inputs: ['color', 'hue', 'mode', 'size'],
 })
 export class IonTitle {
   protected el: HTMLIonTitleElement;

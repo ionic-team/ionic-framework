@@ -2811,12 +2811,57 @@ ion-thumbnail,css-prop,--ion-thumbnail-width
 
 ion-title,shadow
 ion-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-title,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-title,prop,mode,"ios" | "md",undefined,false,false
-ion-title,prop,size,"large" | "small" | undefined,undefined,false,false
-ion-title,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-title,css-prop,--color,ionic
-ion-title,css-prop,--color,ios
-ion-title,css-prop,--color,md
+ion-title,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
+ion-title,css-prop,--ion-title-box-sizing
+ion-title,css-prop,--ion-title-color
+ion-title,css-prop,--ion-title-font-family
+ion-title,css-prop,--ion-title-hue-bold-semantic-default-color
+ion-title,css-prop,--ion-title-hue-subtle-semantic-default-color
+ion-title,css-prop,--ion-title-letter-spacing
+ion-title,css-prop,--ion-title-pointer-events
+ion-title,css-prop,--ion-title-position-bottom
+ion-title,css-prop,--ion-title-position-end
+ion-title,css-prop,--ion-title-position-start
+ion-title,css-prop,--ion-title-position-top
+ion-title,css-prop,--ion-title-size-large-align-items
+ion-title,css-prop,--ion-title-size-large-font-size
+ion-title,css-prop,--ion-title-size-large-font-weight
+ion-title,css-prop,--ion-title-size-large-height
+ion-title,css-prop,--ion-title-size-large-inner-width
+ion-title,css-prop,--ion-title-size-large-line-height
+ion-title,css-prop,--ion-title-size-large-min-width
+ion-title,css-prop,--ion-title-size-large-padding-bottom
+ion-title,css-prop,--ion-title-size-large-padding-end
+ion-title,css-prop,--ion-title-size-large-padding-start
+ion-title,css-prop,--ion-title-size-large-padding-top
+ion-title,css-prop,--ion-title-size-large-position
+ion-title,css-prop,--ion-title-size-large-text-align
+ion-title,css-prop,--ion-title-size-large-transform-origin-x
+ion-title,css-prop,--ion-title-size-large-width
+ion-title,css-prop,--ion-title-size-medium-font-size
+ion-title,css-prop,--ion-title-size-medium-font-weight
+ion-title,css-prop,--ion-title-size-medium-height
+ion-title,css-prop,--ion-title-size-medium-line-height
+ion-title,css-prop,--ion-title-size-medium-padding-bottom
+ion-title,css-prop,--ion-title-size-medium-padding-end
+ion-title,css-prop,--ion-title-size-medium-padding-start
+ion-title,css-prop,--ion-title-size-medium-padding-top
+ion-title,css-prop,--ion-title-size-medium-position
+ion-title,css-prop,--ion-title-size-medium-text-align
+ion-title,css-prop,--ion-title-size-medium-width
+ion-title,css-prop,--ion-title-size-small-font-size
+ion-title,css-prop,--ion-title-size-small-font-weight
+ion-title,css-prop,--ion-title-size-small-height
+ion-title,css-prop,--ion-title-size-small-line-height
+ion-title,css-prop,--ion-title-size-small-padding-bottom
+ion-title,css-prop,--ion-title-size-small-padding-end
+ion-title,css-prop,--ion-title-size-small-padding-start
+ion-title,css-prop,--ion-title-size-small-padding-top
+ion-title,css-prop,--ion-title-size-small-position
+ion-title,css-prop,--ion-title-size-small-text-align
+ion-title,css-prop,--ion-title-size-small-width
 
 ion-toast,shadow
 ion-toast,prop,animated,boolean,true,false,false
