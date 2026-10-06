@@ -9,7 +9,14 @@ class GestureController {
    * Creates a gesture delegate based on the GestureConfig passed
    */
   createGesture(config: GestureConfig): GestureDelegate {
-    return new GestureDelegate(this, this.newID(), config.name, config.priority ?? 0, !!config.disableScroll);
+    return new GestureDelegate(
+      this,
+      this.newID(),
+      config.name,
+      config.priority ?? 0,
+      !!config.disableScroll,
+      config.gestureElement
+    );
   }
 
   /**
@@ -28,7 +35,7 @@ class GestureController {
     return true;
   }
 
-  capture(gestureName: string, id: number, priority: number): boolean {
+  capture(gestureName: string, id: number, priority: number, gestureElement?: Node): boolean {
     if (!this.start(gestureName, id, priority)) {
       return false;
     }
@@ -43,7 +50,9 @@ class GestureController {
       this.capturedId = id;
       requestedStart.clear();
 
-      const event = new CustomEvent('ionGestureCaptured', { detail: { gestureName } });
+      const event = new CustomEvent<GestureCapturedEventDetail>('ionGestureCaptured', {
+        detail: { gestureName, gestureElement },
+      });
       document.dispatchEvent(event);
       return true;
     }
@@ -134,7 +143,8 @@ class GestureDelegate {
     private id: number,
     private name: string,
     priority: number,
-    private disableScroll: boolean
+    private disableScroll: boolean,
+    private gestureElement?: Node
   ) {
     this.priority = priority * 1000000 + id;
     this.ctrl = ctrl;
@@ -161,7 +171,7 @@ class GestureDelegate {
       return false;
     }
 
-    const captured = this.ctrl.capture(this.name, this.id, this.priority);
+    const captured = this.ctrl.capture(this.name, this.id, this.priority, this.gestureElement);
     if (captured && this.disableScroll) {
       this.ctrl.disableScroll(this.id);
     }
@@ -236,6 +246,12 @@ export interface GestureConfig {
   name: string;
   priority?: number;
   disableScroll?: boolean;
+  gestureElement?: Node;
+}
+
+export interface GestureCapturedEventDetail {
+  gestureName: string;
+  gestureElement?: Node;
 }
 
 export interface BlockerConfig {
