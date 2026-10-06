@@ -1,4 +1,13 @@
-import { rgba, currentColor, clamp, mix, dynamicFont, dynamicFontMax, dynamicFontMin, ionColor } from '../../utils/theme';
+import {
+  rgba,
+  currentColor,
+  clamp,
+  mix,
+  dynamicFont,
+  dynamicFontMax,
+  dynamicFontMin,
+  ionColor,
+} from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
