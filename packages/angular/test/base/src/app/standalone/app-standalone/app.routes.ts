@@ -36,6 +36,14 @@ export const routes: Routes = [
       { path: 'modal-options-generic', loadComponent: () => import('../modal-options-generic/modal-options-generic.component').then(c => c.ModalOptionsGenericComponent) },
       { path: 'popover-custom-injector', loadComponent: () => import('../popover-custom-injector/popover-custom-injector.component').then(c => c.PopoverCustomInjectorComponent) },
       { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(c => c.RouterOutletComponent) },
+      {
+        path: 'router-outlet-query-params',
+        loadComponent: () => import('../router-outlet-query-params/router-outlet-query-params-parent.component').then(c => c.RouterOutletQueryParamsParentComponent),
+        children: [
+          { path: '', loadComponent: () => import('../router-outlet-query-params/router-outlet-query-params.component').then(c => c.RouterOutletQueryParamsComponent) },
+          { path: 'details', loadComponent: () => import('../router-outlet-query-params/router-outlet-query-params-details.component').then(c => c.RouterOutletQueryParamsDetailsComponent) },
+        ]
+      },
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(c => c.NavComponent) },
