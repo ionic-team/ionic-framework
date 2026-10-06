@@ -40,15 +40,15 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     };
 
     /**
-     * The default is the `lg` shortcut rather than the `(min-width: 992px)`
-     * query it used to be. Both resolve to the same width by default, so
-     * these pin the shortcut itself as well as where it activates.
+     * The default `lg` shortcut resolves to the same width as the old
+     * literal unless it's configured, so these pin the shortcut itself as
+     * well as where it activates.
      */
     test.describe('with no value', () => {
       test('should default to the lg shortcut', async ({ page }) => {
         const splitPane = await setUpSplitPane(page, undefined);
 
-        expect(await splitPane.evaluate((el: any) => el.when)).toBe('lg');
+        expect(await splitPane.evaluate((el: HTMLIonSplitPaneElement) => el.when)).toBe('lg');
       });
 
       test('should not be visible below the default lg width', async ({ page }) => {
@@ -144,7 +144,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await expect(splitPane).not.toHaveClass(/split-pane-visible/);
 
-        await splitPane.evaluate((el: any) => (el.when = true));
+        await splitPane.evaluate((el: HTMLIonSplitPaneElement) => (el.when = true));
         await page.waitForChanges();
 
         await expect(splitPane).toHaveClass(/split-pane-visible/);
@@ -156,7 +156,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await expect(splitPane).toHaveClass(/split-pane-visible/);
 
-        await splitPane.evaluate((el: any) => (el.when = false));
+        await splitPane.evaluate((el: HTMLIonSplitPaneElement) => (el.when = false));
         await page.waitForChanges();
 
         await expect(splitPane).not.toHaveClass(/split-pane-visible/);
