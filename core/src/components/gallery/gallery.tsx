@@ -64,10 +64,9 @@ export class Gallery implements ComponentInterface {
    * The number of columns to display. Can be set as a number or an object of
    * breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
    *
-   * A breakpoint is matched against the gallery's own width rather than the
-   * width of the screen, so a narrow gallery on a wide screen resolves to a
-   * small breakpoint. The width each breakpoint activates at can be changed
-   * with the `screenBreakpoints` config.
+   * Breakpoints are matched against the gallery's own width rather than the
+   * screen width. The width each breakpoint activates at can be changed with
+   * the `screenBreakpoints` config.
    */
   @Prop() columns: GalleryColumns = DEFAULT_COLUMNS;
 
@@ -79,10 +78,9 @@ export class Gallery implements ComponentInterface {
    * (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept
    * space-separated values or CSS keyword values like `inherit`, `auto`, etc.
    *
-   * A breakpoint is matched against the gallery's own width rather than the
-   * width of the screen, so a narrow gallery on a wide screen resolves to a
-   * small breakpoint. The width each breakpoint activates at can be changed
-   * with the `screenBreakpoints` config.
+   * Breakpoints are matched against the gallery's own width rather than the
+   * screen width. The width each breakpoint activates at can be changed with
+   * the `screenBreakpoints` config.
    */
   @Prop() gap: GalleryGap = DEFAULT_GAP;
 
@@ -294,9 +292,6 @@ export class Gallery implements ComponentInterface {
   /**
    * Resolve a responsive value from a breakpoint map.
    * Uses a breakpoint-specific default when custom values are missing/invalid.
-   *
-   * Note that the breakpoints are compared against the gallery's own width
-   * rather than the width of the screen.
    */
   private resolveFromBreakpoints<T>(
     width: number,
