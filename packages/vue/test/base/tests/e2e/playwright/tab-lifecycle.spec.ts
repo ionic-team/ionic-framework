@@ -55,10 +55,11 @@ test.describe('Tabs: active tab lifecycle when leaving and returning to the tabs
     await page.locator('#go-outside-home').click();
     await ionPageVisible(page, 'tab-lifecycle-outside');
     await expect.poll(() => getLifecycleEvents(page)).toContain('home:ionViewDidLeave');
+    await clearLifecycleEvents(page);
 
     await ionBackClick(page, 'tab-lifecycle-outside');
     await ionPageVisible(page, 'tab-lifecycle-home');
-    await expect.poll(() => getLifecycleEvents(page)).toContain('home:ionViewDidEnter');
+    await expect.poll(() => getLifecycleEvents(page)).toEqual(['home:ionViewWillEnter', 'home:ionViewDidEnter']);
     await clearLifecycleEvents(page);
 
     await page.locator('#go-outside-home').click();
