@@ -62,6 +62,25 @@
     },
     {
       /**
+       * Automerge minor and patch updates once CI passes. Majors still need
+       * a review. With platformAutomerge off, Renovate merges the PR itself
+       * and waits for every check, including ones that aren't required.
+       */
+      matchPackageNames: [
+        "vitest",
+        "@playwright/test",
+        "@axe-core/playwright",
+        "playwright-core",
+        "@types/node",
+        "github/codeql-action",
+        "actions/*"
+      ],
+      matchUpdateTypes: ["minor", "patch"],
+      automerge: true,
+      platformAutomerge: false
+    },
+    {
+      /**
        * The built-in Docker manager tracks the mcr.microsoft.com/playwright tag
        * against the container registry, which lags the npm release by about a day.
        * That lag decouples the Dockerfile from the npm bump: the update either
