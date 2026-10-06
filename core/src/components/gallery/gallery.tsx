@@ -314,7 +314,11 @@ export class Gallery implements ComponentInterface {
       const resolved =
         providedValue === undefined || sanitizedProvided === undefined ? sanitizedDefault : sanitizedProvided;
 
-      if (resolved !== undefined && width >= breakpoints[bp]) {
+      /**
+       * `xs` is the default when the gallery is narrower than the configured
+       * `xs` breakpoint, since no other breakpoint can match.
+       */
+      if (resolved !== undefined && (bp === 'xs' || width >= breakpoints[bp])) {
         resolvedValue = resolved;
       }
     }
