@@ -1176,6 +1176,41 @@ describe('gallery', () => {
       setScreenBreakpoints(undefined);
     });
 
+    /**
+     * `xs` is no longer pinned to 0, so a gallery narrower than the configured
+     * `xs` matches no breakpoint and would otherwise resolve to `undefined`.
+     */
+    it('should resolve to the xs value when narrower than the configured xs', () => {
+      setScreenBreakpoints({ xs: 400 });
+
+      sharedGallery.columns = { xs: 1, md: 3 };
+
+      expect((sharedGallery as any).getColumnsForWidth(300)).toBe(1);
+    });
+
+    it('should resolve to the xs default when narrower than the configured xs', () => {
+      setScreenBreakpoints({ xs: 400 });
+
+      expect((sharedGallery as any).getColumnsForWidth(300)).toBe(DEFAULT_COLUMNS['xs']);
+    });
+
+    /**
+     * An unresolved value lands in the custom property as the string
+     * "undefined". The stylesheet's `var(--internal-gallery-columns, 2)`
+     * fallback cannot catch that, because the property is set.
+     */
+    it('should not write an unresolved value into the columns custom property', () => {
+      setScreenBreakpoints({ xs: 400 });
+
+      sharedGallery.columns = { xs: 1, md: 3 };
+
+      jest.spyOn(sharedGallery.el, 'getBoundingClientRect').mockReturnValue({ width: 300 } as DOMRect);
+
+      (sharedGallery as any).updateResponsiveStyles();
+
+      expect(sharedGallery.el.style.getPropertyValue('--internal-gallery-columns')).toBe('1');
+    });
+
     it('should resolve columns against the configured widths', () => {
       const breakpoints = [
         // xs under both
