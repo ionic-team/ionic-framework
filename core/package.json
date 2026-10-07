@@ -102,7 +102,7 @@
     "fs-extra": "^9.0.1",
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
-    "outsystems-design-tokens": "^2.3.0",
+    "outsystems-design-tokens": "^2.5.0",
     "playwright-core": "^1.63.0",
     "prettier": "^2.8.8",
     "rollup": "^2.26.4",
