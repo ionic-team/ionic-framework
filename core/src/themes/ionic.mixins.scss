@@ -226,6 +226,11 @@
   // }
 }
 
+// Whether `rtl()` emits `:host-context()` selectors. Global stylesheets
+// set this to false: they apply to the document, where `:host-context()`
+// never matches, and Lightning CSS warns about every occurrence.
+$rtl-use-host-context: true !default;
+
 @mixin rtl() {
   $root: #{&};
 
@@ -254,7 +259,7 @@
   }
 
   // Supported by Chrome.
-  @if length($hostContextSelectors) > 0 {
+  @if $rtl-use-host-context and length($hostContextSelectors) > 0 {
     @at-root #{$hostContextSelectors} {
       @content;
     }

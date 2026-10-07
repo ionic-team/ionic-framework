@@ -206,7 +206,10 @@ export interface IonicConfig {
   /**
    * @experimental
    * If `true`, the [CloseWatcher API](https://github.com/WICG/close-watcher) will be used to handle
-   * all Escape key and hardware back button presses to dismiss menus and overlays and to navigate.
+   * Escape key and Android back button presses that dismiss menus and overlays. It's only active
+   * while a menu or an overlay other than a toast is open, so back navigation works as usual
+   * otherwise. Hybrid apps still handle the hardware back button through the native `backbutton`
+   * event.
    * Note that the `hardwareBackButton` config option must also be `true`.
    */
   experimentalCloseWatcher?: boolean;

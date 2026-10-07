@@ -75,6 +75,16 @@ const waitUntil = async (predicate: () => boolean, label: string) => {
   throw new Error(`timed out waiting for ${label}`);
 };
 
+/*
+ * A redirect ends a navigation somewhere other than where it started, so wait
+ * for the path it should end on before letting the router settle.
+ */
+const navigateTo = async (router: any, path: string, navigate: () => void) => {
+  navigate();
+  await waitUntil(() => router.currentRoute.value.path === path, `the navigation to ${path}`);
+  await waitForRouter();
+};
+
 describe('Routing', () => {
   it('should pass no props', async () => {
     const Page1 = {
@@ -1606,6 +1616,304 @@ describe('Routing', () => {
       { id: 'home', hidden: true },
       { id: 'profile', hidden: true },
       { id: 'settings', hidden: false }
+    ]);
+  });
+
+  const mountBackRedirect = async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/login', component: createPage('login') },
+        { path: '/profile', component: createPage('profile') }
+      ]
+    });
+
+    router.beforeEach((to, from) => {
+      if (from.path === '/profile' && to.path === '/home') {
+        return '/login';
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/profile');
+    await waitForRouter();
+
+    return { router, navManager, wrapper };
+  };
+
+  it('should show the redirect target when a guard redirects a browser back', async () => {
+    const { router, navManager, wrapper } = await mountBackRedirect();
+
+    await navigateTo(router, '/login', () => router.back());
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'login', hidden: false }
+    ]);
+  });
+
+  it('should show the redirect target when a guard redirects a back button navigation', async () => {
+    const { router, navManager, wrapper } = await mountBackRedirect();
+
+    /*
+     * The back button stages the Home route it expects to go back to, which
+     * Login would inherit if it were carried over.
+     */
+    await navigateTo(router, '/login', () => navManager.handleNavigateBack());
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'login', hidden: false }
+    ]);
+  });
+
+  it('should go back normally after a guard redirects a browser back', async () => {
+    const { router, navManager, wrapper } = await mountBackRedirect();
+
+    await navigateTo(router, '/login', () => router.back());
+
+    // The redirect replaced Profile's history entry, so back lands on Home.
+    await navigateTo(router, '/home', () => router.back());
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/home',
+      routerAction: 'pop',
+      routerDirection: 'back'
+    });
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: false },
+      { id: 'profile', hidden: true }
+    ]);
+  });
+
+  /*
+   * Leave guards run before any global guard, so Ionic never sees the
+   * navigation they redirect start.
+   */
+  const mountLeaveRedirect = async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+    const Profile = {
+      ...createPage('profile'),
+      setup() {
+        onBeforeRouteLeave((to) => (to.path === '/home' ? '/login' : true));
+      }
+    };
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/login', component: createPage('login') },
+        { path: '/profile', component: Profile }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/profile');
+    await waitForRouter();
+
+    return { router, navManager, wrapper };
+  };
+
+  it('should show the redirect target when a leave guard redirects a browser back', async () => {
+    const { router, navManager, wrapper } = await mountLeaveRedirect();
+
+    await navigateTo(router, '/login', () => router.back());
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'login', hidden: false }
+    ]);
+  });
+
+  it('should show the redirect target when a leave guard redirects a back button navigation', async () => {
+    const { router, navManager, wrapper } = await mountLeaveRedirect();
+
+    await navigateTo(router, '/login', () => navManager.handleNavigateBack());
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'profile', hidden: true },
+      { id: 'login', hidden: false }
+    ]);
+  });
+
+  /*
+   * Only a navigation that no guard redirected should keep the root direction,
+   * including one that a `redirect:` record redirected.
+   */
+  const mountRootRedirect = async () => {
+    let navManager: any;
+
+    const Home = {
+      ...createPage('home'),
+      setup() {
+        navManager = inject('navManager');
+      }
+    };
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/home' },
+        { path: '/home', component: Home },
+        { path: '/login', component: createPage('login') },
+        { path: '/dashboard', component: createPage('dashboard') },
+        { path: '/tabs', redirect: '/tabs/tab' },
+        { path: '/tabs/tab', component: createPage('tab') },
+        { path: '/admin', redirect: '/admin/users' },
+        { path: '/admin/users', component: createPage('users') }
+      ]
+    });
+
+    router.beforeEach((to) => {
+      if (to.path === '/dashboard' || to.path === '/admin/users') {
+        return '/login';
+      }
+
+      return true;
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    return { router, navManager, wrapper };
+  };
+
+  it('should not apply the params of a guard redirected navigation to the redirect target', async () => {
+    const { router, navManager, wrapper } = await mountRootRedirect();
+
+    // If it were carried over, the root direction would drop Home from the back stack.
+    await navigateTo(router, '/login', () => navManager.handleNavigate('/dashboard', 'push', 'root'));
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+    expect(navManager.canGoBack()).toBe(true);
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'login', hidden: false }
+    ]);
+  });
+
+  // Guards against clearing the params of a navigation that only a route record redirected.
+  it('should keep the params of a navigation redirected by a route record', async () => {
+    const { router, navManager, wrapper } = await mountRootRedirect();
+
+    await navigateTo(router, '/tabs/tab', () => navManager.handleNavigate('/tabs', 'push', 'root'));
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/tabs/tab',
+      routerAction: 'push',
+      routerDirection: 'root'
+    });
+    expect(navManager.canGoBack()).toBe(false);
+    expect(viewStack(wrapper)).toEqual([{ id: 'tab', hidden: false }]);
+  });
+
+  it('should not apply the params when a guard redirects after a route record', async () => {
+    const { router, navManager, wrapper } = await mountRootRedirect();
+
+    await navigateTo(router, '/login', () => navManager.handleNavigate('/admin', 'push', 'root'));
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/login',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+    expect(navManager.canGoBack()).toBe(true);
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'login', hidden: false }
+    ]);
+  });
+
+  it('should not apply the params when a guard redirects to the current page', async () => {
+    const { router, navManager, wrapper } = await mountRootRedirect();
+
+    await navigateTo(router, '/login', () => router.push('/login'));
+
+    // The guard sends it back to Login, where the router already is, so it fails as a duplicate.
+    navManager.handleNavigate('/dashboard', 'push', 'root');
+    await waitForRouter();
+
+    await navigateTo(router, '/tabs/tab', () => router.push('/tabs'));
+
+    expect(currentRoute(navManager)).toEqual({
+      pathname: '/tabs/tab',
+      routerAction: 'push',
+      routerDirection: 'forward'
+    });
+    expect(navManager.canGoBack()).toBe(true);
+    expect(viewStack(wrapper)).toEqual([
+      { id: 'home', hidden: true },
+      { id: 'login', hidden: true },
+      { id: 'tab', hidden: false }
     ]);
   });
 
