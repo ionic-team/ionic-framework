@@ -185,6 +185,42 @@
 }
 
 /**
+ * Vertical with no title: the selected date and the input mode toggle in a
+ * row of their own, in the calendar's colors rather than the header's.
+ */
+:host .datetime-selected-date-bar {
+  @include padding(0, 4px, 0, 16px);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 52px;
+
+  border-bottom: 1px solid rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
+
+  font-size: 1.25rem;
+}
+
+:host .datetime-selected-date-bar-text {
+  flex: 1;
+
+  min-width: 0;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+// The placeholder shown until a date is picked, as in Material.
+:host .datetime-selected-date-placeholder {
+  opacity: 0.6;
+}
+
+/**
  * Input mode hides the calendar without taking it out of the layout, and
  * lays the date field over it, so the datetime keeps its height when the
  * toggle is pressed. Hidden this way rather than with `display: none`, the
@@ -202,6 +238,14 @@
 
   position: absolute;
 
+  visibility: visible;
+}
+
+/**
+ * In vertical with no title, the input mode toggle lives in the selected date
+ * bar inside the hidden calendar, so the bar stays visible to switch back.
+ */
+:host(.datetime-input-mode) .datetime-selected-date-bar {
   visibility: visible;
 }
 

@@ -113,6 +113,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * using a grid style layout.
  * @part navigation-button - The buttons used to navigate to the next or previous month when using a grid style layout.
  * @part input-mode-toggle - The button in the header that switches between the calendar and typing a date.
+ * @part selected-date-bar - The row in the calendar header that holds the selected date and the input mode toggle when a vertical datetime has no title.
  * @part previous-button - The button used to navigate to the previous month when using a grid style layout.
  * @part next-button - The button used to navigate to the next month when using a grid style layout.
  * @part calendar-days-of-week - The container for the day-of-the-week header (both weekdays and weekends) when using a grid style layout.
@@ -185,6 +186,13 @@ export class Datetime implements ComponentInterface {
   // The text in the input mode's date field, and why it was rejected, if it was.
   @State() dateInputText = '';
   @State() dateInputError?: string;
+
+  /**
+   * Where the date field starts, so it sits below the selected date bar when
+   * there is one. The bar stays visible in input mode to keep the toggle in
+   * reach, and the field is laid over the hidden calendar below it.
+   */
+  @State() dateInputTop = 0;
 
   // Set on leaving input mode, so `componentDidRender` rebuilds the calendar listeners.
   private pendingCalendarModeReturn = false;
@@ -383,9 +391,28 @@ export class Datetime implements ComponentInterface {
    * the grid presentations. It types a single date, so `multiple` has none,
    * as Material has no multi-date input.
    */
+  private get hasHeader() {
+    return this.showDefaultTitle || this.el.querySelector('[slot="title"]') !== null;
+  }
+
+  /**
+   * Vertical with no title shows the selected date and the input mode toggle
+   * in the calendar header, where horizontal has its month/year toggle and
+   * arrows. Vertical has no month/year toggle, so without this the input mode
+   * toggle would be out of reach and nothing could jump to a distant date.
+   */
+  private get hasSelectedDateBar() {
+    const { showNavigationControls, isGridStyle, multiple, isVerticalNavigation } = this;
+    return showNavigationControls && isGridStyle && !multiple && isVerticalNavigation && !this.hasHeader;
+  }
+
+  /**
+   * The toggle sits in the header when there is one, as in Material's picker,
+   * and in the selected date bar otherwise.
+   */
   private get hasInputModeToggle() {
-    const hasHeader = this.showDefaultTitle || this.el.querySelector('[slot="title"]') !== null;
-    return hasHeader && this.isGridStyle && !this.multiple;
+    const { isGridStyle, multiple } = this;
+    return (isGridStyle && !multiple && this.hasHeader) || this.hasSelectedDateBar;
   }
 
   private get isInputMode() {
@@ -566,6 +593,18 @@ export class Datetime implements ComponentInterface {
    * type the date in.
    */
   @Prop() showDefaultTitle = false;
+
+  /**
+   * If `true`, the navigation controls are shown above the days of the week.
+   * When `navigationOrientation` is `"horizontal"`, these are the month/year
+   * toggle and the previous/next buttons. When it is `"vertical"` and there is
+   * no title, they are the selected date and the input mode toggle, which is
+   * then the only way to jump to a distant date. The days of the week are
+   * shown either way.
+   *
+   * Only applies to grid style presentations.
+   */
+  @Prop() showNavigationControls = true;
 
   /**
    * If `true`, the default "Cancel" and "OK" buttons
@@ -2689,6 +2728,8 @@ export class Datetime implements ComponentInterface {
       const activePart = this.getActivePart();
       this.dateInputText = activePart?.day != null ? formatDateInput(this.locale, activePart) : '';
       this.dateInputError = undefined;
+      this.dateInputTop =
+        getElementRoot(this.el).querySelector<HTMLElement>('.datetime-selected-date-bar')?.offsetHeight ?? 0;
       this.showMonthAndYear = false;
       this.cancelVerticalGlide();
       this.destroyInteractionListeners();
@@ -3482,11 +3523,13 @@ export class Datetime implements ComponentInterface {
           the previous/next buttons. Material's vertical picker drops both,
           each month carries its own heading, and the next month being partly
           visible already tells the user the list scrolls. Big date jumps move
-          to the default title instead. PageUp and PageDown still move by a
-          month from a focused day. The announcement above and the
+          to the input mode toggle instead, in the header or, with no title,
+          in the selected date bar in this row. PageUp and PageDown still move
+          by a month from a focused day. The announcement above and the
           day-of-week row below stay.
         */}
-        {!this.isVerticalNavigation && (
+        {this.hasSelectedDateBar && this.renderSelectedDateBar()}
+        {this.showNavigationControls && !this.isVerticalNavigation && (
           <div class="calendar-action-buttons">
             <div class="calendar-month-year">
               <button
@@ -3955,8 +3998,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHeader(showExpandedHeader = true) {
-    const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
-    if (!hasSlottedTitle && !this.showDefaultTitle) {
+    if (!this.hasHeader) {
       return;
     }
 
@@ -3979,6 +4021,33 @@ export class Datetime implements ComponentInterface {
         ) : (
           selectedDate
         )}
+      </div>
+    );
+  }
+
+  /**
+   * Vertical with no title: the selected date and the input mode toggle in
+   * the calendar header, where horizontal has its navigation controls, in the calendar's
+   * colors rather than the header's, as Material's vertical date picker shows
+   * them when it has no title. Without
+   * a value the row shows a placeholder rather than falling back to today, as
+   * the header does: with no title above it, a date there would read as
+   * selected.
+   */
+  private renderSelectedDateBar() {
+    const hasValue = this.getActivePart() !== undefined;
+
+    return (
+      <div class="datetime-selected-date-bar" part="selected-date-bar">
+        <div
+          class={{
+            'datetime-selected-date-bar-text': true,
+            'datetime-selected-date-placeholder': !hasValue,
+          }}
+        >
+          {hasValue ? this.getHeaderSelectedDateText() : 'Selected date'}
+        </div>
+        {this.renderInputModeToggle()}
       </div>
     );
   }
@@ -4021,7 +4090,7 @@ export class Datetime implements ComponentInterface {
     const { placeholder } = getDateInputFormat(this.locale);
 
     return (
-      <div class="datetime-input" key="datetime-input">
+      <div class="datetime-input" key="datetime-input" style={{ top: `${this.dateInputTop}px` }}>
         <ion-input
           class={{ 'ion-touched': hasError, 'ion-invalid': hasError }}
           label="Date"

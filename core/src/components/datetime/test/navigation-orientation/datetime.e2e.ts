@@ -581,3 +581,123 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: navigation orientation: navigation controls'), () => {
+    test('should show the selected date and the input mode toggle in vertical with no title', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const bar = page.locator('ion-datetime .calendar-header .datetime-selected-date-bar');
+
+      await expect(bar).toBeVisible();
+      await expect(bar.locator('.datetime-selected-date-bar-text')).toHaveText('Fri, Jun 3');
+      await expect(bar.locator('.datetime-input-mode-toggle')).toBeVisible();
+    });
+
+    test('should show a placeholder in the selected date bar with no value', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const text = page.locator('ion-datetime .datetime-selected-date-bar-text');
+
+      await expect(text).toHaveText('Selected date');
+      await expect(text).toHaveClass(/datetime-selected-date-placeholder/);
+    });
+
+    test('should jump to a typed date from the selected date bar', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const datetime = page.locator('ion-datetime');
+      const toggle = datetime.locator('.datetime-selected-date-bar .datetime-input-mode-toggle');
+
+      await toggle.click();
+      await datetime.locator('.datetime-input ion-input input').fill('08/15/2027');
+      await toggle.click();
+
+      await expect.poll(() => getMonthAtTop(datetime)).toBe('2027-8');
+      await expect(datetime.locator('.datetime-selected-date-bar-text')).toHaveText('Sun, Aug 15');
+    });
+
+    test('should not show the selected date bar with a title', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03" show-default-title="true"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      // The toggle is in the header instead, as in Material's picker.
+      await expect(page.locator('ion-datetime .datetime-selected-date-bar')).toHaveCount(0);
+      await expect(page.locator('ion-datetime .datetime-header .datetime-input-mode-toggle')).toBeVisible();
+    });
+
+    test('should not show the selected date bar with multiple', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" navigation-orientation="vertical" multiple="true"></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      await expect(page.locator('ion-datetime .datetime-selected-date-bar')).toHaveCount(0);
+    });
+
+    test('should hide the navigation controls in either orientation', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime id="horizontal" presentation="date" value="2022-06-03" show-navigation-controls="false"></ion-datetime>
+        <ion-datetime
+          id="vertical"
+          presentation="date"
+          navigation-orientation="vertical"
+          value="2022-06-03"
+          show-navigation-controls="false"
+        ></ion-datetime>
+        <ion-datetime
+          id="titled"
+          presentation="date"
+          value="2022-06-03"
+          show-default-title="true"
+          show-navigation-controls="false"
+        ></ion-datetime>
+      `,
+        config
+      );
+      await page.locator('#horizontal.datetime-ready').waitFor();
+      await page.locator('#vertical.datetime-ready').waitFor();
+      await page.locator('#titled.datetime-ready').waitFor();
+
+      await expect(page.locator('#horizontal .calendar-action-buttons')).toHaveCount(0);
+      await expect(page.locator('#vertical .datetime-selected-date-bar')).toHaveCount(0);
+
+      // The days of the week stay in both.
+      await expect(page.locator('#horizontal .calendar-days-of-week')).toBeVisible();
+      await expect(page.locator('#vertical .calendar-days-of-week')).toBeVisible();
+
+      // The header's toggle is not a navigation control, so it stays.
+      await expect(page.locator('#titled .datetime-header .datetime-input-mode-toggle')).toBeVisible();
+    });
+  });
+});

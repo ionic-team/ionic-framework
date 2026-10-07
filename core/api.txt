@@ -717,6 +717,7 @@ ion-datetime,prop,showClearButton,boolean,false,false,false
 ion-datetime,prop,showDefaultButtons,boolean,false,false,false
 ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
 ion-datetime,prop,showDefaultTitle,boolean,false,false,false
+ion-datetime,prop,showNavigationControls,boolean,true,false,false
 ion-datetime,prop,size,"cover" | "fixed",'fixed',false,false
 ion-datetime,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-datetime,prop,titleSelectedDatesFormatter,((selectedDates: string[]) => string) | undefined,undefined,false,false
@@ -753,11 +754,13 @@ ion-datetime,part,calendar-header
 ion-datetime,part,datetime-header
 ion-datetime,part,datetime-selected-date
 ion-datetime,part,datetime-title
+ion-datetime,part,input-mode-toggle
 ion-datetime,part,month-heading
 ion-datetime,part,month-year-button
 ion-datetime,part,navigation-button
 ion-datetime,part,next-button
 ion-datetime,part,previous-button
+ion-datetime,part,selected-date-bar
 ion-datetime,part,time-button
 ion-datetime,part,time-button active
 ion-datetime,part,wheel

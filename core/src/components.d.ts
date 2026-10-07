@@ -1277,6 +1277,11 @@ export namespace Components {
          */
         "showDefaultTitle": boolean;
         /**
+          * If `true`, the navigation controls are shown above the days of the week. When `navigationOrientation` is `"horizontal"`, these are the month/year toggle and the previous/next buttons. When it is `"vertical"` and there is no title, they are the selected date and the input mode toggle, which is then the only way to jump to a distant date. The days of the week are shown either way.  Only applies to grid style presentations.
+          * @default true
+         */
+        "showNavigationControls": boolean;
+        /**
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. When `navigationOrientation` is `"vertical"`, it will also expand to cover the full height of its container. If `fixed`, the `ion-datetime` will have a fixed width.
           * @default 'fixed'
          */
@@ -7209,6 +7214,11 @@ declare namespace LocalJSX {
          */
         "showDefaultTitle"?: boolean;
         /**
+          * If `true`, the navigation controls are shown above the days of the week. When `navigationOrientation` is `"horizontal"`, these are the month/year toggle and the previous/next buttons. When it is `"vertical"` and there is no title, they are the selected date and the input mode toggle, which is then the only way to jump to a distant date. The days of the week are shown either way.  Only applies to grid style presentations.
+          * @default true
+         */
+        "showNavigationControls"?: boolean;
+        /**
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. When `navigationOrientation` is `"vertical"`, it will also expand to cover the full height of its container. If `fixed`, the `ion-datetime` will have a fixed width.
           * @default 'fixed'
          */
@@ -10733,6 +10743,7 @@ declare namespace LocalJSX {
         "multiple": boolean;
         "value": string | string[] | null;
         "showDefaultTitle": boolean;
+        "showNavigationControls": boolean;
         "showDefaultButtons": boolean;
         "showClearButton": boolean;
         "showDefaultTimeLabel": boolean;

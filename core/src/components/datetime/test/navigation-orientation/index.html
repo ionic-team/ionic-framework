@@ -147,6 +147,43 @@
           </div>
 
           <div class="grid-item">
+            <h2>Vertical, no title, no value (placeholder in the selected date bar)</h2>
+            <ion-datetime presentation="date" navigation-orientation="vertical"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, no title, show-navigation-controls="false" (no bar)</h2>
+            <ion-datetime
+              presentation="date"
+              navigation-orientation="vertical"
+              value="2022-06-03"
+              show-navigation-controls="false"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Vertical, slotted title</h2>
+            <ion-datetime presentation="date" navigation-orientation="vertical" value="2022-06-03">
+              <span slot="title">Departure</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Horizontal, show-navigation-controls="false" (swipe only)</h2>
+            <ion-datetime presentation="date" value="2022-06-03" show-navigation-controls="false"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Horizontal, show-default-title, show-navigation-controls="false" (swipe, pencil)</h2>
+            <ion-datetime
+              presentation="date"
+              value="2022-06-03"
+              show-default-title="true"
+              show-navigation-controls="false"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
             <h2>Vertical, show-default-title</h2>
             <ion-datetime
               presentation="date"
