@@ -23,6 +23,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { IonRouteInner } from './IonRouteInner';
 import { ReactRouterViewStack } from './ReactRouterViewStack';
 import StackManager from './StackManager';
+import { areParamsEqual } from './utils/areParamsEqual';
+import type { RouteParams } from './utils/areParamsEqual';
 
 // Use Location directly - state is typed as `unknown` in history v5
 type HistoryLocation = Location;
@@ -36,7 +38,6 @@ interface IonRouterProps {
   registerHistoryListener: (cb: (location: HistoryLocation, action: HistoryAction) => void) => void;
 }
 
-type RouteParams = Record<string, string | string[] | undefined>;
 type SafeRouteParams = Record<string, string | string[]>;
 
 const filterUndefinedParams = (params: RouteParams): SafeRouteParams => {
@@ -71,29 +72,6 @@ const checkIsMultiStepBack = (
     walker = history.findLastLocation(walker);
   }
   return false;
-};
-
-const areParamsEqual = (a?: RouteParams, b?: RouteParams) => {
-  const paramsA = a || {};
-  const paramsB = b || {};
-  const keysA = Object.keys(paramsA);
-  const keysB = Object.keys(paramsB);
-
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  return keysA.every((key) => {
-    const valueA = paramsA[key];
-    const valueB = paramsB[key];
-    if (Array.isArray(valueA) && Array.isArray(valueB)) {
-      if (valueA.length !== valueB.length) {
-        return false;
-      }
-      return valueA.every((entry, idx) => entry === valueB[idx]);
-    }
-    return valueA === valueB;
-  });
 };
 
 export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildren<IonRouterProps>) => {

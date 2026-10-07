@@ -94,6 +94,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/tab-lifecycle">
             <IonLabel>Tab Lifecycle</IonLabel>
           </IonItem>
+          <IonItem routerLink="/hidden-view-renders">
+            <IonLabel>Hidden View Renders</IonLabel>
+          </IonItem>
         </IonList>
 
         <IonList>

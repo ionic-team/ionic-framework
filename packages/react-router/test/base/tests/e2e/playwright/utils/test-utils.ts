@@ -52,6 +52,31 @@ export async function settledLifecycleEvents(page: Page): Promise<string[]> {
   return current;
 }
 
+/**
+ * Read `window.renderCounts` once two consecutive reads match, so a render that
+ * commits late is still counted.
+ */
+export async function settledRenderCounts(page: Page): Promise<Record<string, number>> {
+  let previous: string | undefined;
+  let current: Record<string, number> = {};
+
+  try {
+    await expect
+      .poll(async () => {
+        current = await page.evaluate(() => ({ ...((window as any).renderCounts ?? {}) }));
+        const serialized = JSON.stringify(current);
+        const settled = previous !== undefined && serialized === previous;
+        previous = serialized;
+        return settled;
+      })
+      .toBe(true);
+  } catch (error) {
+    throw new Error(`Render counts never settled. Last read: ${JSON.stringify(current)}`, { cause: error });
+  }
+
+  return current;
+}
+
 let peakCounterId = 0;
 
 /**

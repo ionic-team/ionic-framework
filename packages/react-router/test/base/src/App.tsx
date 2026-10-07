@@ -48,6 +48,7 @@ import DirectionNoneBack from './pages/direction-none-back/DirectionNoneBack';
 import TabSearchParams from './pages/tab-search-params/TabSearchParams';
 import { Step1, Step2, Step3, Step4 } from './pages/replace-params/ReplaceParams';
 import { ParamSwipeBack, ParamSwipeBackB } from './pages/param-swipe-back/ParamSwipeBack';
+import HiddenViewRenders from './pages/hidden-view-renders/HiddenViewRenders';
 import TabLifecycle from './pages/tab-lifecycle/TabLifecycle';
 import TabLifecycleOutside from './pages/tab-lifecycle/TabLifecycleOutside';
 import {
@@ -121,6 +122,7 @@ const App: React.FC = () => {
           <Route path="/replace-params" element={<Navigate to="/replace-params/step1" replace />} />
           <Route path="/tab-lifecycle/*" element={<TabLifecycle />} />
           <Route path="/tab-lifecycle-outside" element={<TabLifecycleOutside />} />
+          <Route path="/hidden-view-renders/*" element={<HiddenViewRenders />} />
           <Route path="/router-link-modifier-click" element={<RouterLinkModifierClick />} />
           <Route path="/router-link-modifier-click/target" element={<RouterLinkModifierClickTarget />} />
           <Route path="/navigate-root/page-a" element={<NavigateRootPageA />} />

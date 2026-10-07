@@ -11,6 +11,7 @@ import React from 'react';
 import type { PathMatch } from 'react-router';
 import { Navigate, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
+import { areParamsEqual } from './utils/areParamsEqual';
 import { analyzeRouteChildren, computeParentPath } from './utils/computeParentPath';
 import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
 import { normalizePathnameForComparison } from './utils/pathNormalization';
@@ -216,6 +217,54 @@ const resolveIndexRouteMatch = (
   const normalizedBase = normalizePathnameForComparison(previousMatch.pathnameBase || previousMatch.pathname || '');
 
   return normalizedPathname === normalizedBase ? previousMatch : null;
+};
+
+const shallowEqual = (a: object, b: object): boolean => {
+  const aRecord = a as Record<string, unknown>;
+  const bRecord = b as Record<string, unknown>;
+  const aKeys = Object.keys(aRecord);
+  return aKeys.length === Object.keys(bRecord).length && aKeys.every((key) => aRecord[key] === bRecord[key]);
+};
+
+const isSameMatch = (a: RouteContextMatch, b: RouteContextMatch): boolean =>
+  a === b ||
+  (a.pathname === b.pathname &&
+    a.pathnameBase === b.pathnameBase &&
+    areParamsEqual(a.params, b.params) &&
+    (a.route === b.route || shallowEqual(a.route, b.route)));
+
+/**
+ * The outlet rebuilds a view's `RouteContext` several times per navigation, so
+ * this compares by content to tell whether anything actually changed.
+ */
+const isSameRouteContext = (
+  a: React.ContextType<typeof RouteContext>,
+  b: React.ContextType<typeof RouteContext>
+): boolean => {
+  const { matches: aMatches, ...aRest } = a;
+  const { matches: bMatches, ...bRest } = b;
+  return (
+    shallowEqual(aRest, bRest) &&
+    aMatches.length === bMatches.length &&
+    aMatches.every((match, i) => isSameMatch(match as RouteContextMatch, bMatches[i] as RouteContextMatch))
+  );
+};
+
+/**
+ * Reuses the last `RouteContext` while its content is the same or `hold` is set,
+ * so hidden pages that only call `useParams` don't re-render. It lives in
+ * component state because outlets with the same id share view items.
+ */
+const ViewRouteContextProvider: React.FC<{
+  value: React.ContextType<typeof RouteContext>;
+  hold: boolean;
+  children: React.ReactNode;
+}> = ({ value, hold, children }) => {
+  const [heldValue, setHeldValue] = React.useState(value);
+  if (!hold && heldValue !== value && !isSameRouteContext(heldValue, value)) {
+    setHeldValue(value);
+  }
+  return <RouteContext.Provider value={heldValue}>{children}</RouteContext.Provider>;
 };
 
 export class ReactRouterViewStack extends ViewStacks {
@@ -452,6 +501,9 @@ export class ReactRouterViewStack extends ViewStacks {
       viewItem.routeData.match = match;
     }
 
+    // A more specific sibling owns the pathname, so this view is hidden even though it matches.
+    let hiddenBySpecificMatch = false;
+
     // Deactivate wildcard (catch-all) and empty-path (default) routes when a more-specific route matches.
     // This prevents "Not found" or fallback pages from showing alongside valid routes.
     if (routePath === '*' || routePath === '/*' || routePath === '') {
@@ -511,6 +563,7 @@ export class ReactRouterViewStack extends ViewStacks {
       }
 
       if (hasSpecificMatch && !isSwipeRevealed(viewItem)) {
+        hiddenBySpecificMatch = true;
         // A splat can be the outlet's container page rather than a "not found" fallback.
         // Pushed over it is the page underneath, so unmounting it destroys its state and
         // leaves nothing for back to reveal. Hiding it below covers that. A view with no
@@ -534,6 +587,11 @@ export class ReactRouterViewStack extends ViewStacks {
       viewItem.routeData.match = match;
     }
     const routeMatch = shouldSkipForDifferentParam ? viewItem.routeData?.match : match || viewItem.routeData?.match;
+    // Hold the context when a sibling owns the pathname, the view is parked on another param
+    // instance, or it doesn't match. A pathless default only strictly matches at "/", so no match
+    // there doesn't mean it's hidden.
+    const isPathlessDefault = !routePath && !viewItem.routeData?.childProps?.index;
+    const holdRouteContext = hiddenBySpecificMatch || !!shouldSkipForDifferentParam || (!match && !isPathlessDefault);
 
     return (
       <RouteContext.Consumer key={`view-context-${viewItem.id}`}>
@@ -581,7 +639,9 @@ export class ReactRouterViewStack extends ViewStacks {
               mount={viewItem.mount}
               removeView={() => this.remove(viewItem)}
             >
-              <RouteContext.Provider value={routeContextValue}>{componentElement}</RouteContext.Provider>
+              <ViewRouteContextProvider value={routeContextValue} hold={holdRouteContext}>
+                {componentElement}
+              </ViewRouteContextProvider>
             </ViewLifeCycleManager>
           );
         }}

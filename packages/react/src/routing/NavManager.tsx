@@ -120,12 +120,29 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     return this.props.stackManager;
   }
 
+  /**
+   * Cached on `routeInfo` because `state` never changes after the constructor.
+   * A new object on every render would re-render every consumer, including
+   * hidden pages.
+   */
+  private contextValues?: { navContext: NavContextState; ionRouterContext: IonRouterContextState };
+
+  private getContextValues() {
+    const { routeInfo } = this.props;
+    if (this.contextValues?.navContext.routeInfo !== routeInfo) {
+      this.contextValues = {
+        navContext: { ...this.state, routeInfo },
+        ionRouterContext: { ...this.ionRouterContextValue, routeInfo },
+      };
+    }
+    return this.contextValues;
+  }
+
   render() {
+    const { navContext, ionRouterContext } = this.getContextValues();
     return (
-      <NavContext.Provider value={{ ...this.state, routeInfo: this.props.routeInfo }}>
-        <IonRouterContext.Provider value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}>
-          {this.props.children}
-        </IonRouterContext.Provider>
+      <NavContext.Provider value={navContext}>
+        <IonRouterContext.Provider value={ionRouterContext}>{this.props.children}</IonRouterContext.Provider>
       </NavContext.Provider>
     );
   }
