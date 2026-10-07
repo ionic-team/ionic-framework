@@ -32,7 +32,7 @@ const POPOVER_IOS_MIN_EDGE_MARGIN = 25;
 export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
   const { event: ev, size, trigger, reference, side, align } = opts;
   const doc = baseEl.ownerDocument as any;
-  const rtl = isRTL(baseEl);
+  const rtl = isRTL((reference === 'trigger' && trigger) ? trigger : ev?.target ?? trigger ?? baseEl)
   const root = getElementRoot(baseEl);
   const contentEl = root.querySelector('.popover-content') as HTMLElement;
   const arrowEl = root.querySelector('.popover-arrow') as HTMLElement | null;

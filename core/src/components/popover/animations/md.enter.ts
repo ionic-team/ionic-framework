@@ -20,7 +20,7 @@ const POPOVER_MD_BODY_PADDING = 12;
 export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
   const { event: ev, size, trigger, reference, side, align } = opts;
   const doc = baseEl.ownerDocument as any;
-  const rtl = isRTL(baseEl);
+  const rtl = isRTL((reference === 'trigger' && trigger) ? trigger : ev?.target ?? trigger ?? baseEl)
 
   const root = getElementRoot(baseEl);
   const contentEl = root.querySelector('.popover-content') as HTMLElement;

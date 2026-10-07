@@ -368,6 +368,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerAnimation,
       routerDirection,
       multipleInputs,
+      el,
     } = this;
     const inheritedAriaAttributes = this.ariaController?.attributes ?? {};
     const childStyles = {} as StyleEventDetail;
@@ -474,7 +475,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-focus-indicator-room': slottedIndicatorNeedsRoom,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
-            'item-rtl': isRTL(this.el),
+            'item-rtl': isRTL(el),
           }),
         }}
         role={inList ? 'listitem' : null}
