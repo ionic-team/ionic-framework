@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test';
 import { test, expect, withAnimations } from './utils/test-base';
 import { waitForAnimationsComplete } from './utils/animation-utils';
-import { ionBackClick, ionPageHidden, ionPageVisible, tabClick } from './utils/test-utils';
+import { ionBackClick, ionPageHidden, ionPageVisible, ionSwipeToGoBack, tabClick } from './utils/test-utils';
 
 const getLifecycleEvents = async (page: Page, pageName?: string): Promise<string[]> => {
   const events: string[] = await page.evaluate(() => (window as any).lifecycleEvents ?? []);
@@ -117,7 +117,9 @@ test.describe('Tabs: active tab lifecycle when leaving and returning to the tabs
 
     await page.locator('#go-to-settings').click();
     await ionPageVisible(page, 'tab-lifecycle-settings');
-    await expect.poll(() => getLifecycleEvents(page)).toContain('settings:ionViewDidEnter');
+    await expect
+      .poll(() => getLifecycleEvents(page, 'settings'))
+      .toEqual(['settings:ionViewWillEnter', 'settings:ionViewDidEnter']);
 
     expect(await getLifecycleEvents(page, 'home')).toEqual([]);
   });
@@ -170,7 +172,9 @@ test.describe('Tabs: active tab lifecycle when leaving and returning to the tabs
 
     await page.locator('#go-to-settings').click();
     await ionPageVisible(page, 'tab-lifecycle-settings');
-    await expect.poll(() => getLifecycleEvents(page)).toContain('settings:ionViewDidEnter');
+    await expect
+      .poll(() => getLifecycleEvents(page, 'settings'))
+      .toEqual(['settings:ionViewWillEnter', 'settings:ionViewDidEnter']);
 
     expect(await getLifecycleEvents(page, 'inner')).toEqual([]);
   });
@@ -197,6 +201,29 @@ test.describe('Tabs: active tab lifecycle when leaving and returning to the tabs
     await expect
       .poll(() => getLifecycleEvents(page, 'inner'))
       .toEqual(['inner:ionViewWillEnter', 'inner:ionViewDidEnter']);
+  });
+
+  test('should fire ionViewWillLeave and ionViewDidLeave once on the active tab page when a swipe back from the tabs completes', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await page.goto(withAnimations('/?ionic:mode=ios'));
+    await ionPageVisible(page, 'home');
+
+    await page.locator('ion-item#tab-lifecycle').click();
+    await ionPageVisible(page, 'tab-lifecycle-home');
+    await ionPageHidden(page, 'home');
+    await waitForAnimationsComplete(page, 'div.ion-page[data-pageid="tab-lifecycle"]');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('home:ionViewDidEnter');
+    await clearLifecycleEvents(page);
+
+    await ionSwipeToGoBack(page, true);
+    await ionPageVisible(page, 'home');
+    await waitForAnimationsComplete(page, 'div.ion-page[data-pageid="home"]');
+
+    await expect
+      .poll(() => getLifecycleEvents(page, 'home'))
+      .toEqual(['home:ionViewWillLeave', 'home:ionViewDidLeave']);
   });
 
   test('should fire ionViewWillLeave on the active tab page when a swipe back from the tabs is cancelled', async ({

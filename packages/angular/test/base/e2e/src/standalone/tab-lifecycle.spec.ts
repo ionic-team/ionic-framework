@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 
+import { ionSwipeToGoBack } from '../../utils/drag-utils';
 import { ionPageHidden, ionPageVisible } from '../../utils/test-utils';
 
 const getLifecycleEvents = async (page: Page, pageName?: string): Promise<string[]> => {
@@ -87,6 +88,24 @@ test.describe('Tabs: active tab lifecycle when leaving and returning to the tabs
     expect(await getLifecycleEvents(page, 'home')).toEqual(['home:ionViewWillEnter', 'home:ionViewDidEnter']);
   });
 
+  test('should fire ionViewWillLeave and ionViewDidLeave on the active tab page when a swipe back from the tabs completes', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await page.goto('/standalone?ionic:mode=ios');
+
+    await page.locator('ion-item[routerLink="/standalone/tab-lifecycle"]').click();
+    await ionPageVisible(page, 'app-tab-lifecycle-home');
+    await ionPageHidden(page, 'app-home-page');
+    await expect.poll(() => getLifecycleEvents(page)).toContain('home:ionViewDidEnter');
+    await clearLifecycleEvents(page);
+
+    await ionSwipeToGoBack(page, true);
+    await ionPageVisible(page, 'app-home-page');
+
+    await expect.poll(() => getLifecycleEvents(page, 'home')).toEqual(['home:ionViewWillLeave', 'home:ionViewDidLeave']);
+  });
+
   test('should fire ionViewWillLeave on the active tab page when a swipe back from the tabs is cancelled', async ({
     page,
   }) => {
@@ -155,7 +174,7 @@ test.describe('Tabs: active tab lifecycle when leaving and returning to the tabs
 
     await page.locator('#go-to-settings').click();
     await ionPageVisible(page, 'app-tab-lifecycle-settings');
-    await expect.poll(() => getLifecycleEvents(page)).toContain('settings:ionViewDidEnter');
+    await expect.poll(() => getLifecycleEvents(page)).toEqual(['settings:ionViewWillEnter', 'settings:ionViewDidEnter']);
 
     expect(await getLifecycleEvents(page, 'home')).toEqual([]);
   });
@@ -208,7 +227,7 @@ test.describe('Tabs: active tab lifecycle when leaving and returning to the tabs
 
     await page.locator('#go-to-settings').click();
     await ionPageVisible(page, 'app-tab-lifecycle-settings');
-    await expect.poll(() => getLifecycleEvents(page)).toContain('settings:ionViewDidEnter');
+    await expect.poll(() => getLifecycleEvents(page)).toEqual(['settings:ionViewWillEnter', 'settings:ionViewDidEnter']);
 
     expect(await getLifecycleEvents(page, 'inner')).toEqual([]);
   });
