@@ -43,7 +43,7 @@ runs:
         output: packages/react/ReactBuild.zip
         paths: packages/react/dist packages/react/css packages/react/package.json
     - name: Clean package.json updates
-      run: git checkout ./core/package.json ./packages/react/package.json
+      run: git checkout ./core/package.json ./packages/react/package.json ./packages/react/package-lock.json
       shell: bash
     - name: 🔍 Check Diff
       run: git diff --exit-code
