@@ -85,6 +85,14 @@ export const routes: Routes = [
         ]
       },
       {
+        path: 'swipe-animated-disabled',
+        loadComponent: () => import('../swipe-animated-disabled/swipe-animated-disabled.component').then(c => c.SwipeAnimatedDisabledComponent),
+        children: [
+          { path: '', loadComponent: () => import('../swipe-animated-disabled/swipe-animated-disabled-main.component').then(c => c.SwipeAnimatedDisabledMainComponent) },
+          { path: 'details', loadComponent: () => import('../swipe-animated-disabled/swipe-animated-disabled-details.component').then(c => c.SwipeAnimatedDisabledDetailsComponent) }
+        ]
+      },
+      {
         path: 'validation',
         children: [
           { path: 'input-validation', loadComponent: () => import('../validation/input-validation/input-validation.component').then(c => c.InputValidationComponent) },

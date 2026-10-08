@@ -1460,7 +1460,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     };
 
     const onStart = async () => {
-      // Core only calls onEnd when a progress animation exists, so with animations off a
+      // Core skips onEnd when an animated swipe ends without a progress animation, so a
       // previous gesture can leave its mark behind. Drop any stale one before marking.
       this.clearSwipeRevealedView();
 
@@ -1494,9 +1494,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
       // When the gesture starts, kick off a transition controlled via swipe gesture
       if (enteringViewItem && leavingViewItem) {
-        // Without a leaving view there is no progress animation, and core only calls
-        // swipeHandler.onEnd when one exists, so nothing would clear the mark until the
-        // next transition.
+        // Without a leaving view there is no progress animation, and core skips
+        // swipeHandler.onEnd for an animated swipe without one, so nothing would clear the
+        // mark until the next transition.
         markSwipeRevealed(enteringViewItem);
         this.swipeRevealedViewItem = enteringViewItem;
 
