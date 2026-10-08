@@ -22,7 +22,13 @@ import {
 } from '@angular/core';
 import type { Provider } from '@angular/core';
 import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Data } from '@angular/router';
-import { componentOnReady } from '@ionic/core/components';
+import {
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+  componentOnReady,
+} from '@ionic/core/components';
 import type { AnimationBuilder } from '@ionic/core/components';
 import { Observable, BehaviorSubject, Subscription, combineLatest, of } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
@@ -32,6 +38,26 @@ import { NavController } from '../../providers/nav-controller';
 
 import { StackController } from './stack-controller';
 import { RouteView, StackDidChangeEvent, StackWillChangeEvent, getUrl, isTabSwitch } from './stack-utils';
+
+/**
+ * A page that left along with its parent page is still the active view of its
+ * outlet. If the user comes back to a different page in that outlet, the
+ * outlet's own transition fires leave on it a second time, so swallow leave
+ * events on it until it enters again. Unblock on `ionViewDidEnter`, since a
+ * cancelled swipe back only fires `ionViewWillEnter`.
+ */
+const blockRepeatLeave = (pageEl: HTMLElement) => {
+  // Capture so this runs before the page's own lifecycle listeners.
+  const block = (ev: Event) => ev.stopImmediatePropagation();
+  const unblock = () => {
+    pageEl.removeEventListener(LIFECYCLE_WILL_LEAVE, block, true);
+    pageEl.removeEventListener(LIFECYCLE_DID_LEAVE, block, true);
+  };
+
+  pageEl.addEventListener(LIFECYCLE_WILL_LEAVE, block, true);
+  pageEl.addEventListener(LIFECYCLE_DID_LEAVE, block, true);
+  pageEl.addEventListener(LIFECYCLE_DID_ENTER, unblock, { capture: true, once: true });
+};
 
 // TODO(FW-2827): types
 
@@ -57,6 +83,7 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
   private currentActivatedRoute$ = new BehaviorSubject<{ component: any; activatedRoute: ActivatedRoute } | null>(null);
 
   private activated: ComponentRef<any> | null = null;
+  private unbindParentLifecycle?: () => void;
   /** @internal */
   get activatedComponentRef(): ComponentRef<any> | null {
     return this.activated;
@@ -129,6 +156,7 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
+    this.unbindParentLifecycle?.();
     this.stackCtrl.destroy();
     this.inputBinder?.unsubscribeFromRouteData(this);
   }
@@ -139,6 +167,7 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.initializeOutletWithName();
+    this.bindParentLifecycle();
   }
 
   // Note: Ionic deviates from the Angular Router implementation here
@@ -157,6 +186,105 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
         this.swipeGesture = this.config.getBoolean('swipeBackEnabled', (this.nativeEl as any).mode === 'ios');
       }
     });
+  }
+
+  /**
+   * Core doesn't bubble lifecycle events, so forward the ones on the page
+   * hosting this outlet (such as a page containing `ion-tabs`) to the page
+   * active in this outlet. Enter events only go to a page that left with the
+   * parent page.
+   */
+  private bindParentLifecycle() {
+    const parentPageEl = this.getParentPageElement();
+    if (!parentPageEl) {
+      return;
+    }
+
+    let leftWithParent: RouteView | undefined;
+
+    /**
+     * Apps using the workaround from
+     * https://github.com/ionic-team/ionic-framework/issues/16834 already
+     * re-dispatch the parent's lifecycle events onto the active tab, so track
+     * whether the active page got the event to avoid firing it twice.
+     */
+    let parentEventType: string | undefined;
+    let activeViewReceived = false;
+    const onParentEventStart = (ev: Event) => {
+      if (ev.target === parentPageEl) {
+        parentEventType = ev.type;
+        activeViewReceived = false;
+      }
+    };
+    const onOutletEvent = (ev: Event) => {
+      if (ev.type === parentEventType && ev.target === this.stackCtrl.getActiveView()?.element) {
+        activeViewReceived = true;
+      }
+    };
+
+    const forward = (ev: Event) => {
+      const alreadyReceived = activeViewReceived;
+      parentEventType = undefined;
+      activeViewReceived = false;
+
+      const activeView = this.stackCtrl.getActiveView();
+      if (!activeView) {
+        return;
+      }
+
+      const isEnter = ev.type === LIFECYCLE_WILL_ENTER || ev.type === LIFECYCLE_DID_ENTER;
+      if (isEnter && activeView !== leftWithParent) {
+        return;
+      }
+
+      if (!alreadyReceived) {
+        activeView.element.dispatchEvent(new CustomEvent(ev.type, { bubbles: false, cancelable: false }));
+      }
+
+      if (ev.type === LIFECYCLE_DID_LEAVE) {
+        leftWithParent = activeView;
+        blockRepeatLeave(activeView.element);
+      } else if (ev.type === LIFECYCLE_DID_ENTER) {
+        leftWithParent = undefined;
+      }
+    };
+
+    /**
+     * Capture listeners see the event before the parent page's own hooks run,
+     * and see events dispatched on pages in this outlet even though they
+     * don't bubble. The bubble-phase `forward` listener runs after the parent
+     * page's own hooks because those are bound when the page is created,
+     * before this outlet inits.
+     */
+    const events = [LIFECYCLE_WILL_ENTER, LIFECYCLE_DID_ENTER, LIFECYCLE_WILL_LEAVE, LIFECYCLE_DID_LEAVE];
+    events.forEach((eventName) => {
+      parentPageEl.addEventListener(eventName, onParentEventStart, true);
+      parentPageEl.addEventListener(eventName, forward);
+      this.nativeEl.addEventListener(eventName, onOutletEvent, true);
+    });
+    this.unbindParentLifecycle = () => {
+      events.forEach((eventName) => {
+        parentPageEl.removeEventListener(eventName, onParentEventStart, true);
+        parentPageEl.removeEventListener(eventName, forward);
+        this.nativeEl.removeEventListener(eventName, onOutletEvent, true);
+      });
+    };
+  }
+
+  /**
+   * The page in the parent outlet that contains this outlet, if any.
+   */
+  private getParentPageElement(): HTMLElement | undefined {
+    const parentOutletEl = this.parentOutlet?.nativeEl;
+    if (!parentOutletEl) {
+      return undefined;
+    }
+
+    let el: HTMLElement | null = this.nativeEl;
+    while (el && el.parentElement !== parentOutletEl) {
+      el = el.parentElement;
+    }
+    return el ?? undefined;
   }
 
   get isActivated(): boolean {

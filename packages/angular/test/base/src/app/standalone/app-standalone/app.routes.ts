@@ -76,6 +76,23 @@ export const routes: Routes = [
           { path: 'tab4', loadComponent: () => import('../tabs-search-params/tab4.component').then(c => c.TabsSearchParamsTab4Component) }
         ]
       },
+      { path: 'tab-lifecycle', redirectTo: '/standalone/tab-lifecycle/home', pathMatch: 'full' },
+      {
+        path: 'tab-lifecycle',
+        loadComponent: () => import('../tab-lifecycle/tab-lifecycle.component').then(c => c.TabLifecycleComponent),
+        children: [
+          { path: 'home', loadComponent: () => import('../tab-lifecycle/tab-lifecycle-home.component').then(c => c.TabLifecycleHomeComponent) },
+          { path: 'settings', loadComponent: () => import('../tab-lifecycle/tab-lifecycle-settings.component').then(c => c.TabLifecycleSettingsComponent) },
+          {
+            path: 'nested',
+            loadComponent: () => import('../tab-lifecycle/tab-lifecycle-nested.component').then(c => c.TabLifecycleNestedComponent),
+            children: [
+              { path: '', loadComponent: () => import('../tab-lifecycle/tab-lifecycle-inner.component').then(c => c.TabLifecycleInnerComponent) }
+            ]
+          }
+        ]
+      },
+      { path: 'tab-lifecycle-outside', loadComponent: () => import('../tab-lifecycle/tab-lifecycle-outside.component').then(c => c.TabLifecycleOutsideComponent) },
       {
         path: 'swipe-gesture-disabled',
         loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled.component').then(c => c.SwipeGestureDisabledComponent),
