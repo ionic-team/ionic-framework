@@ -26,6 +26,9 @@ const KEEP_OPEN_VELOCITY = 400;
  */
 const DISMISS_PROGRESS_RATIO = 0.4;
 
+/** How far ahead, in milliseconds, a drag's velocity is projected when snapping. */
+const FLICK_PROJECTION_MS = 350;
+
 export interface MoveSheetToBreakpointOptions {
   /**
    * The breakpoint value to move the sheet to.
@@ -692,34 +695,17 @@ export const createSheetGesture = (
   /**
    * Decides which breakpoint the sheet should settle on for the current drag.
    *
-   * A sheet whose only breakpoints are 0 and 1 has nowhere to go on a downward
-   * drag except closed, so any drag the gesture recognizes closes it. Sheets
-   * with breakpoints in between snap to the nearest one instead, because
-   * dragging is how the user resizes them.
-   *
-   * Two cases opt back out of that shortcut and use the normal thresholds:
-   * - An upward flick, so a drag that wanders downwards before flicking back up
-   *   reopens the sheet rather than closing it.
-   * - `canDismiss`, which asks the application whether closing is allowed. Going
-   *   through the usual thresholds means a few stray pixels cannot trigger that
-   *   callback.
-   *
    * @param deltaY The change in Y position since the gesture started
    * @param velocityY The velocity in pixels per millisecond
    * @returns The snap breakpoint value
    */
   const calculateSnapBreakpoint = (deltaY: number, velocityY: number): number => {
-    const isDraggingDown = deltaY > 0;
-    const isFlickingUp = velocityY * MILLISECONDS_PER_SECOND < -KEEP_OPEN_VELOCITY;
-    const canOnlyOpenOrClose = minBreakpoint === 0 && breakpoints.length === 2;
-
-    if (isDraggingDown && canOnlyOpenOrClose && !isFlickingUp && !canDismissBlocksGesture) {
-      return 0;
+    if (usePhysicsBasedGesture) {
+      return calculateVelocitySnapBreakpoint(deltaY, velocityY);
     }
 
-    return usePhysicsBasedGesture
-      ? calculateVelocitySnapBreakpoint(deltaY, velocityY)
-      : calculatePositionSnapBreakpoint(deltaY);
+    // Project the drag forward so a quick flick counts.
+    return calculatePositionSnapBreakpoint(deltaY + velocityY * FLICK_PROJECTION_MS);
   };
 
   /**
