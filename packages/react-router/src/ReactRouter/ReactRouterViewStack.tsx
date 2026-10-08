@@ -244,8 +244,8 @@ const isSameRouteContext = (
   const { matches: aMatches, ...aRest } = a;
   const { matches: bMatches, ...bRest } = b;
   return (
-    shallowEqual(aRest, bRest) &&
     aMatches.length === bMatches.length &&
+    shallowEqual(aRest, bRest) &&
     aMatches.every((match, i) => isSameMatch(match as RouteContextMatch, bMatches[i] as RouteContextMatch))
   );
 };
