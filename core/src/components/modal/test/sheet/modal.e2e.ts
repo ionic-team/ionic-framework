@@ -657,11 +657,10 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
       const header = page.locator('.modal-sheet ion-header');
 
       /**
-       * This drag covers well under half the sheet, so snapping to the nearest
-       * breakpoint would reopen it. A sheet that only opens and closes has
-       * nowhere else to go, so it dismisses instead.
+       * Drag far enough that the velocity projection lands past the
+       * halfway point of the sheet, causing it to snap to breakpoint 0.
        */
-      await dragElementBy(header, page, 0, 30);
+      await dragElementBy(header, page, 0, 200);
 
       const dragEndEvent = await ionDragEnd.next();
 
