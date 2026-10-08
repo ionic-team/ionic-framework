@@ -13,12 +13,12 @@ import { calculateSpringStep, canSwipeOnContent, handleCanDismiss } from './util
 const MILLISECONDS_PER_SECOND = 1000;
 
 /**
- * Flick speeds fast enough to decide the outcome on their own, in pixels per
+ * Flick speeds for the ionic theme's physics-based gesture, in pixels per
  * second. Both are magnitudes. Y grows downwards, so the upward threshold is
  * negated where it is compared.
  */
-const DISMISS_VELOCITY = 500;
-const KEEP_OPEN_VELOCITY = 400;
+const FLICK_DOWN_VELOCITY = 500;
+const FLICK_UP_VELOCITY = 400;
 
 /**
  * How far below its starting breakpoint a slow drag has to end to dismiss the
@@ -752,12 +752,12 @@ export const createSheetGesture = (
     const currentProgress = calculateProgress(deltaY);
 
     // Rule 1: Fast downward flick always dismisses
-    if (velocityYPerSecond > DISMISS_VELOCITY) {
+    if (velocityYPerSecond > FLICK_DOWN_VELOCITY) {
       return minBreakpoint;
     }
 
     // Rule 2: Fast upward flick moves to next breakpoint above
-    if (velocityYPerSecond < -KEEP_OPEN_VELOCITY) {
+    if (velocityYPerSecond < -FLICK_UP_VELOCITY) {
       // Find next breakpoint above current position
       const nextBreakpoint = breakpoints.find((bp) => bp > currentProgress);
       // If no breakpoint above, stay at max breakpoint
@@ -770,13 +770,7 @@ export const createSheetGesture = (
       const distanceBelowSnap = currentBreakpoint - currentProgress;
       const percentageBelowSnap = distanceBelowSnap / currentBreakpoint;
 
-      /**
-       * The velocity check reads as "not flicking up", but upward flicks are
-       * negative and already satisfy it. What it excludes in practice is a
-       * downward drag faster than 400 px/s but not fast enough to trip the
-       * dismissal above, which falls through to the nearest breakpoint instead.
-       */
-      if (percentageBelowSnap > DISMISS_PROGRESS_RATIO && velocityYPerSecond <= 400) {
+      if (percentageBelowSnap > DISMISS_PROGRESS_RATIO) {
         return 0;
       }
     }
@@ -793,15 +787,7 @@ export const createSheetGesture = (
    * @returns The progress of the sheet gesture
    */
   const calculateProgress = (deltaY: number): number => {
-    /**
-     * Start from how open the sheet was when the gesture began, then subtract
-     * the fraction of the sheet's height the user has dragged. Dragging down is
-     * positive, so it lowers the progress.
-     *
-     * This is the inverse of the step applied to the animation in onMove, which
-     * keeps the breakpoint the sheet snaps to in agreement with the position it
-     * is drawn at.
-     */
+    // Mirrors the animation step in onMove, so the snap matches where the sheet is drawn.
     const progress = currentBreakpoint - deltaY / height;
     // Round to the nearest thousandth to avoid returning very small decimal
     const roundedProgress = Math.round(progress * 1000) / 1000;

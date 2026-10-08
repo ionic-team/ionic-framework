@@ -671,6 +671,32 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
     });
   });
 
+  test.describe(title('sheet modal: intermediate breakpoints'), () => {
+    test('should not shrink when dragged upwards', async ({ page }) => {
+      await page.goto('/src/components/modal/test/sheet', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      await page.click('#custom-height-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(1));
+      await ionBreakpointDidChange.next();
+
+      const header = page.locator('.modal-sheet ion-header');
+
+      await dragElementBy(header, page, 0, -50);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.snapBreakpoint).toBe(1);
+    });
+  });
+
   test.describe(title('sheet modal: late breakpoints binding'), () => {
     test('should not crash when swiped after breakpoints are set after the modal loads', async ({ page }) => {
       const pageErrors: string[] = [];
