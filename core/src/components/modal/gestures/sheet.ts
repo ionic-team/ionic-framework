@@ -451,7 +451,7 @@ export const createSheetGesture = (
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
-      progress: calculateProgress(detail.deltaY),
+      progress: calculateEventProgress(detail.deltaY),
       snapBreakpoint: snapBreakpoint,
     };
 
@@ -475,7 +475,7 @@ export const createSheetGesture = (
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
-      progress: calculateProgress(detail.deltaY),
+      progress: calculateEventProgress(detail.deltaY),
       snapBreakpoint,
       isDismissing,
     };
@@ -807,6 +807,16 @@ export const createSheetGesture = (
     const roundedProgress = Math.round(progress * 1000) / 1000;
 
     return clamp(0, roundedProgress, 1);
+  };
+
+  /**
+   * Scales the progress from the lowest to the highest breakpoint, so the
+   * drag events report 0 at the lowest breakpoint and 1 at the highest.
+   */
+  const calculateEventProgress = (deltaY: number): number => {
+    const progress = (calculateProgress(deltaY) - minBreakpoint) / (maxBreakpoint - minBreakpoint);
+
+    return clamp(0, progress, 1);
   };
 
   const gesture = createGesture({
