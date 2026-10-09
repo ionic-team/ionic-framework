@@ -13,16 +13,6 @@ export { isPlatform, Platforms, PlatformConfig, getPlatforms } from './utils/pla
 export { IonicSafeString } from './utils/sanitization';
 export { IonicConfig, getMode, setupConfig } from './utils/config';
 export {
-  SCREEN_BREAKPOINT_NAMES,
-  DEFAULT_SCREEN_BREAKPOINTS,
-  BreakpointMap,
-  ScreenBreakpoint,
-  ScreenBreakpoints,
-  getScreenBreakpoints,
-  getScreenBreakpointValue,
-  getScreenBreakpointMediaQuery,
-} from './utils/breakpoints';
-export {
   LIFECYCLE_WILL_ENTER,
   LIFECYCLE_DID_ENTER,
   LIFECYCLE_WILL_LEAVE,
