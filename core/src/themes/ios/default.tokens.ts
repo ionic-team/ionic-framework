@@ -1131,18 +1131,6 @@ export const defaultTheme: DefaultTheme = {
             weight: 'var(--ion-font-weight-bold)',
           },
 
-          inner: {
-            /**
-             * During a page transition
-             * if the large title and the back button
-             * texts match up, the back button should be
-             * scaled to roughly match the dimensions of
-             * the large title text. The following line
-             * ensures that the scale values are accurate.
-             */
-            width: 'auto',
-          },
-
           padding: {
             top: 'var(--ion-spacing-xxxs)',
             end: 'var(--ion-spacing-md)',
@@ -1152,12 +1140,6 @@ export const defaultTheme: DefaultTheme = {
 
           text: {
             align: 'start',
-          },
-
-          transform: {
-            origin: {
-              x: '0%',
-            },
           },
         },
       },

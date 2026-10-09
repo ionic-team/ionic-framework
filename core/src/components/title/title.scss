@@ -43,7 +43,6 @@
    * @prop --ion-title-size-large-font-size: Font size of the large title
    * @prop --ion-title-size-large-font-weight: Font weight of the large title
    * @prop --ion-title-size-large-height: Height of the large title
-   * @prop --ion-title-size-large-inner-width: Width of the large title text, measured by the iOS page transition
    * @prop --ion-title-size-large-line-height: Line height of the large title
    * @prop --ion-title-size-large-min-width: Minimum width of the large title
    * @prop --ion-title-size-large-padding-top: Top padding of the large title
@@ -52,7 +51,6 @@
    * @prop --ion-title-size-large-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the large title
    * @prop --ion-title-size-large-position: Position of the large title
    * @prop --ion-title-size-large-text-align: Text alignment of the large title
-   * @prop --ion-title-size-large-transform-origin-x: Horizontal origin the large title scales from when the header collapses, in the reading direction
    * @prop --ion-title-size-large-width: Width of the large title
    *
    * @prop --ion-title-hue-bold-semantic-default-color: Text color of the `bold` hue when a semantic color is applied
@@ -184,38 +182,8 @@
   text-align: var(--ion-title-size-large-text-align);
 }
 
-/**
- * FW-7295: the header collapse scales the large title text from this
- * origin, and the iOS page transition measures the text's width.
- */
-:host(.title-size-large) {
-  @include mixins.transform-origin(var(--ion-title-size-large-transform-origin-x), center);
-}
-
-:host(.title-size-large) .toolbar-title {
-  @include mixins.transform-origin(inherit);
-
-  width: var(--ion-title-size-large-inner-width);
-}
-
-/**
- * FW-7295: the iOS page transition moves a copy of the large title out of
- * its toolbar, so restore the color and font it would have inherited.
- */
-:host(.title-size-large.ion-cloned-element) {
-  color: var(--ion-title-color, var(--ion-text-color, #000));
-
-  /**
-   * Same tokens as the title, but a different fallback: the copy sits
-   * outside the toolbar, so `inherit` would pick up the overlay's font.
-   */
-  font-family: var(--ion-title-font-family, var(--ion-font-family));
-}
-
 // Title: Hue
 // --------------------------------------------------
-
-// Keep these after the cloned rule so a colored large title's copy keeps its color
 
 :host(.title-hue-bold.ion-color) {
   color: var(--ion-title-hue-bold-semantic-default-color);

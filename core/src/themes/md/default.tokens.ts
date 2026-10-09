@@ -1228,21 +1228,11 @@ export const defaultTheme: DefaultTheme = {
             weight: 'var(--ion-font-weight-normal)',
           },
 
-          inner: {
-            width: '100%',
-          },
-
           padding: {
             top: 'var(--ion-spacing-0)',
             end: 'var(--ion-spacing-xl)',
             bottom: 'var(--ion-spacing-0)',
             start: 'var(--ion-spacing-xl)',
-          },
-
-          transform: {
-            origin: {
-              x: '50%',
-            },
           },
         },
       },
