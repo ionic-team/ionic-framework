@@ -572,6 +572,79 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
     });
   });
 
+  test.describe(title('sheet modal: no intermediate breakpoints'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/modal/test/sheet', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#short-sheet');
+      await ionModalDidPresent.next();
+    });
+
+    test('should not dismiss when dragged upwards', async ({ page }) => {
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      const header = page.locator('.modal-sheet ion-header');
+
+      /**
+       * The sheet is already fully open, so dragging up cannot take it anywhere.
+       * It has to stay open no matter how fast the drag was.
+       */
+      await dragElementBy(header, page, 0, -50);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.isDismissing).toBe(false);
+      await expect(page.locator('ion-modal')).toBeVisible();
+    });
+
+    test('should dismiss when dragged downwards', async ({ page }) => {
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      const header = page.locator('.modal-sheet ion-header');
+
+      /**
+       * Drag far enough that the velocity projection lands past the
+       * halfway point of the sheet, causing it to snap to breakpoint 0.
+       */
+      await dragElementBy(header, page, 0, 200);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.isDismissing).toBe(true);
+
+      await ionModalDidDismiss.next();
+    });
+  });
+
+  test.describe(title('sheet modal: intermediate breakpoints'), () => {
+    test('should not shrink when dragged upwards', async ({ page }) => {
+      await page.goto('/src/components/modal/test/sheet', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      await page.click('#custom-height-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(1));
+      await ionBreakpointDidChange.next();
+
+      const header = page.locator('.modal-sheet ion-header');
+
+      await dragElementBy(header, page, 0, -50);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(dragEndEvent.detail.snapBreakpoint).toBe(1);
+    });
+  });
+
   test.describe(title('sheet modal: late breakpoints binding'), () => {
     test('should not crash when swiped after breakpoints are set after the modal loads', async ({ page }) => {
       const pageErrors: string[] = [];
