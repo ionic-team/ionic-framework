@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title - Transition</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-nav root="page-inbox"></ion-nav>
+    </ion-app>
+
+    <script>
+      const SHORT_TITLE = 'Inbox';
+      const LONG_TITLE = 'Inbox with a name long enough to truncate';
+
+      /**
+       * A large title page. Used on its own, inside tabs and inside a modal,
+       * so every scenario runs the same transition.
+       */
+      class PageInbox extends HTMLElement {
+        connectedCallback() {
+          const inModal = this.closest('ion-modal') !== null;
+          const isTopLevel = !inModal && this.closest('ion-tabs') === null;
+
+          this.innerHTML = `
+          <ion-header translucent="true">
+            <ion-toolbar>
+              <ion-title>${SHORT_TITLE}</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content fullscreen="true">
+            <ion-header scroll-effect="condense">
+              <ion-toolbar>
+                <ion-title size="large">${SHORT_TITLE}</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <div class="ion-padding controls">
+              <button class="go" data-back-text="match">Go (matching back text)</button>
+              <button class="go" data-back-text="Back">Go (different back text)</button>
+              <button class="go" data-back-text="">Go (no back text)</button>
+              <button class="cycle-color">Cycle title color</button>
+              <button class="toggle-long">Toggle long title</button>
+              ${inModal ? '<button class="close-modal">Close modal</button>' : ''}
+              ${
+                isTopLevel
+                  ? `<button class="open-modal">Open in modal</button>
+                     <button class="open-tabs">Open in tabs</button>`
+                  : ''
+              }
+            </div>
+          </ion-content>
+        `;
+
+          const largeTitle = this.querySelector('ion-title[size="large"]');
+
+          this.querySelectorAll('.go').forEach((button) => {
+            button.addEventListener('click', () => {
+              /**
+               * The back button text sets which part of the transition runs:
+               * matching text scales width and height, different text scales
+               * height only, and no text skips the text scaling.
+               */
+              const { backText } = button.dataset;
+              this.closest('ion-nav').push('page-message', {
+                backText: backText === 'match' ? largeTitle.textContent : backText,
+              });
+            });
+          });
+
+          // Cycles none, primary, then primary with the subtle hue
+          this.querySelector('.cycle-color').addEventListener('click', () => {
+            if (!largeTitle.color) {
+              largeTitle.color = 'primary';
+              largeTitle.hue = 'bold';
+            } else if (largeTitle.hue === 'bold') {
+              largeTitle.hue = 'subtle';
+            } else {
+              largeTitle.color = undefined;
+              largeTitle.hue = undefined;
+            }
+          });
+
+          this.querySelector('.toggle-long').addEventListener('click', () => {
+            largeTitle.textContent = largeTitle.textContent === SHORT_TITLE ? LONG_TITLE : SHORT_TITLE;
+          });
+
+          if (inModal) {
+            this.querySelector('.close-modal').addEventListener('click', () => {
+              this.closest('ion-modal').dismiss();
+            });
+          }
+
+          if (isTopLevel) {
+            this.querySelector('.open-modal').addEventListener('click', () => {
+              const modal = document.createElement('ion-modal');
+              modal.component = 'ion-nav';
+              modal.componentProps = { root: 'page-inbox' };
+              modal.addEventListener('ionModalDidDismiss', () => modal.remove());
+              document.body.appendChild(modal);
+              modal.present();
+            });
+
+            this.querySelector('.open-tabs').addEventListener('click', () => {
+              this.closest('ion-nav').push('page-tabs');
+            });
+          }
+        }
+      }
+
+      class PageMessage extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button></ion-back-button>
+              </ion-buttons>
+              <ion-title>Message</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <p>Go back to see the back button grow into the large title.</p>
+          </ion-content>
+        `;
+
+          /**
+           * The md and ionic themes hide the default back button text,
+           * so it's always set explicitly.
+           */
+          this.querySelector('ion-back-button').text = this.backText ?? SHORT_TITLE;
+        }
+      }
+
+      /**
+       * The transition finds the large title differently when the leaving
+       * or entering page is ion-tabs, so the inbox also runs inside a tab.
+       */
+      class PageTabs extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-tabs>
+            <ion-tab tab="inbox">
+              <page-inbox class="ion-page"></page-inbox>
+            </ion-tab>
+            <ion-tab-bar slot="bottom">
+              <ion-tab-button tab="inbox">
+                <ion-label>Inbox</ion-label>
+              </ion-tab-button>
+            </ion-tab-bar>
+          </ion-tabs>
+        `;
+        }
+      }
+
+      customElements.define('page-inbox', PageInbox);
+      customElements.define('page-message', PageMessage);
+      customElements.define('page-tabs', PageTabs);
+    </script>
+  </body>
+</html>
