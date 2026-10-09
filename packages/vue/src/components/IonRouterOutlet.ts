@@ -222,8 +222,16 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
           { pathname: routeInfo.pushedByRoute || "" },
           id
         );
-        enteringViewItem.ionPageElement.setAttribute("aria-hidden", "true");
-        enteringViewItem.ionPageElement.classList.add("ion-page-hidden");
+        /**
+         * Navigation can change while the cancelled animation finishes,
+         * leaving no previous view or mounted page in this outlet.
+         */
+        const enteringEl = enteringViewItem?.ionPageElement;
+        if (!enteringEl) {
+          return;
+        }
+        enteringEl.setAttribute("aria-hidden", "true");
+        enteringEl.classList.add("ion-page-hidden");
       }
     };
 
