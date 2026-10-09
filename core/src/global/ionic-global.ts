@@ -5,6 +5,7 @@ import { applyComponentsTheme, applyGlobalTheme, getCustomTheme } from '@utils/t
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
 import type { DefaultTheme } from '../themes/themes.interfaces';
+import { refreshBreakpointListeners } from '../utils/breakpoints';
 import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
@@ -120,6 +121,13 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   };
 
   config.reset(configObj);
+
+  /**
+   * The breakpoint listeners are built from the configured widths, so they have
+   * to be rebuilt if the config is reset after a component has subscribed.
+   */
+  refreshBreakpointListeners();
+
   if (config.getBoolean('persistConfig')) {
     saveConfig(win, configObj);
   }

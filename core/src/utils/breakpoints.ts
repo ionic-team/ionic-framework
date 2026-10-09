@@ -351,11 +351,33 @@ const notifyBreakpointSubscribers = () => {
 };
 
 /**
+ * Listen on the breakpoint media queries built from the configured widths.
+ */
+const createBreakpointQueries = () => {
+  breakpointQueries = SCREEN_BREAKPOINT_NAMES.map((breakpoint) =>
+    window.matchMedia(getScreenBreakpointMediaQuery(breakpoint)!)
+  );
+
+  breakpointQueries.forEach((query) => query.addEventListener('change', notifyBreakpointSubscribers));
+};
+
+/**
+ * Stop listening on the current breakpoint media queries.
+ */
+const destroyBreakpointQueries = () => {
+  breakpointQueries?.forEach((query) => query.removeEventListener('change', notifyBreakpointSubscribers));
+  breakpointQueries = undefined;
+};
+
+/**
  * Subscribe to changes in the active screen breakpoint.
  *
  * Listening on the breakpoint media queries rather than on `resize` means the
  * callback fires only when a threshold is actually crossed, and at the same
  * moment the CSS media queries change rather than after a debounce.
+ *
+ * The queries are built from the configured widths on first subscribe, and
+ * rebuilt by `refreshBreakpointListeners` if the config is ever reset again.
  *
  * @param callback Called when the active breakpoint changes.
  * @return A function that removes the subscription.
@@ -366,11 +388,7 @@ export const onBreakpointChange = (callback: () => void): (() => void) => {
   }
 
   if (breakpointQueries === undefined) {
-    breakpointQueries = SCREEN_BREAKPOINT_NAMES.map((breakpoint) =>
-      window.matchMedia(getScreenBreakpointMediaQuery(breakpoint)!)
-    );
-
-    breakpointQueries.forEach((query) => query.addEventListener('change', notifyBreakpointSubscribers));
+    createBreakpointQueries();
   }
 
   breakpointSubscribers ??= new Set();
@@ -382,6 +400,28 @@ export const onBreakpointChange = (callback: () => void): (() => void) => {
 };
 
 /**
+ * Rebuild the breakpoint media queries from the configured widths, keeping the
+ * current subscribers.
+ *
+ * The queries are built on first subscribe, so they would otherwise keep the
+ * widths that were configured then. Subscribers are notified because the
+ * breakpoint they are on may have changed without the screen moving.
+ *
+ * @internal Called when the config is reset, since that is the only point the
+ * widths can change.
+ */
+export const refreshBreakpointListeners = () => {
+  if (breakpointQueries === undefined) {
+    return;
+  }
+
+  destroyBreakpointQueries();
+  createBreakpointQueries();
+
+  notifyBreakpointSubscribers();
+};
+
+/**
  * Tear down the shared breakpoint listeners so the next subscribe rebuilds
  * them from the current config.
  *
@@ -389,7 +429,6 @@ export const onBreakpointChange = (callback: () => void): (() => void) => {
  * media queries are built from them on first subscribe.
  */
 export const resetBreakpointListeners = () => {
-  breakpointQueries?.forEach((query) => query.removeEventListener('change', notifyBreakpointSubscribers));
-  breakpointQueries = undefined;
+  destroyBreakpointQueries();
   breakpointSubscribers = undefined;
 };

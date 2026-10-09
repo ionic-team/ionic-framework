@@ -9,6 +9,7 @@ import {
   isBreakpointMap,
   matchBreakpoint,
   onBreakpointChange,
+  refreshBreakpointListeners,
   resetBreakpointListeners,
   resetScreenBreakpoints,
   resolveBreakpointMap,
@@ -454,6 +455,60 @@ describe('screen breakpoints against the window', () => {
       setWidth(1100);
 
       expect(callback).not.toHaveBeenCalled();
+    });
+
+    /**
+     * The queries are built from the configured widths when the first
+     * subscriber arrives, which is the supported order: the config is in place
+     * before any component connects. 700 and 730 sit between the default sm
+     * (576) and md (768), so this only fires if the configured md is used.
+     */
+    it('should notify at the configured width rather than the default', () => {
+      config.set('screenBreakpoints', { md: 720 } as any);
+
+      const callback = jest.fn();
+      onBreakpointChange(callback);
+
+      setWidth(700);
+      callback.mockClear();
+
+      setWidth(730);
+
+      expect(callback).toHaveBeenCalled();
+    });
+
+    /**
+     * The queries are built on first subscribe, so a later config reset has to
+     * rebuild them. 700 and 730 both sit between the default sm (576) and md
+     * (768), so this only fires if the rebuilt queries use the configured md.
+     */
+    it('should notify at the new width after the config is reset', () => {
+      const callback = jest.fn();
+      onBreakpointChange(callback);
+
+      setWidth(700);
+
+      config.set('screenBreakpoints', { md: 720 } as any);
+      refreshBreakpointListeners();
+      callback.mockClear();
+
+      setWidth(730);
+
+      expect(callback).toHaveBeenCalled();
+    });
+
+    it('should notify once when the listeners are rebuilt, so subscribers re-resolve', () => {
+      const callback = jest.fn();
+      onBreakpointChange(callback);
+
+      config.set('screenBreakpoints', { md: 720 } as any);
+      refreshBreakpointListeners();
+
+      expect(callback).toHaveBeenCalledTimes(1);
+    });
+
+    it('should do nothing when nothing has subscribed', () => {
+      expect(() => refreshBreakpointListeners()).not.toThrow();
     });
 
     it('should notify every subscriber', () => {
