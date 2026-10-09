@@ -46,18 +46,18 @@
    * @prop --ion-grid-breakpoint-xl-width: Width of the fixed grid on xl screens
    * @prop --ion-grid-breakpoint-xxl-width: Width of the fixed grid on xxl screens
    */
-
-  @include grid.make-breakpoint-padding(vars.$grid-paddings);
-
   display: block;
 }
+
+@include grid.make-breakpoint-padding(vars.$grid-paddings);
 
 // Fixed Grid
 // --------------------------------------------------
 
 :host(.grid-fixed) {
   @include mixins.margin-horizontal(auto);
-  @include grid.make-grid-widths(vars.$grid-widths);
 
   flex: 1;
 }
+
+@include grid.make-grid-widths(vars.$grid-widths);

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Grid - Breakpoints</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script>
+      /**
+       * Override the global screen breakpoints.
+       *
+       * This must run before `scripts.js` and the Ionic bundle so the values
+       * are picked up by `initialize()`.
+       */
+      window.Ionic = {
+        config: {
+          screenBreakpoints: {
+            xs: 0,
+            sm: 200,
+            md: 400,
+            lg: 600,
+            xl: 800,
+            xxl: 1000,
+          },
+        },
+      };
+    </script>
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Grid - Breakpoints</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="grid-demo">
+        <p class="ion-padding-start">Resize the window to step through the configured breakpoints.</p>
+
+        <table class="legend ion-padding-start">
+          <tr>
+            <th>Breakpoint</th>
+            <th>Activates at</th>
+            <th>Grid padding</th>
+            <th>Column padding</th>
+            <th>Fixed width</th>
+            <th>Columns</th>
+          </tr>
+          <tr>
+            <td>xs</td>
+            <td>0px</td>
+            <td>0px</td>
+            <td>0px</td>
+            <td>100%</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>sm</td>
+            <td>200px</td>
+            <td>12px</td>
+            <td>6px</td>
+            <td>180px</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>md</td>
+            <td>400px</td>
+            <td>28px</td>
+            <td>14px</td>
+            <td>360px</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>lg</td>
+            <td>600px</td>
+            <td>48px</td>
+            <td>24px</td>
+            <td>560px</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>xl</td>
+            <td>800px</td>
+            <td>72px</td>
+            <td>36px</td>
+            <td>760px</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>xxl</td>
+            <td>1000px</td>
+            <td>100px</td>
+            <td>50px</td>
+            <td>960px</td>
+            <td>1</td>
+          </tr>
+        </table>
+
+        <h2 class="ion-padding-start">Responsive padding</h2>
+        <ion-grid id="padding-grid">
+          <ion-row>
+            <ion-col>
+              <div>ion-col</div>
+            </ion-col>
+            <ion-col>
+              <div>ion-col</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <h2 class="ion-padding-start">Fixed width</h2>
+        <p class="ion-padding-start note">
+          The default fixed widths (540px at sm, up to 1320px at xxl) are sized for the default thresholds. Moving the
+          thresholds down without also moving these widths would leave the grid wider than the screen, where
+          <code>max-width: 100%</code> clamps it, so they are overridden to match.
+        </p>
+        <ion-grid fixed id="fixed-grid">
+          <ion-row>
+            <ion-col>
+              <div>ion-grid[fixed]</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <h2 class="ion-padding-start">Responsive column sizes</h2>
+        <p class="ion-padding-start note">
+          Each column spans xs 12, sm 6, md 4, lg 3, xl 2, xxl 1 of the 12 column grid, so the row goes from one column
+          per line to twelve as the screen grows.
+        </p>
+        <ion-grid id="size-grid">
+          <ion-row>
+            <ion-col class="responsive-col">
+              <div>1</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>2</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>3</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>4</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>5</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>6</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>7</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>8</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>9</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>10</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>11</div>
+            </ion-col>
+            <ion-col class="responsive-col">
+              <div>12</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+
+      <div id="breakpoint-readout" aria-live="polite">
+        <span id="active-breakpoint">…</span>
+        <small><span id="viewport-width">–</span>px</small>
+      </div>
+
+      <style>
+        /* Distinct grid padding per breakpoint. */
+        #padding-grid {
+          --ion-grid-breakpoint-xs-padding-top: 0px;
+          --ion-grid-breakpoint-xs-padding-end: 0px;
+          --ion-grid-breakpoint-xs-padding-bottom: 0px;
+          --ion-grid-breakpoint-xs-padding-start: 0px;
+
+          --ion-grid-breakpoint-sm-padding-top: 12px;
+          --ion-grid-breakpoint-sm-padding-end: 12px;
+          --ion-grid-breakpoint-sm-padding-bottom: 12px;
+          --ion-grid-breakpoint-sm-padding-start: 12px;
+
+          --ion-grid-breakpoint-md-padding-top: 28px;
+          --ion-grid-breakpoint-md-padding-end: 28px;
+          --ion-grid-breakpoint-md-padding-bottom: 28px;
+          --ion-grid-breakpoint-md-padding-start: 28px;
+
+          --ion-grid-breakpoint-lg-padding-top: 48px;
+          --ion-grid-breakpoint-lg-padding-end: 48px;
+          --ion-grid-breakpoint-lg-padding-bottom: 48px;
+          --ion-grid-breakpoint-lg-padding-start: 48px;
+
+          --ion-grid-breakpoint-xl-padding-top: 72px;
+          --ion-grid-breakpoint-xl-padding-end: 72px;
+          --ion-grid-breakpoint-xl-padding-bottom: 72px;
+          --ion-grid-breakpoint-xl-padding-start: 72px;
+
+          --ion-grid-breakpoint-xxl-padding-top: 100px;
+          --ion-grid-breakpoint-xxl-padding-end: 100px;
+          --ion-grid-breakpoint-xxl-padding-bottom: 100px;
+          --ion-grid-breakpoint-xxl-padding-start: 100px;
+
+          background-color: #cddc8b;
+        }
+
+        /* Distinct column padding per breakpoint. */
+        #padding-grid ion-col {
+          --ion-col-breakpoint-xs-padding-top: 0px;
+          --ion-col-breakpoint-xs-padding-end: 0px;
+          --ion-col-breakpoint-xs-padding-bottom: 0px;
+          --ion-col-breakpoint-xs-padding-start: 0px;
+
+          --ion-col-breakpoint-sm-padding-top: 6px;
+          --ion-col-breakpoint-sm-padding-end: 6px;
+          --ion-col-breakpoint-sm-padding-bottom: 6px;
+          --ion-col-breakpoint-sm-padding-start: 6px;
+
+          --ion-col-breakpoint-md-padding-top: 14px;
+          --ion-col-breakpoint-md-padding-end: 14px;
+          --ion-col-breakpoint-md-padding-bottom: 14px;
+          --ion-col-breakpoint-md-padding-start: 14px;
+
+          --ion-col-breakpoint-lg-padding-top: 24px;
+          --ion-col-breakpoint-lg-padding-end: 24px;
+          --ion-col-breakpoint-lg-padding-bottom: 24px;
+          --ion-col-breakpoint-lg-padding-start: 24px;
+
+          --ion-col-breakpoint-xl-padding-top: 36px;
+          --ion-col-breakpoint-xl-padding-end: 36px;
+          --ion-col-breakpoint-xl-padding-bottom: 36px;
+          --ion-col-breakpoint-xl-padding-start: 36px;
+
+          --ion-col-breakpoint-xxl-padding-top: 50px;
+          --ion-col-breakpoint-xxl-padding-end: 50px;
+          --ion-col-breakpoint-xxl-padding-bottom: 50px;
+          --ion-col-breakpoint-xxl-padding-start: 50px;
+
+          background-color: #f3b062;
+        }
+
+        /* Fixed widths that fit inside the configured thresholds */
+        #fixed-grid {
+          --ion-grid-breakpoint-xs-width: 100%;
+          --ion-grid-breakpoint-sm-width: 180px;
+          --ion-grid-breakpoint-md-width: 360px;
+          --ion-grid-breakpoint-lg-width: 560px;
+          --ion-grid-breakpoint-xl-width: 760px;
+          --ion-grid-breakpoint-xxl-width: 960px;
+        }
+
+        /* Stays on screen while the window is resized */
+        #breakpoint-readout {
+          position: fixed;
+          z-index: 100;
+
+          /* A heads-up display: it overlays the demo but never blocks it */
+          pointer-events: none;
+
+          inset-block-end: 16px;
+          inset-inline-end: 16px;
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          min-width: 92px;
+          padding: 10px 14px;
+
+          border-radius: 10px;
+
+          background-color: #1b1b1b;
+          box-shadow: 0 2px 10px rgb(0 0 0 / 35%);
+
+          color: #fff;
+          font-family: monospace;
+          line-height: 1.1;
+        }
+
+        #active-breakpoint {
+          font-size: 2rem;
+          font-weight: bold;
+          letter-spacing: 0.05em;
+        }
+
+        #breakpoint-readout small {
+          opacity: 0.7;
+          font-size: 0.8rem;
+        }
+
+        .legend {
+          /**
+           * The global stylesheet collapses tables, and padding does not apply
+           * to a collapsed table, so `ion-padding-start` would be ignored.
+           */
+          border-collapse: separate;
+          border-spacing: 0;
+
+          margin-bottom: 16px;
+          font-size: 0.85em;
+        }
+
+        .legend th,
+        .legend td {
+          padding: 2px 16px 2px 0;
+          text-align: start;
+        }
+
+        .legend th {
+          color: #666;
+          font-weight: normal;
+        }
+
+        .note {
+          color: #666;
+          font-size: 0.8em;
+        }
+
+        .grid-demo ion-col div {
+          background-color: #f7f7f7;
+          border: 1px solid #ddd;
+          font-size: 0.8em;
+          padding: 10px 5px;
+        }
+      </style>
+    </ion-app>
+
+    <script>
+      document.querySelectorAll('.responsive-col').forEach((col) => {
+        col.size = { xs: 12, sm: 6, md: 4, lg: 3, xl: 2, xxl: 1 };
+      });
+
+      /**
+       * Mirror the grid's resolved breakpoint into the page so it is visible
+       * while resizing. `ion-grid` reflects it as the `screen-breakpoint`
+       * attribute.
+       */
+      const fixedGrid = document.getElementById('fixed-grid');
+      const label = document.getElementById('active-breakpoint');
+      const width = document.getElementById('viewport-width');
+
+      const showActiveBreakpoint = () => {
+        label.textContent = fixedGrid.getAttribute('screen-breakpoint') ?? 'none';
+        width.textContent = window.innerWidth;
+      };
+
+      new MutationObserver(showActiveBreakpoint).observe(fixedGrid, {
+        attributeFilter: ['screen-breakpoint'],
+      });
+
+      // The breakpoint only changes at a threshold, so the width is tracked separately
+      window.addEventListener('resize', showActiveBreakpoint);
+
+      customElements.whenDefined('ion-grid').then(showActiveBreakpoint);
+    </script>
+  </body>
+</html>
