@@ -15,6 +15,42 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
   return el.shadowRoot || el;
 };
 
+/**
+ * The scale math needs the box around the title's text. Themes can make the
+ * text element wider than its text, so it's measured at its content width.
+ *
+ * @internal
+ * @param largeTitleEl - The large title to measure.
+ * @param rtl - Whether the title is in a right-to-left direction.
+ * @returns The box of the title's text element at its content width, and how
+ * far the rendered text sits from that box's start, such as when it's centered.
+ */
+const getLargeTitleTextBox = (largeTitleEl: HTMLIonTitleElement, rtl: boolean) => {
+  const textEl = shadow(largeTitleEl).querySelector<HTMLElement>('.toolbar-title')!;
+
+  /**
+   * A range measures where the text is drawn. The text element's own box
+   * can't, since it may be wider than the text, such as when centered.
+   */
+  const range = document.createRange();
+  range.selectNodeContents(largeTitleEl);
+  const text = range.getBoundingClientRect();
+
+  // Shrink the text element to its text for the scale math, then restore it
+  const width = textEl.style.width;
+  textEl.style.width = 'auto';
+  const box = textEl.getBoundingClientRect();
+  textEl.style.width = width;
+
+  /**
+   * How far the drawn text sits from where the shrunk box starts: 0 for a
+   * start-aligned title, more for a centered one. The copies start there.
+   */
+  const startShift = Math.max(0, rtl ? box.right - text.right : text.left - box.left);
+
+  return { box, startShift };
+};
+
 const getLargeTitle = (refEl: any) => {
   const tabs = refEl.tagName === 'ION-TABS' ? refEl : refEl.querySelector('ion-tabs');
   const query = 'ion-content ion-header:not(.header-collapse-condense-inactive) ion-title.title-size-large';
@@ -80,8 +116,10 @@ const createLargeTitleTransition = (
     // Text element not rendered if developers pass text="" to the back button
     const enteringBackButtonTextBox = enteringBackButtonTextEl?.getBoundingClientRect();
 
-    const leavingLargeTitleTextEl = shadow(leavingLargeTitle).querySelector('.toolbar-title')!;
-    const leavingLargeTitleTextBox = leavingLargeTitleTextEl.getBoundingClientRect();
+    const { box: leavingLargeTitleTextBox, startShift: leavingLargeTitleStartShift } = getLargeTitleTextBox(
+      leavingLargeTitle,
+      rtl
+    );
 
     animateLargeTitle(
       rootAnimation,
@@ -90,6 +128,7 @@ const createLargeTitleTransition = (
       leavingLargeTitle,
       leavingLargeTitleBox,
       leavingLargeTitleTextBox,
+      leavingLargeTitleStartShift,
       enteringBackButtonBox,
       enteringBackButtonTextEl,
       enteringBackButtonTextBox
@@ -103,7 +142,8 @@ const createLargeTitleTransition = (
       enteringBackButtonTextEl,
       enteringBackButtonTextBox,
       leavingLargeTitle,
-      leavingLargeTitleTextBox
+      leavingLargeTitleTextBox,
+      leavingLargeTitleStartShift
     );
   } else if (shouldAnimationBackward) {
     const enteringLargeTitleBox = enteringLargeTitle.getBoundingClientRect();
@@ -114,8 +154,10 @@ const createLargeTitleTransition = (
     // Text element not rendered if developers pass text="" to the back button
     const leavingBackButtonTextBox = leavingBackButtonTextEl?.getBoundingClientRect();
 
-    const enteringLargeTitleTextEl = shadow(enteringLargeTitle).querySelector('.toolbar-title')!;
-    const enteringLargeTitleTextBox = enteringLargeTitleTextEl.getBoundingClientRect();
+    const { box: enteringLargeTitleTextBox, startShift: enteringLargeTitleStartShift } = getLargeTitleTextBox(
+      enteringLargeTitle,
+      rtl
+    );
 
     animateLargeTitle(
       rootAnimation,
@@ -124,6 +166,7 @@ const createLargeTitleTransition = (
       enteringLargeTitle,
       enteringLargeTitleBox,
       enteringLargeTitleTextBox,
+      enteringLargeTitleStartShift,
       leavingBackButtonBox,
       leavingBackButtonTextEl,
       leavingBackButtonTextBox
@@ -137,7 +180,8 @@ const createLargeTitleTransition = (
       leavingBackButtonTextEl,
       leavingBackButtonTextBox,
       enteringLargeTitle,
-      enteringLargeTitleTextBox
+      enteringLargeTitleTextBox,
+      enteringLargeTitleStartShift
     );
   }
 
@@ -156,7 +200,8 @@ const animateBackButton = (
   backButtonTextEl: HTMLElement | null,
   backButtonTextBox: DOMRect | undefined,
   largeTitleEl: HTMLIonTitleElement,
-  largeTitleTextBox: DOMRect
+  largeTitleTextBox: DOMRect,
+  largeTitleStartShift: number
 ) => {
   const BACK_BUTTON_START_OFFSET = rtl ? `calc(100% - ${backButtonBox.right + 4}px)` : `${backButtonBox.left - 4}px`;
 
@@ -202,9 +247,13 @@ const animateBackButton = (
    * text. Otherwise, the back button icon will align with the
    * large title text but the back button text will not.
    */
+  /**
+   * Start where the large title's text is, so both copies move together
+   * from a title that isn't at the start edge, such as a centered one.
+   */
   const CONTAINER_START_TRANSLATE_X = rtl
-    ? `${backButtonIconBox.width / 2 - (backButtonIconBox.right - backButtonBox.right)}px`
-    : `${backButtonBox.left - backButtonIconBox.width / 2}px`;
+    ? `${backButtonIconBox.width / 2 - (backButtonIconBox.right - backButtonBox.right) - largeTitleStartShift}px`
+    : `${backButtonBox.left - backButtonIconBox.width / 2 + largeTitleStartShift}px`;
   const CONTAINER_END_TRANSLATE_X = rtl ? `-${window.innerWidth - backButtonBox.right}px` : `${backButtonBox.left}px`;
 
   /**
@@ -302,6 +351,9 @@ const animateBackButton = (
       position: 'absolute',
       top: '0px',
       [CONTAINER_ORIGIN_X]: '0px',
+
+      // The copy moves under the pointer, so it must not show hover styles
+      'pointer-events': 'none',
     })
     /**
      * The write hooks must be set on this animation as it is guaranteed to run. Other
@@ -309,11 +361,15 @@ const animateBackButton = (
      * has no visible text.
      */
     .beforeAddWrite(() => {
-      backButtonEl.style.setProperty('display', 'none');
+      /**
+       * Hide the back button without removing it from the layout,
+       * so a title placed next to it doesn't shift into its space.
+       */
+      backButtonEl.style.setProperty('visibility', 'hidden');
       clonedBackButtonEl.style.setProperty(TEXT_ORIGIN_X, BACK_BUTTON_START_OFFSET);
     })
     .afterAddWrite(() => {
-      backButtonEl.style.setProperty('display', '');
+      backButtonEl.style.removeProperty('visibility');
       clonedBackButtonEl.style.setProperty('display', 'none');
       clonedBackButtonEl.style.removeProperty(TEXT_ORIGIN_X);
     })
@@ -345,6 +401,7 @@ const animateLargeTitle = (
   largeTitleEl: HTMLIonTitleElement,
   largeTitleBox: DOMRect,
   largeTitleTextBox: DOMRect,
+  largeTitleStartShift: number,
   backButtonBox: DOMRect,
   backButtonTextEl: HTMLElement | null,
   backButtonTextBox: DOMRect | undefined
@@ -354,7 +411,13 @@ const animateLargeTitle = (
    */
   const ORIGIN_X = rtl ? 'right' : 'left';
 
-  const TITLE_START_OFFSET = rtl ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
+  /**
+   * The copy's text sits at the start of its box, so the copy starts where
+   * the title's text is rendered, such as further in when it's centered.
+   */
+  const TITLE_START_OFFSET = rtl
+    ? `calc(100% - ${largeTitleBox.right - largeTitleStartShift}px)`
+    : `${largeTitleBox.left + largeTitleStartShift}px`;
 
   /**
    * The cloned large should align exactly with the
@@ -370,9 +433,10 @@ const animateLargeTitle = (
    * title and the back button due to padding and font weight.
    */
   const LARGE_TITLE_TRANSLATION_OFFSET = 8;
+  // The copy already starts further in by the shift, so it travels that much less
   let END_TRANSLATE_X = rtl
-    ? `-${window.innerWidth - backButtonBox.right - LARGE_TITLE_TRANSLATION_OFFSET}px`
-    : `${backButtonBox.x + LARGE_TITLE_TRANSLATION_OFFSET}px`;
+    ? `${-(window.innerWidth - backButtonBox.right - LARGE_TITLE_TRANSLATION_OFFSET - largeTitleStartShift)}px`
+    : `${backButtonBox.x + LARGE_TITLE_TRANSLATION_OFFSET - largeTitleStartShift}px`;
 
   /**
    * How much to scale the large title up/down by.
@@ -401,8 +465,8 @@ const animateLargeTitle = (
      * does not need to be perfect, so approximate values are acceptable here.
      */
     END_TRANSLATE_X = rtl
-      ? `-${window.innerWidth - backButtonTextBox.right - LARGE_TITLE_TRANSLATION_OFFSET}px`
-      : `${backButtonTextBox.x - LARGE_TITLE_TRANSLATION_OFFSET}px`;
+      ? `${-(window.innerWidth - backButtonTextBox.right - LARGE_TITLE_TRANSLATION_OFFSET - largeTitleStartShift)}px`
+      : `${backButtonTextBox.x - LARGE_TITLE_TRANSLATION_OFFSET - largeTitleStartShift}px`;
 
     /**
      * In the forward direction, the large title should start at its normal size and
@@ -461,6 +525,12 @@ const animateLargeTitle = (
   const clonedTitleEl = getClonedElement<HTMLIonTitleElement>('ion-title')!;
   const clonedLargeTitleAnimation = createAnimation();
 
+  /**
+   * The copy sits outside the toolbar, so it loses styles that depend on it,
+   * such as the inherited color and font. Copy them from the title instead.
+   */
+  const { color, fontFamily, paddingTop, paddingRight, paddingBottom, paddingLeft } = getComputedStyle(largeTitleEl);
+
   clonedTitleEl.innerText = largeTitleEl.innerText;
   clonedTitleEl.size = largeTitleEl.size;
   clonedTitleEl.color = largeTitleEl.color;
@@ -481,9 +551,19 @@ const animateLargeTitle = (
       display: '',
       position: 'relative',
       [ORIGIN_X]: TITLE_START_OFFSET,
+      color,
+      'font-family': fontFamily,
+      'padding-top': paddingTop,
+      'padding-right': paddingRight,
+      'padding-bottom': paddingBottom,
+      'padding-left': paddingLeft,
+      'pointer-events': 'none',
     })
     .beforeAddWrite(() => {
       largeTitleEl.style.setProperty('opacity', '0');
+
+      // Scale from the text's start edge, not the edge of a wider text element
+      shadow(clonedTitleEl).querySelector<HTMLElement>('.toolbar-title')?.style.setProperty('width', 'auto');
     })
     .afterAddWrite(() => {
       largeTitleEl.style.setProperty('opacity', '');
