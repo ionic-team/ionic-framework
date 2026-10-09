@@ -1,4 +1,6 @@
+import { config } from '@global/config';
 import { newSpecPage } from '@stencil/core/testing';
+import { resetScreenBreakpoints } from '@utils/breakpoints';
 import * as helpers from '@utils/helpers';
 import * as logging from '@utils/logging';
 
@@ -1149,6 +1151,118 @@ describe('gallery', () => {
         expect((sharedGallery as any).getColumnIndex(7, [2, 2, 5], 3)).toBe(0);
         expect((sharedGallery as any).getColumnIndex(1, [3, 1, 1], 3)).toBe(1);
       });
+    });
+  });
+
+  /**
+   * The thresholds come from the `screenBreakpoints` config rather than a
+   * hardcoded map, so apps can override them. Each width below maps to a
+   * different breakpoint with the override than it does with the defaults,
+   * ensuring these tests fail if the config is ignored.
+   */
+  describe('gallery: screenBreakpoints config', () => {
+    const OVERRIDE = { xs: 0, sm: 200, md: 400, lg: 600, xl: 800, xxl: 1000 };
+
+    const setScreenBreakpoints = (value: unknown) => {
+      config.set('screenBreakpoints', value as any);
+      resetScreenBreakpoints();
+    };
+
+    beforeEach(() => {
+      setScreenBreakpoints(OVERRIDE);
+    });
+
+    afterEach(() => {
+      setScreenBreakpoints(undefined);
+    });
+
+    /**
+     * `xs` is no longer pinned to 0, so a gallery narrower than the configured
+     * `xs` matches no breakpoint and would otherwise resolve to `undefined`.
+     */
+    it('should resolve to the xs value when narrower than the configured xs', () => {
+      setScreenBreakpoints({ xs: 400 });
+
+      sharedGallery.columns = { xs: 1, md: 3 };
+
+      expect((sharedGallery as any).getColumnsForWidth(300)).toBe(1);
+    });
+
+    it('should resolve to the xs default when narrower than the configured xs', () => {
+      setScreenBreakpoints({ xs: 400 });
+
+      expect((sharedGallery as any).getColumnsForWidth(300)).toBe(DEFAULT_COLUMNS['xs']);
+    });
+
+    /**
+     * An unresolved value lands in the custom property as the string
+     * "undefined". The stylesheet's `var(--internal-gallery-columns, 2)`
+     * fallback cannot catch that, because the property is set.
+     */
+    it('should not write an unresolved value into the columns custom property', () => {
+      setScreenBreakpoints({ xs: 400 });
+
+      sharedGallery.columns = { xs: 1, md: 3 };
+
+      jest.spyOn(sharedGallery.el, 'getBoundingClientRect').mockReturnValue({ width: 300 } as DOMRect);
+
+      (sharedGallery as any).updateResponsiveStyles();
+
+      expect(sharedGallery.el.style.getPropertyValue('--internal-gallery-columns')).toBe('1');
+    });
+
+    it('should resolve columns against the configured widths', () => {
+      const breakpoints = [
+        // xs under both
+        { width: 150, expectedColumns: 3 },
+        // sm under the override, xs by default
+        { width: 350, expectedColumns: 4 },
+        // md under the override, xs by default
+        { width: 500, expectedColumns: 5 },
+        // lg under the override, sm by default
+        { width: 650, expectedColumns: 7 },
+        // xl under the override, md by default
+        { width: 850, expectedColumns: 9 },
+        // xxl under the override, lg by default
+        { width: 1100, expectedColumns: 12 },
+      ];
+
+      sharedGallery.columns = { xs: 3, sm: 4, md: 5, lg: 7, xl: 9, xxl: 12 };
+
+      breakpoints.forEach(({ width, expectedColumns }) => {
+        expect((sharedGallery as any).getColumnsForWidth(width)).toBe(expectedColumns);
+      });
+    });
+
+    it('should resolve the gap against the configured widths', () => {
+      const breakpoints = [
+        { width: 150, expectedGap: '2px' },
+        { width: 350, expectedGap: '4px' },
+        { width: 500, expectedGap: '8px' },
+        { width: 650, expectedGap: '16px' },
+        { width: 850, expectedGap: '32px' },
+        { width: 1100, expectedGap: '64px' },
+      ];
+
+      sharedGallery.gap = { xs: '2px', sm: '4px', md: '8px', lg: '16px', xl: '32px', xxl: '64px' };
+
+      breakpoints.forEach(({ width, expectedGap }) => {
+        expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+      });
+    });
+
+    it('should resolve the default columns against the configured widths', () => {
+      // 500 is below the default md of 768, but at or above the configured 400
+      expect((sharedGallery as any).getColumnsForWidth(500)).toBe(DEFAULT_COLUMNS['md']);
+    });
+
+    it('should fall back to the defaults when the config is removed', () => {
+      setScreenBreakpoints(undefined);
+
+      sharedGallery.columns = { xs: 3, md: 5 };
+
+      // 500 resolves to xs again, since the default md is 768
+      expect((sharedGallery as any).getColumnsForWidth(500)).toBe(3);
     });
   });
 });

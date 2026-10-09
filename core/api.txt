@@ -1048,7 +1048,7 @@ ion-footer,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-footer,prop,translucent,boolean,false,false,false
 
 ion-gallery,shadow
-ion-gallery,prop,columns,GalleryBreakpoints<string | number> | number | string,{
+ion-gallery,prop,columns,BreakpointMap<string | number> | number | string,{
   xs: 2,
   sm: 3,
   md: 4,
@@ -1056,7 +1056,7 @@ ion-gallery,prop,columns,GalleryBreakpoints<string | number> | number | string,{
   xl: 8,
   xxl: 10,
 },false,false
-ion-gallery,prop,gap,GalleryBreakpoints<string | number> | number | string,'16px',false,false
+ion-gallery,prop,gap,BreakpointMap<string | number> | number | string,'16px',false,false
 ion-gallery,prop,layout,"masonry" | "uniform",'uniform',false,false
 ion-gallery,prop,mode,"ios" | "md",undefined,false,false
 ion-gallery,prop,order,"best-fit" | "sequential" | undefined,undefined,false,false
