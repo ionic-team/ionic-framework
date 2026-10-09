@@ -517,7 +517,7 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
 
     proxy._futureSnapshot = (activatedRoute as any)._futureSnapshot;
     proxy._routerState = (activatedRoute as any)._routerState;
-    proxy.snapshot = activatedRoute.snapshot;
+    bindProxySnapshot(proxy, activatedRoute);
     proxy.outlet = activatedRoute.outlet;
     proxy.component = activatedRoute.component;
 
@@ -561,13 +561,25 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
 
     (proxy as any)._futureSnapshot = (activatedRoute as any)._futureSnapshot;
     (proxy as any)._routerState = (activatedRoute as any)._routerState;
-    proxy.snapshot = activatedRoute.snapshot;
+    bindProxySnapshot(proxy, activatedRoute);
     proxy.outlet = activatedRoute.outlet;
     proxy.component = activatedRoute.component;
 
     this.currentActivatedRoute$.next({ component, activatedRoute });
   }
 }
+
+/**
+ * A query params change reuses the page and updates the route's snapshot without
+ * re-activating the outlet, so the proxy reads it live instead of copying it once.
+ * It's configurable because `updateActivatedRouteProxy` rebinds it.
+ */
+const bindProxySnapshot = (proxy: ActivatedRoute, activatedRoute: ActivatedRoute): void => {
+  Object.defineProperty(proxy, 'snapshot', {
+    get: () => activatedRoute.snapshot,
+    configurable: true,
+  });
+};
 
 class OutletInjector implements Injector {
   constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) {}
