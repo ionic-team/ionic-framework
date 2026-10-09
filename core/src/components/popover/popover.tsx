@@ -37,6 +37,7 @@ import type {
   TriggerAction,
 } from './popover-interface';
 import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
+import { isRTL } from '@utils/rtl';
 
 // TODO(FW-2832): types
 
@@ -495,6 +496,13 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const { el } = this;
 
     const { inline, delegate } = this.getDelegate(true);
+
+    /**
+     * When presented, ion-popover is hoisted from its place in the element
+     * hierarchy. Copy the current direction onto this element so that child
+     * elements can match.
+     */
+    el.dir = isRTL(el)? 'rtl' : 'ltr';
 
     /**
      * Emit ionMount so JS Frameworks have an opportunity

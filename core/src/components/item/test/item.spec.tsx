@@ -74,4 +74,30 @@ describe('item', () => {
       expect(item).not.toHaveClass('item-focus-indicator-room');
     });
   });
+
+  describe('rtl', () => {
+    const newItemPage = async (html: string, documentDir?: 'rtl') => {
+      const page = await newSpecPage({ components: [Item], html: `<div></div>` });
+      if (documentDir) {
+        page.doc.documentElement.setAttribute('dir', documentDir);
+      }
+      await page.setContent(html);
+      return page.body.querySelector('ion-item')!;
+    };
+
+    it('should set item-rtl when an ancestor declares rtl', async () => {
+      const item = await newItemPage(`<div dir="rtl"><div><ion-item>Item</ion-item></div></div>`);
+      expect(item).toHaveClass('item-rtl');
+    });
+
+    it('should set item-rtl when it declares rtl', async () => {
+      const item = await newItemPage(`<ion-item dir="rtl">Item</ion-item>`);
+      expect(item).toHaveClass('item-rtl');
+    });
+
+    it('should not set item-rtl when an ancestor declares ltr in an rtl document', async () => {
+      const item = await newItemPage(`<div dir="ltr"><div><ion-item>Item</ion-item></div></div>`, 'rtl');
+      expect(item).not.toHaveClass('item-rtl');
+    });
+  });
 });
