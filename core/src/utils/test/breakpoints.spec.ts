@@ -13,6 +13,7 @@ import {
   resetScreenBreakpoints,
   resolveBreakpointMap,
   SCREEN_BREAKPOINT_NAMES,
+  ScreenBreakpoints,
 } from '../breakpoints';
 
 /**
@@ -51,6 +52,23 @@ describe('screen breakpoints', () => {
   });
 
   describe('getScreenBreakpoints()', () => {
+    /**
+     * Every caller is handed the same cached object, so a write would move the
+     * breakpoint for the whole page. `Readonly` only stops TypeScript callers,
+     * which is why it is frozen.
+     */
+    it('should return a frozen object that callers cannot change', () => {
+      const breakpoints = getScreenBreakpoints();
+
+      expect(Object.isFrozen(breakpoints)).toBe(true);
+      expect(() => ((breakpoints as ScreenBreakpoints).md = 600)).toThrow(TypeError);
+      expect(getScreenBreakpoints().md).toBe(EXPECTED_DEFAULT_SCREEN_BREAKPOINTS.md);
+    });
+
+    it('should freeze the defaults so the fallback cannot be corrupted', () => {
+      expect(Object.isFrozen(DEFAULT_SCREEN_BREAKPOINTS)).toBe(true);
+    });
+
     it('should return the defaults when no config is set', () => {
       expect(getScreenBreakpoints()).toEqual(EXPECTED_DEFAULT_SCREEN_BREAKPOINTS);
       expect(consoleWarnSpy).not.toHaveBeenCalled();

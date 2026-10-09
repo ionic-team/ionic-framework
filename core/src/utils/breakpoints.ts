@@ -26,14 +26,14 @@ export type ScreenBreakpoints = Record<ScreenBreakpoint, number>;
  * The screen breakpoints used when an application does not override them.
  * These match the `$screen-breakpoints` Sass map used by the stylesheets.
  */
-export const DEFAULT_SCREEN_BREAKPOINTS: Readonly<ScreenBreakpoints> = {
+export const DEFAULT_SCREEN_BREAKPOINTS: Readonly<ScreenBreakpoints> = Object.freeze({
   xs: 0,
   sm: 576,
   md: 768,
   lg: 992,
   xl: 1200,
   xxl: 1400,
-};
+});
 
 /**
  * A responsive property value keyed by screen breakpoint.
@@ -229,7 +229,7 @@ const resolveScreenBreakpoints = (configValue: unknown): ScreenBreakpoints => {
  * warnings are emitted once for each config object rather than on every render.
  */
 let lastConfigValue: unknown;
-let cachedBreakpoints: ScreenBreakpoints | undefined;
+let cachedBreakpoints: Readonly<ScreenBreakpoints> | undefined;
 
 /**
  * Get the screen breakpoints for the application, merging any
@@ -241,7 +241,7 @@ let cachedBreakpoints: ScreenBreakpoints | undefined;
  *
  * @return The width, in pixels, that each screen breakpoint activates at.
  */
-export const getScreenBreakpoints = (): ScreenBreakpoints => {
+export const getScreenBreakpoints = (): Readonly<ScreenBreakpoints> => {
   const configValue = config.get('screenBreakpoints');
 
   if (cachedBreakpoints !== undefined && configValue === lastConfigValue) {
@@ -249,7 +249,12 @@ export const getScreenBreakpoints = (): ScreenBreakpoints => {
   }
 
   lastConfigValue = configValue;
-  cachedBreakpoints = resolveScreenBreakpoints(configValue);
+  /**
+   * The same object is handed to every caller, so freezing it keeps one of
+   * them from moving a breakpoint for the whole page. `Readonly` alone would
+   * only stop TypeScript callers.
+   */
+  cachedBreakpoints = Object.freeze(resolveScreenBreakpoints(configValue));
 
   return cachedBreakpoints;
 };
