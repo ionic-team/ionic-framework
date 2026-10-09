@@ -18,6 +18,7 @@ interface ToolbarIndex {
   background: HTMLElement;
   ionTitleEl: HTMLIonTitleElement | undefined;
   innerTitleEl: HTMLElement;
+  innerTitleOrigin: string | undefined;
   ionButtonsEl: HTMLElement[] | [];
 }
 
@@ -33,6 +34,33 @@ export const cloneElement = (tagName: string) => {
   document.body.appendChild(clonedEl);
 
   return clonedEl;
+};
+
+/**
+ * The large title grows from the edge its text is aligned to, so the
+ * text's start doesn't shift. Centered text grows from the center.
+ *
+ * @internal
+ * @param ionTitleEl - The title whose alignment and direction set the origin.
+ * @returns The horizontal `transform-origin` keyword: `left`, `right` or `center`.
+ */
+const getTitleOrigin = (ionTitleEl: HTMLIonTitleElement): string => {
+  const { textAlign, direction } = getComputedStyle(ionTitleEl);
+  const rtl = direction === 'rtl';
+
+  if (textAlign === 'center' || textAlign === '-webkit-center') {
+    return 'center';
+  }
+
+  if (textAlign === 'left' || textAlign === 'right') {
+    return textAlign;
+  }
+
+  if (textAlign === 'end') {
+    return rtl ? 'left' : 'right';
+  }
+
+  return rtl ? 'right' : 'left';
 };
 
 export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderIndex | undefined => {
@@ -51,6 +79,7 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
         background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
         ionTitleEl,
         innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
+        innerTitleOrigin: ionTitleEl ? getTitleOrigin(ionTitleEl) : undefined,
         ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')),
       } as ToolbarIndex;
     }),
@@ -239,6 +268,7 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
     }
 
     titleDiv.style.transition = transition ? TRANSITION : '';
+    titleDiv.style.transformOrigin = `${toolbar.innerTitleOrigin} center`;
     titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
   });
 };
