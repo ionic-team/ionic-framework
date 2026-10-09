@@ -40,6 +40,88 @@ configs().forEach(({ title, config }) => {
       expect(results.violations).toEqual([]);
     });
 
+    test('should enter the selected button and leave the segment with Tab', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `<button id="before">Before</button>
+         <ion-segment value="second">
+           <ion-segment-button value="first">First</ion-segment-button>
+           <ion-segment-button value="second">Second</ion-segment-button>
+           <ion-segment-button value="third">Third</ion-segment-button>
+         </ion-segment>
+         <button id="after">After</button>`,
+        config
+      );
+      const buttons = page.locator('ion-segment-button');
+      await page.locator('#before').focus();
+      await pageUtils.pressKeys('Tab');
+      await expect(buttons.nth(1)).toBeFocused();
+      await pageUtils.pressKeys('Tab');
+      await expect(page.locator('#after')).toBeFocused();
+      await pageUtils.pressKeys('Shift+Tab');
+      await expect(buttons.nth(1)).toBeFocused();
+
+      // Manual activation moves focus without changing the selected button.
+      await page.keyboard.press('Home');
+      await expect(buttons.nth(0)).toBeFocused();
+      await expect(buttons.nth(1).locator('button')).toHaveAttribute('aria-selected', 'true');
+      await pageUtils.pressKeys('Tab');
+      await expect(page.locator('#after')).toBeFocused();
+      await pageUtils.pressKeys('Shift+Tab');
+      await expect(buttons.nth(1)).toBeFocused();
+      await page.keyboard.press('End');
+      await expect(buttons.nth(2)).toBeFocused();
+      await pageUtils.pressKeys('Shift+Tab');
+      await expect(page.locator('#before')).toBeFocused();
+    });
+
+    test('should keep one enabled tab stop when buttons change', async ({ page }) => {
+      await page.setContent(
+        `<ion-segment value="second">
+           <ion-segment-button value="first" disabled>First</ion-segment-button>
+           <ion-segment-button value="second">Second</ion-segment-button>
+           <ion-segment-button value="third">Third</ion-segment-button>
+         </ion-segment>`,
+        config
+      );
+      const tabStop = page.locator('ion-segment-button button[tabindex="0"]');
+      await expect(tabStop).toHaveCount(1);
+      await expect(tabStop).toHaveAccessibleName('Second');
+      await page.locator('ion-segment-button[value="second"]').evaluate((button: HTMLIonSegmentButtonElement) => {
+        button.disabled = true;
+      });
+      await expect(tabStop).toHaveCount(1);
+      await expect(tabStop).toHaveAccessibleName('Third');
+      await page.locator('ion-segment-button[value="first"]').evaluate((button: HTMLIonSegmentButtonElement) => {
+        button.disabled = false;
+      });
+      await expect(tabStop).toHaveCount(1);
+      await expect(tabStop).toHaveAccessibleName('First');
+      await page.locator('ion-segment').evaluate((segment: HTMLIonSegmentElement) => {
+        segment.value = 'third';
+      });
+      await expect(tabStop).toHaveAccessibleName('Third');
+      await page.locator('ion-segment-button[value="third"]').evaluate((button) => button.remove());
+      await expect(tabStop).toHaveCount(1);
+      await expect(tabStop).toHaveAccessibleName('First');
+      await page.locator('ion-segment').evaluate((segment: HTMLIonSegmentElement) => {
+        segment.value = 'added';
+        const button = document.createElement('ion-segment-button');
+        button.value = 'added';
+        button.textContent = 'Added';
+        segment.append(button);
+      });
+      await expect(tabStop).toHaveCount(1);
+      await expect(tabStop).toHaveAccessibleName('Added');
+      await page.locator('ion-segment-button[value="first"] button').focus();
+      await expect(tabStop).toHaveAccessibleName('First');
+      await page.locator('ion-segment').evaluate((segment) => {
+        segment.remove();
+        document.body.append(segment);
+      });
+      await expect(tabStop).toHaveCount(1);
+      await expect(tabStop).toHaveAccessibleName('Added');
+    });
+
     test('segment buttons should be keyboard navigable', async ({ page, pageUtils }) => {
       const isRTL = config.direction === 'rtl';
       const nextKey = isRTL ? 'ArrowLeft' : 'ArrowRight';
