@@ -21,6 +21,11 @@
         --height: 50%;
       }
 
+      /* Kept below half the viewport so the drag tests catch sheets dismissing on upward drags. */
+      .short-sheet {
+        --height: 40%;
+      }
+
       .custom-handle::part(handle) {
         top: -16px;
         background: rgba(255, 255, 255, 0.53);
@@ -126,6 +131,12 @@
           </button>
           <button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })">
             Present Sheet Modal (Custom Height)
+          </button>
+          <button
+            id="short-sheet"
+            onclick="presentModal({ cssClass: 'short-sheet', initialBreakpoint: 1, breakpoints: [0, 1] })"
+          >
+            Present Sheet Modal (40% Height, Breakpoints 0 and 1)
           </button>
           <button
             id="handle-behavior-cycle-modal"
