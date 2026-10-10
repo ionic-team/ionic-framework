@@ -52,6 +52,14 @@ export const createPointerEvents = (
     if (lastTouchEvent > Date.now()) {
       return;
     }
+    /**
+     * Only the primary button should start a gesture. On macOS, the
+     * context menu opened by a right click swallows the mouseup, which
+     * would leave the gesture active until the next click.
+     */
+    if (ev.button > 0) {
+      return;
+    }
     if (!pointerDown(ev)) {
       return;
     }
