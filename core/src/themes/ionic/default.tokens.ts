@@ -1074,18 +1074,8 @@ export const defaultTheme: DefaultTheme = {
             weight: 'var(--ion-font-weight-medium)',
           },
 
-          inner: {
-            width: '100%',
-          },
-
           line: {
             height: dynamicFont(global.root, 36),
-          },
-
-          transform: {
-            origin: {
-              x: '50%',
-            },
           },
         },
       },

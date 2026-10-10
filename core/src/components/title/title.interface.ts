@@ -62,18 +62,7 @@ export type IonTitleRecipe = {
 
     large?: IonTitleSizeDefinition & {
       alignItems?: string;
-
-      inner?: {
-        width?: string;
-      };
-
       minWidth?: string;
-
-      transform?: {
-        origin?: {
-          x?: string;
-        };
-      };
     };
   };
 };
