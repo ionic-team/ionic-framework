@@ -71,6 +71,7 @@
   flex: 1;
   align-items: center;
 
+  // Gives the title its own layer so page transitions stay smooth
   transform: translateZ(0);
 
   box-sizing: var(--ion-title-box-sizing);
