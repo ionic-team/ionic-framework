@@ -1,15 +1,16 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { config } from '../../../global/config';
 import { ToolbarTitle } from '../title';
 
 describe('title: classes', () => {
-  it('should add the default size class when size is not set', async () => {
+  it('should add the medium size class when size is not set', async () => {
     const page = await newSpecPage({
       components: [ToolbarTitle],
       html: `<ion-title>Title</ion-title>`,
     });
 
-    expect(page.root!.classList.contains('title-default')).toBe(true);
+    expect(page.root!.classList.contains('title-size-medium')).toBe(true);
   });
 
   it('should add the size class when size is set', async () => {
@@ -19,8 +20,8 @@ describe('title: classes', () => {
     });
 
     const [large, small] = Array.from(page.body.querySelectorAll('ion-title'));
-    expect(large.classList.contains('title-large')).toBe(true);
-    expect(small.classList.contains('title-small')).toBe(true);
+    expect(large.classList.contains('title-size-large')).toBe(true);
+    expect(small.classList.contains('title-size-small')).toBe(true);
   });
 
   it('should add the color classes when color is set', async () => {
@@ -33,14 +34,23 @@ describe('title: classes', () => {
     expect(page.root!.classList.contains('ion-color-primary')).toBe(true);
   });
 
-  it('should add the rtl class when the document is rtl', async () => {
+  it('should add the bold hue class when hue is not set', async () => {
     const page = await newSpecPage({
       components: [ToolbarTitle],
       html: `<ion-title>Title</ion-title>`,
-      direction: 'rtl',
     });
 
-    expect(page.root!.classList.contains('title-rtl')).toBe(true);
+    expect(page.root!.classList.contains('title-hue-bold')).toBe(true);
+  });
+
+  it('should add the hue class when hue is set', async () => {
+    const page = await newSpecPage({
+      components: [ToolbarTitle],
+      html: `<ion-title hue="subtle">Title</ion-title>`,
+    });
+
+    expect(page.root!.classList.contains('title-hue-subtle')).toBe(true);
+    expect(page.root!.classList.contains('title-hue-bold')).toBe(false);
   });
 
   /**
@@ -70,6 +80,38 @@ describe('title: style event', () => {
     page.root!.setAttribute('size', 'large');
     await page.waitForChanges();
 
-    expect(ionStyle).toHaveBeenCalledWith({ 'title-large': true });
+    expect(ionStyle).toHaveBeenCalledWith({ 'title-size-large': true });
+  });
+});
+
+describe('title: config', () => {
+  beforeEach(() => {
+    config.reset({
+      customTheme: { config: { components: { IonTitle: { size: 'large', hue: 'subtle' } } } },
+    });
+  });
+
+  afterEach(() => {
+    config.reset({});
+  });
+
+  it('should use the config values when the props are not set', async () => {
+    const page = await newSpecPage({
+      components: [ToolbarTitle],
+      html: `<ion-title>Title</ion-title>`,
+    });
+
+    expect(page.root!.classList.contains('title-size-large')).toBe(true);
+    expect(page.root!.classList.contains('title-hue-subtle')).toBe(true);
+  });
+
+  it('should use the props over the config values', async () => {
+    const page = await newSpecPage({
+      components: [ToolbarTitle],
+      html: `<ion-title size="small" hue="bold">Title</ion-title>`,
+    });
+
+    expect(page.root!.classList.contains('title-size-small')).toBe(true);
+    expect(page.root!.classList.contains('title-hue-bold')).toBe(true);
   });
 });

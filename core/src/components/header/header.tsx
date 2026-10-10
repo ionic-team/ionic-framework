@@ -18,6 +18,7 @@ import {
   handleContentScroll,
   handleHeaderFade,
   handleToolbarIntersection,
+  isLargeTitle,
   setHeaderActive,
   setToolbarBackgroundOpacity,
   getRoleType,
@@ -234,6 +235,10 @@ export class Header implements ComponentInterface {
     }
   }
 
+  private hasLargeTitle() {
+    return Array.from(this.el.querySelectorAll('ion-title')).some(isLargeTitle);
+  }
+
   private async setupCondenseHeader(contentEl: HTMLElement | null, pageEl: Element | null): Promise<boolean> {
     if (!contentEl || !pageEl) {
       printIonContentErrorMsg(this.el);
@@ -258,8 +263,7 @@ export class Header implements ComponentInterface {
      * in the condense header. Without it, there is nothing to
      * collapse into the main header toolbar.
      */
-    const hasLargeTitle = this.el.querySelector('ion-title[size="large"]') !== null;
-    if (!hasLargeTitle) {
+    if (!this.hasLargeTitle()) {
       printIonWarning(
         '[ion-header] - The condense scroll effect requires an <ion-title size="large"> in the condense header.',
         this.el
@@ -329,12 +333,11 @@ export class Header implements ComponentInterface {
     // condense/fade via the deprecated `collapse` prop are iOS-only.
     const isModeRestricted = scrollEffect === undefined && theme !== 'ios';
     const hasHide = effect === 'hide';
-    const hasCondense =
-      effect === 'condense' && !isModeRestricted && this.el.querySelector('ion-title[size="large"]') !== null;
+    const hasCondense = effect === 'condense' && !isModeRestricted && this.hasLargeTitle();
     const hasFade = effect === 'fade' && !isModeRestricted;
     // The condense header should be hidden when
     // - deprecated collapse prop is used on non-iOS (mode restricted), or
-    // - scrollEffect="condense" is set but no ion-title[size="large"] is present
+    // - scrollEffect="condense" is set but no large ion-title is present
     const isHiddenCondense = effect === 'condense' && !hasCondense;
     // banner role must be at top level, so remove role if inside a menu
     const roleType = isHiddenCondense ? 'none' : getRoleType(hostContext('ion-menu', this.el));

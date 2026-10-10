@@ -11,6 +11,7 @@ import type { IonSkeletonTextRecipe } from '../components/skeleton-text/skeleton
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
 import type { IonTextConfig, IonTextRecipe } from '../components/text/text.interfaces';
 import type { IonThumbnailRecipe } from '../components/thumbnail/thumbnail.interfaces';
+import type { IonTitleConfig, IonTitleRecipe } from '../components/title/title.interface';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
@@ -257,6 +258,7 @@ export type IonicConfig = IonicGlobalConfig & {
     IonProgressBar?: IonProgressBarConfig;
     IonSpinner?: IonSpinnerConfig;
     IonText?: IonTextConfig;
+    IonTitle?: IonTitleConfig;
   };
 };
 
@@ -307,6 +309,7 @@ type Components = {
   IonSpinner?: IonSpinnerRecipe;
   IonText?: IonTextRecipe;
   IonThumbnail?: IonThumbnailRecipe;
+  IonTitle?: IonTitleRecipe;
 
   IonCard?: any;
   IonItem?: any;
