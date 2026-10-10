@@ -1,5 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { config } from '../../../global/config';
 import { ToolbarTitle } from '../title';
 
 describe('title: classes', () => {
@@ -33,6 +34,25 @@ describe('title: classes', () => {
     expect(page.root!.classList.contains('ion-color-primary')).toBe(true);
   });
 
+  it('should add the bold hue class when hue is not set', async () => {
+    const page = await newSpecPage({
+      components: [ToolbarTitle],
+      html: `<ion-title>Title</ion-title>`,
+    });
+
+    expect(page.root!.classList.contains('title-hue-bold')).toBe(true);
+  });
+
+  it('should add the hue class when hue is set', async () => {
+    const page = await newSpecPage({
+      components: [ToolbarTitle],
+      html: `<ion-title hue="subtle">Title</ion-title>`,
+    });
+
+    expect(page.root!.classList.contains('title-hue-subtle')).toBe(true);
+    expect(page.root!.classList.contains('title-hue-bold')).toBe(false);
+  });
+
   /**
    * The iOS collapsing header and page transition look up this
    * element and measure it, so it must keep its class.
@@ -61,5 +81,37 @@ describe('title: style event', () => {
     await page.waitForChanges();
 
     expect(ionStyle).toHaveBeenCalledWith({ 'title-size-large': true });
+  });
+});
+
+describe('title: config', () => {
+  beforeEach(() => {
+    config.reset({
+      customTheme: { config: { components: { IonTitle: { size: 'large', hue: 'subtle' } } } },
+    });
+  });
+
+  afterEach(() => {
+    config.reset({});
+  });
+
+  it('should use the config values when the props are not set', async () => {
+    const page = await newSpecPage({
+      components: [ToolbarTitle],
+      html: `<ion-title>Title</ion-title>`,
+    });
+
+    expect(page.root!.classList.contains('title-size-large')).toBe(true);
+    expect(page.root!.classList.contains('title-hue-subtle')).toBe(true);
+  });
+
+  it('should use the props over the config values', async () => {
+    const page = await newSpecPage({
+      components: [ToolbarTitle],
+      html: `<ion-title size="small" hue="bold">Title</ion-title>`,
+    });
+
+    expect(page.root!.classList.contains('title-size-small')).toBe(true);
+    expect(page.root!.classList.contains('title-hue-bold')).toBe(true);
   });
 });
