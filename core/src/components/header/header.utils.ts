@@ -1,6 +1,9 @@
 import { readTask, writeTask } from '@stencil/core';
 import { clamp } from '@utils/helpers';
 
+import { config } from '../../global/config';
+import type { IonTitleSize } from '../title/title.interface';
+
 const TRANSITION = 'all 0.2s ease-in-out';
 const ROLE_NONE = 'none';
 const ROLE_BANNER = 'banner';
@@ -211,11 +214,27 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   }
 };
 
+/**
+ * Checks the `size` prop, then the attribute (the header can render before
+ * the title is defined), then the `IonTitle.size` config.
+ *
+ * @internal
+ * @param ionTitleEl - The title to check.
+ * @returns Whether the title is large.
+ */
+export const isLargeTitle = (ionTitleEl: HTMLIonTitleElement) => {
+  const attributeSize = ionTitleEl.getAttribute('size') as IonTitleSize | null;
+  const configSize = config.getObjectValue('IonTitle.size') as IonTitleSize | undefined;
+  const size = ionTitleEl.size ?? attributeSize ?? configSize;
+
+  return size === 'large';
+};
+
 export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, transition = false) => {
   toolbars.forEach((toolbar) => {
     const ionTitle = toolbar.ionTitleEl;
     const titleDiv = toolbar.innerTitleEl;
-    if (!ionTitle || ionTitle.size !== 'large') {
+    if (!ionTitle || !isLargeTitle(ionTitle)) {
       return;
     }
 
