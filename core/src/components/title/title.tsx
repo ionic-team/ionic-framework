@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import { Component, Event, Host, Prop, Watch, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
@@ -17,8 +17,6 @@ import type { IonTitleSize } from './title.interface';
   shadow: true,
 })
 export class ToolbarTitle implements ComponentInterface {
-  @Element() el!: HTMLElement;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -83,11 +81,11 @@ export class ToolbarTitle implements ComponentInterface {
   }
 
   render() {
-    const { hueValue, sizeValue } = this;
+    const { color, hueValue, sizeValue } = this;
 
     return (
       <Host
-        class={createColorClasses(this.color, {
+        class={createColorClasses(color, {
           [`title-size-${sizeValue}`]: true,
           [`title-hue-${hueValue}`]: true,
         })}
