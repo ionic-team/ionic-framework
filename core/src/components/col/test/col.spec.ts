@@ -20,10 +20,14 @@ describe('ion-col: rtl', () => {
   });
 
   it('should offset from the right when an ancestor declares rtl', async () => {
-    expect((await newCol(`<div dir="rtl"><div><ion-col ${COL_PARAMS}></ion-col></div></div>`)).style.marginRight).toBe(CALC_STYLE);
+    expect((await newCol(`<div dir="rtl"><div><ion-col ${COL_PARAMS}></ion-col></div></div>`)).style.marginRight).toBe(
+      CALC_STYLE
+    );
   });
 
   it('should offset from the left when an ancestor declares ltr in an rtl document', async () => {
-    expect((await newCol(`<div dir="ltr"><div><ion-col ${COL_PARAMS}></ion-col></div></div>`, 'rtl')).style.marginLeft).toBe(CALC_STYLE);
+    expect(
+      (await newCol(`<div dir="ltr"><div><ion-col ${COL_PARAMS}></ion-col></div></div>`, 'rtl')).style.marginLeft
+    ).toBe(CALC_STYLE);
   });
 });

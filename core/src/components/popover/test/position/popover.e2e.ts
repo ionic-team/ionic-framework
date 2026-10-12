@@ -14,7 +14,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await page.goto('/src/components/popover/test/position', config);
 
       // Set viewport large enough for all buttons and popovers to be visible at once.
-      await page.setViewportSize({width: 768, height: 1024});
+      await page.setViewportSize({ width: 768, height: 1024 });
 
       const sides = ['top', 'right', 'bottom', 'left', 'start', 'end'];
       const alignments = ['start', 'center', 'end'];
@@ -35,7 +35,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
 configs({ directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
   test.describe(title('popover: position'), async () => {
-    test('should be on the left when side is start and an ancestor declares ltr', async({ page }) => {
+    test('should be on the left when side is start and an ancestor declares ltr', async ({ page }) => {
       await page.goto('/src/components/popover/test/position', config);
       await page.setViewportSize(Viewports.tablet.portrait);
       await openPopover(page, `ltr-start`);
@@ -46,9 +46,9 @@ configs({ directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
       const popoverBox = await popoverContent.boundingBox();
 
       expect(popoverBox!.x).toBeLessThan(buttonBox!.x);
-    })
+    });
 
-    test('should be on the right when side is start and an ancestor declares rtl', async({ page }) => {
+    test('should be on the right when side is start and an ancestor declares rtl', async ({ page }) => {
       await page.goto('/src/components/popover/test/position', config);
       await page.setViewportSize(Viewports.tablet.portrait);
       await openPopover(page, `rtl-start`);
@@ -59,6 +59,6 @@ configs({ directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
       const popoverBox = await popoverContent.boundingBox();
 
       expect(popoverBox!.x).toBeGreaterThan(buttonBox!.x);
-    })
+    });
   });
 });

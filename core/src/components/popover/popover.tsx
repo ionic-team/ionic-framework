@@ -17,6 +17,7 @@ import {
   setOverlayId,
 } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
+import { isRTL } from '@utils/rtl';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
 
@@ -37,7 +38,6 @@ import type {
   TriggerAction,
 } from './popover-interface';
 import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
-import { isRTL } from '@utils/rtl';
 
 // TODO(FW-2832): types
 
@@ -502,7 +502,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * hierarchy. Copy the current direction onto this element so that child
      * elements can match.
      */
-    el.dir = isRTL(el)? 'rtl' : 'ltr';
+    el.dir = isRTL(el) ? 'rtl' : 'ltr';
 
     /**
      * Emit ionMount so JS Frameworks have an opportunity
