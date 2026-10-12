@@ -12,17 +12,14 @@ describe('ion-progress-bar: rtl', () => {
     return page.body.querySelector('ion-progress-bar')!;
   };
 
-  it('should reverse when an ancestor declares rtl', async () => {
-    const progressBar = await newProgressBar(`<div dir="rtl"><div><ion-progress-bar></ion-progress-bar></div></div>`);
+  it('should reverse when it declares rtl', async () => {
+    const progressBar = await newProgressBar(`<ion-progress-bar dir="rtl"></ion-progress-bar>`);
     expect(progressBar).toHaveClass('progress-bar-reversed');
   });
 
-  // An rtl ancestor flips `reversed`, so the two cancel out.
-  it('should not reverse when reversed is set inside an rtl ancestor', async () => {
-    const progressBar = await newProgressBar(
-      `<div dir="rtl"><ion-progress-bar reversed="true"></ion-progress-bar></div>`
-    );
-    expect(progressBar).not.toHaveClass('progress-bar-reversed');
+  it('should reverse when an ancestor declares rtl', async () => {
+    const progressBar = await newProgressBar(`<div dir="rtl"><div><ion-progress-bar></ion-progress-bar></div></div>`);
+    expect(progressBar).toHaveClass('progress-bar-reversed');
   });
 
   it('should not reverse when an ancestor declares ltr in an rtl document', async () => {

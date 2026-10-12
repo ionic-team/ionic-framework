@@ -85,13 +85,13 @@ describe('item', () => {
       return page.body.querySelector('ion-item')!;
     };
 
-    it('should set item-rtl when an ancestor declares rtl', async () => {
-      const item = await newItemPage(`<div dir="rtl"><div><ion-item>Item</ion-item></div></div>`);
+    it('should set item-rtl when it declares rtl', async () => {
+      const item = await newItemPage(`<ion-item dir="rtl">Item</ion-item>`);
       expect(item).toHaveClass('item-rtl');
     });
 
-    it('should set item-rtl when it declares rtl', async () => {
-      const item = await newItemPage(`<ion-item dir="rtl">Item</ion-item>`);
+    it('should set item-rtl when an ancestor declares rtl', async () => {
+      const item = await newItemPage(`<div dir="rtl"><div><ion-item>Item</ion-item></div></div>`);
       expect(item).toHaveClass('item-rtl');
     });
 
