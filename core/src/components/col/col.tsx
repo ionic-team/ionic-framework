@@ -1,12 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
-import {
-  getActiveBreakpoint,
-  isBreakpointMap,
-  matchBreakpoint,
-  onBreakpointChange,
-  resolveBreakpointMap,
-} from '@utils/breakpoints';
+import { isBreakpointMap, matchBreakpoint, onBreakpointChange, resolveBreakpointMap } from '@utils/breakpoints';
 
 // TODO(FW-7557): Remove this import in v11.
 import {
@@ -457,7 +451,6 @@ export class Col implements ComponentInterface {
 
     return (
       <Host
-        screen-breakpoint={getActiveBreakpoint()}
         class={{
           'col-size': size !== undefined,
           'col-auto': isAutoSize,

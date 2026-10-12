@@ -1,6 +1,4 @@
 @use "../../themes/mixins" as mixins;
-@use "./grid.mixins" as grid;
-@use "./grid.vars" as vars;
 
 // Grid: Common Styles
 // --------------------------------------------------
@@ -46,10 +44,15 @@
    * @prop --ion-grid-breakpoint-xl-width: Width of the fixed grid on xl screens
    * @prop --ion-grid-breakpoint-xxl-width: Width of the fixed grid on xxl screens
    */
+  @include mixins.padding(
+    var(--internal-grid-padding-top),
+    var(--internal-grid-padding-end),
+    var(--internal-grid-padding-bottom),
+    var(--internal-grid-padding-start)
+  );
+
   display: block;
 }
-
-@include grid.make-breakpoint-padding(vars.$grid-paddings);
 
 // Fixed Grid
 // --------------------------------------------------
@@ -58,6 +61,8 @@
   @include mixins.margin-horizontal(auto);
 
   flex: 1;
-}
 
-@include grid.make-grid-widths(vars.$grid-widths);
+  width: var(--internal-grid-width);
+
+  max-width: 100%;
+}

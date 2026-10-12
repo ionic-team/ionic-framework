@@ -1,6 +1,6 @@
 import { Build, getMode, setMode, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
-import { applyComponentsTheme, applyGlobalTheme, getCustomTheme } from '@utils/theme';
+import { applyComponentsTheme, applyGlobalTheme, generateBreakpointCSS, getCustomTheme, injectCSS } from '@utils/theme';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
@@ -175,6 +175,14 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     applyComponentsTheme(baseTheme);
     config.set('customTheme', baseTheme);
   }
+
+  /**
+   * Map per-breakpoint tokens to the variables consumed by component styles
+   * at their configured widths. Emit after the theme to prevent the theme
+   * from overriding these values, and independently of the theme so they
+   * also apply when an application defines the public variables itself.
+   */
+  injectCSS(generateBreakpointCSS());
 
   /**
    * Apply any global config values from the custom theme

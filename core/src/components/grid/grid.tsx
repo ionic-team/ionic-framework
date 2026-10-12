@@ -1,6 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, forceUpdate, h } from '@stencil/core';
-import { getActiveBreakpoint, onBreakpointChange } from '@utils/breakpoints';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -11,8 +10,6 @@ import { getActiveBreakpoint, onBreakpointChange } from '@utils/breakpoints';
   shadow: true,
 })
 export class Grid implements ComponentInterface {
-  private unsubscribeBreakpoint?: () => void;
-
   /**
    * If `true`, the grid will have a fixed width based on the screen size.
    *
@@ -24,25 +21,9 @@ export class Grid implements ComponentInterface {
    */
   @Prop() fixed = false;
 
-  connectedCallback() {
-    this.unsubscribeBreakpoint = onBreakpointChange(() => forceUpdate(this));
-
-    /**
-     * Re-resolve the breakpoint in case the screen size changed to a new
-     * breakpoint while the component was disconnected.
-     */
-    forceUpdate(this);
-  }
-
-  disconnectedCallback() {
-    this.unsubscribeBreakpoint?.();
-    this.unsubscribeBreakpoint = undefined;
-  }
-
   render() {
     return (
       <Host
-        screen-breakpoint={getActiveBreakpoint()}
         class={{
           'grid-fixed': this.fixed,
         }}
