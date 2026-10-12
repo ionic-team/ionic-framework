@@ -81,10 +81,3 @@
   flex-wrap: wrap;
   align-items: flex-start;
 }
-
-:host(.toolbar-title-size-large) .toolbar-content ion-title {
-  flex: 1;
-  order: map-get($toolbar-order-ios, title-large);
-
-  min-width: 100%;
-}
