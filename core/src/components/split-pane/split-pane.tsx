@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { getScreenBreakpointMediaQuery } from '@utils/breakpoints';
+import { getScreenBreakpointMediaQuery, onBreakpointChange } from '@utils/breakpoints';
 import { printIonWarning } from '@utils/logging';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -49,6 +49,7 @@ const getMediaQuery = (when: string): string => {
 })
 export class SplitPane implements ComponentInterface {
   private rmL?: () => void;
+  private unsubscribeBreakpoint?: () => void;
 
   @Element() el!: HTMLElement;
   @State() visible = false;
@@ -105,10 +106,19 @@ export class SplitPane implements ComponentInterface {
       await customElements.whenDefined('ion-split-pane');
     }
     this.styleMainElement();
+    this.unsubscribeBreakpoint = onBreakpointChange(() => this.updateState());
+
+    /**
+     * Rebuild the media query in case the configured widths changed, or the
+     * screen size changed, while the component was disconnected.
+     */
     this.updateState();
   }
 
   disconnectedCallback() {
+    this.unsubscribeBreakpoint?.();
+    this.unsubscribeBreakpoint = undefined;
+
     if (this.rmL) {
       this.rmL();
       this.rmL = undefined;
