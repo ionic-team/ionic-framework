@@ -16,16 +16,18 @@
        * This must run before `scripts.js` and the Ionic bundle so the values
        * are picked up by `initialize()`.
        */
+      const SCREEN_BREAKPOINTS = {
+        xs: 0,
+        sm: 200,
+        md: 400,
+        lg: 600,
+        xl: 800,
+        xxl: 1000,
+      };
+
       window.Ionic = {
         config: {
-          screenBreakpoints: {
-            xs: 0,
-            sm: 200,
-            md: 400,
-            lg: 600,
-            xl: 800,
-            xxl: 1000,
-          },
+          screenBreakpoints: SCREEN_BREAKPOINTS,
         },
       };
     </script>
@@ -345,24 +347,22 @@
       });
 
       /**
-       * Mirror the grid's resolved breakpoint into the page so it is visible
-       * while resizing. `ion-grid` reflects it as the `screen-breakpoint`
-       * attribute.
+       * Resolve the active breakpoint from the same map the config was set
+       * from, so the readout cannot drift from what the styles apply. The
+       * components select their breakpoint with a media query and reflect
+       * nothing, so there is no attribute to mirror.
        */
-      const fixedGrid = document.getElementById('fixed-grid');
       const label = document.getElementById('active-breakpoint');
       const width = document.getElementById('viewport-width');
 
       const showActiveBreakpoint = () => {
-        label.textContent = fixedGrid.getAttribute('screen-breakpoint') ?? 'none';
+        label.textContent =
+          Object.keys(SCREEN_BREAKPOINTS)
+            .filter((breakpoint) => window.matchMedia(`(min-width: ${SCREEN_BREAKPOINTS[breakpoint]}px)`).matches)
+            .pop() ?? 'none';
         width.textContent = window.innerWidth;
       };
 
-      new MutationObserver(showActiveBreakpoint).observe(fixedGrid, {
-        attributeFilter: ['screen-breakpoint'],
-      });
-
-      // The breakpoint only changes at a threshold, so the width is tracked separately
       window.addEventListener('resize', showActiveBreakpoint);
 
       customElements.whenDefined('ion-grid').then(showActiveBreakpoint);

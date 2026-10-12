@@ -36,13 +36,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     ];
 
     for (const { width, breakpoint, padding, fixedWidth, size, colPadding } of cases) {
-      test(`should resolve the ${breakpoint} breakpoint at ${width}px`, async ({ page }) => {
-        await page.setViewportSize({ width, height: 800 });
-        await page.goto('/src/components/grid/test/breakpoints', config);
-
-        await expect(page.locator('#padding-grid')).toHaveAttribute('screen-breakpoint', breakpoint);
-      });
-
       test(`should apply the ${breakpoint} padding at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
         await page.goto('/src/components/grid/test/breakpoints', config);
@@ -64,9 +57,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       });
 
       /**
-       * `ion-col` selects its padding on the `screen-breakpoint` attribute it
-       * reflects, so this covers the attribute reaching CSS rather than just
-       * the values resolved in JavaScript.
+       * `ion-col` resolves its padding from the same media queries the grid
+       * does, so this covers both components being mapped by the injected
+       * breakpoint CSS.
        */
       test(`should apply the ${breakpoint} column padding at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
@@ -109,15 +102,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.goto('/src/components/grid/test/breakpoints', config);
     });
 
-    test('should re-resolve the breakpoint without reloading', async ({ page }) => {
-      const grid = page.locator('#padding-grid');
-      await expect(grid).toHaveAttribute('screen-breakpoint', 'sm');
-
-      await page.setViewportSize({ width: 1100, height: 800 });
-
-      await expect(grid).toHaveAttribute('screen-breakpoint', 'xxl');
-    });
-
     test('should re-resolve column sizes without reloading', async ({ page }) => {
       const col = page.locator('.responsive-col').first();
       const span = () => col.evaluate((el) => el.style.getPropertyValue('--internal-col-span'));
@@ -125,9 +109,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(await span()).toBe('6');
 
       await page.setViewportSize({ width: 1100, height: 800 });
-      await expect(col).toHaveAttribute('screen-breakpoint', 'xxl');
 
-      expect(await span()).toBe('1');
+      await expect.poll(span).toBe('1');
     });
 
     test('should re-resolve padding without reloading', async ({ page }) => {
@@ -137,81 +120,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(await paddingTop()).toBe('12px');
 
       await page.setViewportSize({ width: 1100, height: 800 });
-      await expect(grid).toHaveAttribute('screen-breakpoint', 'xxl');
 
-      expect(await paddingTop()).toBe('100px');
-    });
-
-    /**
-     * The subscription listens on `matchMedia`, so crossing a threshold has to
-     * take effect on the next frame rather than after a resize debounce.
-     */
-    test('should update without a resize debounce when a threshold is crossed', async ({ page }) => {
-      const grid = page.locator('#padding-grid');
-
-      await expect(grid).toHaveAttribute('screen-breakpoint', 'sm');
-
-      await page.setViewportSize({ width: 500, height: 800 });
-
-      await expect(grid).toHaveAttribute('screen-breakpoint', 'md', { timeout: 250 });
+      await expect.poll(paddingTop).toBe('100px');
     });
 
     test('should resolve back down when the screen narrows again', async ({ page }) => {
       const grid = page.locator('#padding-grid');
 
       await page.setViewportSize({ width: 1100, height: 800 });
-      await expect(grid).toHaveAttribute('screen-breakpoint', 'xxl');
+      await expect(grid).toHaveCSS('padding-top', '100px');
 
       await page.setViewportSize({ width: 350, height: 800 });
 
-      await expect(grid).toHaveAttribute('screen-breakpoint', 'sm');
-    });
-  });
-});
-
-/**
- * Each rule is emitted twice: a `@media` copy scoped to
- * `:host(:not([screen-breakpoint]))`, and an attribute copy. The first is the
- * baseline for before a component hydrates and for when JavaScript never
- * runs, so it has to resolve from the *compiled* thresholds rather than the
- * `screenBreakpoints` config.
- *
- * Removing the attribute is how that state is reached here: the harness
- * cannot load a page with JavaScript disabled, because its `goto` waits for a
- * flag that scripts set.
- *
- * This behavior does not vary across modes/directions.
- */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('grid: breakpoints before hydration'), () => {
-    test.beforeEach(async ({ page }) => {
-      // 800px resolves to the configured xl, but to the compiled md (768px)
-      await page.setViewportSize({ width: 800, height: 800 });
-      await page.goto('/src/components/grid/test/breakpoints', config);
-    });
-
-    test('should fall back to the compiled media query when no breakpoint is reported', async ({ page }) => {
-      const grid = page.locator('#padding-grid');
-
-      await expect(grid).toHaveAttribute('screen-breakpoint', 'xl');
-      expect(await grid.evaluate((el) => getComputedStyle(el).paddingTop)).toBe('72px');
-
-      await grid.evaluate((el) => el.removeAttribute('screen-breakpoint'));
-
-      // md, because the baseline uses the compiled 768px and ignores the config
-      expect(await grid.evaluate((el) => getComputedStyle(el).paddingTop)).toBe('28px');
-    });
-
-    test('should fall back for the fixed width too', async ({ page }) => {
-      const grid = page.locator('#fixed-grid');
-      const width = () => grid.evaluate((el) => Math.round(el.getBoundingClientRect().width));
-
-      await expect(grid).toHaveAttribute('screen-breakpoint', 'xl');
-      expect(await width()).toBe(760);
-
-      await grid.evaluate((el) => el.removeAttribute('screen-breakpoint'));
-
-      expect(await width()).toBe(360);
+      await expect(grid).toHaveCSS('padding-top', '12px');
     });
   });
 });

@@ -37,12 +37,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         const grid = page.locator('ion-grid');
 
-        // Assert the breakpoint before measuring. A grid that has not resolved
-        // one yet still has the xs token applied, which is 100%, so the width
-        // assertion below would fail with the viewport width instead of
-        // naming the breakpoint.
-        await expect(grid).toHaveAttribute('screen-breakpoint', breakpoint);
-
         const measuredWidth = await grid.evaluate((el) => el.getBoundingClientRect().width);
 
         const expected = ionGridBreakpoints[breakpoint]!.width!;
