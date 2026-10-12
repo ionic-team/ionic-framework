@@ -51,10 +51,13 @@ export interface IonicConfig {
    * used by responsive components such as `ion-col` and `ion-gallery`.
    *
    * Values must be unitless pixel widths (`768`, not `'768px'`) and must
-   * increase from `xs` through `xxl`. Only the breakpoints being customized
+   * increase from `sm` through `xxl`. Only the breakpoints being customized
    * need to be provided. Unspecified breakpoints retain their default values.
+   *
+   * `xs` is the base breakpoint and always activates at `0px`, so it cannot be
+   * changed. Move the breakpoint above it instead.
    */
-  screenBreakpoints?: Partial<ScreenBreakpoints>;
+  screenBreakpoints?: Partial<Omit<ScreenBreakpoints, 'xs'>>;
 
   /**
    * Wherever ionic will respond to hardware go back buttons in an Android device.

@@ -168,6 +168,19 @@ const resolveScreenBreakpoints = (configValue: unknown): ScreenBreakpoints => {
     }
 
     /**
+     * `xs` is the baseline every other breakpoint is measured from, so it
+     * always starts at 0. Raising it would leave the widths below it with no
+     * breakpoint at all. Restating the default changes nothing, so it falls
+     * through and is assigned the value it already had.
+     */
+    if (name === 'xs' && value !== DEFAULT_SCREEN_BREAKPOINTS.xs) {
+      printIonWarning(
+        `The "xs" screen breakpoint cannot be changed. It is the base breakpoint and always activates at ${DEFAULT_SCREEN_BREAKPOINTS.xs}px. Move the breakpoint above it instead.`
+      );
+      continue;
+    }
+
+    /**
      * Only unitless numbers are accepted. The value is used to build a
      * `min-width` media query and is also compared directly against measured
      * element widths, so a string such as `'768px'` cannot be used as-is.
@@ -324,10 +337,9 @@ export const matchBreakpoint = (breakpoint: string | undefined) => {
 /**
  * Get the largest screen breakpoint that currently matches.
  *
- * @return The active breakpoint, or `undefined` when none match. That happens
- * before hydration, or when `xs` is configured above the current screen width.
- * Components treat it as "no breakpoint reported" and fall back to their
- * build-time media queries.
+ * @return The active breakpoint, or `undefined` when none match. `xs` always
+ * activates at `0px`, so this only happens before hydration, where components
+ * treat it as "no breakpoint reported".
  */
 export const getActiveBreakpoint = (): ScreenBreakpoint | undefined => lastMatchingBreakpoint(matchBreakpoint);
 

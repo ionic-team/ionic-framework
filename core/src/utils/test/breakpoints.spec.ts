@@ -185,6 +185,36 @@ describe('screen breakpoints', () => {
       });
     });
 
+    /**
+     * The `xs` styles apply unconditionally rather than behind a `min-width`
+     * query, so a non-zero value would be ignored by CSS while still narrowing
+     * the range that responsive JavaScript values resolve in. The config type
+     * excludes `xs`, so this only reaches plain JavaScript applications.
+     */
+    describe('with a value for xs', () => {
+      it('should keep xs at zero and warn that it cannot be changed', () => {
+        setScreenBreakpoints({ xs: 400 });
+
+        expect(getScreenBreakpoints().xs).toBe(0);
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          expect.stringContaining('The "xs" screen breakpoint cannot be changed')
+        );
+      });
+
+      it('should keep the other overrides', () => {
+        setScreenBreakpoints({ xs: 400, md: 700 });
+
+        expect(getScreenBreakpoints()).toEqual({ ...DEFAULT_SCREEN_BREAKPOINTS, md: 700 });
+      });
+
+      it('should not warn when xs is set to its default of zero', () => {
+        setScreenBreakpoints({ xs: 0 });
+
+        expect(getScreenBreakpoints()).toEqual(DEFAULT_SCREEN_BREAKPOINTS);
+        expect(consoleWarnSpy).not.toHaveBeenCalled();
+      });
+    });
+
     describe('with a non-object config', () => {
       it.each([
         ['a string', '768px'],
@@ -389,6 +419,22 @@ describe('screen breakpoints against the window', () => {
       expect(matchBreakpoint('xxxl')).toBe(false);
     });
 
+    /**
+     * `xs` starts at 0 and cannot be configured away from it, so it matches at
+     * any width. Responsive values set on `xs` always apply.
+     */
+    it('should always match xs, even when the config tries to raise it', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      config.set('screenBreakpoints', { xs: 2000 } as any);
+      resetScreenBreakpoints();
+      setWidth(100);
+
+      expect(matchBreakpoint('xs')).toBe(true);
+
+      consoleWarnSpy.mockRestore();
+    });
+
     it('should reflect the configured widths rather than the defaults', () => {
       config.set('screenBreakpoints', { md: 400 } as any);
       resetScreenBreakpoints();
@@ -419,11 +465,24 @@ describe('screen breakpoints against the window', () => {
       expect(getActiveBreakpoint()).toBe(expected);
     });
 
-    it('should return undefined when no breakpoint matches', () => {
-      // xs normally matches at any width, so raise it above the viewport too
+    /**
+     * `xs` activates at 0px and cannot be configured away from it, so some
+     * breakpoint always matches once the window can be queried.
+     */
+    it('should fall back to xs at any width', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
       config.set('screenBreakpoints', { xs: 2000 } as any);
       resetScreenBreakpoints();
       setWidth(100);
+
+      expect(getActiveBreakpoint()).toBe('xs');
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('should return undefined when the window cannot be queried', () => {
+      (window as any).matchMedia = undefined;
 
       expect(getActiveBreakpoint()).toBeUndefined();
     });
