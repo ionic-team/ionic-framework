@@ -52,21 +52,10 @@
   gap: globals.$ion-space-200;
 }
 
-// Toolbar: Title
-// --------------------------------------------------
-
-::slotted(ion-title) {
-  @include globals.padding-horizontal(globals.$ion-space-200);
-}
-
-:host(.toolbar-title-size-large) ::slotted(ion-title) {
-  @include globals.padding-horizontal(globals.$ion-space-400);
-}
-
 // Ionic Toolbar Slot Placement
 // --------------------------------------------------
 // We're using the slots to force the main toolbar content to be
-// centered in the toolbar. This is a bit of a hack but it works.
+// centered in the toolbar. This is a bit of a hack butx it works.
 // The main content is placed in the center and then JavaScript evaluates
 // the sizes of the different slots and sets what size the pairs should be
 // based on the larger one. We then use `flex-basis` to set the expected
