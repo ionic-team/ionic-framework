@@ -1161,7 +1161,7 @@ describe('gallery', () => {
    * ensuring these tests fail if the config is ignored.
    */
   describe('gallery: screenBreakpoints config', () => {
-    const OVERRIDE = { xs: 0, sm: 200, md: 400, lg: 600, xl: 800, xxl: 1000 };
+    const OVERRIDE = { sm: 200, md: 400, lg: 600, xl: 800, xxl: 1000 };
 
     const setScreenBreakpoints = (value: unknown) => {
       config.set('screenBreakpoints', value as any);
