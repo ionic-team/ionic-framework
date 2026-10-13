@@ -177,14 +177,6 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   }
 
   /**
-   * Map per-breakpoint tokens to the variables consumed by component styles
-   * at their configured widths. Emit after the theme to prevent the theme
-   * from overriding these values, and independently of the theme so they
-   * also apply when an application defines the public variables itself.
-   */
-  injectCSS(generateBreakpointCSS());
-
-  /**
    * Apply any global config values from the custom theme
    * excluding component-specific overrides.
    */
@@ -210,10 +202,13 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   });
 
   /**
-   * The breakpoint listeners are built from the configured widths, so they
-   * have to be rebuilt once the configuration is settled. This runs after the
-   * theme's config is merged, since a theme can set the widths itself.
+   * The media queries and the breakpoint listeners are both built from the
+   * configured widths, so they are left until the configuration has settled,
+   * which is after the theme's config is merged since a theme can set the
+   * widths itself. They are emitted whether or not a theme supplies the
+   * tokens, since an application can define the public variables itself.
    */
+  injectCSS(generateBreakpointCSS());
   refreshBreakpointListeners();
 
   if (config.getBoolean('_testing')) {

@@ -173,5 +173,21 @@ describe('Ionic Global', () => {
 
       unsubscribe();
     });
+
+    /**
+     * The media queries are generated from the configured widths too, so they
+     * have to be emitted once the theme's config has been merged as well.
+     */
+    it('should generate the breakpoint CSS from a theme that sets the widths', () => {
+      initialize({ customTheme: { config: { screenBreakpoints: { lg: 700 } } } } as any);
+
+      const injected = Array.from(document.head.querySelectorAll('style'))
+        .map((style) => style.innerHTML)
+        .join('')
+        .replace(/\s+/g, ' ');
+
+      expect(injected).toContain('@media (min-width: 700px) { ion-grid {');
+      expect(injected).not.toContain('@media (min-width: 992px) { ion-grid {');
+    });
   });
 });
