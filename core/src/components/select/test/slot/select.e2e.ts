@@ -513,6 +513,75 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         expect(box!.width).toBeGreaterThanOrEqual(twoCharacterWidth);
       });
     });
+
+    /**
+     * The label truncates beside the wide slot and has room for its full
+     * text once it floats into the notch. It must not reveal that full text
+     * while it is still at its resting size, or it overflows the select
+     * partway through the transition.
+     */
+    test('should keep the label inside the select while it floats above a wide end slot', async ({ page }) => {
+      /**
+       * The label is longer than the select, so revealing all of it at its
+       * resting size pushes it past the border, not only over the slot.
+       */
+      await page.setContent(
+        `
+          <ion-select
+            fill="outline"
+            label="Enter the email address associated with your account"
+            label-placement="floating"
+            style="width: 260px"
+          >
+            ${endSlot}
+            <ion-select-option value="100">100</ion-select-option>
+          </ion-select>
+        `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+
+      /**
+       * Pauses the label's transitions and steps through them so every
+       * point of the animation is checked regardless of frame timing.
+       */
+      const overflow = await select.evaluate(async (el: HTMLIonSelectElement) => {
+        const label = el.shadowRoot!.querySelector('.label-text-wrapper')!;
+        const wrapper = el.shadowRoot!.querySelector('.select-wrapper')!;
+        const maxRight = wrapper.getBoundingClientRect().right - parseFloat(getComputedStyle(wrapper).paddingRight);
+
+        el.value = '100';
+
+        /**
+         * The class that starts the transitions is added on the next render.
+         * This waits for it here instead of using `page.waitForChanges()`,
+         * which waits long enough for the 150ms transitions to finish, at
+         * which point the browser discards them and there is nothing to step
+         * through.
+         */
+        while (!el.classList.contains('label-floating')) {
+          await new Promise(requestAnimationFrame);
+        }
+
+        // Without this a label that already finished floating would pass
+        const transitions = label.getAnimations();
+        if (transitions.length === 0) {
+          throw new Error('The label did not transition');
+        }
+        transitions.forEach((transition) => transition.pause());
+
+        // Step through the 150ms label transition in 15ms increments
+        const overflows = Array.from({ length: 11 }, (_, step) => {
+          transitions.forEach((transition) => (transition.currentTime = step * 15));
+          return label.getBoundingClientRect().right - maxRight;
+        });
+
+        return Math.max(...overflows);
+      });
+
+      expect(overflow).toBeLessThanOrEqual(1);
+    });
   });
 });
 
