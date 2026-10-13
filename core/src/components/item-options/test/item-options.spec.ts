@@ -13,9 +13,7 @@ describe('ion-item-options: rtl', () => {
   };
 
   it('should change sides when it declares rtl', async () => {
-    const itemOptions = await newItemOptions(
-      `<ion-item-options side="start" dir="rtl"></ion-item-options>`
-    );
+    const itemOptions = await newItemOptions(`<ion-item-options side="start" dir="rtl"></ion-item-options>`);
     expect(itemOptions).toHaveClass('item-options-end');
     expect(itemOptions).not.toHaveClass('item-options-start');
   });
