@@ -372,6 +372,14 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const textarea = page.locator('ion-textarea');
 
       /**
+       * The first measurement of the start container disables the label
+       * transition for a frame. Wait for it to finish so the label is not
+       * floated while its transitions are turned off.
+       */
+      await expect(textarea).toHaveAttribute('style', /--internal-start-container-adjustment/);
+      await expect(textarea).not.toHaveClass(/skip-label-transition/);
+
+      /**
        * Pauses the label's transitions and steps through them so every
        * point of the animation is checked regardless of frame timing.
        */
@@ -380,18 +388,25 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         const wrapper = el.querySelector('.textarea-wrapper')!;
         const maxRight = wrapper.getBoundingClientRect().right - parseFloat(getComputedStyle(wrapper).paddingRight);
 
-        el.value = '100';
-
         /**
          * The class that starts the transitions is added on the next render.
-         * This waits for it here instead of using `page.waitForChanges()`,
-         * which waits long enough for the 150ms transitions to finish, at
-         * which point the browser discards them and there is nothing to step
-         * through.
+         * A mutation observer runs right after that render, before the next
+         * frame, so the transitions are caught at their start. Waiting for a
+         * frame or using `page.waitForChanges()` can let the 150ms transitions
+         * finish on a slow machine, at which point the browser discards them
+         * and there is nothing to step through.
          */
-        while (!el.classList.contains('label-floating')) {
-          await new Promise(requestAnimationFrame);
-        }
+        await new Promise<void>((resolve) => {
+          const observer = new MutationObserver(() => {
+            if (el.classList.contains('label-floating')) {
+              observer.disconnect();
+              resolve();
+            }
+          });
+          observer.observe(el, { attributeFilter: ['class'] });
+
+          el.value = '100';
+        });
 
         // Without this a label that already finished floating would pass
         const transitions = label.getAnimations();
