@@ -3,7 +3,7 @@ import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Wa
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { focusFirstDescendant, focusLastDescendant } from '@utils/focus-trap';
 import { GESTURE_CONTROLLER } from '@utils/gesture';
-import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
+import { shouldUseCloseWatcher, updateCloseWatcher } from '@utils/hardware-back-button';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { printIonError } from '@utils/logging';
@@ -726,6 +726,7 @@ export class Menu implements ComponentInterface, MenuI {
     // emit opened/closed events
     this._isOpen = isOpen;
     this.isAnimating = false;
+    updateCloseWatcher();
     if (!this._isOpen) {
       this.blocker.unblock();
     }

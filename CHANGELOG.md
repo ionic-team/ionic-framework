@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
+
+### Bug Fixes
+
+* **close-watcher:** allow back navigation when nothing is open ([#31520](https://github.com/ionic-team/ionic-framework/issues/31520)) ([6532bcb](https://github.com/ionic-team/ionic-framework/commit/6532bcbcf5b69f33724a66ab76720ec645adb00b)), closes [#29648](https://github.com/ionic-team/ionic-framework/issues/29648)
+* **css:** stop emitting :host-context selectors in global stylesheets ([#31516](https://github.com/ionic-team/ionic-framework/issues/31516)) ([35bd2fa](https://github.com/ionic-team/ionic-framework/commit/35bd2fa9f1046b3f5fd3cd6b3778b0b5945be99c)), closes [#30024](https://github.com/ionic-team/ionic-framework/issues/30024)
+* **input-otp:** sync value when length changes ([#31485](https://github.com/ionic-team/ionic-framework/issues/31485)) ([e425825](https://github.com/ionic-team/ionic-framework/commit/e425825815d3c0ab39800912558624b9de72dc6f)), closes [#31484](https://github.com/ionic-team/ionic-framework/issues/31484) [#31484](https://github.com/ionic-team/ionic-framework/issues/31484)
+* **react:** prevent error when an outlet unmounts before it's ready ([#31517](https://github.com/ionic-team/ionic-framework/issues/31517)) ([d5bab2e](https://github.com/ionic-team/ionic-framework/commit/d5bab2e89548311b2e3f62b5fe2be477685cb06d)), closes [#31513](https://github.com/ionic-team/ionic-framework/issues/31513)
+* **vue-router:** render the redirect target when a guard redirects ([#31510](https://github.com/ionic-team/ionic-framework/issues/31510)) ([643584b](https://github.com/ionic-team/ionic-framework/commit/643584b3ac2ba1ca263cbf53960ccde3be2a96fc))
+* **vue-router:** reset tab with memory history ([#31511](https://github.com/ionic-team/ionic-framework/issues/31511)) ([edbc304](https://github.com/ionic-team/ionic-framework/commit/edbc304fbc4179a668d0e170241abd78311fdb62)), closes [#29785](https://github.com/ionic-team/ionic-framework/issues/29785)
+
+
+## [9.0.6](https://github.com/ionic-team/ionic-framework/compare/v9.0.5...v9.0.6) (2026-09-30)
+
+### Bug Fixes
+
+* **react-router:** dispatch view lifecycle events on non-animated transitions ([#31497](https://github.com/ionic-team/ionic-framework/issues/31497)) ([f01e9a7](https://github.com/ionic-team/ionic-framework/commit/f01e9a754d1267e2cdd60aae5d292ebbf2ef3deb)), closes [#31479](https://github.com/ionic-team/ionic-framework/issues/31479)
+* **react-router:** keep splat route page mounted when a sibling route is pushed ([#31481](https://github.com/ionic-team/ionic-framework/issues/31481)) ([1130c2c](https://github.com/ionic-team/ionic-framework/commit/1130c2cc259c914a0a11fbe0976f4163de8d0e6e)), closes [#31477](https://github.com/ionic-team/ionic-framework/issues/31477)
+
+
+## [9.0.5](https://github.com/ionic-team/ionic-framework/compare/v9.0.4...v9.0.5) (2026-09-23)
+
+### Bug Fixes
+
+* **button:** sync aria attributes between host and native button ([#31264](https://github.com/ionic-team/ionic-framework/issues/31264)) ([e771519](https://github.com/ionic-team/ionic-framework/commit/e771519373e787af0ad83611932ee113bc372a6e)), closes [#30626](https://github.com/ionic-team/ionic-framework/issues/30626)
+* **datetime:** tear down ready state only when the host is hidden ([#31460](https://github.com/ionic-team/ionic-framework/issues/31460)) ([bf0607e](https://github.com/ionic-team/ionic-framework/commit/bf0607eece4703fc0d812e59a3a9b2c87fce7b09)), closes [#30933](https://github.com/ionic-team/ionic-framework/issues/30933) [#31108](https://github.com/ionic-team/ionic-framework/issues/31108)
+* **popover:** account for CSS zoom in positioning and sizing ([#31426](https://github.com/ionic-team/ionic-framework/issues/31426)) ([96ff7df](https://github.com/ionic-team/ionic-framework/commit/96ff7dff6d7a1c449b7ac2c5e0fc98f21f5f134e)), closes [#30919](https://github.com/ionic-team/ionic-framework/issues/30919) [#31047](https://github.com/ionic-team/ionic-framework/issues/31047) [floating-ui/floating-ui#3492](https://github.com/floating-ui/floating-ui/issues/3492)
+* **vue:** respect config log level ([#31452](https://github.com/ionic-team/ionic-framework/issues/31452)) ([edb3e48](https://github.com/ionic-team/ionic-framework/commit/edb3e48e28f3829da6a2a6ea436978b9ab92766d))
+
+
 ## [9.0.4](https://github.com/ionic-team/ionic-framework/compare/v9.0.3...v9.0.4) (2026-09-16)
 
 ### Bug Fixes

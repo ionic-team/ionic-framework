@@ -4,6 +4,12 @@
  * particularly with animations and swipe gestures.
  */
 
+import {
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+} from '@ionic/core/components';
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { IonRoute, RouteManagerContext, StackContext, createDebugLogger, generateId, getConfig } from '@ionic/react';
 import React from 'react';
@@ -20,6 +26,7 @@ import {
 import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
 import { stripTrailingSlash } from './utils/pathNormalization';
 import { extractRouteChildren, getRoutesChildren, isNavigateElement } from './utils/routeElements';
+import { clearSwipeRevealed, isForwardPush, isOverMatchingRoute, markSwipeRevealed } from './utils/viewItemUtils';
 
 /**
  * Delay in milliseconds before unmounting a view after a transition completes.
@@ -88,6 +95,19 @@ const revealIonPageForSwipeBack = (element: HTMLElement | undefined): void => {
   }
 };
 
+type ViewLifecycleEvent =
+  | typeof LIFECYCLE_WILL_ENTER
+  | typeof LIFECYCLE_DID_ENTER
+  | typeof LIFECYCLE_WILL_LEAVE
+  | typeof LIFECYCLE_DID_LEAVE;
+
+/** Dispatches a view lifecycle event the way core's `lifecycle()` does. */
+const dispatchLifecycleEvent = (element: HTMLElement | undefined, eventName: ViewLifecycleEvent): void => {
+  if (element) {
+    element.dispatchEvent(new CustomEvent(eventName, { bubbles: false, cancelable: false }));
+  }
+};
+
 /**
  * A leaf view is "preservable" on browser-back (pop) when its React state
  * should survive a forward-pop round-trip. Non-parameterized leaf paths
@@ -118,6 +138,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
   prevProps?: StackManagerProps;
   skipTransition: boolean;
+  /** The view item the in-flight swipe gesture revealed, so the same one gets cleared. */
+  private swipeRevealedViewItem?: ViewItem;
 
   stackContextValue: StackContextState = {
     registerIonPage: this.registerIonPage.bind(this),
@@ -219,7 +241,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           hasWildcardRoute,
         });
 
-        if (result.outletMountPath && !this.outletMountPath) {
+        // A root outlet is mounted under nothing, so caching the inferred path would scope
+        // it to whatever route was active and make every other pathname look out of scope.
+        if (!this.isRootOutlet && result.outletMountPath && !this.outletMountPath) {
           this.outletMountPath = result.outletMountPath;
         }
 
@@ -297,12 +321,17 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
 
     // For non-replace actions, only unmount for back navigation
-    const isForwardPush = routeInfo.routeAction === 'push' && (routeInfo as any).routeDirection === 'forward';
-    if (!isForwardPush && routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
+    if (!isForwardPush(routeInfo) && routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
       return true;
     }
 
     return false;
+  }
+
+  /** Clears the reveal flag from the view item the gesture marked. */
+  private clearSwipeRevealedView(): void {
+    clearSwipeRevealed(this.swipeRevealedViewItem);
+    this.swipeRevealedViewItem = undefined;
   }
 
   /**
@@ -357,12 +386,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
     allViewsInOutlet.forEach((viewItem) => {
       if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewWillLeave', { bubbles: false, cancelable: false })
-        );
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewDidLeave', { bubbles: false, cancelable: false })
-        );
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_WILL_LEAVE);
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_DID_LEAVE);
       }
     });
 
@@ -399,12 +424,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         return;
       }
       if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewWillLeave', { bubbles: false, cancelable: false })
-        );
-        viewItem.ionPageElement.dispatchEvent(
-          new CustomEvent('ionViewDidLeave', { bubbles: false, cancelable: false })
-        );
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_WILL_LEAVE);
+        dispatchLifecycleEvent(viewItem.ionPageElement, LIFECYCLE_DID_LEAVE);
       }
       this.context.unMountViewItem(viewItem);
     });
@@ -524,7 +545,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       const previousInContainer =
         routeInfo.lastPathname.startsWith(containerBase + '/') || routeInfo.lastPathname === containerBase;
 
-      if (currentInContainer && previousInContainer) {
+      // A root-level "/*" leaves an empty base, so both checks above are true for every
+      // pathname and the shortcut would otherwise skip every navigation in this outlet.
+      if (containerBase !== '' && currentInContainer && previousInContainer) {
         const updatedMatch = matchComponent(
           enteringViewItem.reactElement,
           routeInfo.pathname,
@@ -1085,6 +1108,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
     this.waitingForIonPage = false;
     this.preservedViewItems.clear();
+    this.clearSwipeRevealedView();
 
     // Hide all views in this outlet before clearing.
     // This is critical for nested outlets - when the parent component unmounts,
@@ -1120,14 +1144,40 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       return;
     }
 
+    // A completed swipe keeps its reveal flag past goBack() so the deactivation scan does
+    // not re-hide the page between the gesture ending and the URL settling. Clear it at
+    // the start of the transition for the new pathname.
+    this.clearSwipeRevealedView();
+
     // Find entering and leaving view items
     const viewItems = this.findViewItems(routeInfo);
     let enteringViewItem = viewItems.enteringViewItem;
     let leavingViewItem = viewItems.leavingViewItem;
-    let shouldUnmountLeavingViewItem = this.shouldUnmountLeavingView(routeInfo, enteringViewItem, leavingViewItem);
 
     // Get parent path for nested outlets
     const parentPath = this.getParentPath();
+
+    // Find the matching route element. This is React Router's own ranking of the outlet's
+    // routes, so it decides which route owns the pathname.
+    const enteringRoute = findRouteByRouteInfo(this.ionRouterOutlet?.props.children, routeInfo, parentPath) as
+      | React.ReactElement
+      | undefined;
+
+    // The lookup above only matches view items that already exist, so a sibling route with
+    // no view item yet never wins there and an over-matching route (splat, index, empty
+    // path) comes back for pathnames it does not own. Drop it rather than reusing it,
+    // because overwriting its reactElement below would swap its page for the winning
+    // route's and unmount it. This has to resolve before shouldUnmountLeavingView and
+    // handleRootNavigation, which both branch on the entering view item.
+    const matchedRouteProps = enteringViewItem?.routeData?.childProps;
+    const matchedAnOverMatchingRoute = isOverMatchingRoute(matchedRouteProps ?? {});
+    const routeOwnerDisagrees = enteringRoute !== undefined && enteringRoute.props.path !== matchedRouteProps?.path;
+
+    if (enteringViewItem && matchedAnOverMatchingRoute && routeOwnerDisagrees) {
+      enteringViewItem = undefined;
+    }
+
+    let shouldUnmountLeavingViewItem = this.shouldUnmountLeavingView(routeInfo, enteringViewItem, leavingViewItem);
 
     // Handle out-of-scope outlet (route outside mount path)
     if (this.handleOutOfScopeOutlet(routeInfo)) {
@@ -1151,13 +1201,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     if (this.handleOutOfContextNestedOutlet(parentPath, leavingViewItem)) {
       return;
     }
-
-    // Find the matching route element
-    const enteringRoute = findRouteByRouteInfo(
-      this.ionRouterOutlet?.props.children,
-      routeInfo,
-      parentPath
-    ) as React.ReactElement;
 
     // Handle nested outlet with no matching route
     if (this.handleNoMatchingRoute(enteringRoute, enteringViewItem, leavingViewItem)) {
@@ -1384,22 +1427,22 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       const { routeInfo } = this.props;
       const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
       const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
+      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
       // View might have mount=false but ionPageElement still in DOM
       const ionPageInDocument = Boolean(
         enteringViewItem?.ionPageElement && document.body.contains(enteringViewItem.ionPageElement)
       );
 
-      // For wildcard/parameterized routes, the pattern path (e.g. "/foo/*") will
-      // never equal the resolved pathname (e.g. "/foo/bar"), so the pattern check
-      // alone isn't sufficient. Also, verify the entering view's resolved pathname
-      // differs from the current pathname — if they match, the entering and leaving
-      // views are the same and the swipe gesture shouldn't start.
+      // A splat consumes whatever is left of the pathname, so its match resolves to the whole
+      // current pathname and comparing pathnames can't tell a container page underneath a
+      // pushed sibling from the page being left. Compare the view items instead, like onEnd
+      // does. Without a leaving view onStart skips the transition, so reject that here too.
       const canStartSwipe =
         !!enteringViewItem &&
+        !!leavingViewItem &&
         (enteringViewItem.mount || ionPageInDocument) &&
-        enteringViewItem.routeData.match.pattern.path !== routeInfo.pathname &&
-        enteringViewItem.routeData.match.pathname !== routeInfo.pathname;
+        enteringViewItem !== leavingViewItem;
 
       debug('SwipeBackCanStart', () => ({
         outletId: this.id,
@@ -1409,6 +1452,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         enteringViewPath: enteringViewItem?.reactElement?.props?.path,
         enteringMount: enteringViewItem?.mount,
         ionPageInDocument,
+        leavingViewId: leavingViewItem?.id,
         canStartSwipe,
       }));
 
@@ -1416,6 +1460,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     };
 
     const onStart = async () => {
+      // Core only calls onEnd when a progress animation exists, so with animations off a
+      // previous gesture can leave its mark behind. Drop any stale one before marking.
+      this.clearSwipeRevealedView();
+
       const { routeInfo } = this.props;
       const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
       const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
@@ -1446,6 +1494,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
       // When the gesture starts, kick off a transition controlled via swipe gesture
       if (enteringViewItem && leavingViewItem) {
+        // Without a leaving view there is no progress animation, and core only calls
+        // swipeHandler.onEnd when one exists, so nothing would clear the mark until the
+        // next transition.
+        markSwipeRevealed(enteringViewItem);
+        this.swipeRevealedViewItem = enteringViewItem;
+
         await this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back', true);
       }
 
@@ -1472,6 +1526,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
         const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
         const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
+
+        this.clearSwipeRevealedView();
 
         // Don't hide if entering and leaving are the same (parameterized route edge case)
         if (enteringViewItem !== leavingViewItem && enteringViewItem?.ionPageElement !== undefined) {
@@ -1737,10 +1793,36 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           // Bail out if the component unmounted during waitForComponentsReady
           if (!this._isMounted) return;
 
+          const isCurrent = myGeneration === this.transitionGeneration;
+          // A page the newest transition is entering is not leaving after all.
+          const isLeaving = isCurrent || leavingEl !== this.transitionEnteringElement;
+          // Already hidden means the leave events have fired. This checks the class rather
+          // than `isViewVisible` because a nested outlet marks its leaving page
+          // `visibility: hidden` before we get here and still needs `ionViewDidLeave`.
+          const announceLeaving = isLeaving && !leavingEl.classList.contains('ion-page-hidden');
+
+          /**
+           * Dispatch the lifecycle events, since we skipped `commit()`. Only the
+           * newest transition fires the entering events, and the class swap follows
+           * all four so the ordering matches core's `transition()`.
+           *
+           * These run after `waitForComponentsReady` because on a first mount the
+           * page has not attached its listeners yet.
+           */
+          if (announceLeaving) {
+            dispatchLifecycleEvent(leavingEl, LIFECYCLE_WILL_LEAVE);
+          }
+          if (isCurrent) {
+            dispatchLifecycleEvent(enteringEl, LIFECYCLE_WILL_ENTER);
+            dispatchLifecycleEvent(enteringEl, LIFECYCLE_DID_ENTER);
+          }
+          if (announceLeaving) {
+            dispatchLifecycleEvent(leavingEl, LIFECYCLE_DID_LEAVE);
+          }
+
           // Swap visibility synchronously - show entering, hide leaving
-          // Skip hiding if a newer transition already made leavingEl the entering view
           enteringEl.classList.remove('ion-page-invisible');
-          if (myGeneration === this.transitionGeneration || leavingEl !== this.transitionEnteringElement) {
+          if (isLeaving) {
             leavingEl.classList.add('ion-page-hidden');
             leavingEl.setAttribute('aria-hidden', 'true');
           }

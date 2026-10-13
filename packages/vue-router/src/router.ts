@@ -117,10 +117,6 @@ export const createIonRouter = (
    * instead, so there is no failure to inspect there and the staged state
    * would survive. The error is re-thrown to the app the same way it was
    * before, so navigation outcomes are unchanged.
-   *
-   * A guard that returns a location is still not covered, because that
-   * redirects rather than fails and afterEach is never called for the original
-   * navigation.
    */
   addErrorHandler((error: unknown, to: RouteLocationNormalized) => {
     discardStagedStateFor(to);
@@ -184,19 +180,70 @@ export const createIonRouter = (
   };
 
   /**
+   * Whether `to` is a guard redirect of the navigation that claimed `owner`.
+   * vue-router points `redirectedFrom` at the first location in a redirect
+   * chain, so an owner that a `redirect:` record led to is matched on its own
+   * `redirectedFrom`.
+   */
+  const isGuardRedirectOf = (
+    owner: RouteLocationNormalized | undefined,
+    to: RouteLocationNormalized
+  ) =>
+    owner !== undefined &&
+    to.redirectedFrom !== undefined &&
+    (owner.redirectedFrom ?? owner) === to.redirectedFrom;
+
+  /**
+   * Whether `to` was redirected by a guard rather than a `redirect:` record.
+   * This can't tell a record redirect apart from one a leave guard redirected
+   * again afterwards.
+   */
+  const isRedirectedByGuard = (to: RouteLocationNormalized) => {
+    const origin = to.redirectedFrom;
+
+    return (
+      origin !== undefined &&
+      origin.matched[origin.matched.length - 1]?.redirect === undefined
+    );
+  };
+
+  /**
    * The navigation that starts first after params are staged is the one they
    * were staged for, so it takes ownership of them here. Registered before any
    * guard the app adds so that it still runs when one of those aborts.
+   *
+   * A guard that returns a location starts a new navigation and the original
+   * never reaches afterEach or onError, so we discard what it claimed here
+   * instead. Leave guards run before this hook, so a navigation they redirect
+   * hasn't claimed anything yet and its state is discarded unclaimed.
    */
   router.beforeEach((to: RouteLocationNormalized) => {
+    if (isGuardRedirectOf(currentNavigationInfoOwner, to)) {
+      clearNavigationInfo();
+    }
+
+    if (isGuardRedirectOf(incomingRouteParamsOwner, to)) {
+      clearStagedParams();
+    }
+
+    const redirectedByGuard = isRedirectedByGuard(to);
+
     if (incomingRouteParamsUnclaimed) {
-      incomingRouteParamsOwner = to;
-      incomingRouteParamsUnclaimed = false;
+      if (redirectedByGuard) {
+        clearStagedParams();
+      } else {
+        incomingRouteParamsOwner = to;
+        incomingRouteParamsUnclaimed = false;
+      }
     }
 
     if (currentNavigationInfoUnclaimed) {
-      currentNavigationInfoOwner = to;
-      currentNavigationInfoUnclaimed = false;
+      if (redirectedByGuard) {
+        clearNavigationInfo();
+      } else {
+        currentNavigationInfoOwner = to;
+        currentNavigationInfoUnclaimed = false;
+      }
     }
   });
 
@@ -219,18 +266,22 @@ export const createIonRouter = (
    * Both are matched on the navigation that owns them rather than on where it
    * was heading, because two navigations can head for the same path and a path
    * cannot tell them apart. State still unclaimed belongs to this navigation,
-   * since nothing has started since it was staged.
+   * since nothing has started since it was staged. A guard redirect that fails
+   * before reaching beforeEach, like one to the current page, is matched
+   * through the navigation it redirected.
    */
   const discardStagedStateFor = (to: RouteLocationNormalized) => {
     const deltaIsForThisNavigation =
       currentNavigationInfoOwner === undefined
         ? currentNavigationInfoUnclaimed
-        : currentNavigationInfoOwner === to;
+        : currentNavigationInfoOwner === to ||
+          isGuardRedirectOf(currentNavigationInfoOwner, to);
 
     const paramsAreForThisNavigation =
       incomingRouteParamsOwner === undefined
         ? incomingRouteParamsUnclaimed
-        : incomingRouteParamsOwner === to;
+        : incomingRouteParamsOwner === to ||
+          isGuardRedirectOf(incomingRouteParamsOwner, to);
 
     if (deltaIsForThisNavigation) {
       clearNavigationInfo();
@@ -776,6 +827,16 @@ export const createIonRouter = (
     const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
       const delta = routeInfo.position! - currentHistoryPosition;
+      /**
+       * Memory history doesn't store a position in `history.state`, so
+       * `delta` is NaN and there's nothing to traverse. Replace instead.
+       */
+      if (Number.isNaN(delta)) {
+        if (originalHref) {
+          handleNavigate(originalHref, "pop", "back", undefined, tab);
+        }
+        return;
+      }
       if (delta !== 0) {
         router.go(delta);
         return;
