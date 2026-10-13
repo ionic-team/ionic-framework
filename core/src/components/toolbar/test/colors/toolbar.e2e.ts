@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * This behavior does not vary across directions.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toolbar: colors'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/toolbar/test/colors`, config);

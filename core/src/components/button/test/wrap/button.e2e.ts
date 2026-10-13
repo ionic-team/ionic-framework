@@ -1,195 +1,80 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+const LONG_TEXT =
+  'This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends';
+
+const ICONS_TEXT = `
+  <ion-icon slot="start" name="heart"></ion-icon>
+  ${LONG_TEXT}
+  <ion-icon slot="end" name="star"></ion-icon>
+`;
+
+const styles = `
+  <style>
+    .wrap-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  </style>
+`;
+
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: wrap'), () => {
-    test('should render button with long text', async ({ page }) => {
+    test('should render buttons with long text', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button>This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
+        ${styles}
+
+        <div class="wrap-container">
+          <ion-button>${LONG_TEXT}</ion-button>
+          <ion-button size="small">${LONG_TEXT}</ion-button>
+          <ion-button size="large">${LONG_TEXT}</ion-button>
+          <ion-button>${ICONS_TEXT}</ion-button>
+          <ion-button expand="block">${LONG_TEXT}</ion-button>
+          <ion-button expand="block">${ICONS_TEXT}</ion-button>
+          <ion-button expand="full">${LONG_TEXT}</ion-button>
+          <ion-button expand="full">${ICONS_TEXT}</ion-button>
+        </div>
       `,
         config
       );
 
-      const button = page.locator('ion-button');
+      const container = page.locator('.wrap-container');
 
-      await expect(button).toHaveScreenshot(screenshot(`button-wrap`));
+      await expect(container).toHaveScreenshot(screenshot(`button-wrap`));
     });
 
-    test('should render small button with long text', async ({ page }) => {
+    test('should render buttons with long text inside parents', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button size="small">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
+        ${styles}
+
+        <div class="wrap-container">
+          <ion-item>
+            <ion-button slot="end">${LONG_TEXT}</ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-button slot="end">${ICONS_TEXT}</ion-button>
+          </ion-item>
+          <ion-list-header>
+            <ion-label>List Header</ion-label>
+            <ion-button>${LONG_TEXT}</ion-button>
+          </ion-list-header>
+          <ion-toolbar>
+            <ion-buttons slot="end">
+              <ion-button>${LONG_TEXT}</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </div>
       `,
         config
       );
 
-      const button = page.locator('ion-button');
+      const container = page.locator('.wrap-container');
 
-      await expect(button).toHaveScreenshot(screenshot(`button-wrap-small`));
-    });
-
-    test('should render large button with long text', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button size="large">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-wrap-large`));
-    });
-
-    test('should render button with long text and icons', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button>
-          <ion-icon slot="start" name="heart"></ion-icon>
-          This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
-          <ion-icon slot="end" name="star"></ion-icon>
-        </ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-wrap-icons`));
-    });
-
-    test('should render block button with long text', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button expand="block">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-wrap-block`));
-    });
-
-    test('should render block button with long text and icons', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button expand="block">
-          <ion-icon slot="start" name="heart"></ion-icon>
-          This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
-          <ion-icon slot="end" name="star"></ion-icon>
-        </ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-wrap-block-icons`));
-    });
-
-    test('should render full button with long text', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button expand="full">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-wrap-full`));
-    });
-
-    test('should render full button with long text and icons', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button expand="full">
-          <ion-icon slot="start" name="heart"></ion-icon>
-          This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
-          <ion-icon slot="end" name="star"></ion-icon>
-        </ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-wrap-full-icons`));
-    });
-
-    test('should render an item button with long text', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-item>
-          <ion-button slot="end">
-            This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
-          </ion-button>
-        </ion-item>
-      `,
-        config
-      );
-
-      const item = page.locator('ion-item');
-
-      await expect(item).toHaveScreenshot(screenshot(`button-wrap-item-button`));
-    });
-
-    test('should render an item button with long text and icons', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-item>
-          <ion-button slot="end">
-            <ion-icon slot="start" name="heart"></ion-icon>
-            This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
-            <ion-icon slot="end" name="star"></ion-icon>
-          </ion-button>
-        </ion-item>
-      `,
-        config
-      );
-
-      const item = page.locator('ion-item');
-
-      await expect(item).toHaveScreenshot(screenshot(`button-wrap-item-button-icons`));
-    });
-
-    test('should render a list header button with long text', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-list-header>
-          <ion-label>List Header</ion-label>
-          <ion-button>
-            This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
-          </ion-button>
-        </ion-list-header>
-      `,
-        config
-      );
-
-      const listHeader = page.locator('ion-list-header');
-
-      await expect(listHeader).toHaveScreenshot(screenshot(`button-wrap-list-header-button`));
-    });
-
-    test('should render a toolbar button with long text', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-toolbar>
-          <ion-buttons slot="end">
-            <ion-button>
-              This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      `,
-        config
-      );
-
-      const toolbar = page.locator('ion-toolbar');
-
-      await expect(toolbar).toHaveScreenshot(screenshot(`button-wrap-toolbar-button`));
+      await expect(container).toHaveScreenshot(screenshot(`button-wrap-in-parents`));
     });
   });
 });
