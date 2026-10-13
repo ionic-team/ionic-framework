@@ -122,12 +122,6 @@ export const initialize = (userConfig: IonicConfig = {}) => {
 
   config.reset(configObj);
 
-  /**
-   * The breakpoint listeners are built from the configured widths, so they have
-   * to be rebuilt if the config is reset after a component has subscribed.
-   */
-  refreshBreakpointListeners();
-
   if (config.getBoolean('persistConfig')) {
     saveConfig(win, configObj);
   }
@@ -206,6 +200,13 @@ export const initialize = (userConfig: IonicConfig = {}) => {
      */
     config.set(configKey, value);
   });
+
+  /**
+   * The breakpoint listeners are built from the configured widths, so they
+   * have to be rebuilt once the configuration is settled. This runs after the
+   * theme's config is merged, since a theme can set the widths itself.
+   */
+  refreshBreakpointListeners();
 
   if (config.getBoolean('_testing')) {
     config.set('animated', false);

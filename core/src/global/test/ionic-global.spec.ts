@@ -13,8 +13,10 @@ jest.mock('@stencil/core', () => {
 /**
  * The implementation needs to be mocked before the implementation is imported.
  */
-// eslint-disable-next-line import/first
-import { getIonTheme, getIonMode } from '../ionic-global';
+import { onBreakpointChange, resetBreakpointListeners, resetScreenBreakpoints } from '@utils/breakpoints';
+
+import { config } from '../config';
+import { getIonTheme, getIonMode, initialize } from '../ionic-global';
 
 describe('Ionic Global', () => {
   describe('getIonMode', () => {
@@ -105,6 +107,71 @@ describe('Ionic Global', () => {
       }));
 
       expect(getIonTheme()).toBe('md');
+    });
+  });
+
+  describe('initialize', () => {
+    const originalMatchMedia = (window as any).matchMedia;
+
+    /** Every media query the breakpoint listeners have asked for, in order. */
+    let requested: string[];
+
+    beforeEach(() => {
+      requested = [];
+
+      (window as any).matchMedia = (media: string) => {
+        requested.push(media);
+
+        return { media, matches: false, addEventListener: () => {}, removeEventListener: () => {} };
+      };
+
+      config.set('screenBreakpoints', undefined as any);
+      resetScreenBreakpoints();
+      resetBreakpointListeners();
+    });
+
+    afterEach(() => {
+      resetBreakpointListeners();
+      resetScreenBreakpoints();
+      config.set('screenBreakpoints', undefined as any);
+      (window as any).matchMedia = originalMatchMedia;
+    });
+
+    /**
+     * A theme can set the screen breakpoints in its own config block, which is
+     * merged in after the application config, so the listeners can only be
+     * rebuilt once both have been applied.
+     */
+    it('should rebuild the breakpoint listeners from a theme that sets the widths', () => {
+      // Subscribing first is what creates the listeners there are to rebuild.
+      const unsubscribe = onBreakpointChange(() => {});
+      requested.length = 0;
+
+      initialize({ customTheme: { config: { screenBreakpoints: { lg: 700 } } } } as any);
+
+      expect(requested).toContain('(min-width: 700px)');
+      expect(requested).not.toContain('(min-width: 992px)');
+
+      unsubscribe();
+    });
+
+    /**
+     * The theme's config is merged over the application's, so widths set in
+     * either are kept and the listeners are built from the result.
+     */
+    it('should keep widths set by the application alongside those from the theme', () => {
+      const unsubscribe = onBreakpointChange(() => {});
+      requested.length = 0;
+
+      initialize({
+        screenBreakpoints: { sm: 300 },
+        customTheme: { config: { screenBreakpoints: { lg: 700 } } },
+      } as any);
+
+      expect(requested).toContain('(min-width: 300px)');
+      expect(requested).toContain('(min-width: 700px)');
+
+      unsubscribe();
     });
   });
 });
