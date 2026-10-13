@@ -495,7 +495,7 @@ describe('ion-col', () => {
       };
 
       it('resolves a breakpoint object against the configured widths', async () => {
-        setScreenBreakpoints({ xs: 0, sm: 200, md: 400, lg: 600, xl: 800, xxl: 1000 });
+        setScreenBreakpoints({ sm: 200, md: 400, lg: 600, xl: 800, xxl: 1000 });
 
         // 500px is above the overridden md (400) but below the default md (768)
         const col = await renderCol(500, `<ion-col></ion-col>`, { size: { xs: 12, md: 6 } });
@@ -504,7 +504,7 @@ describe('ion-col', () => {
       });
 
       it('does not match a breakpoint that was moved above the screen width', async () => {
-        setScreenBreakpoints({ xs: 0, sm: 900, md: 1000, lg: 1100, xl: 1200, xxl: 1400 });
+        setScreenBreakpoints({ sm: 900, md: 1000, lg: 1100, xl: 1200, xxl: 1400 });
 
         // 800px matches the default md (768) but not the overridden one
         const col = await renderCol(800, `<ion-col></ion-col>`, { size: { xs: 12, md: 6 } });
@@ -514,7 +514,7 @@ describe('ion-col', () => {
 
       // TODO(FW-7557): Remove this when the suffixed props are removed.
       it('applies to the deprecated suffixed properties too', async () => {
-        setScreenBreakpoints({ xs: 0, sm: 200, md: 400, lg: 600, xl: 800, xxl: 1000 });
+        setScreenBreakpoints({ sm: 200, md: 400, lg: 600, xl: 800, xxl: 1000 });
 
         const col = await renderCol(500, `<ion-col size="12" size-md="6"></ion-col>`);
 
