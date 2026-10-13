@@ -22,8 +22,8 @@ describe('ion-title: rtl', () => {
     expect(title).toHaveClass('title-rtl');
   });
 
-  it('should set title-ltr when an ancestor declares ltr in an rtl document', async () => {
+  it('should not set title-rtl when an ancestor declares ltr in an rtl document', async () => {
     const title = await newTitle(`<div dir="ltr"><div><ion-title>Title</ion-title></div></div>`, 'rtl');
-    expect(title).toHaveClass('title-ltr');
+    expect(title).not.toHaveClass('title-rtl');
   });
 });

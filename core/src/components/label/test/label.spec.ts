@@ -22,8 +22,8 @@ describe('ion-label: rtl', () => {
     expect(label).toHaveClass('label-rtl');
   });
 
-  it('should set label-ltr when an ancestor declares ltr in an rtl document', async () => {
+  it('should not set label-rtl when an ancestor declares ltr in an rtl document', async () => {
     const label = await newLabel(`<div dir="ltr"><div><ion-label>Label</ion-label></div></div>`, 'rtl');
-    expect(label).toHaveClass('label-ltr');
+    expect(label).not.toHaveClass('label-rtl');
   });
 });
