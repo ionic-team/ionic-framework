@@ -86,11 +86,11 @@ describe('screen breakpoints', () => {
       expect(consoleWarnSpy).not.toHaveBeenCalled();
     });
 
-    it('should accept a full override of every breakpoint', () => {
-      const breakpoints = { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1536, xxl: 1920 };
+    it('should accept an override of every configurable breakpoint', () => {
+      const breakpoints = { sm: 600, md: 900, lg: 1200, xl: 1536, xxl: 1920 };
       setScreenBreakpoints(breakpoints);
 
-      expect(getScreenBreakpoints()).toEqual(breakpoints);
+      expect(getScreenBreakpoints()).toEqual({ ...DEFAULT_SCREEN_BREAKPOINTS, ...breakpoints });
       expect(consoleWarnSpy).not.toHaveBeenCalled();
     });
 
