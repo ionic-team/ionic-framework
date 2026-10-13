@@ -105,7 +105,21 @@ export class SplitPane implements ComponentInterface {
     if (typeof customElements !== 'undefined' && customElements != null) {
       await customElements.whenDefined('ion-split-pane');
     }
+
+    /**
+     * Awaiting above yields, so this element may have been disconnected since,
+     * in which case `disconnectedCallback` has already run and would not run
+     * again to remove anything set up here.
+     */
+    if (!this.el.isConnected) {
+      return;
+    }
+
     this.styleMainElement();
+
+    // Reconnecting before the await settles would otherwise leave the earlier
+    // subscription with nothing holding its removal.
+    this.unsubscribeBreakpoint?.();
     this.unsubscribeBreakpoint = onBreakpointChange(() => this.updateState());
 
     /**
