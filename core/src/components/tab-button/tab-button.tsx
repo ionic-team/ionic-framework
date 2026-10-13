@@ -172,7 +172,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           role="tab"
           aria-selected={selected ? 'true' : null}
           aria-disabled={disabled ? 'true' : null}
-          tabindex={disabled ? '-1' : undefined}
+          tabindex={disabled ? '-1' : href === undefined || href === null ? '0' : undefined}
           {...inheritedAttributes}
         >
           <span class="button-inner">
