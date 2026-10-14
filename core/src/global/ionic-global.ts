@@ -1,6 +1,6 @@
 import { Build, getMode, setMode, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
-import { applyComponentsTheme, applyGlobalTheme, getCustomTheme } from '@utils/theme';
+import { applyComponentsTheme, applyGlobalTheme, generateBreakpointCSS, getCustomTheme, injectCSS } from '@utils/theme';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
@@ -202,10 +202,13 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   });
 
   /**
-   * The breakpoint listeners are built from the configured widths, so they
-   * have to be rebuilt once the configuration is settled. This runs after the
-   * theme's config is merged, since a theme can set the widths itself.
+   * The media queries and the breakpoint listeners are both built from the
+   * configured widths, so they are left until the configuration has settled,
+   * which is after the theme's config is merged since a theme can set the
+   * widths itself. They are emitted whether or not a theme supplies the
+   * tokens, since an application can define the public variables itself.
    */
+  injectCSS(generateBreakpointCSS());
   refreshBreakpointListeners();
 
   if (config.getBoolean('_testing')) {

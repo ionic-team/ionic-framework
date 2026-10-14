@@ -2,7 +2,6 @@ import { config } from '@global/config';
 
 import {
   DEFAULT_SCREEN_BREAKPOINTS,
-  getActiveBreakpoint,
   getScreenBreakpointMediaQuery,
   getScreenBreakpointValue,
   getScreenBreakpoints,
@@ -23,7 +22,8 @@ import {
  * too.
  *
  * Viewport widths in the window tests are picked to sit inside a single band,
- * so 800 resolves to `md` because 768 <= 800 < 992.
+ * so 800 resolves to `md` because 768 <= 800 < 992. The one exception is the
+ * boundary test in `matchBreakpoint()`, which is on the edges on purpose.
  */
 const EXPECTED_DEFAULT_SCREEN_BREAKPOINTS = {
   xs: 0,
@@ -420,6 +420,26 @@ describe('screen breakpoints against the window', () => {
     });
 
     /**
+     * `min-width` is inclusive, so the width a breakpoint activates at belongs
+     * to that breakpoint and the pixel below it does not.
+     */
+    it.each([
+      ['sm', 576],
+      ['md', 768],
+      ['lg', 992],
+      ['xl', 1200],
+      ['xxl', 1400],
+    ])('should match %p at exactly %ipx but not below it', (breakpoint, threshold) => {
+      setWidth(threshold as number);
+
+      expect(matchBreakpoint(breakpoint as string)).toBe(true);
+
+      setWidth((threshold as number) - 1);
+
+      expect(matchBreakpoint(breakpoint as string)).toBe(false);
+    });
+
+    /**
      * `xs` starts at 0 and cannot be configured away from it, so it matches at
      * any width. Responsive values set on `xs` always apply.
      */
@@ -448,51 +468,6 @@ describe('screen breakpoints against the window', () => {
       (window as any).matchMedia = undefined;
 
       expect(matchBreakpoint('md')).toBe(false);
-    });
-  });
-
-  describe('getActiveBreakpoint()', () => {
-    it.each([
-      [500, 'xs'],
-      [576, 'sm'],
-      [800, 'md'],
-      [1000, 'lg'],
-      [1300, 'xl'],
-      [1500, 'xxl'],
-    ])('should return %p -> %p', (viewport, expected) => {
-      setWidth(viewport);
-
-      expect(getActiveBreakpoint()).toBe(expected);
-    });
-
-    /**
-     * `xs` activates at 0px and cannot be configured away from it, so some
-     * breakpoint always matches once the window can be queried.
-     */
-    it('should fall back to xs at any width', () => {
-      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-
-      config.set('screenBreakpoints', { xs: 2000 } as any);
-      resetScreenBreakpoints();
-      setWidth(100);
-
-      expect(getActiveBreakpoint()).toBe('xs');
-
-      consoleWarnSpy.mockRestore();
-    });
-
-    it('should return undefined when the window cannot be queried', () => {
-      (window as any).matchMedia = undefined;
-
-      expect(getActiveBreakpoint()).toBeUndefined();
-    });
-
-    it('should reflect the configured widths', () => {
-      config.set('screenBreakpoints', { xxl: 900 } as any);
-      resetScreenBreakpoints();
-      setWidth(1000);
-
-      expect(getActiveBreakpoint()).toBe('xxl');
     });
   });
 

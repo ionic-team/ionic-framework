@@ -1,6 +1,4 @@
 @use "../../themes/mixins" as mixins;
-@use "../grid/grid.mixins" as grid;
-@use "./col.vars" as vars;
 
 // Column: Common Styles
 // --------------------------------------------------
@@ -41,7 +39,12 @@
     (100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-row-gap, 0px)) / var(--ion-grid-columns, 12)
   );
 
-  @include grid.make-breakpoint-padding(vars.$grid-column-paddings);
+  @include mixins.padding(
+    var(--padding-top, var(--internal-col-padding-top)),
+    var(--padding-end, var(--internal-col-padding-end)),
+    var(--padding-bottom, var(--internal-col-padding-bottom)),
+    var(--padding-start, var(--internal-col-padding-start))
+  );
   @include mixins.margin(0);
 
   box-sizing: border-box;

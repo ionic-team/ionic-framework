@@ -123,7 +123,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 The following breaking changes apply to `ion-col`:
 
 1. `--ion-grid-column-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens in the `col` namespace. <sup>[1](#version-10x-col-padding-variables)</sup>
-2. Theme classes (`ion-col.md`, `ion-col.ios`) are no longer supported. <sup>[2](#version-10x-col-theme-classes)</sup>
+2. The breakpoint-suffixed `size`, `order` and `offset` properties have been deprecated. <sup>[2](#version-10x-col-deprecated-breakpoint-properties)</sup>
+3. The `push` and `pull` properties have been deprecated. <sup>[3](#version-10x-col-deprecated-push-and-pull-properties)</sup>
+4. Theme classes (`ion-col.md`, `ion-col.ios`) are no longer supported. <sup>[4](#version-10x-col-theme-classes)</sup>
 
 <h5 id="version-10x-col-padding-variables">Padding variables</h5>
 
@@ -133,86 +135,52 @@ Column padding was a single value per breakpoint and is now set per-side, and th
 |---|---|---|
 | `--ion-grid-column-padding-{bp}` | `IonCol.breakpoint.{bp}.padding.{top\|end\|bottom\|start}` | `--ion-col-breakpoint-{bp}-padding-{top\|end\|bottom\|start}` |
 
-<h5 id="version-10x-col-theme-classes">Theme classes</h5>
+<h5 id="version-10x-col-deprecated-breakpoint-properties">Deprecated breakpoint properties</h5>
 
-Remove any instances that target the theme classes: `ion-col.md`, `ion-col.ios`.
+The breakpoint-specific properties (`size-xs` through `size-xl`, along with the `order-*` and `offset-*` equivalents) have been deprecated in favor of setting `size`, `order`, and `offset` to an object containing screen breakpoint values. They continue to work and log a deprecation warning, but will be removed in a future major version.
 
-<h4 id="version-10x-content">Content</h4>
+The object form is the only way to target the `xxl` breakpoint.
 
-The following breaking changes apply to `ion-content`:
+**Version up to 9.x**
 
-1. `--background` and `--color` CSS variables have been replaced.
-2. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional).
-3. `--keyboard-offset`, `--offset-top`, and `--offset-bottom` have been renamed to the `--internal-*` namespace with no replacement.
-4. Theme classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
+```html
+<ion-col size="12" size-md="6" size-xl="3">Column</ion-col>
+```
 
-<h5>Removed CSS variables</h5>
+**Version 10.x+**
 
-`--background` and `--color` have been removed. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+A breakpoint object can only be set as a JavaScript property, since an HTML attribute is always a string.
 
-| Old (9.x) | New token (global) | New CSS variable (component-specific) |
-|---|---|---|
-| `--background` | `IonContent.background` | `--ion-content-default-background` |
-| `--color` | `IonContent.color` | `--ion-content-default-color` |
+```html
+<ion-col>Column</ion-col>
+```
 
-<h5>Padding variables</h5>
+```ts
+const col = document.querySelector('ion-col');
+col.size = { xs: 12, md: 6, xl: 3 };
+```
 
-New code should use the token-based API:
+In a framework, bind the object directly:
 
-| Old (9.x) | New token (global) | New CSS variable (component-specific) |
-|---|---|---|
-| `--padding-top` | `IonContent.padding.top` | `--ion-content-padding-top` |
-| `--padding-end` | `IonContent.padding.end` | `--ion-content-padding-end` |
-| `--padding-bottom` | `IonContent.padding.bottom` | `--ion-content-padding-bottom` |
-| `--padding-start` | `IonContent.padding.start` | `--ion-content-padding-start` |
+```tsx
+<IonCol size={{ xs: 12, md: 6, xl: 3 }}>Column</IonCol>
+```
 
-> [!NOTE]
-> The `--padding-*` overrides and `.ion-padding`, `.ion-padding-*` utility classes in `css/padding.scss` continue to work — `ion-content` honors them as a fallback when the new token is unset. They are no longer part of the documented public API (only `--ion-content-padding-*` is listed in `core/api.txt`), but existing usage will not break.
+The unsuffixed single-value form is unchanged and still applies at every screen size:
 
-<h5>Internal-only variables</h5>
+```html
+<ion-col size="6">Column</ion-col>
+```
 
-The following CSS variables were previously documented `@prop`s on `ion-content` and have been renamed to the `--internal-*` namespace, removing them from the public API:
+To reset a column to the default flex layout at a breakpoint and above, use an empty string or `null` — the equivalent of the old value-less attribute (`<ion-col size="12" size-md>`):
 
-| Old (9.x) | New |
-|---|---|
-| `--keyboard-offset` | `--internal-keyboard-offset` |
-| `--offset-top` | `--internal-offset-top` |
-| `--offset-bottom` | `--internal-offset-bottom` |
+```ts
+col.size = { xs: 12, md: null };
+```
 
-These are managed by `ion-content` itself (keyboard avoidance and header/footer offsets) and were never intended for consumer override. There is no replacement — any code that was setting them directly should be removed.
+If both forms are set for the same property, the object form takes precedence, and the suffixed properties are ignored with a warning.
 
-<h5>Theme classes</h5>
-
-Remove any instances that target the theme classes: `ion-content.md`, `ion-content.ios`.
-
-<h4 id="version-10x-datetime">Datetime</h4>
-
-- The `ion-buttons` component has been removed from the internal implementation of `ion-datetime` and is no longer required when passing custom buttons to the `slot="buttons"`. When providing custom buttons, use a `div` element instead of `ion-buttons`. While existing code using `ion-buttons` may continue to work visually, future updates to the `ion-buttons` component may cause any styles you rely on to break.
-
-<h4 id="version-10x-grid">Grid</h4>
-
-The following breaking changes apply to `ion-grid`:
-
-1. `--ion-grid-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens. <sup>[1](#version-10x-grid-padding-variables)</sup>
-2. `--ion-grid-width-*` CSS variables for the fixed grid have been replaced with per-breakpoint tokens. <sup>[2](#version-10x-grid-fixed-width-variables)</sup>
-3. The `push` and `pull` properties have been deprecated. <sup>[3](#version-10x-grid-deprecated-push-and-pull-properties)</sup>
-4. Theme classes (`ion-grid.md`, `ion-grid.ios`) are no longer supported. <sup>[4](#version-10x-grid-theme-classes)</sup>
-
-<h5 id="version-10x-grid-padding-variables">Padding variables</h5>
-
-Grid padding was a single value per breakpoint and is now set per-side. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
-
-| Old (9.x) | New token (global) | New CSS variable (component-specific) |
-|---|---|---|
-| `--ion-grid-padding-{bp}` | `IonGrid.breakpoint.{bp}.padding.{top\|end\|bottom\|start}` | `--ion-grid-breakpoint-{bp}-padding-{top\|end\|bottom\|start}` |
-
-<h5 id="version-10x-grid-fixed-width-variables">Fixed width variables</h5>
-
-| Old (9.x) | New token (global) | New CSS variable (component-specific) |
-|---|---|---|
-| `--ion-grid-width-{bp}` | `IonGrid.breakpoint.{bp}.width` | `--ion-grid-breakpoint-{bp}-width` |
-
-<h5 id="version-10x-grid-deprecated-push-and-pull-properties">Deprecated <code>push</code> and <code>pull</code> properties</h5>
+<h5 id="version-10x-col-deprecated-push-and-pull-properties">Deprecated <code>push</code> and <code>pull</code> properties</h5>
 
 The `push` and `pull` properties have been disabled. They now log a deprecation warning and no longer affect layout. Use the `order` property to achieve a similar result.
 
@@ -322,15 +290,93 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 ```html
 <ion-grid>
   <ion-row>
-    <ion-col size="auto" order="2" order-md="2">
-      <div>ion-col size="auto" order="2" order-md="2"</div>
+    <ion-col size="auto" order="2">
+      <div>ion-col size="auto" order="2"</div>
     </ion-col>
-    <ion-col size="auto" order="1" order-md="1">
-      <div>ion-col size="auto" order="1" order-md="1"</div>
+    <ion-col size="auto" order="1">
+      <div>ion-col size="auto" order="1"</div>
     </ion-col>
   </ion-row>
 </ion-grid>
 ```
+
+<h5 id="version-10x-col-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-col.md`, `ion-col.ios`.
+
+<h4 id="version-10x-content">Content</h4>
+
+The following breaking changes apply to `ion-content`:
+
+1. `--background` and `--color` CSS variables have been replaced.
+2. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional).
+3. `--keyboard-offset`, `--offset-top`, and `--offset-bottom` have been renamed to the `--internal-*` namespace with no replacement.
+4. Theme classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
+
+<h5>Removed CSS variables</h5>
+
+`--background` and `--color` have been removed. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--background` | `IonContent.background` | `--ion-content-default-background` |
+| `--color` | `IonContent.color` | `--ion-content-default-color` |
+
+<h5>Padding variables</h5>
+
+New code should use the token-based API:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--padding-top` | `IonContent.padding.top` | `--ion-content-padding-top` |
+| `--padding-end` | `IonContent.padding.end` | `--ion-content-padding-end` |
+| `--padding-bottom` | `IonContent.padding.bottom` | `--ion-content-padding-bottom` |
+| `--padding-start` | `IonContent.padding.start` | `--ion-content-padding-start` |
+
+> [!NOTE]
+> The `--padding-*` overrides and `.ion-padding`, `.ion-padding-*` utility classes in `css/padding.scss` continue to work — `ion-content` honors them as a fallback when the new token is unset. They are no longer part of the documented public API (only `--ion-content-padding-*` is listed in `core/api.txt`), but existing usage will not break.
+
+<h5>Internal-only variables</h5>
+
+The following CSS variables were previously documented `@prop`s on `ion-content` and have been renamed to the `--internal-*` namespace, removing them from the public API:
+
+| Old (9.x) | New |
+|---|---|
+| `--keyboard-offset` | `--internal-keyboard-offset` |
+| `--offset-top` | `--internal-offset-top` |
+| `--offset-bottom` | `--internal-offset-bottom` |
+
+These are managed by `ion-content` itself (keyboard avoidance and header/footer offsets) and were never intended for consumer override. There is no replacement — any code that was setting them directly should be removed.
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-content.md`, `ion-content.ios`.
+
+<h4 id="version-10x-datetime">Datetime</h4>
+
+- The `ion-buttons` component has been removed from the internal implementation of `ion-datetime` and is no longer required when passing custom buttons to the `slot="buttons"`. When providing custom buttons, use a `div` element instead of `ion-buttons`. While existing code using `ion-buttons` may continue to work visually, future updates to the `ion-buttons` component may cause any styles you rely on to break.
+
+<h4 id="version-10x-grid">Grid</h4>
+
+The following breaking changes apply to `ion-grid`:
+
+1. `--ion-grid-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens. <sup>[1](#version-10x-grid-padding-variables)</sup>
+2. `--ion-grid-width-*` CSS variables for the fixed grid have been replaced with per-breakpoint tokens. <sup>[2](#version-10x-grid-fixed-width-variables)</sup>
+3. Theme classes (`ion-grid.md`, `ion-grid.ios`) are no longer supported. <sup>[3](#version-10x-grid-theme-classes)</sup>
+
+<h5 id="version-10x-grid-padding-variables">Padding variables</h5>
+
+Grid padding was a single value per breakpoint and is now set per-side. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--ion-grid-padding-{bp}` | `IonGrid.breakpoint.{bp}.padding.{top\|end\|bottom\|start}` | `--ion-grid-breakpoint-{bp}-padding-{top\|end\|bottom\|start}` |
+
+<h5 id="version-10x-grid-fixed-width-variables">Fixed width variables</h5>
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--ion-grid-width-{bp}` | `IonGrid.breakpoint.{bp}.width` | `--ion-grid-breakpoint-{bp}-width` |
 
 <h5 id="version-10x-grid-theme-classes">Theme classes</h5>
 

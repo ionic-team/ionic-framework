@@ -1,8 +1,10 @@
+import type { ScreenBreakpoint } from '@utils/breakpoints';
+
 import type { IonPadding } from '../../themes/themes.interfaces';
 
 export type IonGridRecipe = {
   breakpoint?: {
-    [K in IonGridBreakpoint]?: {
+    [K in ScreenBreakpoint]?: {
       padding?: IonPadding;
       width?: string;
     };
@@ -10,7 +12,3 @@ export type IonGridRecipe = {
 
   columns?: number;
 };
-
-// TODO(FW-7285): Replace with global breakpoints
-export const ION_GRID_BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
-export type IonGridBreakpoint = (typeof ION_GRID_BREAKPOINTS)[number];

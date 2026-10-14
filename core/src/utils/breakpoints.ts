@@ -335,15 +335,6 @@ export const matchBreakpoint = (breakpoint: string | undefined) => {
 };
 
 /**
- * Get the largest screen breakpoint that currently matches.
- *
- * @return The active breakpoint, or `undefined` when none match. `xs` always
- * activates at `0px`, so this only happens before hydration, where components
- * treat it as "no breakpoint reported".
- */
-export const getActiveBreakpoint = (): ScreenBreakpoint | undefined => lastMatchingBreakpoint(matchBreakpoint);
-
-/**
  * Subscribers notified when the active screen breakpoint changes, and the
  * `MediaQueryList` per breakpoint that drives them.
  *
