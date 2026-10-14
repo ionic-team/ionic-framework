@@ -104,6 +104,11 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @part calendar-day today - The calendar day that contains the current day.
  * @part calendar-day disabled - The calendar day that is disabled.
  *
+ * @part range-start - The calendar day button that is the start of a range selection.
+ * @part range-end - The calendar day button that is the end of a range selection.
+ * @part range-selection - The calendar day button that is part of a range selection (includes start and end).
+ * @part range-track - The calendar day wrapper element whose ::before pseudo-element draws the range highlight track.
+ *
  * @part datetime-header - The datetime header contains the content for the `title` slot and the selected date.
  * @part datetime-title - The element that contains the `title` slot content.
  * @part datetime-selected-date - The element that contains the selected date.
@@ -286,6 +291,14 @@ export class Datetime implements ComponentInterface {
     return hasDatePresentation && !preferWheel;
   }
 
+  private get isMultipleMode() {
+    return this.selectionMode === 'multiple' || (this.selectionMode === undefined && this.multiple);
+  }
+
+  private get isRangeMode() {
+    return this.selectionMode === 'range';
+  }
+
   /**
    * The text to display on the picker's cancel button.
    */
@@ -395,8 +408,34 @@ export class Datetime implements ComponentInterface {
   /**
    * If `true`, multiple dates can be selected at once. Only
    * applies to `presentation="date"` and `preferWheel="false"`.
+   *
+   * @deprecated Use `selectionMode="multiple"` instead.
    */
   @Prop() multiple = false;
+
+  /**
+   * Controls the date selection behavior.
+   * `'multiple'` enables selecting multiple individual dates.
+   * `'range'` enables selecting a start and end date range.
+   * When unset, single-date selection is used.
+   *
+   * Range selection only works with `presentation="date"` and `preferWheel="false"`.
+   */
+  @Prop() selectionMode?: 'multiple' | 'range';
+
+  /**
+   * The text shown in the datetime header when the start of the range
+   * is empty, also used by screen readers to announce the start date.
+   * Only applies when `selectionMode="range"`.
+   */
+  @Prop() startDateLabel = 'Start date';
+
+  /**
+   * The text shown in the datetime header when the end of the range
+   * is empty, also used by screen readers to announce the end date.
+   * Only applies when `selectionMode="range"`.
+   */
+  @Prop() endDateLabel = 'End date';
 
   /**
    * Used to apply custom text and background colors to specific dates.
@@ -614,8 +653,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private warnIfIncorrectValueUsage = () => {
-    const { multiple, value } = this;
-    if (!multiple && Array.isArray(value)) {
+    const { value } = this;
+    if (!this.isMultipleMode && !this.isRangeMode && Array.isArray(value)) {
       /**
        * We do some processing on the `value` array so
        * that it looks more like an array when logged to
@@ -625,7 +664,17 @@ export class Datetime implements ComponentInterface {
        * Custom behavior: ['a', 'b']
        */
       printIonWarning(
-        `[ion-datetime] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+        `[ion-datetime] - An array of values was passed, but neither selectionMode="multiple" nor selectionMode="range" is set. This is incorrect usage and may result in unexpected behaviors.
+
+  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
+`,
+        this.el
+      );
+    }
+
+    if (this.isRangeMode && Array.isArray(value) && value.length > 2) {
+      printIonWarning(
+        `[ion-datetime] - More than 2 values were passed with selectionMode="range". Only the first and last values will be used.
 
   Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
 `,
@@ -1492,9 +1541,16 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, formatOptions, highlightedDates, multiple, presentation, preferWheel } = this;
+    const { el, formatOptions, highlightedDates, multiple, selectionMode, presentation, preferWheel } = this;
 
-    if (multiple) {
+    if (selectionMode === undefined && multiple) {
+      printIonWarning(
+        '[ion-datetime] - The "multiple" property is deprecated. Use selectionMode="multiple" instead.',
+        el
+      );
+    }
+
+    if (this.isMultipleMode) {
       if (presentation !== 'date') {
         printIonWarning('[ion-datetime] - Multiple date selection is only supported for presentation="date".', el);
       }
@@ -1502,6 +1558,23 @@ export class Datetime implements ComponentInterface {
       if (preferWheel) {
         printIonWarning('[ion-datetime] - Multiple date selection is not supported with preferWheel="true".', el);
       }
+    }
+
+    if (this.isRangeMode) {
+      if (presentation !== 'date') {
+        printIonWarning('[ion-datetime] - Range selection is only supported for presentation="date".', el);
+      }
+
+      if (preferWheel) {
+        printIonWarning('[ion-datetime] - Range selection is not supported with preferWheel="true".', el);
+      }
+    }
+
+    if (selectionMode !== undefined && multiple) {
+      printIonWarning(
+        '[ion-datetime] - Both "selectionMode" and "multiple" are set. "selectionMode" takes precedence.',
+        el
+      );
     }
 
     if (highlightedDates !== undefined) {
