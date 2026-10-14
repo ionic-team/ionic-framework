@@ -16,6 +16,7 @@ import type {
   DatetimePresentation,
   DatetimeChangeEventDetail,
   DatetimeParts,
+  DatetimeRangeParts,
   TitleSelectedDatesFormatter,
   DatetimeHighlight,
   DatetimeHighlightStyle,
@@ -150,7 +151,7 @@ export class Datetime implements ComponentInterface {
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts | DatetimeParts[] = [];
+  @State() activeParts: DatetimeParts | DatetimeParts[] | DatetimeRangeParts = [];
 
   @State() workingParts: DatetimeParts = {
     month: 5,
@@ -297,6 +298,23 @@ export class Datetime implements ComponentInterface {
 
   private get isRangeMode() {
     return this.selectionMode === 'range';
+  }
+
+  /**
+   * Type guard: returns true if the given activeParts is a DatetimeRangeParts object.
+   */
+  private isRangeParts(parts: DatetimeParts | DatetimeParts[] | DatetimeRangeParts): parts is DatetimeRangeParts {
+    return this.isRangeMode && parts !== null && typeof parts === 'object' && !Array.isArray(parts) && 'start' in parts;
+  }
+
+  /**
+   * Returns the current range parts if in range mode, or undefined otherwise.
+   */
+  private get rangeParts(): DatetimeRangeParts | undefined {
+    if (this.isRangeParts(this.activeParts)) {
+      return this.activeParts;
+    }
+    return undefined;
   }
 
   /**
@@ -586,6 +604,19 @@ export class Datetime implements ComponentInterface {
     const { isCalendarPicker, activeParts, preferWheel, workingParts } = this;
 
     /**
+     * In range mode, only confirm when both start and end are selected.
+     */
+    if (this.isRangeMode) {
+      if (this.isRangeParts(activeParts) && activeParts.start && activeParts.end) {
+        this.setValue([convertDataToISO(activeParts.start), convertDataToISO(activeParts.end)]);
+      }
+      if (closeOverlay) {
+        this.closeParentOverlay(CONFIRM_ROLE);
+      }
+      return;
+    }
+
+    /**
      * We only update the value if the presentation is not a calendar picker.
      */
     if (activeParts !== undefined || !isCalendarPicker) {
@@ -602,7 +633,7 @@ export class Datetime implements ComponentInterface {
           this.setValue(undefined);
         }
       } else {
-        this.setValue(convertDataToISO(activeParts));
+        this.setValue(convertDataToISO(activeParts as DatetimeParts | DatetimeParts[]));
       }
     }
 
@@ -620,6 +651,23 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async reset(startDate?: string) {
+    if (this.isRangeMode) {
+      /**
+       * In range mode, reset clears the full range. If a startDate
+       * is provided, the calendar navigates to that month without
+       * selecting anything so the user begins a fresh selection.
+       */
+      this.activeParts = [];
+      if (startDate) {
+        const parsed = parseDate(startDate);
+        if (parsed) {
+          const target = Array.isArray(parsed) ? parsed[0] : parsed;
+          this.setWorkingParts(target);
+        }
+      }
+      return;
+    }
+
     this.processValue(startDate);
   }
 
@@ -633,6 +681,15 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async cancel(closeOverlay = false) {
+    /**
+     * In range mode, clear the visible selection (including partial ranges)
+     * so the component returns to an empty state. The value property is
+     * left untouched, matching single/multiple mode behavior.
+     */
+    if (this.isRangeMode) {
+      this.activeParts = [];
+    }
+
     this.ionCancel.emit();
 
     if (closeOverlay) {
@@ -705,6 +762,9 @@ export class Datetime implements ComponentInterface {
 
   private getActivePart = () => {
     const { activeParts } = this;
+    if (this.isRangeParts(activeParts)) {
+      return activeParts.start;
+    }
     return Array.isArray(activeParts) ? activeParts[0] : activeParts;
   };
 
@@ -724,6 +784,33 @@ export class Datetime implements ComponentInterface {
     };
   };
 
+  /**
+   * Checks whether the span from start to end contains any disabled day.
+   * Used by range mode to prevent selecting across disabled dates.
+   */
+  private rangeContainsDisabledDate = (start: DatetimeParts, end: DatetimeParts): boolean => {
+    const { minParts, maxParts, parsedDayValues, isDateEnabled } = this;
+
+    let cursor = getNextDay(start);
+    while (isBefore(cursor, end) || isSameDay(cursor, end)) {
+      if (isSameDay(cursor, end)) break;
+      if (isDayDisabled(cursor, minParts, maxParts, parsedDayValues)) {
+        return true;
+      }
+      if (isDateEnabled) {
+        try {
+          if (!isDateEnabled(convertDataToISO(cursor))) {
+            return true;
+          }
+        } catch {
+          // Swallow user callback exceptions during validation
+        }
+      }
+      cursor = getNextDay(cursor);
+    }
+    return false;
+  };
+
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
     /** if the datetime component is in readonly mode,
      * allow browsing of the calendar without changing
@@ -733,7 +820,7 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { multiple, minParts, maxParts, activeParts } = this;
+    const { minParts, maxParts, activeParts } = this;
 
     /**
      * When setting the active parts, it is possible
@@ -748,8 +835,12 @@ export class Datetime implements ComponentInterface {
     const validatedParts = validateParts(parts, minParts, maxParts);
     this.setWorkingParts(validatedParts);
 
-    if (multiple) {
-      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
+    if (this.isRangeMode) {
+      this.setActivePartsRange(validatedParts);
+    } else if (this.isMultipleMode) {
+      const activePartsArray = Array.isArray(activeParts)
+        ? activeParts
+        : [activeParts as DatetimeParts];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
@@ -767,6 +858,66 @@ export class Datetime implements ComponentInterface {
     }
 
     this.confirm();
+  };
+
+  /**
+   * Handles range selection logic when a day is clicked.
+   *
+   * Creating a new range: first click sets start, second sets end.
+   * Modifying an existing range:
+   *   - Before range → new start
+   *   - Within range → new end
+   *   - After range → new end
+   * If the resulting span contains a disabled date, start a new range instead.
+   */
+  private setActivePartsRange = (parts: DatetimeParts) => {
+    const current = this.rangeParts;
+
+    if (!current) {
+      // No range yet — start a new one
+      this.activeParts = { start: parts };
+      return;
+    }
+
+    const { start, end } = current;
+
+    if (end) {
+      // A complete range exists
+      if (isBefore(parts, start)) {
+        // Before range → new start
+        this.activeParts = { start: parts };
+      } else if (isSameDay(parts, start) || (isAfter(parts, start) && isBefore(parts, end))) {
+        // Within range (including start) → set new end
+        if (this.rangeContainsDisabledDate(start, parts)) {
+          this.activeParts = { start: parts };
+        } else {
+          this.activeParts = { start, end: parts };
+        }
+      } else {
+        // After or equal to end → new end
+        if (this.rangeContainsDisabledDate(start, parts)) {
+          this.activeParts = { start: parts };
+        } else {
+          this.activeParts = { start, end: parts };
+        }
+      }
+    } else {
+      // Only start date, no end yet
+      if (isSameDay(parts, start)) {
+        // Same day → single-day range
+        this.activeParts = { start, end: parts };
+      } else if (isBefore(parts, start)) {
+        // Before start → new start
+        this.activeParts = { start: parts };
+      } else {
+        // After start → set end if no disabled dates in between
+        if (this.rangeContainsDisabledDate(start, parts)) {
+          this.activeParts = { start: parts };
+        } else {
+          this.activeParts = { start, end: parts };
+        }
+      }
+    }
   };
 
   private get isCalendarPicker() {
@@ -1441,6 +1592,49 @@ export class Datetime implements ComponentInterface {
      */
     if (hasValue) {
       warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
+    }
+
+    /**
+     * Range mode: convert the value array into DatetimeRangeParts.
+     */
+    if (this.isRangeMode) {
+      if (hasValue && Array.isArray(valueToProcess)) {
+        let rangeValues = valueToProcess;
+
+        // If more than 2 entries, use first and last
+        if (rangeValues.length > 2) {
+          rangeValues = [rangeValues[0], rangeValues[rangeValues.length - 1]];
+        }
+
+        let startParts = rangeValues[0];
+        let endParts = rangeValues.length > 1 ? rangeValues[1] : undefined;
+
+        // Normalize reversed pairs so earlier date is start
+        if (endParts && isAfter(startParts, endParts)) {
+          const temp = startParts;
+          startParts = endParts;
+          endParts = temp;
+        }
+
+        this.activeParts = endParts ? { start: startParts, end: endParts } : { start: startParts };
+
+        // Navigate calendar to the start date
+        const targetValue = clampDate(startParts, minParts, maxParts);
+        const { month, day, year } = targetValue;
+        const didChangeMonth =
+          (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
+        const bodyIsVisible = el.classList.contains('datetime-ready');
+        const { isGridStyle, showMonthAndYear } = this;
+
+        if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+          this.animateToDate(targetValue);
+        } else {
+          this.setWorkingParts({ month, day, year, hour: 0, minute: 0, ampm: 'am' });
+        }
+      } else {
+        this.activeParts = [];
+      }
+      return;
     }
 
     /**
@@ -2487,11 +2681,12 @@ export class Datetime implements ComponentInterface {
             } = getCalendarDayState(
               this.locale,
               referenceParts,
-              this.activeParts,
+              this.isRangeParts(this.activeParts) ? [] : this.activeParts,
               this.todayParts,
               this.minParts,
               this.maxParts,
-              this.parsedDayValues
+              this.parsedDayValues,
+              this.rangeParts
             );
 
             const dateIsoString = convertDataToISO(referenceParts);
