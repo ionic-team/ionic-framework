@@ -211,6 +211,24 @@
   color: globals.$ion-text-default;
 }
 
+// Range Selection
+// -----------------------------------
+
+:host {
+  --range-background: #{globals.$ion-semantics-primary-100};
+}
+
+// Range start and end days
+.calendar-day.calendar-day-range-start,
+.calendar-day.calendar-day-range-end {
+  background: globals.$ion-semantics-primary-100;
+}
+
+// Days in the middle of the range
+.calendar-day.calendar-day-in-range {
+  color: globals.$ion-semantics-primary-base;
+}
+
 // Time / Header
 // -----------------------------------
 :host .datetime-time {

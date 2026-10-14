@@ -186,6 +186,47 @@
   color: $text-color-step-500;
 }
 
+// Range Selection
+// -----------------------------------
+
+:host {
+  --range-background: #{ion-color(primary, base, 0.2)};
+}
+
+:host(.ion-color) {
+  --range-background: #{current-color(base, 0.2)};
+}
+
+/**
+ * Range start and end days should have the
+ * same active styling as a selected day.
+ */
+:host .calendar-day.calendar-day-range-start,
+:host .calendar-day.calendar-day-range-end {
+  border: 1px solid ion-color(primary, base);
+  background: ion-color(primary, base);
+  color: ion-color(primary, contrast);
+}
+
+:host(.ion-color) .calendar-day.calendar-day-range-start,
+:host(.ion-color) .calendar-day.calendar-day-range-end {
+  border: 1px solid current-color(base);
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+/**
+ * Days in the middle of the range should have
+ * a subtle text color to indicate they are selected.
+ */
+:host .calendar-day.calendar-day-in-range {
+  color: ion-color(primary, base);
+}
+
+:host(.ion-color) .calendar-day.calendar-day-in-range {
+  color: current-color(base);
+}
+
 // Time / Header
 // -----------------------------------
 :host .datetime-time {

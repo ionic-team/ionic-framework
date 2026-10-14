@@ -273,6 +273,8 @@
 :host .calendar-day-wrapper {
   display: flex;
 
+  position: relative;
+
   align-items: center;
   justify-content: center;
 
@@ -285,6 +287,53 @@
   min-height: 0;
 
   overflow: visible;
+}
+
+// Range Selection Track
+// -----------------------------------
+
+/**
+ * The ::before pseudo-element on the calendar-day-wrapper
+ * draws the colored background track that connects the
+ * range start to the range end.
+ *
+ * @prop --range-background: The background color of the range selection track.
+ */
+:host .calendar-day-wrapper-range-start::before,
+:host .calendar-day-wrapper-in-range::before,
+:host .calendar-day-wrapper-range-end::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  z-index: -1;
+
+  background: var(--range-background);
+}
+
+:host .calendar-day-wrapper-range-start::before {
+  inset-inline-start: 50%;
+  inset-inline-end: 0;
+}
+
+:host .calendar-day-wrapper-in-range::before {
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+}
+
+:host .calendar-day-wrapper-range-end::before {
+  inset-inline-start: 0;
+  inset-inline-end: 50%;
+}
+
+/**
+ * When a single day is both the start and end of the range,
+ * do not show a track since there is nothing to connect.
+ */
+:host .calendar-day-wrapper-range-start.calendar-day-wrapper-range-end::before {
+  display: none;
 }
 
 /**
