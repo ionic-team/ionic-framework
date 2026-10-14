@@ -799,6 +799,10 @@ ion-col,css-prop,--ion-col-breakpoint-xs-padding-bottom
 ion-col,css-prop,--ion-col-breakpoint-xs-padding-end
 ion-col,css-prop,--ion-col-breakpoint-xs-padding-start
 ion-col,css-prop,--ion-col-breakpoint-xs-padding-top
+ion-col,css-prop,--ion-col-breakpoint-xxl-padding-bottom
+ion-col,css-prop,--ion-col-breakpoint-xxl-padding-end
+ion-col,css-prop,--ion-col-breakpoint-xxl-padding-start
+ion-col,css-prop,--ion-col-breakpoint-xxl-padding-top
 
 ion-content,shadow
 ion-content,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -1090,6 +1094,11 @@ ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-end
 ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-start
 ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-top
 ion-grid,css-prop,--ion-grid-breakpoint-xs-width
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-padding-bottom
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-padding-end
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-padding-start
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-padding-top
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-width
 ion-grid,css-prop,--ion-grid-columns
 
 ion-header,none

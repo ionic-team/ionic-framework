@@ -39,4 +39,10 @@ $grid-column-paddings: (
     bottom: var(--padding-bottom, var(--ion-col-breakpoint-xl-padding-bottom)),
     start: var(--padding-start, var(--ion-col-breakpoint-xl-padding-start)),
   ),
+  xxl: (
+    top: var(--padding-top, var(--ion-col-breakpoint-xxl-padding-top)),
+    end: var(--padding-end, var(--ion-col-breakpoint-xxl-padding-end)),
+    bottom: var(--padding-bottom, var(--ion-col-breakpoint-xxl-padding-bottom)),
+    start: var(--padding-start, var(--ion-col-breakpoint-xxl-padding-start)),
+  ),
 );

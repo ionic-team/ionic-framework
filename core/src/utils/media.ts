@@ -5,6 +5,7 @@ export const SIZE_TO_MEDIA: any = {
   md: '(min-width: 768px)',
   lg: '(min-width: 992px)',
   xl: '(min-width: 1200px)',
+  xxl: '(min-width: 1400px)',
 };
 
 // Check if the window matches the media query

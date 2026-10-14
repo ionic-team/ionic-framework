@@ -31,6 +31,11 @@
    * @prop --ion-col-breakpoint-xl-padding-end: End padding on xl screens
    * @prop --ion-col-breakpoint-xl-padding-bottom: Bottom padding on xl screens
    * @prop --ion-col-breakpoint-xl-padding-start: Start padding on xl screens
+   *
+   * @prop --ion-col-breakpoint-xxl-padding-top: Top padding on xxl screens
+   * @prop --ion-col-breakpoint-xxl-padding-end: End padding on xxl screens
+   * @prop --ion-col-breakpoint-xxl-padding-bottom: Bottom padding on xxl screens
+   * @prop --ion-col-breakpoint-xxl-padding-start: Start padding on xxl screens
    */
   --internal-col-unit-size: calc(
     (100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-row-gap, 0px)) / var(--ion-grid-columns, 12)
