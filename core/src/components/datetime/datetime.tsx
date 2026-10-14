@@ -2644,7 +2644,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showAdjacentDays).map((dateObject, index) => {
             const { day, dayOfWeek, isAdjacentDay } = dateObject;
-            const { el, highlightedDates, isDateEnabled, multiple, showAdjacentDays } = this;
+            const { el, highlightedDates, isDateEnabled, showAdjacentDays } = this;
             let _month = month;
             let _year = year;
             if (showAdjacentDays && isAdjacentDay && day !== null) {
@@ -2677,6 +2677,9 @@ export class Datetime implements ComponentInterface {
               ariaLabel,
               ariaSelected,
               disabled: isDayDisabled,
+              isRangeStart,
+              isRangeEnd,
+              isInRange,
               text,
             } = getCalendarDayState(
               this.locale,
@@ -2719,13 +2722,19 @@ export class Datetime implements ComponentInterface {
 
             const isButtonDisabled = isCalDayDisabled || isDatetimeDisabled;
 
+            /**
+             * Determine if this day is part of the range selection.
+             * Range styling takes priority over highlightedDates.
+             */
+            const isPartOfRange = isRangeStart || isRangeEnd || isInRange;
+
             let dateStyle: DatetimeHighlightStyle | undefined = undefined;
 
             /**
-             * Custom highlight styles should not override the style for selected dates,
-             * nor apply to "filler days" at the start of the grid.
+             * Custom highlight styles should not override the style for selected dates
+             * or range selection, nor apply to "filler days" at the start of the grid.
              */
-            if (highlightedDates !== undefined && !isActive && day !== null && !isAdjacentDay) {
+            if (highlightedDates !== undefined && !isActive && !isPartOfRange && day !== null && !isAdjacentDay) {
               dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
@@ -2734,15 +2743,43 @@ export class Datetime implements ComponentInterface {
             // "Filler days" at the beginning of the grid should not get the calendar day
             // CSS parts added to them
             if (!isCalendarPadding && !isAdjacentDay) {
-              dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
-                isCalDayDisabled ? ' disabled' : ''
-              }`;
+              dateParts = `calendar-day${isActive || isRangeStart || isRangeEnd ? ' active' : ''}${
+                isToday ? ' today' : ''
+              }${isCalDayDisabled ? ' disabled' : ''}${isRangeStart ? ' range-start range-selection' : ''}${
+                isRangeEnd ? ' range-end range-selection' : ''
+              }${isInRange ? ' range-selection' : ''}`;
             } else if (isAdjacentDay) {
               dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}`;
             }
 
+            /**
+             * Build the wrapper's shadow part attribute for range track styling.
+             */
+            const wrapperParts = isPartOfRange && !isCalendarPadding && !isAdjacentDay ? 'range-track' : undefined;
+
+            /**
+             * Build the aria-label for range mode accessibility.
+             */
+            let rangeAriaLabel = ariaLabel;
+            if (this.isRangeMode && ariaLabel) {
+              if (isRangeStart) {
+                rangeAriaLabel = `${ariaLabel}, ${this.startDateLabel}`;
+              }
+              if (isRangeEnd) {
+                rangeAriaLabel = `${ariaLabel}, ${this.endDateLabel}`;
+              }
+            }
+
             return (
-              <div class="calendar-day-wrapper">
+              <div
+                class={{
+                  'calendar-day-wrapper': true,
+                  'calendar-day-wrapper-range-start': isRangeStart,
+                  'calendar-day-wrapper-in-range': isInRange,
+                  'calendar-day-wrapper-range-end': isRangeEnd,
+                }}
+                part={wrapperParts}
+              >
                 <button
                   // We need to use !important for the inline styles here because
                   // otherwise the CSS shadow parts will override these styles.
@@ -2771,15 +2808,18 @@ export class Datetime implements ComponentInterface {
                   class={{
                     'calendar-day-padding': isCalendarPadding,
                     'calendar-day': true,
-                    'calendar-day-active': isActive,
+                    'calendar-day-active': isActive || isRangeStart || isRangeEnd,
                     'calendar-day-constrained': isCalDayConstrained,
                     'calendar-day-today': isToday,
                     'calendar-day-adjacent-day': isAdjacentDay,
+                    'calendar-day-range-start': isRangeStart,
+                    'calendar-day-range-end': isRangeEnd,
+                    'calendar-day-in-range': isInRange,
                   }}
                   part={dateParts}
                   aria-hidden={isCalendarPadding ? 'true' : null}
-                  aria-selected={ariaSelected}
-                  aria-label={ariaLabel}
+                  aria-selected={isActive || isRangeStart || isRangeEnd ? 'true' : ariaSelected}
+                  aria-label={rangeAriaLabel}
                   onClick={() => {
                     if (isCalendarPadding) {
                       return;
@@ -2788,17 +2828,24 @@ export class Datetime implements ComponentInterface {
                     if (isAdjacentDay) {
                       // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
                       this.el.blur();
-                      this.activeParts = { ...activePart, ...referenceParts };
+                      if (!this.isRangeMode) {
+                        this.activeParts = { ...activePart, ...referenceParts };
+                      }
                       this.animateToDate(referenceParts);
-                      this.confirm();
+                      if (this.isRangeMode) {
+                        this.setActiveParts(referenceParts);
+                      } else {
+                        this.confirm();
+                      }
                     } else {
                       this.setWorkingParts({
                         ...this.workingParts,
                         ...referenceParts,
                       });
 
-                      // Multiple only needs date info so we can wipe out other fields like time.
-                      if (multiple) {
+                      if (this.isRangeMode) {
+                        this.setActiveParts(referenceParts);
+                      } else if (this.isMultipleMode) {
                         this.setActiveParts(referenceParts, isActive);
                       } else {
                         this.setActiveParts({
