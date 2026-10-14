@@ -8,7 +8,11 @@ import { HUES } from '../../../../themes/themes.interfaces';
  *
  * `ios` is the same as `md`.
  */
-configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
+configs({
+  directions: ['ltr'],
+  modes: ['md', 'ionic-md'],
+  palettes: ['light', 'dark', 'high-contrast', 'high-contrast-dark'],
+}).forEach(({ title, screenshot, config }) => {
   test.describe(title('title: hue'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/title/test/hue', config);
