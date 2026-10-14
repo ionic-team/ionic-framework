@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
+
+### Bug Fixes
+
+* **modal:** stop sheets dismissing on upward drags ([#31553](https://github.com/ionic-team/ionic-framework/issues/31553)) ([3e3544e](https://github.com/ionic-team/ionic-framework/commit/3e3544e4303d9dd49eb834cddddacd54bbe01fe4))
+
+
 ## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
 
 ### Bug Fixes

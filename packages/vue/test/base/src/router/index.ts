@@ -227,6 +227,38 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
+    path: '/tab-lifecycle/',
+    component: () => import('@/views/tab-lifecycle/TabLifecycle.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/tab-lifecycle/home'
+      },
+      {
+        path: 'home',
+        component: () => import('@/views/tab-lifecycle/TabLifecycleHome.vue')
+      },
+      {
+        path: 'settings',
+        component: () => import('@/views/tab-lifecycle/TabLifecycleSettings.vue')
+      },
+      {
+        path: 'nested',
+        component: () => import('@/views/tab-lifecycle/TabLifecycleNested.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('@/views/tab-lifecycle/TabLifecycleInner.vue')
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/tab-lifecycle-outside',
+    component: () => import('@/views/tab-lifecycle/TabLifecycleOutside.vue')
+  },
+  {
     path: '/tabs-similar-prefixes/',
     component: () => import('@/views/tabs-similar-prefixes/TabsSimilarPrefixes.vue'),
     children: [
