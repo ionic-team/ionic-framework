@@ -1897,6 +1897,14 @@ export class Datetime implements ComponentInterface {
      * is disabled or readonly.
      */
     const isButtonDisabled = disabled || readonly;
+
+    /**
+     * In range mode, the confirm button should be disabled until
+     * both a start and end date have been selected.
+     */
+    const isRangeIncomplete =
+      this.isRangeMode && (!this.isRangeParts(this.activeParts) || !this.activeParts.end);
+    const isConfirmDisabled = isButtonDisabled || isRangeIncomplete;
     const confirmFill = theme === 'ionic' ? 'solid' : undefined;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
@@ -1952,7 +1960,7 @@ export class Datetime implements ComponentInterface {
                     fill={confirmFill}
                     color={this.color}
                     onClick={() => this.confirm(true)}
-                    disabled={isButtonDisabled}
+                    disabled={isConfirmDisabled}
                   >
                     {this.doneText}
                   </ion-button>
