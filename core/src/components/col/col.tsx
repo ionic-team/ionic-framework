@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import { matchBreakpoint } from '@utils/breakpoints';
 import { printIonWarning } from '@utils/logging';
-import { matchBreakpoint } from '@utils/media';
 
 import type { IonColProperty, IonColStyle } from './col.interface';
 import { ION_COL_BREAKPOINTS } from './col.interface';
