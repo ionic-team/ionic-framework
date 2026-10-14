@@ -2962,11 +2962,23 @@ export class Datetime implements ComponentInterface {
   }
 
   private getHeaderSelectedDateText() {
-    const { activeParts, formatOptions, multiple, titleSelectedDatesFormatter } = this;
+    const { activeParts, formatOptions, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
+    const dateFormatOptions = formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' };
 
     let headerText: string;
-    if (multiple && isArray && activeParts.length !== 1) {
+
+    if (this.isRangeMode) {
+      headerText = this.getRangeHeaderText(dateFormatOptions);
+      if (titleSelectedDatesFormatter !== undefined) {
+        try {
+          const rangeValues = this.getRangeValueArray();
+          headerText = titleSelectedDatesFormatter(rangeValues);
+        } catch (e) {
+          printIonError('[ion-datetime] - Exception in provided `titleSelectedDatesFormatter`:', e);
+        }
+      }
+    } else if (this.isMultipleMode && isArray && activeParts.length !== 1) {
       headerText = `${activeParts.length} days`; // default/fallback for multiple selection
       if (titleSelectedDatesFormatter !== undefined) {
         try {
@@ -2977,14 +2989,39 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getLocalizedDateTime(
-        this.locale,
-        this.getActivePartsWithFallback(),
-        formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' }
-      );
+      headerText = getLocalizedDateTime(this.locale, this.getActivePartsWithFallback(), dateFormatOptions);
     }
 
     return headerText;
+  }
+
+  /**
+   * Returns the formatted range header text.
+   * Shows "Start date - End date" with placeholders from startDateLabel/endDateLabel.
+   */
+  private getRangeHeaderText(dateFormatOptions: Intl.DateTimeFormatOptions): string {
+    const range = this.rangeParts;
+    if (!range) {
+      return `${this.startDateLabel} - ${this.endDateLabel}`;
+    }
+
+    const startText = getLocalizedDateTime(this.locale, range.start, dateFormatOptions);
+    const endText = range.end
+      ? getLocalizedDateTime(this.locale, range.end, dateFormatOptions)
+      : this.endDateLabel;
+
+    return `${startText} - ${endText}`;
+  }
+
+  /**
+   * Returns the current range value as an ISO string array for
+   * titleSelectedDatesFormatter and ionChange.
+   */
+  private getRangeValueArray(): string[] {
+    const range = this.rangeParts;
+    if (!range) return [];
+    if (!range.end) return [convertDataToISO(range.start)];
+    return [convertDataToISO(range.start), convertDataToISO(range.end)];
   }
 
   private renderHeader(showExpandedHeader = true) {
