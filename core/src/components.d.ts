@@ -50,6 +50,7 @@ import { SelectPopoverOption } from "./components/select-popover/select-popover-
 import { SpinnerSize } from "./components/spinner/spinner.interfaces";
 import { TabBarChangedEventDetail, TabBarScrollEffect, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
+import { IonTitleSize } from "./components/title/title.interface";
 import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
@@ -97,6 +98,7 @@ export { SelectPopoverOption } from "./components/select-popover/select-popover-
 export { SpinnerSize } from "./components/spinner/spinner.interfaces";
 export { TabBarChangedEventDetail, TabBarScrollEffect, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
+export { IonTitleSize } from "./components/title/title.interface";
 export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
@@ -4189,17 +4191,17 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a title with vibrant, bold colors or to `"subtle"` for a title with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
-          * The size of the toolbar title.
+          * The size of the toolbar title.  Defaults to `"medium"` if both the size property and theme config are unset.
          */
-        "size"?: 'large' | 'small';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "size"?: IonTitleSize;
     }
     interface IonToast {
         /**
@@ -10169,6 +10171,10 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a title with vibrant, bold colors or to `"subtle"` for a title with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -10177,13 +10183,9 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonTitleCustomEvent<StyleEventDetail>) => void;
         /**
-          * The size of the toolbar title.
+          * The size of the toolbar title.  Defaults to `"medium"` if both the size property and theme config are unset.
          */
-        "size"?: 'large' | 'small';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "size"?: IonTitleSize;
     }
     interface IonToast {
         /**
@@ -11178,7 +11180,8 @@ declare namespace LocalJSX {
     }
     interface IonTitleAttributes {
         "color": Color;
-        "size": 'large' | 'small';
+        "hue": Hue;
+        "size": IonTitleSize;
     }
     interface IonToastAttributes {
         "overlayIndex": number;
