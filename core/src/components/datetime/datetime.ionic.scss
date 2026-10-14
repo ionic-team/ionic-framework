@@ -11,7 +11,7 @@
    */
   --background: #{globals.$ion-bg-surface-default};
   --focus-ring-color: #{globals.$ion-border-focus-default};
-  --focus-ring-width: #{globals.$ion-border-radius-025};
+  --focus-ring-width: #{globals.$ion-border-size-050};
   /**
    * TODO(FW-6931): Remove these variables upon solving the root cause
    */
@@ -230,6 +230,43 @@
 .calendar-day.calendar-day-in-range {
   background: none;
   color: globals.$ion-text-default;
+}
+
+// Hovered range start/end/in-range days
+@media (any-hover: hover) {
+  .calendar-day.calendar-day-range-start:not([disabled]):not(:active):hover,
+  .calendar-day.calendar-day-range-end:not([disabled]):not(:active):hover,
+  .calendar-day.calendar-day-in-range:not([disabled]):not(:active):hover {
+    background: globals.$ion-semantics-primary-200;
+  }
+}
+
+// Pressed range start/end/in-range days
+.calendar-day.calendar-day-range-start:active,
+.calendar-day.calendar-day-range-end:active,
+.calendar-day.calendar-day-in-range:active {
+  background: globals.$ion-bg-primary-subtle-press;
+}
+
+// Disabled range days show the range background with a faded overlay
+.calendar-day.calendar-day-range-start[disabled],
+.calendar-day.calendar-day-range-end[disabled],
+.calendar-day.calendar-day-in-range[disabled] {
+  color: globals.$ion-text-default;
+  opacity: 1;
+
+  &::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: rgba(255, 255, 255, 0.6);
+
+    border-radius: inherit;
+
+    pointer-events: none;
+  }
 }
 
 // Time / Header

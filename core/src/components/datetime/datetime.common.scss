@@ -275,6 +275,13 @@
 
   position: relative;
 
+  /**
+   * Create a stacking context so the range track
+   * (::before with z-index: -1) stays behind the
+   * day button but above the host background.
+   */
+  z-index: 0;
+
   align-items: center;
   justify-content: center;
 

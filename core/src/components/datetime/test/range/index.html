@@ -5,31 +5,26 @@
     <title>Datetime - Range</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
-    <link href="../../../../../css/palettes/dark.class.css" rel="stylesheet" />
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
-      ion-checkbox,
-      ion-select {
-        margin-inline-start: 10px;
-        margin-inline-end: 10px;
-      }
-
       .grid {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
       }
 
       .grid-item {
         margin-bottom: 20px;
+        margin-right: 20px;
       }
 
       h2 {
         font-size: 12px;
         font-weight: normal;
+
         color: #6f7378;
+
         margin-top: 10px;
         margin-left: 5px;
       }
@@ -38,18 +33,6 @@
         box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
         border-radius: 8px;
       }
-
-      #event-log {
-        font-size: 12px;
-        color: #6f7378;
-        margin-top: 10px;
-        padding: 8px;
-        background: #f5f5f5;
-        border-radius: 4px;
-        min-height: 40px;
-        max-height: 120px;
-        overflow-y: auto;
-      }
     </style>
   </head>
   <body>
@@ -57,7 +40,6 @@
       <ion-header translucent="true">
         <ion-toolbar>
           <ion-title>Datetime - Range</ion-title>
-          <ion-checkbox slot="end">Dark Mode</ion-checkbox>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
@@ -208,63 +190,46 @@
             ></ion-datetime>
           </div>
         </div>
-
-        <h2>Event Log</h2>
-        <div id="event-log">Waiting for events...</div>
       </ion-content>
-      <script>
-        const darkModeCheckbox = document.querySelector('ion-checkbox');
-        darkModeCheckbox.addEventListener('ionChange', () => {
-          document.documentElement.classList.toggle('ion-palette-dark');
-        });
-
-        // Programmatic default value
-        document.querySelector('#defaultValue').value = ['2022-06-10', '2022-06-20'];
-
-        // Single day range
-        document.querySelector('#singleDayRange').value = ['2022-06-15', '2022-06-15'];
-
-        // With header - set a partial range (start only)
-        document.querySelector('#withHeader').value = ['2022-06-10'];
-
-        // Disabled dates: 15th of every month
-        const disabledDatetime = document.querySelector('#disabledDates');
-        disabledDatetime.isDateEnabled = (dateIsoString) => {
-          const date = new Date(dateIsoString);
-          return date.getUTCDate() !== 15;
-        };
-
-        // Highlighted dates
-        const highlightedDatetime = document.querySelector('#highlightedDates');
-        highlightedDatetime.highlightedDates = [
-          { date: '2022-06-03', textColor: '#800080', backgroundColor: '#ffc0cb' },
-          { date: '2022-06-10', textColor: '#09721b', backgroundColor: '#c8e5d0' },
-          { date: '2022-06-17', textColor: '#09721b', backgroundColor: '#c8e5d0' },
-          { date: '2022-06-24', textColor: '#09721b', backgroundColor: '#c8e5d0' },
-        ];
-
-        // Custom formatter
-        const customFormatterDatetime = document.querySelector('#customFormatter');
-        customFormatterDatetime.value = ['2022-06-05', '2022-06-12'];
-        customFormatterDatetime.titleSelectedDatesFormatter = (selectedDates) => {
-          if (selectedDates.length === 0) return 'Pick your dates';
-          if (selectedDates.length === 1) return `From ${selectedDates[0]}`;
-          return `${selectedDates[0]} → ${selectedDates[1]}`;
-        };
-
-        // Readonly with value
-        document.querySelector('#readonlyRange').value = ['2022-06-08', '2022-06-18'];
-
-        // Event logging
-        const eventLog = document.querySelector('#event-log');
-        document.querySelectorAll('ion-datetime').forEach((dt) => {
-          dt.addEventListener('ionChange', (ev) => {
-            const entry = document.createElement('div');
-            entry.textContent = `[${dt.id}] ionChange: ${JSON.stringify(ev.detail.value)}`;
-            eventLog.prepend(entry);
-          });
-        });
-      </script>
     </ion-app>
+
+    <script>
+      // Programmatic default value
+      document.querySelector('#defaultValue').value = ['2022-06-10', '2022-06-20'];
+
+      // Single day range
+      document.querySelector('#singleDayRange').value = ['2022-06-15', '2022-06-15'];
+
+      // With header - set a partial range (start only)
+      document.querySelector('#withHeader').value = ['2022-06-10'];
+
+      // Disabled dates: 15th of every month
+      const disabledDatetime = document.querySelector('#disabledDates');
+      disabledDatetime.isDateEnabled = (dateIsoString) => {
+        const date = new Date(dateIsoString);
+        return date.getUTCDate() !== 15;
+      };
+
+      // Highlighted dates
+      const highlightedDatetime = document.querySelector('#highlightedDates');
+      highlightedDatetime.highlightedDates = [
+        { date: '2022-06-03', textColor: '#800080', backgroundColor: '#ffc0cb' },
+        { date: '2022-06-10', textColor: '#09721b', backgroundColor: '#c8e5d0' },
+        { date: '2022-06-17', textColor: '#09721b', backgroundColor: '#c8e5d0' },
+        { date: '2022-06-24', textColor: '#09721b', backgroundColor: '#c8e5d0' },
+      ];
+
+      // Custom formatter
+      const customFormatterDatetime = document.querySelector('#customFormatter');
+      customFormatterDatetime.value = ['2022-06-05', '2022-06-12'];
+      customFormatterDatetime.titleSelectedDatesFormatter = (selectedDates) => {
+        if (selectedDates.length === 0) return 'Pick your dates';
+        if (selectedDates.length === 1) return `From ${selectedDates[0]}`;
+        return `${selectedDates[0]} → ${selectedDates[1]}`;
+      };
+
+      // Readonly with value
+      document.querySelector('#readonlyRange').value = ['2022-06-08', '2022-06-18'];
+    </script>
   </body>
 </html>
