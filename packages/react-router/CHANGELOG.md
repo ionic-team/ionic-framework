@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
+
+### Bug Fixes
+
+* **react-router:** stop hidden views from re-rendering on every navigation ([#31541](https://github.com/ionic-team/ionic-framework/issues/31541)) ([4ae0196](https://github.com/ionic-team/ionic-framework/commit/4ae01961e8ed65e26369e09d478fabeffba5ed6d)), closes [#31528](https://github.com/ionic-team/ionic-framework/issues/31528)
+
+
 ## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
 
 ### Bug Fixes

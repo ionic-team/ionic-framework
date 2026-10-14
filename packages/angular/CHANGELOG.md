@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
+
+### Bug Fixes
+
+* **angular, vue:** fire lifecycle events on nested pages ([#31532](https://github.com/ionic-team/ionic-framework/issues/31532)) ([277097e](https://github.com/ionic-team/ionic-framework/commit/277097e1dfa13d8b34a6826aca462843810fc8f1)), closes [#30831](https://github.com/ionic-team/ionic-framework/issues/30831) [#16834](https://github.com/ionic-team/ionic-framework/issues/16834)
+* **angular:** update route snapshot on query param navigation ([#31534](https://github.com/ionic-team/ionic-framework/issues/31534)) ([6b5afec](https://github.com/ionic-team/ionic-framework/commit/6b5afec5b8d2a8df79c014120b5be5b4fbb2a2cb)), closes [#24587](https://github.com/ionic-team/ionic-framework/issues/24587)
+
+
 ## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
 
 **Note:** Version bump only for package @ionic/angular
