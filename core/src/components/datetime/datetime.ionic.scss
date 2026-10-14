@@ -216,17 +216,20 @@
 
 :host {
   --range-background: #{globals.$ion-semantics-primary-100};
+  --range-track-height: #{globals.$ion-scale-1200};
 }
 
-// Range start and end days
+// Range start and end days keep the selected day background
 .calendar-day.calendar-day-range-start,
 .calendar-day.calendar-day-range-end {
   background: globals.$ion-semantics-primary-100;
 }
 
-// Days in the middle of the range
+// In-range days should not have a circle background;
+// only the track behind them is visible
 .calendar-day.calendar-day-in-range {
-  color: globals.$ion-semantics-primary-base;
+  background: none;
+  color: globals.$ion-text-default;
 }
 
 // Time / Header

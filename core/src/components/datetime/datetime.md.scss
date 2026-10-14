@@ -191,6 +191,7 @@
 
 :host {
   --range-background: #{ion-color(primary, base, 0.2)};
+  --range-track-height: #{$datetime-md-day-height};
 }
 
 :host(.ion-color) {
@@ -216,15 +217,11 @@
 }
 
 /**
- * Days in the middle of the range should have
- * a subtle text color to indicate they are selected.
+ * In-range days should not have a circle background;
+ * only the track behind them is visible.
  */
 :host .calendar-day.calendar-day-in-range {
-  color: ion-color(primary, base);
-}
-
-:host(.ion-color) .calendar-day.calendar-day-in-range {
-  color: current-color(base);
+  background: none;
 }
 
 // Time / Header

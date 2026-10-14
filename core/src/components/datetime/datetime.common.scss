@@ -295,7 +295,8 @@
 /**
  * The ::before pseudo-element on the calendar-day-wrapper
  * draws the colored background track that connects the
- * range start to the range end.
+ * range start to the range end. The track is vertically
+ * centered and sized to match the day button height.
  *
  * @prop --range-background: The background color of the range selection track.
  */
@@ -305,8 +306,14 @@
   content: "";
 
   position: absolute;
-  top: 0;
-  bottom: 0;
+
+  /**
+   * Vertically center the track and size it to
+   * match the calendar day button height.
+   */
+  top: 50%;
+  transform: translateY(-50%);
+  height: var(--range-track-height);
 
   z-index: -1;
 
