@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tap Click - Captured Gesture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script type="module">
+      import { createGesture } from '../../../../../dist/ionic/index.esm.js';
+      await customElements.whenDefined('ion-button');
+      const button = document.querySelector('ion-button');
+      await button.componentOnReady();
+      const gesture = createGesture({
+        el: button,
+        gestureName: 'long-press',
+        threshold: 0,
+        passive: false,
+        disableScroll: true,
+      });
+      gesture.enable();
+      document.body.dataset.ready = 'true';
+    </script>
+  </head>
+  <body>
+    <ion-app
+      ><ion-content><ion-button id="press" mode="md">Hold or drag</ion-button></ion-content></ion-app
+    >
+  </body>
+</html>
