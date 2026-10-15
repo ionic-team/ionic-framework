@@ -138,7 +138,7 @@ inside the label, so they can be styled and measured independently of the contro
 
 - **Use when**: The element wraps the default slot, or wraps the native control (and any immediate content like listbox or slots inside it).
 - **Don’t use when**: The element is the main content area of an overlay (use `content` instead).
-- **Examples**: `ion-item` (`.input-wrapper` around default slot), `ion-item-divider` (`.item-divider-wrapper`), `ion-select` (`.native-wrapper` around select text + listbox).
+- **Examples**: `ion-item` (`.input-wrapper` around default slot), `ion-item-divider` (`.item-divider-wrapper`), `ion-select` (`.native-wrapper` around select text + listbox), `ion-textarea` (`.native-wrapper` around `<textarea>`).
 
 From the examples above:
 
@@ -166,13 +166,24 @@ From the examples above:
 </div>
 ```
 
+**ion-textarea** - `.native-wrapper` wraps the `<textarea>`:
+
+```tsx
+<div class="textarea-control" part="control">
+  {this.renderLabel()}
+  <div class="native-wrapper" part="container">
+    <textarea class="native-textarea" part="native"></textarea>
+  </div>
+</div>
+```
+
 ### `control`
 
 **What it does:** Groups the label and the native control so they lay out together, separately from the `start` and `end` slot containers on either side of them.
 
 - **Use when**: A form control needs the label and the native control positioned as a unit, for example so that `label-placement` can switch between a row and a column without moving the slots.
 - **Don't use when**: The element also wraps the `start`/`end` slots (use `inner` instead).
-- **Examples**: `ion-select` (`.select-control`).
+- **Examples**: `ion-select` (`.select-control`), `ion-textarea` (`.textarea-control`).
 
 **ion-select** - `.select-control` groups the label and the native wrapper, with the slots as siblings:
 
@@ -234,9 +245,9 @@ Components may also expose specialized parts for specific elements. The followin
 | `handle` | Handle elements (e.g., `ion-modal`, `ion-toggle`) |
 | `track` | Track elements (e.g., `ion-toggle`, `ion-progress-bar`) |
 | `mark` | Checkmark or indicator marks (e.g., `ion-checkbox`, `ion-radio`) |
-| `start` | The container holding the `start` slot, when the slot is wrapped so it can be styled or measured on its own (e.g., `ion-select`) |
-| `end` | The container holding the `end` slot, under the same conditions as `start` (e.g., `ion-select`) |
-| `bottom` | The area below the control that holds supporting text and counters (e.g., `ion-select`) |
+| `start` | The container holding the `start` slot, when the slot is wrapped so it can be styled or measured on its own (e.g., `ion-select`, `ion-textarea`) |
+| `end` | The container holding the `end` slot, under the same conditions as `start` (e.g., `ion-select`, `ion-textarea`) |
+| `bottom` | The area below the control that holds supporting text and counters (e.g., `ion-select`, `ion-textarea`) |
 
 **When to create new specialized parts:**
 - Use standard parts (`native`, `wrapper`, `inner`, `container`, `content`) when they apply
