@@ -100,6 +100,16 @@ export const routes: Routes = [
           }
         ]
       },
+      { path: 'tab-tap', redirectTo: '/standalone/tab-tap/home', pathMatch: 'full' },
+      {
+        path: 'tab-tap',
+        loadComponent: () => import('../tab-tap/tab-tap.component').then(c => c.TabTapComponent),
+        children: [
+          { path: 'home', loadComponent: () => import('../tab-tap/tab-tap-home.component').then(c => c.TabTapHomeComponent) },
+          { path: 'home/child', loadComponent: () => import('../tab-tap/tab-tap-child.component').then(c => c.TabTapChildComponent) },
+          { path: 'settings', loadComponent: () => import('../tab-tap/tab-tap-settings.component').then(c => c.TabTapSettingsComponent) }
+        ]
+      },
       { path: 'tab-lifecycle-outside', loadComponent: () => import('../tab-lifecycle/tab-lifecycle-outside.component').then(c => c.TabLifecycleOutsideComponent) },
       {
         path: 'swipe-gesture-disabled',
