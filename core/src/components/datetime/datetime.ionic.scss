@@ -219,17 +219,43 @@
   --range-track-height: #{globals.$ion-scale-1200};
 }
 
-// Range start and end days keep the selected day background
-.calendar-day.calendar-day-range-start,
-.calendar-day.calendar-day-range-end {
+// Range start: left-pill shape (rounded left, square right)
+.calendar-day.calendar-day-range-start {
+  @include globals.border-radius(globals.$ion-border-radius-full 0 0 globals.$ion-border-radius-full);
+
   background: globals.$ion-semantics-primary-100;
+  color: globals.$ion-text-default;
 }
 
-// In-range days should not have a circle background;
-// only the track behind them is visible
+// Range end: right-pill shape (square left, rounded right)
+.calendar-day.calendar-day-range-end {
+  @include globals.border-radius(0 globals.$ion-border-radius-full globals.$ion-border-radius-full 0);
+
+  background: globals.$ion-semantics-primary-100;
+  color: globals.$ion-text-default;
+}
+
+// Single day range: both start and end, restore full circle
+.calendar-day.calendar-day-range-start.calendar-day-range-end {
+  @include globals.border-radius(globals.$ion-border-radius-full);
+}
+
+// In-range days: rectangular, no rounding
 .calendar-day.calendar-day-in-range {
+  @include globals.border-radius(0);
+
   background: none;
   color: globals.$ion-text-default;
+}
+
+// Current day keeps its blue text even when part of a range
+.calendar-day.calendar-day-today.calendar-day-in-range {
+  color: globals.$ion-semantics-primary-base;
+}
+
+.calendar-day.calendar-day-today.calendar-day-range-start,
+.calendar-day.calendar-day-today.calendar-day-range-end {
+  color: globals.$ion-semantics-primary-base;
 }
 
 // Hovered range start/end/in-range days
@@ -248,26 +274,30 @@
   background: globals.$ion-bg-primary-subtle-press;
 }
 
-// Disabled range days show the range background with a faded overlay
-.calendar-day.calendar-day-range-start[disabled],
-.calendar-day.calendar-day-range-end[disabled],
-.calendar-day.calendar-day-in-range[disabled] {
-  color: globals.$ion-text-default;
+// Disabled range days show faded text over the range track.
+:host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-start[disabled],
+:host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-end[disabled],
+:host(:not(.datetime-readonly)) .calendar-day.calendar-day-in-range[disabled] {
+  color: globals.$ion-primitives-neutral-500;
 
   opacity: 1;
+}
 
-  &::after {
-    @include globals.border-radius(inherit);
+// Readonly range days should look like a normal range (not faded).
+// Needs higher specificity to override the general disabled day color.
+:host(.datetime-readonly) .calendar-day.calendar-day-range-start[disabled],
+:host(.datetime-readonly) .calendar-day.calendar-day-range-end[disabled] {
+  color: globals.$ion-text-default;
+}
 
-    position: absolute;
-    inset: 0;
+:host(.datetime-readonly) .calendar-day.calendar-day-in-range[disabled] {
+  color: globals.$ion-text-default;
+}
 
-    background: rgba(255, 255, 255, 0.6);
-
-    content: "";
-
-    pointer-events: none;
-  }
+:host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-in-range[disabled],
+:host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-range-start[disabled],
+:host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-range-end[disabled] {
+  color: globals.$ion-semantics-primary-base;
 }
 
 // Time / Header

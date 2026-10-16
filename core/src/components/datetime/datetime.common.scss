@@ -353,6 +353,24 @@
 }
 
 /**
+ * When the component is disabled, move the opacity to the wrapper
+ * so both the track and day button fade equally. Without this,
+ * the day button becomes semi-transparent (via native disabled opacity)
+ * while the track stays opaque, causing a visible overlap.
+ */
+:host(.datetime-disabled) .calendar-day-wrapper-range-start,
+:host(.datetime-disabled) .calendar-day-wrapper-in-range,
+:host(.datetime-disabled) .calendar-day-wrapper-range-end {
+  opacity: 0.4;
+}
+
+:host(.datetime-disabled) .calendar-day-wrapper-range-start .calendar-day[disabled],
+:host(.datetime-disabled) .calendar-day-wrapper-in-range .calendar-day[disabled],
+:host(.datetime-disabled) .calendar-day-wrapper-range-end .calendar-day[disabled] {
+  opacity: 1;
+}
+
+/**
  * Center the day text vertically
  * and horizontally within its grid cell.
  */

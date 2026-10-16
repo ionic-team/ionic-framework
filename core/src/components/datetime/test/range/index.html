@@ -163,6 +163,24 @@
             ></ion-datetime>
           </div>
 
+          <!-- Range spanning today -->
+          <div class="grid-item">
+            <h2>Range Spanning Today</h2>
+            <ion-datetime id="spanningToday" locale="en-US" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <!-- Disabled -->
+          <div class="grid-item">
+            <h2>Disabled</h2>
+            <ion-datetime
+              id="disabledRange"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              disabled="true"
+            ></ion-datetime>
+          </div>
+
           <!-- Readonly -->
           <div class="grid-item">
             <h2>Readonly</h2>
@@ -212,6 +230,18 @@
         if (selectedDates.length === 1) return `From ${selectedDates[0]}`;
         return `${selectedDates[0]} → ${selectedDates[1]}`;
       };
+
+      // Range spanning today
+      const today = new Date();
+      const fiveDaysAgo = new Date(today);
+      fiveDaysAgo.setDate(today.getDate() - 5);
+      const fiveDaysFromNow = new Date(today);
+      fiveDaysFromNow.setDate(today.getDate() + 5);
+      const formatDate = (d) => d.toISOString().split('T')[0];
+      document.querySelector('#spanningToday').value = [formatDate(fiveDaysAgo), formatDate(fiveDaysFromNow)];
+
+      // Disabled with value
+      document.querySelector('#disabledRange').value = ['2022-06-08', '2022-06-18'];
 
       // Readonly with value
       document.querySelector('#readonlyRange').value = ['2022-06-08', '2022-06-18'];
