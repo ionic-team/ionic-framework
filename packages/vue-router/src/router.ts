@@ -475,9 +475,15 @@ export const createIonRouter = (
           currentHistoryPosition
         );
       } else if (incomingRouteParams.routerAction === "pop") {
+        /**
+         * Back can skip several entries, e.g. router.go(-3) after a
+         * tab switch, so use the delta to find the page we left. A
+         * back done with router.replace has no delta and keeps the
+         * one-step lookup.
+         */
         leavingLocationInfo = locationHistory.current(
           initialHistoryPosition,
-          currentHistoryPosition + 1
+          currentHistoryPosition - (delta ?? -1)
         );
 
         /**
@@ -709,7 +715,12 @@ export const createIonRouter = (
 
           routeInfo.lastPathname =
             currentRouteInfo?.pathname || routeInfo.lastPathname;
-          routeInfo.pushedByRoute = pushedByRoute;
+          /**
+           * A root replace resets the stack, so keeping pushedByRoute
+           * would show a back button with nowhere to go.
+           */
+          routeInfo.pushedByRoute =
+            routeInfo.routerDirection === "root" ? undefined : pushedByRoute;
           /**
            * Prefer the direction/animation the caller specified on
            * the navigate call; fall back to the leaving route's
