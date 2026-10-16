@@ -804,6 +804,7 @@ export class Textarea implements ComponentInterface {
                 cols={this.cols}
                 rows={this.rows}
                 wrap={this.wrap}
+                value={value}
                 onInput={this.onInput}
                 onChange={this.onChange}
                 onBlur={this.onBlur}
@@ -812,9 +813,7 @@ export class Textarea implements ComponentInterface {
                 aria-describedby={this.getHintTextID()}
                 aria-invalid={this.isInvalid ? 'true' : undefined}
                 {...this.inheritedAttributes}
-              >
-                {value}
-              </textarea>
+              />
             </div>
           </div>
           <div class="textarea-end" ref={(el) => (this.endContainerEl = el)}>

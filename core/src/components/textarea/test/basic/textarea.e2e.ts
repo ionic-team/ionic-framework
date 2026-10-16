@@ -6,6 +6,42 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('textarea: basic'), () => {
+    // Regression coverage for https://github.com/ionic-team/ionic-framework/issues/31579
+    test('should place the caret at the end when focused with an initial value', async ({ page }) => {
+      await page.setContent(`<ion-textarea value="Hello world"></ion-textarea>`, config);
+
+      const textarea = page.locator('ion-textarea');
+      const nativeTextarea = textarea.locator('textarea');
+
+      await textarea.evaluate(async (el: HTMLIonTextareaElement) => {
+        await el.setFocus();
+      });
+
+      await expect(nativeTextarea).toBeFocused();
+      await expect
+        .poll(() => nativeTextarea.evaluate((el: HTMLTextAreaElement) => [el.selectionStart, el.selectionEnd]))
+        .toEqual([11, 11]);
+    });
+
+    test('should preserve an existing selection when an unrelated render occurs', async ({ page }) => {
+      await page.setContent(`<ion-textarea value="Hello world"></ion-textarea>`, config);
+
+      const textarea = page.locator('ion-textarea');
+      const nativeTextarea = textarea.locator('textarea');
+
+      await textarea.evaluate(async (el: HTMLIonTextareaElement) => {
+        await el.setFocus();
+      });
+      await nativeTextarea.evaluate((el: HTMLTextAreaElement) => el.setSelectionRange(1, 4));
+
+      await textarea.evaluate((el) => el.setAttribute('helper-text', 'Updated helper text'));
+      await page.waitForChanges();
+
+      await expect
+        .poll(() => nativeTextarea.evaluate((el: HTMLTextAreaElement) => [el.selectionStart, el.selectionEnd]))
+        .toEqual([1, 4]);
+    });
+
     test('should stretch to fill height when min-height is set on the host', async ({ page }) => {
       await page.setContent(
         `
