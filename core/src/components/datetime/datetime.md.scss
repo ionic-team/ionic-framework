@@ -205,6 +205,7 @@
 :host .calendar-day.calendar-day-range-start,
 :host .calendar-day.calendar-day-range-end {
   border: 1px solid ion-color(primary, base);
+
   background: ion-color(primary, base);
   color: ion-color(primary, contrast);
 }
@@ -212,6 +213,7 @@
 :host(.ion-color) .calendar-day.calendar-day-range-start,
 :host(.ion-color) .calendar-day.calendar-day-range-end {
   border: 1px solid current-color(base);
+
   background: current-color(base);
   color: current-color(contrast);
 }

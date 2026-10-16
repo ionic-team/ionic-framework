@@ -275,15 +275,15 @@
 
   position: relative;
 
+  align-items: center;
+  justify-content: center;
+
   /**
    * Create a stacking context so the range track
    * (::before with z-index: -1) stays behind the
    * day button but above the host background.
    */
   z-index: 0;
-
-  align-items: center;
-  justify-content: center;
 
   // Adding a min width and min height allows
   // it to shrink smaller than its content
@@ -310,8 +310,6 @@
 :host .calendar-day-wrapper-range-start::before,
 :host .calendar-day-wrapper-in-range::before,
 :host .calendar-day-wrapper-range-end::before {
-  content: "";
-
   position: absolute;
 
   /**
@@ -319,12 +317,16 @@
    * match the calendar day button height.
    */
   top: 50%;
-  transform: translateY(-50%);
+
   height: var(--range-track-height);
 
-  z-index: -1;
+  transform: translateY(-50%);
 
   background: var(--range-background);
+
+  content: "";
+
+  z-index: -1;
 }
 
 :host .calendar-day-wrapper-range-start::before {

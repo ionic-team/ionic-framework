@@ -253,17 +253,18 @@
 .calendar-day.calendar-day-range-end[disabled],
 .calendar-day.calendar-day-in-range[disabled] {
   color: globals.$ion-text-default;
+
   opacity: 1;
 
   &::after {
-    content: "";
-
     position: absolute;
     inset: 0;
 
+    @include globals.border-radius(inherit);
+
     background: rgba(255, 255, 255, 0.6);
 
-    border-radius: inherit;
+    content: "";
 
     pointer-events: none;
   }
