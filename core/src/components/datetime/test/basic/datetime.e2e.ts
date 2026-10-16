@@ -609,6 +609,23 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(nextPrevIcons.first()).toHaveClass(/flip-rtl/);
       await expect(nextPrevIcons.last()).toHaveClass(/flip-rtl/);
     });
+
+    test('should flip icons when RTL is set on an ancestor', async ({ page }) => {
+      await page.setContent(
+        `
+        <div dir="rtl">
+          <div>
+            <ion-datetime></ion-datetime>
+          </div>
+        </div>
+      `,
+        config
+      );
+
+      const nextPrevIcons = page.locator('ion-datetime .calendar-next-prev ion-icon');
+      await expect(nextPrevIcons.first()).toHaveClass(/flip-rtl/);
+      await expect(nextPrevIcons.last()).toHaveClass(/flip-rtl/);
+    });
   });
 });
 
