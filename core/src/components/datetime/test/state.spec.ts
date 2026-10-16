@@ -13,6 +13,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: null,
       ariaLabel: 'Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refC)).toEqual({
@@ -22,6 +25,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: 'true',
       ariaLabel: 'Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refB, refA)).toEqual({
@@ -31,6 +37,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: null,
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refA)).toEqual({
@@ -40,6 +49,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refA, undefined, undefined, [1])).toEqual({
@@ -49,6 +61,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refA, undefined, undefined, [2])).toEqual({
@@ -58,6 +73,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
   });
 });
