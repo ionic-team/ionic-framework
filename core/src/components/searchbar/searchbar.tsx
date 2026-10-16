@@ -282,7 +282,7 @@ export class Searchbar implements ComponentInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = {
-      ...inheritAttributes(this.el, ['lang', 'dir']),
+      ...inheritAttributes(this.el, ['lang', 'dir', 'aria-label']),
     };
   }
 
