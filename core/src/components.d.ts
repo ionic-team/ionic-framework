@@ -1166,6 +1166,11 @@ export namespace Components {
          */
         "doneText": string;
         /**
+          * The text shown in the datetime header when the end of the range is empty, also used by screen readers to announce the end date. Only applies when `selectionMode="range"`.
+          * @default 'End date'
+         */
+        "endDateLabel": string;
+        /**
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
           * @default 0
          */
@@ -1221,6 +1226,7 @@ export namespace Components {
         "monthValues"?: number[] | number | string;
         /**
           * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+          * @deprecated Use `selectionMode="multiple"` instead.
           * @default false
          */
         "multiple": boolean;
@@ -1249,6 +1255,10 @@ export namespace Components {
           * @param startDate A valid [ISO-8601 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format) to reset the datetime state to.
          */
         "reset": (startDate?: string) => Promise<void>;
+        /**
+          * Controls the date selection behavior. `'multiple'` enables selecting multiple individual dates. `'range'` enables selecting a start and end date range. When unset, single-date selection is used.  Range selection only works with `presentation="date"` and `preferWheel="false"`.
+         */
+        "selectionMode"?: 'multiple' | 'range';
         /**
           * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
           * @default false
@@ -1279,6 +1289,11 @@ export namespace Components {
           * @default 'fixed'
          */
         "size": 'cover' | 'fixed';
+        /**
+          * The text shown in the datetime header when the start of the range is empty, also used by screen readers to announce the start date. Only applies when `selectionMode="range"`.
+          * @default 'Start date'
+         */
+        "startDateLabel": string;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -6126,7 +6141,7 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
+    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K]?: never };
 
     interface IonAccordion {
         /**
@@ -7237,6 +7252,11 @@ declare namespace LocalJSX {
          */
         "doneText"?: string;
         /**
+          * The text shown in the datetime header when the end of the range is empty, also used by screen readers to announce the end date. Only applies when `selectionMode="range"`.
+          * @default 'End date'
+         */
+        "endDateLabel"?: string;
+        /**
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
           * @default 0
          */
@@ -7288,6 +7308,7 @@ declare namespace LocalJSX {
         "monthValues"?: number[] | number | string;
         /**
           * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+          * @deprecated Use `selectionMode="multiple"` instead.
           * @default false
          */
         "multiple"?: boolean;
@@ -7340,6 +7361,10 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
+          * Controls the date selection behavior. `'multiple'` enables selecting multiple individual dates. `'range'` enables selecting a start and end date range. When unset, single-date selection is used.  Range selection only works with `presentation="date"` and `preferWheel="false"`.
+         */
+        "selectionMode"?: 'multiple' | 'range';
+        /**
           * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
           * @default false
          */
@@ -7369,6 +7394,11 @@ declare namespace LocalJSX {
           * @default 'fixed'
          */
         "size"?: 'cover' | 'fixed';
+        /**
+          * The text shown in the datetime header when the start of the range is empty, also used by screen readers to announce the start date. Only applies when `selectionMode="range"`.
+          * @default 'Start date'
+         */
+        "startDateLabel"?: string;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -11001,6 +11031,9 @@ declare namespace LocalJSX {
         "locale": string;
         "firstDayOfWeek": number;
         "multiple": boolean;
+        "selectionMode": 'multiple' | 'range';
+        "startDateLabel": string;
+        "endDateLabel": string;
         "value": string | string[] | null;
         "showDefaultTitle": boolean;
         "showDefaultButtons": boolean;
