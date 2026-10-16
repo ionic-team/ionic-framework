@@ -1,6 +1,7 @@
 import { doc } from '@utils/browser';
 
 import type { Config } from '../../interface';
+import type { GestureCapturedEventDetail } from '../gesture/gesture-controller';
 import { pointerCoord } from '../helpers';
 
 export const startTapClick = (config: Config) => {
@@ -9,6 +10,9 @@ export const startTapClick = (config: Config) => {
   }
 
   let lastActivated = 0;
+  let gestureCaptured = false;
+  let pointerMoved = false;
+  let pointerStart: { x: number; y: number } | undefined;
 
   let activatableEle: HTMLElement | undefined;
   let activeRipple: Promise<() => void> | undefined;
@@ -18,6 +22,7 @@ export const startTapClick = (config: Config) => {
   const clearDefers = new WeakMap<HTMLElement, any>();
 
   const cancelActive = () => {
+    gestureCaptured = false;
     if (activeDefer) clearTimeout(activeDefer);
     activeDefer = undefined;
     if (activatableEle) {
@@ -26,15 +31,43 @@ export const startTapClick = (config: Config) => {
     }
   };
 
+  const onGestureCaptured = (ev: Event) => {
+    const gestureElement = (ev as CustomEvent<GestureCapturedEventDetail>).detail?.gestureElement;
+
+    // A gesture on this control or inside it can be a long press.
+    // Ancestor gestures still cancel activation for sliding and reordering.
+    if (gestureElement && activatableEle?.contains(gestureElement) && !pointerMoved) {
+      gestureCaptured = true;
+      return;
+    }
+
+    cancelActive();
+  };
+
   const pointerDown = (ev: PointerEvent) => {
     // Ignore right clicks
     if (activatableEle || ev.button === 2) {
       return;
     }
+    gestureCaptured = false;
+    pointerMoved = false;
+    pointerStart = pointerCoord(ev);
     setActivatedElement(getActivatableTarget(ev), ev);
   };
 
+  const pointerMove = (ev: PointerEvent) => {
+    if (pointerStart) {
+      const { x, y } = pointerCoord(ev);
+      pointerMoved = pointerMoved || x !== pointerStart.x || y !== pointerStart.y;
+      if (gestureCaptured && pointerMoved) {
+        cancelActive();
+      }
+    }
+  };
+
   const pointerUp = (ev: UIEvent) => {
+    gestureCaptured = false;
+    pointerStart = undefined;
     setActivatedElement(undefined, ev);
   };
 
@@ -119,10 +152,11 @@ export const startTapClick = (config: Config) => {
     }
   };
 
-  doc.addEventListener('ionGestureCaptured', cancelActive);
+  doc.addEventListener('ionGestureCaptured', onGestureCaptured);
 
   doc.addEventListener('pointerdown', pointerDown, true);
   doc.addEventListener('pointerup', pointerUp, true);
+  doc.addEventListener('pointermove', pointerMove, true);
 
   /**
    * Tap click effects such as the ripple effect should
