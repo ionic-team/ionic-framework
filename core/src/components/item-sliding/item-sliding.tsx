@@ -422,6 +422,13 @@ export class ItemSliding implements ComponentInterface {
       style.transition = '';
     }
 
+    if (openAmount !== 0) {
+      el.classList.remove('item-sliding-closing');
+      if (this.gesture) {
+        this.gesture.enable(!this.disabled);
+      }
+    }
+
     if (openAmount > 0) {
       this.state =
         openAmount >= this.optsWidthRightSide + SWIPE_MARGIN

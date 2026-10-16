@@ -262,5 +262,21 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await openStartOptions(page, true);
     });
+
+    test('opening opposite side should remove item-sliding-closing and keep options clickable', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29975',
+      });
+
+      const slidingItem = page.locator('#item2');
+      await slidingItem.evaluate(async (el: HTMLIonItemSlidingElement) => {
+        await el.open('end');
+        await el.open('start');
+      });
+      await page.waitForChanges();
+
+      await expect(slidingItem).not.toHaveClass(/item-sliding-closing/);
+    });
   });
 });
