@@ -278,13 +278,6 @@
   align-items: center;
   justify-content: center;
 
-  /**
-   * Create a stacking context so the range track
-   * (::before with z-index: -1) stays behind the
-   * day button but above the host background.
-   */
-  z-index: 0;
-
   // Adding a min width and min height allows
   // it to shrink smaller than its content
   // which keeps the calendar day highlight
@@ -294,6 +287,13 @@
   min-height: 0;
 
   overflow: visible;
+
+  /**
+   * Create a stacking context so the range track
+   * (::before with z-index: -1) stays behind the
+   * day button but above the host background.
+   */
+  z-index: 0;
 }
 
 // Range Selection Track

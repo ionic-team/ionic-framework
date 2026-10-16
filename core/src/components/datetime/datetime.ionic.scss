@@ -257,10 +257,10 @@
   opacity: 1;
 
   &::after {
+    @include globals.border-radius(inherit);
+
     position: absolute;
     inset: 0;
-
-    @include globals.border-radius(inherit);
 
     background: rgba(255, 255, 255, 0.6);
 
