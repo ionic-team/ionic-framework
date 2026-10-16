@@ -125,6 +125,76 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
           await expect(datetime).toHaveJSProperty('value', '2022-05-10');
           await expectSelectedDay(datetime, 10, 3);
         });
+
+        test('should commit the selection when a dismiss handler confirms it after a custom role', async ({ page }) => {
+          await page
+            .locator(tag)
+            .evaluate(
+              (el: HTMLElement, eventName: string) =>
+                el.addEventListener(eventName, () => el.querySelector('ion-datetime')!.confirm()),
+              didDismiss
+            );
+
+          await openDatetime(page, didPresent);
+          await getDay(datetime, 10).click();
+          await dismissDatetime(page, didDismiss, () =>
+            page
+              .locator(tag)
+              .evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => el.dismiss(undefined, 'my-custom-role'))
+          );
+
+          await expect(datetime).toHaveJSProperty('value', '2022-05-10');
+
+          await openDatetime(page, didPresent);
+          await expectSelectedDay(datetime, 10, 3);
+        });
+
+        test('should commit the selection when confirmed after awaiting onDidDismiss with a custom role', async ({
+          page,
+        }) => {
+          await openDatetime(page, didPresent);
+          await getDay(datetime, 10).click();
+
+          await page.locator(tag).evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => {
+            el.onDidDismiss().then(() => el.querySelector('ion-datetime')!.confirm());
+          });
+          await dismissDatetime(page, didDismiss, () =>
+            page
+              .locator(tag)
+              .evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => el.dismiss(undefined, 'my-custom-role'))
+          );
+
+          await expect(datetime).toHaveJSProperty('value', '2022-05-10');
+
+          await openDatetime(page, didPresent);
+          await expectSelectedDay(datetime, 10, 3);
+        });
+
+        test('should keep the selection set by reset() after cancelling', async ({ page }) => {
+          await openDatetime(page, didPresent);
+          await getDay(datetime, 10).click();
+          await dismissDatetime(page, didDismiss, () => datetime.locator('#cancel-button').click());
+
+          await datetime.evaluate((el: HTMLIonDatetimeElement) => el.reset('2022-05-20'));
+          await openDatetime(page, didPresent);
+
+          await expectSelectedDay(datetime, 20, 3);
+        });
+
+        test('should keep the selection set by reset() before dismissing without confirming', async ({ page }) => {
+          await openDatetime(page, didPresent);
+          await getDay(datetime, 10).click();
+          await datetime.evaluate((el: HTMLIonDatetimeElement) => el.reset('2022-05-20'));
+          await dismissDatetime(page, didDismiss, () =>
+            page
+              .locator(tag)
+              .evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => el.dismiss(undefined, 'backdrop'))
+          );
+
+          await openDatetime(page, didPresent);
+
+          await expectSelectedDay(datetime, 20, 3);
+        });
       });
     });
 
@@ -206,7 +276,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
 
       /**
        * The time picker opens its own popover. Dismissing it
-       * must not discard the selection in the parent popover.
+       * shouldn't discard the selection in the parent popover.
        */
       await datetime.locator('.time-body').click();
       await ionPopoverDidPresent.next();
