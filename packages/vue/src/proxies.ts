@@ -318,10 +318,13 @@ export const IonContent: StencilVueComponent<JSX.IonContent> = /*@__PURE__*/ def
   'scrollX',
   'scrollY',
   'scrollEvents',
+  'tabBarScrollEffect',
+  'ionTabBarScrollEffectChange',
   'ionScrollStart',
   'ionScroll',
   'ionScrollEnd'
 ], [
+  'ionTabBarScrollEffectChange',
   'ionScrollStart',
   'ionScroll',
   'ionScrollEnd'

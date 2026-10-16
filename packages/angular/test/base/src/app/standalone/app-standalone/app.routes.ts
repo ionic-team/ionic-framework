@@ -76,6 +76,17 @@ export const routes: Routes = [
           { path: 'tab4', loadComponent: () => import('../tabs-search-params/tab4.component').then(c => c.TabsSearchParamsTab4Component) }
         ]
       },
+      { path: 'tab-bar-scroll-effect', redirectTo: '/standalone/tab-bar-scroll-effect/tab1', pathMatch: 'full' },
+      {
+        path: 'tab-bar-scroll-effect',
+        loadComponent: () => import('../tab-bar-scroll-effect/tab-bar-scroll-effect.component').then(c => c.TabBarScrollEffectComponent),
+        children: [
+          { path: 'tab1', loadComponent: () => import('../tab-bar-scroll-effect/tab-bar-scroll-effect-tab1.component').then(c => c.TabBarScrollEffectTab1Component) },
+          { path: 'tab1/child', loadComponent: () => import('../tab-bar-scroll-effect/tab-bar-scroll-effect-child.component').then(c => c.TabBarScrollEffectChildComponent) },
+          { path: 'tab1/child-effect', data: { tabBarScrollEffect: true }, loadComponent: () => import('../tab-bar-scroll-effect/tab-bar-scroll-effect-child.component').then(c => c.TabBarScrollEffectChildComponent) },
+          { path: 'tab2', loadComponent: () => import('../tab-bar-scroll-effect/tab-bar-scroll-effect-tab2.component').then(c => c.TabBarScrollEffectTab2Component) }
+        ]
+      },
       {
         path: 'swipe-gesture-disabled',
         loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled.component').then(c => c.SwipeGestureDisabledComponent),

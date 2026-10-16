@@ -52,7 +52,8 @@ export class Header implements ComponentInterface {
   /**
    * Describes the scroll effect that will be applied to the header.
    * `"hide"` slides the header out of view when scrolling down and back in
-   * when scrolling up.
+   * when scrolling back quickly. A header that is out of view is shown again
+   * when an element in it receives focus.
    * `"condense"` collapses the large title into the main toolbar on scroll.
    * `"fade"` fades the toolbar background on scroll.
    */
@@ -170,8 +171,10 @@ export class Header implements ComponentInterface {
   private setupScrollEffectHide = async (contentEl: HTMLElement) => {
     const setupPromise = createScrollHideController(contentEl, {
       el: this.el,
+      edge: 'top',
       cssVar: '--internal-header-hide-height',
       hiddenClass: 'header-scroll-hidden',
+      settlingClass: 'header-scroll-settling',
       contentPartnerClass: 'content-header-hide-scroll-partner',
       contentHiddenClass: 'content-header-hide-scroll-hidden',
     });
@@ -274,6 +277,16 @@ export class Header implements ComponentInterface {
     }) as HTMLElement | undefined;
 
     if (!this.collapsibleMainHeader) {
+      return false;
+    }
+
+    /**
+     * A main header that hides on scroll leaves the screen along with the
+     * scroll, so the large title cannot collapse into it. The large title
+     * scrolls with the content instead and the main header keeps its title.
+     */
+    if ((this.collapsibleMainHeader as HTMLIonHeaderElement).scrollEffect === 'hide') {
+      this.collapsibleMainHeader = undefined;
       return false;
     }
 
