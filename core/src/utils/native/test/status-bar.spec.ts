@@ -85,6 +85,47 @@ describe('StatusBar', () => {
     });
   });
 
+  describe('when only the SystemBars plugin is available', () => {
+    let systemBarsPlugin: { setStyle: jest.Mock };
+
+    beforeEach(() => {
+      systemBarsPlugin = { setStyle: jest.fn() };
+      mockCapacitor({ plugins: { SystemBars: systemBarsPlugin }, available: ['SystemBars'] });
+    });
+
+    it('should style only the status bar through the SystemBars plugin', () => {
+      StatusBar.setStyle({ style: Style.Dark });
+
+      expect(systemBarsPlugin.setStyle.mock.calls).toStrictEqual([[{ style: 'DARK', bar: 'StatusBar' }]]);
+    });
+
+    it('should resolve getStyle to DEFAULT', async () => {
+      await expect(StatusBar.getStyle()).resolves.toBe('DEFAULT');
+    });
+  });
+
+  describe('when both the StatusBar and SystemBars plugins are available', () => {
+    let statusBarPlugin: ReturnType<typeof createStatusBarPlugin>;
+    let systemBarsPlugin: { setStyle: jest.Mock };
+
+    beforeEach(() => {
+      statusBarPlugin = createStatusBarPlugin();
+      systemBarsPlugin = { setStyle: jest.fn() };
+      mockCapacitor({
+        plugins: { StatusBar: statusBarPlugin, SystemBars: systemBarsPlugin },
+        available: ['StatusBar', 'SystemBars'],
+      });
+    });
+
+    it('should only call the StatusBar plugin', async () => {
+      StatusBar.setStyle({ style: Style.Dark });
+
+      await expect(StatusBar.getStyle()).resolves.toBe('LIGHT');
+      expect(statusBarPlugin.setStyle.mock.calls).toStrictEqual([[{ style: 'DARK' }]]);
+      expect(systemBarsPlugin.setStyle).not.toHaveBeenCalled();
+    });
+  });
+
   describe('when Capacitor is not present', () => {
     it('should not throw when setting the style', () => {
       expect(() => StatusBar.setStyle({ style: Style.Dark })).not.toThrow();
