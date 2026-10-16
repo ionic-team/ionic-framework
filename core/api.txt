@@ -666,6 +666,7 @@ ion-content,prop,mode,"ios" | "md",undefined,false,false
 ion-content,prop,scrollEvents,boolean,false,false,false
 ion-content,prop,scrollX,boolean,false,false,false
 ion-content,prop,scrollY,boolean,true,false,false
+ion-content,prop,tabBarScrollEffect,boolean | undefined,undefined,false,false
 ion-content,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-content,method,getScrollElement,getScrollElement() => Promise<HTMLElement>
 ion-content,method,scrollByPoint,scrollByPoint(x: number, y: number, duration: number) => Promise<void>
@@ -2397,7 +2398,7 @@ ion-tab-bar,shadow
 ion-tab-bar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-tab-bar,prop,expand,"compact" | "full",'full',false,false
 ion-tab-bar,prop,mode,"ios" | "md",undefined,false,false
-ion-tab-bar,prop,scrollEffect,"hide" | undefined,undefined,false,true
+ion-tab-bar,prop,scrollEffect,"fade" | "hide" | undefined,undefined,false,true
 ion-tab-bar,prop,selectedTab,string | undefined,undefined,false,false
 ion-tab-bar,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-tab-bar,prop,theme,"ios" | "md" | "ionic",undefined,false,false

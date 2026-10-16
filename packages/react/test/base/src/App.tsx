@@ -29,6 +29,7 @@ import TabsBasic from './pages/TabsBasic';
 import NavComponent from './pages/navigation/NavComponent';
 import NavModalComponent from './pages/navigation/NavModalComponent';
 import TabsDirectNavigation from './pages/TabsDirectNavigation';
+import TabsScrollEffect from './pages/TabsScrollEffect';
 import TabsSimilarPrefixes from './pages/TabsSimilarPrefixes';
 import IonModalConditional from './pages/overlay-components/IonModalConditional';
 import IonModalConditionalSibling from './pages/overlay-components/IonModalConditionalSibling';
@@ -71,6 +72,7 @@ const App: React.FC = () => (
         <Route path="/tabs/*" element={<Tabs />} />
         <Route path="/tabs-basic/*" element={<TabsBasic />} />
         <Route path="/tabs-direct-navigation/*" element={<TabsDirectNavigation />} />
+        <Route path="/tabs-scroll-effect/*" element={<TabsScrollEffect />} />
         <Route path="/tabs-similar-prefixes/*" element={<TabsSimilarPrefixes />} />
         <Route path="/icons" element={<Icons />} />
         <Route path="/inputs" element={<Inputs />} />

@@ -1119,6 +1119,10 @@ export namespace Components {
          */
         "scrollY": boolean;
         /**
+          * Whether the scroll effect of an `ion-tab-bar` applies to this content. By default, the scroll effect only applies to the content of a page that cannot go back, such as the root page of a tab, so that the tab bar stays in place on pages that were navigated to. Set to `true` to apply the scroll effect on a page that can go back, or to `false` to turn it off for a page. Only applies to a tab bar that has a `scrollEffect` and is a child of `ion-tabs`.
+         */
+        "tabBarScrollEffect"?: boolean;
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -1471,7 +1475,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll.
+          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling back quickly. A footer that is out of view is shown again when an element in it receives focus. `"fade"` fades the toolbar background on scroll.
          */
         "scrollEffect"?: FooterScrollEffect;
         /**
@@ -1558,7 +1562,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. `"fade"` fades the toolbar background on scroll.
+          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling back quickly. A header that is out of view is shown again when an element in it receives focus. `"condense"` collapses the large title into the main toolbar on scroll. `"fade"` fades the toolbar background on scroll.
          */
         "scrollEffect"?: HeaderScrollEffect;
         /**
@@ -3947,7 +3951,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.  Note: `"hide"` is ignored when the tab bar is nested inside an `ion-footer` to avoid leaving an empty footer visible on screen. Set `scroll-effect="hide"` on the footer instead so the entire footer hides together.
+          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling back quickly. A tab bar that is out of view is shown again when an element in it receives focus. `"fade"` fades the tab bar background out when the content is scrolled to the end.  Note: `"hide"` is ignored when the tab bar is nested inside an `ion-footer` to avoid leaving an empty footer visible on screen. Set `scroll-effect="hide"` on the footer instead so the entire footer hides together.
          */
         "scrollEffect"?: TabBarScrollEffect;
         /**
@@ -4869,6 +4873,7 @@ declare global {
         new (): HTMLIonColElement;
     };
     interface HTMLIonContentElementEventMap {
+        "ionTabBarScrollEffectChange": void;
         "ionScrollStart": ScrollBaseDetail;
         "ionScroll": ScrollDetail;
         "ionScrollEnd": ScrollBaseDetail;
@@ -7021,6 +7026,7 @@ declare namespace LocalJSX {
           * Emitted when the scroll has started. This event is disabled by default. Set `scrollEvents` to `true` to enable.
          */
         "onIonScrollStart"?: (event: IonContentCustomEvent<ScrollBaseDetail>) => void;
+        "onIonTabBarScrollEffectChange"?: (event: IonContentCustomEvent<void>) => void;
         /**
           * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
           * @default false
@@ -7036,6 +7042,10 @@ declare namespace LocalJSX {
           * @default true
          */
         "scrollY"?: boolean;
+        /**
+          * Whether the scroll effect of an `ion-tab-bar` applies to this content. By default, the scroll effect only applies to the content of a page that cannot go back, such as the root page of a tab, so that the tab bar stays in place on pages that were navigated to. Set to `true` to apply the scroll effect on a page that can go back, or to `false` to turn it off for a page. Only applies to a tab bar that has a `scrollEffect` and is a child of `ion-tabs`.
+         */
+        "tabBarScrollEffect"?: boolean;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -7398,7 +7408,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll.
+          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling back quickly. A footer that is out of view is shown again when an element in it receives focus. `"fade"` fades the toolbar background on scroll.
          */
         "scrollEffect"?: FooterScrollEffect;
         /**
@@ -7481,7 +7491,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. `"fade"` fades the toolbar background on scroll.
+          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling back quickly. A header that is out of view is shown again when an element in it receives focus. `"condense"` collapses the large title into the main toolbar on scroll. `"fade"` fades the toolbar background on scroll.
          */
         "scrollEffect"?: HeaderScrollEffect;
         /**
@@ -9966,7 +9976,7 @@ declare namespace LocalJSX {
         "onIonTabBarChanged"?: (event: IonTabBarCustomEvent<TabBarChangedEventDetail>) => void;
         "onIonTabBarLoaded"?: (event: IonTabBarCustomEvent<void>) => void;
         /**
-          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.  Note: `"hide"` is ignored when the tab bar is nested inside an `ion-footer` to avoid leaving an empty footer visible on screen. Set `scroll-effect="hide"` on the footer instead so the entire footer hides together.
+          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling back quickly. A tab bar that is out of view is shown again when an element in it receives focus. `"fade"` fades the tab bar background out when the content is scrolled to the end.  Note: `"hide"` is ignored when the tab bar is nested inside an `ion-footer` to avoid leaving an empty footer visible on screen. Set `scroll-effect="hide"` on the footer instead so the entire footer hides together.
          */
         "scrollEffect"?: TabBarScrollEffect;
         /**
@@ -10700,6 +10710,7 @@ declare namespace LocalJSX {
         "scrollX": boolean;
         "scrollY": boolean;
         "scrollEvents": boolean;
+        "tabBarScrollEffect": boolean;
     }
     interface IonDatetimeAttributes {
         "color": Color;

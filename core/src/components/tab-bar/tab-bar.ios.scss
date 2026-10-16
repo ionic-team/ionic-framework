@@ -32,4 +32,13 @@
   :host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
     background: rgba($background-color-rgb, 0.6);
   }
+
+  // The blur is applied to the faded background so that it fades with it
+  :host(.tab-bar-translucent.tab-bar-scroll-effect-fade) {
+    backdrop-filter: none;
+  }
+
+  :host(.tab-bar-translucent.tab-bar-scroll-effect-fade) .tab-bar-background {
+    backdrop-filter: $tab-bar-ios-translucent-filter;
+  }
 }

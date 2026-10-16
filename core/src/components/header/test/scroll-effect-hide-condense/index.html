@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Header - Scroll Effect Hide with Large Title</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header scroll-effect="hide" id="mainHeader">
+          <ion-toolbar>
+            <ion-title>Header</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content fullscreen="true">
+          <ion-header scroll-effect="condense" id="largeTitleHeader">
+            <ion-toolbar>
+              <ion-title size="large">Header</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <div class="ion-padding" style="height: 3000px">
+            <h1>Content</h1>
+            <p>Scroll down. The header hides, and the large title scrolls away with the content.</p>
+          </div>
+        </ion-content>
+      </div>
+    </ion-app>
+  </body>
+</html>

@@ -43,7 +43,8 @@ export class Footer implements ComponentInterface {
   /**
    * Describes the scroll effect that will be applied to the footer.
    * `"hide"` slides the footer out of view when scrolling down and back in
-   * when scrolling up.
+   * when scrolling back quickly. A footer that is out of view is shown again
+   * when an element in it receives focus.
    * `"fade"` fades the toolbar background on scroll.
    */
   @Prop({ reflect: true }) scrollEffect?: FooterScrollEffect;
@@ -171,8 +172,10 @@ export class Footer implements ComponentInterface {
   private setupScrollEffectHide = async (contentEl: HTMLElement) => {
     const setupPromise = createScrollHideController(contentEl, {
       el: this.el,
+      edge: 'bottom',
       cssVar: '--internal-footer-hide-height',
       hiddenClass: 'footer-scroll-hidden',
+      settlingClass: 'footer-scroll-settling',
       contentPartnerClass: 'content-footer-hide-scroll-partner',
       contentHiddenClass: 'content-footer-hide-scroll-hidden',
     });

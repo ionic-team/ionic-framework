@@ -140,6 +140,28 @@ export class Content implements ComponentInterface {
   @Prop() scrollEvents = false;
 
   /**
+   * Whether the scroll effect of an `ion-tab-bar` applies to this content.
+   * By default, the scroll effect only applies to the content of a page that
+   * cannot go back, such as the root page of a tab, so that the tab bar stays
+   * in place on pages that were navigated to.
+   * Set to `true` to apply the scroll effect on a page that can go back, or to
+   * `false` to turn it off for a page.
+   * Only applies to a tab bar that has a `scrollEffect` and is a child of `ion-tabs`.
+   */
+  @Prop() tabBarScrollEffect?: boolean;
+  @Watch('tabBarScrollEffect')
+  tabBarScrollEffectChanged() {
+    this.ionTabBarScrollEffectChange.emit();
+  }
+
+  /**
+   * @internal
+   * Emitted when `tabBarScrollEffect` changes, so that the tab bar
+   * can update which pages it applies its scroll effect to.
+   */
+  @Event() ionTabBarScrollEffectChange!: EventEmitter<void>;
+
+  /**
    * Emitted when the scroll has started. This event is disabled by default.
    * Set `scrollEvents` to `true` to enable.
    */

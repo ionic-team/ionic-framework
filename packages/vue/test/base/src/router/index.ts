@@ -227,6 +227,32 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
+    path: '/tab-bar-scroll-effect/',
+    component: () => import('@/views/tab-bar-scroll-effect/TabBarScrollEffect.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/tab-bar-scroll-effect/home'
+      },
+      {
+        path: 'home',
+        component: () => import('@/views/tab-bar-scroll-effect/Home.vue')
+      },
+      {
+        path: 'home/child',
+        component: () => import('@/views/tab-bar-scroll-effect/Child.vue')
+      },
+      {
+        path: 'home/child-effect',
+        component: () => import('@/views/tab-bar-scroll-effect/ChildEffect.vue')
+      },
+      {
+        path: 'other',
+        component: () => import('@/views/tab-bar-scroll-effect/Other.vue')
+      }
+    ]
+  },
+  {
     path: '/tabs-similar-prefixes/',
     component: () => import('@/views/tabs-similar-prefixes/TabsSimilarPrefixes.vue'),
     children: [

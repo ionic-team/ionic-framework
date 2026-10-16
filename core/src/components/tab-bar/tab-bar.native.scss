@@ -23,3 +23,14 @@
 :host(.ion-color) ::slotted(ion-tab-button) {
   background: #{current-color(base)};
 }
+
+// Tab Bar with Color - Scroll Effect Fade
+// --------------------------------------------------
+
+:host(.ion-color.tab-bar-scroll-effect-fade) ::slotted(ion-tab-button) {
+  background: transparent;
+}
+
+:host(.ion-color.tab-bar-scroll-effect-fade) .tab-bar-background {
+  background: #{current-color(base)};
+}

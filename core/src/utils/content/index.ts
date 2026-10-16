@@ -59,6 +59,71 @@ export const findClosestIonContent = (el: Element) => {
 };
 
 /**
+ * Queries the content of the page that is currently visible inside the given element.
+ *
+ * Elements such as `ion-tabs` render the content of several pages at once, but only
+ * show one of them. Hidden pages, pages that have not started transitioning in,
+ * and content that belongs to an overlay or a menu are ignored. If more than one
+ * page is visible, such as during a transition, the last one in the DOM is used.
+ */
+export const findVisibleIonContent = (el: Element) => {
+  const contents = Array.from(el.querySelectorAll<HTMLElement>(ION_CONTENT_SELECTOR));
+  const visibleContents = contents.filter((content) => {
+    /**
+     * Only the pages inside of the element matter. The element itself may be in
+     * a page that is not visible yet, such as the page that contains `ion-tabs`
+     * while it is transitioning in.
+     */
+    const hiddenAncestor = content.closest('.ion-page-invisible, ion-modal, ion-popover, ion-menu');
+
+    return content.offsetParent !== null && (hiddenAncestor === null || !el.contains(hiddenAncestor));
+  });
+
+  return visibleContents.length > 0 ? visibleContents[visibleContents.length - 1] : null;
+};
+
+/**
+ * Calls the callback with the content that is visible inside of the given element,
+ * and again whenever a page is shown, hidden, added, or removed, even if the visible
+ * content stays the same, since the page itself may have changed. Returns a function
+ * that stops observing.
+ */
+export const observeVisibleIonContent = (el: Element, callback: (contentEl: HTMLElement | null) => void) => {
+  const checkContent = () => callback(findVisibleIonContent(el));
+
+  checkContent();
+
+  if (typeof MutationObserver === 'undefined') {
+    return () => undefined;
+  }
+
+  const affectsContent = (node: Node) =>
+    node.nodeType === Node.ELEMENT_NODE &&
+    ((node as Element).matches(`.ion-page, ion-tab, ${ION_CONTENT_SELECTOR}`) ||
+      (node as Element).querySelector(ION_CONTENT_SELECTOR) !== null);
+
+  /**
+   * Pages are shown and hidden by adding and removing elements
+   * and by toggling classes on the pages. Other changes in the
+   * subtree, such as pressed states or list items, are ignored.
+   */
+  const observer = new MutationObserver((records) => {
+    const hasPageChange = records.some((record) =>
+      record.type === 'childList'
+        ? Array.from(record.addedNodes).concat(Array.from(record.removedNodes)).some(affectsContent)
+        : (record.target as Element).matches('.ion-page, ion-tab')
+    );
+
+    if (hasPageChange) {
+      checkContent();
+    }
+  });
+  observer.observe(el, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+
+  return () => observer.disconnect();
+};
+
+/**
  * Queries the custom scroll host an `ion-refresher` scrolls with in the given
  * `ion-content`. A refresher only pairs with the first host.
  */

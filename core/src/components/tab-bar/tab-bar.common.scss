@@ -63,26 +63,70 @@
   padding-bottom: 0;
 }
 
+// Tab Bar - Scroll Effect Fade
+// --------------------------------------------------
+
+// The background and border are drawn by a child element so
+// that they can fade without affecting the tab buttons.
+:host(.tab-bar-scroll-effect-fade) {
+  position: relative;
+
+  border-top: 0;
+
+  background: transparent;
+
+  isolation: isolate;
+}
+
+:host([slot="top"].tab-bar-scroll-effect-fade) {
+  border-bottom: 0;
+}
+
+// The tab buttons are transparent so that they do not cover the faded background.
+:host(.tab-bar-scroll-effect-fade) ::slotted(ion-tab-button) {
+  background: transparent;
+}
+
+.tab-bar-background {
+  position: absolute;
+  inset: 0;
+
+  border-top: var(--border);
+
+  background: var(--background);
+
+  opacity: var(--opacity-scale, 1);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+:host([slot="top"]) .tab-bar-background {
+  border-top: 0;
+  border-bottom: var(--border);
+}
+
 // Tab Bar - Scroll Effect Hide
 // --------------------------------------------------
 
-// Slide back into view when scrolling up — spring ease-out snaps the tab bar
-// back into place quickly and settles smoothly.
+// The tab bar follows the scroll pixel by pixel. The offset is set
+// by the scroll effect and is how far the tab bar is out of view.
 :host(.tab-bar-scroll-effect-hide) {
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(var(--internal-scroll-hide-offset, 0px));
 }
 
-// Slide out of view when scrolling down — tab bar moves off the bottom of the
-// screen. Slower duration mirrors the natural pace of the downward scroll.
-:host(.tab-bar-scroll-effect-hide.tab-bar-scroll-hidden) {
-  transform: translateY(100%);
+:host([slot="top"].tab-bar-scroll-effect-hide) {
+  transform: translateY(calc(var(--internal-scroll-hide-offset, 0px) * -1));
+}
 
-  transition: transform 350ms cubic-bezier(0.4, 0, 1, 1);
+// Only animate when the tab bar settles after scrolling stops.
+:host(.tab-bar-scroll-effect-hide.tab-bar-scroll-settling) {
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :host(.tab-bar-scroll-effect-hide),
-  :host(.tab-bar-scroll-effect-hide.tab-bar-scroll-hidden) {
+  :host(.tab-bar-scroll-effect-hide.tab-bar-scroll-settling) {
     transition: none;
   }
 }
