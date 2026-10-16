@@ -273,6 +273,8 @@
 :host .calendar-day-wrapper {
   display: flex;
 
+  position: relative;
+
   align-items: center;
   justify-content: center;
 
@@ -285,6 +287,87 @@
   min-height: 0;
 
   overflow: visible;
+
+  /**
+   * Create a stacking context so the range track
+   * (::before with z-index: -1) stays behind the
+   * day button but above the host background.
+   */
+  z-index: 0;
+}
+
+// Range Selection Track
+// -----------------------------------
+
+/**
+ * The ::before pseudo-element on the calendar-day-wrapper
+ * draws the colored background track that connects the
+ * range start to the range end. The track is vertically
+ * centered and sized to match the day button height.
+ *
+ * @prop --range-background: The background color of the range selection track.
+ */
+:host .calendar-day-wrapper-range-start::before,
+:host .calendar-day-wrapper-in-range::before,
+:host .calendar-day-wrapper-range-end::before {
+  position: absolute;
+
+  /**
+   * Vertically center the track and size it to
+   * match the calendar day button height.
+   */
+  top: 50%;
+
+  height: var(--range-track-height);
+
+  transform: translateY(-50%);
+
+  background: var(--range-background);
+
+  content: "";
+
+  z-index: -1;
+}
+
+:host .calendar-day-wrapper-range-start::before {
+  inset-inline-start: 50%;
+  inset-inline-end: 0;
+}
+
+:host .calendar-day-wrapper-in-range::before {
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+}
+
+:host .calendar-day-wrapper-range-end::before {
+  inset-inline-start: 0;
+  inset-inline-end: 50%;
+}
+
+/**
+ * When a single day is both the start and end of the range,
+ * do not show a track since there is nothing to connect.
+ */
+:host .calendar-day-wrapper-range-start.calendar-day-wrapper-range-end::before {
+  display: none;
+}
+
+/**
+ * When the component is disabled, move the opacity to the wrapper
+ * so both the track and day button fade equally. Without this,
+ * the day button becomes semi-transparent (via native disabled opacity)
+ * while the track stays opaque, causing a visible overlap.
+ */
+:host(.datetime-disabled) .calendar-day-wrapper-range-start,
+:host(.datetime-disabled) .calendar-day-wrapper-in-range,
+:host(.datetime-disabled) .calendar-day-wrapper-range-end {
+  opacity: 0.4;
+}
+
+:host(.datetime-disabled) .calendar-day-wrapper-range-start .calendar-day[disabled],
+:host(.datetime-disabled) .calendar-day-wrapper-in-range .calendar-day[disabled],
+:host(.datetime-disabled) .calendar-day-wrapper-range-end .calendar-day[disabled] {
+  opacity: 1;
 }
 
 /**

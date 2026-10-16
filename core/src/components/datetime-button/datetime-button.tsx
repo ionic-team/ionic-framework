@@ -197,7 +197,16 @@ export class DatetimeButton implements ComponentInterface {
       return;
     }
 
-    const { value, locale, formatOptions, hourCycle, preferWheel, multiple, titleSelectedDatesFormatter } = datetimeEl;
+    const {
+      value,
+      locale,
+      formatOptions,
+      hourCycle,
+      preferWheel,
+      multiple,
+      selectionMode,
+      titleSelectedDatesFormatter,
+    } = datetimeEl;
 
     const parsedValues = this.getParsedDateValues(value);
 
@@ -213,6 +222,9 @@ export class DatetimeButton implements ComponentInterface {
       return;
     }
 
+    const isRangeMode = selectionMode === 'range';
+    const isMultipleMode = selectionMode === 'multiple' || (selectionMode === undefined && multiple);
+
     /**
      * If developers incorrectly use multiple="true"
      * with non "date" datetimes, then just select
@@ -222,17 +234,14 @@ export class DatetimeButton implements ComponentInterface {
      */
     const firstParsedDatetime = parsedDatetimes[0];
     const computedHourCycle = getHourCycle(locale, hourCycle);
+    const dateFormatOptions = formatOptions?.date ?? { month: 'short', day: 'numeric', year: 'numeric' };
 
     this.dateText = this.timeText = undefined;
 
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
-        const dateText = getLocalizedDateTime(
-          locale,
-          firstParsedDatetime,
-          formatOptions?.date ?? { month: 'short', day: 'numeric', year: 'numeric' }
-        );
+        const dateText = getLocalizedDateTime(locale, firstParsedDatetime, dateFormatOptions);
         const timeText = getLocalizedTime(locale, firstParsedDatetime, computedHourCycle, formatOptions?.time);
         if (preferWheel) {
           this.dateText = `${dateText} ${timeText}`;
@@ -242,7 +251,24 @@ export class DatetimeButton implements ComponentInterface {
         }
         break;
       case 'date':
-        if (multiple && parsedValues.length !== 1) {
+        if (isRangeMode && parsedValues.length === 2) {
+          // Range mode: display "startDate - endDate"
+          const startDate = getLocalizedDateTime(locale, parsedDatetimes[0], dateFormatOptions);
+          const endDate = getLocalizedDateTime(
+            locale,
+            parsedDatetimes.length > 1 ? parsedDatetimes[1] : parsedDatetimes[0],
+            dateFormatOptions
+          );
+          let rangeText = `${startDate} - ${endDate}`;
+          if (titleSelectedDatesFormatter !== undefined) {
+            try {
+              rangeText = titleSelectedDatesFormatter(parsedValues);
+            } catch (e) {
+              printIonError('[ion-datetime-button] - Exception in provided `titleSelectedDatesFormatter`:', e);
+            }
+          }
+          this.dateText = rangeText;
+        } else if (isMultipleMode && parsedValues.length !== 1) {
           let headerText = `${parsedValues.length} days`; // default/fallback for multiple selection
           if (titleSelectedDatesFormatter !== undefined) {
             try {
@@ -253,11 +279,7 @@ export class DatetimeButton implements ComponentInterface {
           }
           this.dateText = headerText;
         } else {
-          this.dateText = getLocalizedDateTime(
-            locale,
-            firstParsedDatetime,
-            formatOptions?.date ?? { month: 'short', day: 'numeric', year: 'numeric' }
-          );
+          this.dateText = getLocalizedDateTime(locale, firstParsedDatetime, dateFormatOptions);
         }
         break;
       case 'time':

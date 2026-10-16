@@ -36,6 +36,11 @@ export type DatetimeHighlight = { date: string } & DatetimeHighlightStyle;
 
 export type DatetimeHighlightCallback = (dateIsoString: string) => DatetimeHighlightStyle | undefined;
 
+export interface DatetimeRangeParts {
+  start: DatetimeParts;
+  end?: DatetimeParts;
+}
+
 export type DatetimeHourCycle = 'h11' | 'h12' | 'h23' | 'h24';
 
 /**

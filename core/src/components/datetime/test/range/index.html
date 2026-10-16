@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Range</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .grid-item {
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      ion-datetime {
+        box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Range</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <!-- Basic range selection -->
+          <div class="grid-item">
+            <h2>Basic Range (No Value)</h2>
+            <ion-datetime id="basicRange" locale="en-US" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <!-- Programmatic default value -->
+          <div class="grid-item">
+            <h2>Programmatic Default Value</h2>
+            <ion-datetime id="defaultValue" locale="en-US" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <!-- Single day range -->
+          <div class="grid-item">
+            <h2>Single Day Range</h2>
+            <ion-datetime id="singleDayRange" locale="en-US" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <!-- With header -->
+          <div class="grid-item">
+            <h2>With Header</h2>
+            <ion-datetime
+              id="withHeader"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- With header and custom labels -->
+          <div class="grid-item">
+            <h2>Custom Labels (Check in / Check out)</h2>
+            <ion-datetime
+              id="customLabels"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+              start-date-label="Check in"
+              end-date-label="Check out"
+            ></ion-datetime>
+          </div>
+
+          <!-- With buttons -->
+          <div class="grid-item">
+            <h2>With Buttons</h2>
+            <ion-datetime
+              id="withButtons"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              show-default-buttons="true"
+              show-clear-button="true"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- With disabled dates -->
+          <div class="grid-item">
+            <h2>With Disabled Dates (15th disabled)</h2>
+            <ion-datetime
+              id="disabledDates"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- With min/max -->
+          <div class="grid-item">
+            <h2>Min/Max (Jun 5 - Jun 25)</h2>
+            <ion-datetime
+              id="minMax"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              min="2022-06-05"
+              max="2022-06-25"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- With highlighted dates -->
+          <div class="grid-item">
+            <h2>With Highlighted Dates</h2>
+            <ion-datetime
+              id="highlightedDates"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+            ></ion-datetime>
+          </div>
+
+          <!-- With custom formatter -->
+          <div class="grid-item">
+            <h2>Custom Formatter</h2>
+            <ion-datetime
+              id="customFormatter"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- With adjacent days -->
+          <div class="grid-item">
+            <h2>With Adjacent Days</h2>
+            <ion-datetime
+              id="adjacentDays"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              show-adjacent-days="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- Range spanning today -->
+          <div class="grid-item">
+            <h2>Range Spanning Today</h2>
+            <ion-datetime id="spanningToday" locale="en-US" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <!-- Disabled -->
+          <div class="grid-item">
+            <h2>Disabled</h2>
+            <ion-datetime
+              id="disabledRange"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              disabled="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- Readonly -->
+          <div class="grid-item">
+            <h2>Readonly</h2>
+            <ion-datetime
+              id="readonlyRange"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              readonly="true"
+            ></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Programmatic default value
+      document.querySelector('#defaultValue').value = ['2022-06-10', '2022-06-20'];
+
+      // Single day range
+      document.querySelector('#singleDayRange').value = ['2022-06-15', '2022-06-15'];
+
+      // With header - set a partial range (start only)
+      document.querySelector('#withHeader').value = ['2022-06-10'];
+
+      // Disabled dates: 15th of every month
+      const disabledDatetime = document.querySelector('#disabledDates');
+      disabledDatetime.isDateEnabled = (dateIsoString) => {
+        const date = new Date(dateIsoString);
+        return date.getUTCDate() !== 15;
+      };
+
+      // Highlighted dates
+      const highlightedDatetime = document.querySelector('#highlightedDates');
+      highlightedDatetime.highlightedDates = [
+        { date: '2022-06-03', textColor: '#800080', backgroundColor: '#ffc0cb' },
+        { date: '2022-06-10', textColor: '#09721b', backgroundColor: '#c8e5d0' },
+        { date: '2022-06-17', textColor: '#09721b', backgroundColor: '#c8e5d0' },
+        { date: '2022-06-24', textColor: '#09721b', backgroundColor: '#c8e5d0' },
+      ];
+
+      // Custom formatter
+      const customFormatterDatetime = document.querySelector('#customFormatter');
+      customFormatterDatetime.value = ['2022-06-05', '2022-06-12'];
+      customFormatterDatetime.titleSelectedDatesFormatter = (selectedDates) => {
+        if (selectedDates.length === 0) return 'Pick your dates';
+        if (selectedDates.length === 1) return `From ${selectedDates[0]}`;
+        return `${selectedDates[0]} → ${selectedDates[1]}`;
+      };
+
+      // Range spanning today
+      const today = new Date();
+      const fiveDaysAgo = new Date(today);
+      fiveDaysAgo.setDate(today.getDate() - 5);
+      const fiveDaysFromNow = new Date(today);
+      fiveDaysFromNow.setDate(today.getDate() + 5);
+      const formatDate = (d) => d.toISOString().split('T')[0];
+      document.querySelector('#spanningToday').value = [formatDate(fiveDaysAgo), formatDate(fiveDaysFromNow)];
+
+      // Disabled with value
+      document.querySelector('#disabledRange').value = ['2022-06-08', '2022-06-18'];
+
+      // Readonly with value
+      document.querySelector('#readonlyRange').value = ['2022-06-08', '2022-06-18'];
+    </script>
+  </body>
+</html>
