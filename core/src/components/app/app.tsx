@@ -14,6 +14,7 @@ import { getIonMode } from '../../global/ionic-global';
 })
 export class App implements ComponentInterface {
   private focusVisible?: FocusVisibleUtility;
+  private tapClickCleanup?: () => void;
   private loadTimeout?: ReturnType<typeof setTimeout> | undefined;
 
   @Element() el!: HTMLElement;
@@ -23,7 +24,7 @@ export class App implements ComponentInterface {
       this.rIC(async () => {
         const isHybrid = isPlatform(window, 'hybrid');
         if (!config.getBoolean('_testing')) {
-          import('../../utils/tap-click').then((module) => module.startTapClick(config));
+          import('../../utils/tap-click').then((module) => (this.tapClickCleanup = module.startTapClick(config)));
         }
         if (config.getBoolean('statusTap', isHybrid)) {
           import('../../utils/status-tap').then((module) => module.startStatusTap());
@@ -64,6 +65,14 @@ export class App implements ComponentInterface {
   disconnectedCallback() {
     if (this.loadTimeout) {
       clearTimeout(this.loadTimeout);
+    }
+    if (this.focusVisible) {
+      this.focusVisible.destroy();
+      this.focusVisible = undefined;
+    }
+    if (this.tapClickCleanup) {
+      this.tapClickCleanup();
+      this.tapClickCleanup = undefined;
     }
   }
 
