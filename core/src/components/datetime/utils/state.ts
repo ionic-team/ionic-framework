@@ -135,8 +135,7 @@ export const getCalendarDayState = (
 
     if (end) {
       isRangeEnd = isSameDay(refParts, end);
-      isInRange =
-        !disabled && !isRangeStart && !isRangeEnd && isAfter(refParts, start) && isBefore(refParts, end);
+      isInRange = !disabled && !isRangeStart && !isRangeEnd && isAfter(refParts, start) && isBefore(refParts, end);
     }
   }
 

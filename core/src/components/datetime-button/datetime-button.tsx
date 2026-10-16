@@ -197,8 +197,16 @@ export class DatetimeButton implements ComponentInterface {
       return;
     }
 
-    const { value, locale, formatOptions, hourCycle, preferWheel, multiple, selectionMode, titleSelectedDatesFormatter } =
-      datetimeEl;
+    const {
+      value,
+      locale,
+      formatOptions,
+      hourCycle,
+      preferWheel,
+      multiple,
+      selectionMode,
+      titleSelectedDatesFormatter,
+    } = datetimeEl;
 
     const parsedValues = this.getParsedDateValues(value);
 

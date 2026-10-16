@@ -838,9 +838,7 @@ export class Datetime implements ComponentInterface {
     if (this.isRangeMode) {
       this.setActivePartsRange(validatedParts);
     } else if (this.isMultipleMode) {
-      const activePartsArray = Array.isArray(activeParts)
-        ? activeParts
-        : [activeParts as DatetimeParts];
+      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts as DatetimeParts];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
@@ -1902,8 +1900,7 @@ export class Datetime implements ComponentInterface {
      * In range mode, the confirm button should be disabled until
      * both a start and end date have been selected.
      */
-    const isRangeIncomplete =
-      this.isRangeMode && (!this.isRangeParts(this.activeParts) || !this.activeParts.end);
+    const isRangeIncomplete = this.isRangeMode && (!this.isRangeParts(this.activeParts) || !this.activeParts.end);
     const isConfirmDisabled = isButtonDisabled || isRangeIncomplete;
     const confirmFill = theme === 'ionic' ? 'solid' : undefined;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
@@ -3014,9 +3011,7 @@ export class Datetime implements ComponentInterface {
     }
 
     const startText = getLocalizedDateTime(this.locale, range.start, dateFormatOptions);
-    const endText = range.end
-      ? getLocalizedDateTime(this.locale, range.end, dateFormatOptions)
-      : this.endDateLabel;
+    const endText = range.end ? getLocalizedDateTime(this.locale, range.end, dateFormatOptions) : this.endDateLabel;
 
     return `${startText} - ${endText}`;
   }
