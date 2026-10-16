@@ -408,6 +408,11 @@ export class ItemSliding implements ComponentInterface {
     if (this.tmr !== undefined) {
       clearTimeout(this.tmr);
       this.tmr = undefined;
+      // Reopening cancels the close animation, including its interaction cleanup.
+      this.el.classList.remove('item-sliding-closing');
+      if (this.gesture) {
+        this.gesture.enable(!this.disabled);
+      }
     }
     if (!this.item) {
       return;
