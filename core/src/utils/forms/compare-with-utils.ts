@@ -15,6 +15,9 @@ export const compareOptions = (
   if (typeof compareWith === 'function') {
     return compareWith(currentValue, compareValue);
   } else if (typeof compareWith === 'string') {
+    if (currentValue == null || compareValue == null) {
+      return currentValue === compareValue;
+    }
     return currentValue[compareWith] === compareValue[compareWith];
   } else {
     return Array.isArray(compareValue) ? compareValue.includes(currentValue) : currentValue === compareValue;
