@@ -201,6 +201,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/TabsBasic.vue')
   },
   {
+    path: '/tabs-standalone',
+    component: () => import('@/views/TabsStandalone.vue')
+  },
+  {
     path: '/tabs-search-params/',
     component: () => import('@/views/tabs-search-params/TabsSearchParams.vue'),
     children: [
