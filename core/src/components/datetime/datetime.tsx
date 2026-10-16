@@ -607,7 +607,7 @@ export class Datetime implements ComponentInterface {
      * In range mode, only confirm when both start and end are selected.
      */
     if (this.isRangeMode) {
-      if (this.isRangeParts(activeParts) && activeParts.start && activeParts.end) {
+      if (this.isRangeParts(activeParts) && activeParts.end) {
         this.setValue([convertDataToISO(activeParts.start), convertDataToISO(activeParts.end)]);
       }
       if (closeOverlay) {
