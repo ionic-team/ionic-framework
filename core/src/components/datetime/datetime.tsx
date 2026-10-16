@@ -129,6 +129,13 @@ export class Datetime implements ComponentInterface {
 
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
+  private destroyOverlayPresentListener?: () => void;
+  /**
+   * Set when the user selects a value, cleared when it's confirmed
+   * or `processValue` runs (`reset()`, `value` changes). The overlay
+   * present listener only discards a selection while this is set.
+   */
+  private hasUnconfirmedSelection = false;
 
   // TODO(FW-2832): types (DatetimeParts causes some errors that need untangling)
   private minParts?: any;
@@ -565,6 +572,8 @@ export class Datetime implements ComponentInterface {
       }
     }
 
+    this.hasUnconfirmedSelection = false;
+
     if (closeOverlay) {
       this.closeParentOverlay(CONFIRM_ROLE);
     }
@@ -583,9 +592,10 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Emits the ionCancel event and
-   * optionally closes the popover
-   * or modal that the datetime was
+   * Emits the ionCancel event, discards
+   * any unconfirmed selection, and
+   * optionally closes the popover or
+   * modal that the datetime was
    * presented in.
    *
    * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
@@ -594,8 +604,12 @@ export class Datetime implements ComponentInterface {
   async cancel(closeOverlay = false) {
     this.ionCancel.emit();
 
-    if (closeOverlay) {
-      this.closeParentOverlay(CANCEL_ROLE);
+    /**
+     * When a parent overlay closes, the present listener discards
+     * the selection on the next open. Otherwise discard it now.
+     */
+    if (!closeOverlay || !this.closeParentOverlay(CANCEL_ROLE)) {
+      this.processValue(this.value);
     }
   }
 
@@ -665,6 +679,8 @@ export class Datetime implements ComponentInterface {
     if (popoverOrModal) {
       popoverOrModal.dismiss(undefined, role);
     }
+
+    return popoverOrModal !== null;
   };
 
   private setWorkingParts = (parts: DatetimeParts) => {
@@ -681,6 +697,8 @@ export class Datetime implements ComponentInterface {
     if (this.readonly) {
       return;
     }
+
+    this.hasUnconfirmedSelection = true;
 
     const { multiple, minParts, maxParts, activeParts } = this;
 
@@ -1102,6 +1120,7 @@ export class Datetime implements ComponentInterface {
     this.loadTimeout = setTimeout(() => {
       this.ensureReadyIfVisible();
     }, 100);
+    this.initializeOverlayPresentListener();
   }
 
   disconnectedCallback() {
@@ -1110,6 +1129,39 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible = undefined;
     }
     this.loadTimeoutCleanup();
+
+    if (this.destroyOverlayPresentListener) {
+      this.destroyOverlayPresentListener();
+      this.destroyOverlayPresentListener = undefined;
+    }
+  }
+
+  /**
+   * A datetime in a modal or popover stays mounted between
+   * presentations, so an unconfirmed selection would still show when
+   * it reopens. Discarding on present rather than dismiss lets app
+   * code that runs on dismiss still confirm or reset the selection,
+   * whatever order its listeners were added in.
+   */
+  private initializeOverlayPresentListener() {
+    const overlay = this.el.closest('ion-modal, ion-popover');
+    if (!overlay) {
+      return;
+    }
+
+    const eventName = overlay.tagName === 'ION-MODAL' ? 'ionModalWillPresent' : 'ionPopoverWillPresent';
+    const onPresent = (ev: Event) => {
+      // Ignore nested overlays and skip when there's nothing to discard.
+      if (ev.target !== overlay || !this.hasUnconfirmedSelection) {
+        return;
+      }
+
+      // The overlay is still hidden, so skip the month animation.
+      this.processValue(this.value, false);
+    };
+
+    overlay.addEventListener(eventName, onPresent);
+    this.destroyOverlayPresentListener = () => overlay.removeEventListener(eventName, onPresent);
   }
 
   /**
@@ -1363,7 +1415,9 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private processValue = (value?: string | string[] | null) => {
+  private processValue = (value?: string | string[] | null, animated = true) => {
+    this.hasUnconfirmedSelection = false;
+
     const hasValue =
       value !== null && value !== undefined && value !== '' && (!Array.isArray(value) || value.length > 0);
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
@@ -1435,13 +1489,14 @@ export class Datetime implements ComponentInterface {
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
 
-    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear && animated) {
       /**
        * Only animate if:
        * 1. We're using grid style (wheel style pickers should just jump to new value)
        * 2. The month and/or year actually changed, and both are defined (otherwise there's nothing to animate to)
        * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
        * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
+       * 5. The caller did not opt out (e.g. the parent overlay is still hidden)
        */
       this.animateToDate(targetValue);
     } else {

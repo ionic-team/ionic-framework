@@ -912,7 +912,7 @@ export namespace Components {
     }
     interface IonDatetime {
         /**
-          * Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
+          * Emits the ionCancel event, discards any unconfirmed selection, and optionally closes the popover or modal that the datetime was presented in.
           * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
          */
         "cancel": (closeOverlay?: boolean) => Promise<void>;
