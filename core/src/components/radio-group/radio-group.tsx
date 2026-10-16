@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
-import { checkInvalidState } from '@utils/forms';
+import { checkInvalidState, isOptionSelected } from '@utils/forms';
 import { renderHiddenInput } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -104,7 +104,7 @@ export class RadioGroup implements ComponentInterface {
 
     // Get the first radio that is not disabled and the checked one
     const first = radios.find((radio) => !radio.disabled);
-    const checked = radios.find((radio) => radio.value === value && !radio.disabled);
+    const checked = radios.find((radio) => isOptionSelected(value, radio.value, this.compareWith) && !radio.disabled);
 
     if (!first && !checked) {
       return;
@@ -219,7 +219,8 @@ export class RadioGroup implements ComponentInterface {
     if (selectedRadio && !selectedRadio.disabled) {
       const currentValue = this.value;
       const newValue = selectedRadio.value;
-      if (newValue !== currentValue) {
+      const isSelected = isOptionSelected(currentValue, newValue, this.compareWith);
+      if (!isSelected) {
         this.value = newValue;
         this.emitValueChange(ev);
       } else if (this.allowEmptySelection) {
@@ -275,7 +276,8 @@ export class RadioGroup implements ComponentInterface {
       // space bar on top of a selected radio
       if ([' '].includes(ev.key)) {
         const previousValue = this.value;
-        this.value = this.allowEmptySelection && this.value !== undefined ? undefined : current.value;
+        const isSelected = isOptionSelected(this.value, current.value, this.compareWith);
+        this.value = this.allowEmptySelection && isSelected ? undefined : current.value;
         if (previousValue !== this.value || this.allowEmptySelection) {
           /**
            * Value change should only be emitted if the value is different,
