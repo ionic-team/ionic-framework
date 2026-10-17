@@ -1195,6 +1195,15 @@ export class Datetime implements ComponentInterface {
     const { el, intersectionTrackerRef } = this;
 
     /**
+     * If a value was assigned before componentDidLoad (e.g. by Angular NgModel or
+     * zone.js microtasks before Stencil's watch-ready flag is active), re-process
+     * the value so working parts and wheels reflect the bound value (#31565).
+     */
+    if (this.hasValue()) {
+      this.processValue(this.value);
+    }
+
+    /**
      * If a scrollable element is hidden using `display: none`,
      * it will not have a scroll height meaning we cannot scroll elements
      * into view. As a result, we will need to wait for the datetime to become
