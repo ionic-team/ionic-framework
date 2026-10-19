@@ -570,13 +570,7 @@ The classes `ion-title` adds for its size now include the property name. A title
 | `title-small` | `title-size-small` |
 | `title-large` | `title-size-large` |
 
-`ion-toolbar` builds its own classes from these, so they change as well:
-
-| Old (9.x) | New |
-|---|---|
-| `toolbar-title-default` | `toolbar-title-size-medium` |
-| `toolbar-title-small` | `toolbar-title-size-small` |
-| `toolbar-title-large` | `toolbar-title-size-large` |
+`ion-toolbar` builds its own classes from these, so they change as well. Refer to [Toolbar](#version-10x-toolbar-title-size-classes).
 
 <h5 id="version-10x-title-rtl-class"><code>title-rtl</code> class</h5>
 
@@ -595,7 +589,17 @@ Remove any instances that target the theme classes: `ion-title.md`, `ion-title.i
 
 The following breaking changes apply to `ion-toolbar`:
 
-1. The classes it adds for a slotted title's size now include the property name. <sup>[1](#version-10x-title-size-classes)</sup>
+1. The classes it adds for a slotted title's size now include the property name. <sup>[1](#version-10x-toolbar-title-size-classes)</sup>
+
+<h5 id="version-10x-toolbar-title-size-classes">Title size classes</h5>
+
+The classes `ion-toolbar` adds for a slotted title's size now include the property name, following the title's own size classes. Refer to [Title](#version-10x-title-size-classes).
+
+| Old (9.x) | New |
+|---|---|
+| `toolbar-title-default` | `toolbar-title-size-medium` |
+| `toolbar-title-small` | `toolbar-title-size-small` |
+| `toolbar-title-large` | `toolbar-title-size-large` |
 
 <h2 id="version-10x-framework-specific">Framework Specific</h2>
 
