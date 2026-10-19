@@ -81,3 +81,8 @@
   flex-wrap: wrap;
   align-items: flex-start;
 }
+
+// The large title fills a row of its own, so the wrap moves it below the buttons
+:host(.toolbar-title-size-large) ::slotted(ion-title) {
+  min-width: 100%;
+}

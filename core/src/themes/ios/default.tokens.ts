@@ -1122,7 +1122,6 @@ export const defaultTheme: DefaultTheme = {
         large: {
           alignItems: 'flex-end',
           height: '100%',
-          minWidth: '100%',
           position: 'static',
           width: '100%',
 

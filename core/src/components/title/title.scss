@@ -45,7 +45,6 @@
    * @prop --ion-title-size-large-height: Height of the large title
    * @prop --ion-title-size-large-inner-width: Width of the large title text, measured by the iOS page transition
    * @prop --ion-title-size-large-line-height: Line height of the large title
-   * @prop --ion-title-size-large-min-width: Minimum width of the large title
    * @prop --ion-title-size-large-padding-top: Top padding of the large title
    * @prop --ion-title-size-large-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the large title
    * @prop --ion-title-size-large-padding-bottom: Bottom padding of the large title
@@ -173,7 +172,6 @@
   align-items: var(--ion-title-size-large-align-items);
 
   width: var(--ion-title-size-large-width);
-  min-width: var(--ion-title-size-large-min-width);
   height: var(--ion-title-size-large-height);
 
   font-size: var(--ion-title-size-large-font-size);

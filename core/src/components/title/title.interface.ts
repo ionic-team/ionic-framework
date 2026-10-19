@@ -67,8 +67,6 @@ export type IonTitleRecipe = {
         width?: string;
       };
 
-      minWidth?: string;
-
       transform?: {
         origin?: {
           x?: string;
