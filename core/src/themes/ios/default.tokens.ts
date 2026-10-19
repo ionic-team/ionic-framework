@@ -1107,6 +1107,7 @@ export const defaultTheme: DefaultTheme = {
             weight: 'var(--ion-font-weight-semi-bold)',
           },
 
+          // TODO(FW-6864): ios side padding changes when ion-toolbar titlePlacement works in every theme
           padding: {
             top: 'var(--padding-top)',
             end: '90px',
