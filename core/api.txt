@@ -2819,7 +2819,6 @@ ion-title,css-prop,--ion-title-font-family
 ion-title,css-prop,--ion-title-hue-bold-semantic-default-color
 ion-title,css-prop,--ion-title-hue-subtle-semantic-default-color
 ion-title,css-prop,--ion-title-letter-spacing
-ion-title,css-prop,--ion-title-pointer-events
 ion-title,css-prop,--ion-title-position-bottom
 ion-title,css-prop,--ion-title-position-end
 ion-title,css-prop,--ion-title-position-start

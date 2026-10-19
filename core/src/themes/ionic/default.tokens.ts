@@ -1014,8 +1014,6 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonTitle: {
-      pointerEvents: 'none',
-
       font: {
         family: 'var(--ion-font-family)',
       },

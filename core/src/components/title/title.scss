@@ -12,7 +12,6 @@
    * @prop --ion-title-color: Text color of the title when no semantic color is applied
    * @prop --ion-title-font-family: Font family of the title
    * @prop --ion-title-letter-spacing: Letter spacing of the title
-   * @prop --ion-title-pointer-events: Pointer events of the title host; the title text always accepts pointer events
    *
    * @prop --ion-title-size-small-font-size: Font size of the small title
    * @prop --ion-title-size-small-font-weight: Font weight of the small title
@@ -81,7 +80,8 @@
 
   letter-spacing: var(--ion-title-letter-spacing);
 
-  pointer-events: var(--ion-title-pointer-events);
+  // Only the text receives taps, so a tap on the padding reaches the toolbar behind it
+  pointer-events: none;
 }
 
 .toolbar-title {

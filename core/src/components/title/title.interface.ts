@@ -46,8 +46,6 @@ export type IonTitleRecipe = {
     spacing?: string;
   };
 
-  pointerEvents?: string;
-
   position?: {
     top?: string;
     end?: string;

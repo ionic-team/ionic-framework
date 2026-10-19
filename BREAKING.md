@@ -540,6 +540,7 @@ The following breaking changes apply to `ion-title`:
 3. The size classes now include the property name, and a title without `size` is now `medium`. <sup>[3](#version-10x-title-size-classes)</sup>
 4. The `title-rtl` class has been removed. <sup>[4](#version-10x-title-rtl-class)</sup>
 5. Theme classes (`ion-title.md`, `ion-title.ios`) are no longer supported. <sup>[5](#version-10x-title-theme-classes)</sup>
+6. In the `md` theme, a tap on the title's padding no longer counts as a tap on the title. <sup>[6](#version-10x-title-padding-taps)</sup>
 
 <h5 id="version-10x-title-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -584,6 +585,12 @@ The classes `ion-title` adds for its size now include the property name. A title
 <h5 id="version-10x-title-theme-classes">Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-title.md`, `ion-title.ios`.
+
+<h5 id="version-10x-title-padding-taps">Taps on the title's padding</h5>
+
+In the `md` theme, a tap on the padding at the start or end of `ion-title` now reaches the element behind it, usually `ion-toolbar`, instead of the title. This matches the `ios` and `ionic` themes. Taps on the text, and on the rest of the title, still reach `ion-title`.
+
+If an app listens for taps on `ion-title` and needs them to include the padding, listen on `ion-toolbar` instead.
 
 <h4 id="version-10x-toolbar">Toolbar</h4>
 

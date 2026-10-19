@@ -1048,8 +1048,6 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonTitle: {
-      pointerEvents: 'none',
-
       hue: {
         bold: {
           semantic: {
