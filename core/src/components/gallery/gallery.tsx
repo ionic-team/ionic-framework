@@ -6,8 +6,6 @@ import { isCssVariable, isValidLengthPercentage } from '@utils/css-value-validat
 import { raf } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 
-import { getIonTheme } from '../../global/ionic-global';
-
 import { DEFAULT_COLUMNS, DEFAULT_GAP } from './gallery-constants';
 import type { GalleryBreakpoints, GalleryColumns, GalleryGap } from './gallery-interface';
 
@@ -18,7 +16,6 @@ const GALLERY_ITEM_SELECTOR = 'ion-gallery-item';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - One or more `ion-gallery-item` components, placed in a responsive
  * gallery layout.
@@ -692,12 +689,10 @@ export class Gallery implements ComponentInterface {
   render() {
     const { layout } = this;
     const order = this.getOrder();
-    const theme = getIonTheme(this);
 
     return (
       <Host
         class={{
-          [theme]: true,
           [`gallery-layout-${layout}`]: true,
           [`gallery-order-${order}`]: layout === 'masonry' && order !== undefined,
         }}
