@@ -7,10 +7,20 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('title: color'), () => {
     test('should not have visual regressions', async ({ page }) => {
-      await page.goto('/src/components/title/test/color', config);
-      const wrapper = page.locator('#header-wrapper');
+      await page.setContent(
+        `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title color="primary">Primary</ion-title>
+          </ion-toolbar>
+        </ion-header>
+      `,
+        config
+      );
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`title-color`));
+      const header = page.locator('ion-header');
+
+      await expect(header).toHaveScreenshot(screenshot(`title-color`));
     });
   });
 });
