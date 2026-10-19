@@ -12,22 +12,25 @@ describe('ion-col: rtl', () => {
     return page.body.querySelector('ion-col')!;
   };
 
-  const CALC_STYLE = `calc(calc(3 / var(--ion-grid-columns, 12)) * 100%)`;
-  const COL_PARAMS = `<ion-col offset="3" push="2" pull="1"></ion-col>`;
+  const cols = (n: number) => `calc(calc(${n} / var(--ion-grid-columns, 12)) * 100%)`;
 
-  it('should offset from the right when it declares rtl', async () => {
-    expect((await newCol(`<ion-col dir="rtl" ${COL_PARAMS}></ion-col>`)).style.marginRight).toBe(CALC_STYLE);
+  const COL_PARAMS = `offset="3" push="2" pull="1"`;
+
+  it('should mirror push and pull when it declares rtl', async () => {
+    const col = await newCol(`<ion-col dir="rtl" ${COL_PARAMS}></ion-col>`);
+    expect(col.style.right).toBe(cols(2));
+    expect(col.style.left).toBe(cols(1));
   });
 
-  it('should offset from the right when an ancestor declares rtl', async () => {
-    expect((await newCol(`<div dir="rtl"><div><ion-col ${COL_PARAMS}></ion-col></div></div>`)).style.marginRight).toBe(
-      CALC_STYLE
-    );
+  it('should mirror push and pull when an ancestor declares rtl', async () => {
+    const col = await newCol(`<div dir="rtl"><div><ion-col ${COL_PARAMS}></ion-col></div></div>`);
+    expect(col.style.right).toBe(cols(2));
+    expect(col.style.left).toBe(cols(1));
   });
 
-  it('should offset from the left when an ancestor declares ltr in an rtl document', async () => {
-    expect(
-      (await newCol(`<div dir="ltr"><div><ion-col ${COL_PARAMS}></ion-col></div></div>`, 'rtl')).style.marginLeft
-    ).toBe(CALC_STYLE);
+  it('should not mirror push and pull when an ancestor declares ltr in an rtl document', async () => {
+    const col = await newCol(`<div dir="ltr"><div><ion-col ${COL_PARAMS}></ion-col></div></div>`, 'rtl');
+    expect(col.style.right).toBe(cols(1));
+    expect(col.style.left).toBe(cols(2));
   });
 });

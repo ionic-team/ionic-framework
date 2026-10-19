@@ -73,6 +73,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private workingDelegate?: FrameworkDelegate;
 
   private focusDescendantOnPresent = false;
+  private dirSetOnPresent = false;
 
   lastFocus?: HTMLElement;
 
@@ -502,7 +503,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * hierarchy. Copy the current direction onto this element so that child
      * elements can match.
      */
-    el.dir = isRTL(el) ? 'rtl' : 'ltr';
+    if (!el.hasAttribute('dir')) {
+      el.setAttribute('dir', isRTL(el) ? 'rtl' : 'ltr');
+      this.dirSetOnPresent = true;
+    }
 
     /**
      * Emit ionMount so JS Frameworks have an opportunity
@@ -658,6 +662,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
        */
       const { delegate } = this.getDelegate();
       await detachComponent(delegate, this.usersElement);
+
+      if (this.dirSetOnPresent) {
+        this.el.removeAttribute('dir');
+        this.dirSetOnPresent = false;
+      }
     }
 
     unlock();
