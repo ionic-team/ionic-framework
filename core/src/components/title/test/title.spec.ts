@@ -58,6 +58,20 @@ describe('title: classes', () => {
 });
 
 describe('title: style event', () => {
+  it('should emit the size class when it first connects', async () => {
+    const page = await newSpecPage({
+      components: [ToolbarTitle],
+      html: '',
+    });
+
+    const ionStyle = jest.fn();
+    page.body.addEventListener('ionStyle', (ev: Event) => ionStyle((ev as CustomEvent).detail));
+
+    await page.setContent(`<ion-title size="large">Title</ion-title>`);
+
+    expect(ionStyle).toHaveBeenCalledWith({ 'title-large': true });
+  });
+
   it('should emit the size class when size changes', async () => {
     const page = await newSpecPage({
       components: [ToolbarTitle],
