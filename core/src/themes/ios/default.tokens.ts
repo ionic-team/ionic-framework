@@ -1066,6 +1066,7 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
+      // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
       position: {
         top: 'var(--ion-spacing-0)',
         start: 'var(--ion-spacing-0)',
@@ -1074,6 +1075,7 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           height: '100%',
+          // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
           position: 'relative',
           width: '100%',
 
@@ -1096,6 +1098,7 @@ export const defaultTheme: DefaultTheme = {
 
         medium: {
           height: '100%',
+          // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
           position: 'absolute',
           width: '100%',
 

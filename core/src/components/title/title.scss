@@ -55,7 +55,7 @@
    * @prop --ion-title-hue-bold-semantic-default-color: Text color of the `bold` hue when a semantic color is applied
    * @prop --ion-title-hue-subtle-semantic-default-color: Text color of the `subtle` hue when a semantic color is applied
    */
-  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
   @include mixins.position(
     var(--ion-title-position-top),
     var(--ion-title-position-end),
@@ -108,7 +108,7 @@
     var(--ion-title-size-small-padding-start)
   );
 
-  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
   position: var(--ion-title-size-small-position);
 
   width: var(--ion-title-size-small-width);
@@ -119,7 +119,7 @@
 
   line-height: var(--ion-title-size-small-line-height);
 
-  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
   text-align: var(--ion-title-size-small-text-align);
 }
 
@@ -131,7 +131,7 @@
 // --------------------------------------------------
 
 :host(.title-size-medium) {
-  // TODO: ios side padding changes when ion-toolbar titlePlacement works in every theme
+  // TODO(FW-6864): ios side padding changes when ion-toolbar titlePlacement works in every theme
   @include mixins.padding(
     var(--ion-title-size-medium-padding-top),
     var(--ion-title-size-medium-padding-end),
@@ -139,10 +139,10 @@
     var(--ion-title-size-medium-padding-start)
   );
 
-  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
   position: var(--ion-title-size-medium-position);
 
-  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
   width: var(--ion-title-size-medium-width);
   height: var(--ion-title-size-medium-height);
 
@@ -151,7 +151,7 @@
 
   line-height: var(--ion-title-size-medium-line-height);
 
-  // TODO: remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+  // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
   text-align: var(--ion-title-size-medium-text-align);
 }
 
