@@ -549,7 +549,7 @@ Use the new token structure for global styles, or the corresponding CSS variable
 |---|---|---|
 | `--color` | `IonTitle.color` | `--ion-title-color` |
 
-<h5 id="version-10x-title-hue">New `hue` property and color tokens</h5>
+<h5 id="version-10x-title-hue">New <code>hue</code> property and color tokens</h5>
 
 A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`, which preserves prior behavior when `color` is set.
 
@@ -578,7 +578,7 @@ The classes `ion-title` adds for its size now include the property name. A title
 | `toolbar-title-small` | `toolbar-title-size-small` |
 | `toolbar-title-large` | `toolbar-title-size-large` |
 
-<h5 id="version-10x-title-rtl-class">`title-rtl` class</h5>
+<h5 id="version-10x-title-rtl-class"><code>title-rtl</code> class</h5>
 
 `ion-title` no longer adds the `title-rtl` class. Use the `:dir(rtl)` pseudo-class instead:
 
