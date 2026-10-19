@@ -2814,7 +2814,6 @@ ion-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secon
 ion-title,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-title,prop,mode,"ios" | "md",undefined,false,false
 ion-title,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
-ion-title,css-prop,--ion-title-box-sizing
 ion-title,css-prop,--ion-title-color
 ion-title,css-prop,--ion-title-font-family
 ion-title,css-prop,--ion-title-hue-bold-semantic-default-color

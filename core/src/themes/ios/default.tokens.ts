@@ -1048,7 +1048,6 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonTitle: {
-      boxSizing: 'border-box',
       pointerEvents: 'none',
 
       hue: {

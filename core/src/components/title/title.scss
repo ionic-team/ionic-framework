@@ -9,7 +9,6 @@
    * @prop --ion-title-position-end: Right offset if direction is left-to-right, and left offset if direction is right-to-left of the title, when a theme positions it
    * @prop --ion-title-position-bottom: Bottom offset of the title, when a theme positions it
    * @prop --ion-title-position-start: Left offset if direction is left-to-right, and right offset if direction is right-to-left of the title, when a theme positions it
-   * @prop --ion-title-box-sizing: Box sizing of the title
    * @prop --ion-title-color: Text color of the title when no semantic color is applied
    * @prop --ion-title-font-family: Font family of the title
    * @prop --ion-title-letter-spacing: Letter spacing of the title
@@ -73,7 +72,7 @@
   // Gives the title its own layer so page transitions stay smooth
   transform: translateZ(0);
 
-  box-sizing: var(--ion-title-box-sizing);
+  box-sizing: border-box;
 
   color: var(--ion-title-color);
 

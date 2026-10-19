@@ -26,7 +26,6 @@ type IonTitleSizeDefinition = {
 };
 
 export type IonTitleRecipe = {
-  boxSizing?: string;
   color?: string;
 
   font?: {
