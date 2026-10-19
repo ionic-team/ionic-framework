@@ -132,8 +132,9 @@ export class Datetime implements ComponentInterface {
   private destroyOverlayPresentListener?: () => void;
   /**
    * Set when the user selects a value, cleared when it's confirmed
-   * or `processValue` runs (`reset()`, `value` changes). The overlay
-   * present listener only discards a selection while this is set.
+   * or `processValue` runs (`reset()`, or `value` being set to a
+   * non-empty value). The overlay present listener only discards a
+   * selection while this is set.
    */
   private hasUnconfirmedSelection = false;
 

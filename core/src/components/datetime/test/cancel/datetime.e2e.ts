@@ -24,6 +24,20 @@ const dismissDatetime = async (page: E2EPage, didDismiss: string, dismiss: () =>
   await ionDidDismiss.next();
 };
 
+const dismissWithRole = (page: E2EPage, tag: string, role: string) =>
+  page
+    .locator(tag)
+    .evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement, role: string) => el.dismiss(undefined, role), role);
+
+const confirmOnDismiss = (page: E2EPage, tag: string, didDismiss: string) =>
+  page
+    .locator(tag)
+    .evaluate(
+      (el: HTMLElement, eventName: string) =>
+        el.addEventListener(eventName, () => el.querySelector('ion-datetime')!.confirm()),
+      didDismiss
+    );
+
 const overlays = [
   { tag: 'ion-modal', didPresent: 'ionModalDidPresent', didDismiss: 'ionModalDidDismiss' },
   { tag: 'ion-popover', didPresent: 'ionPopoverDidPresent', didDismiss: 'ionPopoverDidDismiss' },
@@ -79,11 +93,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
 
           await openDatetime(page, didPresent);
           await getDay(datetime, 10).click();
-          await dismissDatetime(page, didDismiss, () =>
-            page
-              .locator(tag)
-              .evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => el.dismiss(undefined, 'backdrop'))
-          );
+          await dismissDatetime(page, didDismiss, () => dismissWithRole(page, tag, 'backdrop'));
           await openDatetime(page, didPresent);
 
           await expect(datetime).toHaveJSProperty('value', '2022-05-03');
@@ -127,21 +137,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
         });
 
         test('should commit the selection when a dismiss handler confirms it after a custom role', async ({ page }) => {
-          await page
-            .locator(tag)
-            .evaluate(
-              (el: HTMLElement, eventName: string) =>
-                el.addEventListener(eventName, () => el.querySelector('ion-datetime')!.confirm()),
-              didDismiss
-            );
+          await confirmOnDismiss(page, tag, didDismiss);
 
           await openDatetime(page, didPresent);
           await getDay(datetime, 10).click();
-          await dismissDatetime(page, didDismiss, () =>
-            page
-              .locator(tag)
-              .evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => el.dismiss(undefined, 'my-custom-role'))
-          );
+          await dismissDatetime(page, didDismiss, () => dismissWithRole(page, tag, 'my-custom-role'));
 
           await expect(datetime).toHaveJSProperty('value', '2022-05-10');
 
@@ -158,11 +158,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
           await page.locator(tag).evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => {
             el.onDidDismiss().then(() => el.querySelector('ion-datetime')!.confirm());
           });
-          await dismissDatetime(page, didDismiss, () =>
-            page
-              .locator(tag)
-              .evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => el.dismiss(undefined, 'my-custom-role'))
-          );
+          await dismissDatetime(page, didDismiss, () => dismissWithRole(page, tag, 'my-custom-role'));
 
           await expect(datetime).toHaveJSProperty('value', '2022-05-10');
 
@@ -185,15 +181,55 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
           await openDatetime(page, didPresent);
           await getDay(datetime, 10).click();
           await datetime.evaluate((el: HTMLIonDatetimeElement) => el.reset('2022-05-20'));
-          await dismissDatetime(page, didDismiss, () =>
-            page
-              .locator(tag)
-              .evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => el.dismiss(undefined, 'backdrop'))
-          );
+          await dismissDatetime(page, didDismiss, () => dismissWithRole(page, tag, 'backdrop'));
 
           await openDatetime(page, didPresent);
 
           await expectSelectedDay(datetime, 20, 3);
+        });
+
+        test('should show the value set after dismissing without confirming', async ({ page }) => {
+          await openDatetime(page, didPresent);
+          await getDay(datetime, 10).click();
+          await dismissDatetime(page, didDismiss, () => dismissWithRole(page, tag, 'backdrop'));
+
+          await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2022-05-20'));
+          await openDatetime(page, didPresent);
+
+          await expect(datetime).toHaveJSProperty('value', '2022-05-20');
+          await expectSelectedDay(datetime, 20, 10);
+        });
+
+        test('should clear the selection when the value is cleared after dismissing without confirming', async ({
+          page,
+        }) => {
+          await openDatetime(page, didPresent);
+          await getDay(datetime, 10).click();
+          await dismissDatetime(page, didDismiss, () => dismissWithRole(page, tag, 'backdrop'));
+
+          await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = null));
+          await openDatetime(page, didPresent);
+
+          await expect(datetime).toHaveJSProperty('value', null);
+          await expect(datetime.locator('.calendar-day-active')).toHaveCount(0);
+        });
+
+        /**
+         * Cancel defers discarding the selection until the overlay
+         * presents again, so an app that confirms on every dismiss
+         * commits the cancelled selection. This is intended.
+         */
+        test('should commit a cancelled selection when a dismiss handler confirms it', async ({ page }) => {
+          await confirmOnDismiss(page, tag, didDismiss);
+
+          await openDatetime(page, didPresent);
+          await getDay(datetime, 10).click();
+          await dismissDatetime(page, didDismiss, () => datetime.locator('#cancel-button').click());
+
+          await expect(datetime).toHaveJSProperty('value', '2022-05-10');
+
+          await openDatetime(page, didPresent);
+          await expectSelectedDay(datetime, 10, 3);
         });
       });
     });
