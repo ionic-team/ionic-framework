@@ -1086,9 +1086,9 @@ export const defaultTheme: DefaultTheme = {
 
           padding: {
             top: 'var(--ion-spacing-xs)',
-            end: '9px',
+            end: 'var(--ion-spacing-lg)',
             bottom: 'var(--ion-spacing-lg)',
-            start: '9px',
+            start: 'var(--ion-spacing-lg)',
           },
 
           text: {
