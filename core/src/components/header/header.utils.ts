@@ -79,7 +79,7 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
         background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
         ionTitleEl,
         innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
-        innerTitleOrigin: ionTitleEl ? getTitleOrigin(ionTitleEl) : undefined,
+        innerTitleOrigin: ionTitleEl && isLargeTitle(ionTitleEl) ? getTitleOrigin(ionTitleEl) : undefined,
         ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')),
       } as ToolbarIndex;
     }),
