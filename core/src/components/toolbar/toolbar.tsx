@@ -86,6 +86,14 @@ export class Toolbar implements ComponentInterface {
     this.updateSlotWidths();
   }
 
+  connectedCallback() {
+    // Recreates the observer when the toolbar is moved in the DOM
+    const titlePlacement = this.getTitlePlacement();
+    if (titlePlacement === 'center') {
+      this.observeSlotContent();
+    }
+  }
+
   disconnectedCallback() {
     this.slotContentObserver?.disconnect();
     this.slotContentObserver = undefined;

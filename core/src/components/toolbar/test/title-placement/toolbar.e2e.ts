@@ -87,5 +87,37 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
       await expect(toolbar).toHaveClass(/show-end/);
       await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
     });
+
+    test('should center the title when buttons resize after the toolbar moves', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-header>
+            <ion-toolbar title-placement="center">
+              <ion-buttons slot="start">
+                <ion-button>Back</ion-button>
+              </ion-buttons>
+              <ion-title>Title</ion-title>
+            </ion-toolbar>
+          </ion-header>
+        `,
+        config
+      );
+
+      // Lets the load-time measurement finish, so only the observer can measure again
+      await page.evaluate(() => new Promise((resolve) => setTimeout(resolve)));
+
+      // Moves the toolbar to a new header
+      await page.evaluate(() => {
+        const header = document.createElement('ion-header');
+        document.body.appendChild(header);
+        header.appendChild(document.querySelector('ion-toolbar')!);
+      });
+
+      await page.locator('ion-toolbar ion-button').evaluate((button) => {
+        button.textContent = 'Long button text';
+      });
+
+      await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
+    });
   });
 });
