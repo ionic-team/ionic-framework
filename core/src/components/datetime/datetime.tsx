@@ -2253,6 +2253,7 @@ export class Datetime implements ComponentInterface {
 
   private renderCalendarHeader(mode: Mode) {
     const { disabled } = this;
+    const monthAndYear = getMonthAndYear(this.locale, this.workingParts);
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
@@ -2274,11 +2275,11 @@ export class Datetime implements ComponentInterface {
               }}
               part="month-year-button"
               disabled={disabled}
-              aria-label={this.showMonthAndYear ? 'Hide year picker' : 'Show year picker'}
+              aria-label={`${monthAndYear}, ${this.showMonthAndYear ? 'Hide year picker' : 'Show year picker'}`}
               onClick={() => this.toggleMonthAndYearView()}
             >
               <span id="toggle-wrapper">
-                {getMonthAndYear(this.locale, this.workingParts)}
+                {monthAndYear}
                 <ion-icon
                   aria-hidden="true"
                   icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
