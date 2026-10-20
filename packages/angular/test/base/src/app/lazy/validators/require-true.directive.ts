@@ -1,5 +1,6 @@
 import { Directive, forwardRef } from '@angular/core';
-import { NG_VALIDATORS, Validator, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
+import { NG_VALIDATORS, Validators } from '@angular/forms';
+import type { AbstractControl, ValidationErrors, Validator } from '@angular/forms';
 
 @Directive({
   selector: '[appRequireTrue]',
