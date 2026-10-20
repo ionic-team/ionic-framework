@@ -1183,7 +1183,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       letter: {
-        spacing: '0.0125em',
+        spacing: '0.0075em',
       },
 
       size: {
