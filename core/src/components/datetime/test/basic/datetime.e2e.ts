@@ -607,17 +607,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(nextPrevIcons.first()).toHaveClass(/icon-rtl/);
       await expect(nextPrevIcons.last()).toHaveClass(/icon-rtl/);
     });
-  });
 
-  test('should flip icons when RTL is set on an ancestor', async ({ page }) => {
+    test('should flip icons when RTL is set on an ancestor', async ({ page }) => {
       await page.setContent(
         `
-        <div dir="rtl">
-          <div>
-            <ion-datetime></ion-datetime>
+          <div dir="rtl">
+            <div>
+              <ion-datetime></ion-datetime>
+            </div>
           </div>
-        </div>
-      `,
+        `,
         config
       );
 
@@ -625,6 +624,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(nextPrevIcons.first()).toHaveClass(/icon-rtl/);
       await expect(nextPrevIcons.last()).toHaveClass(/icon-rtl/);
     });
+  });
 });
 
 /**
