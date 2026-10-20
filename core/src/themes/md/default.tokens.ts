@@ -1188,9 +1188,6 @@ export const defaultTheme: DefaultTheme = {
 
       size: {
         small: {
-          height: '100%',
-          width: '100%',
-
           font: {
             size: dynamicFont(global.root, 15),
             weight: 'var(--ion-font-weight-normal)',
@@ -1220,8 +1217,6 @@ export const defaultTheme: DefaultTheme = {
 
         large: {
           alignItems: 'center',
-          height: '100%',
-          width: '100%',
 
           font: {
             size: dynamicFont(global.root, 28),

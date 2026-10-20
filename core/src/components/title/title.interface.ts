@@ -9,8 +9,6 @@ type IonTitleSizeDefinition = {
     weight?: string;
   };
 
-  height?: string;
-
   line?: {
     height?: string;
   };
@@ -23,8 +21,6 @@ type IonTitleSizeDefinition = {
   text?: {
     align?: string;
   };
-
-  width?: string;
 };
 
 export type IonTitleRecipe = {

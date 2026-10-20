@@ -2826,7 +2826,6 @@ ion-title,css-prop,--ion-title-position-top
 ion-title,css-prop,--ion-title-size-large-align-items
 ion-title,css-prop,--ion-title-size-large-font-size
 ion-title,css-prop,--ion-title-size-large-font-weight
-ion-title,css-prop,--ion-title-size-large-height
 ion-title,css-prop,--ion-title-size-large-inner-width
 ion-title,css-prop,--ion-title-size-large-line-height
 ion-title,css-prop,--ion-title-size-large-padding-bottom
@@ -2836,10 +2835,8 @@ ion-title,css-prop,--ion-title-size-large-padding-top
 ion-title,css-prop,--ion-title-size-large-position
 ion-title,css-prop,--ion-title-size-large-text-align
 ion-title,css-prop,--ion-title-size-large-transform-origin-x
-ion-title,css-prop,--ion-title-size-large-width
 ion-title,css-prop,--ion-title-size-medium-font-size
 ion-title,css-prop,--ion-title-size-medium-font-weight
-ion-title,css-prop,--ion-title-size-medium-height
 ion-title,css-prop,--ion-title-size-medium-line-height
 ion-title,css-prop,--ion-title-size-medium-padding-bottom
 ion-title,css-prop,--ion-title-size-medium-padding-end
@@ -2847,10 +2844,8 @@ ion-title,css-prop,--ion-title-size-medium-padding-start
 ion-title,css-prop,--ion-title-size-medium-padding-top
 ion-title,css-prop,--ion-title-size-medium-position
 ion-title,css-prop,--ion-title-size-medium-text-align
-ion-title,css-prop,--ion-title-size-medium-width
 ion-title,css-prop,--ion-title-size-small-font-size
 ion-title,css-prop,--ion-title-size-small-font-weight
-ion-title,css-prop,--ion-title-size-small-height
 ion-title,css-prop,--ion-title-size-small-line-height
 ion-title,css-prop,--ion-title-size-small-padding-bottom
 ion-title,css-prop,--ion-title-size-small-padding-end
@@ -2858,7 +2853,6 @@ ion-title,css-prop,--ion-title-size-small-padding-start
 ion-title,css-prop,--ion-title-size-small-padding-top
 ion-title,css-prop,--ion-title-size-small-position
 ion-title,css-prop,--ion-title-size-small-text-align
-ion-title,css-prop,--ion-title-size-small-width
 
 ion-toast,shadow
 ion-toast,prop,animated,boolean,true,false,false
