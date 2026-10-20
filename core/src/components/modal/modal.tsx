@@ -97,6 +97,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
   private resetSheetContentScroll?: () => void;
+  private refreshSheetGeometry?: () => void;
   private inheritedAttributes: Attributes = {};
   private statusBarStyle?: StatusBarStyle;
 
@@ -321,6 +322,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       // values may change on device rotation (e.g., portrait notch vs landscape).
       if (context.isSheetModal) {
         this.updateSheetOffsetTop();
+        this.refreshSheetGeometry?.();
       }
 
       // Regular (non-sheet, non-card) modals: update safe-area overrides
@@ -820,7 +822,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     ani.progressStart(true, 1);
 
-    const { gesture, moveSheetToBreakpoint, resetContentScroll } = createSheetGesture(
+    const { gesture, moveSheetToBreakpoint, resetContentScroll, refreshGeometry } = createSheetGesture(
       this.el,
       this.backdropEl!,
       wrapperEl,
@@ -845,6 +847,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.gesture = gesture;
     this.moveSheetToBreakpoint = moveSheetToBreakpoint;
     this.resetSheetContentScroll = resetContentScroll;
+    this.refreshSheetGeometry = refreshGeometry;
 
     this.gesture.enable(true);
 
@@ -1078,6 +1081,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
        */
       this.resetSheetContentScroll?.();
       this.resetSheetContentScroll = undefined;
+      this.refreshSheetGeometry = undefined;
       this.cleanupViewTransitionListener();
       this.cleanupParentRemovalObserver();
       this.cleanupSafeAreaOverrides();

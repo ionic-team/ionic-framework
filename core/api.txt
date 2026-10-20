@@ -1219,6 +1219,8 @@ ion-modal,css-prop,--min-height,ios
 ion-modal,css-prop,--min-height,md
 ion-modal,css-prop,--min-width,ios
 ion-modal,css-prop,--min-width,md
+ion-modal,css-prop,--sheet-inset,ios
+ion-modal,css-prop,--sheet-inset,md
 ion-modal,css-prop,--width,ios
 ion-modal,css-prop,--width,md
 ion-modal,part,backdrop

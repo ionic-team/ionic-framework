@@ -3,7 +3,9 @@ import { createAnimation } from '@utils/animation/animation';
 import type { ModalAnimationOptions } from '../modal-interface';
 import { getBackdropValueForSheet } from '../utils';
 
-export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
+import { getSheetWrapperKeyframes } from './sheet-geometry';
+
+export const createSheetEnterAnimation = (opts: ModalAnimationOptions, baseEl?: HTMLElement) => {
   const { currentBreakpoint, backdropBreakpoint, expandToScroll } = opts;
 
   /**
@@ -24,10 +26,14 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
       .afterClearStyles(['pointer-events']);
   }
 
-  const wrapperAnimation = createAnimation('wrapperAnimation').keyframes([
-    { offset: 0, opacity: 1, transform: 'translateY(100%)' },
-    { offset: 1, opacity: 1, transform: `translateY(${100 - currentBreakpoint! * 100}%)` },
-  ]);
+  const wrapperAnimation = createAnimation('wrapperAnimation').keyframes(
+    baseEl
+      ? getSheetWrapperKeyframes(baseEl, 0, currentBreakpoint!)
+      : [
+          { offset: 0, opacity: 1, transform: 'translateY(100%)' },
+          { offset: 1, opacity: 1, transform: `translateY(${100 - currentBreakpoint! * 100}%)` },
+        ]
+  );
 
   /**
    * This allows the content to be scrollable at any breakpoint.
@@ -42,7 +48,7 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   return { wrapperAnimation, backdropAnimation, contentAnimation };
 };
 
-export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
+export const createSheetLeaveAnimation = (opts: ModalAnimationOptions, baseEl?: HTMLElement) => {
   const { currentBreakpoint, backdropBreakpoint } = opts;
 
   /**
@@ -69,10 +75,14 @@ export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
     backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop
   );
 
-  const wrapperAnimation = createAnimation('wrapperAnimation').keyframes([
-    { offset: 0, opacity: 1, transform: `translateY(${100 - currentBreakpoint! * 100}%)` },
-    { offset: 1, opacity: 1, transform: `translateY(100%)` },
-  ]);
+  const wrapperAnimation = createAnimation('wrapperAnimation').keyframes(
+    baseEl
+      ? getSheetWrapperKeyframes(baseEl, currentBreakpoint!, 0)
+      : [
+          { offset: 0, opacity: 1, transform: `translateY(${100 - currentBreakpoint! * 100}%)` },
+          { offset: 1, opacity: 1, transform: 'translateY(100%)' },
+        ]
+  );
 
   return { wrapperAnimation, backdropAnimation };
 };

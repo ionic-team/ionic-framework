@@ -5,6 +5,7 @@ import { FOCUS_TRAP_DISABLE_CLASS } from '@utils/overlays';
 
 import type { Animation, ModalDragEventDetail } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
+import { getSheetWrapperKeyframes } from '../animations/sheet-geometry';
 import { getBackdropValueForSheet } from '../utils';
 
 import { calculateSpringStep, canSwipeOnContent, handleCanDismiss } from './utils';
@@ -73,10 +74,7 @@ export const createSheetGesture = (
   ];
 
   const SheetDefaults = {
-    WRAPPER_KEYFRAMES: [
-      { offset: 0, transform: 'translateY(0%)' },
-      { offset: 1, transform: 'translateY(100%)' },
-    ],
+    WRAPPER_KEYFRAMES: getSheetWrapperKeyframes(baseEl, 1, 0),
     BACKDROP_KEYFRAMES: backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop,
     CONTENT_KEYFRAMES: [
       { offset: 0, maxHeight: '100%' },
@@ -92,7 +90,8 @@ export const createSheetGesture = (
    * rather than the host element, which is stretched to the full viewport no
    * matter how tall the sheet itself is.
    */
-  const height = wrapperEl.clientHeight;
+  let height = wrapperEl.clientHeight;
+  let dragging = false;
   let currentBreakpoint = initialBreakpoint;
   let offset = 0;
   let canDismissBlocksGesture = false;
@@ -145,6 +144,9 @@ export const createSheetGesture = (
    * @param newPosition Whether the footer is in a moving or stationary position.
    */
   const swapFooterPosition = (newPosition: 'moving' | 'stationary') => {
+    if (SheetDefaults.WRAPPER_KEYFRAMES.some((frame) => 'clipPath' in frame && frame.clipPath !== 'none')) {
+      return;
+    }
     if (!cachedFooterEls) {
       cachedFooterEls = Array.from(baseEl.querySelectorAll('ion-footer'));
       if (!cachedFooterEls.length) {
@@ -290,6 +292,10 @@ export const createSheetGesture = (
   };
 
   const onStart = (detail: GestureDetail) => {
+    dragging = true;
+    height = wrapperEl.clientHeight;
+    SheetDefaults.WRAPPER_KEYFRAMES = getSheetWrapperKeyframes(baseEl, 1, 0);
+    wrapperAnimation?.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
     /**
      * Firefox automatically selects the header text during drag
      * due to the focusable wrapper (tabindex="-1"). Remove any
@@ -441,6 +447,7 @@ export const createSheetGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
+    dragging = false;
     const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY, detail.velocityY);
 
     /**
@@ -520,10 +527,7 @@ export const createSheetGesture = (
      * the last offset to the closest snap point.
      */
     if (wrapperAnimation && backdropAnimation) {
-      wrapperAnimation.keyframes([
-        { offset: 0, transform: `translateY(${breakpointOffset * 100}%)` },
-        { offset: 1, transform: `translateY(${(1 - snapToBreakpoint) * 100}%)` },
-      ]);
+      wrapperAnimation.keyframes(getSheetWrapperKeyframes(baseEl, 1 - breakpointOffset, snapToBreakpoint));
 
       backdropAnimation.keyframes([
         {
@@ -613,6 +617,7 @@ export const createSheetGesture = (
                */
               if (wrapperAnimation && backdropAnimation) {
                 raf(() => {
+                  SheetDefaults.WRAPPER_KEYFRAMES = getSheetWrapperKeyframes(baseEl, 1, 0);
                   wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
                   backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
                   contentAnimation?.keyframes([...SheetDefaults.CONTENT_KEYFRAMES]);
@@ -728,7 +733,17 @@ export const createSheetGesture = (
     }
   };
 
+  const refreshGeometry = () => {
+    // Do not interrupt a drag or a snap. Their end path refreshes the geometry.
+    if (dragging || animation.isRunning()) return;
+    height = wrapperEl.clientHeight;
+    SheetDefaults.WRAPPER_KEYFRAMES = getSheetWrapperKeyframes(baseEl, 1, 0);
+    wrapperAnimation?.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
+    animation.progressStart(true, 1 - getCurrentBreakpoint());
+  };
+
   return {
+    refreshGeometry,
     gesture,
     moveSheetToBreakpoint,
     resetContentScroll,

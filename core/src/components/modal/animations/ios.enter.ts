@@ -27,7 +27,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
   const { presentingEl, currentBreakpoint, expandToScroll } = opts;
   const root = getElementRoot(baseEl);
   const { wrapperAnimation, backdropAnimation, contentAnimation } =
-    currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
+    currentBreakpoint !== undefined ? createSheetEnterAnimation(opts, baseEl) : createEnterAnimation();
 
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!);
 

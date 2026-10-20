@@ -20,6 +20,8 @@
    * @prop --height: Height of the modal
    * @prop --max-height: Maximum height of the modal
    *
+   * @prop --sheet-inset: Inset in pixels for iOS sheet presentation. Defaults to 0. Partial detents are scaled and clipped; breakpoint 1 returns to full width.
+   *
    * @prop --backdrop-opacity: Opacity of the backdrop
    */
   --width: 100%;
