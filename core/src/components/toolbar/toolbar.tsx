@@ -273,7 +273,8 @@ export class Toolbar implements ComponentInterface {
   /**
    * Re-measures the slots when their content changes size, such as a back
    * button that renders after the toolbar. The callback runs before paint,
-   * so a centered title never shows off-center.
+   * so a centered title never shows off-center. Runs again on slotchange
+   * to watch content added later.
    */
   private observeSlotContent() {
     if (typeof ResizeObserver === 'undefined') {
@@ -283,6 +284,9 @@ export class Toolbar implements ComponentInterface {
     if (this.slotContentObserver === undefined) {
       this.slotContentObserver = new ResizeObserver(() => this.measureAndUpdateSlots());
     }
+
+    // Stops watching content that left the slots
+    this.slotContentObserver.disconnect();
 
     // The slotted content, not the slots, so setting the slot widths doesn't re-trigger it
     this.el.querySelectorAll(':scope > [slot]').forEach((el) => this.slotContentObserver!.observe(el));
@@ -342,13 +346,13 @@ export class Toolbar implements ComponentInterface {
       >
         <div class="toolbar-background" part="background"></div>
         <div class="toolbar-container" part="container">
-          <slot name="start" onSlotchange={() => this.updateSlotClasses}></slot>
-          <slot name="secondary" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="start" onSlotchange={() => this.updateSlotClasses()}></slot>
+          <slot name="secondary" onSlotchange={() => this.updateSlotClasses()}></slot>
           <div class="toolbar-content" part="content">
             <slot></slot>
           </div>
-          <slot name="primary" onSlotchange={() => this.updateSlotClasses}></slot>
-          <slot name="end" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="primary" onSlotchange={() => this.updateSlotClasses()}></slot>
+          <slot name="end" onSlotchange={() => this.updateSlotClasses()}></slot>
         </div>
       </Host>
     );
