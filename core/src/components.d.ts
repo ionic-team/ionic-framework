@@ -21,7 +21,7 @@ import { IonColValue } from "./components/col/col.interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { FooterScrollEffect } from "./components/footer/footer-interface";
-import { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
+import { IonGalleryColumns, IonGalleryGap } from "./components/gallery/gallery.interface";
 import { HeaderScrollEffect } from "./components/header/header-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
@@ -68,7 +68,7 @@ export { IonColValue } from "./components/col/col.interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { FooterScrollEffect } from "./components/footer/footer-interface";
-export { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
+export { IonGalleryColumns, IonGalleryGap } from "./components/gallery/gallery.interface";
 export { HeaderScrollEffect } from "./components/header/header-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
@@ -1506,12 +1506,11 @@ export namespace Components {
           * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
           * @default {   xs: 2,   sm: 3,   md: 4,   lg: 6,   xl: 8,   xxl: 10, }
          */
-        "columns": GalleryColumns;
+        "columns": IonGalleryColumns;
         /**
-          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
-          * @default '16px'
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.  When unset, or for a breakpoint missing from the map, the gap comes from the theme's `--ion-gallery-gap` token.
          */
-        "gap": GalleryGap;
+        "gap"?: IonGalleryGap;
         /**
           * The visual layout of the gallery. When `uniform`, rows take up the height of the tallest item and are spaced evenly across the gallery. Additionally, items will have an aspect ratio of 1/1, forcing them to be square unless a height is explicitly set. When `masonry`, items will be positioned under each other with only the specified gap between them.
           * @default 'uniform'
@@ -7374,12 +7373,11 @@ declare namespace LocalJSX {
           * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
           * @default {   xs: 2,   sm: 3,   md: 4,   lg: 6,   xl: 8,   xxl: 10, }
          */
-        "columns"?: GalleryColumns;
+        "columns"?: IonGalleryColumns;
         /**
-          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
-          * @default '16px'
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.  When unset, or for a breakpoint missing from the map, the gap comes from the theme's `--ion-gallery-gap` token.
          */
-        "gap"?: GalleryGap;
+        "gap"?: IonGalleryGap;
         /**
           * The visual layout of the gallery. When `uniform`, rows take up the height of the tallest item and are spaced evenly across the gallery. Additionally, items will have an aspect ratio of 1/1, forcing them to be square unless a height is explicitly set. When `masonry`, items will be positioned under each other with only the specified gap between them.
           * @default 'uniform'

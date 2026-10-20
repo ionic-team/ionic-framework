@@ -1056,10 +1056,11 @@ ion-gallery,prop,columns,BreakpointMap<string | number> | number | string,{
   xl: 8,
   xxl: 10,
 },false,false
-ion-gallery,prop,gap,BreakpointMap<string | number> | number | string,'16px',false,false
+ion-gallery,prop,gap,BreakpointMap<string | number> | number | string | undefined,undefined,false,false
 ion-gallery,prop,layout,"masonry" | "uniform",'uniform',false,false
 ion-gallery,prop,mode,"ios" | "md",undefined,false,false
 ion-gallery,prop,order,"best-fit" | "sequential" | undefined,undefined,false,false
+ion-gallery,css-prop,--ion-gallery-gap
 
 ion-gallery-item,shadow
 ion-gallery-item,prop,mode,"ios" | "md",undefined,false,false

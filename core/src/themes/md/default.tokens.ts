@@ -691,6 +691,10 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
+    IonGallery: {
+      gap: 'var(--ion-spacing-lg)',
+    },
+
     IonGrid: {
       breakpoint: {
         xs: {

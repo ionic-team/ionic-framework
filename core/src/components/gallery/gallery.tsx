@@ -6,8 +6,8 @@ import { isCssVariable, isValidLengthPercentage } from '@utils/css-value-validat
 import { raf } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 
-import { DEFAULT_COLUMNS, DEFAULT_GAP } from './gallery-constants';
-import type { GalleryBreakpoints, GalleryColumns, GalleryGap } from './gallery-interface';
+import { DEFAULT_COLUMNS } from './gallery.constant';
+import type { IonGalleryBreakpointValues, IonGalleryColumns, IonGalleryGap } from './gallery.interface';
 
 /**
  * The tag of the component used to wrap each gallery item.
@@ -65,7 +65,7 @@ export class Gallery implements ComponentInterface {
    * screen width. The width each breakpoint activates at can be changed with
    * the `screenBreakpoints` config.
    */
-  @Prop() columns: GalleryColumns = DEFAULT_COLUMNS;
+  @Prop() columns: IonGalleryColumns = DEFAULT_COLUMNS;
 
   /**
    * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage)
@@ -78,8 +78,11 @@ export class Gallery implements ComponentInterface {
    * Breakpoints are matched against the gallery's own width rather than the
    * screen width. The width each breakpoint activates at can be changed with
    * the `screenBreakpoints` config.
+   *
+   * When unset, or for a breakpoint missing from the map, the gap comes from
+   * the theme's `--ion-gallery-gap` token.
    */
-  @Prop() gap: GalleryGap = DEFAULT_GAP;
+  @Prop() gap?: IonGalleryGap;
 
   @Watch('columns')
   @Watch('gap')
@@ -268,7 +271,7 @@ export class Gallery implements ComponentInterface {
    * breakpoint key fails the sanitizer (e.g. `{ xs: -3 }`, `{ sm: 'foo' }`).
    */
   private hasInvalidBreakpointMap(
-    breakpointMap: GalleryBreakpoints,
+    breakpointMap: IonGalleryBreakpointValues,
     sanitizeValue: (value: string | number | undefined) => unknown
   ) {
     let hasBreakpointEntry = false;
@@ -292,7 +295,7 @@ export class Gallery implements ComponentInterface {
    */
   private resolveFromBreakpoints<T>(
     width: number,
-    breakpointMap: GalleryBreakpoints,
+    breakpointMap: IonGalleryBreakpointValues,
     sanitizeProvided: (value: string | number | undefined) => T | undefined,
     getSanitizedDefault: (breakpoint: ScreenBreakpoint) => T | undefined
   ) {
@@ -318,7 +321,7 @@ export class Gallery implements ComponentInterface {
    * Get the columns from a responsive breakpoint map.
    * Returns the columns for the last matching breakpoint.
    */
-  private getColumnsFromBreakpointMap(width: number, breakpointMap: GalleryBreakpoints) {
+  private getColumnsFromBreakpointMap(width: number, breakpointMap: IonGalleryBreakpointValues) {
     return this.resolveFromBreakpoints(
       width,
       breakpointMap,
@@ -329,14 +332,15 @@ export class Gallery implements ComponentInterface {
 
   /**
    * Get the gap from a responsive breakpoint map.
-   * Returns the gap for the last matching breakpoint.
+   * Returns the gap for the last matching breakpoint, or `null` when that
+   * breakpoint has no valid value so the theme's gap token applies.
    */
-  private getGapFromBreakpointMap(width: number, breakpointMap: GalleryBreakpoints) {
-    return this.resolveFromBreakpoints(
+  private getGapFromBreakpointMap(width: number, breakpointMap: IonGalleryBreakpointValues) {
+    return this.resolveFromBreakpoints<string | null>(
       width,
       breakpointMap,
       (value) => this.sanitizeGap(value),
-      () => this.sanitizeGap(DEFAULT_GAP)
+      () => null
     );
   }
 
@@ -345,7 +349,7 @@ export class Gallery implements ComponentInterface {
    * an empty breakpoint map, a map with no supported breakpoint keys,
    * or a map with invalid breakpoint values.
    */
-  private warnInvalidColumns(columns: GalleryColumns) {
+  private warnInvalidColumns(columns: IonGalleryColumns) {
     if (this.hasWarnedInvalidColumns) {
       return;
     }
@@ -364,7 +368,7 @@ export class Gallery implements ComponentInterface {
    * an empty breakpoint map, a map with no supported breakpoint keys,
    * or a map with invalid breakpoint values.
    */
-  private warnInvalidGap(gap: GalleryGap) {
+  private warnInvalidGap(gap: IonGalleryGap) {
     if (this.hasWarnedInvalidGap) {
       return;
     }
@@ -422,28 +426,27 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Resolve the active gap value for the current width.
+   * Resolve the active gap value for the current width. Returns `undefined`
+   * when the theme's gap token should apply: the `gap` property is unset,
+   * invalid, or has no value for the active breakpoint.
    */
-  private getGapForWidth(width: number) {
+  private getGapForWidth(width: number): string | undefined {
     const { gap } = this;
-    const providedGap = gap ?? DEFAULT_GAP;
 
-    const isBreakpointGap = isBreakpointMap<string | number>(providedGap);
+    if (gap === undefined) {
+      return undefined;
+    }
+
+    const isBreakpointGap = isBreakpointMap<string | number>(gap);
     const hasInvalidBreakpointGap =
-      isBreakpointGap && this.hasInvalidBreakpointMap(providedGap, (value) => this.sanitizeGap(value));
-    const sanitizedGap = isBreakpointGap
-      ? this.getGapFromBreakpointMap(width, providedGap)
-      : this.sanitizeGap(providedGap);
+      isBreakpointGap && this.hasInvalidBreakpointMap(gap, (value) => this.sanitizeGap(value));
+    const sanitizedGap = isBreakpointGap ? this.getGapFromBreakpointMap(width, gap) : this.sanitizeGap(gap);
 
     if (hasInvalidBreakpointGap || (!isBreakpointGap && sanitizedGap === undefined)) {
-      this.warnInvalidGap(providedGap);
+      this.warnInvalidGap(gap);
     }
 
-    if (sanitizedGap !== undefined) {
-      return sanitizedGap;
-    }
-
-    return this.sanitizeGap(DEFAULT_GAP);
+    return sanitizedGap ?? undefined;
   }
 
   /**
@@ -465,8 +468,14 @@ export class Gallery implements ComponentInterface {
     const columns = this.getColumnsForWidth(width);
     this.el.style.setProperty('--internal-gallery-columns', `${columns}`);
 
+    // Without a gap from the property, remove the inline value so the
+    // stylesheet's default (the theme's gap token) applies.
     const gap = this.getGapForWidth(width);
-    this.el.style.setProperty('--internal-gallery-gap', `${gap}`);
+    if (gap === undefined) {
+      this.el.style.removeProperty('--internal-gallery-gap');
+    } else {
+      this.el.style.setProperty('--internal-gallery-gap', gap);
+    }
   }
 
   /**
