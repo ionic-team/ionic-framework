@@ -272,6 +272,12 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
 
       await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe('24px');
       await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe('24px');
+
+      // Returning to `sm` removes the inline 24px so the token applies again.
+      await page.setViewportSize({ width: 576, height: 900 });
+
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe('7px');
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe('7px');
     });
   });
 });
