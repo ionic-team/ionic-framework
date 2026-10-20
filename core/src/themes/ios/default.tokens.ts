@@ -1074,10 +1074,8 @@ export const defaultTheme: DefaultTheme = {
 
       size: {
         small: {
-          height: '100%',
           // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
           position: 'relative',
-          width: '100%',
 
           font: {
             size: dynamicFontMax(global.root, 1.8, 13),
@@ -1097,10 +1095,8 @@ export const defaultTheme: DefaultTheme = {
         },
 
         medium: {
-          height: '100%',
           // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
           position: 'absolute',
-          width: '100%',
 
           font: {
             size: dynamicFontMax(global.root, 1.2, 17),
@@ -1122,9 +1118,7 @@ export const defaultTheme: DefaultTheme = {
 
         large: {
           alignItems: 'flex-end',
-          height: '100%',
           position: 'static',
-          width: '100%',
 
           font: {
             size: dynamicFontMax(global.root, 1.8, 34),
