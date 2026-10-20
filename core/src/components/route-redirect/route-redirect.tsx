@@ -7,7 +7,9 @@ import { Component, Event, Prop, Watch } from '@stencil/core';
 export class RouteRedirect implements ComponentInterface {
   /**
    * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL.
-   * It needs to be an exact match of the navigated URL in order to apply.
+   * It needs to be an exact match of the navigated URL in order to apply, unless it ends in `*`.
+   * A `from` that ends in `*` matches any path below it, but not the path itself, so `/admin/*`
+   * matches `/admin/posts` but not `/admin`.
    *
    * The path specified in this value is always an absolute path, even if the initial `/` slash
    * is not specified.

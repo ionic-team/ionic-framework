@@ -14,6 +14,14 @@ export class Route implements ComponentInterface {
    *
    * Accepts paths similar to expressjs so that you can define parameters
    * in the url /foo/:bar where bar would be available in incoming props.
+   *
+   * A url ending in `*`, such as `*` or `/admin/*`, matches any remaining path,
+   * including none, so `/admin/*` also matches `/admin`. It only wins over a
+   * route that matches the whole path when it has more fixed segments, so
+   * `/admin/*` wins over `/:section/:id` but not over `/admin/:id`. It always
+   * wins over a route that matches by ignoring trailing segments, such as
+   * `/admin` for `/admin/users`. The matched path is passed in the `pathMatch`
+   * prop without a leading `/`. A `*` on a route with child routes is ignored.
    */
   @Prop() url = '';
 
