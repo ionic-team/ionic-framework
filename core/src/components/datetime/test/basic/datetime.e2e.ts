@@ -590,8 +590,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 /**
- * Test RTL set within the component tree.
- * This behavior does not vary across modes.
+ * RTL is set in the markup, on the component
+ * or an ancestor, so we don't need to test
+ * both directions. Also, this behavior
+ * does not vary across modes.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: RTL'), () => {
