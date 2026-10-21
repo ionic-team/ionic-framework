@@ -33,8 +33,8 @@
 }
 
 /**
- * The testing font follows the theme. <html> has both the mode and theme
- * classes, so the font is keyed on its `theme` attribute instead.
+ * Each theme loads its own testing font. The font is selected by the `theme`
+ * attribute because `<html>` carries both a mode class and a theme class.
  */
 :root,
 html,
