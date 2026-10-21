@@ -1,13 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { ionPageVisible, ionPageHidden, ionPageDoesNotExist, ionNav } from './utils/test-utils';
+import { ionPageVisible, ionPageHidden, ionPageDoesNotExist, ionNav, withTestingMode } from './utils/test-utils';
 import { ionSwipeToGoBack } from './utils/drag-utils';
 
 const IOS_MODE = 'ionic:mode=ios';
 
 test.describe('Swipe To Go Back', () => {
   /*
-    This spec tests that swipe to go back works.
-    Animations must be enabled (no ionic:_testing=true) for gesture tests.
+    This spec tests that swipe to go back works with animations enabled (no ionic:_testing=true).
   */
 
   test('should swipe and abort', async ({ page }) => {
@@ -216,5 +215,48 @@ test.describe('Swipe To Go Back', () => {
     await ionSwipeToGoBack(page, true, 'ion-router-outlet#swipe-to-go-back-disabled');
     await ionPageVisible(page, 'disabled-details');
     await ionPageHidden(page, 'disabled-main');
+  });
+});
+
+test.describe('Swipe To Go Back without animations', () => {
+  /*
+    Testing mode disables animations, so these cover swipe to go back without them.
+  */
+
+  test('should swipe and abort', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/29793',
+    });
+
+    await page.goto(withTestingMode(`/swipe-to-go-back?${IOS_MODE}`));
+    await ionPageVisible(page, 'main');
+
+    await ionNav(page, 'ion-item', 'Details');
+    await ionPageVisible(page, 'details');
+    await ionPageHidden(page, 'main');
+
+    await ionSwipeToGoBack(page, false, 'ion-router-outlet#swipe-to-go-back');
+    await ionPageVisible(page, 'details');
+    await ionPageHidden(page, 'main');
+    await expect(page).toHaveURL(/\/swipe-to-go-back\/details/);
+  });
+
+  test('should swipe and go back', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/29793',
+    });
+
+    await page.goto(withTestingMode(`/swipe-to-go-back?${IOS_MODE}`));
+    await ionPageVisible(page, 'main');
+
+    await ionNav(page, 'ion-item', 'Details');
+    await ionPageVisible(page, 'details');
+    await ionPageHidden(page, 'main');
+
+    await ionSwipeToGoBack(page, true, 'ion-router-outlet#swipe-to-go-back');
+    await ionPageVisible(page, 'main');
+    await expect(page).toHaveURL(/\/swipe-to-go-back(\?|$)/);
   });
 });

@@ -44,7 +44,7 @@ export const useIonRouter = (): UseIonRouterResult => {
     navigate(location, "forward", "push", routerAnimation);
 
   const replace = (location: any, routerAnimation?: AnimationBuilder) =>
-    navigate(location, "root", "replace", routerAnimation);
+    navigate(location, "none", "replace", routerAnimation);
 
   const back = (routerAnimation?: AnimationBuilder) => goBack(routerAnimation);
 

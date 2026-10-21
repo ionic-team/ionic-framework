@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.9](https://github.com/ionic-team/ionic-framework/compare/v9.0.8...v9.0.9) (2026-10-21)
+
+### Bug Fixes
+
+* **angular:** import tab proxies directly in standalone tabs ([#31596](https://github.com/ionic-team/ionic-framework/issues/31596)) ([cb963f8](https://github.com/ionic-team/ionic-framework/commit/cb963f886ee08ce3abf25d6cb4e33c5cc3ac0003)), closes [#31594](https://github.com/ionic-team/ionic-framework/issues/31594)
+* **nav:** defer non-animated swipe back until the gesture completes ([#31552](https://github.com/ionic-team/ionic-framework/issues/31552)) ([5f3f5fc](https://github.com/ionic-team/ionic-framework/commit/5f3f5fcae2bc83cb4301bc6e47c7e0b64f6d3d76)), closes [#29793](https://github.com/ionic-team/ionic-framework/issues/29793)
+
+
 ## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
 
 ### Bug Fixes
