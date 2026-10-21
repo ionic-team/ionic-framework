@@ -48,10 +48,6 @@
   max-width: max-content;
 }
 
-:host .calendar-action-buttons ion-button {
-  --background: transparent;
-}
-
 /**
  * Center the day text vertically
  * and horizontally within its grid cell.
@@ -128,10 +124,18 @@
   color: globals.current-color(base);
 }
 
+/**
+ * TODO(FW-6893): Move to datetime's tokens in its migration. Button's migration only
+ * renamed these properties: a nested `IonDatetime.IonButton` token can't target just
+ * the action buttons inside datetime's shadow root.
+ */
 // Default text color for action buttons (cancel, clear, done).
 // When datetime doesn't receive a color prop.
 :host .datetime-action-buttons ion-button {
-  --color: #{globals.ion-color(primary, base)};
+  --ion-button-hue-bold-clear-default-color: #{globals.ion-color(primary, base)};
+  --ion-button-hue-bold-clear-focus-color: #{globals.ion-color(primary, base)};
+  --ion-button-hue-bold-clear-hover-color: #{globals.ion-color(primary, base)};
+  --ion-button-hue-bold-clear-activated-color: #{globals.ion-color(primary, base)};
 }
 
 .calendar-month-year-toggle {

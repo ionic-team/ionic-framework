@@ -50,7 +50,86 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 <h4 id="version-10x-button">Button</h4>
 
-- The `border-radius` of the `ios` and `md` button now defaults to `6px` and `999px` instead of `14px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"` for `md` and override the `--border-radius` CSS variable for `ios` to `14px`, or set it to a different value entirely.
+The following breaking changes apply to `ion-button`:
+
+1. The `border-radius` of the `ios` button is now `6px` at every size, instead of `6px`, `14px` and `16px` for the small, default and large sizes. The `md` button now defaults to `999px` instead of `4px`. Both follow the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"` for `md`. For `ios`, set `IonButton.shape.soft.border.radius` for global styles or `--ion-button-shape-soft-border-radius` for component-specific styles to `14px`, and to `6px` and `16px` on small and large buttons.
+2. Icon-only buttons in the `start` and `end` slots of `ion-input`, `ion-select` and `ion-textarea` now follow the button's `shape` instead of always being circles. For `ios`, set the `shape` to `"round"` to keep them circular.
+3. The font size of `clear` buttons in the `ios` theme now matches the other fills at each size, instead of `17px` at the default size. To keep the previous size, set `--ion-button-size-medium-font-size` to `17px` on those buttons.
+4. The `ios` button is now `28px`, `34px` and `50px` tall at the small, default and large sizes, with less padding, following the iOS guidelines. To revert to the previous appearance, set `IonButton.size.<size>.minHeight` for global styles or `--ion-button-size-<size>-min-height` for component-specific styles to `2.1em`, `3.1em` and `3.1em`, and the padding (`IonButton.size.<size>.padding` or `--ion-button-size-<size>-padding-*`) to `4px 0.9em`, `13px 1em` and `17px 1em`.
+5. Icon-only buttons are now squares as tall as a text button of the same size. In `md`, this makes them a few pixels smaller at the small and default sizes and larger at the large size. To change their size, set the size's `minHeight` as described above.
+6. CSS variables have been replaced. <sup>[6](#version-10x-button-replaced-css-variables)</sup>
+7. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[7](#version-10x-button-padding-variables)</sup>
+8. The fill, size, shape and expand classes have been renamed. <sup>[8](#version-10x-button-renamed-classes)</sup>
+9. The `default` size has been deprecated. <sup>[9](#version-10x-button-deprecated-default-size)</sup>
+10. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[10](#version-10x-button-theme-classes)</sup>
+
+<h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
+
+Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides. Replace `<fill>` with `solid`, `outline` or `clear`, and `<shape>` with `crisp`, `soft`, `round` or `rectangular`. Buttons with a `color` read the same tokens under `semantic`, for example `IonButton.hue.bold.solid.semantic.default.background`.
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--background` | `IonButton.hue.bold.<fill>.default.background` | `--ion-button-hue-bold-<fill>-default-background` |
+| `--background-activated` | `IonButton.hue.bold.<fill>.activated.background` | `--ion-button-hue-bold-<fill>-activated-background` |
+| `--background-focused` | `IonButton.hue.bold.<fill>.focus.background` | `--ion-button-hue-bold-<fill>-focus-background` |
+| `--background-hover` | `IonButton.hue.bold.<fill>.hover.background` | `--ion-button-hue-bold-<fill>-hover-background` |
+| `--border-color` | `IonButton.hue.bold.<fill>.default.border.color` | `--ion-button-hue-bold-<fill>-default-border-color` |
+| `--border-radius` | `IonButton.shape.<shape>.border.radius` | `--ion-button-shape-<shape>-border-radius` |
+| `--border-style` | `IonButton.hue.bold.<fill>.default.border.style` | `--ion-button-hue-bold-<fill>-default-border-style` |
+| `--border-width` | `IonButton.hue.bold.<fill>.default.border.width` | `--ion-button-hue-bold-<fill>-default-border-width` |
+| `--box-shadow` | `IonButton.hue.bold.<fill>.default.box.shadow` | `--ion-button-hue-bold-<fill>-default-box-shadow` |
+| `--color` | `IonButton.hue.bold.<fill>.default.color` | `--ion-button-hue-bold-<fill>-default-color` |
+| `--color-activated` | `IonButton.hue.bold.<fill>.activated.color` | `--ion-button-hue-bold-<fill>-activated-color` |
+| `--color-focused` | `IonButton.hue.bold.<fill>.focus.color` | `--ion-button-hue-bold-<fill>-focus-color` |
+| `--color-hover` | `IonButton.hue.bold.<fill>.hover.color` | `--ion-button-hue-bold-<fill>-hover-color` |
+| `--ripple-color` | `IonButton.hue.bold.<fill>.rippleEffect.color` | `--ion-button-hue-bold-<fill>-ripple-effect-color` |
+| `--transition` | `IonButton.transition` | `--ion-button-transition` |
+
+> [!NOTE]
+> `--background-activated-opacity`, `--background-focused-opacity` and `--background-hover-opacity` have been removed with no one-to-one replacement. Each state's background is now a single color that includes its opacity, so set the final color, for example `color-mix(in srgb, var(--ion-color-primary) 12%, transparent)`. States are also drawn on the native element itself, so styles targeting `::part(native)::after` no longer affect them.
+
+> [!NOTE]
+> `--opacity` has been removed with no replacement. Set `opacity` on `ion-button` instead.
+
+<h5 id="version-10x-button-padding-variables">Padding variables</h5>
+
+New code should use the token-based API. Replace `<size>` with `small`, `medium` or `large`, and use `iconOnly.padding` under the size for icon-only buttons:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--padding-top` | `IonButton.size.<size>.padding.top` | `--ion-button-size-<size>-padding-top` |
+| `--padding-end` | `IonButton.size.<size>.padding.end` | `--ion-button-size-<size>-padding-end` |
+| `--padding-bottom` | `IonButton.size.<size>.padding.bottom` | `--ion-button-size-<size>-padding-bottom` |
+| `--padding-start` | `IonButton.size.<size>.padding.start` | `--ion-button-size-<size>-padding-start` |
+
+> [!NOTE]
+> The `--padding-*` overrides and the `.ion-padding`, `.ion-padding-*` utility classes in `css/padding.scss` continue to work when set on the button itself: `ion-button` honors them ahead of the new tokens. They are no longer part of the documented public API (only `--ion-button-size-<size>-padding-*` is listed in `core/api.txt`), but existing usage will not break.
+
+<h5 id="version-10x-button-renamed-classes">Renamed classes</h5>
+
+Update any styles that target these classes:
+
+| Old (9.x) | New |
+|---|---|
+| `.button-solid` | `.button-fill-solid` |
+| `.button-outline` | `.button-fill-outline` |
+| `.button-clear` | `.button-fill-clear` |
+| `.button-small` | `.button-size-small` |
+| `.button-default` | `.button-size-medium` |
+| `.button-large` | `.button-size-large` |
+| `.button-soft` | `.button-shape-soft` |
+| `.button-round` | `.button-shape-round` |
+| `.button-rectangular` | `.button-shape-rectangular` |
+| `.button-block` | `.button-expand-block` |
+| `.button-full` | `.button-expand-full` |
+
+<h5 id="version-10x-button-deprecated-default-size">Deprecated <code>default</code> size</h5>
+
+The `default` value of the `size` property is deprecated. It logs a warning and renders the same as `medium`. Use `size="medium"` instead.
+
+<h5 id="version-10x-button-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-button.md`, `ion-button.ios`.
 
 <h4 id="version-10x-card">Card</h4>
 

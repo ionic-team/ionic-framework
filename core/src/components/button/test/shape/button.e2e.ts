@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-const SHAPES = ['soft', 'round', 'rectangular'];
+import { ION_BUTTON_SHAPES } from '../../button.interface';
 
 // `solid` is the default fill, so it renders without a `fill` attribute
 const FILLS = ['solid', 'outline', 'clear'];
@@ -14,7 +14,7 @@ const SIZES = ['small', 'medium', 'large'];
 configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: shape'), () => {
     test('should not have visual regressions', async ({ page }) => {
-      const grids = SHAPES.flatMap((shape) =>
+      const grids = ION_BUTTON_SHAPES.flatMap((shape) =>
         FILLS.map((fill) => {
           const fillAttr = fill === 'solid' ? '' : ` fill="${fill}"`;
           // Clear buttons have no background, so focus them to show the shape

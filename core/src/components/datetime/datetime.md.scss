@@ -47,8 +47,16 @@
 // Calendar / Header / Action Buttons
 // -----------------------------------
 
+/**
+ * TODO(FW-6893): Move to datetime's tokens in its migration. Button's migration only
+ * renamed these properties: a nested `IonDatetime.IonButton` token can't target just
+ * the month navigation buttons inside datetime's shadow root.
+ */
 :host .calendar-action-buttons ion-button {
-  --color: #{$text-color-step-350};
+  --ion-button-hue-bold-clear-default-color: #{$text-color-step-350};
+  --ion-button-hue-bold-clear-focus-color: #{$text-color-step-350};
+  --ion-button-hue-bold-clear-hover-color: #{$text-color-step-350};
+  --ion-button-hue-bold-clear-activated-color: #{$text-color-step-350};
 }
 
 // These styles are copied from buttons.md.scss
@@ -57,7 +65,6 @@
   --padding-end: 12px;
   --padding-bottom: 12px;
   --padding-start: 12px;
-  --border-radius: 50%;
 
   @include margin(0);
 

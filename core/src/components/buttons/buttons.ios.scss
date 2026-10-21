@@ -21,62 +21,7 @@
   --padding-bottom: 0;
 }
 
-// TODO(FW-6203): is this value correct?
-::slotted(*) ion-button:not(.button-round) {
-  --border-radius: #{$toolbar-ios-button-border-radius};
-}
-
-// iOS Toolbar with Color: Default Buttons
-// --------------------------------------------------
-
-:host-context(.ion-color)::slotted(*) .button {
-  --color: initial;
-  --border-color: initial;
-  --background-focused: #{current-color(contrast)};
-}
-
-:host-context(.ion-color)::slotted(*) .button-solid {
-  --background: #{current-color(contrast)};
-  --background-focused: #000;
-  --background-focused-opacity: 0.12;
-  --background-activated: #000;
-  --background-activated-opacity: 0.12;
-  --background-hover: #{current-color(base)};
-  --background-hover-opacity: 0.45;
-  --color: #{current-color(base)};
-  --color-focused: #{current-color(base)};
-}
-
-:host-context(.ion-color)::slotted(*) .button-clear {
-  --color-activated: #{current-color(contrast)};
-  --color-focused: #{current-color(contrast)};
-}
-
-:host-context(.ion-color)::slotted(*) .button-outline {
-  --color-activated: #{current-color(base)};
-  --color-focused: #{current-color(contrast)};
-  --background-activated: #{current-color(contrast)};
-}
-
-// iOS Toolbar Button Clear / Outline
-// --------------------------------------------------
-
-::slotted(*) .button-clear,
-::slotted(*) .button-outline {
-  --background-activated: transparent;
-  --background-focused: currentColor;
-  --background-hover: transparent;
-}
-
-// iOS Toolbar Button Solid
-// --------------------------------------------------
-
-::slotted(*) .button-solid:not(.ion-color) {
-  --background-focused: #000;
-  --background-focused-opacity: 0.12;
-  --background-activated: #000;
-  --background-activated-opacity: 0.12;
-}
+// Colors, shapes and fonts for the buttons are in the `IonToolbar.IonButtons.IonButton` tokens
 
 // iOS Toolbar Button Icon
 // --------------------------------------------------

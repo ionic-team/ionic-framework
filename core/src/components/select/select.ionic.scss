@@ -393,7 +393,6 @@
 
 ::slotted(ion-button[slot="start"].button-has-icon-only),
 ::slotted(ion-button[slot="end"].button-has-icon-only) {
-  --border-radius: 50%;
   --padding-start: #{globals.$ion-space-200};
   --padding-end: #{globals.$ion-space-200};
   --padding-top: #{globals.$ion-space-200};

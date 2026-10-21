@@ -8,13 +8,16 @@ import { hasShadowDom, openURL } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonTheme, getIonMode } from '../../global/ionic-global';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
+import type { Hue } from '../../themes/themes.interfaces';
 import type { RouterDirection } from '../router/utils/interface';
+
+import type { IonButtonExpand, IonButtonFill, IonButtonShape, IonButtonSize } from './button.interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot icon-only - Should be used on an icon in a button that has no text.
@@ -25,17 +28,14 @@ import type { RouterDirection } from '../router/utils/interface';
  */
 @Component({
   tag: 'ion-button',
-  styleUrls: {
-    ios: 'button.ios.scss',
-    md: 'button.md.scss',
-    ionic: 'button.ionic.scss',
-  },
+  styleUrl: 'button.scss',
   shadow: true,
 })
 export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
   private hasLoaded = false;
   private inDatetime = false;
   private inItem = false;
+  private hasWarnedSizeDefault = false;
   private inListHeader = false;
   private inButtons = false;
   private formButtonEl: HTMLButtonElement | null = null;
@@ -83,15 +83,17 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * with square corners and no left or right borders.
    */
-  @Prop({ reflect: true }) expand?: 'full' | 'block';
+  @Prop({ reflect: true }) expand?: IonButtonExpand;
 
   /**
-   * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"`
-   * for a transparent button with a border, or to `"solid"` for a button with a filled background.
-   * The default fill is `"solid"` except when inside of a buttons or datetime component, where
-   * the default fill is `"clear"`.
+   * Set to `"clear"` for a transparent button that resembles a flat button,
+   * `"outline"` for a transparent button with a border,
+   * or `"solid"` for a button with a filled background.
+   *
+   * Defaults to `"solid"` if both the fill property and theme config are unset,
+   * or `"clear"` inside of buttons, datetime, or list header.
    */
-  @Prop({ reflect: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
+  @Prop({ reflect: true, mutable: true }) fill?: IonButtonFill | 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -126,20 +128,26 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop() rel: string | undefined;
 
   /**
-   * Set to `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully
-   * rounded corners, or `"rectangular"` for a button without rounded corners.
-   * Defaults to `"soft"` for the `"ios"` theme and `"round"` for all other themes.
+   * Set to `"crisp"` for a button with even slightly rounded corners,
+   * `"soft"` for a button with slightly rounded corners,
+   * `"round"` for a button with fully rounded corners,
+   * or `"rectangular"` for a button without rounded corners.
+   *
+   * Defaults to `"round"` if both the shape property and theme config are unset.
    */
-  @Prop({ reflect: true }) shape?: 'soft' | 'round' | 'rectangular';
+  @Prop({ reflect: true }) shape?: IonButtonShape;
 
   /**
-   * Set to `"small"` for a button with less height and padding, to `"medium"`
-   * for a button with the medium height and padding, or to `"large"` for a button
-   * with more height and padding. By default the size is unset, unless the button
-   * is inside of an item, where the size is `"small"` by default. Set the size to
-   * `"default"` inside of an item to make it a standard size button.
+   * Set to `"small"` for a button with less height and padding,
+   * `"medium"` for a button with the standard height and padding,
+   * or `"large"` for a button with more height and padding.
+   *
+   * Defaults to `"medium"` if both the size property and theme config are unset,
+   * or `"small"` inside of an item.
+   *
+   * `"default"` is deprecated and renders the same as `"medium"`.
    */
-  @Prop({ reflect: true }) size?: 'small' | 'default' | 'medium' | 'large';
+  @Prop({ reflect: true }) size?: IonButtonSize | 'default';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -254,10 +262,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   private get rippleType() {
-    const hasClearFill = this.fill === undefined || this.fill === 'clear';
+    const hasClearFill = this.fillValue === 'clear';
 
     // Use the unbounded "circular" ripple effect if it:
-    // - Has a clear fill (the default)
+    // - Has a clear fill (the default in buttons and datetime)
     // - Only has an icon and
     // - Is inside of buttons (used in a toolbar) or a datetime
     if (hasClearFill && this.hasIconOnly && (this.inButtons || this.inDatetime)) {
@@ -268,28 +276,65 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   /**
-   * Set the shape based on the theme
+   * Gets the button fill. Uses the `fill` property if set, otherwise `clear` inside of
+   * buttons, datetime or list header, then the theme config. Defaults to `solid` if none apply.
    */
-  private getShape(): string {
-    const theme = getIonTheme(this);
-    const { shape } = this;
+  get fillValue(): IonButtonFill | 'default' {
+    const { fill } = this;
 
-    if (shape === undefined) {
-      return theme === 'ios' ? 'soft' : 'round';
+    if (fill !== undefined) {
+      return fill;
     }
 
-    return shape;
+    if (this.inDatetime || this.inButtons || this.inListHeader) {
+      return 'clear';
+    }
+
+    return config.getObjectValue('IonButton.fill', 'solid') as IonButtonFill;
   }
 
   /**
-   * Get the default size. If size is unset and the button is inside an item,
-   * the default size is "small". Otherwise, it uses the value of size.
+   * Gets the button hue from the theme config. Defaults to `bold` if it is unset.
    */
-  private getSize(): string | undefined {
+  get hueValue(): Hue {
+    return config.getObjectValue('IonButton.hue', 'bold') as Hue;
+  }
+
+  /**
+   * Gets the button shape. Uses the `shape` property if set, otherwise
+   * checks the theme config. Defaults to `round` if neither is set.
+   */
+  get shapeValue(): IonButtonShape {
+    const shapeConfig = config.getObjectValue('IonButton.shape', 'round') as IonButtonShape;
+
+    return this.shape ?? shapeConfig;
+  }
+
+  /**
+   * Gets the button size. Uses the `size` property if set, otherwise `small`
+   * inside of an item, then the theme config. Defaults to `medium` if none apply.
+   */
+  get sizeValue(): IonButtonSize {
     const { size } = this;
 
     if (size === undefined) {
-      return this.inItem ? 'small' : 'medium';
+      if (this.inItem) {
+        return 'small';
+      }
+
+      return config.getObjectValue('IonButton.size', 'medium') as IonButtonSize;
+    }
+
+    if (size === 'default') {
+      if (!this.hasWarnedSizeDefault) {
+        this.hasWarnedSizeDefault = true;
+        printIonWarning(
+          '[ion-button] - The "default" size is deprecated. Use "medium" instead.\nExample: <ion-button size="medium">',
+          this.el
+        );
+      }
+
+      return 'medium';
     }
 
     return size;
@@ -398,12 +443,24 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   };
 
   render() {
-    const { buttonType, type, disabled, rel, target, href, color, expand, hasIconOnly, hasBadge, strong } = this;
-
-    const theme = getIonTheme(this);
+    const {
+      buttonType,
+      type,
+      disabled,
+      rel,
+      target,
+      href,
+      color,
+      expand,
+      hasIconOnly,
+      hasBadge,
+      fillValue,
+      hueValue,
+      shapeValue,
+      sizeValue,
+      strong,
+    } = this;
     const mode = getIonMode(this);
-    const size = this.getSize();
-    const shape = this.getShape();
     const inheritedAttributes = this.ariaController?.attributes ?? {};
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
@@ -415,10 +472,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             rel,
             target,
           };
-    let fill = this.fill;
-    if (fill === undefined) {
-      fill = this.inDatetime || this.inButtons || this.inListHeader ? 'clear' : 'solid';
-    }
 
     /**
      * We call renderHiddenButton in the render function to account
@@ -436,12 +489,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         onClick={this.handleClick}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
-          [theme]: true,
           [buttonType]: true,
-          [`${buttonType}-${expand}`]: expand !== undefined,
-          [`${buttonType}-${size}`]: size !== undefined,
-          [`${buttonType}-${shape}`]: true,
-          [`${buttonType}-${fill}`]: true,
+          [`${buttonType}-expand-${expand}`]: expand !== undefined,
+          [`${buttonType}-size-${sizeValue}`]: true,
+          [`${buttonType}-shape-${shapeValue}`]: true,
+          [`${buttonType}-fill-${fillValue}`]: true,
+          // TODO(FW-6838): read the hue prop first in the hue PR
+          [`${buttonType}-hue-${hueValue}`]: true,
           [`${buttonType}-strong`]: strong,
           'in-datetime': this.inDatetime,
           'in-toolbar': hostContext('ion-toolbar', this.el),

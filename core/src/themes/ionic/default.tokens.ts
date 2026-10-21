@@ -27,6 +27,13 @@ export const defaultTheme: DefaultTheme = {
         size: 'small',
       },
 
+      IonButton: {
+        fill: 'solid',
+        hue: 'bold',
+        shape: 'round',
+        size: 'medium',
+      },
+
       IonChip: {
         fill: 'solid',
         hue: 'subtle',
@@ -288,6 +295,771 @@ export const defaultTheme: DefaultTheme = {
 
             min: {
               width: 'var(--ion-scaling-xxxs)',
+            },
+          },
+        },
+      },
+    },
+
+    IonButton: {
+      margin: {
+        top: 'var(--ion-spacing-0)',
+        end: 'var(--ion-spacing-0)',
+        bottom: 'var(--ion-spacing-0)',
+        start: 'var(--ion-spacing-0)',
+      },
+
+      transition: 'none',
+
+      font: {
+        family: 'var(--ion-font-family)',
+      },
+
+      letter: {
+        spacing: '0.01em',
+      },
+
+      // Hues
+      hue: {
+        bold: {
+          solid: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            default: {
+              background: ionColor('primary', 'base'),
+              color: ionColor('primary', 'contrast'),
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base'),
+              color: ionColor('primary', 'contrast'),
+            },
+
+            hover: {
+              background: ionColor('primary', 'shade'),
+              color: ionColor('primary', 'contrast'),
+            },
+
+            activated: {
+              background: ionColor('primary', 'shade'),
+              color: ionColor('primary', 'contrast'),
+            },
+
+            // A white wash over the button
+            disabled: {
+              background: ionColor('primary', 'base'),
+
+              opacity: '0.4',
+            },
+
+            rippleEffect: {
+              color: ionColor('primary', 'shade'),
+              opacity: '1',
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base'),
+                color: currentColor('contrast'),
+              },
+
+              focus: {
+                background: currentColor('base'),
+                color: currentColor('contrast'),
+              },
+
+              hover: {
+                background: currentColor('shade'),
+                color: currentColor('contrast'),
+              },
+
+              activated: {
+                background: currentColor('shade'),
+                color: currentColor('contrast'),
+              },
+
+              disabled: {
+                background: currentColor('base'),
+              },
+
+              rippleEffect: {
+                color: currentColor('shade'),
+                opacity: '1',
+              },
+            },
+          },
+
+          outline: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            default: {
+              background: baseColors.backgroundColor,
+              color: ionColor('primary', 'foreground'),
+
+              border: {
+                color: ionColor('primary', 'base'),
+                style: 'solid',
+                width: 'var(--ion-border-width-xxxs)',
+              },
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: baseColors.backgroundColor,
+              color: ionColor('primary', 'foreground'),
+            },
+
+            hover: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'foreground'),
+            },
+
+            activated: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'foreground'),
+            },
+
+            // A white wash over the button
+            disabled: {
+              background: baseColors.backgroundColor,
+
+              opacity: '0.4',
+            },
+
+            rippleEffect: {
+              color: ionColor('primary', 'shade', { subtle: true }),
+              opacity: '1',
+            },
+
+            semantic: {
+              default: {
+                background: baseColors.backgroundColor,
+                color: currentColor('foreground'),
+
+                border: {
+                  color: currentColor('base'),
+                },
+              },
+
+              focus: {
+                background: baseColors.backgroundColor,
+                color: currentColor('foreground'),
+              },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('foreground'),
+              },
+
+              activated: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('foreground'),
+              },
+
+              disabled: {
+                background: baseColors.backgroundColor,
+              },
+
+              rippleEffect: {
+                color: currentColor('shade', { subtle: true }),
+                opacity: '1',
+              },
+            },
+          },
+
+          clear: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground'),
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground'),
+            },
+
+            hover: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'foreground'),
+            },
+
+            activated: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'foreground'),
+            },
+
+            // A white wash over the button
+            disabled: {
+              background: 'transparent',
+
+              opacity: '0.4',
+            },
+
+            rippleEffect: {
+              color: ionColor('primary', 'shade', { subtle: true }),
+              opacity: '1',
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('foreground'),
+              },
+
+              focus: {
+                background: 'transparent',
+                color: currentColor('foreground'),
+              },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('foreground'),
+              },
+
+              activated: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('foreground'),
+              },
+
+              disabled: {
+                background: 'transparent',
+              },
+
+              rippleEffect: {
+                color: currentColor('shade', { subtle: true }),
+                opacity: '1',
+              },
+            },
+          },
+        },
+      },
+
+      // Sizes
+      size: {
+        small: {
+          minHeight: 'var(--ion-scaling-lg)',
+          minWidth: 'var(--ion-scaling-1600)',
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-lg)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-lg)',
+          },
+
+          font: {
+            size: dynamicFont(global.root, 14),
+          },
+
+          line: {
+            height: dynamicFont(global.root, 20),
+          },
+
+          icon: {
+            font: {
+              size: dynamicFont(global.root, 20),
+            },
+
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-sm)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-sm)',
+              },
+            },
+          },
+
+          iconOnly: {
+            padding: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-0)',
+            },
+
+            icon: {
+              font: {
+                size: dynamicFont(global.root, 20),
+              },
+            },
+          },
+
+          spinner: {
+            // `xsmall` is the theme's default spinner size; each larger size steps up 4px
+            size: {
+              xsmall: {
+                height: 'var(--ion-scaling-xxs)',
+                width: 'var(--ion-scaling-xxs)',
+              },
+
+              small: {
+                height: 'var(--ion-scaling-xs)',
+                width: 'var(--ion-scaling-xs)',
+              },
+
+              medium: {
+                height: 'var(--ion-scaling-sm)',
+                width: 'var(--ion-scaling-sm)',
+              },
+
+              large: {
+                height: 'var(--ion-scaling-md)',
+                width: 'var(--ion-scaling-md)',
+              },
+
+              xlarge: {
+                height: 'var(--ion-scaling-900)',
+                width: 'var(--ion-scaling-900)',
+              },
+            },
+
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-sm)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-sm)',
+              },
+            },
+          },
+        },
+
+        medium: {
+          minHeight: 'var(--ion-scaling-xl)',
+          minWidth: 'var(--ion-scaling-xxxl)',
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-xl)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-xl)',
+          },
+
+          font: {
+            size: dynamicFont(global.root, 16),
+          },
+
+          line: {
+            height: dynamicFont(global.root, 24),
+          },
+
+          icon: {
+            font: {
+              size: dynamicFont(global.root, 20),
+            },
+
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-250)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-250)',
+              },
+            },
+          },
+
+          iconOnly: {
+            padding: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-0)',
+            },
+
+            icon: {
+              font: {
+                size: dynamicFont(global.root, 20),
+              },
+            },
+          },
+
+          spinner: {
+            // `xsmall` is the theme's default spinner size; each larger size steps up 4px
+            size: {
+              xsmall: {
+                height: 'var(--ion-scaling-xxs)',
+                width: 'var(--ion-scaling-xxs)',
+              },
+
+              small: {
+                height: 'var(--ion-scaling-xs)',
+                width: 'var(--ion-scaling-xs)',
+              },
+
+              medium: {
+                height: 'var(--ion-scaling-sm)',
+                width: 'var(--ion-scaling-sm)',
+              },
+
+              large: {
+                height: 'var(--ion-scaling-md)',
+                width: 'var(--ion-scaling-md)',
+              },
+
+              xlarge: {
+                height: 'var(--ion-scaling-900)',
+                width: 'var(--ion-scaling-900)',
+              },
+            },
+
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-250)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-250)',
+              },
+            },
+          },
+        },
+
+        large: {
+          minHeight: 'var(--ion-scaling-xxl)',
+          minWidth: 'var(--ion-scaling-xxxxl)',
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-xxxl)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-xxxl)',
+          },
+
+          font: {
+            size: dynamicFont(global.root, 20),
+          },
+
+          line: {
+            height: dynamicFont(global.root, 24),
+          },
+
+          icon: {
+            font: {
+              size: dynamicFont(global.root, 24),
+            },
+
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-md)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-md)',
+              },
+            },
+          },
+
+          iconOnly: {
+            padding: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-0)',
+            },
+
+            icon: {
+              font: {
+                size: dynamicFont(global.root, 24),
+              },
+            },
+          },
+
+          spinner: {
+            // `xsmall` is the theme's default spinner size; each larger size steps up 4px
+            size: {
+              xsmall: {
+                height: 'var(--ion-scaling-xs)',
+                width: 'var(--ion-scaling-xs)',
+              },
+
+              small: {
+                height: 'var(--ion-scaling-sm)',
+                width: 'var(--ion-scaling-sm)',
+              },
+
+              medium: {
+                height: 'var(--ion-scaling-md)',
+                width: 'var(--ion-scaling-md)',
+              },
+
+              large: {
+                height: 'var(--ion-scaling-900)',
+                width: 'var(--ion-scaling-900)',
+              },
+
+              xlarge: {
+                height: 'var(--ion-scaling-lg)',
+                width: 'var(--ion-scaling-lg)',
+              },
+            },
+
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-md)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-md)',
+              },
+            },
+          },
+        },
+      },
+
+      // Shapes
+      shape: {
+        crisp: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+        },
+
+        soft: {
+          border: {
+            radius: 'var(--ion-radii-md)',
+          },
+        },
+
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
+        },
+      },
+
+      // States
+      state: {
+        focus: {
+          ring: {
+            color: '#b5c0f7',
+            offset: 'var(--ion-border-width-xxs)',
+            style: 'solid',
+            width: 'var(--ion-border-width-xxs)',
+          },
+        },
+      },
+    },
+
+    // Parents that theme the buttons they contain
+    IonInputPasswordToggle: {
+      IonButton: {
+        hue: {
+          bold: {
+            clear: {
+              default: {
+                color: '#6c727a',
+              },
+
+              focus: {
+                color: '#6c727a',
+              },
+
+              hover: {
+                color: '#6c727a',
+              },
+
+              activated: {
+                color: '#6c727a',
+              },
+            },
+          },
+        },
+      },
+    },
+
+    IonToolbar: {
+      IonButton: {
+        /**
+         * In a toolbar without a color, the global `--ion-toolbar-color` and
+         * `--ion-toolbar-background` properties color the buttons.
+         */
+        hue: {
+          bold: {
+            solid: {
+              default: {
+                background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+              },
+
+              focus: {
+                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+              },
+
+              hover: {
+                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+              },
+
+              activated: {
+                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+              },
+            },
+
+            // Transparent so the text, which takes the toolbar color, stays readable on any toolbar background
+            outline: {
+              default: {
+                background: 'transparent',
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+
+                border: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                },
+              },
+
+              focus: {
+                background: 'transparent',
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+
+              hover: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+
+              disabled: {
+                background: 'transparent',
+              },
+            },
+
+            clear: {
+              default: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+
+              focus: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+
+              hover: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+
+              activated: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+            },
+          },
+        },
+      },
+
+      IonButtons: {
+        IonButton: {
+          hue: {
+            bold: {
+              // Clear buttons in a toolbar use the default text color and have no state backgrounds
+              clear: {
+                default: {
+                  color: 'var(--ion-toolbar-color, #242528)',
+                },
+
+                focus: {
+                  background: 'transparent',
+                  color: 'var(--ion-toolbar-color, #242528)',
+                },
+
+                hover: {
+                  background: 'transparent',
+                  color: 'var(--ion-toolbar-color, #242528)',
+                },
+
+                activated: {
+                  background: 'transparent',
+                  color: 'var(--ion-toolbar-color, #242528)',
+                },
+
+                rippleEffect: {
+                  color: 'transparent',
+                },
+              },
+            },
+          },
+
+          // Toolbar buttons are shorter than standalone ones; icon-only ones are squares of this height
+          size: {
+            medium: {
+              minHeight: 'var(--ion-scaling-lg)',
             },
           },
         },
