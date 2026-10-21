@@ -37,8 +37,7 @@
  * attribute because `<html>` carries both a mode class and a theme class.
  */
 :root,
-html,
-html[theme="md"] {
+html {
   --ion-font-family: Roboto, "mdTestingFont", sans-serif;
   font-family: Roboto, "mdTestingFont", sans-serif;
 }
