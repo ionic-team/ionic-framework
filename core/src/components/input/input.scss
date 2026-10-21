@@ -228,6 +228,15 @@
   opacity: 1;
 }
 
+.input-clear-icon:focus-visible {
+  @include border-radius(4px);
+
+  outline: 2px solid #000;
+  outline-offset: 1px;
+
+  box-shadow: 0 0 0 1px #fff;
+}
+
 :host(.has-value) .input-clear-icon {
   visibility: visible;
 }

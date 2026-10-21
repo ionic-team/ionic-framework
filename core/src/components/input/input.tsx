@@ -132,6 +132,11 @@ export class Input implements ComponentInterface {
   @Prop() clearInputIcon?: string;
 
   /**
+   * The accessible label for the clear button. Only applies when `clearInput` is set to `true`.
+   */
+  @Prop() clearButtonText = 'reset';
+
+  /**
    * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop() clearOnEdit?: boolean;
@@ -856,7 +861,7 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, hasFocus, clearInputIcon } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, hasFocus, clearInputIcon, clearButtonText } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -945,7 +950,7 @@ export class Input implements ComponentInterface {
           <div class="input-end">
             {this.clearInput && !readonly && !disabled && (
               <button
-                aria-label="reset"
+                aria-label={clearButtonText}
                 type="button"
                 class="input-clear-icon"
                 onPointerDown={(ev) => {
