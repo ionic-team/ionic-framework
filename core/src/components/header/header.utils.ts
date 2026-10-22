@@ -41,11 +41,11 @@ export const cloneElement = (tagName: string) => {
  * text's start doesn't shift. Centered text grows from the center.
  *
  * @internal
- * @param ionTitleEl - The title whose alignment and direction set the origin.
+ * @param textAlign - The title's computed `text-align`.
+ * @param direction - The title's computed `direction`.
  * @returns The horizontal `transform-origin` keyword: `left`, `right` or `center`.
  */
-const getTitleOrigin = (ionTitleEl: HTMLIonTitleElement): string => {
-  const { textAlign, direction } = getComputedStyle(ionTitleEl);
+export const getTitleOrigin = (textAlign: string, direction: string): string => {
   const rtl = direction === 'rtl';
 
   if (textAlign === 'center' || textAlign === '-webkit-center') {
@@ -79,7 +79,7 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
         background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
         ionTitleEl,
         innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
-        innerTitleOrigin: ionTitleEl && isLargeTitle(ionTitleEl) ? getTitleOrigin(ionTitleEl) : undefined,
+        innerTitleOrigin: undefined,
         ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')),
       } as ToolbarIndex;
     }),
@@ -265,6 +265,12 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
     const titleDiv = toolbar.innerTitleEl;
     if (!ionTitle || !isLargeTitle(ionTitle)) {
       return;
+    }
+
+    // Read once, when the title is first scaled, so a title that becomes large later still gets one
+    if (toolbar.innerTitleOrigin === undefined) {
+      const { textAlign, direction } = getComputedStyle(ionTitle);
+      toolbar.innerTitleOrigin = getTitleOrigin(textAlign, direction);
     }
 
     titleDiv.style.transition = transition ? TRANSITION : '';
