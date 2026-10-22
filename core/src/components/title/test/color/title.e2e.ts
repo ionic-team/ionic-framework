@@ -13,6 +13,12 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
           <ion-toolbar>
             <ion-title color="primary">Primary</ion-title>
           </ion-toolbar>
+          <ion-toolbar>
+            <ion-title color="tertiary">Tertiary</ion-title>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-title color="warning">Warning</ion-title>
+          </ion-toolbar>
         </ion-header>
       `,
         config
