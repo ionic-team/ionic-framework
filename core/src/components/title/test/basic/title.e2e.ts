@@ -14,7 +14,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
           }
         </style>
 
-        <div id="header-wrapper">
+        <div id="container">
           <ion-header>
             <ion-toolbar>
               <ion-title>Settings</ion-title>
@@ -77,9 +77,9 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
         config
       );
 
-      const wrapper = page.locator('#header-wrapper');
+      const container = page.locator('#container');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`title-basic`));
+      await expect(container).toHaveScreenshot(screenshot(`title-basic`));
     });
   });
 });
