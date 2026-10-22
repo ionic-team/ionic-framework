@@ -36,8 +36,10 @@
  * Each theme loads its own testing font. The font is selected by the `theme`
  * attribute because `<html>` carries both a mode class and a theme class.
  */
+/* `html[theme="md"]` outranks the `:root` block of theme tokens added after this file */
 :root,
-html {
+html,
+html[theme="md"] {
   --ion-font-family: Roboto, "mdTestingFont", sans-serif;
   font-family: Roboto, "mdTestingFont", sans-serif;
 }
