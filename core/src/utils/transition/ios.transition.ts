@@ -245,11 +245,10 @@ const animateBackButton = (
    * We need to offset the container by the icon dimensions
    * so that the back button text aligns with the large title
    * text. Otherwise, the back button icon will align with the
-   * large title text but the back button text will not.
-   */
-  /**
-   * Start where the large title's text is, so both copies move together
-   * from a title that isn't at the start edge, such as a centered one.
+   * large title text but the back button text will not. It
+   * starts where the large title's text is, so both copies move
+   * together from a title that isn't at the start edge, such as
+   * a centered one.
    */
   const CONTAINER_START_TRANSLATE_X = rtl
     ? `${backButtonIconBox.width / 2 - (backButtonIconBox.right - backButtonBox.right) - largeTitleStartShift}px`
