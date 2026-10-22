@@ -1117,7 +1117,10 @@ export const defaultTheme: DefaultTheme = {
         },
 
         large: {
-          alignItems: 'flex-end',
+          align: {
+            items: 'flex-end',
+          },
+
           position: 'static',
 
           font: {

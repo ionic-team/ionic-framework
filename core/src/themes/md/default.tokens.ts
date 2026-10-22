@@ -1216,7 +1216,9 @@ export const defaultTheme: DefaultTheme = {
         },
 
         large: {
-          alignItems: 'center',
+          align: {
+            items: 'center',
+          },
 
           font: {
             size: dynamicFont(global.root, 28),
