@@ -3,7 +3,7 @@ import type { E2EPage } from '@utils/test/playwright';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * Title placement is only supported by the `ionic` theme.
+ * TODO(FW-6864): add ios and md when ion-toolbar titlePlacement works in every theme
  */
 configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toolbar: title-placement'), () => {
@@ -60,7 +60,7 @@ const getTitleOffset = (page: E2EPage) => {
 };
 
 /**
- * Title placement is only supported by the `ionic` theme.
+ * TODO(FW-6864): add ios and md when ion-toolbar titlePlacement works in every theme
  * This behavior does not vary across directions.
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
