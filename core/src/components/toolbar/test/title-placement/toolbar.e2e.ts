@@ -60,6 +60,7 @@ const getTitleOffset = (page: E2EPage) => {
 };
 
 /**
+ * Title placement is only supported by the `ionic` theme.
  * This behavior does not vary across directions.
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
