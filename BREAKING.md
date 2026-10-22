@@ -57,11 +57,30 @@ The following breaking changes apply to `ion-button`:
 3. The font size of `clear` buttons in the `ios` theme now matches the other fills at each size, instead of `17px` at the default size. To keep the previous size, set `--ion-button-size-medium-font-size` to `17px` on those buttons.
 4. The `ios` button is now `28px`, `34px` and `50px` tall at the small, default and large sizes, with less padding, following the iOS guidelines. To revert to the previous appearance, set `IonButton.size.<size>.min.height` for global styles or `--ion-button-size-<size>-min-height` for component-specific styles to `2.1em`, `3.1em` and `3.1em`, and the padding (`IonButton.size.<size>.padding` or `--ion-button-size-<size>-padding-*`) to `4px 0.9em`, `13px 1em` and `17px 1em`.
 5. Icon-only buttons are now squares as tall as a text button of the same size. In `md`, this makes them a few pixels smaller at the small and default sizes and larger at the large size. To change their size, set the size's `min.height` as described above.
-6. CSS variables have been replaced. <sup>[6](#version-10x-button-replaced-css-variables)</sup>
-7. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[7](#version-10x-button-padding-variables)</sup>
-8. The fill, size, shape and expand classes have been renamed. <sup>[8](#version-10x-button-renamed-classes)</sup>
-9. The `default` size has been deprecated. <sup>[9](#version-10x-button-deprecated-default-size)</sup>
-10. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[10](#version-10x-button-theme-classes)</sup>
+6. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[6](#version-10x-button-md-material-design-2)</sup>
+7. CSS variables have been replaced. <sup>[7](#version-10x-button-replaced-css-variables)</sup>
+8. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[8](#version-10x-button-padding-variables)</sup>
+9. The fill, size, shape and expand classes have been renamed. <sup>[9](#version-10x-button-renamed-classes)</sup>
+10. The `default` size has been deprecated. <sup>[10](#version-10x-button-deprecated-default-size)</sup>
+11. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[11](#version-10x-button-theme-classes)</sup>
+
+<h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
+
+The `md` button now uses the Material Design 2 values below. To keep a previous value, set the token for global styles, or the matching `--ion-button-*` CSS variable for component-specific styles. Replace `<fill>` with `solid`, `outline` or `clear`, and `<size>` with `small`, `medium` or `large`.
+
+| Property | Previous | New | Token |
+|---|---|---|---|
+| Padding at the default size | `1.1em` | `16px` | `IonButton.size.medium.padding.start` and `.end` |
+| Min width at the default size | none | `64px` | `IonButton.size.medium.min.width` |
+| Letter spacing | `0.06em` | `0.0893em` | `IonButton.letter.spacing` |
+| Icon size | `1.35em` | `1.2857em` (`18px` at the default size) | `IonButton.size.<size>.icon.font.size` |
+| Gap between icon and label | `0.3em` | `0.5714em` (`8px` at the default size) | `IonButton.size.<size>.icon.leading.margin.end` and `.trailing.margin.start` |
+| Outline border | `2px`, the button's color | `1px`, the text color at `12%` | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
+| Solid elevation on hover and focus | the resting elevation | elevation 4 | `IonButton.hue.bold.solid.hover.box.shadow` and `.focus.box.shadow` |
+| Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` |
+| Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` |
+
+Buttons in toolbars keep their previous colors when disabled and have no elevation on hover or focus.
 
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 
