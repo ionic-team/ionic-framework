@@ -330,6 +330,8 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-focused) .button-native {
     background: var(#{$token}-focus-background);
+
+    box-shadow: var(#{$token}-focus-box-shadow);
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-color.ion-focused) .button-native {
@@ -354,6 +356,8 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
     :host(.button-hue-bold.button-fill-#{$fill}:hover) .button-native {
       background: var(#{$token}-hover-background);
+
+      box-shadow: var(#{$token}-hover-box-shadow);
     }
 
     :host(.button-hue-bold.button-fill-#{$fill}.ion-color:hover) .button-native {
@@ -405,15 +409,29 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   $token: --ion-button-hue-bold-#{$fill};
 
   :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) {
+    // Keeps the default color when the theme doesn't set one
+    color: var(#{$token}-disabled-color, var(#{$token}-default-color));
+
     opacity: var(#{$token}-disabled-opacity);
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) .button-native {
+    // Keeps the default border color when the theme doesn't set one
+    border-color: var(#{$token}-disabled-border-color, var(#{$token}-default-border-color));
+
     background: var(#{$token}-disabled-background);
+
+    box-shadow: var(#{$token}-disabled-box-shadow);
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-color.button-disabled) .button-native {
+    // Keeps the default border color when the theme doesn't set one
+    border-color: var(#{$token}-semantic-disabled-border-color, var(#{$token}-semantic-default-border-color));
+
     background: var(#{$token}-semantic-disabled-background);
+
+    // Keeps the default color when the theme doesn't set one
+    color: var(#{$token}-semantic-disabled-color, var(#{$token}-semantic-default-color));
   }
 }
 
