@@ -726,11 +726,7 @@ step 3 $TOTAL_STEPS "Code freeze"
 
 echo ""
 echo -e "  Post this message in the relevant Slack channels:"
-echo ""
-echo -e "  ${YELLOW}┌─────────────────────────────────────────────────────────┐${RESET}"
-echo -e "  ${YELLOW}│${RESET} Code freeze on ${BASE_BRANCH}, ${VERSION_BRANCH}                          ${YELLOW}│${RESET}"
-echo -e "  ${YELLOW}└─────────────────────────────────────────────────────────┘${RESET}"
-echo ""
+alert_box "$YELLOW" ":snowflake: Code freeze on ${BASE_BRANCH}, ${VERSION_BRANCH} :snowflake:"
 confirm "Press Enter once you've posted the code freeze message..."
 
 fi # end step 3
@@ -1017,7 +1013,7 @@ echo ""
 GH_RELEASE_URL="https://github.com/${REPO}/releases/tag/v${VERSION}"
 
 echo -e "  Post this in the relevant Slack channels to end the code freeze:"
-alert_box "$GREEN" "Code unfreeze on ${BASE_BRANCH}, ${VERSION_BRANCH}"
+alert_box "$GREEN" ":fire: Code unfreeze on ${BASE_BRANCH}, ${VERSION_BRANCH} :fire:"
 
 # Release announcement. We post a link to the GitHub release
 # page with a random celebratory emoji (pick your own — this is just a suggestion).
