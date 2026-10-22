@@ -674,9 +674,9 @@ export const defaultTheme: DefaultTheme = {
 
           padding: {
             top: 'var(--ion-spacing-sm)',
-            end: 'var(--ion-spacing-lg)',
+            end: '1.1429em',
             bottom: 'var(--ion-spacing-sm)',
-            start: 'var(--ion-spacing-lg)',
+            start: '1.1429em',
           },
 
           font: {

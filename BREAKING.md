@@ -70,7 +70,7 @@ The `md` button now uses the Material Design 2 values below. To keep a previous 
 
 | Property | Previous | New | Token |
 |---|---|---|---|
-| Padding at the default size | `1.1em` | `16px` | `IonButton.size.medium.padding.start` and `.end` |
+| Padding at the default size | `1.1em` | `1.1429em` (`16px` at the default size) | `IonButton.size.medium.padding.start` and `.end` |
 | Min width at the default size | none | `64px` | `IonButton.size.medium.min.width` |
 | Letter spacing | `0.06em` | `0.0893em` | `IonButton.letter.spacing` |
 | Icon size | `1.35em` | `1.2857em` (`18px` at the default size) | `IonButton.size.<size>.icon.font.size` |
