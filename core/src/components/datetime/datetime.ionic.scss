@@ -136,6 +136,7 @@
   --ion-button-hue-bold-clear-hover-background: #{globals.$ion-primitives-neutral-200};
   --ion-button-hue-bold-clear-activated-background: #{globals.$ion-primitives-neutral-200};
   --ion-button-hue-bold-clear-ripple-effect-color: #{globals.$ion-primitives-neutral-200};
+  min-width: globals.$ion-scale-1000;
   min-height: globals.$ion-scale-1000;
 }
 
