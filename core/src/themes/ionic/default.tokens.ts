@@ -563,8 +563,10 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          minHeight: 'var(--ion-scaling-lg)',
-          minWidth: 'var(--ion-scaling-1600)',
+          min: {
+            height: 'var(--ion-scaling-lg)',
+            width: 'var(--ion-scaling-1600)',
+          },
 
           padding: {
             top: 'var(--ion-spacing-0)',
@@ -670,8 +672,10 @@ export const defaultTheme: DefaultTheme = {
         },
 
         medium: {
-          minHeight: 'var(--ion-scaling-xl)',
-          minWidth: 'var(--ion-scaling-xxxl)',
+          min: {
+            height: 'var(--ion-scaling-xl)',
+            width: 'var(--ion-scaling-xxxl)',
+          },
 
           padding: {
             top: 'var(--ion-spacing-0)',
@@ -777,8 +781,10 @@ export const defaultTheme: DefaultTheme = {
         },
 
         large: {
-          minHeight: 'var(--ion-scaling-xxl)',
-          minWidth: 'var(--ion-scaling-xxxxl)',
+          min: {
+            height: 'var(--ion-scaling-xxl)',
+            width: 'var(--ion-scaling-xxxxl)',
+          },
 
           padding: {
             top: 'var(--ion-spacing-0)',
@@ -1059,7 +1065,9 @@ export const defaultTheme: DefaultTheme = {
           // Toolbar buttons are shorter than standalone ones; icon-only ones are squares of this height
           size: {
             medium: {
-              minHeight: 'var(--ion-scaling-lg)',
+              min: {
+                height: 'var(--ion-scaling-lg)',
+              },
             },
           },
         },
