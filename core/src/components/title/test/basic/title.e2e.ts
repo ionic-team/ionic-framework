@@ -7,13 +7,14 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
       await page.setContent(
         `
         <style>
-          .ios .hide-ios,
-          .ionic .hide-ios {
+          /* ios and ionic center the title, so a second title would overlap it */
+          .ios .hide-when-centered,
+          .ionic .hide-when-centered {
             display: none;
           }
         </style>
 
-        <div id="header-wrapper">
+        <div id="container">
           <ion-header>
             <ion-toolbar>
               <ion-title>Settings</ion-title>
@@ -35,7 +36,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
                 <ion-back-button default-href="#"></ion-back-button>
               </ion-buttons>
               <ion-title>Title</ion-title>
-              <ion-title class="hide-ios" size="small">Subtitle</ion-title>
+              <ion-title class="hide-when-centered" size="small">Subtitle</ion-title>
               <ion-buttons slot="end">
                 <ion-button><ion-icon slot="icon-only" name="search"></ion-icon></ion-button>
                 <ion-button><ion-icon slot="icon-only" name="menu"></ion-icon></ion-button>
@@ -76,9 +77,9 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
         config
       );
 
-      const wrapper = page.locator('#header-wrapper');
+      const container = page.locator('#container');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`title-basic`));
+      await expect(container).toHaveScreenshot(screenshot(`title-basic`));
     });
   });
 });
