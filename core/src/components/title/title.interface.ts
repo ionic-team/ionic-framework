@@ -57,7 +57,9 @@ export type IonTitleRecipe = {
     medium?: IonTitleSizeDefinition;
 
     large?: IonTitleSizeDefinition & {
-      alignItems?: string;
+      align?: {
+        items?: string;
+      };
 
       inner?: {
         width?: string;
