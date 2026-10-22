@@ -205,9 +205,12 @@ type IonButtonSizeDefinition = {
     height?: string | number;
   };
 
-  /** Also the width and height of an icon-only button, so it's a square as tall as a text button */
-  minHeight?: string | number;
-  minWidth?: string | number;
+  min?: {
+    /** Also the width and height of an icon-only button, so it's a square as tall as a text button */
+    height?: string | number;
+    width?: string | number;
+  };
+
   padding?: IonPadding;
 
   icon?: IonButtonIconDefinition;

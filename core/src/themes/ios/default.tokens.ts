@@ -538,7 +538,9 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          minHeight: 'clamp(23px, 2.16em, 54px)',
+          min: {
+            height: 'clamp(23px, 2.16em, 54px)',
+          },
 
           padding: {
             top: 'var(--ion-spacing-xxs)',
@@ -596,7 +598,9 @@ export const defaultTheme: DefaultTheme = {
         },
 
         medium: {
-          minHeight: 'clamp(30px, 2.125em, 60px)',
+          min: {
+            height: 'clamp(30px, 2.125em, 60px)',
+          },
 
           padding: {
             top: '7px',
@@ -654,7 +658,9 @@ export const defaultTheme: DefaultTheme = {
         },
 
         large: {
-          minHeight: 'clamp(46px, 2.5em, 78px)',
+          min: {
+            height: 'clamp(46px, 2.5em, 78px)',
+          },
 
           padding: {
             top: '14px',
@@ -752,7 +758,9 @@ export const defaultTheme: DefaultTheme = {
 
         size: {
           medium: {
-            minHeight: 'var(--ion-scaling-md)',
+            min: {
+              height: 'var(--ion-scaling-md)',
+            },
 
             padding: {
               top: 'var(--ion-spacing-75)',
