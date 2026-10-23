@@ -38,6 +38,7 @@ export class Toolbar implements ComponentInterface {
   ];
   private readonly showClasses = ['show-start', 'show-end', 'show-primary', 'show-secondary'];
   private readonly slotSizeVars = ['--start-end-size', '--primary-secondary-size'];
+  private slotContentObserver?: ResizeObserver;
 
   @Element() el!: HTMLIonToolbarElement;
 
@@ -83,6 +84,19 @@ export class Toolbar implements ComponentInterface {
   componentDidLoad() {
     this.updateSlotClasses();
     this.updateSlotWidths();
+  }
+
+  connectedCallback() {
+    // Recreates the observer when the toolbar is moved in the DOM
+    const titlePlacement = this.getTitlePlacement();
+    if (titlePlacement === 'center') {
+      this.observeSlotContent();
+    }
+  }
+
+  disconnectedCallback() {
+    this.slotContentObserver?.disconnect();
+    this.slotContentObserver = undefined;
   }
 
   @Watch('titlePlacement')
@@ -212,8 +226,11 @@ export class Toolbar implements ComponentInterface {
     const titlePlacement = this.getTitlePlacement();
     if (titlePlacement !== 'center') {
       this.removeSlotClasses();
+      this.slotContentObserver?.disconnect();
       return;
     }
+
+    this.observeSlotContent();
 
     // Check if slots have content
     const slots = ['start', 'end', 'primary', 'secondary'];
@@ -259,6 +276,28 @@ export class Toolbar implements ComponentInterface {
 
     // Update slot widths after classes have been updated
     this.updateSlotWidths();
+  }
+
+  /**
+   * Re-measures the slots when their content changes size, such as a back
+   * button that renders after the toolbar. The callback runs before paint,
+   * so a centered title never shows off-center. Runs again on slotchange
+   * to watch content added later.
+   */
+  private observeSlotContent() {
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    if (this.slotContentObserver === undefined) {
+      this.slotContentObserver = new ResizeObserver(() => this.measureAndUpdateSlots());
+    }
+
+    // Stops watching content that left the slots
+    this.slotContentObserver.disconnect();
+
+    // The slotted content, not the slots, so setting the slot widths doesn't re-trigger it
+    this.el.querySelectorAll(':scope > [slot]').forEach((el) => this.slotContentObserver!.observe(el));
   }
 
   private hasSlotContent(slotName: string): boolean {
@@ -315,13 +354,13 @@ export class Toolbar implements ComponentInterface {
       >
         <div class="toolbar-background" part="background"></div>
         <div class="toolbar-container" part="container">
-          <slot name="start" onSlotchange={() => this.updateSlotClasses}></slot>
-          <slot name="secondary" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="start" onSlotchange={() => this.updateSlotClasses()}></slot>
+          <slot name="secondary" onSlotchange={() => this.updateSlotClasses()}></slot>
           <div class="toolbar-content" part="content">
             <slot></slot>
           </div>
-          <slot name="primary" onSlotchange={() => this.updateSlotClasses}></slot>
-          <slot name="end" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="primary" onSlotchange={() => this.updateSlotClasses()}></slot>
+          <slot name="end" onSlotchange={() => this.updateSlotClasses()}></slot>
         </div>
       </Host>
     );

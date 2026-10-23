@@ -1111,10 +1111,6 @@ export const defaultTheme: DefaultTheme = {
             weight: 'var(--ion-font-weight-medium)',
           },
 
-          inner: {
-            width: '100%',
-          },
-
           line: {
             height: dynamicFont(global.root, 36),
           },
@@ -1124,12 +1120,6 @@ export const defaultTheme: DefaultTheme = {
             end: 'var(--ion-spacing-lg)',
             bottom: 'var(--ion-spacing-0)',
             start: 'var(--ion-spacing-lg)',
-          },
-
-          transform: {
-            origin: {
-              x: '50%',
-            },
           },
         },
       },
