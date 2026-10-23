@@ -183,6 +183,28 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   }
 }
 
+// An icon-only button shows only its icon and badges with a `vertical` position
+:host(.button-has-icon-only) ::slotted([slot="start"]),
+:host(.button-has-icon-only) ::slotted([slot="end"]),
+:host(.button-has-icon-only) ::slotted(:not([slot]):not(ion-badge[vertical])) {
+  display: none;
+}
+
+// Text can't be selected, so a zero font size hides it. Letter spacing is inherited in px, so it's reset too.
+:host(.button-has-icon-only) .button-content {
+  font-size: 0;
+
+  letter-spacing: 0;
+}
+
+// Button: Content
+// --------------------------------------------------
+
+// Lays out the default slot's content as if this wrapper weren't there
+.button-content {
+  display: contents;
+}
+
 // Button: Slotted Elements
 // --------------------------------------------------
 
