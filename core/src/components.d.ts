@@ -1508,7 +1508,7 @@ export namespace Components {
          */
         "columns": IonGalleryColumns;
         /**
-          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.  When unset, or for a breakpoint missing from the map, the gap comes from the theme's `--ion-gallery-gap` token.
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.  When unset, invalid, or missing for the active breakpoint, the gap comes from the theme's `--ion-gallery-gap` token.
          */
         "gap"?: IonGalleryGap;
         /**
@@ -7375,7 +7375,7 @@ declare namespace LocalJSX {
          */
         "columns"?: IonGalleryColumns;
         /**
-          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.  When unset, or for a breakpoint missing from the map, the gap comes from the theme's `--ion-gallery-gap` token.
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.  When unset, invalid, or missing for the active breakpoint, the gap comes from the theme's `--ion-gallery-gap` token.
          */
         "gap"?: IonGalleryGap;
         /**

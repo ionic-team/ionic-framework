@@ -79,8 +79,8 @@ export class Gallery implements ComponentInterface {
    * screen width. The width each breakpoint activates at can be changed with
    * the `screenBreakpoints` config.
    *
-   * When unset, or for a breakpoint missing from the map, the gap comes from
-   * the theme's `--ion-gallery-gap` token.
+   * When unset, invalid, or missing for the active breakpoint, the gap comes
+   * from the theme's `--ion-gallery-gap` token.
    */
   @Prop() gap?: IonGalleryGap;
 
