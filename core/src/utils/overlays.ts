@@ -716,8 +716,13 @@ const restoreElementFocus = async (overlayEl: any) => {
     return;
   }
 
-  // Ensure active element is blurred to prevent a11y warning issues
-  previousElement.blur();
+  /**
+   * Ensure active element is blurred to prevent a11y warning issues.
+   * Skip this when keyboardClose is false so the keyboard stays open.
+   */
+  if (overlayEl.keyboardClose !== false) {
+    previousElement.blur();
+  }
 
   const shadowRoot = previousElement?.shadowRoot;
   if (shadowRoot) {
