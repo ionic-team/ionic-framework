@@ -242,6 +242,11 @@ type IonButtonSizeDefinition = {
   icon?: IonButtonIconDefinition;
   iconOnly?: IonButtonIconOnlyDefinition;
   spinner?: IonButtonSpinnerDefinition;
+
+  /** A badge without a `vertical` position, which sits after the label of a text button */
+  badge?: {
+    margin?: IonMargin;
+  };
 };
 
 type IonButtonShapeDefinition = {

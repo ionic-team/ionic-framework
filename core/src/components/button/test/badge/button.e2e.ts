@@ -84,5 +84,50 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
 
       await expect(container).toHaveScreenshot(screenshot(`button-badge`));
     });
+
+    test('should space a badge without a position from the label', async ({ page }) => {
+      const rows = BUTTON_SIZES.map(
+        (buttonSize) => `<div class="row">${contents
+          .flatMap((html) =>
+            ION_BADGE_SIZES.map(
+              (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
+                Button
+                <ion-badge hue="bold" shape="round" color="danger" size="${badgeSize}">${html}</ion-badge>
+              </ion-button>`
+            )
+          )
+          .join('\n')}
+        </div>`
+      ).join('\n');
+
+      await page.setContent(
+        `
+          <style>
+            .row {
+              display: grid;
+              grid-template-columns: repeat(3, auto);
+              justify-items: start;
+              align-items: center;
+              padding-bottom: 10px;
+              row-gap: 5px;
+              column-gap: 30px;
+            }
+          </style>
+
+          <div class="badge-container">
+            ${rows}
+          </div>
+        `,
+        config
+      );
+
+      const container = page.locator('.badge-container');
+
+      // Fits the viewport to the content so nothing renders outside it
+      const box = await container.boundingBox();
+      await page.setViewportSize({ width: Math.ceil(box!.width) + 200, height: Math.ceil(box!.height) + 32 });
+
+      await expect(container).toHaveScreenshot(screenshot(`button-badge-no-position`));
+    });
   });
 });

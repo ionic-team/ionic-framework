@@ -486,5 +486,19 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 // --------------------------------------------------
 
 :host(.button-has-badge) .button-native {
+  // Keeps a badge taller than the label from making the button taller than its min height
+  @include mixins.padding(var(--padding-top, 0), null, var(--padding-bottom, 0), null);
+
   overflow: visible;
+}
+
+@each $size in $sizes {
+  :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(ion-badge:not([vertical])) {
+    @include mixins.margin(
+      var(--ion-button-size-#{$size}-badge-margin-top),
+      var(--ion-button-size-#{$size}-badge-margin-end),
+      var(--ion-button-size-#{$size}-badge-margin-bottom),
+      var(--ion-button-size-#{$size}-badge-margin-start)
+    );
+  }
 }
