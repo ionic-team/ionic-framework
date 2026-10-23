@@ -59,6 +59,12 @@ const blockRepeatLeave = (pageEl: HTMLElement) => {
   pageEl.addEventListener(LIFECYCLE_DID_ENTER, unblock, { capture: true, once: true });
 };
 
+/**
+ * `ChildrenOutletContexts` keeps each outlet's context in a private `contexts`
+ * map. Saving and restoring it preserves tab state.
+ */
+type ChildrenOutletContextsInternals = { contexts: Map<string, OutletContext> };
+
 // TODO(FW-2827): types
 
 @Directive({
@@ -331,7 +337,9 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
     if (this.activated) {
       if (this.activatedView) {
         const context = this.getContext()!;
-        this.activatedView.savedData = new Map(context.children['contexts']);
+        this.activatedView.savedData = new Map(
+          (context.children as unknown as ChildrenOutletContextsInternals).contexts
+        );
 
         /**
          * Angular v11.2.10 introduced a change
@@ -380,7 +388,7 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
       if (saved) {
         // self-restore
         const context = this.getContext()!;
-        context.children['contexts'] = saved;
+        (context.children as unknown as ChildrenOutletContextsInternals).contexts = saved;
       }
       // Updated activated route proxy for this component
       this.updateActivatedRouteProxy(cmpRef.instance, activatedRoute);
