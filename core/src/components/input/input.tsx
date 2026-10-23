@@ -13,12 +13,12 @@ import {
   forceUpdate,
   h,
 } from '@stencil/core';
-import type { ClickController, NotchController, StartContainerController } from '@utils/forms';
+import type { ClickController, NotchController, StartEndContainerController } from '@utils/forms';
 import {
   createClearButtonPressController,
   createClickController,
   createNotchController,
-  createStartContainerController,
+  createStartEndContainerController,
   checkInvalidState,
 } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
@@ -64,8 +64,9 @@ export class Input implements ComponentInterface {
   private slotMutationController?: SlotMutationController;
   private notchController?: NotchController;
   private notchSpacerEl: HTMLElement | undefined;
-  private startContainerController?: StartContainerController;
+  private startEndContainerController?: StartEndContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private endContainerEl: HTMLElement | undefined;
   private clickController?: ClickController;
 
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
@@ -441,7 +442,7 @@ export class Input implements ComponentInterface {
     const { el } = this;
 
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
-      this.startContainerController?.calculateStartContainerWidth();
+      this.startEndContainerController?.calculateContainerWidths();
 
       this.setSlottedLabelId();
       forceUpdate(this);
@@ -454,15 +455,16 @@ export class Input implements ComponentInterface {
       () => this.labelSlot
     );
 
-    this.startContainerController = createStartContainerController(
+    this.startEndContainerController = createStartEndContainerController(
       el,
       () => this.startContainerEl,
+      () => this.endContainerEl,
       () => {
         return Build.isBrowser && getIonTheme(this) === 'md' && this.fill === 'outline';
       }
     );
 
-    this.startContainerController.calculateStartContainerWidth();
+    this.startEndContainerController.calculateContainerWidths();
 
     this.clickController = createClickController(el, () => this.nativeInput);
 
@@ -511,7 +513,7 @@ export class Input implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
-    this.startContainerController?.calculateStartContainerWidth();
+    this.startEndContainerController?.calculateContainerWidths();
   }
 
   disconnectedCallback() {
@@ -535,9 +537,9 @@ export class Input implements ComponentInterface {
       this.notchController = undefined;
     }
 
-    if (this.startContainerController) {
-      this.startContainerController.destroy();
-      this.startContainerController = undefined;
+    if (this.startEndContainerController) {
+      this.startEndContainerController.destroy();
+      this.startEndContainerController = undefined;
     }
 
     // Clean up validation observer to prevent memory leaks
@@ -1030,7 +1032,7 @@ export class Input implements ComponentInterface {
 
   private renderEndContainer() {
     return (
-      <div key="end" class="input-end">
+      <div key="end" class="input-end" ref={(el) => (this.endContainerEl = el)}>
         {this.renderClearButton()}
         <slot name="end"></slot>
       </div>
