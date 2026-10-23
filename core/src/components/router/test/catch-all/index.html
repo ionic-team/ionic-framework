@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Router - Catch-all</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script>
+      const createPage = (title, body = () => '') =>
+        class extends HTMLElement {
+          connectedCallback() {
+            this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>${title}</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>${body(this)}</ion-content>`;
+          }
+        };
+
+      const pathMatch = (page) => `<p>Path: <span class="path-match">${page.pathMatch}</span></p>`;
+
+      class TabsPage extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+        <ion-tabs>
+          <ion-tab tab="tab-home" component="tab-home"></ion-tab>
+          <ion-tab tab="tab-docs" component="tab-docs"></ion-tab>
+
+          <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="tab-home">
+              <ion-label>Home</ion-label>
+            </ion-tab-button>
+            <ion-tab-button tab="tab-docs">
+              <ion-label>Docs</ion-label>
+            </ion-tab-button>
+          </ion-tab-bar>
+        </ion-tabs>`;
+        }
+      }
+
+      class TabDocs extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `<ion-router-outlet></ion-router-outlet>`;
+        }
+      }
+
+      customElements.define('tabs-page', TabsPage);
+      customElements.define('tab-home', createPage('Home'));
+      customElements.define('tab-docs', TabDocs);
+      customElements.define('docs-index', createPage('Docs'));
+      customElements.define('docs-intro', createPage('Intro'));
+      customElements.define('docs-not-found', createPage('Docs Not Found', pathMatch));
+      customElements.define('not-found-page', createPage('Not Found', pathMatch));
+    </script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-router use-hash="true">
+        <ion-route url="/" component="tabs-page">
+          <ion-route url="/" component="tab-home"></ion-route>
+          <ion-route url="/docs" component="tab-docs">
+            <ion-route url="/" component="docs-index"></ion-route>
+            <ion-route url="/intro" component="docs-intro"></ion-route>
+            <ion-route url="/*" component="docs-not-found"></ion-route>
+          </ion-route>
+        </ion-route>
+        <ion-route url="*" component="not-found-page"></ion-route>
+      </ion-router>
+
+      <ion-router-outlet></ion-router-outlet>
+    </ion-app>
+  </body>
+</html>

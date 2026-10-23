@@ -1,5 +1,5 @@
-import { ROUTER_INTENT_FORWARD } from './constants';
-import type { ParsedRoute, RouteChain, RouterDirection } from './interface';
+import { ROUTER_INTENT_FORWARD, WILDCARD_PARAM } from './constants';
+import type { ParsedRoute, RouteChain, RouteEntry, RouterDirection } from './interface';
 
 /** Join the non empty segments with "/". */
 export const generatePath = (segments: string[]): string => {
@@ -45,12 +45,13 @@ export const writeSegments = (
  *
  * Notes:
  * - parameter segments of the form :param are replaced with their value,
- * - null is returned when a value is missing for any parameter segment.
+ * - null is returned when a value is missing for any parameter segment,
+ * - a trailing wildcard is replaced with the path it matched.
  */
 export const chainToSegments = (chain: RouteChain): string[] | null => {
   const segments = [];
   for (const route of chain) {
-    for (const segment of route.segments) {
+    for (const segment of withoutWildcard(route.segments)) {
       if (segment[0] === ':') {
         const param = route.params && route.params[segment.slice(1)];
         if (!param) {
@@ -61,8 +62,24 @@ export const chainToSegments = (chain: RouteChain): string[] | null => {
         segments.push(segment);
       }
     }
+    segments.push(...wildcardSegments(route));
   }
   return segments;
+};
+
+/** Only a `*` in the last segment of a route url is a wildcard. Elsewhere it's matched literally. */
+export const endsWithWildcard = (segments: string[]): boolean => {
+  return segments[segments.length - 1] === '*';
+};
+
+/** Returns the path segments matched by the trailing wildcard of the route. */
+const wildcardSegments = (route: RouteEntry): string[] => {
+  const pathMatch: string | undefined = endsWithWildcard(route.segments) ? route.params?.[WILDCARD_PARAM] : undefined;
+  return pathMatch ? pathMatch.split('/').filter((s) => s.length > 0) : [];
+};
+
+export const withoutWildcard = (segments: string[]): string[] => {
+  return endsWithWildcard(segments) ? segments.slice(0, -1) : segments;
 };
 
 /**

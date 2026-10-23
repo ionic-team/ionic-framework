@@ -6,6 +6,7 @@ import {
   matchesRedirect,
   mergeParams,
   findChainForSegments,
+  findChainForIDs,
 } from '../utils/matching';
 import { parsePath } from '../utils/path';
 
@@ -200,6 +201,278 @@ describe('findChainForSegments', () => {
   });
 });
 
+describe('wildcard routes', () => {
+  const NOT_FOUND: RouteChain = [{ id: 'not-found', segments: ['*'], params: undefined }];
+
+  it('should match any depth and expose the matched path', () => {
+    expect(matchesSegments(['a'], NOT_FOUND)).toEqual([
+      { id: 'not-found', segments: ['*'], params: { pathMatch: 'a' } },
+    ]);
+    expect(matchesSegments(['a', 'b', 'c'], NOT_FOUND)).toEqual([
+      { id: 'not-found', segments: ['*'], params: { pathMatch: 'a/b/c' } },
+    ]);
+  });
+
+  it('should match the root path', () => {
+    expect(matchesSegments([''], NOT_FOUND)).toEqual([{ id: 'not-found', segments: ['*'], params: { pathMatch: '' } }]);
+  });
+
+  it('should match after a fixed prefix', () => {
+    const chain: RouteChain = [{ id: 'admin', segments: ['admin', '*'], params: { role: 'owner' } }];
+    expect(matchesSegments(['admin'], chain)).toEqual([
+      { id: 'admin', segments: ['admin', '*'], params: { role: 'owner', pathMatch: '' } },
+    ]);
+    expect(matchesSegments(['admin', 'users', '1'], chain)).toEqual([
+      { id: 'admin', segments: ['admin', '*'], params: { role: 'owner', pathMatch: 'users/1' } },
+    ]);
+    expect(matchesSegments(['users'], chain)).toEqual(null);
+  });
+
+  it('should match a wildcard nested under a default route', () => {
+    const chain: RouteChain = [
+      { id: 'tabs', segments: [''], params: undefined },
+      { id: 'not-found', segments: ['*'], params: undefined },
+    ];
+    expect(matchesSegments(['a', 'b'], chain)).toEqual([
+      { id: 'tabs', segments: [''], params: undefined },
+      { id: 'not-found', segments: ['*'], params: { pathMatch: 'a/b' } },
+    ]);
+  });
+
+  it('should let the children of a parent wildcard match the rest of the path', () => {
+    const chain: RouteChain = [
+      { id: 'admin', segments: ['admin', '*'], params: undefined },
+      { id: 'users', segments: ['users'], params: undefined },
+    ];
+    expect(matchesSegments(['admin', 'users'], chain)).toEqual(chain);
+    expect(matchesSegments(['admin', 'posts'], chain)).toEqual(null);
+  });
+
+  it('should match a wildcard nested under a parent wildcard', () => {
+    const chain: RouteChain = [
+      { id: 'parent', segments: ['*'], params: undefined },
+      { id: 'not-found', segments: ['*'], params: undefined },
+    ];
+    expect(findChainForSegments(['x', 'y'], [chain])).toEqual([
+      { id: 'parent', segments: ['*'], params: undefined },
+      { id: 'not-found', segments: ['*'], params: { pathMatch: 'x/y' } },
+    ]);
+  });
+
+  it('should match a mid-path * literally', () => {
+    const chain: RouteChain = [{ id: '1', segments: ['a', '*', 'b'], params: undefined }];
+    expect(matchesSegments(['a', '*', 'b'], chain)).toEqual(chain);
+    expect(matchesSegments(['a', 'x', 'b'], chain)).toEqual(null);
+  });
+
+  it('should lose to default, fixed and parameter routes on a single segment path', () => {
+    const home: RouteChain = [{ id: 'home', segments: [''], params: undefined }];
+    const foo: RouteChain = [{ id: 'foo', segments: ['foo'], params: undefined }];
+    const param: RouteChain = [{ id: 'param', segments: [':id'], params: undefined }];
+    const routes = [NOT_FOUND, home, foo];
+
+    expect(findChainForSegments([''], routes)![0].id).toEqual('home');
+    expect(findChainForSegments(['foo'], routes)![0].id).toEqual('foo');
+    expect(findChainForSegments(['bar'], routes)![0].id).toEqual('not-found');
+    expect(findChainForSegments(['bar'], [NOT_FOUND, param])![0].id).toEqual('param');
+  });
+
+  it('should win over a route that ignored trailing segments', () => {
+    const admin: RouteChain = [{ id: 'admin', segments: ['admin'], params: undefined }];
+    const adminNotFound: RouteChain = [{ id: 'admin-not-found', segments: ['admin', '*'], params: undefined }];
+
+    expect(findChainForSegments(['admin'], [admin, adminNotFound, NOT_FOUND])![0].id).toEqual('admin');
+    expect(findChainForSegments(['admin', 'users', '1'], [admin, adminNotFound, NOT_FOUND])).toEqual([
+      { id: 'admin-not-found', segments: ['admin', '*'], params: { pathMatch: 'users/1' } },
+    ]);
+    expect(findChainForSegments(['admin', 'users'], [admin, NOT_FOUND])![0].id).toEqual('not-found');
+  });
+
+  it('should lose to a route that matched the whole path', () => {
+    const profile: RouteChain = [{ id: 'profile', segments: ['settings', 'profile'], params: undefined }];
+    const item: RouteChain = [{ id: 'item', segments: ['settings', ':section', ':item'], params: undefined }];
+
+    expect(findChainForSegments(['settings', 'profile', 'avatar'], [profile, item, NOT_FOUND])).toEqual([
+      { id: 'item', segments: ['settings', ':section', ':item'], params: { section: 'profile', item: 'avatar' } },
+    ]);
+    // Without the wildcard, the route that ignored a trailing segment still wins
+    expect(findChainForSegments(['settings', 'profile', 'avatar'], [profile, item])![0].id).toEqual('profile');
+  });
+
+  it('should not change how routes without a wildcard match trailing segments', () => {
+    const admin: RouteChain = [{ id: 'admin', segments: ['admin'], params: undefined }];
+    expect(findChainForSegments(['admin', 'users'], [admin])![0].id).toEqual('admin');
+  });
+
+  it('should win over parameter routes with fewer fixed segments and lose to ones with as many', () => {
+    const admin: RouteChain = [{ id: 'admin', segments: ['admin', '*'], params: undefined }];
+    const section: RouteChain = [{ id: 'section', segments: [':section', ':id'], params: undefined }];
+    const adminId: RouteChain = [{ id: 'admin-id', segments: ['admin', ':id'], params: undefined }];
+
+    expect(findChainForSegments(['admin', 'users'], [section, admin])![0].id).toEqual('admin');
+    expect(findChainForSegments(['admin', 'users'], [admin, adminId])![0].id).toEqual('admin-id');
+    expect(findChainForSegments(['admin', 'users'], [adminId, admin])![0].id).toEqual('admin-id');
+  });
+
+  it('should lose to a parameter route with the same fixed segments when nested under default routes', () => {
+    const docsNotFound: RouteChain = [
+      { id: 'tabs', segments: [''], params: undefined },
+      { id: 'tab-docs', segments: ['docs'], params: undefined },
+      { id: 'docs-not-found', segments: ['*'], params: undefined },
+    ];
+    const docDetail: RouteChain = [{ id: 'doc-detail', segments: ['docs', ':id'], params: undefined }];
+
+    expect(findChainForSegments(['docs', 'abc'], [docsNotFound, docDetail])![0].id).toEqual('doc-detail');
+    expect(findChainForSegments(['docs', 'abc', 'def'], [docsNotFound, docDetail])![2].id).toEqual('docs-not-found');
+  });
+
+  it('should rank routes without a wildcard by priority', () => {
+    const user: RouteChain = [{ id: 'user', segments: ['users', ':id'], params: undefined }];
+    const me: RouteChain = [{ id: 'me', segments: ['users', 'me'], params: undefined }];
+
+    expect(findChainForSegments(['users', 'me'], [user, me, NOT_FOUND])![0].id).toEqual('me');
+    expect(findChainForSegments(['users', 'me'], [me, user, NOT_FOUND])![0].id).toEqual('me');
+  });
+
+  it('should rank wildcard routes with as many fixed segments by priority, ignoring the wildcard', () => {
+    const deep: RouteChain = [{ id: 'deep', segments: [':a', ':b', '*'], params: undefined }];
+    const nested: RouteChain = [
+      { id: 'tabs', segments: [''], params: undefined },
+      { id: 'tab', segments: [''], params: undefined },
+      { id: 'shallow', segments: [':a', '*'], params: undefined },
+    ];
+
+    expect(findChainForSegments(['x', 'y'], [nested, deep])![0].id).toEqual('deep');
+    expect(findChainForSegments(['x', 'y'], [deep, nested])![0].id).toEqual('deep');
+  });
+
+  it('should fall back to the best full match in any declaration order when one has as many fixed segments', () => {
+    const admin: RouteChain = [{ id: 'admin', segments: ['admin', 'users', '*'], params: undefined }];
+    const user: RouteChain = [{ id: 'user', segments: ['admin', 'users', ':id'], params: undefined }];
+    const settings: RouteChain = [{ id: 'settings', segments: [':org', ':team', 'settings'], params: undefined }];
+    const path = ['admin', 'users', 'settings'];
+
+    expect(findChainForSegments(path, [admin, user, settings])![0].id).toEqual('settings');
+    expect(findChainForSegments(path, [settings, user, admin])![0].id).toEqual('settings');
+    expect(findChainForSegments(path, [admin, settings, user])![0].id).toEqual('settings');
+  });
+
+  it('should prefer the wildcard with more fixed segments over one with a higher priority', () => {
+    const nested: RouteChain = [
+      { id: 'tabs', segments: [''], params: undefined },
+      { id: 'tab', segments: [''], params: undefined },
+      { id: 'docs', segments: ['docs'], params: undefined },
+      { id: 'docs-not-found', segments: ['*'], params: undefined },
+    ];
+    const guide: RouteChain = [{ id: 'guide-not-found', segments: ['docs', 'guide', '*'], params: undefined }];
+    const sub: RouteChain = [{ id: 'sub', segments: ['docs', ':id', ':sub'], params: undefined }];
+
+    expect(findChainForSegments(['docs', 'guide', 'x'], [nested, guide, sub])![0].id).toEqual('guide-not-found');
+    expect(findChainForSegments(['docs', 'guide', 'x'], [sub, guide, nested])![0].id).toEqual('guide-not-found');
+  });
+
+  it('should prefer the wildcard with the most fixed segments', () => {
+    const admin: RouteChain = [{ id: 'admin', segments: ['admin', '*'], params: undefined }];
+    expect(findChainForSegments(['admin', 'x'], [NOT_FOUND, admin])![0].id).toEqual('admin');
+    expect(findChainForSegments(['other', 'x'], [NOT_FOUND, admin])![0].id).toEqual('not-found');
+  });
+});
+
+describe('findChainForIDs', () => {
+  it('should prefer a route over a wildcard route on a tie regardless of declaration order', () => {
+    const notFound: RouteChain = [
+      { id: 'tabs', segments: [''], params: undefined },
+      { id: 'docs-not-found', segments: ['*'], params: undefined },
+    ];
+    const index: RouteChain = [
+      { id: 'tabs', segments: [''], params: undefined },
+      { id: 'docs-index', segments: [''], params: undefined },
+    ];
+    const ids = [{ id: 'tabs', element: undefined }];
+
+    expect(findChainForIDs(ids, [notFound, index])![1].id).toEqual('docs-index');
+    expect(findChainForIDs(ids, [index, notFound])![1].id).toEqual('docs-index');
+  });
+
+  it('should keep a wildcard route on a tie when the other route is missing a parameter', () => {
+    const notFound: RouteChain = [
+      { id: 'tabs', segments: [''], params: undefined },
+      { id: 'docs-not-found', segments: ['*'], params: undefined },
+    ];
+    const slug: RouteChain = [
+      { id: 'tabs', segments: [''], params: undefined },
+      { id: 'doc-page', segments: [':slug'], params: undefined },
+    ];
+    const ids = [{ id: 'tabs', element: undefined }];
+
+    expect(findChainForIDs(ids, [notFound, slug])![1].id).toEqual('docs-not-found');
+    expect(findChainForIDs(ids, [slug, notFound])![1].id).toEqual('docs-not-found');
+  });
+
+  it('should prefer a route over a wildcard route on a tie when the outlet reports its parameter', () => {
+    const notFound: RouteChain = [
+      { id: 'docs', segments: ['docs'], params: undefined },
+      { id: 'doc-page', segments: ['*'], params: undefined },
+    ];
+    const view: RouteChain = [
+      { id: 'docs', segments: ['docs'], params: undefined },
+      { id: 'doc-page', segments: ['view', ':slug'], params: undefined },
+    ];
+    const ids = [
+      { id: 'docs', element: undefined },
+      { id: 'doc-page', element: undefined, params: { slug: 'a' } },
+    ];
+
+    expect(findChainForIDs(ids, [notFound, view])).toEqual([
+      { id: 'docs', segments: ['docs'], params: undefined },
+      { id: 'doc-page', segments: ['view', ':slug'], params: { slug: 'a' } },
+    ]);
+  });
+
+  it('should prefer a route that can build a url, then a wildcard route, in any declaration order', () => {
+    const tabs = { id: 'tabs', segments: [''], params: undefined };
+    const slug: RouteChain = [tabs, { id: 'doc-page', segments: [':slug'], params: undefined }];
+    const index: RouteChain = [tabs, { id: 'docs-index', segments: [''], params: undefined }];
+    const notFound: RouteChain = [tabs, { id: 'docs-not-found', segments: ['*'], params: undefined }];
+    const ids = [{ id: 'tabs', element: undefined }];
+
+    expect(findChainForIDs(ids, [slug, index, notFound])![1].id).toEqual('docs-index');
+    expect(findChainForIDs(ids, [slug, notFound, index])![1].id).toEqual('docs-index');
+    expect(findChainForIDs(ids, [notFound, slug, index])![1].id).toEqual('docs-index');
+  });
+
+  it('should keep the first route declared on a tie without a wildcard route', () => {
+    const tabs = { id: 'tabs', segments: [''], params: undefined };
+    const slug: RouteChain = [tabs, { id: 'doc-page', segments: [':slug'], params: undefined }];
+    const index: RouteChain = [tabs, { id: 'docs-index', segments: [''], params: undefined }];
+    const ids = [{ id: 'tabs', element: undefined }];
+
+    expect(findChainForIDs(ids, [slug, index])![1].id).toEqual('doc-page');
+  });
+
+  it('should prefer a wildcard route when the outlet reports the matched path', () => {
+    const index: RouteChain = [
+      { id: 'docs', segments: ['docs'], params: undefined },
+      { id: 'doc-page', segments: [''], params: undefined },
+    ];
+    const slug: RouteChain = [
+      { id: 'docs', segments: ['docs'], params: undefined },
+      { id: 'doc-page', segments: [':slug'], params: undefined },
+    ];
+    const notFound: RouteChain = [
+      { id: 'docs', segments: ['docs'], params: undefined },
+      { id: 'doc-page', segments: ['*'], params: undefined },
+    ];
+    const ids = [
+      { id: 'docs', element: undefined },
+      { id: 'doc-page', element: undefined, params: { pathMatch: 'a/b' } },
+    ];
+
+    expect(findChainForIDs(ids, [index, notFound])![1].segments).toEqual(['*']);
+    expect(findChainForIDs(ids, [slug, notFound])![1].segments).toEqual(['*']);
+  });
+});
+
 describe('mergeParams', () => {
   it('should merge undefined', () => {
     expect(mergeParams(undefined, undefined)).toBeUndefined();
@@ -247,6 +520,13 @@ describe('RouterSegments', () => {
     expect(s.next()).toEqual('to');
     expect(s.next()).toEqual('destination');
     expect(s.next()).toEqual('');
+    expect(s.next()).toEqual('');
+  });
+
+  it('should return the non empty remaining segments', () => {
+    const s = new RouterSegments(['a', '', 'b', '', 'c']);
+    expect(s.next()).toEqual('a');
+    expect(s.rest()).toEqual(['b', 'c']);
     expect(s.next()).toEqual('');
   });
 });

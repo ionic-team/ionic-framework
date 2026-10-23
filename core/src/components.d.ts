@@ -2719,14 +2719,14 @@ export namespace Components {
          */
         "componentProps"?: { [key: string]: any };
         /**
-          * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.
+          * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.  A url ending in `*`, such as `*` or `/admin/*`, matches any remaining path, including none, so `/admin/*` also matches `/admin`. It only wins over a route that matches the whole path when it has more fixed segments, so `/admin/*` wins over `/:section/:id` but not over `/admin/:id`. It always wins over a route that matches by ignoring trailing segments, such as `/admin` for `/admin/users`. The matched path is passed in the `pathMatch` prop without a leading `/`. A `*` on a route with child routes is ignored.
           * @default ''
          */
         "url": string;
     }
     interface IonRouteRedirect {
         /**
-          * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
+          * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply, unless it contains a `*`. A `*` matches the rest of the path from that segment on, as long as the path has at least as many segments as `from`, so `/admin/*` matches `/admin/posts` but not `/admin`.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
          */
         "from": string;
         /**
@@ -7896,14 +7896,14 @@ declare namespace LocalJSX {
          */
         "onIonRouteDataChanged"?: (event: IonRouteCustomEvent<any>) => void;
         /**
-          * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.
+          * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.  A url ending in `*`, such as `*` or `/admin/*`, matches any remaining path, including none, so `/admin/*` also matches `/admin`. It only wins over a route that matches the whole path when it has more fixed segments, so `/admin/*` wins over `/:section/:id` but not over `/admin/:id`. It always wins over a route that matches by ignoring trailing segments, such as `/admin` for `/admin/users`. The matched path is passed in the `pathMatch` prop without a leading `/`. A `*` on a route with child routes is ignored.
           * @default ''
          */
         "url"?: string;
     }
     interface IonRouteRedirect {
         /**
-          * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
+          * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply, unless it contains a `*`. A `*` matches the rest of the path from that segment on, as long as the path has at least as many segments as `from`, so `/admin/*` matches `/admin/posts` but not `/admin`.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
          */
         "from": string;
         /**

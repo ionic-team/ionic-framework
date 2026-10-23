@@ -121,6 +121,23 @@ describe('chainToSegments', () => {
     expect(chainToSegments(chain)).toEqual(['segment', 'to', 'hola', 'hey', 'name', 'adios', 'manu', '123']);
   });
 
+  it('should replace a wildcard with the path it matched', () => {
+    const chain: RouteChain = [
+      { id: '1', segments: [''], params: undefined },
+      { id: '2', segments: ['admin', '*'], params: { pathMatch: 'users/1' } },
+    ];
+    expect(chainToSegments(chain)).toEqual(['admin', 'users', '1']);
+  });
+
+  it('should drop a wildcard that matched nothing', () => {
+    expect(chainToSegments([{ id: '1', segments: ['*'], params: { pathMatch: '' } }])).toEqual([]);
+    expect(chainToSegments([{ id: '1', segments: ['admin', '*'], params: undefined }])).toEqual(['admin']);
+  });
+
+  it('should keep a mid-path * literally', () => {
+    expect(chainToSegments([{ id: '1', segments: ['a', '*', 'b'], params: undefined }])).toEqual(['a', '*', 'b']);
+  });
+
   it('should return null on missing parameters', () => {
     const chain: RouteChain = [
       { id: '3', segments: ['segment'], params: undefined },
