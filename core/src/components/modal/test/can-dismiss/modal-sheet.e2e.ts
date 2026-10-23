@@ -112,11 +112,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         await ionHandlerDone.next();
 
-        const modal = page.locator('ion-modal');
-        expect(modal).not.toBe(null);
+        await expect(page.locator('ion-modal')).toBeVisible();
       });
       test('should not dismiss on swipe when not attempting to close', async ({ page }) => {
         const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+        const ionDragEnd = await page.spyOnEvent('ionDragEnd');
 
         await page.click('#sheet-can-dismiss-promise-true');
 
@@ -125,8 +125,14 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const modalHeader = page.locator('#modal-header');
         await dragElementBy(modalHeader, page, 0, 30);
 
-        const modal = page.locator('ion-modal');
-        expect(modal).not.toBe(null);
+        /**
+         * A drag this small snaps the sheet back open, so canDismiss is never
+         * consulted and the sheet stays where it was.
+         */
+        const dragEndEvent = await ionDragEnd.next();
+
+        expect(dragEndEvent.detail.isDismissing).toBe(false);
+        await expect(page.locator('ion-modal')).toBeVisible();
       });
       test('should hit the dismiss threshold when swiping', async ({ page }) => {
         const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');

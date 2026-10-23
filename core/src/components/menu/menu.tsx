@@ -3,14 +3,13 @@ import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Wa
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { focusFirstDescendant, focusLastDescendant } from '@utils/focus-trap';
 import { GESTURE_CONTROLLER } from '@utils/gesture';
-import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
+import { shouldUseCloseWatcher, updateCloseWatcher } from '@utils/hardware-back-button';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { printIonError } from '@utils/logging';
 import { menuController } from '@utils/menu-controller';
 import { BACKDROP, GESTURE, getPresentedOverlay } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
-import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -269,7 +268,7 @@ export class Menu implements ComponentInterface, MenuI {
      * of the split pane. If the split pane is
      * hidden then the menu should be too.
      */
-    const splitPane = this.el.closest('ion-split-pane');
+    const splitPane = this.getSplitPane();
     if (splitPane !== null) {
       this.isPaneVisible = await splitPane.isVisible();
     }
@@ -315,9 +314,9 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Listen('ionSplitPaneVisible', { target: 'body' })
   onSplitPaneChanged(ev: CustomEvent<{ visible: boolean }>) {
-    const closestSplitPane = this.el.closest<HTMLIonSplitPaneElement>('ion-split-pane');
+    const splitPane = this.getSplitPane();
 
-    if (closestSplitPane !== null && closestSplitPane === ev.target) {
+    if (splitPane !== null && splitPane === ev.target) {
       this.isPaneVisible = ev.detail.visible;
 
       this.updateState();
@@ -550,6 +549,27 @@ export class Menu implements ComponentInterface, MenuI {
     return !this.disabled && !this.isPaneVisible;
   }
 
+  /**
+   * Returns the split pane this menu is a side pane of.
+   * A menu inside the split pane's main content, such as one
+   * in a page, is a regular menu. The menu doesn't need to be
+   * a direct child, since it can be wrapped in a component.
+   */
+  private getSplitPane(): HTMLIonSplitPaneElement | null {
+    const splitPane = this.el.closest('ion-split-pane');
+    const main = this.el.closest('.split-pane-main');
+
+    /**
+     * A split pane can be the main content of an outer split
+     * pane, so only this split pane's main content counts.
+     */
+    if (splitPane === null || (main !== null && main !== splitPane && splitPane.contains(main))) {
+      return null;
+    }
+
+    return splitPane;
+  }
+
   private canSwipe(): boolean {
     return this.swipeGesture && !this.isAnimating && this._isActive();
   }
@@ -726,6 +746,7 @@ export class Menu implements ComponentInterface, MenuI {
     // emit opened/closed events
     this._isOpen = isOpen;
     this.isAnimating = false;
+    updateCloseWatcher();
     if (!this._isOpen) {
       this.blocker.unblock();
     }
@@ -829,7 +850,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   render() {
-    const { type, disabled, el, isPaneVisible, inheritedAttributes, side } = this;
+    const { type, disabled, isPaneVisible, inheritedAttributes, side } = this;
     const mode = getIonMode(this);
 
     /**
@@ -848,7 +869,7 @@ export class Menu implements ComponentInterface, MenuI {
           'menu-enabled': !disabled,
           [`menu-side-${side}`]: true,
           'menu-pane-visible': isPaneVisible,
-          'split-pane-side': hostContext('ion-split-pane', el),
+          'split-pane-side': this.getSplitPane() !== null,
         }}
       >
         <div class="menu-inner" part="container" ref={(el) => (this.menuInnerEl = el)}>
