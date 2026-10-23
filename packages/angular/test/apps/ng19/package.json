@@ -59,7 +59,7 @@
     "ts-node": "^8.3.0",
     "typescript": "^5.6.3",
     "wait-on": "^8.0.1",
-    "webpack": "^5.61.0",
+    "webpack": "^5.111.1",
     "webpack-cli": "^4.9.2"
   },
   "overrides": {

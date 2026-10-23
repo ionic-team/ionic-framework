@@ -1,3 +1,6 @@
+// Global stylesheet: `:host-context()` never matches outside a shadow root
+$rtl-use-host-context: false;
+
 @import "../themes/native/native.globals";
 @import "../themes/mixins";
 

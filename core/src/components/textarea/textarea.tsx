@@ -14,11 +14,11 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { NotchController, StartContainerController } from '@utils/forms';
+import type { NotchController, StartEndContainerController } from '@utils/forms';
 import {
   getSlottedClickContent,
   createNotchController,
-  createStartContainerController,
+  createStartEndContainerController,
   checkInvalidState,
   reportValidityToElementInternals,
 } from '@utils/forms';
@@ -94,8 +94,9 @@ export class Textarea implements ComponentInterface {
 
   private notchController?: NotchController;
   private notchSpacerEl: HTMLElement | undefined;
-  private startContainerController?: StartContainerController;
+  private startEndContainerController?: StartEndContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private endContainerEl: HTMLElement | undefined;
 
   /**
    * The value of the textarea when the textarea is focused.
@@ -396,7 +397,7 @@ export class Textarea implements ComponentInterface {
     const { el } = this;
 
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
-      this.startContainerController?.calculateStartContainerWidth();
+      this.startEndContainerController?.calculateContainerWidths();
 
       forceUpdate(this);
     });
@@ -407,15 +408,16 @@ export class Textarea implements ComponentInterface {
       () => this.labelSlot
     );
 
-    this.startContainerController = createStartContainerController(
+    this.startEndContainerController = createStartEndContainerController(
       el,
       () => this.startContainerEl,
+      () => this.endContainerEl,
       () => {
         return Build.isBrowser && getIonTheme(this) === 'md' && this.fill === 'outline';
       }
     );
 
-    this.startContainerController.calculateStartContainerWidth();
+    this.startEndContainerController.calculateContainerWidths();
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
@@ -469,9 +471,9 @@ export class Textarea implements ComponentInterface {
       this.notchController = undefined;
     }
 
-    if (this.startContainerController) {
-      this.startContainerController.destroy();
-      this.startContainerController = undefined;
+    if (this.startEndContainerController) {
+      this.startEndContainerController.destroy();
+      this.startEndContainerController = undefined;
     }
 
     // Clean up validation observer to prevent memory leaks
@@ -503,7 +505,7 @@ export class Textarea implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
-    this.startContainerController?.calculateStartContainerWidth();
+    this.startEndContainerController?.calculateContainerWidths();
   }
 
   /**
@@ -948,7 +950,7 @@ export class Textarea implements ComponentInterface {
 
   private renderEndContainer() {
     return (
-      <div key="end" class="textarea-end" part="end">
+      <div key="end" class="textarea-end" part="end" ref={(el) => (this.endContainerEl = el)}>
         <slot name="end"></slot>
       </div>
     );

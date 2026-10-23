@@ -44,7 +44,13 @@ test.describe('useIonRouter.navigate with routerAction="replace"', () => {
     expect(await readCurrentDirection(page)).toBe('forward');
   });
 
-  test('default useIonRouter.replace() keeps direction "root"', async ({ page }) => {
+  // The default replace keeps the stack beneath the replaced page.
+  test('default useIonRouter.replace() should use direction "none"', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/30617',
+    });
+
     await page.goto('/');
     await ionPageVisible(page, 'home');
 
@@ -52,6 +58,6 @@ test.describe('useIonRouter.navigate with routerAction="replace"', () => {
     await page.evaluate(() => (window as any).debugIonRouter.replace('/routing'));
     await ionPageVisible(page, 'routing');
 
-    expect(await readCurrentDirection(page)).toBe('root');
+    expect(await readCurrentDirection(page)).toBe('none');
   });
 });

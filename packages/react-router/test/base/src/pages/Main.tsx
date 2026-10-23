@@ -58,6 +58,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/suspense-outlet/content" id="go-to-suspense-outlet">
             <IonLabel>Suspense Outlet</IonLabel>
           </IonItem>
+          <IonItem routerLink="/outlet-unmount-before-ready">
+            <IonLabel>Outlet Unmount Before Ready</IonLabel>
+          </IonItem>
         </IonList>
 
         <IonList>
@@ -90,6 +93,9 @@ const Main: React.FC = () => {
           </IonItem>
           <IonItem routerLink="/tab-lifecycle">
             <IonLabel>Tab Lifecycle</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/hidden-view-renders">
+            <IonLabel>Hidden View Renders</IonLabel>
           </IonItem>
         </IonList>
 
