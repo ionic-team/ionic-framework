@@ -806,9 +806,11 @@ These mixins depend on the `:host-context` pseudo-class when used inside of shad
 To work around this, you should set an RTL class on the host of your component and set your RTL styles by targeting that class:
 
 ```tsx
+import { isRTL } from '@utils/rtl';
+
 <Host
 class={{
-  'my-cmp-rtl': document.dir === 'rtl'
+  'my-cmp-rtl': isRTL(this.el)
 }}
 >
  ...
