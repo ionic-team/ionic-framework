@@ -927,14 +927,14 @@ export declare interface IonGallery extends Components.IonGallery {}
 
 
 @ProxyCmp({
-  inputs: ['mode', 'theme']
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-gallery-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'theme'],
+  inputs: ['mode'],
   standalone: false
 })
 export class IonGalleryItem {
