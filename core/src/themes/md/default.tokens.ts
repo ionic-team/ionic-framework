@@ -633,18 +633,18 @@ export const defaultTheme: DefaultTheme = {
             leading: {
               margin: {
                 top: '0',
-                end: '0.5714em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.2857em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2857em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.5714em',
+                start: '0.4444em',
               },
             },
           },
@@ -692,18 +692,18 @@ export const defaultTheme: DefaultTheme = {
             leading: {
               margin: {
                 top: '0',
-                end: '0.5714em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.2857em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2857em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.5714em',
+                start: '0.4444em',
               },
             },
           },
@@ -753,18 +753,18 @@ export const defaultTheme: DefaultTheme = {
             leading: {
               margin: {
                 top: '0',
-                end: '0.5714em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.2857em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2857em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.5714em',
+                start: '0.4444em',
               },
             },
           },
