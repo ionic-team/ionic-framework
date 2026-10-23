@@ -904,14 +904,14 @@ export declare interface IonFooter extends Components.IonFooter {}
 
 
 @ProxyCmp({
-  inputs: ['columns', 'gap', 'layout', 'mode', 'order', 'theme']
+  inputs: ['columns', 'gap', 'layout', 'mode', 'order']
 })
 @Component({
   selector: 'ion-gallery',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['columns', 'gap', 'layout', 'mode', 'order', 'theme'],
+  inputs: ['columns', 'gap', 'layout', 'mode', 'order'],
   standalone: false
 })
 export class IonGallery {
