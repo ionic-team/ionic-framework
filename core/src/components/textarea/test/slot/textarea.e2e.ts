@@ -384,8 +384,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
        * point of the animation is checked regardless of frame timing.
        */
       const overflow = await textarea.evaluate(async (el: HTMLIonTextareaElement) => {
-        const label = el.querySelector('.label-text-wrapper')!;
-        const wrapper = el.querySelector('.textarea-wrapper')!;
+        const label = el.shadowRoot!.querySelector('.label-text-wrapper')!;
+        const wrapper = el.shadowRoot!.querySelector('.textarea-wrapper')!;
         const maxRight = wrapper.getBoundingClientRect().right - parseFloat(getComputedStyle(wrapper).paddingRight);
 
         /**
