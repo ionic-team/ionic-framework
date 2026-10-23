@@ -1098,10 +1098,6 @@ export const defaultTheme: DefaultTheme = {
                 hover: {
                   background: 'transparent',
                 },
-
-                activated: {
-                  background: 'transparent',
-                },
               },
 
               clear: {
