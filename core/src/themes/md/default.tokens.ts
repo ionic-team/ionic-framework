@@ -633,18 +633,18 @@ export const defaultTheme: DefaultTheme = {
             leading: {
               margin: {
                 top: '0',
-                end: '0.5714em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.2857em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2857em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.5714em',
+                start: '0.4444em',
               },
             },
           },
@@ -661,6 +661,36 @@ export const defaultTheme: DefaultTheme = {
             icon: {
               font: {
                 size: 'clamp(13.002px, 1.23125em, 40.385px)',
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.7347em',
+                width: '0.7347em',
+              },
+
+              small: {
+                height: '0.9184em',
+                width: '0.9184em',
+              },
+
+              medium: {
+                height: '1.2857em',
+                width: '1.2857em',
+              },
+
+              large: {
+                height: '1.6531em',
+                width: '1.6531em',
+              },
+
+              xlarge: {
+                height: '2.2041em',
+                width: '2.2041em',
               },
             },
           },
@@ -692,18 +722,18 @@ export const defaultTheme: DefaultTheme = {
             leading: {
               margin: {
                 top: '0',
-                end: '0.5714em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.2857em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2857em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.5714em',
+                start: '0.4444em',
               },
             },
           },
@@ -723,6 +753,36 @@ export const defaultTheme: DefaultTheme = {
                  * min font size: 15px, default font size: 22.4px, max font size: 43px
                  */
                 size: 'clamp(15.104px, 1.6em, 43.008px)',
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.7347em',
+                width: '0.7347em',
+              },
+
+              small: {
+                height: '0.9184em',
+                width: '0.9184em',
+              },
+
+              medium: {
+                height: '1.2857em',
+                width: '1.2857em',
+              },
+
+              large: {
+                height: '1.6531em',
+                width: '1.6531em',
+              },
+
+              xlarge: {
+                height: '2.2041em',
+                width: '2.2041em',
               },
             },
           },
@@ -753,18 +813,18 @@ export const defaultTheme: DefaultTheme = {
             leading: {
               margin: {
                 top: '0',
-                end: '0.5714em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.2857em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2857em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.5714em',
+                start: '0.4444em',
               },
             },
           },
@@ -781,6 +841,36 @@ export const defaultTheme: DefaultTheme = {
             icon: {
               font: {
                 size: 'clamp(15.008px, 1.4em, 43.008px)',
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.7347em',
+                width: '0.7347em',
+              },
+
+              small: {
+                height: '0.9184em',
+                width: '0.9184em',
+              },
+
+              medium: {
+                height: '1.2857em',
+                width: '1.2857em',
+              },
+
+              large: {
+                height: '1.6531em',
+                width: '1.6531em',
+              },
+
+              xlarge: {
+                height: '2.2041em',
+                width: '2.2041em',
               },
             },
           },

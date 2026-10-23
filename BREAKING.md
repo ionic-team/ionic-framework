@@ -75,7 +75,8 @@ The `md` button now uses the Material Design 2 values below. To keep a previous 
 | Min width at the default size | none | `64px` | `IonButton.size.medium.min.width` |
 | Letter spacing | `0.06em` | `0.0893em` | `IonButton.letter.spacing` |
 | Icon size | `1.35em` | `1.2857em` (`18px` at the default size) | `IonButton.size.<size>.icon.font.size` |
-| Gap between icon and label | `0.3em` | `0.5714em` (`8px` at the default size) | `IonButton.size.<size>.icon.leading.margin.end` and `.trailing.margin.start` |
+| Gap between icon and label | `0.3em` | `0.4444em` (`8px` at the default size) | `IonButton.size.<size>.icon.leading.margin.end` and `.trailing.margin.start` |
+| Spinner in a button | the spinner's own size (`28px` by default) | `1.2857em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
 | Outline border | `2px`, the button's color | `1px`, the text color at `12%` | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
 | Solid elevation on hover and focus | the resting elevation | elevation 4 | `IonButton.hue.bold.solid.hover.box.shadow` and `.focus.box.shadow` |
 | Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` |
