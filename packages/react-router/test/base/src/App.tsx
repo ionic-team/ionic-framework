@@ -49,6 +49,7 @@ import DirectionNoneBack from './pages/direction-none-back/DirectionNoneBack';
 import TabSearchParams from './pages/tab-search-params/TabSearchParams';
 import { Step1, Step2, Step3, Step4 } from './pages/replace-params/ReplaceParams';
 import { ParamSwipeBack, ParamSwipeBackB } from './pages/param-swipe-back/ParamSwipeBack';
+import HiddenViewRenders from './pages/hidden-view-renders/HiddenViewRenders';
 import TabLifecycle from './pages/tab-lifecycle/TabLifecycle';
 import TabLifecycleOutside from './pages/tab-lifecycle/TabLifecycleOutside';
 import {
@@ -57,6 +58,7 @@ import {
 } from './pages/router-link-modifier-click/RouterLinkModifierClick';
 import { NavigateRootPageA, NavigateRootPageB, NavigateRootPageC } from './pages/navigate-root/NavigateRoot';
 import SuspenseOutlet from './pages/suspense-outlet/SuspenseOutlet';
+import OutletUnmountBeforeReady from './pages/outlet-unmount-before-ready/OutletUnmountBeforeReady';
 import { PropsUpdateDirect, PropsUpdateRoutesWrapper } from './pages/props-update/PropsUpdate';
 import DisabledButton from './pages/disabled-button/DisabledButton';
 import SplatSibling from './pages/splat-sibling/SplatSibling';
@@ -122,12 +124,14 @@ const App: React.FC = () => {
           <Route path="/replace-params" element={<Navigate to="/replace-params/step1" replace />} />
           <Route path="/tab-lifecycle/*" element={<TabLifecycle />} />
           <Route path="/tab-lifecycle-outside" element={<TabLifecycleOutside />} />
+          <Route path="/hidden-view-renders/*" element={<HiddenViewRenders />} />
           <Route path="/router-link-modifier-click" element={<RouterLinkModifierClick />} />
           <Route path="/router-link-modifier-click/target" element={<RouterLinkModifierClickTarget />} />
           <Route path="/navigate-root/page-a" element={<NavigateRootPageA />} />
           <Route path="/navigate-root/page-b" element={<NavigateRootPageB />} />
           <Route path="/navigate-root/page-c" element={<NavigateRootPageC />} />
           <Route path="/suspense-outlet/*" element={<SuspenseOutlet />} />
+          <Route path="/outlet-unmount-before-ready" element={<OutletUnmountBeforeReady />} />
           <Route path="/props-update-routes/*" element={<PropsUpdateRoutesWrapper />} />
           <Route path="/props-update-direct/*" element={<PropsUpdateDirect />} />
           <Route path="/splat-sibling/*" element={<SplatSibling />} />

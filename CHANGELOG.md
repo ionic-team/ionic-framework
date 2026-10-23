@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.9](https://github.com/ionic-team/ionic-framework/compare/v9.0.8...v9.0.9) (2026-10-21)
+
+### Bug Fixes
+
+* **angular:** import tab proxies directly in standalone tabs ([#31596](https://github.com/ionic-team/ionic-framework/issues/31596)) ([cb963f8](https://github.com/ionic-team/ionic-framework/commit/cb963f886ee08ce3abf25d6cb4e33c5cc3ac0003)), closes [#31594](https://github.com/ionic-team/ionic-framework/issues/31594)
+* **datetime:** discard unconfirmed selection on cancel ([#31558](https://github.com/ionic-team/ionic-framework/issues/31558)) ([cecd3af](https://github.com/ionic-team/ionic-framework/commit/cecd3afdaea91a2e5f4ada6cd4aaedf6f436e6c9)), closes [#30777](https://github.com/ionic-team/ionic-framework/issues/30777) [#27975](https://github.com/ionic-team/ionic-framework/issues/27975) [#27976](https://github.com/ionic-team/ionic-framework/issues/27976)
+* **input, select, textarea:** prevent floating label from overflowing while it floats ([#31567](https://github.com/ionic-team/ionic-framework/issues/31567)) ([ecd6f5a](https://github.com/ionic-team/ionic-framework/commit/ecd6f5a7c0ed987f4357b7a0e3954d9291be170d))
+* **nav:** defer non-animated swipe back until the gesture completes ([#31552](https://github.com/ionic-team/ionic-framework/issues/31552)) ([5f3f5fc](https://github.com/ionic-team/ionic-framework/commit/5f3f5fcae2bc83cb4301bc6e47c7e0b64f6d3d76)), closes [#29793](https://github.com/ionic-team/ionic-framework/issues/29793)
+* **vue-router:** keep back working after replacing a page in tabs ([#31583](https://github.com/ionic-team/ionic-framework/issues/31583)) ([86390f6](https://github.com/ionic-team/ionic-framework/commit/86390f6deab23b58498c3b9ae782f9e0fc5a4e29)), closes [#30617](https://github.com/ionic-team/ionic-framework/issues/30617) [#31142](https://github.com/ionic-team/ionic-framework/issues/31142)
+
+
+## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
+
+### Bug Fixes
+
+* **angular, vue:** fire lifecycle events on nested pages ([#31532](https://github.com/ionic-team/ionic-framework/issues/31532)) ([277097e](https://github.com/ionic-team/ionic-framework/commit/277097e1dfa13d8b34a6826aca462843810fc8f1)), closes [#30831](https://github.com/ionic-team/ionic-framework/issues/30831) [#16834](https://github.com/ionic-team/ionic-framework/issues/16834)
+* **angular:** update route snapshot on query param navigation ([#31534](https://github.com/ionic-team/ionic-framework/issues/31534)) ([6b5afec](https://github.com/ionic-team/ionic-framework/commit/6b5afec5b8d2a8df79c014120b5be5b4fbb2a2cb)), closes [#24587](https://github.com/ionic-team/ionic-framework/issues/24587)
+* **modal:** stop sheets dismissing on upward drags ([#31553](https://github.com/ionic-team/ionic-framework/issues/31553)) ([3e3544e](https://github.com/ionic-team/ionic-framework/commit/3e3544e4303d9dd49eb834cddddacd54bbe01fe4))
+* **react-router:** stop hidden views from re-rendering on every navigation ([#31541](https://github.com/ionic-team/ionic-framework/issues/31541)) ([4ae0196](https://github.com/ionic-team/ionic-framework/commit/4ae01961e8ed65e26369e09d478fabeffba5ed6d)), closes [#31528](https://github.com/ionic-team/ionic-framework/issues/31528)
+
+
+## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
+
+### Bug Fixes
+
+* **close-watcher:** allow back navigation when nothing is open ([#31520](https://github.com/ionic-team/ionic-framework/issues/31520)) ([6532bcb](https://github.com/ionic-team/ionic-framework/commit/6532bcbcf5b69f33724a66ab76720ec645adb00b)), closes [#29648](https://github.com/ionic-team/ionic-framework/issues/29648)
+* **css:** stop emitting :host-context selectors in global stylesheets ([#31516](https://github.com/ionic-team/ionic-framework/issues/31516)) ([35bd2fa](https://github.com/ionic-team/ionic-framework/commit/35bd2fa9f1046b3f5fd3cd6b3778b0b5945be99c)), closes [#30024](https://github.com/ionic-team/ionic-framework/issues/30024)
+* **input-otp:** sync value when length changes ([#31485](https://github.com/ionic-team/ionic-framework/issues/31485)) ([e425825](https://github.com/ionic-team/ionic-framework/commit/e425825815d3c0ab39800912558624b9de72dc6f)), closes [#31484](https://github.com/ionic-team/ionic-framework/issues/31484) [#31484](https://github.com/ionic-team/ionic-framework/issues/31484)
+* **react:** prevent error when an outlet unmounts before it's ready ([#31517](https://github.com/ionic-team/ionic-framework/issues/31517)) ([d5bab2e](https://github.com/ionic-team/ionic-framework/commit/d5bab2e89548311b2e3f62b5fe2be477685cb06d)), closes [#31513](https://github.com/ionic-team/ionic-framework/issues/31513)
+* **vue-router:** render the redirect target when a guard redirects ([#31510](https://github.com/ionic-team/ionic-framework/issues/31510)) ([643584b](https://github.com/ionic-team/ionic-framework/commit/643584b3ac2ba1ca263cbf53960ccde3be2a96fc))
+* **vue-router:** reset tab with memory history ([#31511](https://github.com/ionic-team/ionic-framework/issues/31511)) ([edbc304](https://github.com/ionic-team/ionic-framework/commit/edbc304fbc4179a668d0e170241abd78311fdb62)), closes [#29785](https://github.com/ionic-team/ionic-framework/issues/29785)
+
+
 ## [9.0.6](https://github.com/ionic-team/ionic-framework/compare/v9.0.5...v9.0.6) (2026-09-30)
 
 ### Bug Fixes

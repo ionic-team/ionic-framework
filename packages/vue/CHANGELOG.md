@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.9](https://github.com/ionic-team/ionic-framework/compare/v9.0.8...v9.0.9) (2026-10-21)
+
+### Bug Fixes
+
+* **nav:** defer non-animated swipe back until the gesture completes ([#31552](https://github.com/ionic-team/ionic-framework/issues/31552)) ([5f3f5fc](https://github.com/ionic-team/ionic-framework/commit/5f3f5fcae2bc83cb4301bc6e47c7e0b64f6d3d76)), closes [#29793](https://github.com/ionic-team/ionic-framework/issues/29793)
+* **vue-router:** keep back working after replacing a page in tabs ([#31583](https://github.com/ionic-team/ionic-framework/issues/31583)) ([86390f6](https://github.com/ionic-team/ionic-framework/commit/86390f6deab23b58498c3b9ae782f9e0fc5a4e29)), closes [#30617](https://github.com/ionic-team/ionic-framework/issues/30617) [#31142](https://github.com/ionic-team/ionic-framework/issues/31142)
+
+
+## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
+
+### Bug Fixes
+
+* **angular, vue:** fire lifecycle events on nested pages ([#31532](https://github.com/ionic-team/ionic-framework/issues/31532)) ([277097e](https://github.com/ionic-team/ionic-framework/commit/277097e1dfa13d8b34a6826aca462843810fc8f1)), closes [#30831](https://github.com/ionic-team/ionic-framework/issues/30831) [#16834](https://github.com/ionic-team/ionic-framework/issues/16834)
+
+
+## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
+
+### Bug Fixes
+
+* **vue-router:** render the redirect target when a guard redirects ([#31510](https://github.com/ionic-team/ionic-framework/issues/31510)) ([643584b](https://github.com/ionic-team/ionic-framework/commit/643584b3ac2ba1ca263cbf53960ccde3be2a96fc))
+* **vue-router:** reset tab with memory history ([#31511](https://github.com/ionic-team/ionic-framework/issues/31511)) ([edbc304](https://github.com/ionic-team/ionic-framework/commit/edbc304fbc4179a668d0e170241abd78311fdb62)), closes [#29785](https://github.com/ionic-team/ionic-framework/issues/29785)
+
+
 ## [9.0.6](https://github.com/ionic-team/ionic-framework/compare/v9.0.5...v9.0.6) (2026-09-30)
 
 **Note:** Version bump only for package @ionic/vue
