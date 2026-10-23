@@ -2726,7 +2726,7 @@ export namespace Components {
     }
     interface IonRouteRedirect {
         /**
-          * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply, unless it ends in `*`. A `from` that ends in `*` matches any path below it, but not the path itself, so `/admin/*` matches `/admin/posts` but not `/admin`.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
+          * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply, unless it contains a `*`. A `*` matches the rest of the path from that segment on, as long as the path has at least as many segments as `from`, so `/admin/*` matches `/admin/posts` but not `/admin`.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
          */
         "from": string;
         /**
@@ -7903,7 +7903,7 @@ declare namespace LocalJSX {
     }
     interface IonRouteRedirect {
         /**
-          * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply, unless it ends in `*`. A `from` that ends in `*` matches any path below it, but not the path itself, so `/admin/*` matches `/admin/posts` but not `/admin`.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
+          * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply, unless it contains a `*`. A `*` matches the rest of the path from that segment on, as long as the path has at least as many segments as `from`, so `/admin/*` matches `/admin/posts` but not `/admin`.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
          */
         "from": string;
         /**
