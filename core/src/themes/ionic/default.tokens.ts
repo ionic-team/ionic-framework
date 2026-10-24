@@ -558,6 +558,244 @@ export const defaultTheme: DefaultTheme = {
             },
           },
         },
+
+        subtle: {
+          solid: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            default: {
+              background: ionColor('primary', 'base', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            hover: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            activated: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            // A white wash over the button
+            disabled: {
+              background: ionColor('primary', 'base', { subtle: true }),
+
+              opacity: '0.4',
+            },
+
+            rippleEffect: {
+              color: ionColor('primary', 'shade', { subtle: true }),
+              opacity: '1',
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              focus: {
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              activated: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              disabled: {
+                background: currentColor('base', { subtle: true }),
+              },
+
+              rippleEffect: {
+                color: currentColor('shade', { subtle: true }),
+                opacity: '1',
+              },
+            },
+          },
+
+          outline: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            default: {
+              background: baseColors.backgroundColor,
+              color: ionColor('primary', 'foreground', { subtle: true }),
+
+              border: {
+                color: ionColor('primary', 'shade', { subtle: true }),
+                style: 'solid',
+                width: 'var(--ion-border-width-xxxs)',
+              },
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: baseColors.backgroundColor,
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            hover: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            activated: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            // A white wash over the button
+            disabled: {
+              background: baseColors.backgroundColor,
+
+              opacity: '0.4',
+            },
+
+            rippleEffect: {
+              color: ionColor('primary', 'shade', { subtle: true }),
+              opacity: '1',
+            },
+
+            semantic: {
+              default: {
+                background: baseColors.backgroundColor,
+                color: currentColor('foreground', { subtle: true }),
+
+                border: {
+                  color: currentColor('shade', { subtle: true }),
+                },
+              },
+
+              focus: {
+                background: baseColors.backgroundColor,
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              activated: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              disabled: {
+                background: baseColors.backgroundColor,
+              },
+
+              rippleEffect: {
+                color: currentColor('shade', { subtle: true }),
+                opacity: '1',
+              },
+            },
+          },
+
+          clear: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            hover: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            activated: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            // A white wash over the button
+            disabled: {
+              background: 'transparent',
+
+              opacity: '0.4',
+            },
+
+            rippleEffect: {
+              color: ionColor('primary', 'shade', { subtle: true }),
+              opacity: '1',
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              focus: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              activated: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              disabled: {
+                background: 'transparent',
+              },
+
+              rippleEffect: {
+                color: currentColor('shade', { subtle: true }),
+                opacity: '1',
+              },
+            },
+          },
+        },
       },
 
       // Sizes

@@ -626,6 +626,10 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
+          * Set to `"bold"` for a button with vibrant, bold colors or to `"subtle"` for a button with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -6479,6 +6483,10 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
+          * Set to `"bold"` for a button with vibrant, bold colors or to `"subtle"` for a button with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -10477,6 +10485,7 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "expand": IonButtonExpand;
         "fill": IonButtonFill | 'default';
+        "hue": Hue;
         "routerDirection": RouterDirection;
         "download": string | undefined;
         "href": string | undefined;

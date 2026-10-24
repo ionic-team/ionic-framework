@@ -604,6 +604,287 @@ export const defaultTheme: DefaultTheme = {
             },
           },
         },
+
+        subtle: {
+          solid: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-bold)',
+              },
+            },
+
+            default: {
+              background: ionColor('primary', 'base', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+              box: {
+                shadow:
+                  '0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)',
+              },
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: overlay(
+                ionColor('primary', 'base', { subtle: true }),
+                ionColor('primary', 'contrast', { alpha: 0.24, subtle: true })
+              ),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+
+              box: {
+                shadow:
+                  '0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)',
+              },
+            },
+
+            hover: {
+              background: overlay(
+                ionColor('primary', 'base', { subtle: true }),
+                ionColor('primary', 'contrast', { alpha: 0.08, subtle: true })
+              ),
+
+              color: ionColor('primary', 'contrast', { subtle: true }),
+
+              box: {
+                shadow:
+                  '0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)',
+              },
+            },
+
+            // The ripple is the pressed feedback
+            activated: {
+              background: ionColor('primary', 'base', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+
+              box: {
+                shadow:
+                  '0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)',
+              },
+            },
+
+            disabled: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+
+              box: {
+                shadow: 'none',
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+            },
+
+            rippleEffect: {
+              opacity: '0.24',
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              focus: {
+                background: overlay(
+                  currentColor('base', { subtle: true }),
+                  currentColor('contrast', { alpha: 0.24, subtle: true })
+                ),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              hover: {
+                background: overlay(
+                  currentColor('base', { subtle: true }),
+                  currentColor('contrast', { alpha: 0.08, subtle: true })
+                ),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              activated: {
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              disabled: {
+                background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+              },
+
+              rippleEffect: {
+                opacity: '0.24',
+              },
+            },
+          },
+
+          outline: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-bold)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+                style: 'solid',
+                width: 'var(--ion-border-width-xxxs)',
+              },
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base', { alpha: 0.12 }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            hover: {
+              background: ionColor('primary', 'base', { alpha: 0.04 }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            // The ripple is the pressed feedback
+            activated: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            disabled: {
+              background: 'transparent',
+
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+            },
+
+            rippleEffect: {
+              opacity: '0.12',
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+
+                border: {
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+                },
+              },
+
+              focus: {
+                background: currentColor('base', { alpha: 0.12 }),
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              hover: {
+                background: currentColor('base', { alpha: 0.04 }),
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              activated: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              disabled: {
+                background: 'transparent',
+
+                border: {
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+                },
+
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+              },
+
+              rippleEffect: {
+                opacity: '0.12',
+              },
+            },
+          },
+
+          clear: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-bold)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base', { alpha: 0.12 }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            hover: {
+              background: ionColor('primary', 'base', { alpha: 0.04 }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            // The ripple is the pressed feedback
+            activated: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            disabled: {
+              background: 'transparent',
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+            },
+
+            rippleEffect: {
+              opacity: '0.12',
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              focus: {
+                background: currentColor('base', { alpha: 0.12 }),
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              hover: {
+                background: currentColor('base', { alpha: 0.04 }),
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              activated: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              disabled: {
+                background: 'transparent',
+
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+              },
+
+              rippleEffect: {
+                opacity: '0.12',
+              },
+            },
+          },
+        },
       },
 
       // Sizes

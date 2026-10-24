@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Button - Hue</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+        color: #6f7378;
+        margin: 16px 0 4px;
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Button - Hue</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content"></ion-content>
+    </ion-app>
+
+    <script>
+      const hues = ['bold', 'subtle'];
+      const fills = ['solid', 'outline', 'clear'];
+      const states = [
+        { name: 'default', attrs: '' },
+        { name: 'focused', attrs: 'class="ion-focused"' },
+        { name: 'activated', attrs: 'class="ion-activated"' },
+        { name: 'disabled', attrs: 'disabled' },
+      ];
+      const colors = [
+        '',
+        'primary',
+        'secondary',
+        'tertiary',
+        'success',
+        'warning',
+        'danger',
+        'light',
+        'medium',
+        'dark',
+      ];
+
+      const content = document.getElementById('content');
+
+      content.innerHTML = fills
+        .map((fill) =>
+          hues
+            .map(
+              (hue) => `
+                <h2>${fill} / ${hue}</h2>
+                ${states
+                  .map(
+                    (state) => `
+                      <div class="row" id="${fill}-${hue}-${state.name}">
+                        ${colors
+                          .map(
+                            (color) =>
+                              `<ion-button hue="${hue}" fill="${fill}" ${color ? `color="${color}"` : ''} ${
+                                state.attrs
+                              }>${color || 'Default'}</ion-button>`
+                          )
+                          .join('')}
+                      </div>
+                    `
+                  )
+                  .join('')}
+              `
+            )
+            .join('')
+        )
+        .join('');
+    </script>
+  </body>
+</html>

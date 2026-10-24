@@ -96,6 +96,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop({ reflect: true, mutable: true }) fill?: IonButtonFill | 'default';
 
   /**
+   * Set to `"bold"` for a button with vibrant, bold colors or to `"subtle"` for
+   * a button with muted, subtle colors.
+   *
+   * Defaults to `"bold"` if both the hue property and theme config are unset.
+   */
+  @Prop() hue?: Hue;
+
+  /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
@@ -294,10 +302,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   /**
-   * Gets the button hue from the theme config. Defaults to `bold` if it is unset.
+   * Gets the button hue. Uses the `hue` property if set, otherwise
+   * checks the theme config. Defaults to `bold` if neither is set.
    */
   get hueValue(): Hue {
-    return config.getObjectValue('IonButton.hue', 'bold') as Hue;
+    const hueConfig = config.getObjectValue('IonButton.hue', 'bold') as Hue;
+
+    return this.hue ?? hueConfig;
   }
 
   /**
@@ -494,7 +505,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [`${buttonType}-size-${sizeValue}`]: true,
           [`${buttonType}-shape-${shapeValue}`]: true,
           [`${buttonType}-fill-${fillValue}`]: true,
-          // TODO(FW-6838): read the hue prop first in the hue PR
           [`${buttonType}-hue-${hueValue}`]: true,
           [`${buttonType}-strong`]: strong,
           'in-datetime': this.inDatetime,
