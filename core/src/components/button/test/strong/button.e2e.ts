@@ -8,59 +8,36 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: strong'), () => {
-    test('should render strong button', async ({ page }) => {
+    test('should render strong buttons', async ({ page }) => {
       await page.setContent(
         `
-         <ion-button fill="solid" strong="true">Button</ion-button>
-       `,
-        config
-      );
+        <style>
+          .strong-container {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            gap: 10px;
+            padding: 6px;
+          }
+        </style>
 
-      const wrapper = page.locator('ion-button');
-
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-strong`));
-    });
-    test('should render strong clear button', async ({ page }) => {
-      await page.setContent(
-        `
-         <ion-button fill="clear" strong="true">Button</ion-button>
-       `,
-        config
-      );
-
-      const wrapper = page.locator('ion-button');
-
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-clear-strong`));
-    });
-  });
-  test.describe(title('in ion-buttons'), () => {
-    test('should render strong button', async ({ page }) => {
-      await page.setContent(
-        `
+        <div class="strong-container">
+          <ion-button fill="solid" strong="true">Button</ion-button>
+          <ion-button fill="clear" strong="true">Button</ion-button>
           <ion-buttons>
             <ion-button strong="true" fill="solid">Button</ion-button>
           </ion-buttons>
-        `,
-        config
-      );
-
-      const wrapper = page.locator('ion-button');
-
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-strong-in-buttons`));
-    });
-    test('should render strong clear button', async ({ page }) => {
-      await page.setContent(
-        `
           <ion-buttons>
             <ion-button strong="true" fill="clear">Button</ion-button>
           </ion-buttons>
-        `,
+        </div>
+      `,
         config
       );
 
-      const wrapper = page.locator('ion-button');
+      const container = page.locator('.strong-container');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-clear-strong-in-buttons`));
+      await expect(container).toHaveScreenshot(screenshot(`button-strong`));
     });
   });
 });
