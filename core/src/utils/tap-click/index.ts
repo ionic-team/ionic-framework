@@ -3,10 +3,14 @@ import { doc } from '@utils/browser';
 import type { Config } from '../../interface';
 import { pointerCoord } from '../helpers';
 
-export const startTapClick = (config: Config) => {
+let currentTapClickCleanup: (() => void) | undefined;
+
+export const startTapClick = (config: Config): (() => void) => {
   if (doc === undefined) {
-    return;
+    return () => {};
   }
+
+  currentTapClickCleanup?.();
 
   let lastActivated = 0;
 
@@ -137,6 +141,20 @@ export const startTapClick = (config: Config) => {
    * ion-content's scroll events.
    */
   doc.addEventListener('pointercancel', cancelActive, true);
+
+  const cleanup = () => {
+    doc.removeEventListener('ionGestureCaptured', cancelActive);
+    doc.removeEventListener('pointerdown', pointerDown, true);
+    doc.removeEventListener('pointerup', pointerUp, true);
+    doc.removeEventListener('pointercancel', cancelActive, true);
+    if (currentTapClickCleanup === cleanup) {
+      currentTapClickCleanup = undefined;
+    }
+  };
+
+  currentTapClickCleanup = cleanup;
+
+  return cleanup;
 };
 
 // TODO(FW-2832): type
