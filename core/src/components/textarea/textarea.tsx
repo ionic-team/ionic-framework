@@ -786,6 +786,7 @@ export class Textarea implements ComponentInterface {
             {this.renderLabel()}
             <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
               <textarea
+                value={value}
                 class="native-textarea"
                 ref={(el) => (this.nativeInput = el)}
                 id={inputId}
@@ -812,9 +813,7 @@ export class Textarea implements ComponentInterface {
                 aria-describedby={this.getHintTextID()}
                 aria-invalid={this.isInvalid ? 'true' : undefined}
                 {...this.inheritedAttributes}
-              >
-                {value}
-              </textarea>
+              ></textarea>
             </div>
           </div>
           <div class="textarea-end" ref={(el) => (this.endContainerEl = el)}>
