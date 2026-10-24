@@ -129,6 +129,53 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       const item = page.locator('ion-item');
       await expect(item).toHaveScreenshot(screenshot(`input-with-clear-button-item-color`));
     });
+
+    test('should retain opacity: 1 and render a visible focus indicator when the clear button receives keyboard focus', async ({ page, browserName }) => {
+      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+
+      await page.setContent(
+        `
+        <ion-input label="my label" value="abc" clear-input="true"></ion-input>
+      `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      const nativeInput = input.locator('input');
+      const clearButton = input.locator('.input-clear-icon');
+
+      await nativeInput.focus();
+      await page.keyboard.press(tabKey);
+
+      await expect(clearButton).toBeFocused();
+      await expect(clearButton).toHaveCSS('opacity', '1');
+      await expect(clearButton).toHaveCSS('outline-style', 'solid');
+      await expect(clearButton).toHaveCSS('outline-width', '2px');
+    });
+
+    test('should have default aria-label "reset" on clear button', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input label="my label" value="abc" clear-input="true"></ion-input>
+      `,
+        config
+      );
+
+      const clearButton = page.locator('ion-input .input-clear-icon');
+      await expect(clearButton).toHaveAttribute('aria-label', 'reset');
+    });
+
+    test('should reflect custom clearButtonText on clear button aria-label', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input label="my label" value="abc" clear-input="true" clear-button-text="Clear text"></ion-input>
+      `,
+        config
+      );
+
+      const clearButton = page.locator('ion-input .input-clear-icon');
+      await expect(clearButton).toHaveAttribute('aria-label', 'Clear text');
+    });
   });
 
   test.describe(title('input: click'), () => {
