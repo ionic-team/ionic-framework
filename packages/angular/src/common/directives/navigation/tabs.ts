@@ -5,6 +5,7 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
+  inject,
   Output,
   ViewChild,
   AfterViewInit,
@@ -12,6 +13,7 @@ import {
 } from '@angular/core';
 import type { Params } from '@angular/router';
 
+import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 
 import { StackDidChangeEvent, StackWillChangeEvent } from './stack-utils';
@@ -87,6 +89,8 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   private hasTab = false;
   private selectedTab?: { tab: string };
   private leavingTab?: any;
+
+  private config = inject(Config);
 
   constructor(private navCtrl: NavController) {}
 
@@ -214,6 +218,9 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
 
       // If on root tab, do not navigate to root tab again
       if (activeView?.url === tabRootUrl) {
+        if (this.config.getBoolean('tabTap', false)) {
+          activeView.element.querySelector('ion-content')?.scrollToTop(300);
+        }
         return;
       }
 
