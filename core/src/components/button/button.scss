@@ -487,6 +487,13 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 // Button: With a Badge
 // --------------------------------------------------
 
+// A badge can overflow its button, so the button sits above its siblings to keep the badge visible
+:host(.button-has-badge) {
+  position: relative;
+
+  z-index: 1;
+}
+
 :host(.button-has-badge) .button-native {
   // Keeps a badge taller than the label from making the button taller than its min height
   @include mixins.padding(var(--padding-top, 0), null, var(--padding-bottom, 0), null);
