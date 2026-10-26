@@ -193,19 +193,14 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   display: none;
 }
 
-// Text can't be selected, so a zero font size hides it. Letter spacing is inherited in px, so it's reset too.
-:host(.button-has-icon-only) .button-content {
+/**
+ * Text can't be selected, so the default slot passes it a zero font size.
+ * Letter spacing is inherited in px, so it's reset too.
+ */
+:host(.button-has-icon-only) slot:not([name]) {
   font-size: 0;
 
   letter-spacing: 0;
-}
-
-// Button: Content
-// --------------------------------------------------
-
-// Lays out the default slot's content as if this wrapper weren't there
-.button-content {
-  display: contents;
 }
 
 // Button: Slotted Elements
