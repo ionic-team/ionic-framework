@@ -120,8 +120,6 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     min-height: var(--ion-button-size-#{$size}-min-height);
 
     font-size: var(--ion-button-size-#{$size}-font-size);
-
-    line-height: var(--ion-button-size-#{$size}-line-height);
   }
 
   :host(.button-size-#{$size}) .button-native {
