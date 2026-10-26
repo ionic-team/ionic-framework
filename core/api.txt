@@ -599,7 +599,6 @@ ion-button,css-prop,--ion-button-size-large-icon-trailing-margin-bottom
 ion-button,css-prop,--ion-button-size-large-icon-trailing-margin-end
 ion-button,css-prop,--ion-button-size-large-icon-trailing-margin-start
 ion-button,css-prop,--ion-button-size-large-icon-trailing-margin-top
-ion-button,css-prop,--ion-button-size-large-line-height
 ion-button,css-prop,--ion-button-size-large-min-height
 ion-button,css-prop,--ion-button-size-large-min-width
 ion-button,css-prop,--ion-button-size-large-padding-bottom
@@ -643,7 +642,6 @@ ion-button,css-prop,--ion-button-size-medium-icon-trailing-margin-bottom
 ion-button,css-prop,--ion-button-size-medium-icon-trailing-margin-end
 ion-button,css-prop,--ion-button-size-medium-icon-trailing-margin-start
 ion-button,css-prop,--ion-button-size-medium-icon-trailing-margin-top
-ion-button,css-prop,--ion-button-size-medium-line-height
 ion-button,css-prop,--ion-button-size-medium-min-height
 ion-button,css-prop,--ion-button-size-medium-min-width
 ion-button,css-prop,--ion-button-size-medium-padding-bottom
@@ -687,7 +685,6 @@ ion-button,css-prop,--ion-button-size-small-icon-trailing-margin-bottom
 ion-button,css-prop,--ion-button-size-small-icon-trailing-margin-end
 ion-button,css-prop,--ion-button-size-small-icon-trailing-margin-start
 ion-button,css-prop,--ion-button-size-small-icon-trailing-margin-top
-ion-button,css-prop,--ion-button-size-small-line-height
 ion-button,css-prop,--ion-button-size-small-min-height
 ion-button,css-prop,--ion-button-size-small-min-width
 ion-button,css-prop,--ion-button-size-small-padding-bottom
