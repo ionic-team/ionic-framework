@@ -282,3 +282,32 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * TODO(FW-6417): the subtle palette fails contrast for success, warning and
+ * light, and in the high contrast palettes. Add them back once it is fixed.
+ */
+const SUBTLE_COLORS = ['primary', 'secondary', 'tertiary', 'danger', 'medium', 'dark'];
+
+configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
+  test.describe(title('button: subtle hue a11y'), () => {
+    test('should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        ['solid', 'outline', 'clear']
+          .map((fill) =>
+            [undefined, ...SUBTLE_COLORS]
+              .map(
+                (color) =>
+                  `<ion-button hue="subtle" fill="${fill}"${color ? ` color="${color}"` : ''}>Button</ion-button>`
+              )
+              .join('')
+          )
+          .join(''),
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
