@@ -3,7 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: size'), () => {
-    test('should render small and large buttons', async ({ page }) => {
+    test('should render small, medium and large buttons', async ({ page }) => {
       await page.setContent(
         `
         <style>
@@ -18,9 +18,13 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
 
         <div class="sizes-container">
           <ion-button size="small" fill="solid">Small Button</ion-button>
+          <ion-button size="medium" fill="solid">Medium Button</ion-button>
           <ion-button size="large" fill="solid">Large Button</ion-button>
           <ion-buttons>
             <ion-button size="small" fill="solid">Small Button</ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button size="medium" fill="solid">Medium Button</ion-button>
           </ion-buttons>
           <ion-buttons>
             <ion-button size="large" fill="solid">Large Button</ion-button>
