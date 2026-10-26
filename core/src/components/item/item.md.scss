@@ -213,6 +213,11 @@
 // Material Design Floating/Stacked Label
 // --------------------------------------------------
 
+::slotted(ion-label.label-stacked),
+::slotted(ion-label.label-floating) {
+  @include margin(0, 0, 0, 0);
+}
+
 :host(.item-label-stacked) ::slotted([slot="end"]),
 :host(.item-label-floating) ::slotted([slot="end"]) {
   @include margin(

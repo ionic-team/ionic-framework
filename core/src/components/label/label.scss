@@ -3,7 +3,7 @@
 // Label
 // --------------------------------------------------
 
-:host-context(.item) {
+:host(.in-item) {
   /**
    * @prop --color: Color of the label. This property is only available when using `ion-label` inside of an `ion-item`.
    */
@@ -29,29 +29,6 @@
   overflow: hidden;
 }
 
-:host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
-  cursor: default;
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-:host-context(.item-input) {
-  flex: initial;
-
-  max-width: 200px;
-  pointer-events: none;
-}
-
-:host-context(.item-textarea) {
-  align-self: baseline;
-}
-
-// Overflow hidden is required for the proper
-// margins between skeleton text elements
-:host-context(.item-skeleton-text) {
-  overflow: hidden;
-}
-
 // Fixed Inputs
 // --------------------------------------------------
 
@@ -69,6 +46,7 @@
 :host(.label-stacked),
 :host(.label-floating) {
   @include margin(null, null, 0, null);
+  @include transform-origin(start, top);
 
   align-self: stretch;
 
@@ -83,12 +61,24 @@
 // Headings
 // --------------------------------------------------
 
-::slotted(*) h1,
-::slotted(*) h2,
-::slotted(*) h3,
-::slotted(*) h4,
-::slotted(*) h5,
-::slotted(*) h6 {
+/**
+ * Slotted elements inherit from the slot rather than the host.
+ * `overflow` and `text-overflow` are not inherited by default, so the
+ * slot passes the host values through. This lets the slotted headings
+ * and paragraphs below inherit them to truncate with an ellipsis.
+ */
+slot {
+  text-overflow: inherit;
+
+  overflow: inherit;
+}
+
+::slotted(h1),
+::slotted(h2),
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
   text-overflow: inherit;
 
   overflow: inherit;

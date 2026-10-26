@@ -23,6 +23,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Datetime](#version-10x-datetime)
   - [Grid](#version-10x-grid)
   - [Input Otp](#version-10x-input-otp)
+  - [Label](#version-10x-label)
   - [Radio Group](#version-10x-radio-group)
   - [Textarea](#version-10x-textarea)
 - [Framework Specific](#version-10x-framework-specific)
@@ -222,6 +223,44 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 Converted `ion-input-otp` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 If you were targeting the internals of `ion-input-otp` in your CSS, you will need to target the `group`, `container`, `native`, `separator` or `description` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+<h4 id="version-10x-label">Label</h4>
+
+Converted `ion-label` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+`ion-label` does not render any internal elements, so there are no Shadow Parts to target. However, the following changes may affect existing styles:
+
+- The default heading (`h1` - `h6`) and paragraph (`p`) styles now only apply to elements that are direct children of `ion-label`. Headings and paragraphs nested inside another element, such as `ion-text`, no longer receive the label styles, and nested headings receive the global typography styles instead. To color the label text and headings, set the `color` property on `ion-label`. To color a paragraph or only part of the label, move `ion-text` inside the heading or paragraph:
+
+  ```diff
+  <ion-label>
+  - <ion-text color="primary">
+  -   <h3>Title</h3>
+  - </ion-text>
+  + <h3><ion-text color="primary">Title</ion-text></h3>
+    <p>Description</p>
+  </ion-label>
+  ```
+- Global element styles for headings and paragraphs, such as `h2 { font-size: 20px; }`, now take precedence over the default label styles for those elements. Previously, the label styles took precedence. To keep the label styles, scope the global styles so they do not match elements inside `ion-label`.
+
+  ```diff
+  - h2 {
+  + h2:not(ion-label > h2) {
+      font-size: 20px;
+    }
+  ```
+
+  The `:not()` selector increases the specificity of the global style. To keep the original specificity, wrap the exclusion in `:where()`:
+
+  ```css
+  h2:where(:not(ion-label > h2)) {
+    font-size: 20px;
+  }
+  ```
+
+  Complex selectors inside `:not()` require Chrome 88+, Firefox 84+ and Safari 9+, and `:where()` requires Chrome 88+, Firefox 78+ and Safari 14+.
+- The global typography styles in `typography.css` no longer apply to headings that are direct children of `ion-label`. These headings are styled by `ion-label` instead.
+- App styles that target `ion-label` directly now take precedence over the default `ion-label` styles. For example, a class that sets `color` on an `ion-label` inside of an `ion-item` previously had no effect because the label applied `var(--color)`, and it now changes the label color. Remove these styles if they are no longer wanted, or use the `--color` CSS variable to set the color of a label inside of an item.
 
 <h4 id="version-10x-radio-group">Radio Group</h4>
 
