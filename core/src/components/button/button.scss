@@ -415,14 +415,16 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
   /**
    * Only `md` mode renders a ripple. When it does, the ripple shows the press,
-   * so the button keeps its default background instead of the activated one.
+   * so the button keeps its default background and text color instead of the activated ones.
    */
   :host(.button-hue-bold.button-fill-#{$fill}.ion-activated) .button-native:has(ion-ripple-effect) {
     background: var(#{$token}-default-background);
+    color: var(#{$token}-default-color);
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-color.ion-activated) .button-native:has(ion-ripple-effect) {
     background: var(#{$token}-semantic-default-background);
+    color: var(#{$token}-semantic-default-color);
   }
 }
 
