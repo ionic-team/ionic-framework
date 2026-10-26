@@ -520,9 +520,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           <span class="button-inner">
             <slot name="icon-only" onSlotchange={this.iconOnlySlotChanged}></slot>
             <slot name="start"></slot>
-            <span class="button-content">
-              <slot onSlotchange={this.onSlotChanged}></slot>
-            </span>
+            <slot onSlotchange={this.onSlotChanged}></slot>
             <slot name="end"></slot>
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
