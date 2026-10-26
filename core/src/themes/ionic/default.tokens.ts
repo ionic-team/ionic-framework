@@ -817,10 +817,6 @@ export const defaultTheme: DefaultTheme = {
             size: dynamicFont(global.root, 14),
           },
 
-          line: {
-            height: dynamicFont(global.root, 20),
-          },
-
           icon: {
             font: {
               size: dynamicFont(global.root, 20),
@@ -935,10 +931,6 @@ export const defaultTheme: DefaultTheme = {
             size: dynamicFont(global.root, 16),
           },
 
-          line: {
-            height: dynamicFont(global.root, 24),
-          },
-
           icon: {
             font: {
               size: dynamicFont(global.root, 20),
@@ -1051,10 +1043,6 @@ export const defaultTheme: DefaultTheme = {
 
           font: {
             size: dynamicFont(global.root, 20),
-          },
-
-          line: {
-            height: dynamicFont(global.root, 24),
           },
 
           icon: {
