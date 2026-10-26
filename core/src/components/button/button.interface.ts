@@ -201,10 +201,6 @@ type IonButtonSizeDefinition = {
     size?: string | number;
   };
 
-  line?: {
-    height?: string | number;
-  };
-
   min?: {
     /** Also the width and height of an icon-only button, so it's a square as tall as a text button */
     height?: string | number;
