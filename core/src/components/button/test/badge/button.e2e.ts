@@ -131,3 +131,42 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
     });
   });
 });
+
+/**
+ * Stacking does not vary across modes or directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('button: badge stacking'), () => {
+    test('should keep a badge above the next button', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="display: flex">
+          <ion-button id="with-badge">
+            Button
+            <ion-badge vertical="top">999+</ion-badge>
+          </ion-button>
+          <ion-button id="next">Button</ion-button>
+        </div>
+      `,
+        config
+      );
+
+      const badgeBox = (await page.locator('#with-badge ion-badge').boundingBox())!;
+      const nextBox = (await page.locator('#next').boundingBox())!;
+
+      // The area where the badge overflows into the next button
+      const left = Math.max(badgeBox.x, nextBox.x);
+      const right = Math.min(badgeBox.x + badgeBox.width, nextBox.x + nextBox.width);
+      const top = Math.max(badgeBox.y, nextBox.y);
+      const bottom = Math.min(badgeBox.y + badgeBox.height, nextBox.y + nextBox.height);
+      expect(right).toBeGreaterThan(left);
+      expect(bottom).toBeGreaterThan(top);
+
+      const topmost = await page.evaluate(
+        ([x, y]) => document.elementFromPoint(x, y)?.closest('ion-badge, ion-button')?.tagName,
+        [(left + right) / 2, (top + bottom) / 2]
+      );
+      expect(topmost).toBe('ION-BADGE');
+    });
+  });
+});
