@@ -19,6 +19,7 @@ export const defaultTheme: DefaultTheme = {
 
   config: {
     formHighlight: true,
+    rippleEffect: true,
 
     components: {
       IonBadge: {
