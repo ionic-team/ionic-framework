@@ -1121,8 +1121,6 @@ export const defaultTheme: DefaultTheme = {
             items: 'flex-end',
           },
 
-          position: 'static',
-
           font: {
             size: dynamicFontMax(global.root, 1.8, 34),
             weight: 'var(--ion-font-weight-bold)',
