@@ -216,6 +216,44 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     // ---------------------------------------------------------------
+    // Screen reader labels
+    // ---------------------------------------------------------------
+
+    test('start and end days should be announced with their labels', async () => {
+      const datetime = await fixture.goto(config, RANGE_VALUE);
+
+      const day8 = datetime.locator('[data-month="6"][data-day="8"]');
+      const day12 = datetime.locator('[data-month="6"][data-day="12"]');
+      const day18 = datetime.locator('[data-month="6"][data-day="18"]');
+
+      await expect(day8).toHaveAttribute('aria-label', 'Wednesday, June 8, Start date');
+      await expect(day18).toHaveAttribute('aria-label', 'Saturday, June 18, End date');
+      // Days inside the range are not endpoints, so they get no label
+      await expect(day12).toHaveAttribute('aria-label', 'Sunday, June 12');
+    });
+
+    test('single-day range should be announced as both start and end', async () => {
+      const datetime = await fixture.goto(config, [RANGE_START, RANGE_START]);
+
+      const day8 = datetime.locator('[data-month="6"][data-day="8"]');
+
+      await expect(day8).toHaveAttribute('aria-label', 'Wednesday, June 8, Start date, End date');
+    });
+
+    test('days should be announced with custom labels', async () => {
+      const datetime = await fixture.goto(config, RANGE_VALUE, {
+        startDateLabel: 'Check in',
+        endDateLabel: 'Check out',
+      });
+
+      const day8 = datetime.locator('[data-month="6"][data-day="8"]');
+      const day18 = datetime.locator('[data-month="6"][data-day="18"]');
+
+      await expect(day8).toHaveAttribute('aria-label', 'Wednesday, June 8, Check in');
+      await expect(day18).toHaveAttribute('aria-label', 'Saturday, June 18, Check out');
+    });
+
+    // ---------------------------------------------------------------
     // ionChange event detail
     // ---------------------------------------------------------------
 
