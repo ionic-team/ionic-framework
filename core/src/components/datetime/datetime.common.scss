@@ -300,46 +300,40 @@
 // -----------------------------------
 
 /**
- * The range track uses a gradient background on in-range
- * wrappers to eliminate subpixel gaps between adjacent grid
- * cells (the background fills the full grid cell). Start and
- * end caps use ::before pseudo-elements for the half-width
- * track from the pill center to the cell edge.
+ * Each day in the range draws its own piece of the track with a
+ * ::before. In-range days fill the cell, while the start and end
+ * caps cover the half between the pill center and the next day.
+ *
+ * Grid columns are `1fr`, so cell edges land on fractional pixels
+ * and a cell's track can fall a hairline short of its neighbor's.
+ * Each day therefore extends 1px toward the next day in the range,
+ * which the next day paints over except inside such a gap.
  *
  * @prop --range-background: The background color of the range selection track.
  */
-
-/**
- * In-range cells use a gradient background directly on the
- * wrapper. The gradient draws a horizontal band at the track
- * height, vertically centered, with transparent above/below.
- */
-:host .calendar-day-wrapper-in-range {
-  background: linear-gradient(
-    to bottom,
-    transparent calc(50% - var(--range-track-height) / 2),
-    var(--range-background) calc(50% - var(--range-track-height) / 2),
-    var(--range-background) calc(50% + var(--range-track-height) / 2),
-    transparent calc(50% + var(--range-track-height) / 2)
-  );
-}
-
-/**
- * Start and end caps use ::before pseudo-elements for
- * the half-width track that extends from the pill center
- * to the cell edge.
- */
+:host .calendar-day-wrapper-in-range::before,
 :host .calendar-day-wrapper-range-start::before,
 :host .calendar-day-wrapper-range-end::before {
   position: absolute;
 
   top: 50%;
 
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+
   height: var(--range-track-height);
 
   transform: translateY(-50%);
 
-  background: var(--range-background);
+  /**
+   * `--range-background` is translucent by default, so it is layered
+   * over the datetime background to paint an opaque track. Where two
+   * days overlap, the color stays the same instead of doubling up
+   * into a darker line.
+   */
+  background:
+    linear-gradient(var(--range-background), var(--range-background)),
+    linear-gradient(var(--background), var(--background));
 
   content: "";
 
@@ -348,12 +342,23 @@
 
 :host .calendar-day-wrapper-range-start::before {
   inset-inline-start: 50%;
-  inset-inline-end: 0;
 }
 
 :host .calendar-day-wrapper-range-end::before {
-  inset-inline-start: 0;
   inset-inline-end: 50%;
+}
+
+/**
+ * Only extend toward a day that draws the track as well. The last
+ * day of a week is followed by the next row, and the next day is
+ * unpainted when it ends the selection or is disabled inside the
+ * range, so extending there would leave a 1px nub.
+ */
+:host .calendar-day-wrapper-in-range:not(:nth-child(7n)):has(+ .calendar-day-wrapper-in-range)::before,
+:host .calendar-day-wrapper-in-range:not(:nth-child(7n)):has(+ .calendar-day-wrapper-range-end)::before,
+:host .calendar-day-wrapper-range-start:not(:nth-child(7n)):has(+ .calendar-day-wrapper-in-range)::before,
+:host .calendar-day-wrapper-range-start:not(:nth-child(7n)):has(+ .calendar-day-wrapper-range-end)::before {
+  inset-inline-end: -1px;
 }
 
 /**
@@ -362,10 +367,6 @@
  */
 :host .calendar-day-wrapper-range-start.calendar-day-wrapper-range-end::before {
   display: none;
-}
-
-:host .calendar-day-wrapper-range-start.calendar-day-wrapper-range-end {
-  background: none;
 }
 
 /**
