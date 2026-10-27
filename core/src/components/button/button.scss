@@ -14,9 +14,6 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   /**
    * The undocumented padding hooks still work for the `ion-padding` classes set on
    * the button itself. Reset them so the button never inherits them from an ancestor.
-   *
-   * TODO(FW-6838): Parents such as ion-buttons, ion-item and ion-input still set these
-   * hooks on buttons. Move them to nested tokens, such as `IonItem.IonButton.size.small.padding`.
    */
   --padding-top: initial;
   --padding-end: initial;
