@@ -2316,8 +2316,8 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          // Month wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
-          if (!this.multiple) {
+          // Month wheel is navigation-only in multi-select and range modes as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.isMultipleMode && !this.isRangeMode) {
             this.setActiveParts({
               ...activePart,
               month: ev.detail.value,
@@ -2365,8 +2365,8 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          // Year wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
-          if (!this.multiple) {
+          // Year wheel is navigation-only in multi-select and range modes as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.isMultipleMode && !this.isRangeMode) {
             this.setActiveParts({
               ...activePart,
               year: ev.detail.value,
