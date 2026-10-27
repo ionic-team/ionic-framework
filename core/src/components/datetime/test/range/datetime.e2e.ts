@@ -63,6 +63,26 @@ class DatetimeRangeFixture {
     return this.datetime;
   }
 
+  /**
+   * Helper to get a day button in the visible month by day number.
+   * Uses .calendar-month:nth-child(2) to target the visible (center) month.
+   */
+  getVisibleDay(day: number) {
+    return this.datetime.locator(`.calendar-month:nth-child(2) [data-day="${day}"]`);
+  }
+
+  /**
+   * Helper to build an ISO date string from a visible day button's data attributes.
+   */
+  async getISOFromDay(day: Locator) {
+    const year = await day.getAttribute('data-year');
+    let month = await day.getAttribute('data-month');
+    if (month && month.length < 2) month = '0' + month;
+    const dayNum = await day.getAttribute('data-day');
+    const paddedDay = dayNum && dayNum.length < 2 ? '0' + dayNum : dayNum;
+    return `${year}-${month}-${paddedDay}`;
+  }
+
   async expectRangeDatePicker(id: string, screenshot: ScreenshotFn) {
     await expect(this.datetime).toHaveScreenshot(screenshot(`datetime-range-${id}`));
   }
@@ -108,8 +128,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const datetime = await fixture.goto(config);
       const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-      const day8 = datetime.locator('[data-month="6"][data-day="8"]');
-      const day18 = datetime.locator('[data-month="6"][data-day="18"]');
+      const day8 = fixture.getVisibleDay(8);
+      const day18 = fixture.getVisibleDay(18);
 
       await day8.click();
       await page.waitForChanges();
@@ -120,7 +140,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await day18.click();
       await ionChangeSpy.next();
 
-      await expect(datetime).toHaveJSProperty('value', RANGE_VALUE);
+      const startISO = await fixture.getISOFromDay(day8);
+      const endISO = await fixture.getISOFromDay(day18);
+      await expect(datetime).toHaveJSProperty('value', [startISO, endISO]);
     });
 
     test('clicking a day before the start should set a new start', async ({ page }) => {
@@ -164,13 +186,14 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const datetime = await fixture.goto(config);
       const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-      const day10 = datetime.locator('[data-month="6"][data-day="10"]');
+      const day10 = fixture.getVisibleDay(10);
       await day10.click();
       await page.waitForChanges();
       await day10.click();
       await ionChangeSpy.next();
 
-      await expect(datetime).toHaveJSProperty('value', ['2022-06-10', '2022-06-10']);
+      const dayISO = await fixture.getISOFromDay(day10);
+      await expect(datetime).toHaveJSProperty('value', [dayISO, dayISO]);
     });
 
     // ---------------------------------------------------------------
@@ -200,14 +223,17 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const datetime = await fixture.goto(config);
       const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-      const day8 = datetime.locator('[data-month="6"][data-day="8"]');
-      const day18 = datetime.locator('[data-month="6"][data-day="18"]');
+      const day8 = fixture.getVisibleDay(8);
+      const day18 = fixture.getVisibleDay(18);
 
       await day8.click();
       await day18.click();
+      await ionChangeSpy.next();
 
+      const startISO = await fixture.getISOFromDay(day8);
+      const endISO = await fixture.getISOFromDay(day18);
       expect(ionChangeSpy).toHaveReceivedEventDetail({
-        value: RANGE_VALUE,
+        value: [startISO, endISO],
       });
     });
 
@@ -258,8 +284,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('with buttons, value should not update until confirm is called', async ({ page }) => {
       const datetime = await fixture.goto(config, undefined, { showDefaultButtons: true });
 
-      const day8 = datetime.locator('[data-month="6"][data-day="8"]');
-      const day18 = datetime.locator('[data-month="6"][data-day="18"]');
+      const day8 = fixture.getVisibleDay(8);
+      const day18 = fixture.getVisibleDay(18);
 
       await day8.click();
       await day18.click();
@@ -268,14 +294,17 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Value should not be set until confirmed
       await expect(datetime).toHaveJSProperty('value', undefined);
 
+      const startISO = await fixture.getISOFromDay(day8);
+      const endISO = await fixture.getISOFromDay(day18);
+
       await datetime.evaluate((el: HTMLIonDatetimeElement) => el.confirm());
-      await expect(datetime).toHaveJSProperty('value', RANGE_VALUE);
+      await expect(datetime).toHaveJSProperty('value', [startISO, endISO]);
     });
 
     test('confirm should not close overlay with incomplete range', async ({ page }) => {
       const datetime = await fixture.goto(config, undefined, { showDefaultButtons: true });
 
-      const day8 = datetime.locator('[data-month="6"][data-day="8"]');
+      const day8 = fixture.getVisibleDay(8);
       await day8.click();
       await page.waitForChanges();
 
@@ -347,6 +376,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         ></ion-datetime>
         <script>
           const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-01'];
           datetime.isDateEnabled = (dateIsoString) => {
             const date = new Date(dateIsoString);
             return date.getUTCDate() !== 15;
