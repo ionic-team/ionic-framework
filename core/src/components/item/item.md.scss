@@ -259,8 +259,6 @@
 }
 
 :host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
-:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating),
-:host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
-:host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-md-text-color-focused;
 }
