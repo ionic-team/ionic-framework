@@ -12,8 +12,9 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
 :host {
   /**
-   * The undocumented padding hooks still work for the `ion-padding` classes set on
-   * the button itself. Reset them so the button never inherits them from an ancestor.
+   * Ancestors such as `.ion-padding` containers set `--padding-*` for themselves,
+   * and the button would inherit them. The reset limits them to values set on
+   * the button, such as its own `ion-padding` classes.
    */
   --padding-top: initial;
   --padding-end: initial;
