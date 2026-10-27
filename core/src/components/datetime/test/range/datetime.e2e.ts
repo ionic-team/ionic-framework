@@ -397,7 +397,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(day8).toHaveAttribute('disabled', '');
     });
 
-    test('readonly datetime should show range but not allow interaction', async ({ page }) => {
+    test('readonly datetime should show range but not allow interaction', async () => {
       const datetime = await fixture.goto(config, RANGE_VALUE, { readonly: true });
 
       const day8 = datetime.locator('[data-month="6"][data-day="8"]');
