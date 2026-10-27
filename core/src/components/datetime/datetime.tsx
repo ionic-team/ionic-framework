@@ -810,8 +810,7 @@ export class Datetime implements ComponentInterface {
     const { minParts, maxParts, parsedDayValues, isDateEnabled } = this;
 
     let cursor = getNextDay(start);
-    while (isBefore(cursor, end) || isSameDay(cursor, end)) {
-      if (isSameDay(cursor, end)) break;
+    while (isBefore(cursor, end)) {
       if (isDayDisabled(cursor, minParts, maxParts, parsedDayValues)) {
         return true;
       }
@@ -892,50 +891,10 @@ export class Datetime implements ComponentInterface {
   private setActivePartsRange = (parts: DatetimeParts) => {
     const current = this.rangeParts;
 
-    if (!current) {
-      // No range yet — start a new one
+    if (!current || isBefore(parts, current.start) || this.rangeContainsDisabledDate(current.start, parts)) {
       this.activeParts = { start: parts };
-      return;
-    }
-
-    const { start, end } = current;
-
-    if (end) {
-      // A complete range exists
-      if (isBefore(parts, start)) {
-        // Before range → new start
-        this.activeParts = { start: parts };
-      } else if (isSameDay(parts, start) || (isAfter(parts, start) && isBefore(parts, end))) {
-        // Within range (including start) → set new end
-        if (this.rangeContainsDisabledDate(start, parts)) {
-          this.activeParts = { start: parts };
-        } else {
-          this.activeParts = { start, end: parts };
-        }
-      } else {
-        // After or equal to end → new end
-        if (this.rangeContainsDisabledDate(start, parts)) {
-          this.activeParts = { start: parts };
-        } else {
-          this.activeParts = { start, end: parts };
-        }
-      }
     } else {
-      // Only start date, no end yet
-      if (isSameDay(parts, start)) {
-        // Same day → single-day range
-        this.activeParts = { start, end: parts };
-      } else if (isBefore(parts, start)) {
-        // Before start → new start
-        this.activeParts = { start: parts };
-      } else {
-        // After start → set end if no disabled dates in between
-        if (this.rangeContainsDisabledDate(start, parts)) {
-          this.activeParts = { start: parts };
-        } else {
-          this.activeParts = { start, end: parts };
-        }
-      }
+      this.activeParts = { start: current.start, end: parts };
     }
   };
 
