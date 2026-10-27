@@ -15,6 +15,17 @@ const getTextBox = (el: Element) => {
 };
 
 /**
+ * Measures where the back button's text is drawn.
+ */
+const getBackButtonTextBox = (el: Element) => {
+  const range = document.createRange();
+  range.selectNodeContents(el.shadowRoot!.querySelector('.button-text')!);
+  const { left, right } = range.getBoundingClientRect();
+
+  return { left, right };
+};
+
+/**
  * Pauses the transition once the large title copy starts animating,
  * on its first frame or just before its last one.
  */
@@ -92,6 +103,41 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
         expect(Math.abs(copyBox.left - titleBox.left)).toBeLessThanOrEqual(1);
         expect(Math.abs(copyBox.right - titleBox.right)).toBeLessThanOrEqual(1);
+      });
+
+      test(`should start the back button copy on the title's side when the title is empty in the ${theme} theme`, async ({
+        page,
+      }) => {
+        await goto(page);
+        await page.locator('page-inbox ion-title[size="large"]').evaluate((el) => (el.textContent = ''));
+
+        const transitionPaused = pauseTransition(page, 'first');
+        await page.locator('page-inbox button.go[data-back-text="Back"]').click();
+        await transitionPaused;
+
+        const copyBox = await page.locator('ion-back-button.ion-cloned-element').evaluate(getBackButtonTextBox);
+        const middle = page.viewportSize()!.width / 2;
+
+        if (config.direction === 'rtl') {
+          expect(copyBox.right).toBeGreaterThan(middle);
+        } else {
+          expect(copyBox.left).toBeLessThan(middle);
+        }
+      });
+
+        const getTextStyles = (el: Element) => {
+          const { color, fontFamily } = getComputedStyle(el);
+          return { color, fontFamily };
+        };
+        const titleStyles = await largeTitle.evaluate(getTextStyles);
+
+        const transitionPaused = pauseTransition(page, 'first');
+        await page.locator('page-inbox button.go[data-back-text="match"]').click();
+        await transitionPaused;
+
+        const copyStyles = await page.locator('ion-title.ion-cloned-element').evaluate(getTextStyles);
+
+        expect(copyStyles).toEqual(titleStyles);
       });
 
       [

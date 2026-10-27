@@ -46,7 +46,7 @@ const getLargeTitleTextBox = (largeTitleEl: HTMLIonTitleElement, rtl: boolean) =
    * How far the drawn text sits from where the shrunk box starts: 0 for a
    * start-aligned title, more for a centered one. The copies start there.
    */
-  const startShift = Math.max(0, rtl ? box.right - text.right : text.left - box.left);
+  const startShift = text.width === 0 ? 0 : Math.max(0, rtl ? box.right - text.right : text.left - box.left);
 
   return { box, startShift };
 };
