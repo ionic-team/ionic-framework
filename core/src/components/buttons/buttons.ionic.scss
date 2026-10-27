@@ -4,6 +4,7 @@
 // Ionic Buttons
 // --------------------------------------------------
 
+// TODO(FW-6839): Move these button padding hooks to IonButtons.IonButton tokens
 ::slotted(*) .button-has-icon-only {
   --padding-top: 0;
   --padding-bottom: 0;
