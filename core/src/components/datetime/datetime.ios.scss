@@ -341,15 +341,13 @@
 }
 
 /**
- * The wrapper has `height: 0` to collapse and let content
- * determine its size. However, this breaks percentage-based
- * gradient calculations for the range track (50% of 0 = 0).
- * Override to `auto` so the gradient reference height matches
- * the actual rendered height.
+ * The wrapper has `height: 0` which clips backgrounds to the
+ * border-box (~24px) and breaks percentage-based gradient stops.
+ * Override to `auto` so the gradient fills correctly. To prevent
+ * range rows from being taller than non-range rows, also set
+ * non-range wrappers to `auto` when range selection is active.
  */
-:host .calendar-day-wrapper-in-range,
-:host .calendar-day-wrapper-range-start,
-:host .calendar-day-wrapper-range-end {
+:host(.datetime-range) .calendar-day-wrapper {
   height: auto;
 }
 

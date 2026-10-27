@@ -3225,6 +3225,7 @@ export class Datetime implements ComponentInterface {
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,
             [`datetime-grid`]: isGridStyle,
+            [`datetime-range`]: this.isRangeMode,
           }),
         }}
       >

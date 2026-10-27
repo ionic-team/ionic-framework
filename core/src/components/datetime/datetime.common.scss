@@ -300,19 +300,19 @@
 // -----------------------------------
 
 /**
- * The range track uses a gradient background on the wrapper
- * itself for in-range cells (gap-free, since the background
- * fills the full grid cell) and ::before pseudo-elements
- * only for the half-width start / end caps.
+ * The range track uses a gradient background on in-range
+ * wrappers to eliminate subpixel gaps between adjacent grid
+ * cells (the background fills the full grid cell). Start and
+ * end caps use ::before pseudo-elements for the half-width
+ * track from the pill center to the cell edge.
  *
  * @prop --range-background: The background color of the range selection track.
  */
 
 /**
  * In-range cells use a gradient background directly on the
- * wrapper to avoid subpixel gaps between adjacent cells.
- * The gradient draws a horizontal band at the track height,
- * vertically centered.
+ * wrapper. The gradient draws a horizontal band at the track
+ * height, vertically centered, with transparent above/below.
  */
 :host .calendar-day-wrapper-in-range {
   background: linear-gradient(
