@@ -11,13 +11,14 @@ import { ariaAttributes, inheritAttributes } from '@utils/helpers';
  * Create the controller in `componentWillLoad`. It takes the initial copy and starts
  * watching right away, so `init()` is only needed to resume after a move.
  *
- * Two things to know before adopting it. Only the initial copy removes the attributes
- * from the host, so a value written after load sits on the host as well as on the
- * element it is applied to, which matters if the host has a role of its own. And an
- * attribute from the initial markup can never be removed, only overwritten, since the
- * copy already took it off the host and a `removeAttribute` there fires no mutation.
- * An empty string works for `aria-label` and friends, but a token-valued attribute
- * has to be set to its default instead, so `aria-pressed="false"` rather than empty.
+ * Each reflected write is removed from the host after it is copied, matching the initial
+ * inherit. Leaving a post-load value on the host as well would put two labelled nodes in
+ * the accessibility tree (for example VoiceOver stopping on both `ion-button` and its
+ * native control). An attribute that has already been copied off the host can never be
+ * cleared with `removeAttribute` there — only overwritten — since a removal of something
+ * already gone fires no mutation. An empty string works for `aria-label` and friends, but
+ * a token-valued attribute has to be set to its default instead, so `aria-pressed="false"`
+ * rather than empty.
  *
  * @internal
  * @param el The host element to copy from and watch.
@@ -40,9 +41,9 @@ export const createAttributeController = (
   const watchedAttributes = attributes.filter((attr) => !hostOwnedAttributes.includes(attr));
 
   /**
-   * The names still on the host, which is everything written after load. The initial
-   * copy removes what it captures, so a missing attribute only counts as a removal
-   * when its name is in here.
+   * The names still on the host, which is everything written after load that has not yet
+   * been cleared by `clearHostAttributes`. The initial copy removes what it captures, so
+   * a missing attribute only counts as a removal when its name is in here.
    */
   const hostWritten = new Set<string>();
 
@@ -52,6 +53,21 @@ export const createAttributeController = (
     } else {
       hostWritten.add(name);
     }
+  };
+
+  /**
+   * Drop reflected attributes from the host so assistive technology does not see a second
+   * labelled node. Any removal mutations this causes must be drained so they do not wipe
+   * the copy that was just taken.
+   */
+  const clearHostAttributes = (changed: Attributes) => {
+    for (const name of Object.keys(changed)) {
+      if (changed[name] !== null && el.hasAttribute(name)) {
+        el.removeAttribute(name);
+        hostWritten.delete(name);
+      }
+    }
+    observer?.takeRecords();
   };
 
   /**
@@ -81,6 +97,7 @@ export const createAttributeController = (
 
     if (Object.keys(changed).length > 0) {
       inherited = { ...inherited, ...changed };
+      clearHostAttributes(changed);
       onChange();
     }
   };
@@ -107,6 +124,7 @@ export const createAttributeController = (
       }
 
       inherited = { ...inherited, ...changed };
+      clearHostAttributes(changed);
       onChange();
     });
 

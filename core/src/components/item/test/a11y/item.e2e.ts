@@ -226,19 +226,22 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeItem).toHaveAttribute('aria-label', 'initial');
 
-      // Post-load writes stay on the host and are copied to the native element.
+      // Post-load writes are copied to the native element and cleared from the host.
       await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
-      await expect(host).toHaveAttribute('aria-label', 'second');
+      await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeItem).toHaveAttribute('aria-label', 'second');
 
-      // An empty string is a valid ARIA attribute value.
+      // An empty string is a valid ARIA attribute value; it is also cleared from the host.
       await host.evaluate((el) => el.setAttribute('aria-label', ''));
+      await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeItem).toHaveAttribute('aria-label', '');
 
-      // A removal of a post-load write does reach the native element.
-      await host.evaluate((el) => el.removeAttribute('aria-label'));
-      await expect(host).not.toHaveAttribute('aria-label');
-      await expect(nativeItem).not.toHaveAttribute('aria-label');
+      // Overwrite again, then clear via empty string — same path as initial markup,
+      // since a host removeAttribute after reflect changes nothing.
+      await host.evaluate((el) => el.setAttribute('aria-label', 'third'));
+      await expect(nativeItem).toHaveAttribute('aria-label', 'third');
+      await host.evaluate((el) => el.setAttribute('aria-label', ''));
+      await expect(nativeItem).toHaveAttribute('aria-label', '');
     });
 
     test('should not sync ARIA attributes other than aria-label', async ({ page }) => {
