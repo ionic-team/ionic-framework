@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input OTP - a11y</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/core.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <h1>Input OTP</h1>
+
+      <h2>Host aria-label, description and hint text</h2>
+      <ion-input-otp
+        id="hint"
+        length="4"
+        aria-label="PIN"
+        helper-text="Check your email for the code"
+        error-text="The code is incorrect"
+      >
+        Didn't get a code?
+      </ion-input-otp>
+      <button id="toggle-invalid">Toggle invalid</button>
+
+      <h2>Host aria-labelledby</h2>
+      <p id="otp-label">Verification code</p>
+      <ion-input-otp length="4" aria-labelledby="otp-label"></ion-input-otp>
+
+      <h2>Label formatter</h2>
+      <ion-input-otp id="formatter" length="4"></ion-input-otp>
+
+      <h2>Host aria-describedby and aria-invalid</h2>
+      <ion-input-otp id="host-aria" length="4" aria-label="Code"></ion-input-otp>
+      <p id="server-error">The server rejected this code</p>
+      <button id="toggle-host-aria">Toggle host error</button>
+    </main>
+
+    <script>
+      const hint = document.querySelector('#hint');
+      document.querySelector('#toggle-invalid').addEventListener('click', () => {
+        hint.classList.toggle('ion-invalid');
+        hint.classList.add('ion-touched');
+      });
+
+      document.querySelector('#formatter').inputLabelFormatter = (index, length) => `Ziffer ${index + 1} von ${length}`;
+
+      const hostAria = document.querySelector('#host-aria');
+      document.querySelector('#toggle-host-aria').addEventListener('click', () => {
+        if (hostAria.hasAttribute('aria-invalid')) {
+          hostAria.removeAttribute('aria-invalid');
+          hostAria.removeAttribute('aria-describedby');
+        } else {
+          hostAria.setAttribute('aria-invalid', 'true');
+          hostAria.setAttribute('aria-describedby', 'server-error');
+        }
+      });
+    </script>
+  </body>
+</html>

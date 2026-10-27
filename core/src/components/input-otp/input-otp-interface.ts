@@ -17,6 +17,8 @@ export interface InputOtpCompleteEventDetail {
   event?: Event;
 }
 
+export type InputOtpLabelFormatter = (index: number, length: number) => string;
+
 export interface InputOtpCustomEvent<T = InputOtpChangeEventDetail> extends CustomEvent {
   detail: T;
   target: HTMLIonInputOtpElement;
