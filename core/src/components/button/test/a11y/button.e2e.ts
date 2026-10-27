@@ -2,6 +2,8 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_BUTTON_FILLS } from '../../button.interface';
+
 configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('button: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
@@ -293,16 +295,14 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
   test.describe(title('button: subtle hue a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
-        ['solid', 'outline', 'clear']
-          .map((fill) =>
-            [undefined, ...COLORS]
-              .map(
-                (color) =>
-                  `<ion-button hue="subtle" fill="${fill}"${color ? ` color="${color}"` : ''}>Button</ion-button>`
-              )
-              .join('')
-          )
-          .join(''),
+        ION_BUTTON_FILLS.map((fill) =>
+          [undefined, ...COLORS]
+            .map(
+              (color) =>
+                `<ion-button hue="subtle" fill="${fill}"${color ? ` color="${color}"` : ''}>Button</ion-button>`
+            )
+            .join('')
+        ).join(''),
         config
       );
 
