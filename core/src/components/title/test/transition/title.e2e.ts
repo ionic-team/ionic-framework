@@ -26,6 +26,12 @@ const getBackButtonTextBox = (el: Element) => {
 };
 
 /**
+ * The copies only roughly overlap what they animate from and to, since
+ * their font sizes differ, so their start edges are compared loosely.
+ */
+const START_EDGE_TOLERANCE = 16;
+
+/**
  * Pauses the transition once the large title copy starts animating,
  * on its first frame or just before its last one.
  */
@@ -103,6 +109,34 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
         expect(Math.abs(copyBox.left - titleBox.left)).toBeLessThanOrEqual(1);
         expect(Math.abs(copyBox.right - titleBox.right)).toBeLessThanOrEqual(1);
+      });
+
+      test(`should end the large title copy on the back button text in the ${theme} theme`, async ({ page }) => {
+        await goto(page);
+
+        const transitionPaused = pauseTransition(page, 'last');
+        await page.locator('page-inbox button.go[data-back-text="match"]').click();
+        await transitionPaused;
+
+        const copyBox = await page.locator('ion-title.ion-cloned-element').evaluate(getTextBox);
+        const backTextBox = await page.locator('page-message ion-back-button').evaluate(getBackButtonTextBox);
+        const edge = config.direction === 'rtl' ? 'right' : 'left';
+
+        expect(Math.abs(copyBox[edge] - backTextBox[edge])).toBeLessThanOrEqual(START_EDGE_TOLERANCE);
+      });
+
+      test(`should start the back button copy on the title text in the ${theme} theme`, async ({ page }) => {
+        await goto(page);
+        const titleBox = await page.locator('page-inbox ion-title[size="large"]').evaluate(getTextBox);
+
+        const transitionPaused = pauseTransition(page, 'first');
+        await page.locator('page-inbox button.go[data-back-text="match"]').click();
+        await transitionPaused;
+
+        const copyBox = await page.locator('ion-back-button.ion-cloned-element').evaluate(getBackButtonTextBox);
+        const edge = config.direction === 'rtl' ? 'right' : 'left';
+
+        expect(Math.abs(copyBox[edge] - titleBox[edge])).toBeLessThanOrEqual(START_EDGE_TOLERANCE);
       });
 
       test(`should start the back button copy on the title's side when the title is empty in the ${theme} theme`, async ({
