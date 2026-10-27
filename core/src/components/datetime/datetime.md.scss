@@ -60,6 +60,7 @@
 }
 
 // These styles are copied from buttons.md.scss
+// TODO(FW-6893): Move these button padding hooks to IonDatetime.IonButton tokens
 .calendar-next-prev ion-button {
   --padding-top: 12px;
   --padding-end: 12px;
