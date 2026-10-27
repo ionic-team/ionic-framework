@@ -1,3 +1,5 @@
+// TODO(FW-6850): Remove when label is migrated to Modular Ionic.
+@use "../../foundations/ionic.vars" as ionic;
 @import "./label";
 @import "./label.md.vars";
 
@@ -61,11 +63,11 @@
  * tokens for its headings.
  */
 :host(.ionic) ::slotted(h1) {
-  line-height: 1.285714;
+  line-height: map-get(ionic.$ion-heading-h1-regular, line-height);
 }
 
 :host(.ionic) ::slotted(h2) {
-  line-height: 1.384615;
+  line-height: map-get(ionic.$ion-heading-h2-regular, line-height);
 }
 
 ::slotted(h3),
