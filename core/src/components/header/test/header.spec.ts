@@ -76,6 +76,6 @@ describe('header: large title origin', () => {
     scaleLargeTitles(headerIndex.toolbars, 1.1);
 
     const innerTitle = title.shadowRoot!.querySelector<HTMLElement>('.toolbar-title')!;
-    expect(innerTitle.style.transformOrigin).not.toContain('undefined');
+    expect(innerTitle.style.transformOrigin).toBe('left center');
   });
 });
