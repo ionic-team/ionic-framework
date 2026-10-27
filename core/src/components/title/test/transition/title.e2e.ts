@@ -159,6 +159,18 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
         }
       });
 
+      test(`should give the copy the font and color the title inherits from its toolbar in the ${theme} theme`, async ({
+        page,
+      }) => {
+        await goto(page);
+
+        const largeTitle = page.locator('page-inbox ion-title[size="large"]');
+        await largeTitle.evaluate((el) => {
+          const toolbar = el.closest('ion-toolbar')!;
+          toolbar.style.setProperty('font-family', 'monospace');
+          toolbar.style.setProperty('--color', 'rgb(200, 0, 0)');
+        });
+
         const getTextStyles = (el: Element) => {
           const { color, fontFamily } = getComputedStyle(el);
           return { color, fontFamily };
