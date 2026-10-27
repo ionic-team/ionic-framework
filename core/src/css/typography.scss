@@ -51,6 +51,9 @@ a {
 }
 
 /**
+ * TODO(FW-7085): Move these heading rules into a stylesheet shared by all
+ * themes so the `ion-label` exclusion is defined once.
+ *
  * Headings slotted directly into `ion-label` are styled by the label's
  * shadow stylesheet. Document styles always win over `::slotted()` styles,
  * so these rules skip those headings to let the label styles apply.
