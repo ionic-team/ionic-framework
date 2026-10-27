@@ -461,6 +461,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       strong,
     } = this;
     const mode = getIonMode(this);
+    // TODO(FW-7893): remove the mode fallback once the base theme's config always applies
+    const showRipple = config.getBoolean('rippleEffect', mode === 'md');
     const inheritedAttributes = this.ariaController?.attributes ?? {};
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
@@ -523,7 +525,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             <slot onSlotchange={this.onSlotChanged}></slot>
             <slot name="end"></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          {showRipple && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </TagType>
       </Host>
     );
