@@ -194,3 +194,49 @@ describe('button: hue', () => {
     expect(page.root!.classList.contains('button-hue-subtle')).toBe(true);
   });
 });
+
+describe('button: ripple effect', () => {
+  afterEach(() => {
+    config.reset({});
+  });
+
+  it('should render a ripple in md mode when the theme config has no rippleEffect', async () => {
+    const page = await newSpecPage({
+      components: [Button],
+      html: `<ion-button mode="md">Button</ion-button>`,
+    });
+
+    expect(page.root!.shadowRoot!.querySelector('ion-ripple-effect')).not.toBeNull();
+  });
+
+  it('should not render a ripple in ios mode when the theme config has no rippleEffect', async () => {
+    const page = await newSpecPage({
+      components: [Button],
+      html: `<ion-button mode="ios">Button</ion-button>`,
+    });
+
+    expect(page.root!.shadowRoot!.querySelector('ion-ripple-effect')).toBeNull();
+  });
+
+  it('should render a ripple in ios mode when rippleEffect is enabled', async () => {
+    config.reset({ rippleEffect: true });
+
+    const page = await newSpecPage({
+      components: [Button],
+      html: `<ion-button mode="ios">Button</ion-button>`,
+    });
+
+    expect(page.root!.shadowRoot!.querySelector('ion-ripple-effect')).not.toBeNull();
+  });
+
+  it('should not render a ripple in md mode when rippleEffect is disabled', async () => {
+    config.reset({ rippleEffect: false });
+
+    const page = await newSpecPage({
+      components: [Button],
+      html: `<ion-button mode="md">Button</ion-button>`,
+    });
+
+    expect(page.root!.shadowRoot!.querySelector('ion-ripple-effect')).toBeNull();
+  });
+});
