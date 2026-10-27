@@ -458,7 +458,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the backdrop will be visible.
+          * If `true`, the backdrop will be visible. This property controls whether or not the backdrop's default background is shown. It does not control whether or not the backdrop blocks interaction, and it does not override a custom background set on `ion-backdrop`.
           * @default true
          */
         "visible": boolean;
@@ -1125,7 +1125,7 @@ export namespace Components {
     }
     interface IonDatetime {
         /**
-          * Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
+          * Emits the ionCancel event, discards any unconfirmed selection, and optionally closes the popover or modal that the datetime was presented in.
           * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
          */
         "cancel": (closeOverlay?: boolean) => Promise<void>;
@@ -6380,7 +6380,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the backdrop will be visible.
+          * If `true`, the backdrop will be visible. This property controls whether or not the backdrop's default background is shown. It does not control whether or not the backdrop blocks interaction, and it does not override a custom background set on `ion-backdrop`.
           * @default true
          */
         "visible"?: boolean;
