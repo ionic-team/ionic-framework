@@ -18,6 +18,9 @@ body {
 }
 
 /**
+ * TODO(FW-7085): Move these heading rules into a stylesheet shared by all
+ * themes so the `ion-label` exclusion is defined once.
+ *
  * Override html headings based on heading tokens.
  *
  * Headings slotted directly into `ion-label` are styled by the label's
