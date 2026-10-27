@@ -1052,7 +1052,7 @@ export const defaultTheme: DefaultTheme = {
         bold: {
           semantic: {
             default: {
-              color: currentColor('base'),
+              color: currentColor('foreground'),
             },
           },
         },
@@ -1120,8 +1120,6 @@ export const defaultTheme: DefaultTheme = {
           align: {
             items: 'flex-end',
           },
-
-          position: 'static',
 
           font: {
             size: dynamicFontMax(global.root, 1.8, 34),

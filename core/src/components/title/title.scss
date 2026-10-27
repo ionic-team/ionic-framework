@@ -41,7 +41,6 @@
    * @prop --ion-title-size-large-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the large title
    * @prop --ion-title-size-large-padding-bottom: Bottom padding of the large title
    * @prop --ion-title-size-large-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the large title
-   * @prop --ion-title-size-large-position: Position of the large title
    * @prop --ion-title-size-large-text-align: Text alignment of the large title
    *
    * @prop --ion-title-hue-bold-semantic-default-color: Text color of the `bold` hue when a semantic color is applied
@@ -153,8 +152,6 @@
     var(--ion-title-size-large-padding-bottom),
     var(--ion-title-size-large-padding-start)
   );
-
-  position: var(--ion-title-size-large-position);
 
   align-items: var(--ion-title-size-large-align-items);
 

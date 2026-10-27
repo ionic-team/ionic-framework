@@ -533,6 +533,7 @@ const animateLargeTitle = (
   clonedTitleEl.innerText = largeTitleEl.innerText;
   clonedTitleEl.size = largeTitleEl.size;
   clonedTitleEl.color = largeTitleEl.color;
+  clonedTitleEl.hue = largeTitleEl.hue;
 
   clonedLargeTitleAnimation.addElement(clonedTitleEl);
 

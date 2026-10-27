@@ -15,9 +15,6 @@ type IonTitleSizeDefinition = {
 
   padding?: IonPadding;
 
-  // TODO(FW-6864): remove for small and medium when ion-toolbar titlePlacement works in every theme (ios center, md start)
-  position?: string;
-
   text?: {
     align?: string;
   };
@@ -53,8 +50,9 @@ export type IonTitleRecipe = {
   };
 
   size?: {
-    small?: IonTitleSizeDefinition;
-    medium?: IonTitleSizeDefinition;
+    // TODO(FW-6864): remove position when ion-toolbar titlePlacement works in every theme (ios center, md start)
+    small?: IonTitleSizeDefinition & { position?: string };
+    medium?: IonTitleSizeDefinition & { position?: string };
 
     large?: IonTitleSizeDefinition & {
       align?: {

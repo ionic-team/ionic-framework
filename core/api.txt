@@ -2831,7 +2831,6 @@ ion-title,css-prop,--ion-title-size-large-padding-bottom
 ion-title,css-prop,--ion-title-size-large-padding-end
 ion-title,css-prop,--ion-title-size-large-padding-start
 ion-title,css-prop,--ion-title-size-large-padding-top
-ion-title,css-prop,--ion-title-size-large-position
 ion-title,css-prop,--ion-title-size-large-text-align
 ion-title,css-prop,--ion-title-size-medium-font-size
 ion-title,css-prop,--ion-title-size-medium-font-weight
