@@ -1,7 +1,7 @@
 import type { Hue, IonMargin, IonPadding } from '../../themes/themes.interfaces';
 import type { SpinnerSize } from '../spinner/spinner.interfaces';
 
-export const ION_BUTTON_FILLS = ['clear', 'outline', 'solid'] as const;
+export const ION_BUTTON_FILLS = ['solid', 'outline', 'clear'] as const;
 export type IonButtonFill = (typeof ION_BUTTON_FILLS)[number];
 
 export const ION_BUTTON_SHAPES = ['crisp', 'soft', 'round', 'rectangular'] as const;
