@@ -541,6 +541,7 @@ The following breaking changes apply to `ion-title`:
 4. The `title-rtl` class has been removed. <sup>[4](#version-10x-title-rtl-class)</sup>
 5. Theme classes (`ion-title.md`, `ion-title.ios`) are no longer supported. <sup>[5](#version-10x-title-theme-classes)</sup>
 6. In the `md` theme, a tap on the title's padding no longer counts as a tap on the title. <sup>[6](#version-10x-title-padding-taps)</sup>
+7. The `ios` small title has more padding at its sides, and the `md` title has tighter letter spacing. <sup>[7](#version-10x-title-spacing)</sup>
 
 <h5 id="version-10x-title-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -593,6 +594,11 @@ Remove any instances that target the theme classes: `ion-title.md`, `ion-title.i
 In the `md` theme, a tap on the padding at the start or end of `ion-title` now reaches the element behind it, usually `ion-toolbar`, instead of the title. This matches the `ios` and `ionic` themes. Taps on the text, and on the rest of the title, still reach `ion-title`.
 
 If an app listens for taps on `ion-title` and needs them to include the padding, listen on `ion-toolbar` instead.
+
+<h5 id="version-10x-title-spacing">Spacing</h5>
+
+- The `ios` small title's start and end padding is now `16px` instead of `9px`, in accordance with the iOS guidelines. To revert to the previous appearance, set `IonTitle.size.small.padding.start` and `IonTitle.size.small.padding.end` to `9px` for global styles, or `--ion-title-size-small-padding-start` and `--ion-title-size-small-padding-end` for component-specific styles.
+- The `md` title's letter spacing is now `0.0075em` instead of `0.0125em`, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set `IonTitle.letter.spacing` to `0.0125em` for global styles, or `--ion-title-letter-spacing` for component-specific styles.
 
 <h4 id="version-10x-toolbar">Toolbar</h4>
 
