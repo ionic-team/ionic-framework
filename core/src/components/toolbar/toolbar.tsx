@@ -285,6 +285,10 @@ export class Toolbar implements ComponentInterface {
    * to watch content added later.
    */
   private observeSlotContent() {
+    /**
+     * TODO(FW-6864): only the ionic theme reads the slot sizes, so the observer
+     * does no useful work in ios and md. Revisit when titlePlacement works in every theme.
+     */
     if (typeof ResizeObserver === 'undefined') {
       return;
     }
