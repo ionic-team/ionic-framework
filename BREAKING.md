@@ -552,7 +552,9 @@ Use the new token structure for global styles, or the corresponding CSS variable
 
 <h5 id="version-10x-title-hue">New <code>hue</code> property and color tokens</h5>
 
-A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`, which preserves prior behavior when `color` is set.
+A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`.
+
+When `color` is set, a bold title now uses the color's `foreground` variant instead of `base`, which is darker so the text stays readable on the page. To revert to the previous appearance, set `IonTitle.hue.bold.semantic.default.color` to `var(--ion-color-base)` for global styles, or `--ion-title-hue-bold-semantic-default-color` for component-specific styles.
 
 When `color` is set, the title color now reads from a token instead of `--ion-color-base` directly. Global overrides should use the theme tokens; component-specific overrides use the corresponding CSS variables:
 

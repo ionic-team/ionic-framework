@@ -1052,7 +1052,7 @@ export const defaultTheme: DefaultTheme = {
         bold: {
           semantic: {
             default: {
-              color: currentColor('base'),
+              color: currentColor('foreground'),
             },
           },
         },
