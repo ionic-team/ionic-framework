@@ -254,11 +254,7 @@ export class DatetimeButton implements ComponentInterface {
         if (isRangeMode && parsedValues.length === 2) {
           // Range mode: display "startDate - endDate"
           const startDate = getLocalizedDateTime(locale, parsedDatetimes[0], dateFormatOptions);
-          const endDate = getLocalizedDateTime(
-            locale,
-            parsedDatetimes.length > 1 ? parsedDatetimes[1] : parsedDatetimes[0],
-            dateFormatOptions
-          );
+          const endDate = getLocalizedDateTime(locale, parsedDatetimes[1], dateFormatOptions);
           let rangeText = `${startDate} - ${endDate}`;
           if (titleSelectedDatesFormatter !== undefined) {
             try {
