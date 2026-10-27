@@ -236,6 +236,7 @@
 // Material Design Item Button
 // --------------------------------------------------
 
+// TODO(FW-6847): Move these button padding hooks to IonItem.IonButton tokens
 ::slotted(.button-size-small) {
   --padding-top: 2px;
   --padding-bottom: 2px;
