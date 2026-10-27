@@ -132,7 +132,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('clicking a day before the start should set a new start', async ({ page }) => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
-      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
       const day3 = datetime.locator('[data-month="6"][data-day="3"]');
       await day3.click();
@@ -384,7 +383,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     // Disabled and readonly states
     // ---------------------------------------------------------------
 
-    test('disabled datetime should show range but not allow interaction', async ({ page }) => {
+    test('disabled datetime should show range but not allow interaction', async () => {
       const datetime = await fixture.goto(config, RANGE_VALUE, { disabled: true });
 
       const day8 = datetime.locator('[data-month="6"][data-day="8"]');
