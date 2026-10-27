@@ -220,7 +220,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     // ---------------------------------------------------------------
 
     test('ionChange should emit with array value detail', async ({ page }) => {
-      const datetime = await fixture.goto(config);
+      await fixture.goto(config);
       const ionChangeSpy = await page.spyOnEvent('ionChange');
 
       const day8 = fixture.getVisibleDay(8);
