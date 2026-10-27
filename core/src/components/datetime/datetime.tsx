@@ -837,10 +837,9 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-        this.hasUnconfirmedSelection = true;
+    this.hasUnconfirmedSelection = true;
 
     const { minParts, maxParts, activeParts } = this;
-
 
     /**
      * When setting the active parts, it is possible
