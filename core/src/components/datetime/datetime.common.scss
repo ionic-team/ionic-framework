@@ -331,8 +331,7 @@
    * days overlap, the color stays the same instead of doubling up
    * into a darker line.
    */
-  background:
-    linear-gradient(var(--range-background), var(--range-background)),
+  background: linear-gradient(var(--range-background), var(--range-background)),
     linear-gradient(var(--background), var(--background));
 
   content: "";
