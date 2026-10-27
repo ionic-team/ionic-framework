@@ -221,7 +221,7 @@
 
 // Range start: left-pill shape (rounded left, square right)
 .calendar-day.calendar-day-range-start {
-  @include globals.border-radius(globals.$ion-border-radius-full 0 0 globals.$ion-border-radius-full);
+  @include globals.border-radius(globals.$ion-border-radius-full, 0, 0, globals.$ion-border-radius-full);
 
   background: globals.$ion-semantics-primary-100;
   color: globals.$ion-text-default;
@@ -229,7 +229,7 @@
 
 // Range end: right-pill shape (square left, rounded right)
 .calendar-day.calendar-day-range-end {
-  @include globals.border-radius(0 globals.$ion-border-radius-full globals.$ion-border-radius-full 0);
+  @include globals.border-radius(0, globals.$ion-border-radius-full, globals.$ion-border-radius-full, 0);
 
   background: globals.$ion-semantics-primary-100;
   color: globals.$ion-text-default;

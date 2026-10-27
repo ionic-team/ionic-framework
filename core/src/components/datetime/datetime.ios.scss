@@ -342,7 +342,7 @@
 
 // Range start: left-pill shape (rounded left, square right)
 :host .calendar-day.calendar-day-range-start {
-  @include border-radius(50% 0 0 50%);
+  @include border-radius(50%, 0, 0, 50%);
 
   background: ion-color(primary, base);
   color: ion-color(primary, contrast);
@@ -352,7 +352,7 @@
 
 // Range end: right-pill shape (square left, rounded right)
 :host .calendar-day.calendar-day-range-end {
-  @include border-radius(0 50% 50% 0);
+  @include border-radius(0, 50%, 50%, 0);
 
   background: ion-color(primary, base);
   color: ion-color(primary, contrast);
