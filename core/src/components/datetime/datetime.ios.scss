@@ -340,6 +340,19 @@
   --range-background: #{current-color(base, 0.2)};
 }
 
+/**
+ * The wrapper has `height: 0` to collapse and let content
+ * determine its size. However, this breaks percentage-based
+ * gradient calculations for the range track (50% of 0 = 0).
+ * Override to `auto` so the gradient reference height matches
+ * the actual rendered height.
+ */
+:host .calendar-day-wrapper-in-range,
+:host .calendar-day-wrapper-range-start,
+:host .calendar-day-wrapper-range-end {
+  height: auto;
+}
+
 // Range start: left-pill shape (rounded left, square right)
 :host .calendar-day.calendar-day-range-start {
   @include border-radius(50%, 0, 0, 50%);

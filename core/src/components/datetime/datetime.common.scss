@@ -300,22 +300,39 @@
 // -----------------------------------
 
 /**
- * The ::before pseudo-element on the calendar-day-wrapper
- * draws the colored background track that connects the
- * range start to the range end. The track is vertically
- * centered and sized to match the day button height.
+ * The range track uses a gradient background on the wrapper
+ * itself for in-range cells (gap-free, since the background
+ * fills the full grid cell) and ::before pseudo-elements
+ * only for the half-width start / end caps.
  *
  * @prop --range-background: The background color of the range selection track.
  */
+
+/**
+ * In-range cells use a gradient background directly on the
+ * wrapper to avoid subpixel gaps between adjacent cells.
+ * The gradient draws a horizontal band at the track height,
+ * vertically centered.
+ */
+:host .calendar-day-wrapper-in-range {
+  background: linear-gradient(
+    to bottom,
+    transparent calc(50% - var(--range-track-height) / 2),
+    var(--range-background) calc(50% - var(--range-track-height) / 2),
+    var(--range-background) calc(50% + var(--range-track-height) / 2),
+    transparent calc(50% + var(--range-track-height) / 2)
+  );
+}
+
+/**
+ * Start and end caps use ::before pseudo-elements for
+ * the half-width track that extends from the pill center
+ * to the cell edge.
+ */
 :host .calendar-day-wrapper-range-start::before,
-:host .calendar-day-wrapper-in-range::before,
 :host .calendar-day-wrapper-range-end::before {
   position: absolute;
 
-  /**
-   * Vertically center the track and size it to
-   * match the calendar day button height.
-   */
   top: 50%;
 
   height: var(--range-track-height);
@@ -334,11 +351,6 @@
   inset-inline-end: 0;
 }
 
-:host .calendar-day-wrapper-in-range::before {
-  inset-inline-start: 0;
-  inset-inline-end: 0;
-}
-
 :host .calendar-day-wrapper-range-end::before {
   inset-inline-start: 0;
   inset-inline-end: 50%;
@@ -350,6 +362,10 @@
  */
 :host .calendar-day-wrapper-range-start.calendar-day-wrapper-range-end::before {
   display: none;
+}
+
+:host .calendar-day-wrapper-range-start.calendar-day-wrapper-range-end {
+  background: none;
 }
 
 /**
