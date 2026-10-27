@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 // TODO(FW-6203): do we need these styles?
+// TODO(FW-6839): Move these button padding hooks to IonButtons.IonButton tokens
 ::slotted(*) ion-button {
   --padding-top: 3px;
   --padding-bottom: 3px;

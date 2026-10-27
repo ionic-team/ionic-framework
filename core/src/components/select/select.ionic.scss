@@ -391,6 +391,7 @@
   margin-inline-start: globals.$ion-space-200;
 }
 
+// TODO(FW-6881): Move these button padding hooks to IonSelect.IonButton tokens
 ::slotted(ion-button[slot="start"].button-has-icon-only),
 ::slotted(ion-button[slot="end"].button-has-icon-only) {
   --padding-start: #{globals.$ion-space-200};
