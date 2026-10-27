@@ -26,15 +26,8 @@ class DatetimeRangeFixture {
   }
 
   async goto(config: E2EPageOptions, value?: string[], datetimeConfig?: DatetimeRangeConfig) {
-    const {
-      showDefaultTitle,
-      showDefaultButtons,
-      showClearButton,
-      startDateLabel,
-      endDateLabel,
-      disabled,
-      readonly,
-    } = datetimeConfig ?? {};
+    const { showDefaultTitle, showDefaultButtons, showClearButton, startDateLabel, endDateLabel, disabled, readonly } =
+      datetimeConfig ?? {};
 
     const valueScript = value ? `datetime.value = [${value.map((v) => `'${v}'`).join(',')}];` : '';
 
