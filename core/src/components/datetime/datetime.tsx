@@ -2825,10 +2825,10 @@ export class Datetime implements ComponentInterface {
             let rangeAriaLabel = ariaLabel;
             if (this.isRangeMode && ariaLabel) {
               if (isRangeStart) {
-                rangeAriaLabel = `${ariaLabel}, ${this.startDateLabel}`;
+                rangeAriaLabel += `, ${this.startDateLabel}`;
               }
               if (isRangeEnd) {
-                rangeAriaLabel = `${ariaLabel}, ${this.endDateLabel}`;
+                rangeAriaLabel += `, ${this.endDateLabel}`;
               }
             }
 
