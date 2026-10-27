@@ -557,7 +557,6 @@ const animateLargeTitle = (
       'padding-right': paddingRight,
       'padding-bottom': paddingBottom,
       'padding-left': paddingLeft,
-      'pointer-events': 'none',
     })
     .beforeAddWrite(() => {
       largeTitleEl.style.setProperty('opacity', '0');
