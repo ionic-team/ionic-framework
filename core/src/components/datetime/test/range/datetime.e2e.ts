@@ -91,7 +91,7 @@ class DatetimeRangeFixture {
 /**
  * Visual regression tests across modes and directions.
  */
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: range selection (visual regressions)'), () => {
     let fixture: DatetimeRangeFixture;
     test.beforeEach(async ({ page }) => {
@@ -541,7 +541,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 /**
  * RTL-specific visual regression tests to verify pill border-radius direction.
  */
-configs({ modes: ['ios', 'md'], directions: ['rtl'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['rtl'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: range selection RTL (visual regressions)'), () => {
     let fixture: DatetimeRangeFixture;
     test.beforeEach(async ({ page }) => {
