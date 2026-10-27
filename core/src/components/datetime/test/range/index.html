@@ -213,13 +213,18 @@
         return date.getUTCDate() !== 15;
       };
 
-      // Highlighted dates
+      const today = new Date();
+
+      // Highlighted dates. This datetime has no value, so it opens on the
+      // current month. The dates are built from that month to stay visible.
       const highlightedDatetime = document.querySelector('#highlightedDates');
+      const dayThisMonth = (day) =>
+        `${today.getFullYear()}-${`${today.getMonth() + 1}`.padStart(2, '0')}-${`${day}`.padStart(2, '0')}`;
       highlightedDatetime.highlightedDates = [
-        { date: '2022-06-03', textColor: '#800080', backgroundColor: '#ffc0cb' },
-        { date: '2022-06-10', textColor: '#09721b', backgroundColor: '#c8e5d0' },
-        { date: '2022-06-17', textColor: '#09721b', backgroundColor: '#c8e5d0' },
-        { date: '2022-06-24', textColor: '#09721b', backgroundColor: '#c8e5d0' },
+        { date: dayThisMonth(3), textColor: '#800080', backgroundColor: '#ffc0cb' },
+        { date: dayThisMonth(10), textColor: '#09721b', backgroundColor: '#c8e5d0' },
+        { date: dayThisMonth(17), textColor: '#09721b', backgroundColor: '#c8e5d0' },
+        { date: dayThisMonth(24), textColor: '#09721b', backgroundColor: '#c8e5d0' },
       ];
 
       // Custom formatter
@@ -232,7 +237,6 @@
       };
 
       // Range spanning today
-      const today = new Date();
       const fiveDaysAgo = new Date(today);
       fiveDaysAgo.setDate(today.getDate() - 5);
       const fiveDaysFromNow = new Date(today);

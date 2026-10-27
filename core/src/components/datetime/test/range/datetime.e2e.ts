@@ -107,6 +107,16 @@ configs().forEach(({ title, screenshot, config }) => {
       await fixture.goto(config, [RANGE_START]);
       await fixture.expectRangeDatePicker('partial', screenshot);
     });
+
+    test('disabled range should not have visual regressions', async () => {
+      await fixture.goto(config, RANGE_VALUE, { disabled: true });
+      await fixture.expectRangeDatePicker('disabled', screenshot);
+    });
+
+    test('readonly range should not have visual regressions', async () => {
+      await fixture.goto(config, RANGE_VALUE, { readonly: true });
+      await fixture.expectRangeDatePicker('readonly', screenshot);
+    });
   });
 });
 

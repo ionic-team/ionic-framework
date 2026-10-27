@@ -369,20 +369,17 @@
 }
 
 /**
- * When the component is disabled, move the opacity to the wrapper
- * so both the track and day button fade equally. Without this,
- * the day button becomes semi-transparent (via native disabled opacity)
- * while the track stays opaque, causing a visible overlap.
+ * When the component is disabled, fade the whole grid once instead of
+ * fading each day. Fading a day makes it its own compositing group, so
+ * the 1px that each day extends toward the next would be painted twice
+ * and read as a darker seam. The day buttons drop their own disabled
+ * opacity so the grid is the only thing applying it.
  */
-:host(.datetime-disabled) .calendar-day-wrapper-range-start,
-:host(.datetime-disabled) .calendar-day-wrapper-in-range,
-:host(.datetime-disabled) .calendar-day-wrapper-range-end {
+:host(.datetime-disabled) .calendar-month-grid {
   opacity: 0.4;
 }
 
-:host(.datetime-disabled) .calendar-day-wrapper-range-start .calendar-day[disabled],
-:host(.datetime-disabled) .calendar-day-wrapper-in-range .calendar-day[disabled],
-:host(.datetime-disabled) .calendar-day-wrapper-range-end .calendar-day[disabled] {
+:host(.datetime-disabled) .calendar-month-grid .calendar-day[disabled] {
   opacity: 1;
 }
 

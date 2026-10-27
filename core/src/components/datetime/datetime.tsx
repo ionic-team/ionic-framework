@@ -1611,6 +1611,13 @@ export class Datetime implements ComponentInterface {
      * Range mode: convert the value array into DatetimeRangeParts.
      */
     if (this.isRangeMode) {
+      /**
+       * The calendar navigates to the start of the range, or to the default
+       * date when there is nothing selected, so that an empty range mode
+       * opens on the same month as the other selection modes.
+       */
+      let navigateTo: DatetimeParts;
+
       if (hasValue && Array.isArray(valueToProcess)) {
         let rangeValues = valueToProcess;
 
@@ -1630,22 +1637,23 @@ export class Datetime implements ComponentInterface {
         }
 
         this.activeParts = endParts ? { start: startParts, end: endParts } : { start: startParts };
-
-        // Navigate calendar to the start date
-        const targetValue = clampDate(startParts, minParts, maxParts);
-        const { month, day, year } = targetValue;
-        const didChangeMonth =
-          (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
-        const bodyIsVisible = el.classList.contains('datetime-ready');
-        const { isGridStyle, showMonthAndYear } = this;
-
-        if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
-          this.animateToDate(targetValue);
-        } else {
-          this.setWorkingParts({ month, day, year, hour: 0, minute: 0, ampm: 'am' });
-        }
+        navigateTo = startParts;
       } else {
         this.activeParts = [];
+        navigateTo = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
+      }
+
+      const targetValue = clampDate(navigateTo, minParts, maxParts);
+      const { month, day, year } = targetValue;
+      const didChangeMonth =
+        (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
+      const bodyIsVisible = el.classList.contains('datetime-ready');
+      const { isGridStyle, showMonthAndYear } = this;
+
+      if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+        this.animateToDate(targetValue);
+      } else {
+        this.setWorkingParts({ month, day, year, hour: 0, minute: 0, ampm: 'am' });
       }
       return;
     }
