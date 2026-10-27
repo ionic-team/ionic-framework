@@ -2,8 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 import { ION_BADGE_SIZES, ION_BADGE_VERTICAL_POSITIONS } from '../../../badge/badge.interfaces';
-
-const BUTTON_SIZES = ['small', 'medium', 'large'];
+import { ION_BUTTON_SIZES } from '../../button.interface';
 
 const contents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
 
@@ -29,7 +28,7 @@ const renderRows = (buttonSize: string, buttonContent: string) =>
 configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('button: badge'), () => {
     test('should not have visual regressions with badges', async ({ page }) => {
-      const sections = BUTTON_SIZES.map(
+      const sections = ION_BUTTON_SIZES.map(
         (buttonSize) => `
           <h1>button size: ${buttonSize}</h1>
           ${renderRows(buttonSize, '<ion-icon slot="icon-only" name="add"></ion-icon>')}
