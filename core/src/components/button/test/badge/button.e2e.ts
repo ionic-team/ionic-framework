@@ -111,6 +111,10 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
               row-gap: 5px;
               column-gap: 30px;
             }
+
+            .badge-container {
+              width: max-content;
+            }
           </style>
 
           <div class="badge-container">
