@@ -126,9 +126,9 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
 
       const container = page.locator('.badge-container');
 
-      // Fits the viewport to the content so nothing renders outside it
+      // Content wider than the viewport is cut off at the left edge in rtl
       const box = await container.boundingBox();
-      await page.setViewportSize({ width: Math.ceil(box!.width) + 200, height: Math.ceil(box!.height) + 32 });
+      await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
 
       await expect(container).toHaveScreenshot(screenshot(`button-badge-no-position`));
     });
