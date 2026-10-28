@@ -147,8 +147,8 @@ describe('getCalendarDayState()', () => {
     const rangeParts = { start, end };
 
     // Day 12 is disabled via min (setting min to day 13 disables day 12)
-    const disabledDay = { month: 6, day: 7, year: 2022 };
-    const minParts = { month: 6, day: 9, year: 2022 };
+    const disabledDay = { month: 6, day: 12, year: 2022 };
+    const minParts = { month: 6, day: 13, year: 2022 };
 
     const result = getCalendarDayState('en-US', disabledDay, [], today, minParts, undefined, undefined, rangeParts);
     expect(result.isInRange).toEqual(false);

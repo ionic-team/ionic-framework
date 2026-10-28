@@ -350,15 +350,35 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('confirm should not close overlay with incomplete range', async ({ page }) => {
-      const datetime = await fixture.goto(config, undefined, { showDefaultButtons: true });
+      await page.setContent(
+        `
+        <ion-modal>
+          <ion-datetime locale="en-US" presentation="date" selection-mode="range"></ion-datetime>
+        </ion-modal>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-08'];
+        </script>
+      `,
+        config
+      );
+      const modal = page.locator('ion-modal');
+      const datetime = page.locator('ion-datetime');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
-      const day8 = fixture.getVisibleDay(8);
-      await day8.click();
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await page.locator('.datetime-ready').waitFor();
+
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => el.confirm(true));
       await page.waitForChanges();
 
-      // Calling confirm with only start selected should not set value
-      await datetime.evaluate((el: HTMLIonDatetimeElement) => el.confirm());
-      await expect(datetime).toHaveJSProperty('value', undefined);
+      // The modal is still open, so the range can be completed and confirmed.
+      await datetime.locator('[data-month="6"][data-day="18"]').click();
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => el.confirm(true));
+      await ionModalDidDismiss.next();
+
+      expect(ionModalDidDismiss).toHaveReceivedEventTimes(1);
+      await expect(datetime).toHaveJSProperty('value', RANGE_VALUE);
     });
 
     test('reset should clear the range selection', async ({ page }) => {
@@ -447,7 +467,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       // Range should not span the disabled 15th — should start a new range instead
       await expect(day10).not.toHaveClass(/calendar-day-range-start/);
-      await expect(day20).toHaveClass(/calendar-day-active/);
+      await expect(day20).toHaveClass(/calendar-day-range-start/);
     });
 
     // ---------------------------------------------------------------
@@ -501,7 +521,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await dropdownButton.click();
       await page.waitForChanges();
 
-      const monthOption = page.locator('.month-column ion-picker-column-option').nth(0);
+      const monthOption = page.locator('.month-column ion-picker-column-option').filter({ hasText: 'August' });
       await monthOption.click();
       await page.waitForChanges();
 
@@ -528,7 +548,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await dropdownButton.click();
       await page.waitForChanges();
 
-      const yearOption = page.locator('.year-column ion-picker-column-option').nth(0);
+      const yearOption = page.locator('.year-column ion-picker-column-option').filter({ hasText: '2023' });
       await yearOption.click();
       await page.waitForChanges();
 
