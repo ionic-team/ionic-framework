@@ -123,9 +123,9 @@
 }
 
 /**
- * TODO(FW-6893): Move to datetime's tokens in its migration. Button's migration only
- * renamed these properties: a nested `IonDatetime.IonButton` token can't target just
- * the previous and next buttons inside datetime's shadow root.
+ * TODO(FW-6893): Move to datetime's tokens in its migration. A nested
+ * `IonDatetime.IonButton` token can't target just the previous and next buttons inside
+ * datetime's shadow root.
  */
 // TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
 .calendar-next-prev ion-button.button-has-icon-only {
