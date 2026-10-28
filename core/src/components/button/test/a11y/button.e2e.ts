@@ -4,6 +4,9 @@ import { configs, test } from '@utils/test/playwright';
 
 import { ION_BUTTON_FILLS } from '../../button.interface';
 
+/**
+ * This behavior does not vary across directions.
+ */
 configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('button: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
@@ -291,6 +294,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  */
 const COLORS = ['primary', 'secondary', 'tertiary', 'danger', 'medium', 'dark'];
 
+/**
+ * This behavior does not vary across directions.
+ */
 configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('button: subtle hue a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
