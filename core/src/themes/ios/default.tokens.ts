@@ -398,7 +398,7 @@ export const defaultTheme: DefaultTheme = {
 
             default: {
               background: 'transparent',
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
 
               border: {
                 color: ionColor('primary', 'base'),
@@ -413,13 +413,13 @@ export const defaultTheme: DefaultTheme = {
 
             focus: {
               background: ionColor('primary', 'base', { alpha: 0.1 }),
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
             },
 
             // Fades the whole button instead of changing its color
             hover: {
               background: 'transparent',
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
               opacity: '0.6',
             },
 
@@ -441,7 +441,7 @@ export const defaultTheme: DefaultTheme = {
             semantic: {
               default: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
 
                 border: {
                   color: currentColor('base'),
@@ -450,12 +450,12 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.1 }),
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               hover: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               activated: {
@@ -523,12 +523,12 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.1 }),
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               hover: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               activated: {

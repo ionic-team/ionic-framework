@@ -445,7 +445,7 @@ export const defaultTheme: DefaultTheme = {
 
             default: {
               background: 'transparent',
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
 
               border: {
                 color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
@@ -460,18 +460,18 @@ export const defaultTheme: DefaultTheme = {
 
             focus: {
               background: ionColor('primary', 'base', { alpha: 0.12 }),
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
             },
 
             hover: {
               background: ionColor('primary', 'base', { alpha: 0.04 }),
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
             },
 
             // The ripple is the pressed feedback
             activated: {
               background: 'transparent',
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
             },
 
             disabled: {
@@ -491,7 +491,7 @@ export const defaultTheme: DefaultTheme = {
             semantic: {
               default: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
 
                 border: {
                   color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
@@ -500,17 +500,17 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.12 }),
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               activated: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               disabled: {

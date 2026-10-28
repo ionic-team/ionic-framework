@@ -85,7 +85,7 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
     });
 
     test('should space a badge without a position from the label', async ({ page }) => {
-      const rows = BUTTON_SIZES.map(
+      const rows = ION_BUTTON_SIZES.map(
         (buttonSize) => `<div class="row">${contents
           .flatMap((html) =>
             ION_BADGE_SIZES.map(
