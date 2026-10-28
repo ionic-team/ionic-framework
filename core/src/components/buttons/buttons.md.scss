@@ -22,6 +22,24 @@
   --padding-bottom: 0;
 }
 
+// Material Design Toolbar Back and Menu Buttons
+// --------------------------------------------------
+
+// TODO(FW-6835, FW-6853): Move to tokens when back button and menu button migrate
+::slotted(*) ion-back-button,
+::slotted(*) ion-menu-button {
+  --background-hover: currentColor;
+}
+
+:host-context(.ion-color)::slotted(*) ion-back-button,
+:host-context(.ion-color)::slotted(*) ion-menu-button {
+  --color: initial;
+  --color-focused: #{current-color(contrast)};
+  --color-hover: #{current-color(contrast)};
+  --background-focused: #{current-color(contrast)};
+  --background-hover: #{current-color(contrast)};
+}
+
 // Material Design Toolbar Icon Only Clear Button
 // --------------------------------------------------
 
