@@ -48,9 +48,9 @@
 // -----------------------------------
 
 /**
- * TODO(FW-6893): Move to datetime's tokens in its migration. Button's migration only
- * renamed these properties: a nested `IonDatetime.IonButton` token can't target just
- * the month navigation buttons inside datetime's shadow root.
+ * TODO(FW-6893): Move to datetime's tokens in its migration. A nested
+ * `IonDatetime.IonButton` token can't target just the month navigation buttons inside
+ * datetime's shadow root.
  */
 :host .calendar-action-buttons ion-button {
   --ion-button-hue-bold-clear-default-color: #{$text-color-step-350};
