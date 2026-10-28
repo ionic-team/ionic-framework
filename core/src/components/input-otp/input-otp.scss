@@ -63,6 +63,9 @@
    */
   --highlight-color: var(--highlight-color-focused);
 
+  // Don't inherit `--border-color` from ancestors like `ion-modal`
+  --border-color: initial;
+
   display: block;
   position: relative;
 
@@ -102,7 +105,9 @@
 
   border-width: var(--border-width);
   border-style: solid;
-  border-color: var(--border-color);
+  // The defaults use `--internal-border-color` since a host
+  // selector can't beat `:host(.input-otp-fill-*)`
+  border-color: var(--border-color, var(--internal-border-color));
 
   background: var(--background);
   color: var(--color);
@@ -131,6 +136,37 @@
 }
 
 .input-otp-description-hidden {
+  display: none;
+}
+
+// Input Hint Text
+// ----------------------------------------------------------------
+
+.input-otp-bottom {
+  font-size: dynamic-font(12px);
+
+  line-height: dynamic-font(20px);
+
+  text-align: center;
+}
+
+.input-otp-bottom .error-text {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
+.input-otp-bottom .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .input-otp-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .input-otp-bottom .helper-text {
   display: none;
 }
 
@@ -198,7 +234,7 @@
 }
 
 :host(.input-otp-fill-solid) {
-  --border-color: #{$background-color-step-50};
+  --internal-border-color: #{$background-color-step-50};
   --background: #{$background-color-step-50};
 }
 
@@ -211,7 +247,7 @@
 
 :host(.input-otp-fill-outline.input-otp-disabled) {
   --background: #{$background-color-step-50};
-  --border-color: #{$background-color-step-100};
+  --internal-border-color: #{$background-color-step-100};
 }
 
 :host(.input-otp-disabled),
@@ -231,7 +267,7 @@
 
 :host(.input-otp-fill-solid.input-otp-disabled),
 :host(.input-otp-fill-solid.input-otp-readonly) {
-  --border-color: #{$background-color-step-100};
+  --internal-border-color: #{$background-color-step-100};
   --background: #{$background-color-step-100};
 }
 

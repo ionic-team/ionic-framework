@@ -128,3 +128,116 @@ configs().forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input-otp: host aria attributes'), () => {
+    test('should forward aria-invalid and aria-describedby set on the host after load', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31619',
+      });
+
+      await page.setContent(`<ion-input-otp length="3"></ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      await inputOtp.evaluate((el) => {
+        el.setAttribute('aria-invalid', 'true');
+        el.setAttribute('aria-describedby', 'server-error');
+      });
+
+      for (const input of await inputBoxes.all()) {
+        await expect(input).toHaveAttribute('aria-invalid', 'true');
+        await expect(input).toHaveAttribute('aria-describedby', 'server-error');
+      }
+    });
+
+    test('should clear aria-invalid and aria-describedby from the inputs when removed from the host', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31619',
+      });
+
+      await page.setContent(
+        `<ion-input-otp length="3" aria-invalid="true" aria-describedby="server-error"></ion-input-otp>`,
+        config
+      );
+
+      const inputOtp = page.locator('ion-input-otp');
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      await inputOtp.evaluate((el) => {
+        el.removeAttribute('aria-invalid');
+        el.removeAttribute('aria-describedby');
+      });
+
+      for (const input of await inputBoxes.all()) {
+        await expect(input).not.toHaveAttribute('aria-invalid');
+        await expect(input).not.toHaveAttribute('aria-describedby');
+      }
+    });
+
+    test('should rename the inputs when the host aria-label changes', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31619',
+      });
+
+      await page.setContent(`<ion-input-otp length="2" aria-label="PIN"></ion-input-otp>`, config);
+
+      await page.locator('ion-input-otp').evaluate((el) => el.setAttribute('aria-label', 'Code'));
+
+      const inputBoxes = page.locator('ion-input-otp input');
+      await expect(inputBoxes.nth(0)).toHaveAttribute('aria-label', 'Code, 1 of 2');
+      await expect(inputBoxes.nth(1)).toHaveAttribute('aria-label', 'Code, 2 of 2');
+      await expect(page.locator('ion-input-otp .input-otp-group')).toHaveAttribute('aria-label', 'Code');
+    });
+
+    test('should describe the group, not each input, with the slotted description', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31619',
+      });
+
+      await page.setContent(`<ion-input-otp length="2">Didn't get a code?</ion-input-otp>`, config);
+
+      const description = page.locator('ion-input-otp .input-otp-description');
+      await expect(description).toBeVisible();
+      const descriptionId = await description.getAttribute('id');
+
+      await expect(page.locator('ion-input-otp .input-otp-group')).toHaveAttribute('aria-describedby', descriptionId!);
+      for (const input of await page.locator('ion-input-otp input').all()) {
+        await expect(input).not.toHaveAttribute('aria-describedby');
+      }
+    });
+
+    test('should restore the default labels when a host aria-label set after load is removed', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31619',
+      });
+
+      await page.setContent(`<ion-input-otp length="2"></ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el) => el.setAttribute('aria-label', 'PIN'));
+      await expect(page.locator('ion-input-otp input').nth(0)).toHaveAttribute('aria-label', 'PIN, 1 of 2');
+
+      await inputOtp.evaluate((el) => el.removeAttribute('aria-label'));
+
+      await expect(page.locator('ion-input-otp .input-otp-group')).toHaveAttribute(
+        'aria-label',
+        'One-time password input'
+      );
+      await expect(page.locator('ion-input-otp input').nth(0)).toHaveAttribute('aria-label', 'Input 1 of 2');
+    });
+  });
+});

@@ -1,8 +1,24 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Fragment, Host, Method, Prop, State, h, Watch } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Fragment,
+  Host,
+  Method,
+  Prop,
+  State,
+  forceUpdate,
+  h,
+  Watch,
+} from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createAttributeController } from '@utils/attribute-controller';
+import { checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes } from '@utils/helpers';
-import { printIonWarning } from '@utils/logging';
+import { ariaAttributes } from '@utils/helpers';
+import { printIonError, printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 
@@ -13,6 +29,7 @@ import type {
   InputOtpChangeEventDetail,
   InputOtpCompleteEventDetail,
   InputOtpInputEventDetail,
+  InputOtpLabelFormatter,
 } from './input-otp-interface';
 
 @Component({
@@ -24,9 +41,13 @@ import type {
   scoped: true,
 })
 export class InputOTP implements ComponentInterface {
-  private inheritedAttributes: Attributes = {};
+  private ariaController?: AttributeController;
   private inputRefs: HTMLInputElement[] = [];
   private inputId = `ion-input-otp-${inputIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
+  private descriptionId = `${this.inputId}-description`;
+  private validationObserver?: MutationObserver;
   private parsedSeparators: number[] = [];
 
   /**
@@ -55,6 +76,8 @@ export class InputOTP implements ComponentInterface {
   @State() hasFocus = false;
   @State() private previousInputValues: string[] = [];
 
+  @State() isInvalid = false;
+
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
    * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
@@ -74,10 +97,30 @@ export class InputOTP implements ComponentInterface {
   @Prop({ reflect: true }) disabled = false;
 
   /**
+   * Text that is placed under the input boxes and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
    * The fill for the input boxes. If `"solid"` the input boxes will have a background. If
    * `"outline"` the input boxes will be transparent with a border.
    */
   @Prop() fill?: 'outline' | 'solid' = 'outline';
+
+  /**
+   * Text that is placed under the input boxes and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * A callback used to format the accessible name of each input box. It
+   * receives the 0-based `index` of the box and the total `length`. By default
+   * the name is "Input 1 of 4", or "PIN, 1 of 4" with an `aria-label` of "PIN".
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
+   */
+  @Prop() inputLabelFormatter?: InputOtpLabelFormatter;
 
   /**
    * A hint to the browser for which keyboard to display.
@@ -197,6 +240,13 @@ export class InputOTP implements ComponentInterface {
     }
   }
 
+  // The host keeps these (see `HOST_ARIA_ATTRIBUTES`), so re-render when they change
+  @Watch('aria-describedby')
+  @Watch('aria-invalid')
+  onHostAriaChange() {
+    forceUpdate(this);
+  }
+
   @Watch('value')
   valueChanged() {
     this.initializeValues();
@@ -274,14 +324,59 @@ export class InputOTP implements ComponentInterface {
     this.parsedSeparators = separatorValues.filter((pos) => pos <= length);
   }
 
+  connectedCallback() {
+    const { el } = this;
+
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = checkInvalidState(el);
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          // Force a re-render to update aria-describedby immediately
+          forceUpdate(this);
+        }
+      });
+
+      this.validationObserver.observe(el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    this.isInvalid = checkInvalidState(el);
+
+    // Resumes watching after a move, since `componentWillLoad` only runs once
+    this.ariaController?.init();
+  }
+
+  disconnectedCallback() {
+    this.ariaController?.destroy();
+
+    if (this.validationObserver) {
+      this.validationObserver.disconnect();
+      this.validationObserver = undefined;
+    }
+  }
+
   componentWillLoad() {
-    this.inheritedAttributes = inheritAriaAttributes(this.el);
+    // Only read `role` at load so a later host write isn't copied to the group
+    this.ariaController = createAttributeController(
+      this.el,
+      ariaAttributes.filter((attr) => !HOST_ARIA_ATTRIBUTES.includes(attr)),
+      () => forceUpdate(this),
+      ['role']
+    );
     this.processSeparators();
     this.initializeValues();
   }
 
   componentDidLoad() {
     this.updateTabIndexes();
+
+    // The description only exists after the first render, so render again to reference it
+    if (this.getDescriptionText()) {
+      forceUpdate(this);
+    }
   }
 
   componentDidRender() {
@@ -818,18 +913,90 @@ export class InputOTP implements ComponentInterface {
     return this.parsedSeparators.includes(index + 1) && index < length - 1;
   }
 
+  /**
+   * Returns `undefined` until the first render creates the description container.
+   */
+  private getDescriptionText() {
+    return this.el.querySelector('.input-otp-description')?.textContent?.trim();
+  }
+
+  private getHintTextId(): string | undefined {
+    const { isInvalid, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (isInvalid && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
+
+    return [
+      <div id={helperTextId} class="helper-text" aria-live="polite">
+        {!isInvalid ? helperText : null}
+      </div>,
+      <div id={errorTextId} class="error-text" role="alert">
+        {isInvalid ? errorText : null}
+      </div>,
+    ];
+  }
+
+  private renderBottomContent() {
+    const { helperText, errorText } = this;
+
+    if (!helperText && !errorText) {
+      return;
+    }
+
+    return <div class="input-otp-bottom">{this.renderHintText()}</div>;
+  }
+
+  /**
+   * A custom formatter is used as is so translators control the whole name.
+   * With a host `aria-labelledby`, each box also references itself so its
+   * position is still read.
+   */
+  private getInputLabelAttributes(index: number, hostAttributes: Attributes) {
+    const { inputId, inputLabelFormatter, length } = this;
+    const hostLabel = hostAttributes['aria-label'];
+    const hostLabelledBy = hostAttributes['aria-labelledby'];
+    const position = `${index + 1} of ${length}`;
+
+    if (inputLabelFormatter !== undefined) {
+      try {
+        return { 'aria-label': inputLabelFormatter(index, length) };
+      } catch (e) {
+        printIonError('[ion-input-otp] - Exception in provided `inputLabelFormatter`:', e);
+      }
+    }
+
+    if (hostLabelledBy) {
+      return { 'aria-label': position, 'aria-labelledby': `${hostLabelledBy} ${inputId}-${index}` };
+    }
+
+    return { 'aria-label': hostLabel ? `${hostLabel}, ${position}` : `Input ${position}` };
+  }
+
   render() {
     const {
+      ariaController,
       autocapitalize,
       color,
+      descriptionId,
       disabled,
       el,
       fill,
       hasFocus,
-      inheritedAttributes,
       inputId,
       inputRefs,
       inputValues,
+      isInvalid,
       length,
       readonly,
       shape,
@@ -839,7 +1006,22 @@ export class InputOTP implements ComponentInterface {
     const inputmode = this.getInputmode();
     const tabbableIndex = this.getTabbableIndex();
     const pattern = this.getPattern();
-    const hasDescription = el.querySelector('.input-otp-description')?.textContent?.trim() !== '';
+    const descriptionText = this.getDescriptionText();
+    // Keep the description visible until the first render can check it
+    const hasDescription = descriptionText !== '';
+
+    /**
+     * Screen readers only announce these from the focused input. The
+     * description stays on the group so it isn't repeated for every input.
+     */
+    const {
+      'aria-errormessage': ariaErrorMessage,
+      'aria-required': ariaRequired,
+      ...groupAttributes
+    } = ariaController?.attributes ?? {};
+    const hostDescribedBy = el.getAttribute('aria-describedby');
+    const hostInvalid = el.getAttribute('aria-invalid') ?? undefined;
+    const describedBy = [hostDescribedBy, this.getHintTextId()].filter(Boolean).join(' ');
 
     return (
       <Host
@@ -853,14 +1035,24 @@ export class InputOTP implements ComponentInterface {
           'input-otp-readonly': readonly,
         })}
       >
-        <div role="group" aria-label="One-time password input" class="input-otp-group" {...inheritedAttributes}>
+        <div
+          role="group"
+          class="input-otp-group"
+          {...groupAttributes}
+          aria-label={groupAttributes['aria-label'] || 'One-time password input'}
+          aria-describedby={descriptionText ? descriptionId : undefined}
+        >
           {Array.from({ length }).map((_, index) => (
             <>
               <div class="native-wrapper">
                 <input
                   class="native-input"
                   id={`${inputId}-${index}`}
-                  aria-label={`Input ${index + 1} of ${length}`}
+                  {...this.getInputLabelAttributes(index, groupAttributes)}
+                  aria-describedby={describedBy || undefined}
+                  aria-errormessage={ariaErrorMessage}
+                  aria-invalid={isInvalid ? 'true' : hostInvalid}
+                  aria-required={ariaRequired}
                   type="text"
                   autoCapitalize={autocapitalize}
                   inputmode={inputmode}
@@ -890,6 +1082,7 @@ export class InputOTP implements ComponentInterface {
           ))}
         </div>
         <div
+          id={descriptionId}
           class={{
             'input-otp-description': true,
             'input-otp-description-hidden': !hasDescription,
@@ -897,9 +1090,17 @@ export class InputOTP implements ComponentInterface {
         >
           <slot></slot>
         </div>
+        {this.renderBottomContent()}
       </Host>
     );
   }
 }
 
 let inputIds = 0;
+
+/**
+ * The attribute controller removes these from the host, so an app could never
+ * clear them. They stay on the host instead, which only works for global
+ * attributes since the host has no role.
+ */
+const HOST_ARIA_ATTRIBUTES = ['aria-describedby', 'aria-invalid'];

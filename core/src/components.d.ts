@@ -18,7 +18,7 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
+import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail, InputOtpLabelFormatter } from "./components/input-otp/input-otp-interface";
 import { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalDragEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -55,7 +55,7 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
+export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail, InputOtpLabelFormatter } from "./components/input-otp/input-otp-interface";
 export { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalDragEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -1469,10 +1469,22 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the input boxes and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The fill for the input boxes. If `"solid"` the input boxes will have a background. If `"outline"` the input boxes will be transparent with a border.
           * @default 'outline'
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the input boxes and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
+          * A callback used to format the accessible name of each input box. It receives the 0-based `index` of the box and the total `length`. By default the name is "Input 1 of 4", or "PIN, 1 of 4" with an `aria-label` of "PIN".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
+         */
+        "inputLabelFormatter"?: InputOtpLabelFormatter;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
          */
@@ -6629,10 +6641,22 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Text that is placed under the input boxes and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The fill for the input boxes. If `"solid"` the input boxes will have a background. If `"outline"` the input boxes will be transparent with a border.
           * @default 'outline'
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the input boxes and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
+          * A callback used to format the accessible name of each input box. It receives the 0-based `index` of the box and the total `length`. By default the name is "Input 1 of 4", or "PIN, 1 of 4" with an `aria-label` of "PIN".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
+         */
+        "inputLabelFormatter"?: InputOtpLabelFormatter;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
          */
@@ -9236,7 +9260,9 @@ declare namespace LocalJSX {
         "autocapitalize": string;
         "color": Color;
         "disabled": boolean;
+        "errorText": string;
         "fill": 'outline' | 'solid';
+        "helperText": string;
         "inputmode": 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         "length": number;
         "pattern": string;

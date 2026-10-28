@@ -16,5 +16,5 @@
 // --------------------------------------------------
 
 :host(.input-otp-fill-outline) {
-  --border-color: #{$item-ios-border-color};
+  --internal-border-color: #{$item-ios-border-color};
 }
