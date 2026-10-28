@@ -68,6 +68,11 @@
           </div>
 
           <div class="grid-item">
+            <h2>Inline - Disabled Range</h2>
+            <ion-datetime id="inline-datetime-range" presentation="date" disabled selection-mode="range"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
             <h2>Inline - Prefer Wheel</h2>
             <ion-datetime id="inline-datetime-wheel" disabled prefer-wheel value="2022-04-21T00:00:00"></ion-datetime>
           </div>
@@ -76,6 +81,9 @@
       <script>
         const firstDatetime = document.querySelector('#inline-datetime');
         firstDatetime.value = ['2023-08-03', '2023-08-13', '2023-08-29'];
+
+        const rangeDatetime = document.querySelector('#inline-datetime-range');
+        rangeDatetime.value = ['2022-04-10', '2022-04-20'];
       </script>
     </ion-app>
   </body>

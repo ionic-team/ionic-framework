@@ -274,6 +274,12 @@
   background: globals.$ion-bg-primary-subtle-press;
 }
 
+// The ionic theme uses color (not opacity) for disabled days, so undo
+// the grid-level opacity from common.scss to avoid double-fading.
+:host(.datetime-disabled.datetime-range) .calendar-month-grid {
+  opacity: 1;
+}
+
 // Disabled range days show faded text over the range track.
 :host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-start[disabled],
 :host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-end[disabled],

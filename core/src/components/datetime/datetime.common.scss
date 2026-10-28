@@ -375,11 +375,11 @@
  * and read as a darker seam. The day buttons drop their own disabled
  * opacity so the grid is the only thing applying it.
  */
-:host(.datetime-disabled) .calendar-month-grid {
+:host(.datetime-disabled.datetime-range) .calendar-month-grid {
   opacity: 0.4;
 }
 
-:host(.datetime-disabled) .calendar-month-grid .calendar-day[disabled] {
+:host(.datetime-disabled.datetime-range) .calendar-month-grid .calendar-day[disabled] {
   opacity: 1;
 }
 
