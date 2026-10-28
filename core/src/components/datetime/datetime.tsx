@@ -693,15 +693,6 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async cancel(closeOverlay = false) {
-    /**
-     * In range mode, clear the visible selection (including partial ranges)
-     * so the component returns to an empty state. The value property is
-     * left untouched, matching single/multiple mode behavior.
-     */
-    if (this.isRangeMode) {
-      this.activeParts = [];
-    }
-
     this.ionCancel.emit();
 
     /**

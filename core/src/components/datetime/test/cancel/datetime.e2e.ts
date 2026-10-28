@@ -289,6 +289,35 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
       await expect(activeDay).toHaveText('3');
     });
 
+    test('should keep the confirmed range when reopened after cancelling without changes', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-modal>
+          <ion-datetime locale="en-US" presentation="date" selection-mode="range" show-default-buttons="true"></ion-datetime>
+        </ion-modal>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-08', '2022-06-18'];
+        </script>
+      `,
+        config
+      );
+      const modal = page.locator('ion-modal');
+      const datetime = page.locator('ion-datetime');
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+      await datetime.locator('#cancel-button').click();
+      await ionModalDidDismiss.next();
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+
+      await expect(datetime.locator('[data-month="6"][data-day="8"]')).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="18"]')).toHaveClass(/calendar-day-range-end/);
+    });
+
     test('should keep the selection when the time picker inside a popover is dismissed', async ({ page }) => {
       await page.setContent(
         `
