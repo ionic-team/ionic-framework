@@ -22,6 +22,16 @@
   --padding-bottom: 0;
 }
 
+// iOS Toolbar with Color: Back and Menu Buttons
+// --------------------------------------------------
+
+// TODO(FW-6835, FW-6853): Move to tokens when back button and menu button migrate
+:host-context(.ion-color)::slotted(*) ion-back-button,
+:host-context(.ion-color)::slotted(*) ion-menu-button {
+  --color: initial;
+  --background-focused: #{current-color(contrast)};
+}
+
 // iOS Toolbar Button Icon
 // --------------------------------------------------
 
