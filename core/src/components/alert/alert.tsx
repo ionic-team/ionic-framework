@@ -239,15 +239,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const inputTypes = new Set(this.processedInputs.map((i) => i.type));
 
     /**
-     * Based on keyboard navigation requirements, the
-     * checkbox should not respond to the enter keydown event.
-     */
-    if (inputTypes.has('checkbox') && ev.key === 'Enter') {
-      ev.preventDefault();
-      return;
-    }
-
-    /**
      * Ensure when alert container is being focused, and the user presses the tab + shift keys, the focus will be set to the last alert button.
      */
     if (ev.target.classList.contains('alert-wrapper')) {
@@ -525,6 +516,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
     forceUpdate(this);
   }
 
+  /**
+   * Prevent Enter from toggling the checkbox, which only Space should do.
+   */
+  private onCheckboxKeydown = (ev: KeyboardEvent) => {
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+    }
+  };
+
   private async buttonClick(button: AlertButton) {
     const role = button.role;
     const values = this.getValues();
@@ -625,6 +625,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             <button
               type="button"
               onClick={() => this.cbClick(i)}
+              onKeyDown={this.onCheckboxKeydown}
               aria-checked={`${i.checked}`}
               id={i.id}
               disabled={i.disabled}

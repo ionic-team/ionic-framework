@@ -590,13 +590,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 /**
- * We are setting RTL on the component
- * instead, so we don't need to test
+ * RTL is set in the markup, on the component
+ * or an ancestor, so we don't need to test
  * both directions. Also, this behavior
  * does not vary across modes.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('datetime: RTL set on component'), () => {
+  test.describe(title('datetime: RTL'), () => {
     test('should flip icons when RTL is set on component directly', async ({ page }) => {
       await page.setContent(
         `
@@ -606,8 +606,25 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
 
       const nextPrevIcons = page.locator('ion-datetime .calendar-next-prev ion-icon');
-      await expect(nextPrevIcons.first()).toHaveClass(/flip-rtl/);
-      await expect(nextPrevIcons.last()).toHaveClass(/flip-rtl/);
+      await expect(nextPrevIcons.first()).toHaveClass(/icon-rtl/);
+      await expect(nextPrevIcons.last()).toHaveClass(/icon-rtl/);
+    });
+
+    test('should flip icons when RTL is set on an ancestor', async ({ page }) => {
+      await page.setContent(
+        `
+          <div dir="rtl">
+            <div>
+              <ion-datetime></ion-datetime>
+            </div>
+          </div>
+        `,
+        config
+      );
+
+      const nextPrevIcons = page.locator('ion-datetime .calendar-next-prev ion-icon');
+      await expect(nextPrevIcons.first()).toHaveClass(/icon-rtl/);
+      await expect(nextPrevIcons.last()).toHaveClass(/icon-rtl/);
     });
   });
 });

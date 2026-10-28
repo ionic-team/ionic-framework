@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.10](https://github.com/ionic-team/ionic-framework/compare/v9.0.9...v9.0.10) (2026-10-28)
+
+### Bug Fixes
+
+* **vue:** render resolved href for object router-link ([#31663](https://github.com/ionic-team/ionic-framework/issues/31663)) ([d73cacb](https://github.com/ionic-team/ionic-framework/commit/d73cacbc5891aa982b078f8e3554a5e14a8fb1bb)), closes [#30848](https://github.com/ionic-team/ionic-framework/issues/30848)
+
+
 ## [9.0.9](https://github.com/ionic-team/ionic-framework/compare/v9.0.8...v9.0.9) (2026-10-21)
 
 ### Bug Fixes
