@@ -31,7 +31,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
           </ion-header>
 
           <ion-header>
-            <ion-toolbar class="toolbar-title-default">
+            <ion-toolbar class="toolbar-title-size-medium">
               <ion-buttons slot="start">
                 <ion-back-button default-href="#"></ion-back-button>
               </ion-buttons>
