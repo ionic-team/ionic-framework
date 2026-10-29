@@ -38,6 +38,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Text](#version-10x-text)
   - [Textarea](#version-10x-textarea)
   - [Thumbnail](#version-10x-thumbnail)
+  - [Title](#version-10x-title)
+  - [Toolbar](#version-10x-toolbar)
 - [Framework Specific](#version-10x-framework-specific)
   - [Angular](#version-10x-angular)
 
@@ -699,6 +701,91 @@ Use the **parent's** thumbnail tokens instead:
 <h5>Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-thumbnail.md`, `ion-thumbnail.ios`.
+
+<h4 id="version-10x-title">Title</h4>
+
+The following breaking changes apply to `ion-title`:
+
+1. `--color` has been replaced. <sup>[1](#version-10x-title-replaced-css-variables)</sup>
+2. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[2](#version-10x-title-hue)</sup>
+3. The size classes now include the property name, and a title without `size` is now `medium`. <sup>[3](#version-10x-title-size-classes)</sup>
+4. The `title-rtl` class has been removed. <sup>[4](#version-10x-title-rtl-class)</sup>
+5. Theme classes (`ion-title.md`, `ion-title.ios`) are no longer supported. <sup>[5](#version-10x-title-theme-classes)</sup>
+6. In the `md` theme, a tap on the title's padding no longer counts as a tap on the title. <sup>[6](#version-10x-title-padding-taps)</sup>
+7. The `ios` small title has more padding at its sides, and the `md` title has tighter letter spacing. <sup>[7](#version-10x-title-spacing)</sup>
+
+<h5 id="version-10x-title-replaced-css-variables">Replaced CSS variables</h5>
+
+Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--color` | `IonTitle.color` | `--ion-title-color` |
+
+<h5 id="version-10x-title-hue">New <code>hue</code> property and color tokens</h5>
+
+A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`.
+
+When `color` is set, a bold title now uses the color's `foreground` variant instead of `base`, which is darker so the text stays readable on the page. To revert to the previous appearance, set `IonTitle.hue.bold.semantic.default.color` to `var(--ion-color-base)` for global styles, or `--ion-title-hue-bold-semantic-default-color` for component-specific styles.
+
+When `color` is set, the title color now reads from a token instead of `--ion-color-base` directly. Global overrides should use the theme tokens; component-specific overrides use the corresponding CSS variables:
+
+| Hue | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| `bold` | `IonTitle.hue.bold.semantic.default.color` | `--ion-title-hue-bold-semantic-default-color` |
+| `subtle` | `IonTitle.hue.subtle.semantic.default.color` | `--ion-title-hue-subtle-semantic-default-color` |
+
+<h5 id="version-10x-title-size-classes">Size classes</h5>
+
+The classes `ion-title` adds for its size now include the property name. A title without `size` is now `medium`, which can also be set explicitly:
+
+| Old (9.x) | New |
+|---|---|
+| `title-default` | `title-size-medium` |
+| `title-small` | `title-size-small` |
+| `title-large` | `title-size-large` |
+
+`ion-toolbar` builds its own classes from these, so they change as well. Refer to [Toolbar](#version-10x-toolbar-title-size-classes).
+
+<h5 id="version-10x-title-rtl-class"><code>title-rtl</code> class</h5>
+
+`ion-title` no longer adds the `title-rtl` class. Use the `:dir(rtl)` pseudo-class instead:
+
+```diff
+-ion-title.title-rtl { }
++ion-title:dir(rtl) { }
+```
+
+<h5 id="version-10x-title-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-title.md`, `ion-title.ios`.
+
+<h5 id="version-10x-title-padding-taps">Taps on the title's padding</h5>
+
+In the `md` theme, a tap on the padding at the start or end of `ion-title` now reaches the element behind it, usually `ion-toolbar`, instead of the title. This matches the `ios` and `ionic` themes. Taps on the text, and on the rest of the title, still reach `ion-title`.
+
+If an app listens for taps on `ion-title` and needs them to include the padding, listen on `ion-toolbar` instead.
+
+<h5 id="version-10x-title-spacing">Spacing</h5>
+
+- The `ios` small title's start and end padding is now `16px` instead of `9px`, in accordance with the iOS guidelines. To revert to the previous appearance, set `IonTitle.size.small.padding.start` and `IonTitle.size.small.padding.end` to `9px` for global styles, or `--ion-title-size-small-padding-start` and `--ion-title-size-small-padding-end` for component-specific styles.
+- The `md` title's letter spacing is now `0.0075em` instead of `0.0125em`, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set `IonTitle.letter.spacing` to `0.0125em` for global styles, or `--ion-title-letter-spacing` for component-specific styles.
+
+<h4 id="version-10x-toolbar">Toolbar</h4>
+
+The following breaking changes apply to `ion-toolbar`:
+
+1. The classes it adds for a slotted title's size now include the property name. <sup>[1](#version-10x-toolbar-title-size-classes)</sup>
+
+<h5 id="version-10x-toolbar-title-size-classes">Title size classes</h5>
+
+The classes `ion-toolbar` adds for a slotted title's size now include the property name, following the title's own size classes. Refer to [Title](#version-10x-title-size-classes).
+
+| Old (9.x) | New |
+|---|---|
+| `toolbar-title-default` | `toolbar-title-size-medium` |
+| `toolbar-title-small` | `toolbar-title-size-small` |
+| `toolbar-title-large` | `toolbar-title-size-large` |
 
 <h2 id="version-10x-framework-specific">Framework Specific</h2>
 
