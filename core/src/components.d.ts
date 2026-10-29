@@ -17,10 +17,11 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+import { IonColValue } from "./components/col/col.interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { FooterScrollEffect } from "./components/footer/footer-interface";
-import { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
+import { IonGalleryColumns, IonGalleryGap } from "./components/gallery/gallery.interface";
 import { HeaderScrollEffect } from "./components/header/header-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
@@ -63,10 +64,11 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+export { IonColValue } from "./components/col/col.interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { FooterScrollEffect } from "./components/footer/footer-interface";
-export { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
+export { IonGalleryColumns, IonGalleryGap } from "./components/gallery/gallery.interface";
 export { HeaderScrollEffect } from "./components/header/header-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
@@ -916,51 +918,61 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
+          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 0, md: 2 }`), in which case the value for the largest matching breakpoint is used.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
-        "offset"?: string;
+        "offset"?: IonColValue;
         /**
           * The amount to offset the column for lg screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ lg: 2 }`).
          */
         "offsetLg"?: string;
         /**
           * The amount to offset the column for md screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ md: 2 }`).
          */
         "offsetMd"?: string;
         /**
           * The amount to offset the column for sm screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ sm: 2 }`).
          */
         "offsetSm"?: string;
         /**
           * The amount to offset the column for xl screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ xl: 2 }`).
          */
         "offsetXl"?: string;
         /**
           * The amount to offset the column for xs screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ xs: 2 }`).
          */
         "offsetXs"?: string;
         /**
-          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 2, md: 1 }`), in which case the value for the largest matching breakpoint is used.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
-        "order"?: string;
+        "order"?: IonColValue;
         /**
           * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ lg: 1 }`).
          */
         "orderLg"?: string;
         /**
           * The order of the column for md screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ md: 1 }`).
          */
         "orderMd"?: string;
         /**
           * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ sm: 1 }`).
          */
         "orderSm"?: string;
         /**
           * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ xl: 1 }`).
          */
         "orderXl"?: string;
         /**
           * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ xs: 1 }`).
          */
         "orderXs"?: string;
         /**
@@ -1024,27 +1036,32 @@ export namespace Components {
          */
         "pushXs"?: string;
         /**
-          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 12, md: 6 }`), in which case the value for the largest matching breakpoint is used.  An empty string or `null` at a breakpoint resets the column to the default flex layout from that breakpoint up (e.g. `{ xs: 12, md: null }`).  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
-        "size"?: string;
+        "size"?: IonColValue;
         /**
           * The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ lg: 4 }`).
          */
         "sizeLg"?: string;
         /**
           * The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ md: 6 }`).
          */
         "sizeMd"?: string;
         /**
           * The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ sm: 6 }`).
          */
         "sizeSm"?: string;
         /**
           * The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ xl: 3 }`).
          */
         "sizeXl"?: string;
         /**
           * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ xs: 12 }`).
          */
         "sizeXs"?: string;
     }
@@ -1486,15 +1503,14 @@ export namespace Components {
     }
     interface IonGallery {
         /**
-          * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
+          * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
           * @default {   xs: 2,   sm: 3,   md: 4,   lg: 6,   xl: 8,   xxl: 10, }
          */
-        "columns": GalleryColumns;
+        "columns": IonGalleryColumns;
         /**
-          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
-          * @default '16px'
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.  When unset, invalid, or missing for the active breakpoint, the gap comes from the theme's `--ion-gallery-gap` token.
          */
-        "gap": GalleryGap;
+        "gap"?: IonGalleryGap;
         /**
           * The visual layout of the gallery. When `uniform`, rows take up the height of the tallest item and are spaced evenly across the gallery. Additionally, items will have an aspect ratio of 1/1, forcing them to be square unless a height is explicitly set. When `masonry`, items will be positioned under each other with only the specified gap between them.
           * @default 'uniform'
@@ -1508,10 +1524,6 @@ export namespace Components {
           * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space. Defaults to `sequential` when layout is `masonry` and `order` is not explicitly set.
          */
         "order"?: 'sequential' | 'best-fit';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonGalleryItem {
         /**
@@ -1522,14 +1534,10 @@ export namespace Components {
           * Resolve the layout from the parent `ion-gallery`. Called internally on load and connect, and by the gallery when its layout changes.
          */
         "syncGalleryLayout": () => Promise<void>;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonGrid {
         /**
-          * If `true`, the grid will have a fixed width based on the screen size.
+          * If `true`, the grid will have a fixed width based on the screen size.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config. The default widths assume the default thresholds, so lowering a threshold without lowering its width leaves the grid clamped by `max-width: 100%` and no longer fixed. Set the matching `--ion-grid-breakpoint-*-width` variables alongside the config.
           * @default false
          */
         "fixed": boolean;
@@ -3861,8 +3869,8 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default '(min-width: 992px)'
+          * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.  The shortcut expressions are the names of the global screen breakpoints (`"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"` and `"xxl"`), which expand to the `min-width` media query for that breakpoint, plus `"never"`, which keeps the split pane hidden at every size. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
+          * @default 'lg'
          */
         "when": string | boolean;
     }
@@ -6792,51 +6800,61 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
+          * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 0, md: 2 }`), in which case the value for the largest matching breakpoint is used.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
-        "offset"?: string;
+        "offset"?: IonColValue;
         /**
           * The amount to offset the column for lg screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ lg: 2 }`).
          */
         "offsetLg"?: string;
         /**
           * The amount to offset the column for md screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ md: 2 }`).
          */
         "offsetMd"?: string;
         /**
           * The amount to offset the column for sm screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ sm: 2 }`).
          */
         "offsetSm"?: string;
         /**
           * The amount to offset the column for xl screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ xl: 2 }`).
          */
         "offsetXl"?: string;
         /**
           * The amount to offset the column for xs screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Set `offset` to an object of screen breakpoint values instead (e.g. `{ xs: 2 }`).
          */
         "offsetXs"?: string;
         /**
-          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 2, md: 1 }`), in which case the value for the largest matching breakpoint is used.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
-        "order"?: string;
+        "order"?: IonColValue;
         /**
           * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ lg: 1 }`).
          */
         "orderLg"?: string;
         /**
           * The order of the column for md screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ md: 1 }`).
          */
         "orderMd"?: string;
         /**
           * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ sm: 1 }`).
          */
         "orderSm"?: string;
         /**
           * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ xl: 1 }`).
          */
         "orderXl"?: string;
         /**
           * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+          * @deprecated Set `order` to an object of screen breakpoint values instead (e.g. `{ xs: 1 }`).
          */
         "orderXs"?: string;
         /**
@@ -6900,27 +6918,32 @@ declare namespace LocalJSX {
          */
         "pushXs"?: string;
         /**
-          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.  Can be a single value that applies at every screen size, or an object of screen breakpoint values (e.g. `{ xs: 12, md: 6 }`), in which case the value for the largest matching breakpoint is used.  An empty string or `null` at a breakpoint resets the column to the default flex layout from that breakpoint up (e.g. `{ xs: 12, md: null }`).  The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
          */
-        "size"?: string;
+        "size"?: IonColValue;
         /**
           * The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ lg: 4 }`).
          */
         "sizeLg"?: string;
         /**
           * The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ md: 6 }`).
          */
         "sizeMd"?: string;
         /**
           * The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ sm: 6 }`).
          */
         "sizeSm"?: string;
         /**
           * The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ xl: 3 }`).
          */
         "sizeXl"?: string;
         /**
           * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
+          * @deprecated Set `size` to an object of screen breakpoint values instead (e.g. `{ xs: 12 }`).
          */
         "sizeXs"?: string;
     }
@@ -7347,15 +7370,14 @@ declare namespace LocalJSX {
     }
     interface IonGallery {
         /**
-          * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
+          * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
           * @default {   xs: 2,   sm: 3,   md: 4,   lg: 6,   xl: 8,   xxl: 10, }
          */
-        "columns"?: GalleryColumns;
+        "columns"?: IonGalleryColumns;
         /**
-          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
-          * @default '16px'
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.  Breakpoints are matched against the gallery's own width rather than the screen width. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.  When unset, invalid, or missing for the active breakpoint, the gap comes from the theme's `--ion-gallery-gap` token.
          */
-        "gap"?: GalleryGap;
+        "gap"?: IonGalleryGap;
         /**
           * The visual layout of the gallery. When `uniform`, rows take up the height of the tallest item and are spaced evenly across the gallery. Additionally, items will have an aspect ratio of 1/1, forcing them to be square unless a height is explicitly set. When `masonry`, items will be positioned under each other with only the specified gap between them.
           * @default 'uniform'
@@ -7369,24 +7391,16 @@ declare namespace LocalJSX {
           * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space. Defaults to `sequential` when layout is `masonry` and `order` is not explicitly set.
          */
         "order"?: 'sequential' | 'best-fit';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonGalleryItem {
         /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonGrid {
         /**
-          * If `true`, the grid will have a fixed width based on the screen size.
+          * If `true`, the grid will have a fixed width based on the screen size.  The width each breakpoint activates at can be changed with the `screenBreakpoints` config. The default widths assume the default thresholds, so lowering a threshold without lowering its width leaves the grid clamped by `max-width: 100%` and no longer fixed. Set the matching `--ion-grid-breakpoint-*-width` variables alongside the config.
           * @default false
          */
         "fixed"?: boolean;
@@ -9816,8 +9830,8 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default '(min-width: 992px)'
+          * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.  The shortcut expressions are the names of the global screen breakpoints (`"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"` and `"xxl"`), which expand to the `min-width` media query for that breakpoint, plus `"never"`, which keeps the split pane hidden at every size. The width each breakpoint activates at can be changed with the `screenBreakpoints` config.
+          * @default 'lg'
          */
         "when"?: string | boolean;
     }
