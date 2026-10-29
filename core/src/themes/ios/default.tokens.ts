@@ -1,4 +1,14 @@
-import { rgba, currentColor, clamp, mix, dynamicFont, dynamicFontMin, ionColor, overlay } from '../../utils/theme';
+import {
+  rgba,
+  currentColor,
+  clamp,
+  mix,
+  dynamicFont,
+  dynamicFontMax,
+  dynamicFontMin,
+  ionColor,
+  overlay,
+} from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -53,6 +63,11 @@ export const defaultTheme: DefaultTheme = {
 
       IonText: {
         hue: 'bold',
+      },
+
+      IonTitle: {
+        hue: 'bold',
+        size: 'medium',
       },
     },
   },
@@ -1995,6 +2010,99 @@ export const defaultTheme: DefaultTheme = {
 
       border: {
         radius: 'var(--ion-radii-xxxxs)',
+      },
+    },
+
+    IonTitle: {
+      hue: {
+        bold: {
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+      position: {
+        top: 'var(--ion-spacing-0)',
+        start: 'var(--ion-spacing-0)',
+      },
+
+      size: {
+        small: {
+          // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+          position: 'relative',
+
+          font: {
+            size: dynamicFontMax(global.root, 1.8, 13),
+            weight: 'var(--ion-font-weight-normal)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xs)',
+            end: 'var(--ion-spacing-lg)',
+            bottom: 'var(--ion-spacing-lg)',
+            start: 'var(--ion-spacing-lg)',
+          },
+
+          text: {
+            align: 'center',
+          },
+        },
+
+        medium: {
+          // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
+          position: 'absolute',
+
+          font: {
+            size: dynamicFontMax(global.root, 1.2, 17),
+            weight: 'var(--ion-font-weight-semi-bold)',
+          },
+
+          // TODO(FW-6864): ios side padding changes when ion-toolbar titlePlacement works in every theme
+          padding: {
+            top: 'var(--padding-top)',
+            end: '90px',
+            bottom: 'var(--padding-bottom)',
+            start: '90px',
+          },
+
+          text: {
+            align: 'center',
+          },
+        },
+
+        large: {
+          align: {
+            items: 'flex-end',
+          },
+
+          font: {
+            size: dynamicFontMax(global.root, 1.8, 34),
+            weight: 'var(--ion-font-weight-bold)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-md)',
+            bottom: 'var(--ion-spacing-xxs)',
+            start: 'var(--ion-spacing-md)',
+          },
+
+          text: {
+            align: 'start',
+          },
+        },
       },
     },
   },
