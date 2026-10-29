@@ -45,6 +45,11 @@ export const defaultTheme: DefaultTheme = {
       IonText: {
         hue: 'bold',
       },
+
+      IonTitle: {
+        hue: 'bold',
+        size: 'medium',
+      },
     },
   },
 
@@ -1029,6 +1034,94 @@ export const defaultTheme: DefaultTheme = {
 
       border: {
         radius: 'var(--ion-radii-xxxxs)',
+      },
+    },
+
+    IonTitle: {
+      font: {
+        family: 'var(--ion-font-family)',
+      },
+
+      hue: {
+        bold: {
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letter: {
+        spacing: '0',
+      },
+
+      size: {
+        small: {
+          font: {
+            size: dynamicFont(global.root, 18),
+            weight: 'var(--ion-font-weight-medium)',
+          },
+
+          line: {
+            height: dynamicFont(global.root, 28),
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-sm)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-sm)',
+          },
+        },
+
+        medium: {
+          font: {
+            size: dynamicFont(global.root, 18),
+            weight: 'var(--ion-font-weight-medium)',
+          },
+
+          line: {
+            height: dynamicFont(global.root, 28),
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-sm)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-sm)',
+          },
+        },
+
+        large: {
+          align: {
+            items: 'center',
+          },
+
+          font: {
+            size: dynamicFont(global.root, 28),
+            weight: 'var(--ion-font-weight-medium)',
+          },
+
+          line: {
+            height: dynamicFont(global.root, 36),
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-lg)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-lg)',
+          },
+        },
       },
     },
   },
