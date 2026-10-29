@@ -64,11 +64,12 @@ The following breaking changes apply to `ion-button`:
 7. The `ios` button follows iOS 17 for its font, icons and disabled state. <sup>[7](#version-10x-button-ios-17)</sup>
 8. A badge without a `vertical` position now has a gap between it and the label, and no longer makes the button taller than its `min.height`. To remove the gap, set `IonButton.size.<size>.badge.margin.start` for global styles or `--ion-button-size-<size>-badge-margin-start` for component-specific styles to `0`.
 9. A button with an icon in the `icon-only` slot now shows only that icon and any badge with a `vertical` position. Text, elements in the `start` and `end` slots, and other content are hidden. Hidden text still names the button for assistive technology. To show other content, remove the `icon-only` slot and use the `start` or `end` slot for the icon.
-10. CSS variables have been replaced. <sup>[10](#version-10x-button-replaced-css-variables)</sup>
-11. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[11](#version-10x-button-padding-variables)</sup>
-12. The fill, size, shape and expand classes have been renamed. <sup>[12](#version-10x-button-renamed-classes)</sup>
-13. The `default` size has been deprecated. <sup>[13](#version-10x-button-deprecated-default-size)</sup>
-14. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[14](#version-10x-button-theme-classes)</sup>
+10. The text of `outline` buttons in `md` and `ios` now uses the color's darker `foreground` variant instead of `base`, matching `clear` buttons, since it sits on the page rather than on a fill of the color. In `ios`, `clear` buttons with a `color` also keep `foreground` on hover and focus. To revert, set `IonButton.hue.bold.outline.<state>.color` (`.semantic.<state>.color` with a `color`) for global styles or `--ion-button-hue-bold-outline-<state>-color` (`--ion-button-hue-bold-outline-semantic-<state>-color`) for component-specific styles to the color's `base`.
+11. CSS variables have been replaced. <sup>[11](#version-10x-button-replaced-css-variables)</sup>
+12. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[12](#version-10x-button-padding-variables)</sup>
+13. The fill, size, shape and expand classes have been renamed. <sup>[13](#version-10x-button-renamed-classes)</sup>
+14. The `default` size has been deprecated. <sup>[14](#version-10x-button-deprecated-default-size)</sup>
+15. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[15](#version-10x-button-theme-classes)</sup>
 
 <h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
 

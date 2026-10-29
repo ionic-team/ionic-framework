@@ -2,6 +2,11 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_BUTTON_FILLS } from '../../button.interface';
+
+/**
+ * This behavior does not vary across directions.
+ */
 configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('button: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
@@ -279,6 +284,36 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(host).toHaveClass(/ion-color-primary/);
 
       await expect(nativeButton).toHaveAttribute('aria-label', 'initial');
+    });
+  });
+});
+
+/**
+ * TODO(FW-6417): the subtle palette fails contrast for success, warning and
+ * light, and in the high contrast palettes. Add them back once it is fixed.
+ */
+const COLORS = ['primary', 'secondary', 'tertiary', 'danger', 'medium', 'dark'];
+
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
+  test.describe(title('button: subtle hue a11y'), () => {
+    test('should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        ION_BUTTON_FILLS.map((fill) =>
+          [undefined, ...COLORS]
+            .map(
+              (color) =>
+                `<ion-button hue="subtle" fill="${fill}"${color ? ` color="${color}"` : ''}>Button</ion-button>`
+            )
+            .join('')
+        ).join(''),
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
     });
   });
 });
