@@ -58,14 +58,15 @@ The following breaking changes apply to `ion-button`:
 1. The `border-radius` of the `ios` button is now `6px` at every size, instead of `6px`, `14px` and `16px` for the small, default and large sizes. The `md` button now defaults to `999px` instead of `4px`. Both follow the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"` for `md`. For `ios`, set `IonButton.shape.soft.border.radius` for global styles or `--ion-button-shape-soft-border-radius` for component-specific styles to `14px`, and to `6px` and `16px` on small and large buttons.
 2. Icon-only buttons in the `start` and `end` slots of `ion-input`, `ion-select` and `ion-textarea` now follow the button's `shape` instead of always being circles. For `ios`, set the `shape` to `"round"` to keep them circular.
 3. The font size of `clear` buttons in the `ios` theme now matches the other fills at each size, instead of `17px` at the default size. To keep the previous size, set `--ion-button-size-medium-font-size` to `17px` on those buttons.
-4. The `ios` button is now `28px`, `34px` and `50px` tall at the small, default and large sizes, with less padding, following the iOS guidelines. To revert to the previous appearance, set `IonButton.size.<size>.min.height` for global styles or `--ion-button-size-<size>-min-height` for component-specific styles to `2.1em`, `3.1em` and `3.1em`, and the padding (`IonButton.size.<size>.padding` or `--ion-button-size-<size>-padding-*`) to `4px 0.9em`, `13px 1em` and `17px 1em`.
+4. The `ios` button is now `28px`, `34px` and `50px` tall at the small, default and large sizes, with less padding, following the iOS guidelines. To revert to the previous appearance, set `IonButton.size.<size>.min.height` for global styles or `--ion-button-size-<size>-min-height` for component-specific styles to `2.1em`, `3.1em` and `3.1em`, and the padding (`IonButton.size.<size>.padding` or `--ion-button-size-<size>-padding-*`) to `4px 0.9em`, `13px 1em` and `17px 1em`, along with the previous font sizes from item 7.
 5. Icon-only buttons are now squares as tall as a text button of the same size. In `md`, this makes them a few pixels smaller at the small and default sizes and larger at the large size. To change their size, set the size's `min.height` as described above.
 6. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[6](#version-10x-button-md-material-design-2)</sup>
-7. CSS variables have been replaced. <sup>[7](#version-10x-button-replaced-css-variables)</sup>
-8. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[8](#version-10x-button-padding-variables)</sup>
-9. The fill, size, shape and expand classes have been renamed. <sup>[9](#version-10x-button-renamed-classes)</sup>
-10. The `default` size has been deprecated. <sup>[10](#version-10x-button-deprecated-default-size)</sup>
-11. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[11](#version-10x-button-theme-classes)</sup>
+7. The `ios` button follows iOS 17 for its font, icons and disabled state. <sup>[7](#version-10x-button-ios-17)</sup>
+8. CSS variables have been replaced. <sup>[8](#version-10x-button-replaced-css-variables)</sup>
+9. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[9](#version-10x-button-padding-variables)</sup>
+10. The fill, size, shape and expand classes have been renamed. <sup>[10](#version-10x-button-renamed-classes)</sup>
+11. The `default` size has been deprecated. <sup>[11](#version-10x-button-deprecated-default-size)</sup>
+12. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[12](#version-10x-button-theme-classes)</sup>
 
 <h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
 
@@ -85,6 +86,24 @@ The `md` button now uses the Material Design 2 values below. To keep a previous 
 | Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` |
 
 Buttons in toolbars keep their previous colors when disabled and have no elevation on hover or focus.
+
+<h5 id="version-10x-button-ios-17">iOS 17 in <code>ios</code></h5>
+
+The `ios` button now uses the iOS 17 values below. To keep a previous value, set the token for global styles, or the matching `--ion-button-*` CSS variable for component-specific styles. Replace `<fill>` with `solid`, `outline` or `clear`, and `<size>` with `small`, `medium` or `large`. Values in `em` are relative to the font size, so reverting the font size also needs the previous `em` values.
+
+| Property | Previous | New | Token |
+|---|---|---|---|
+| Font size | `13px`, `16px` and `20px` | `15px`, `15px` and `17px` | `IonButton.size.<size>.font.size` |
+| Font weight of solid and outline | `500` | `400` | `IonButton.hue.bold.<fill>.default.font.weight` |
+| Horizontal padding | `0.77em`, `0.875em` and `1em` | `0.6667em`, `0.9333em` and `1.1765em` (same pixels at the new font size) | `IonButton.size.<size>.padding.start` and `.end` |
+| Min height | `2.16em`, `2.125em` and `2.5em` | `1.8667em`, `2.2667em` and `2.9412em` (same pixels at the new font size) | `IonButton.size.<size>.min.height` |
+| Icon size next to a label | `1.35em` | `1.2em` | `IonButton.size.<size>.icon.font.size` |
+| Icon spacing | `0.3em` into the padding and a `0.3em` gap | at the padding edge and a `0.2222em` gap (`4px` at the default size) | `IonButton.size.<size>.icon.leading.margin` and `.trailing.margin` |
+| Icon-only icon size | `1.308125em`, `1.125em` and `0.9em` | `1.1333em`, `1.2em` and `1.0588em` (same pixels at the new font size) | `IonButton.size.<size>.iconOnly.icon.font.size` |
+| Spinner in a button | the spinner's own size (`28px` by default) | `1.2em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
+| Disabled | the whole button at `0.5` opacity | the text color at `25%`, which outline also uses for its border, and on solid, an `8%` container | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.border.color` |
+
+Buttons in toolbars keep their previous colors when disabled.
 
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 
