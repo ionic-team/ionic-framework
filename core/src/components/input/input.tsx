@@ -527,6 +527,11 @@ export class Input implements ComponentInterface {
 
     this.clearButtonPressController.destroy();
 
+    if (this.clickController) {
+      this.clickController.destroy();
+      this.clickController = undefined;
+    }
+
     if (this.slotMutationController) {
       this.slotMutationController.destroy();
       this.slotMutationController = undefined;

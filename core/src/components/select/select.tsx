@@ -484,6 +484,11 @@ export class Select implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    if (this.clickController) {
+      this.clickController.destroy();
+      this.clickController = undefined;
+    }
+
     if (this.mutationO) {
       this.mutationO.disconnect();
       this.mutationO = undefined;
