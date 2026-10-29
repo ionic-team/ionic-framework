@@ -15,7 +15,7 @@
  * - `rtl`: Set to `true` to enable right-to-left directionality.
  * - `ionic:_testing`: Set to `true` to identify testing environments.
  * - `ionic:theme`: Set to `ionic`, `ios`, `md` or `base` to load a specific 
- * theme. Defaults to `md`.
+ * theme. Defaults to the mode, then `md`.
  * - `palette`: Set to `light`, `dark`, `high-contrast`, or 
  * `high-contrast-dark` to load a specific palette. Defaults to `light`.
  */
@@ -53,14 +53,19 @@ const DEFAULT_PALETTE = 'light';
 
   /**
    * The `theme` param is used to load a specific theme.
-   * This can be `ionic`, `ios`, `md`, or `base`. Default to `md` for tests.
+   * This can be `ionic`, `ios`, `md`, or `base`. Defaults to the mode, as in
+   * the app, then to `md`.
    * `base` loads only the base tokens, with no component tokens, to show
    * how migrated components render without a theme.
    */
   const themeQuery = window.location.search.match(/ionic:theme=([a-z0-9]+)/i);
   const themeHash = window.location.hash.match(/ionic:theme=([a-z0-9]+)/i);
   const themeAttr = document.documentElement.getAttribute('theme');
-  const themeName = themeQuery?.[1] || themeHash?.[1] || themeAttr || DEFAULT_THEME;
+  const modeQuery = window.location.search.match(/ionic:mode=([a-z]+)/i);
+  const modeHash = window.location.hash.match(/ionic:mode=([a-z]+)/i);
+  const modeAttr = document.documentElement.getAttribute('mode');
+  const modeName = modeQuery?.[1] || modeHash?.[1] || modeAttr;
+  const themeName = themeQuery?.[1] || themeHash?.[1] || themeAttr || modeName || DEFAULT_THEME;
 
   // TODO(): Remove this when the tokens are working for all components
   // and the themes all use the same bundle
