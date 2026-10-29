@@ -223,7 +223,7 @@
 .calendar-day.calendar-day-range-start {
   @include globals.border-radius(globals.$ion-border-radius-full, 0, 0, globals.$ion-border-radius-full);
 
-  background: globals.$ion-semantics-primary-100;
+  background: globals.$ion-bg-primary-subtle-press;
   color: globals.$ion-text-default;
 }
 
@@ -231,7 +231,7 @@
 .calendar-day.calendar-day-range-end {
   @include globals.border-radius(0, globals.$ion-border-radius-full, globals.$ion-border-radius-full, 0);
 
-  background: globals.$ion-semantics-primary-100;
+  background: globals.$ion-bg-primary-subtle-press;
   color: globals.$ion-text-default;
 }
 
