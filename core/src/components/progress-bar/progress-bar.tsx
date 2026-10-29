@@ -6,7 +6,7 @@ import { createColorClasses } from '@utils/theme';
 import { config } from '../../global/config';
 import type { Color } from '../../interface';
 
-import type { IonProgressBarShape } from './progress-bar.interfaces';
+import type { IonProgressBarShape } from './progress-bar.interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.

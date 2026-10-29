@@ -1,17 +1,17 @@
-import type { IonBadgeConfig, IonBadgeRecipe } from '../components/badge/badge.interfaces';
-import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
+import type { IonBadgeConfig, IonBadgeRecipe } from '../components/badge/badge.interface';
+import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interface';
 import type { IonColRecipe } from '../components/col/col.interface';
-import type { IonContentRecipe } from '../components/content/content.interfaces';
+import type { IonContentRecipe } from '../components/content/content.interface';
 import type { IonGalleryRecipe } from '../components/gallery/gallery.interface';
 import type { IonGridRecipe } from '../components/grid/grid.interface';
-import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
-import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interfaces';
+import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interface';
+import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interface';
 import type { IonRippleEffectRecipe } from '../components/ripple-effect/ripple-effect.interface';
 import type { IonRowRecipe } from '../components/row/row.interface';
 import type { IonSkeletonTextRecipe } from '../components/skeleton-text/skeleton-text.interface';
-import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
-import type { IonTextConfig, IonTextRecipe } from '../components/text/text.interfaces';
-import type { IonThumbnailRecipe } from '../components/thumbnail/thumbnail.interfaces';
+import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interface';
+import type { IonTextConfig, IonTextRecipe } from '../components/text/text.interface';
+import type { IonThumbnailRecipe } from '../components/thumbnail/thumbnail.interface';
 import type { IonTitleConfig, IonTitleRecipe } from '../components/title/title.interface';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 

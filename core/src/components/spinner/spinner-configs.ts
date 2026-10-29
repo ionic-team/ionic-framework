@@ -1,4 +1,4 @@
-import type { SpinnerDefinitions } from './spinner.interfaces';
+import type { SpinnerDefinitions } from './spinner.interface';
 
 const spinners = {
   bubbles: {

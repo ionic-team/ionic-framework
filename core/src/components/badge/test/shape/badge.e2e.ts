@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-import { ION_BADGE_SHAPES } from '../../../badge/badge.interfaces';
+import { ION_BADGE_SHAPES } from '../../../badge/badge.interface';
 
 /**
  * This behavior does not vary across directions.

@@ -1,6 +1,8 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_CHIP_SHAPES } from '../../chip.interface';
+
 /**
  * This behavior does not vary across directions
  */
@@ -10,27 +12,11 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
       await page.goto(`/src/components/chip/test/shape`, config);
     });
 
-    test.describe('soft', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        const container = page.locator('#soft');
+    ION_CHIP_SHAPES.forEach((shape) => {
+      test(`should not have visual regressions with ${shape} shape`, async ({ page }) => {
+        const container = page.locator(`#${shape}`);
 
-        await expect(container).toHaveScreenshot(screenshot(`chip-soft`));
-      });
-    });
-
-    test.describe('round', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        const container = page.locator('#round');
-
-        await expect(container).toHaveScreenshot(screenshot(`chip-round`));
-      });
-    });
-
-    test.describe('rectangular', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        const container = page.locator('#rectangular');
-
-        await expect(container).toHaveScreenshot(screenshot(`chip-rectangular`));
+        await expect(container).toHaveScreenshot(screenshot(`chip-${shape}`));
       });
     });
   });
