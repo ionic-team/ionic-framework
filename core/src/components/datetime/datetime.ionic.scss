@@ -169,18 +169,18 @@
 
 // Disabled Day
 .calendar-day[disabled]:not(.calendar-day-constrained) {
-  color: globals.$ion-primitives-neutral-500;
+  color: globals.$ion-text-disabled;
 }
 
 // Current Day
 .calendar-day.calendar-day-today {
-  color: globals.$ion-semantics-primary-base;
+  color: globals.$ion-text-select;
 }
 
 // Selected Day
 .calendar-day.calendar-day-active,
 .calendar-day.calendar-day-active.calendar-day-adjacent-day {
-  background: globals.$ion-semantics-primary-100;
+  background: globals.$ion-bg-primary-subtle-default;
 }
 
 // Focused Day
@@ -190,7 +190,7 @@
 
 // Hovered Day
 @media (any-hover: hover) {
-  .calendar-day:not([disabled]):not(:active):hover {
+  .calendar-day:not([disabled]):not(:active):not(.calendar-day-in-range):hover {
     background: globals.$ion-semantics-primary-200;
   }
 }
@@ -215,24 +215,24 @@
 // -----------------------------------
 
 :host {
-  --range-background: #{globals.$ion-semantics-primary-100};
+  --range-background: #{globals.$ion-bg-primary-subtle-default};
   --range-track-height: #{globals.$ion-scale-1200};
 }
 
-// Range start: left-pill shape (rounded left, square right)
+// Range start: full circle
 .calendar-day.calendar-day-range-start {
-  @include globals.border-radius(globals.$ion-border-radius-full, 0, 0, globals.$ion-border-radius-full);
+  @include globals.border-radius(globals.$ion-border-radius-full);
 
-  background: globals.$ion-bg-primary-subtle-press;
-  color: globals.$ion-text-default;
+  background: globals.$ion-bg-primary-base-default;
+  color: globals.$ion-text-inverse;
 }
 
-// Range end: right-pill shape (square left, rounded right)
+// Range end: full circle
 .calendar-day.calendar-day-range-end {
-  @include globals.border-radius(0, globals.$ion-border-radius-full, globals.$ion-border-radius-full, 0);
+  @include globals.border-radius(globals.$ion-border-radius-full);
 
-  background: globals.$ion-bg-primary-subtle-press;
-  color: globals.$ion-text-default;
+  background: globals.$ion-bg-primary-base-default;
+  color: globals.$ion-text-inverse;
 }
 
 // Single day range: both start and end, restore full circle
@@ -250,26 +250,28 @@
 
 // Current day keeps its blue text even when part of a range
 .calendar-day.calendar-day-today.calendar-day-in-range {
-  color: globals.$ion-semantics-primary-base;
+  color: globals.$ion-text-select;
 }
 
 .calendar-day.calendar-day-today.calendar-day-range-start,
 .calendar-day.calendar-day-today.calendar-day-range-end {
-  color: globals.$ion-semantics-primary-base;
+  color: globals.$ion-text-inverse;
 }
 
-// Hovered range start/end/in-range days
+// Hovered range start/end days
 @media (any-hover: hover) {
   .calendar-day.calendar-day-range-start:not([disabled]):not(:active):hover,
-  .calendar-day.calendar-day-range-end:not([disabled]):not(:active):hover,
-  .calendar-day.calendar-day-in-range:not([disabled]):not(:active):hover {
-    background: globals.$ion-semantics-primary-200;
+  .calendar-day.calendar-day-range-end:not([disabled]):not(:active):hover {
+    background: globals.$ion-bg-primary-base-press;
   }
 }
 
 // Pressed range start/end/in-range days
 .calendar-day.calendar-day-range-start:active,
-.calendar-day.calendar-day-range-end:active,
+.calendar-day.calendar-day-range-end:active {
+  background: globals.$ion-bg-primary-base-press;
+}
+
 .calendar-day.calendar-day-in-range:active {
   background: globals.$ion-bg-primary-subtle-press;
 }
@@ -284,7 +286,7 @@
 :host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-start[disabled],
 :host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-end[disabled],
 :host(:not(.datetime-readonly)) .calendar-day.calendar-day-in-range[disabled] {
-  color: globals.$ion-primitives-neutral-500;
+  color: globals.$ion-text-disabled;
 
   opacity: 1;
 }

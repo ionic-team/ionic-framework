@@ -226,6 +226,13 @@
   background: none;
 }
 
+:host .calendar-day.calendar-day-in-range.calendar-day-active,
+:host .calendar-day.calendar-day-in-range:focus {
+  background: none;
+
+  box-shadow: none;
+}
+
 :host(.ion-color) .calendar-day.calendar-day-range-start,
 :host(.ion-color) .calendar-day.calendar-day-range-end {
   background: current-color(base);
