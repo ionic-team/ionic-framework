@@ -1,10 +1,11 @@
 import { Build, getMode, setMode, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
-import { applyComponentsTheme, applyGlobalTheme, getCustomTheme } from '@utils/theme';
+import { applyComponentsTheme, applyGlobalTheme, generateBreakpointCSS, getCustomTheme, injectCSS } from '@utils/theme';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
 import type { DefaultTheme } from '../themes/themes.interfaces';
+import { refreshBreakpointListeners } from '../utils/breakpoints';
 import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
@@ -120,6 +121,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   };
 
   config.reset(configObj);
+
   if (config.getBoolean('persistConfig')) {
     saveConfig(win, configObj);
   }
@@ -198,6 +200,16 @@ export const initialize = (userConfig: IonicConfig = {}) => {
      */
     config.set(configKey, value);
   });
+
+  /**
+   * The media queries and the breakpoint listeners are both built from the
+   * configured widths, so they are left until the configuration has settled,
+   * which is after the theme's config is merged since a theme can set the
+   * widths itself. They are emitted whether or not a theme supplies the
+   * tokens, since an application can define the public variables itself.
+   */
+  injectCSS(generateBreakpointCSS());
+  refreshBreakpointListeners();
 
   if (config.getBoolean('_testing')) {
     config.set('animated', false);

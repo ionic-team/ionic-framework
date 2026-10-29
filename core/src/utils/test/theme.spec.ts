@@ -3,7 +3,11 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Buttons } from '../../components/buttons/buttons';
 import { CardContent } from '../../components/card-content/card-content';
 import { Chip } from '../../components/chip/chip';
+import { config } from '@global/config';
+
+import { SCREEN_BREAKPOINT_NAMES, resetScreenBreakpoints } from '../breakpoints';
 import {
+  generateBreakpointCSS,
   generateColorClasses,
   generateComponentsThemeCSS,
   generateCSSVars,
@@ -841,6 +845,91 @@ describe('generateComponentsThemeCSS', () => {
     const css = generateComponentsThemeCSS(components);
 
     expect(css).toBe('');
+  });
+});
+
+describe('generateBreakpointCSS', () => {
+  const setScreenBreakpoints = (value: unknown) => {
+    config.set('screenBreakpoints', value as any);
+    resetScreenBreakpoints();
+  };
+
+  afterEach(() => {
+    setScreenBreakpoints(undefined);
+  });
+
+  it('should map the public breakpoint tokens onto internal variables', () => {
+    const css = generateBreakpointCSS().replace(/\s+/g, ' ');
+
+    for (const breakpoint of SCREEN_BREAKPOINT_NAMES) {
+      for (const side of ['top', 'end', 'bottom', 'start']) {
+        expect(css).toContain(
+          `--internal-grid-padding-${side}: var(--ion-grid-breakpoint-${breakpoint}-padding-${side});`
+        );
+        expect(css).toContain(
+          `--internal-col-padding-${side}: var(--ion-col-breakpoint-${breakpoint}-padding-${side});`
+        );
+      }
+
+      expect(css).toContain(`--internal-grid-width: var(--ion-grid-breakpoint-${breakpoint}-width);`);
+    }
+  });
+
+  /**
+   * The smallest breakpoint always applies, so wrapping it would add a query
+   * that is always true and leave the others nothing to override.
+   */
+  it('should emit the smallest breakpoint without a media query', () => {
+    const css = generateBreakpointCSS().replace(/\s+/g, ' ');
+
+    expect(css).toContain('ion-grid { --internal-grid-padding-top: var(--ion-grid-breakpoint-xs-padding-top);');
+    expect(css).not.toContain('@media (min-width: 0px)');
+  });
+
+  /**
+   * The rules have equal specificity, so the media queries only override the
+   * smallest breakpoint by coming after it.
+   */
+  it('should emit the smallest breakpoint before the queries that override it', () => {
+    const css = generateBreakpointCSS().replace(/\s+/g, ' ');
+
+    expect(css.indexOf('--internal-grid-padding-top: var(--ion-grid-breakpoint-xs-padding-top);')).toBeLessThan(
+      css.indexOf('@media')
+    );
+  });
+
+  it('should emit the remaining breakpoints at their default widths', () => {
+    const css = generateBreakpointCSS().replace(/\s+/g, ' ');
+
+    expect(css).toContain('@media (min-width: 768px) { ion-grid {');
+    expect(css).toContain('@media (min-width: 1400px) { ion-grid {');
+  });
+
+  /**
+   * This is the reason the queries are built at runtime: a `@media` rule in a
+   * stylesheet cannot read the configured widths.
+   */
+  it('should emit the configured widths rather than the defaults', () => {
+    setScreenBreakpoints({ md: 400 });
+
+    const css = generateBreakpointCSS().replace(/\s+/g, ' ');
+
+    expect(css).toContain('@media (min-width: 400px) { ion-grid {');
+    expect(css).not.toContain('@media (min-width: 768px) { ion-grid {');
+  });
+
+  it('should emit the mapping for every component that resolves per breakpoint', () => {
+    const css = generateBreakpointCSS().replace(/\s+/g, ' ');
+
+    expect(css).toContain('@media (min-width: 768px) { ion-col {');
+  });
+
+  /**
+   * An application can set the public variables in its own CSS, so the mapping
+   * cannot depend on a theme supplying tokens for the component.
+   */
+  it('should not depend on a theme supplying tokens', () => {
+    expect(generateBreakpointCSS()).not.toBe('');
   });
 });
 
