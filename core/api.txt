@@ -580,6 +580,10 @@ ion-button,css-prop,--ion-button-shape-crisp-border-radius
 ion-button,css-prop,--ion-button-shape-rectangular-border-radius
 ion-button,css-prop,--ion-button-shape-round-border-radius
 ion-button,css-prop,--ion-button-shape-soft-border-radius
+ion-button,css-prop,--ion-button-size-large-badge-margin-bottom
+ion-button,css-prop,--ion-button-size-large-badge-margin-end
+ion-button,css-prop,--ion-button-size-large-badge-margin-start
+ion-button,css-prop,--ion-button-size-large-badge-margin-top
 ion-button,css-prop,--ion-button-size-large-font-size
 ion-button,css-prop,--ion-button-size-large-icon-font-size
 ion-button,css-prop,--ion-button-size-large-icon-leading-margin-bottom
@@ -619,6 +623,10 @@ ion-button,css-prop,--ion-button-size-large-spinner-trailing-margin-bottom
 ion-button,css-prop,--ion-button-size-large-spinner-trailing-margin-end
 ion-button,css-prop,--ion-button-size-large-spinner-trailing-margin-start
 ion-button,css-prop,--ion-button-size-large-spinner-trailing-margin-top
+ion-button,css-prop,--ion-button-size-medium-badge-margin-bottom
+ion-button,css-prop,--ion-button-size-medium-badge-margin-end
+ion-button,css-prop,--ion-button-size-medium-badge-margin-start
+ion-button,css-prop,--ion-button-size-medium-badge-margin-top
 ion-button,css-prop,--ion-button-size-medium-font-size
 ion-button,css-prop,--ion-button-size-medium-icon-font-size
 ion-button,css-prop,--ion-button-size-medium-icon-leading-margin-bottom
@@ -658,6 +666,10 @@ ion-button,css-prop,--ion-button-size-medium-spinner-trailing-margin-bottom
 ion-button,css-prop,--ion-button-size-medium-spinner-trailing-margin-end
 ion-button,css-prop,--ion-button-size-medium-spinner-trailing-margin-start
 ion-button,css-prop,--ion-button-size-medium-spinner-trailing-margin-top
+ion-button,css-prop,--ion-button-size-small-badge-margin-bottom
+ion-button,css-prop,--ion-button-size-small-badge-margin-end
+ion-button,css-prop,--ion-button-size-small-badge-margin-start
+ion-button,css-prop,--ion-button-size-small-badge-margin-top
 ion-button,css-prop,--ion-button-size-small-font-size
 ion-button,css-prop,--ion-button-size-small-icon-font-size
 ion-button,css-prop,--ion-button-size-small-icon-leading-margin-bottom

@@ -699,6 +699,15 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          badge: {
+            margin: {
+              top: '0',
+              end: '0',
+              bottom: '0',
+              start: 'var(--ion-spacing-sm)',
+            },
+          },
         },
 
         medium: {
@@ -791,6 +800,15 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          badge: {
+            margin: {
+              top: '0',
+              end: '0',
+              bottom: '0',
+              start: 'var(--ion-spacing-sm)',
+            },
+          },
         },
 
         large: {
@@ -877,6 +895,15 @@ export const defaultTheme: DefaultTheme = {
                 height: '2.2041em',
                 width: '2.2041em',
               },
+            },
+          },
+
+          badge: {
+            margin: {
+              top: '0',
+              end: '0',
+              bottom: '0',
+              start: 'var(--ion-spacing-md)',
             },
           },
         },

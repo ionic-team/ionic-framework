@@ -671,6 +671,15 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          badge: {
+            margin: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-sm)',
+            },
+          },
         },
 
         medium: {
@@ -776,6 +785,15 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          badge: {
+            margin: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-250)',
+            },
+          },
         },
 
         large: {
@@ -879,6 +897,15 @@ export const defaultTheme: DefaultTheme = {
                 bottom: 'var(--ion-spacing-0)',
                 start: 'var(--ion-spacing-md)',
               },
+            },
+          },
+
+          badge: {
+            margin: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-md)',
             },
           },
         },
