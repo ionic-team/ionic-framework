@@ -47,5 +47,5 @@
 :host(.in-gallery-layout-masonry) {
   // The spacing between stacked items. Applies to all items except
   // for the last item in each column to remove any trailing space.
-  margin-bottom: var(--internal-gallery-gap, 16px);
+  margin-bottom: var(--internal-gallery-gap);
 }

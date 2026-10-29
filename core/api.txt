@@ -911,13 +911,13 @@ ion-chip,css-prop,--ion-chip-state-focus-ring-width
 
 ion-col,shadow
 ion-col,prop,mode,"ios" | "md",undefined,false,false
-ion-col,prop,offset,string | undefined,undefined,false,false
+ion-col,prop,offset,BreakpointMap<string | number | null> | number | string | undefined,undefined,false,false
 ion-col,prop,offsetLg,string | undefined,undefined,false,false
 ion-col,prop,offsetMd,string | undefined,undefined,false,false
 ion-col,prop,offsetSm,string | undefined,undefined,false,false
 ion-col,prop,offsetXl,string | undefined,undefined,false,false
 ion-col,prop,offsetXs,string | undefined,undefined,false,false
-ion-col,prop,order,string | undefined,undefined,false,false
+ion-col,prop,order,BreakpointMap<string | number | null> | number | string | undefined,undefined,false,false
 ion-col,prop,orderLg,string | undefined,undefined,false,false
 ion-col,prop,orderMd,string | undefined,undefined,false,false
 ion-col,prop,orderSm,string | undefined,undefined,false,false
@@ -935,7 +935,7 @@ ion-col,prop,pushMd,string | undefined,undefined,false,false
 ion-col,prop,pushSm,string | undefined,undefined,false,false
 ion-col,prop,pushXl,string | undefined,undefined,false,false
 ion-col,prop,pushXs,string | undefined,undefined,false,false
-ion-col,prop,size,string | undefined,undefined,false,false
+ion-col,prop,size,BreakpointMap<string | number | null> | number | string | undefined,undefined,false,false
 ion-col,prop,sizeLg,string | undefined,undefined,false,false
 ion-col,prop,sizeMd,string | undefined,undefined,false,false
 ion-col,prop,sizeSm,string | undefined,undefined,false,false
@@ -961,6 +961,10 @@ ion-col,css-prop,--ion-col-breakpoint-xs-padding-bottom
 ion-col,css-prop,--ion-col-breakpoint-xs-padding-end
 ion-col,css-prop,--ion-col-breakpoint-xs-padding-start
 ion-col,css-prop,--ion-col-breakpoint-xs-padding-top
+ion-col,css-prop,--ion-col-breakpoint-xxl-padding-bottom
+ion-col,css-prop,--ion-col-breakpoint-xxl-padding-end
+ion-col,css-prop,--ion-col-breakpoint-xxl-padding-start
+ion-col,css-prop,--ion-col-breakpoint-xxl-padding-top
 
 ion-content,shadow
 ion-content,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -1206,7 +1210,7 @@ ion-footer,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-footer,prop,translucent,boolean,false,false,false
 
 ion-gallery,shadow
-ion-gallery,prop,columns,GalleryBreakpoints<string | number> | number | string,{
+ion-gallery,prop,columns,BreakpointMap<string | number> | number | string,{
   xs: 2,
   sm: 3,
   md: 4,
@@ -1214,15 +1218,14 @@ ion-gallery,prop,columns,GalleryBreakpoints<string | number> | number | string,{
   xl: 8,
   xxl: 10,
 },false,false
-ion-gallery,prop,gap,GalleryBreakpoints<string | number> | number | string,'16px',false,false
+ion-gallery,prop,gap,BreakpointMap<string | number> | number | string | undefined,undefined,false,false
 ion-gallery,prop,layout,"masonry" | "uniform",'uniform',false,false
 ion-gallery,prop,mode,"ios" | "md",undefined,false,false
 ion-gallery,prop,order,"best-fit" | "sequential" | undefined,undefined,false,false
-ion-gallery,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-gallery,css-prop,--ion-gallery-gap
 
 ion-gallery-item,shadow
 ion-gallery-item,prop,mode,"ios" | "md",undefined,false,false
-ion-gallery-item,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-grid,shadow
 ion-grid,prop,fixed,boolean,false,false,false
@@ -1252,6 +1255,11 @@ ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-end
 ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-start
 ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-top
 ion-grid,css-prop,--ion-grid-breakpoint-xs-width
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-padding-bottom
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-padding-end
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-padding-start
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-padding-top
+ion-grid,css-prop,--ion-grid-breakpoint-xxl-width
 ion-grid,css-prop,--ion-grid-columns
 
 ion-header,none
@@ -2758,7 +2766,7 @@ ion-split-pane,prop,contentId,string | undefined,undefined,false,true
 ion-split-pane,prop,disabled,boolean,false,false,false
 ion-split-pane,prop,mode,"ios" | "md",undefined,false,false
 ion-split-pane,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-split-pane,prop,when,boolean | string,'(min-width: 992px)',false,false
+ion-split-pane,prop,when,boolean | string,'lg',false,false
 ion-split-pane,event,ionSplitPaneVisible,{ visible: boolean; },true
 ion-split-pane,css-prop,--border,ionic
 ion-split-pane,css-prop,--border,ios
