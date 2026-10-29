@@ -1,4 +1,5 @@
 import type { IonBadgeConfig, IonBadgeRecipe } from '../components/badge/badge.interfaces';
+import type { IonButtonConfig, IonButtonRecipe } from '../components/button/button.interface';
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
 import type { IonColRecipe } from '../components/col/col.interface';
 import type { IonContentRecipe } from '../components/content/content.interfaces';
@@ -255,6 +256,7 @@ export type BaseTheme = {
 export type IonicConfig = IonicGlobalConfig & {
   components?: {
     IonBadge?: IonBadgeConfig;
+    IonButton?: IonButtonConfig;
     IonChip?: IonChipConfig;
     IonProgressBar?: IonProgressBarConfig;
     IonSpinner?: IonSpinnerConfig;
@@ -298,6 +300,7 @@ export type DefaultTheme = BaseTheme & {
 type Components = {
   IonAvatar?: any;
   IonBadge?: IonBadgeRecipe;
+  IonButton?: IonButtonRecipe;
   IonChip?: IonChipRecipe;
   IonCol?: IonColRecipe;
   IonContent?: IonContentRecipe;
@@ -315,9 +318,38 @@ type Components = {
 
   IonCard?: any;
   IonItem?: any;
+
+  /**
+   * Parents that style the buttons inside them. When a parent migrates,
+   * its recipe type replaces the entry here and keeps the `IonButton` key.
+   */
+  IonDatetime?: {
+    IonButton?: IonButtonRecipe;
+  };
+
+  IonInputPasswordToggle?: {
+    IonButton?: IonButtonRecipe;
+  };
+
+  IonToolbar?: {
+    // TODO(FW-6864): Replace with the toolbar recipe once IonToolbar migrates
+    [key: string]: any;
+    IonButton?: IonButtonRecipe;
+
+    IonButtons?: {
+      IonButton?: IonButtonRecipe;
+    };
+
+    // In a toolbar with a color
+    semantic?: {
+      IonButtons?: {
+        IonButton?: IonButtonRecipe;
+      };
+    };
+  };
+
   IonTabBar?: any;
   IonModal?: any;
-  IonToolbar?: any;
 };
 
 export type IonMargin = {

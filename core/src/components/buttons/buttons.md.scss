@@ -5,12 +5,12 @@
 // --------------------------------------------------
 
 // TODO(FW-6203): do we need these styles?
+// TODO(FW-6839): Move these button padding hooks to IonButtons.IonButton tokens
 ::slotted(*) ion-button {
   --padding-top: 3px;
   --padding-bottom: 3px;
   --padding-start: 8px;
   --padding-end: 8px;
-  --box-shadow: none;
 
   @include margin-horizontal(2px, 2px);
 
@@ -22,89 +22,38 @@
   --padding-bottom: 0;
 }
 
-// TODO(FW-6203): is this value correct?
-::slotted(*) ion-button:not(.button-round) {
-  --border-radius: #{$toolbar-md-button-border-radius};
-}
-
-// Material Design Toolbar w/ Color: Default Buttons
+// Material Design Toolbar Back and Menu Buttons
 // --------------------------------------------------
 
-:host-context(.ion-color)::slotted(*) .button {
+// TODO(FW-6835, FW-6853): Move to tokens when back button and menu button migrate
+::slotted(*) ion-back-button,
+::slotted(*) ion-menu-button {
+  --background-hover: currentColor;
+}
+
+:host-context(.ion-color)::slotted(*) ion-back-button,
+:host-context(.ion-color)::slotted(*) ion-menu-button {
   --color: initial;
   --color-focused: #{current-color(contrast)};
   --color-hover: #{current-color(contrast)};
-  --background-activated: transparent;
   --background-focused: #{current-color(contrast)};
   --background-hover: #{current-color(contrast)};
-}
-
-:host-context(.ion-color)::slotted(*) .button-solid {
-  --background: #{current-color(contrast)};
-  --background-activated: transparent;
-  --background-focused: #{current-color(shade)};
-  --background-hover: #{current-color(base)};
-  --color: #{current-color(base)};
-  --color-focused: #{current-color(base)};
-  --color-hover: #{current-color(base)};
-}
-
-:host-context(.ion-color)::slotted(*) .button-outline {
-  --border-color: #{current-color(contrast)};
 }
 
 // Material Design Toolbar Icon Only Clear Button
 // --------------------------------------------------
 
 // TODO(FW-6203): do we need these styles?
-::slotted(*) .button-has-icon-only.button-clear {
+::slotted(*) .button-has-icon-only.button-fill-clear {
   --padding-top: 12px;
   --padding-end: 12px;
   --padding-bottom: 12px;
   --padding-start: 12px;
-  --border-radius: 50%;
 
   @include margin(0);
 
   width: 3rem;
   height: 3rem;
-}
-
-::slotted(*) .button {
-  --background-hover: currentColor;
-}
-
-// Material Design Toolbar Solid Button
-// --------------------------------------------------
-
-::slotted(*) .button-solid {
-  --color: #{$toolbar-md-background};
-  --background: #{$toolbar-md-color};
-  --background-activated: transparent;
-  --background-focused: currentColor;
-}
-
-// Material Design Toolbar Outline Button
-// --------------------------------------------------
-
-::slotted(*) .button-outline {
-  --color: initial;
-  --background: transparent;
-  --background-activated: transparent;
-  --background-focused: currentColor;
-  --background-hover: currentColor;
-  --border-color: currentColor;
-}
-
-// Material Design Toolbar Clear Button
-// --------------------------------------------------
-
-::slotted(*) .button-clear {
-  --color: initial;
-  --background: transparent;
-  --background-activated: transparent;
-  --background-focused: currentColor;
-  --background-hover: currentColor;
 }
 
 // Material Design Toolbar Button Icon

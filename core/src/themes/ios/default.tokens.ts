@@ -7,6 +7,7 @@ import {
   dynamicFontMax,
   dynamicFontMin,
   ionColor,
+  overlay,
 } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
@@ -36,6 +37,13 @@ export const defaultTheme: DefaultTheme = {
         hue: 'bold',
         shape: 'round',
         size: 'small',
+      },
+
+      IonButton: {
+        fill: 'solid',
+        hue: 'bold',
+        shape: 'soft',
+        size: 'medium',
       },
 
       IonChip: {
@@ -304,6 +312,764 @@ export const defaultTheme: DefaultTheme = {
               end: 'var(--ion-spacing-sm)',
               bottom: 'var(--ion-spacing-75)',
               start: 'var(--ion-spacing-sm)',
+            },
+          },
+        },
+      },
+    },
+
+    IonButton: {
+      margin: {
+        top: 'var(--ion-spacing-xxs)',
+        end: 'var(--ion-spacing-xxxs)',
+        bottom: 'var(--ion-spacing-xxs)',
+        start: 'var(--ion-spacing-xxxs)',
+      },
+
+      transition: 'background-color, opacity 100ms linear',
+
+      font: {
+        family: 'var(--ion-font-family, inherit)',
+      },
+
+      letter: {
+        spacing: '0',
+      },
+
+      // Hues
+      hue: {
+        bold: {
+          solid: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-semi-bold)',
+              },
+            },
+
+            default: {
+              background: ionColor('primary', 'base'),
+              color: ionColor('primary', 'contrast'),
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'shade'),
+              color: ionColor('primary', 'contrast'),
+            },
+
+            hover: {
+              background: ionColor('primary', 'tint'),
+              color: ionColor('primary', 'contrast'),
+            },
+
+            activated: {
+              background: ionColor('primary', 'shade'),
+              color: ionColor('primary', 'contrast'),
+            },
+
+            disabled: {
+              background: ionColor('primary', 'base'),
+
+              opacity: '0.5',
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base'),
+                color: currentColor('contrast'),
+              },
+
+              focus: {
+                background: currentColor('shade'),
+                color: currentColor('contrast'),
+              },
+
+              hover: {
+                background: currentColor('tint'),
+                color: currentColor('contrast'),
+              },
+
+              activated: {
+                background: currentColor('shade'),
+                color: currentColor('contrast'),
+              },
+
+              disabled: {
+                background: currentColor('base'),
+              },
+            },
+          },
+
+          outline: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-semi-bold)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'base'),
+
+              border: {
+                color: ionColor('primary', 'base'),
+                style: 'solid',
+                width: 'var(--ion-border-width-25)',
+              },
+
+              font: {
+                weight: 'var(--ion-font-weight-medium)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base', { alpha: 0.1 }),
+              color: ionColor('primary', 'base'),
+            },
+
+            // Fades the whole button instead of changing its color
+            hover: {
+              background: 'transparent',
+              color: ionColor('primary', 'base'),
+              opacity: '0.6',
+            },
+
+            activated: {
+              background: ionColor('primary', 'base'),
+              color: ionColor('primary', 'contrast'),
+            },
+
+            disabled: {
+              background: 'transparent',
+
+              opacity: '0.5',
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('base'),
+
+                border: {
+                  color: currentColor('base'),
+                },
+              },
+
+              focus: {
+                background: currentColor('base', { alpha: 0.1 }),
+                color: currentColor('base'),
+              },
+
+              hover: {
+                background: 'transparent',
+                color: currentColor('base'),
+              },
+
+              activated: {
+                background: currentColor('base'),
+                color: currentColor('contrast'),
+              },
+
+              disabled: {
+                background: 'transparent',
+              },
+            },
+          },
+
+          clear: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-semi-bold)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground'),
+
+              // The clear fill uses a regular weight font
+              font: {
+                weight: 'normal',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base', { alpha: 0.1 }),
+              color: ionColor('primary', 'foreground'),
+            },
+
+            // Fades the whole button instead of changing its color
+            hover: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground'),
+              opacity: '0.6',
+            },
+
+            activated: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground'),
+              opacity: '0.4',
+            },
+
+            disabled: {
+              background: 'transparent',
+
+              opacity: '0.5',
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('foreground'),
+              },
+
+              focus: {
+                background: currentColor('base', { alpha: 0.1 }),
+                color: currentColor('base'),
+              },
+
+              hover: {
+                background: 'transparent',
+                color: currentColor('base'),
+              },
+
+              activated: {
+                background: 'transparent',
+                color: currentColor('foreground'),
+              },
+
+              disabled: {
+                background: 'transparent',
+              },
+            },
+          },
+        },
+      },
+
+      // Sizes
+      size: {
+        small: {
+          min: {
+            height: 'clamp(23px, 2.16em, 54px)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xxs)',
+            end: '0.77em',
+            bottom: 'var(--ion-spacing-xxs)',
+            start: '0.77em',
+          },
+
+          font: {
+            size: `min(${dynamicFont(global.root, 13)}, 39px)`,
+          },
+
+          icon: {
+            font: {
+              size: '1.35em',
+            },
+
+            leading: {
+              margin: {
+                top: '0',
+                end: '0.3em',
+                bottom: '0',
+                start: '-0.3em',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: '0',
+                end: '-0.2em',
+                bottom: '0',
+                start: '0.3em',
+              },
+            },
+          },
+
+          iconOnly: {
+            padding: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-0)',
+            },
+
+            icon: {
+              font: {
+                /**
+                 * The values were provided through a native iOS app.
+                 * min font size: 12px, default font size: 17px, max font size: 40px
+                 */
+                size: 'clamp(12.1394px, 1.308125em, 40.1856px)',
+              },
+            },
+          },
+        },
+
+        medium: {
+          min: {
+            height: 'clamp(30px, 2.125em, 60px)',
+          },
+
+          padding: {
+            top: '7px',
+            end: '0.875em',
+            bottom: '7px',
+            start: '0.875em',
+          },
+
+          font: {
+            size: `min(${dynamicFont(global.root, 16)}, 48px)`,
+          },
+
+          icon: {
+            font: {
+              size: '1.35em',
+            },
+
+            leading: {
+              margin: {
+                top: '0',
+                end: '0.3em',
+                bottom: '0',
+                start: '-0.3em',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: '0',
+                end: '-0.2em',
+                bottom: '0',
+                start: '0.3em',
+              },
+            },
+          },
+
+          iconOnly: {
+            padding: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-0)',
+            },
+
+            icon: {
+              font: {
+                /**
+                 * The values were provided through a native iOS app.
+                 * min font size: 15px, default font size: 18px, max font size: 43px
+                 */
+                size: 'clamp(15.12px, 1.125em, 43.02px)',
+              },
+            },
+          },
+        },
+
+        large: {
+          min: {
+            height: 'clamp(46px, 2.5em, 78px)',
+          },
+
+          padding: {
+            top: '14px',
+            end: '1em',
+            bottom: '14px',
+            start: '1em',
+          },
+
+          font: {
+            size: `min(${dynamicFont(global.root, 20)}, 60px)`,
+          },
+
+          icon: {
+            font: {
+              size: '1.35em',
+            },
+
+            leading: {
+              margin: {
+                top: '0',
+                end: '0.3em',
+                bottom: '0',
+                start: '-0.3em',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: '0',
+                end: '-0.2em',
+                bottom: '0',
+                start: '0.3em',
+              },
+            },
+          },
+
+          iconOnly: {
+            padding: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-0)',
+            },
+
+            icon: {
+              font: {
+                /**
+                 * The values were provided through a native iOS app.
+                 * min font size: 15px, default font size: 18px, max font size: 43px
+                 */
+                size: 'clamp(15.12px, 0.9em, 43.056px)',
+              },
+            },
+          },
+        },
+      },
+
+      // Shapes
+      shape: {
+        crisp: {
+          border: {
+            radius: 'var(--ion-radii-xxs)',
+          },
+        },
+
+        soft: {
+          border: {
+            radius: 'var(--ion-radii-xs)',
+          },
+        },
+
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
+        },
+      },
+    },
+
+    // Parents that theme the buttons they contain
+    IonDatetime: {
+      IonButton: {
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-xxxs)',
+          bottom: 'var(--ion-spacing-0)',
+          start: 'var(--ion-spacing-xxxs)',
+        },
+
+        size: {
+          medium: {
+            min: {
+              height: 'var(--ion-scaling-md)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-75)',
+              end: '5px',
+              bottom: 'var(--ion-spacing-75)',
+              start: '5px',
+            },
+
+            font: {
+              size: 'clamp(17px, 1.0625rem, 21.08px)',
+            },
+          },
+        },
+
+        hue: {
+          bold: {
+            solid: {
+              default: {
+                font: {
+                  weight: 'var(--ion-font-weight-normal)',
+                },
+              },
+            },
+
+            outline: {
+              default: {
+                font: {
+                  weight: 'var(--ion-font-weight-normal)',
+                },
+              },
+            },
+
+            clear: {
+              default: {
+                font: {
+                  weight: 'var(--ion-font-weight-normal)',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
+    IonToolbar: {
+      IonButton: {
+        /**
+         * In a toolbar without a color, the global `--ion-toolbar-color` and
+         * `--ion-toolbar-background` properties color the buttons.
+         */
+        hue: {
+          bold: {
+            solid: {
+              default: {
+                background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+              },
+
+              focus: {
+                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+              },
+
+              // A solid button lightens the toolbar color on hover
+              hover: {
+                background: overlay(
+                  `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                  'rgba(255, 255, 255, 0.1)'
+                ),
+                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+              },
+
+              activated: {
+                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+              },
+            },
+
+            outline: {
+              default: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+
+                border: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                },
+              },
+
+              focus: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+              },
+
+              hover: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+              },
+
+              // A pressed outline button fills with the toolbar color
+              activated: {
+                background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+              },
+            },
+
+            clear: {
+              default: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+
+              focus: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+
+              hover: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+
+              activated: {
+                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+            },
+          },
+        },
+      },
+
+      IonButtons: {
+        IonButton: {
+          // Buttons in a toolbar use a larger font and a regular weight
+          size: {
+            medium: {
+              font: {
+                size: 'clamp(17px, 1.0625rem, 21.08px)',
+              },
+            },
+          },
+
+          shape: {
+            soft: {
+              border: {
+                radius: 'var(--ion-radii-xxs)',
+              },
+            },
+
+            rectangular: {
+              border: {
+                radius: 'var(--ion-radii-xxs)',
+              },
+            },
+          },
+
+          hue: {
+            bold: {
+              solid: {
+                default: {
+                  font: {
+                    weight: 'var(--ion-font-weight-normal)',
+                  },
+                },
+
+                focus: {
+                  background: overlay(
+                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                    'rgba(0, 0, 0, 0.12)'
+                  ),
+                },
+
+                activated: {
+                  background: overlay(
+                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                    'rgba(0, 0, 0, 0.12)'
+                  ),
+                },
+              },
+
+              // Outline and clear tints use primary, unless the app sets `--ion-toolbar-color`
+              outline: {
+                default: {
+                  font: {
+                    weight: 'var(--ion-font-weight-normal)',
+                  },
+                },
+
+                focus: {
+                  background: ionColor('primary', 'base', { alpha: 0.1 }),
+                },
+
+                hover: {
+                  background: 'transparent',
+                },
+
+                activated: {
+                  background: 'transparent',
+                },
+              },
+
+              clear: {
+                default: {
+                  font: {
+                    weight: 'var(--ion-font-weight-normal)',
+                  },
+                },
+
+                focus: {
+                  background: ionColor('primary', 'base', { alpha: 0.1 }),
+                },
+
+                hover: {
+                  background: 'transparent',
+                },
+
+                activated: {
+                  background: 'transparent',
+                },
+              },
+            },
+          },
+        },
+      },
+
+      // In a toolbar with a color
+      semantic: {
+        IonButtons: {
+          IonButton: {
+            hue: {
+              bold: {
+                solid: {
+                  default: {
+                    background: currentColor('contrast'),
+                    color: currentColor('base'),
+                  },
+
+                  focus: {
+                    background: overlay(currentColor('contrast'), 'rgba(0, 0, 0, 0.12)'),
+                    color: currentColor('base'),
+                  },
+
+                  hover: {
+                    background: overlay(currentColor('contrast'), currentColor('base', { alpha: 0.45 })),
+                    color: currentColor('base'),
+                  },
+
+                  activated: {
+                    background: overlay(currentColor('contrast'), 'rgba(0, 0, 0, 0.12)'),
+                    color: currentColor('base'),
+                  },
+                },
+
+                outline: {
+                  default: {
+                    background: 'transparent',
+                    color: 'currentColor',
+
+                    border: {
+                      color: 'currentColor',
+                    },
+                  },
+
+                  focus: {
+                    background: currentColor('contrast', { alpha: 0.1 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+
+                  activated: {
+                    background: currentColor('contrast'),
+                    color: currentColor('base'),
+                  },
+                },
+
+                clear: {
+                  default: {
+                    background: 'transparent',
+                    color: 'currentColor',
+
+                    border: {
+                      color: 'currentColor',
+                    },
+                  },
+
+                  focus: {
+                    background: currentColor('contrast', { alpha: 0.1 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                    color: currentColor('contrast'),
+                  },
+                },
+              },
             },
           },
         },

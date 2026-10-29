@@ -15,6 +15,7 @@ import { Hue } from "./themes/themes.interfaces";
 import { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
+import { IonButtonExpand, IonButtonFill, IonButtonShape, IonButtonSize } from "./components/button/button.interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
 import { IonColValue } from "./components/col/col.interface";
@@ -63,6 +64,7 @@ export { Hue } from "./themes/themes.interfaces";
 export { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
+export { IonButtonExpand, IonButtonFill, IonButtonShape, IonButtonSize } from "./components/button/button.interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
 export { IonColValue } from "./components/col/col.interface";
@@ -614,11 +616,11 @@ export namespace Components {
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button with square corners and no left or right borders.
          */
-        "expand"?: 'full' | 'block';
+        "expand"?: IonButtonExpand;
         /**
-          * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"` for a transparent button with a border, or to `"solid"` for a button with a filled background. The default fill is `"solid"` except when inside of a buttons or datetime component, where the default fill is `"clear"`.
+          * Set to `"clear"` for a transparent button that resembles a flat button, `"outline"` for a transparent button with a border, or `"solid"` for a button with a filled background.  Defaults to `"solid"` if both the fill property and theme config are unset, or `"clear"` inside of buttons, datetime, or list header.
          */
-        "fill"?: 'clear' | 'outline' | 'solid' | 'default';
+        "fill"?: IonButtonFill | 'default';
         /**
           * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
          */
@@ -645,13 +647,13 @@ export namespace Components {
          */
         "routerDirection": RouterDirection;
         /**
-          * Set to `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully rounded corners, or `"rectangular"` for a button without rounded corners. Defaults to `"soft"` for the `"ios"` theme and `"round"` for all other themes.
+          * Set to `"crisp"` for a button with even slightly rounded corners, `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully rounded corners, or `"rectangular"` for a button without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round' | 'rectangular';
+        "shape"?: IonButtonShape;
         /**
-          * Set to `"small"` for a button with less height and padding, to `"medium"` for a button with the medium height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
+          * Set to `"small"` for a button with less height and padding, `"medium"` for a button with the standard height and padding, or `"large"` for a button with more height and padding.  Defaults to `"medium"` if both the size property and theme config are unset, or `"small"` inside of an item.  `"default"` is deprecated and renders the same as `"medium"`.
          */
-        "size"?: 'small' | 'default' | 'medium' | 'large';
+        "size"?: IonButtonSize | 'default';
         /**
           * If `true`, activates a button with a heavier font weight.
           * @default false
@@ -661,10 +663,6 @@ export namespace Components {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target": string | undefined;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
           * @default 'button'
@@ -6477,11 +6475,11 @@ declare namespace LocalJSX {
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button with square corners and no left or right borders.
          */
-        "expand"?: 'full' | 'block';
+        "expand"?: IonButtonExpand;
         /**
-          * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"` for a transparent button with a border, or to `"solid"` for a button with a filled background. The default fill is `"solid"` except when inside of a buttons or datetime component, where the default fill is `"clear"`.
+          * Set to `"clear"` for a transparent button that resembles a flat button, `"outline"` for a transparent button with a border, or `"solid"` for a button with a filled background.  Defaults to `"solid"` if both the fill property and theme config are unset, or `"clear"` inside of buttons, datetime, or list header.
          */
-        "fill"?: 'clear' | 'outline' | 'solid' | 'default';
+        "fill"?: IonButtonFill | 'default';
         /**
           * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
          */
@@ -6516,13 +6514,13 @@ declare namespace LocalJSX {
          */
         "routerDirection"?: RouterDirection;
         /**
-          * Set to `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully rounded corners, or `"rectangular"` for a button without rounded corners. Defaults to `"soft"` for the `"ios"` theme and `"round"` for all other themes.
+          * Set to `"crisp"` for a button with even slightly rounded corners, `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully rounded corners, or `"rectangular"` for a button without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round' | 'rectangular';
+        "shape"?: IonButtonShape;
         /**
-          * Set to `"small"` for a button with less height and padding, to `"medium"` for a button with the medium height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
+          * Set to `"small"` for a button with less height and padding, `"medium"` for a button with the standard height and padding, or `"large"` for a button with more height and padding.  Defaults to `"medium"` if both the size property and theme config are unset, or `"small"` inside of an item.  `"default"` is deprecated and renders the same as `"medium"`.
          */
-        "size"?: 'small' | 'default' | 'medium' | 'large';
+        "size"?: IonButtonSize | 'default';
         /**
           * If `true`, activates a button with a heavier font weight.
           * @default false
@@ -6532,10 +6530,6 @@ declare namespace LocalJSX {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target"?: string | undefined;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
           * @default 'button'
@@ -10497,14 +10491,14 @@ declare namespace LocalJSX {
         "color": Color;
         "buttonType": string;
         "disabled": boolean;
-        "expand": 'full' | 'block';
-        "fill": 'clear' | 'outline' | 'solid' | 'default';
+        "expand": IonButtonExpand;
+        "fill": IonButtonFill | 'default';
         "routerDirection": RouterDirection;
         "download": string | undefined;
         "href": string | undefined;
         "rel": string | undefined;
-        "shape": 'soft' | 'round' | 'rectangular';
-        "size": 'small' | 'default' | 'medium' | 'large';
+        "shape": IonButtonShape;
+        "size": IonButtonSize | 'default';
         "strong": boolean;
         "target": string | undefined;
         "type": 'submit' | 'reset' | 'button';

@@ -25,6 +25,7 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
+// TODO(FW-6878): Move these button padding hooks to IonInput.IonButton tokens
 /**
  * Slotted buttons have a lot of default padding that can
  * cause them to look misaligned from other pieces such
@@ -35,7 +36,6 @@
  */
 ::slotted(ion-button[slot="start"].button-has-icon-only),
 ::slotted(ion-button[slot="end"].button-has-icon-only) {
-  --border-radius: 50%;
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 0;

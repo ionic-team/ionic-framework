@@ -11,14 +11,14 @@ import { defineCustomElement as defineIonButton } from '@ionic/core/components/i
 
 @ProxyCmp({
   defineCustomElementFn: defineIonButton,
-  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'theme', 'type']
+  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
 })
 @Component({
   selector: 'ion-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['buttonType', 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', { name: 'strong', transform: nullableBooleanAttribute }, 'target', 'theme', 'type'],
+  inputs: ['buttonType', 'color', { name: 'disabled', transform: nullableBooleanAttribute }, 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', { name: 'strong', transform: nullableBooleanAttribute }, 'target', 'type'],
   outputs: ['ionFocus', 'ionBlur'],
 })
 export class IonButton {

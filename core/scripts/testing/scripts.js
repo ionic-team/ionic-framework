@@ -260,7 +260,7 @@ const DEFAULT_PALETTE = 'light';
       elements.map(async (el) => {
         await el.componentOnReady?.();
 
-        // Only the `md` mode renders a ripple
+        // Skip elements that don't render a ripple, which depends on the `rippleEffect` config
         const ripple = el.shadowRoot?.querySelector('ion-ripple-effect') ?? el.querySelector('ion-ripple-effect');
         if (!ripple) {
           return;
