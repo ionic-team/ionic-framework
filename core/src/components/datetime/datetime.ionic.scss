@@ -220,7 +220,8 @@
 }
 
 // Range start: full circle
-.calendar-day.calendar-day-range-start {
+// Use :host prefix for specificity over the general disabled day rule.
+:host .calendar-day.calendar-day-range-start {
   @include globals.border-radius(globals.$ion-border-radius-full);
 
   background: globals.$ion-bg-primary-base-default;
@@ -228,7 +229,7 @@
 }
 
 // Range end: full circle
-.calendar-day.calendar-day-range-end {
+:host .calendar-day.calendar-day-range-end {
   @include globals.border-radius(globals.$ion-border-radius-full);
 
   background: globals.$ion-bg-primary-base-default;
@@ -253,8 +254,8 @@
   color: globals.$ion-text-select;
 }
 
-.calendar-day.calendar-day-today.calendar-day-range-start,
-.calendar-day.calendar-day-today.calendar-day-range-end {
+:host .calendar-day.calendar-day-today.calendar-day-range-start,
+:host .calendar-day.calendar-day-today.calendar-day-range-end {
   color: globals.$ion-text-inverse;
 }
 
@@ -283,10 +284,15 @@
 }
 
 // Disabled range days show faded text over the range track.
-:host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-start[disabled],
-:host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-end[disabled],
 :host(:not(.datetime-readonly)) .calendar-day.calendar-day-in-range[disabled] {
   color: globals.$ion-text-disabled;
+
+  opacity: 1;
+}
+
+:host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-start[disabled],
+:host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-end[disabled] {
+  color: globals.$ion-text-inverse;
 
   opacity: 1;
 }
@@ -295,17 +301,20 @@
 // Needs higher specificity to override the general disabled day color.
 :host(.datetime-readonly) .calendar-day.calendar-day-range-start[disabled],
 :host(.datetime-readonly) .calendar-day.calendar-day-range-end[disabled] {
-  color: globals.$ion-text-default;
+  color: globals.$ion-text-inverse;
 }
 
 :host(.datetime-readonly) .calendar-day.calendar-day-in-range[disabled] {
   color: globals.$ion-text-default;
 }
 
-:host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-in-range[disabled],
+:host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-in-range[disabled] {
+  color: globals.$ion-text-select;
+}
+
 :host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-range-start[disabled],
 :host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-range-end[disabled] {
-  color: globals.$ion-semantics-primary-base;
+  color: globals.$ion-text-inverse;
 }
 
 // Time / Header
