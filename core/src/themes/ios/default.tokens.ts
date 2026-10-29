@@ -1590,6 +1590,15 @@ export const defaultTheme: DefaultTheme = {
             top: '5px',
           },
         },
+
+        xxl: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+        },
       },
     },
 
@@ -1618,6 +1627,10 @@ export const defaultTheme: DefaultTheme = {
         start: 'var(--ion-spacing-0)',
         top: 'var(--ion-spacing-0)',
       },
+    },
+
+    IonGallery: {
+      gap: 'var(--ion-spacing-lg)',
     },
 
     IonGrid: {
@@ -1675,6 +1688,17 @@ export const defaultTheme: DefaultTheme = {
           },
 
           width: '1140px',
+        },
+
+        xxl: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+
+          width: '1320px',
         },
       },
 
