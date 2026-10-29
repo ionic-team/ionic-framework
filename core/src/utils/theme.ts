@@ -1,3 +1,4 @@
+import { SCREEN_BREAKPOINT_NAMES, getScreenBreakpoints } from '@utils/breakpoints';
 import { printIonWarning } from '@utils/logging';
 
 import type { Color, CssClassMap } from '../interface';
@@ -432,6 +433,55 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
   const mergedTheme = deepMerge(baseTheme, userTheme);
   injectCSS(generateGlobalThemeCSS(mergedTheme));
   return mergedTheme;
+};
+
+/**
+ * The properties each component resolves per screen breakpoint, named after
+ * the public token they come from (e.g. `--ion-grid-breakpoint-md-width`).
+ */
+const BREAKPOINT_SCOPED_PROPERTIES: Record<string, readonly string[]> = {
+  'ion-grid': ['padding-top', 'padding-end', 'padding-bottom', 'padding-start', 'width'],
+  'ion-col': ['padding-top', 'padding-end', 'padding-bottom', 'padding-start'],
+};
+
+/**
+ * Map the public breakpoint tokens onto internal variables, inside a media
+ * query at the width each breakpoint is configured to activate at.
+ *
+ * Component styles read these internal variables instead of duplicating
+ * property rules for each breakpoint. The media query widths follow the
+ * `screenBreakpoints` config, which cannot be referenced dynamically by
+ * static stylesheet media queries.
+ *
+ * This CSS is generated regardless of whether a theme supplies the public
+ * tokens, since applications can define those tokens themselves.
+ *
+ * @returns CSS mapping public breakpoint tokens to internal variables.
+ */
+export const generateBreakpointCSS = (): string => {
+  const breakpoints = getScreenBreakpoints();
+
+  return Object.entries(BREAKPOINT_SCOPED_PROPERTIES)
+    .flatMap(([tag, properties]) => {
+      const name = tag.replace(/^ion-/, '');
+
+      return SCREEN_BREAKPOINT_NAMES.map((breakpoint) => {
+        const vars = properties
+          .map((property) => `--internal-${name}-${property}: var(--${tag}-breakpoint-${breakpoint}-${property});`)
+          .join('\n');
+
+        const rule = `${tag} { ${vars} }`;
+
+        /**
+         * The smallest breakpoint applies without a media query, providing the
+         * default values that larger breakpoints override.
+         */
+        return breakpoint === SCREEN_BREAKPOINT_NAMES[0]
+          ? rule
+          : `@media (min-width: ${breakpoints[breakpoint]}px) { ${rule} }`;
+      });
+    })
+    .join('\n');
 };
 
 /**
