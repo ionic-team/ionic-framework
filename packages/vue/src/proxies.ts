@@ -1115,6 +1115,7 @@ export const IonThumbnail: StencilVueComponent<JSX.IonThumbnail> = /*@__PURE__*/
 
 export const IonTitle: StencilVueComponent<JSX.IonTitle> = /*@__PURE__*/ defineContainer<JSX.IonTitle>('ion-title', defineIonTitle, [
   'color',
+  'hue',
   'size',
   'ionStyle'
 ], [

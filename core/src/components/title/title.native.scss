@@ -1,6 +1,0 @@
-@import "../../themes/native/native.globals";
-@import "title.common";
-
-:host(.ion-color) {
-  color: #{current-color(base)};
-}
