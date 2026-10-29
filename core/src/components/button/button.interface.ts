@@ -95,11 +95,19 @@ type IonButtonStateDefinition = {
   };
 
   hover?: IonButtonColorDefinition & {
+    box?: {
+      shadow?: string;
+    };
+
     /** The whole button, for fills that fade instead of changing color */
     opacity?: string | number;
   };
 
-  focus?: IonButtonColorDefinition;
+  focus?: IonButtonColorDefinition & {
+    box?: {
+      shadow?: string;
+    };
+  };
 
   activated?: IonButtonColorDefinition & {
     /** The whole button, for fills that fade instead of changing color */
@@ -110,8 +118,19 @@ type IonButtonStateDefinition = {
     };
   };
 
+  /** Unset colors keep the default ones */
   disabled?: {
     background?: string;
+
+    border?: {
+      color?: string;
+    };
+
+    box?: {
+      shadow?: string;
+    };
+
+    color?: string;
 
     /** The whole button */
     opacity?: string | number;
@@ -132,8 +151,15 @@ type IonButtonSemanticDefinition = {
 
   activated?: IonButtonColorDefinition;
 
+  /** Unset colors keep the default ones */
   disabled?: {
     background?: string;
+
+    border?: {
+      color?: string;
+    };
+
+    color?: string;
   };
 };
 

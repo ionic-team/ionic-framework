@@ -332,7 +332,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       letter: {
-        spacing: '0.06em',
+        spacing: '0.0893em',
       },
 
       text: {
@@ -366,11 +366,21 @@ export const defaultTheme: DefaultTheme = {
             focus: {
               background: overlay(ionColor('primary', 'base'), ionColor('primary', 'contrast', { alpha: 0.24 })),
               color: ionColor('primary', 'contrast'),
+
+              box: {
+                shadow:
+                  '0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)',
+              },
             },
 
             hover: {
               background: overlay(ionColor('primary', 'base'), ionColor('primary', 'contrast', { alpha: 0.08 })),
               color: ionColor('primary', 'contrast'),
+
+              box: {
+                shadow:
+                  '0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)',
+              },
             },
 
             // The ripple is the pressed feedback
@@ -385,9 +395,17 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: ionColor('primary', 'base'),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
 
-              opacity: '0.5',
+              box: {
+                shadow: 'none',
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+            },
+
+            rippleEffect: {
+              opacity: '0.24',
             },
 
             // Any of the semantic colors like primary, secondary, etc.
@@ -413,7 +431,12 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: currentColor('base'),
+                background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+              },
+
+              rippleEffect: {
+                opacity: '0.24',
               },
             },
           },
@@ -430,9 +453,9 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'base'),
 
               border: {
-                color: ionColor('primary', 'base'),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 style: 'solid',
-                width: 'var(--ion-border-width-xxs)',
+                width: 'var(--ion-border-width-xxxs)',
               },
 
               font: {
@@ -459,7 +482,15 @@ export const defaultTheme: DefaultTheme = {
             disabled: {
               background: 'transparent',
 
-              opacity: '0.5',
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+            },
+
+            rippleEffect: {
+              opacity: '0.12',
             },
 
             semantic: {
@@ -468,7 +499,7 @@ export const defaultTheme: DefaultTheme = {
                 color: currentColor('base'),
 
                 border: {
-                  color: currentColor('base'),
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 },
               },
 
@@ -489,6 +520,16 @@ export const defaultTheme: DefaultTheme = {
 
               disabled: {
                 background: 'transparent',
+
+                border: {
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+                },
+
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+              },
+
+              rippleEffect: {
+                opacity: '0.12',
               },
             },
           },
@@ -528,7 +569,11 @@ export const defaultTheme: DefaultTheme = {
             disabled: {
               background: 'transparent',
 
-              opacity: '0.5',
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+            },
+
+            rippleEffect: {
+              opacity: '0.12',
             },
 
             semantic: {
@@ -554,6 +599,12 @@ export const defaultTheme: DefaultTheme = {
 
               disabled: {
                 background: 'transparent',
+
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+              },
+
+              rippleEffect: {
+                opacity: '0.12',
               },
             },
           },
@@ -580,24 +631,25 @@ export const defaultTheme: DefaultTheme = {
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2857em',
             },
 
+            // The negative margin moves the icon closer to the edge than a label would be
             leading: {
               margin: {
                 top: '0',
-                end: '0.3em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.3em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.3em',
+                start: '0.4444em',
               },
             },
           },
@@ -617,18 +669,49 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.7347em',
+                width: '0.7347em',
+              },
+
+              small: {
+                height: '0.9184em',
+                width: '0.9184em',
+              },
+
+              medium: {
+                height: '1.2857em',
+                width: '1.2857em',
+              },
+
+              large: {
+                height: '1.6531em',
+                width: '1.6531em',
+              },
+
+              xlarge: {
+                height: '2.2041em',
+                width: '2.2041em',
+              },
+            },
+          },
         },
 
         medium: {
           min: {
             height: 'var(--ion-scaling-900)',
+            width: 'var(--ion-scaling-xxxxl)',
           },
 
           padding: {
             top: 'var(--ion-spacing-sm)',
-            end: '1.1em',
+            end: '1.1429em',
             bottom: 'var(--ion-spacing-sm)',
-            start: '1.1em',
+            start: '1.1429em',
           },
 
           font: {
@@ -637,24 +720,25 @@ export const defaultTheme: DefaultTheme = {
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2857em',
             },
 
+            // The negative margin moves the icon closer to the edge than a label would be
             leading: {
               margin: {
                 top: '0',
-                end: '0.3em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.3em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.3em',
+                start: '0.4444em',
               },
             },
           },
@@ -674,6 +758,36 @@ export const defaultTheme: DefaultTheme = {
                  * min font size: 15px, default font size: 22.4px, max font size: 43px
                  */
                 size: 'clamp(15.104px, 1.6em, 43.008px)',
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.7347em',
+                width: '0.7347em',
+              },
+
+              small: {
+                height: '0.9184em',
+                width: '0.9184em',
+              },
+
+              medium: {
+                height: '1.2857em',
+                width: '1.2857em',
+              },
+
+              large: {
+                height: '1.6531em',
+                width: '1.6531em',
+              },
+
+              xlarge: {
+                height: '2.2041em',
+                width: '2.2041em',
               },
             },
           },
@@ -697,24 +811,25 @@ export const defaultTheme: DefaultTheme = {
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2857em',
             },
 
+            // The negative margin moves the icon closer to the edge than a label would be
             leading: {
               margin: {
                 top: '0',
-                end: '0.3em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.3em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.3em',
+                start: '0.4444em',
               },
             },
           },
@@ -731,6 +846,36 @@ export const defaultTheme: DefaultTheme = {
             icon: {
               font: {
                 size: 'clamp(15.008px, 1.4em, 43.008px)',
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.7347em',
+                width: '0.7347em',
+              },
+
+              small: {
+                height: '0.9184em',
+                width: '0.9184em',
+              },
+
+              medium: {
+                height: '1.2857em',
+                width: '1.2857em',
+              },
+
+              large: {
+                height: '1.6531em',
+                width: '1.6531em',
+              },
+
+              xlarge: {
+                height: '2.2041em',
+                width: '2.2041em',
               },
             },
           },
@@ -799,6 +944,18 @@ export const defaultTheme: DefaultTheme = {
                 },
               },
 
+              focus: {
+                box: {
+                  shadow: 'none',
+                },
+              },
+
+              hover: {
+                box: {
+                  shadow: 'none',
+                },
+              },
+
               activated: {
                 box: {
                   shadow: 'none',
@@ -846,6 +1003,26 @@ export const defaultTheme: DefaultTheme = {
               activated: {
                 color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
               },
+
+              // In a toolbar, a disabled button keeps its colors and fades
+              disabled: {
+                background: 'var(--ion-button-hue-bold-solid-default-background)',
+
+                box: {
+                  shadow: 'var(--ion-button-hue-bold-solid-default-box-shadow)',
+                },
+
+                color: 'var(--ion-button-hue-bold-solid-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  background: 'var(--ion-button-hue-bold-solid-semantic-default-background)',
+                  color: 'var(--ion-button-hue-bold-solid-semantic-default-color)',
+                },
+              },
             },
 
             outline: {
@@ -864,6 +1041,31 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
               },
+
+              // In a toolbar, a disabled button keeps its colors and fades
+              disabled: {
+                background: 'var(--ion-button-hue-bold-outline-default-background)',
+
+                border: {
+                  color: 'var(--ion-button-hue-bold-outline-default-border-color)',
+                },
+
+                color: 'var(--ion-button-hue-bold-outline-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  background: 'var(--ion-button-hue-bold-outline-semantic-default-background)',
+
+                  border: {
+                    color: 'var(--ion-button-hue-bold-outline-semantic-default-border-color)',
+                  },
+
+                  color: 'var(--ion-button-hue-bold-outline-semantic-default-color)',
+                },
+              },
             },
 
             clear: {
@@ -881,6 +1083,21 @@ export const defaultTheme: DefaultTheme = {
 
               activated: {
                 color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+              },
+
+              // In a toolbar, a disabled button keeps its colors and fades
+              disabled: {
+                background: 'var(--ion-button-hue-bold-clear-default-background)',
+                color: 'var(--ion-button-hue-bold-clear-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  background: 'var(--ion-button-hue-bold-clear-semantic-default-background)',
+                  color: 'var(--ion-button-hue-bold-clear-semantic-default-color)',
+                },
               },
             },
           },
@@ -926,6 +1143,10 @@ export const defaultTheme: DefaultTheme = {
                     'rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24)'
                   ),
                   color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
+
+                  box: {
+                    shadow: 'none',
+                  },
                 },
 
                 hover: {
@@ -934,6 +1155,10 @@ export const defaultTheme: DefaultTheme = {
                     'rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.08)'
                   ),
                   color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
+
+                  box: {
+                    shadow: 'none',
+                  },
                 },
 
                 activated: {
