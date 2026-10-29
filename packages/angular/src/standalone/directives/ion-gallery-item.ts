@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonGalleryItem } from '@ionic/core/compone
 
 @ProxyCmp({
   defineCustomElementFn: defineIonGalleryItem,
-  inputs: ['mode', 'theme']
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-gallery-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'theme'],
+  inputs: ['mode'],
 })
 export class IonGalleryItem {
   protected el: HTMLIonGalleryItemElement;
