@@ -57,6 +57,11 @@ export const defaultTheme: DefaultTheme = {
       IonText: {
         hue: 'bold',
       },
+
+      IonTitle: {
+        hue: 'bold',
+        size: 'medium',
+      },
     },
   },
 
@@ -2176,6 +2181,78 @@ export const defaultTheme: DefaultTheme = {
 
       border: {
         radius: 'var(--ion-radii-xxxxs)',
+      },
+    },
+
+    IonTitle: {
+      hue: {
+        bold: {
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letter: {
+        spacing: '0.0075em',
+      },
+
+      size: {
+        small: {
+          font: {
+            size: dynamicFont(global.root, 15),
+            weight: 'var(--ion-font-weight-normal)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-xl)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-xl)',
+          },
+        },
+
+        medium: {
+          font: {
+            size: dynamicFont(global.root, 20),
+            weight: 'var(--ion-font-weight-medium)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-xl)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-xl)',
+          },
+        },
+
+        large: {
+          align: {
+            items: 'center',
+          },
+
+          font: {
+            size: dynamicFont(global.root, 28),
+            weight: 'var(--ion-font-weight-normal)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-xl)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-xl)',
+          },
+        },
       },
     },
   },
