@@ -3,6 +3,7 @@ import type { IonButtonConfig, IonButtonRecipe } from '../components/button/butt
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
 import type { IonColRecipe } from '../components/col/col.interface';
 import type { IonContentRecipe } from '../components/content/content.interfaces';
+import type { IonGalleryRecipe } from '../components/gallery/gallery.interface';
 import type { IonGridRecipe } from '../components/grid/grid.interface';
 import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
 import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interfaces';
@@ -301,6 +302,7 @@ type Components = {
   IonChip?: IonChipRecipe;
   IonCol?: IonColRecipe;
   IonContent?: IonContentRecipe;
+  IonGallery?: IonGalleryRecipe;
   IonGrid?: IonGridRecipe;
   IonItemDivider?: IonItemDividerRecipe;
   IonProgressBar?: IonProgressBarRecipe;
