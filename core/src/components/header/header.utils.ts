@@ -1,6 +1,9 @@
 import { readTask, writeTask } from '@stencil/core';
 import { clamp } from '@utils/helpers';
 
+import { config } from '../../global/config';
+import type { IonTitleSize } from '../title/title.interface';
+
 const TRANSITION = 'all 0.2s ease-in-out';
 const ROLE_NONE = 'none';
 const ROLE_BANNER = 'banner';
@@ -15,6 +18,7 @@ interface ToolbarIndex {
   background: HTMLElement;
   ionTitleEl: HTMLIonTitleElement | undefined;
   innerTitleEl: HTMLElement;
+  innerTitleOrigin: string | undefined;
   ionButtonsEl: HTMLElement[] | [];
 }
 
@@ -30,6 +34,33 @@ export const cloneElement = (tagName: string) => {
   document.body.appendChild(clonedEl);
 
   return clonedEl;
+};
+
+/**
+ * The large title grows from the edge its text is aligned to, so the
+ * text's start doesn't shift. Centered text grows from the center.
+ *
+ * @internal
+ * @param textAlign - The title's computed `text-align`.
+ * @param direction - The title's computed `direction`.
+ * @returns The horizontal `transform-origin` keyword: `left`, `right` or `center`.
+ */
+export const getTitleOrigin = (textAlign: string, direction: string): string => {
+  const rtl = direction === 'rtl';
+
+  if (textAlign === 'center' || textAlign === '-webkit-center') {
+    return 'center';
+  }
+
+  if (textAlign === 'left' || textAlign === 'right') {
+    return textAlign;
+  }
+
+  if (textAlign === 'end') {
+    return rtl ? 'left' : 'right';
+  }
+
+  return rtl ? 'right' : 'left';
 };
 
 export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderIndex | undefined => {
@@ -48,6 +79,7 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
         background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
         ionTitleEl,
         innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
+        innerTitleOrigin: undefined,
         ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')),
       } as ToolbarIndex;
     }),
@@ -211,15 +243,38 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   }
 };
 
+/**
+ * Checks the `size` prop, then the attribute (the header can render before
+ * the title is defined), then the `IonTitle.size` config.
+ *
+ * @internal
+ * @param ionTitleEl - The title to check.
+ * @returns Whether the title is large.
+ */
+export const isLargeTitle = (ionTitleEl: HTMLIonTitleElement) => {
+  const attributeSize = ionTitleEl.getAttribute('size') as IonTitleSize | null;
+  const configSize = config.getObjectValue('IonTitle.size') as IonTitleSize | undefined;
+  const size = ionTitleEl.size ?? attributeSize ?? configSize;
+
+  return size === 'large';
+};
+
 export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, transition = false) => {
   toolbars.forEach((toolbar) => {
     const ionTitle = toolbar.ionTitleEl;
     const titleDiv = toolbar.innerTitleEl;
-    if (!ionTitle || ionTitle.size !== 'large') {
+    if (!ionTitle || !isLargeTitle(ionTitle)) {
       return;
     }
 
+    // Read once, when the title is first scaled, so a title that becomes large later still gets one
+    if (toolbar.innerTitleOrigin === undefined) {
+      const { textAlign, direction } = getComputedStyle(ionTitle);
+      toolbar.innerTitleOrigin = getTitleOrigin(textAlign, direction);
+    }
+
     titleDiv.style.transition = transition ? TRANSITION : '';
+    titleDiv.style.transformOrigin = `${toolbar.innerTitleOrigin} center`;
     titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
   });
 };
