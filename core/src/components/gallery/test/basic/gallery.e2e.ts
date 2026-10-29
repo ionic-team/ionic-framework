@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-import { DEFAULT_COLUMNS, DEFAULT_GAP } from '../../gallery-constants';
+import { DEFAULT_COLUMNS } from '../../gallery.constant';
 
 const DEFAULT_COLUMNS_BREAKPOINTS = [
   { name: 'xs', width: 384, expectedColumns: DEFAULT_COLUMNS.xs },
@@ -124,27 +124,6 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           .toBe(`${breakpoint.expectedColumns}`);
       });
 
-      test(`should resolve the default gap value on ${breakpoint.name} screens`, async ({ page }) => {
-        await page.setViewportSize({ width: breakpoint.width, height: 900 });
-
-        await page.setContent(
-          `
-            <ion-gallery>
-              <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One" /></ion-gallery-item>
-              <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two" /></ion-gallery-item>
-              <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three" /></ion-gallery-item>
-              <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four" /></ion-gallery-item>
-            </ion-gallery>
-          `,
-          config
-        );
-
-        const gallery = page.locator('ion-gallery');
-
-        await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe(DEFAULT_GAP);
-        await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe(DEFAULT_GAP);
-      });
-
       test(`should resolve the gap CSS variable on ${breakpoint.name} screens`, async ({ page }) => {
         await page.setViewportSize({ width: breakpoint.width, height: 900 });
 
@@ -235,6 +214,105 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
 
       await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe('8px');
       await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe('8px');
+    });
+
+    test("should use the theme's gap when the gap property is not set", async ({ page }) => {
+      await page.setViewportSize({ width: 768, height: 900 });
+
+      // The token is set to a value no theme uses, so a 7px gap can only
+      // come from `--ion-gallery-gap`.
+      await page.setContent(
+        `
+          <ion-gallery style="--ion-gallery-gap: 7px">
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four" /></ion-gallery-item>
+          </ion-gallery>
+        `,
+        config
+      );
+
+      const gallery = page.locator('ion-gallery');
+
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe('7px');
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe('7px');
+    });
+
+    test("should use the theme's gap for breakpoints the gap property does not set", async ({ page }) => {
+      await page.setViewportSize({ width: 576, height: 900 });
+
+      // The token is set to a value no theme uses, so a 7px gap can only
+      // come from `--ion-gallery-gap`.
+      await page.setContent(
+        `
+          <ion-gallery style="--ion-gallery-gap: 7px">
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four" /></ion-gallery-item>
+          </ion-gallery>
+        `,
+        config
+      );
+
+      const gallery = page.locator('ion-gallery');
+
+      // Breakpoint maps are objects, so they are set as a property rather
+      // than an attribute. Only `md` is set, so smaller breakpoints use the
+      // token and `md` and larger use 24px.
+      await gallery.evaluate((el) => {
+        (el as HTMLIonGalleryElement).gap = { md: 24 };
+      });
+
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe('7px');
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe('7px');
+
+      await page.setViewportSize({ width: 768, height: 900 });
+
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe('24px');
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe('24px');
+
+      // Returning to `sm` removes the inline 24px so the token applies again.
+      await page.setViewportSize({ width: 576, height: 900 });
+
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe('7px');
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe('7px');
+    });
+  });
+});
+
+/**
+ * Each theme sets its own gap token, so this runs in every theme.
+ */
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ config, title }) => {
+  test.describe(title('gallery: theme gap'), () => {
+    test('should use the gap from each theme by default', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-gallery>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four" /></ion-gallery-item>
+          </ion-gallery>
+        `,
+        config
+      );
+
+      const gallery = page.locator('ion-gallery');
+
+      /**
+       * A theme without a gap token leaves the gap at 0. Checking that the
+       * token resolves to a value catches a theme that never sets it.
+       */
+      const themeGap = await gallery.evaluate((el) =>
+        getComputedStyle(el).getPropertyValue('--ion-gallery-gap').trim()
+      );
+      expect(themeGap).not.toBe('');
+
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe(themeGap);
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe(themeGap);
     });
   });
 });
