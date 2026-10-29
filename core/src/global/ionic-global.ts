@@ -177,28 +177,38 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   }
 
   /**
-   * Apply any global config values from the custom theme
-   * excluding component-specific overrides.
+   * Apply any global config values from the resolved theme
+   * excluding component-specific overrides. The resolved theme
+   * is the base theme merged with the custom theme, so a value
+   * from the custom theme takes precedence over the base theme.
+   * The theme only provides defaults, so any value set by the
+   * application takes precedence over the value from the theme.
    */
+  const resolvedTheme: DefaultTheme | undefined = config.get('customTheme');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { components, ...customGlobalConfig } = customTheme?.config || {};
+  const { components, ...themeGlobalConfig } = resolvedTheme?.config || {};
 
-  Object.entries(customGlobalConfig).forEach(([key, value]) => {
+  const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+    typeof value === 'object' && value !== null && !Array.isArray(value);
+
+  Object.entries(themeGlobalConfig).forEach(([key, value]) => {
     const configKey = key as keyof IonicConfig;
+    const appValue = config.get(configKey);
 
-    // For object-based config values, we merge with existing settings.
-    if (value !== null && typeof value === 'object') {
-      const existingConfig = config.get(configKey, {});
-      config.set(configKey, { ...existingConfig, ...value });
+    // The theme value is used when the application has not set one.
+    if (appValue === undefined) {
+      config.set(configKey, value);
       return;
     }
 
     /**
-     * For primitive values (boolean, string, number), we set the
-     * value directly.
-     * This covers global flags like 'rippleEffect' or 'animated'.
+     * For object-based config values, such as 'screenBreakpoints',
+     * the theme fills in the keys the application has not set.
+     * Any other value set by the application is kept as is.
      */
-    config.set(configKey, value);
+    if (isPlainObject(value) && isPlainObject(appValue)) {
+      config.set(configKey, { ...value, ...appValue });
+    }
   });
 
   /**
