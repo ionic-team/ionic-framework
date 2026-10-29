@@ -1,84 +1,45 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+const STATES = ['activated', 'focused'];
+
+// `solid` is the default fill, so it renders without a `fill` attribute
+const FILLS = ['solid', 'outline', 'clear'];
+
 configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('button: activated'), () => {
-    test('should render solid button', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
+  test.describe(title('button: states'), () => {
+    STATES.forEach((state) => {
+      test(`should render ${state} buttons`, async ({ page }) => {
+        const buttons = FILLS.map((fill) => {
+          const fillAttr = fill === 'solid' ? '' : ` fill="${fill}"`;
 
-      const button = page.locator('ion-button');
+          return `
+            <ion-button${fillAttr} class="ion-${state}">Button</ion-button>
+            <ion-button color="warning"${fillAttr} class="ion-${state}">Button</ion-button>
+          `;
+        }).join('');
 
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-solid`));
-    });
+        await page.setContent(
+          `
+          <style>
+            .states-container {
+              display: grid;
+              grid-template-columns: repeat(2, auto);
+              justify-content: start;
+              gap: 10px;
+              padding: 6px;
+            }
+          </style>
 
-    test('should render solid button with color', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button color="warning" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
+          <div class="states-container">${buttons}</div>
+        `,
+          config
+        );
 
-      const button = page.locator('ion-button');
+        const container = page.locator('.states-container');
 
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-solid-color`));
-    });
-
-    test('should render outline button', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button fill="outline" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-outline`));
-    });
-
-    test('should render outline button with color', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button color="warning" fill="outline" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-outline-color`));
-    });
-
-    test('should render clear button', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button fill="clear" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-clear`));
-    });
-
-    test('should render clear button with color', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button color="warning" fill="clear" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-clear-color`));
+        await expect(container).toHaveScreenshot(screenshot(`button-${state}`));
+      });
     });
   });
 });

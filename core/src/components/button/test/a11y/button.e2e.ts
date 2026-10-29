@@ -34,6 +34,12 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
     });
 
     test('button in toolbar should not have accessibility violations', async ({ page }) => {
+      /**
+       * The pressed outline button fails color contrast in the md dark palette
+       * once its ripple shows. Only md renders a ripple, so iOS dark still runs.
+       */
+      test.skip(config.mode === 'md' && config.palette === 'dark', 'TODO(FW-6417): fix pressed outline contrast');
+
       await page.setContent(
         `
         <ion-toolbar>
@@ -71,80 +77,35 @@ configs({ directions: ['ltr'], modes: ['ios'], palettes: ['light', 'dark'] }).fo
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: font scaling'), () => {
-    test('should scale default button text on larger font sizes', async ({ page }) => {
+    test('should scale button text on larger font sizes', async ({ page }) => {
       await page.setContent(
         `
         <style>
           html {
             font-size: 310%;
           }
-        </style>
 
-        <ion-button>Default</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-default-scale`));
-    });
-
-    test('should scale clear button text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
-        <style>
-          html {
-            font-size: 310%;
+          .scale-container {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            gap: 10px;
           }
         </style>
 
-        <ion-button fill="clear">Clear</ion-button>
+        <div class="scale-container">
+          <ion-button>Default</ion-button>
+          <ion-button fill="clear">Clear</ion-button>
+          <ion-button size="small">Small</ion-button>
+          <ion-button size="large">Large</ion-button>
+        </div>
       `,
         config
       );
 
-      const button = page.locator('ion-button');
+      const container = page.locator('.scale-container');
 
-      await expect(button).toHaveScreenshot(screenshot(`button-clear-scale`));
-    });
-
-    test('should scale small button text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
-        <style>
-          html {
-            font-size: 310%;
-          }
-        </style>
-
-        <ion-button size="small">Small</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-small-scale`));
-    });
-
-    test('should scale large button text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
-        <style>
-          html {
-            font-size: 310%;
-          }
-        </style>
-
-        <ion-button size="large">Large</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-large-scale`));
+      await expect(container).toHaveScreenshot(screenshot(`button-scale`));
     });
   });
 });

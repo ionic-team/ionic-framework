@@ -3,60 +3,40 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: size'), () => {
-    test('should render small buttons', async ({ page }) => {
+    test('should render small, medium and large buttons', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button size="small" fill="solid">Small Button</ion-button>
+        <style>
+          .sizes-container {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            gap: 10px;
+            padding: 6px;
+          }
+        </style>
+
+        <div class="sizes-container">
+          <ion-button size="small" fill="solid">Small Button</ion-button>
+          <ion-button size="medium" fill="solid">Medium Button</ion-button>
+          <ion-button size="large" fill="solid">Large Button</ion-button>
+          <ion-buttons>
+            <ion-button size="small" fill="solid">Small Button</ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button size="medium" fill="solid">Medium Button</ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button size="large" fill="solid">Large Button</ion-button>
+          </ion-buttons>
+        </div>
       `,
         config
       );
 
-      const wrapper = page.locator('ion-button');
+      const container = page.locator('.sizes-container');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-size-small`));
-    });
-    test('should render large buttons', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button size="large" fill="solid">Large Button</ion-button>
-      `,
-        config
-      );
-
-      const wrapper = page.locator('ion-button');
-
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-size-large`));
-    });
-  });
-
-  test.describe(title('in ion-buttons'), () => {
-    test('should render small button', async ({ page }) => {
-      await page.setContent(
-        `
-      <ion-buttons>
-        <ion-button size="small" fill="solid">Small Button</ion-button>
-      </ion-buttons>
-    `,
-        config
-      );
-
-      const wrapper = page.locator('ion-button');
-
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-size-small-in-buttons`));
-    });
-    test('should render large button', async ({ page }) => {
-      await page.setContent(
-        `
-      <ion-buttons>
-        <ion-button size="large" fill="solid">Large Button</ion-button>
-      </ion-buttons>
-    `,
-        config
-      );
-
-      const wrapper = page.locator('ion-button');
-
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-size-large-in-buttons`));
+      await expect(container).toHaveScreenshot(screenshot(`button-size`));
     });
   });
 });
