@@ -58,16 +58,6 @@ export type IonTitleRecipe = {
       align?: {
         items?: string;
       };
-
-      inner?: {
-        width?: string;
-      };
-
-      transform?: {
-        origin?: {
-          x?: string;
-        };
-      };
     };
   };
 };

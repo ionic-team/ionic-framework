@@ -18,6 +18,7 @@ interface ToolbarIndex {
   background: HTMLElement;
   ionTitleEl: HTMLIonTitleElement | undefined;
   innerTitleEl: HTMLElement;
+  innerTitleOrigin: string | undefined;
   ionButtonsEl: HTMLElement[] | [];
 }
 
@@ -33,6 +34,33 @@ export const cloneElement = (tagName: string) => {
   document.body.appendChild(clonedEl);
 
   return clonedEl;
+};
+
+/**
+ * The large title grows from the edge its text is aligned to, so the
+ * text's start doesn't shift. Centered text grows from the center.
+ *
+ * @internal
+ * @param textAlign - The title's computed `text-align`.
+ * @param direction - The title's computed `direction`.
+ * @returns The horizontal `transform-origin` keyword: `left`, `right` or `center`.
+ */
+export const getTitleOrigin = (textAlign: string, direction: string): string => {
+  const rtl = direction === 'rtl';
+
+  if (textAlign === 'center' || textAlign === '-webkit-center') {
+    return 'center';
+  }
+
+  if (textAlign === 'left' || textAlign === 'right') {
+    return textAlign;
+  }
+
+  if (textAlign === 'end') {
+    return rtl ? 'left' : 'right';
+  }
+
+  return rtl ? 'right' : 'left';
 };
 
 export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderIndex | undefined => {
@@ -51,6 +79,7 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
         background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
         ionTitleEl,
         innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
+        innerTitleOrigin: undefined,
         ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')),
       } as ToolbarIndex;
     }),
@@ -238,7 +267,14 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
       return;
     }
 
+    // Read once, when the title is first scaled, so a title that becomes large later still gets one
+    if (toolbar.innerTitleOrigin === undefined) {
+      const { textAlign, direction } = getComputedStyle(ionTitle);
+      toolbar.innerTitleOrigin = getTitleOrigin(textAlign, direction);
+    }
+
     titleDiv.style.transition = transition ? TRANSITION : '';
+    titleDiv.style.transformOrigin = `${toolbar.innerTitleOrigin} center`;
     titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
   });
 };
