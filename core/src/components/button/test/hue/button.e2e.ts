@@ -65,6 +65,10 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ ti
 
         const container = page.locator('.hue-container');
 
+        // Firefox and Safari leave the area below the viewport transparent
+        const box = await container.boundingBox();
+        await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
+
         await expect(container).toHaveScreenshot(screenshot(`button-hue-${hue}`));
       });
     });
