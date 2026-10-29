@@ -1,33 +1,35 @@
+import { config } from '@global/config';
 import { newSpecPage } from '@stencil/core/testing';
+import { resetScreenBreakpoints } from '@utils/breakpoints';
 import * as helpers from '@utils/helpers';
 import * as logging from '@utils/logging';
 
 import { Gallery } from './gallery';
-import { DEFAULT_COLUMNS, DEFAULT_GAP } from './gallery-constants';
+import { DEFAULT_COLUMNS } from './gallery.constant';
 
 let sharedGallery: Gallery;
 let el: HTMLIonGalleryElement;
 
-// The expected columns and gap for each breakpoint when the columns and gap
-// properties are not set or are set to an invalid value.
+// The widths to test at each breakpoint, with the expected columns when the
+// columns property is not set or is set to an invalid value.
 const DEFAULT_BREAKPOINTS = [
   // xs
-  { width: 0, expectedColumns: DEFAULT_COLUMNS['xs'], expectedGap: DEFAULT_GAP },
-  { width: 575, expectedColumns: DEFAULT_COLUMNS['xs'], expectedGap: DEFAULT_GAP },
+  { width: 0, expectedColumns: DEFAULT_COLUMNS['xs'] },
+  { width: 575, expectedColumns: DEFAULT_COLUMNS['xs'] },
   // sm
-  { width: 576, expectedColumns: DEFAULT_COLUMNS['sm'], expectedGap: DEFAULT_GAP },
-  { width: 767, expectedColumns: DEFAULT_COLUMNS['sm'], expectedGap: DEFAULT_GAP },
+  { width: 576, expectedColumns: DEFAULT_COLUMNS['sm'] },
+  { width: 767, expectedColumns: DEFAULT_COLUMNS['sm'] },
   // md
-  { width: 768, expectedColumns: DEFAULT_COLUMNS['md'], expectedGap: DEFAULT_GAP },
-  { width: 991, expectedColumns: DEFAULT_COLUMNS['md'], expectedGap: DEFAULT_GAP },
+  { width: 768, expectedColumns: DEFAULT_COLUMNS['md'] },
+  { width: 991, expectedColumns: DEFAULT_COLUMNS['md'] },
   // lg
-  { width: 992, expectedColumns: DEFAULT_COLUMNS['lg'], expectedGap: DEFAULT_GAP },
-  { width: 1199, expectedColumns: DEFAULT_COLUMNS['lg'], expectedGap: DEFAULT_GAP },
+  { width: 992, expectedColumns: DEFAULT_COLUMNS['lg'] },
+  { width: 1199, expectedColumns: DEFAULT_COLUMNS['lg'] },
   // xl
-  { width: 1200, expectedColumns: DEFAULT_COLUMNS['xl'], expectedGap: DEFAULT_GAP },
-  { width: 1399, expectedColumns: DEFAULT_COLUMNS['xl'], expectedGap: DEFAULT_GAP },
+  { width: 1200, expectedColumns: DEFAULT_COLUMNS['xl'] },
+  { width: 1399, expectedColumns: DEFAULT_COLUMNS['xl'] },
   // xxl
-  { width: 1400, expectedColumns: DEFAULT_COLUMNS['xxl'], expectedGap: DEFAULT_GAP },
+  { width: 1400, expectedColumns: DEFAULT_COLUMNS['xxl'] },
 ];
 
 describe('gallery', () => {
@@ -444,23 +446,21 @@ describe('gallery', () => {
     });
 
     describe('getGapForWidth()', () => {
-      it('should resolve to the default gap for each breakpoint', () => {
-        const breakpoints = DEFAULT_BREAKPOINTS;
+      it("should use the theme's gap when the gap property is not set", () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
-        breakpoints.forEach(({ width, expectedGap }) => {
-          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
-        });
+        expect((sharedGallery as any).getGapForWidth(768)).toBeUndefined();
+        expect(warningSpy).not.toHaveBeenCalled();
+
+        warningSpy.mockRestore();
       });
 
-      it('should fallback to the default gap when the gap property is set to a negative number', () => {
-        const breakpoints = DEFAULT_BREAKPOINTS;
+      it("should warn and use the theme's gap when the gap property is set to a negative number", () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         sharedGallery.gap = -3;
 
-        breakpoints.forEach(({ width, expectedGap }) => {
-          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
-        });
+        expect((sharedGallery as any).getGapForWidth(768)).toBeUndefined();
 
         expect(warningSpy).toHaveBeenCalledWith(
           expect.stringContaining('[ion-gallery] - Invalid "gap" value (-3).'),
@@ -470,15 +470,12 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
-      it('should fallback to the default gap when the gap property is set to an invalid string', () => {
-        const breakpoints = DEFAULT_BREAKPOINTS;
+      it("should warn and use the theme's gap when the gap property is set to an invalid string", () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         sharedGallery.gap = '';
 
-        breakpoints.forEach(({ width, expectedGap }) => {
-          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
-        });
+        expect((sharedGallery as any).getGapForWidth(768)).toBeUndefined();
 
         expect(warningSpy).toHaveBeenCalledWith(
           expect.stringContaining('[ion-gallery] - Invalid "gap" value ("").'),
@@ -488,14 +485,14 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
-      it('should fallback to the default gap when the gap property is set to an object with all invalid breakpoint values', () => {
+      it("should warn and use the theme's gap when the gap property is set to an object with all invalid breakpoint values", () => {
         const breakpoints = DEFAULT_BREAKPOINTS;
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         sharedGallery.gap = { xs: '', sm: -3 };
 
-        breakpoints.forEach(({ width, expectedGap }) => {
-          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+        breakpoints.forEach(({ width }) => {
+          expect((sharedGallery as any).getGapForWidth(width)).toBeUndefined();
         });
 
         expect(warningSpy).toHaveBeenCalledWith(expect.stringContaining('[ion-gallery] - Invalid "gap" value'), el);
@@ -503,14 +500,14 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
-      it('should warn and fallback when gap is an empty breakpoint map object', () => {
+      it("should warn and use the theme's gap when gap is an empty breakpoint map object", () => {
         const breakpoints = DEFAULT_BREAKPOINTS;
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         sharedGallery.gap = {} as any;
 
-        breakpoints.forEach(({ width, expectedGap }) => {
-          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+        breakpoints.forEach(({ width }) => {
+          expect((sharedGallery as any).getGapForWidth(width)).toBeUndefined();
         });
 
         expect(warningSpy).toHaveBeenCalledWith(
@@ -521,14 +518,14 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
-      it('should warn and fallback when gap breakpoint map has only unrecognized keys', () => {
+      it("should warn and use the theme's gap when the gap breakpoint map has only unrecognized keys", () => {
         const breakpoints = DEFAULT_BREAKPOINTS;
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         sharedGallery.gap = { gapp: '8px', sm_typo: '1rem' } as any;
 
-        breakpoints.forEach(({ width, expectedGap }) => {
-          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+        breakpoints.forEach(({ width }) => {
+          expect((sharedGallery as any).getGapForWidth(width)).toBeUndefined();
         });
 
         expect(warningSpy).toHaveBeenCalledWith(expect.stringContaining('[ion-gallery] - Invalid "gap" value'), el);
@@ -536,19 +533,19 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
-      it('should properly set gap for the md breakpoint but fallback to the default gap for all others when the gap property is set to an object with one valid breakpoint and the rest invalid', () => {
+      it("should properly set gap for the md breakpoint but use the theme's gap for all others when the gap property is set to an object with one valid breakpoint and the rest invalid", () => {
         const breakpoints = [
-          { width: 0, expectedGap: DEFAULT_GAP },
-          { width: 575, expectedGap: DEFAULT_GAP },
-          { width: 576, expectedGap: DEFAULT_GAP },
-          { width: 767, expectedGap: DEFAULT_GAP },
+          { width: 0, expectedGap: undefined },
+          { width: 575, expectedGap: undefined },
+          { width: 576, expectedGap: undefined },
+          { width: 767, expectedGap: undefined },
           { width: 768, expectedGap: '1rem' },
           { width: 991, expectedGap: '1rem' },
-          { width: 992, expectedGap: DEFAULT_GAP },
-          { width: 1199, expectedGap: DEFAULT_GAP },
-          { width: 1200, expectedGap: DEFAULT_GAP },
-          { width: 1399, expectedGap: DEFAULT_GAP },
-          { width: 1400, expectedGap: DEFAULT_GAP },
+          { width: 992, expectedGap: undefined },
+          { width: 1199, expectedGap: undefined },
+          { width: 1200, expectedGap: undefined },
+          { width: 1399, expectedGap: undefined },
+          { width: 1400, expectedGap: undefined },
         ];
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
@@ -563,15 +560,12 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
-      it('should fallback to the default gap when the gap property is set to an unaccepted type', () => {
-        const breakpoints = DEFAULT_BREAKPOINTS;
+      it("should warn and use the theme's gap when the gap property is set to an unaccepted type", () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         sharedGallery.gap = [{ xs: 'invalid' }] as any;
 
-        breakpoints.forEach(({ width, expectedGap }) => {
-          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
-        });
+        expect((sharedGallery as any).getGapForWidth(768)).toBeUndefined();
 
         expect(warningSpy).toHaveBeenCalledWith(
           expect.stringContaining('[ion-gallery] - Invalid "gap" value ([{"xs":"invalid"}]).'),
@@ -650,17 +644,17 @@ describe('gallery', () => {
 
       it('should resolve to the CSS variable for breakpoints that set one when gap is a breakpoint map', () => {
         const breakpoints = [
-          { width: 0, expectedGap: DEFAULT_GAP },
-          { width: 575, expectedGap: DEFAULT_GAP },
-          { width: 576, expectedGap: DEFAULT_GAP },
-          { width: 767, expectedGap: DEFAULT_GAP },
+          { width: 0, expectedGap: undefined },
+          { width: 575, expectedGap: undefined },
+          { width: 576, expectedGap: undefined },
+          { width: 767, expectedGap: undefined },
           { width: 768, expectedGap: 'var(--app-gap)' },
           { width: 991, expectedGap: 'var(--app-gap)' },
-          { width: 992, expectedGap: DEFAULT_GAP },
-          { width: 1199, expectedGap: DEFAULT_GAP },
-          { width: 1200, expectedGap: DEFAULT_GAP },
-          { width: 1399, expectedGap: DEFAULT_GAP },
-          { width: 1400, expectedGap: DEFAULT_GAP },
+          { width: 992, expectedGap: undefined },
+          { width: 1199, expectedGap: undefined },
+          { width: 1200, expectedGap: undefined },
+          { width: 1399, expectedGap: undefined },
+          { width: 1400, expectedGap: undefined },
         ];
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
@@ -683,11 +677,11 @@ describe('gallery', () => {
           { width: 767, expectedGap: 'var(--g-sm)' },
           { width: 768, expectedGap: 'var(--g-md)' },
           { width: 991, expectedGap: 'var(--g-md)' },
-          { width: 992, expectedGap: DEFAULT_GAP },
-          { width: 1199, expectedGap: DEFAULT_GAP },
+          { width: 992, expectedGap: undefined },
+          { width: 1199, expectedGap: undefined },
           { width: 1200, expectedGap: '2rem' },
           { width: 1399, expectedGap: '2rem' },
-          { width: 1400, expectedGap: DEFAULT_GAP },
+          { width: 1400, expectedGap: undefined },
         ];
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
@@ -702,15 +696,12 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
-      it('should warn and fallback to the default gap when gap is a malformed CSS variable', () => {
-        const breakpoints = DEFAULT_BREAKPOINTS;
+      it("should warn and use the theme's gap when gap is a malformed CSS variable", () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         sharedGallery.gap = 'var(--app-gap. 16px)';
 
-        breakpoints.forEach(({ width, expectedGap }) => {
-          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
-        });
+        expect((sharedGallery as any).getGapForWidth(768)).toBeUndefined();
 
         expect(warningSpy).toHaveBeenCalledWith(
           expect.stringContaining('[ion-gallery] - Invalid "gap" value ("var(--app-gap. 16px)").'),
@@ -977,6 +968,29 @@ describe('gallery', () => {
         expect(sharedGallery.el.style.getPropertyValue('--internal-gallery-columns')).toBe('5');
         expect(sharedGallery.el.style.getPropertyValue('--internal-gallery-gap')).toBe('8px');
       });
+
+      it('should remove the gap CSS variable when the gap property is unset', () => {
+        sharedGallery.gap = 8;
+
+        jest.spyOn(sharedGallery.el, 'getBoundingClientRect').mockReturnValue({
+          width: 768,
+          height: 0,
+          top: 0,
+          left: 0,
+          right: 768,
+          bottom: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect);
+
+        (sharedGallery as any).updateResponsiveStyles(true);
+        expect(sharedGallery.el.style.getPropertyValue('--internal-gallery-gap')).toBe('8px');
+
+        sharedGallery.gap = undefined;
+        (sharedGallery as any).updateResponsiveStyles(true);
+        expect(sharedGallery.el.style.getPropertyValue('--internal-gallery-gap')).toBe('');
+      });
     });
 
     describe('scheduleMasonryResize()', () => {
@@ -1149,6 +1163,83 @@ describe('gallery', () => {
         expect((sharedGallery as any).getColumnIndex(7, [2, 2, 5], 3)).toBe(0);
         expect((sharedGallery as any).getColumnIndex(1, [3, 1, 1], 3)).toBe(1);
       });
+    });
+  });
+
+  /**
+   * The thresholds come from the `screenBreakpoints` config rather than a
+   * hardcoded map, so apps can override them. Each width below maps to a
+   * different breakpoint with the override than it does with the defaults,
+   * ensuring these tests fail if the config is ignored.
+   */
+  describe('gallery: screenBreakpoints config', () => {
+    const OVERRIDE = { sm: 200, md: 400, lg: 600, xl: 800, xxl: 1000 };
+
+    const setScreenBreakpoints = (value: unknown) => {
+      config.set('screenBreakpoints', value as any);
+      resetScreenBreakpoints();
+    };
+
+    beforeEach(() => {
+      setScreenBreakpoints(OVERRIDE);
+    });
+
+    afterEach(() => {
+      setScreenBreakpoints(undefined);
+    });
+
+    it('should resolve columns against the configured widths', () => {
+      const breakpoints = [
+        // xs under both
+        { width: 150, expectedColumns: 3 },
+        // sm under the override, xs by default
+        { width: 350, expectedColumns: 4 },
+        // md under the override, xs by default
+        { width: 500, expectedColumns: 5 },
+        // lg under the override, sm by default
+        { width: 650, expectedColumns: 7 },
+        // xl under the override, md by default
+        { width: 850, expectedColumns: 9 },
+        // xxl under the override, lg by default
+        { width: 1100, expectedColumns: 12 },
+      ];
+
+      sharedGallery.columns = { xs: 3, sm: 4, md: 5, lg: 7, xl: 9, xxl: 12 };
+
+      breakpoints.forEach(({ width, expectedColumns }) => {
+        expect((sharedGallery as any).getColumnsForWidth(width)).toBe(expectedColumns);
+      });
+    });
+
+    it('should resolve the gap against the configured widths', () => {
+      const breakpoints = [
+        { width: 150, expectedGap: '2px' },
+        { width: 350, expectedGap: '4px' },
+        { width: 500, expectedGap: '8px' },
+        { width: 650, expectedGap: '16px' },
+        { width: 850, expectedGap: '32px' },
+        { width: 1100, expectedGap: '64px' },
+      ];
+
+      sharedGallery.gap = { xs: '2px', sm: '4px', md: '8px', lg: '16px', xl: '32px', xxl: '64px' };
+
+      breakpoints.forEach(({ width, expectedGap }) => {
+        expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+      });
+    });
+
+    it('should resolve the default columns against the configured widths', () => {
+      // 500 is below the default md of 768, but at or above the configured 400
+      expect((sharedGallery as any).getColumnsForWidth(500)).toBe(DEFAULT_COLUMNS['md']);
+    });
+
+    it('should fall back to the defaults when the config is removed', () => {
+      setScreenBreakpoints(undefined);
+
+      sharedGallery.columns = { xs: 3, md: 5 };
+
+      // 500 resolves to xs again, since the default md is 768
+      expect((sharedGallery as any).getColumnsForWidth(500)).toBe(3);
     });
   });
 });
