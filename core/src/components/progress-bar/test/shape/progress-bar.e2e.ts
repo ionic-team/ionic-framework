@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-import { ION_PROGRESS_BAR_SHAPES } from '../../progress-bar.interfaces';
+import { ION_PROGRESS_BAR_SHAPES } from '../../progress-bar.interface';
 
 /**
  * This behavior does not vary across directions

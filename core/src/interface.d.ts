@@ -7,7 +7,7 @@ export { AccordionGroupCustomEvent } from './components/accordion-group/accordio
 export { AlertOptions } from './components/alert/alert-interface';
 export { ActionSheetOptions } from './components/action-sheet/action-sheet-interface';
 export { BreadcrumbCustomEvent } from './components/breadcrumb/breadcrumb-interface';
-export { ScrollBaseCustomEvent, ScrollCallback, ScrollCustomEvent } from './components/content/content.interfaces';
+export { ScrollBaseCustomEvent, ScrollCallback, ScrollCustomEvent } from './components/content/content.interface';
 export { CheckboxCustomEvent } from './components/checkbox/checkbox-interface';
 export { DatetimeCustomEvent, DatetimeHighlightStyle } from './components/datetime/datetime-interface';
 export { InfiniteScrollCustomEvent } from './components/infinite-scroll/infinite-scroll-interface';
@@ -32,7 +32,7 @@ export {
 export { SearchbarCustomEvent } from './components/searchbar/searchbar-interface';
 export { SegmentCustomEvent } from './components/segment/segment-interface';
 export { SelectCustomEvent, SelectCompareFn } from './components/select/select-interface';
-export { TabsCustomEvent } from './components/tabs/tabs.interfaces';
+export { TabsCustomEvent } from './components/tabs/tabs.interface';
 export { TextareaCustomEvent } from './components/textarea/textarea-interface';
 export { ToastOptions } from './components/toast/toast-interface';
 export { ToggleCustomEvent } from './components/toggle/toggle-interface';

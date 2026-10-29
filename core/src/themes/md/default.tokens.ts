@@ -328,14 +328,18 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          minHeight: 'var(--ion-scaling-xs)',
+          min: {
+            height: 'var(--ion-scaling-xs)',
+          },
 
           font: {
             size: `${((components.chip.font.size - 2) / global.root).toFixed(2)}rem`,
           },
         },
         large: {
-          minHeight: 'var(--ion-scaling-md)',
+          min: {
+            height: 'var(--ion-scaling-md)',
+          },
 
           font: {
             size: `${(components.chip.font.size / global.root).toFixed(2)}rem`,
@@ -775,7 +779,9 @@ export const defaultTheme: DefaultTheme = {
     IonItemDivider: {
       background: baseColors.backgroundColor,
       color: `var(--ion-text-color-step-600, ${mix(baseColors.white, baseColors.black, '40%')})`,
-      minHeight: 'var(--ion-scaling-750)',
+      min: {
+        height: 'var(--ion-scaling-750)',
+      },
 
       padding: {
         top: 'var(--ion-spacing-0)',
@@ -1076,7 +1082,9 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      lineHeight: 'var(--ion-scaling-250)',
+      line: {
+        height: 'var(--ion-scaling-250)',
+      },
 
       margin: {
         bottom: 'var(--ion-spacing-xxs)',
@@ -1206,9 +1214,7 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      letter: {
-        spacing: '0.0075em',
-      },
+      letterSpacing: '0.0075em',
 
       size: {
         small: {

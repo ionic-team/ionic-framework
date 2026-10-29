@@ -36,6 +36,21 @@ core/
         └── mixins.scss             # Sass mixins
 ```
 
+## Component Files
+
+A component that uses the theme system keeps its recipe and config types next to its source:
+
+```bash
+core/src/components/my-component/
+├── my-component.tsx            # Reads config defaults and renders CSS custom properties
+├── my-component.scss           # Single base stylesheet for every theme
+├── my-component.interface.ts   # Recipe and config types, plus const arrays for prop values
+└── my-component.constant.ts    # Optional shared values, such as defaults
+```
+
+- Name the interface and constant files in the singular: `my-component.interface.ts` and `my-component.constant.ts`.
+- Back each prop union with a `const` array, such as `ION_CHIP_SIZES`, so tests can loop over every value.
+
 ## Available Themes
 
 ### iOS Theme (`@ionic/theme/ios`)

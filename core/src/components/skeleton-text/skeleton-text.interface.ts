@@ -25,7 +25,9 @@ export type IonSkeletonTextRecipe = {
     };
   };
 
-  lineHeight?: string;
+  line?: {
+    height?: string;
+  };
 
   margin?: Omit<IonMargin, 'end' | 'start'>;
 };

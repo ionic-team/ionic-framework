@@ -25,7 +25,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode } from '../../interface';
 
-import type { ScrollBaseDetail, ScrollDetail } from './content.interfaces';
+import type { ScrollBaseDetail, ScrollDetail } from './content.interface';
 
 /**
  * How long to wait (in ms) after the last `resize` event before recalculating.

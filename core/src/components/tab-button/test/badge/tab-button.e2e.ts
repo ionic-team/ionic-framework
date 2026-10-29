@@ -1,9 +1,10 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_BADGE_SIZES, ION_BADGE_VERTICAL_POSITIONS } from '../../../badge/badge.interface';
+
 configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('tab-button: badge'), () => {
-    const positions = ['top', 'bottom'];
     const layouts = ['icon-top', 'icon-bottom', 'icon-start', 'icon-end', 'icon-hide', 'label-hide'];
     const icons = ['star', 'globe', 'logo-facebook', 'chatbox'];
     const colors = ['danger', 'primary', 'warning', 'success'];
@@ -15,24 +16,23 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
       { label: 'label-only', hasIcon: false, hasLabel: true },
     ];
 
-    ['small', 'medium', 'large'].forEach((badgeSize) => {
+    ION_BADGE_SIZES.forEach((badgeSize) => {
       test(`should not have visual regressions with ${badgeSize} badges`, async ({ page }) => {
-        const tabBars = positions
-          .map((position) => {
-            const combinedLayouts: Record<string, string[]> = {
-              'icon-only': layouts.filter((l) => l !== 'icon-hide'),
-              'label-only': layouts.filter((l) => l !== 'label-hide'),
-            };
+        const tabBars = ION_BADGE_VERTICAL_POSITIONS.map((position) => {
+          const combinedLayouts: Record<string, string[]> = {
+            'icon-only': layouts.filter((l) => l !== 'icon-hide'),
+            'label-only': layouts.filter((l) => l !== 'label-hide'),
+          };
 
-            const variantGroups = slotVariants
-              .map((variant) => {
-                if (variant.label === 'icon-only' || variant.label === 'label-only') {
-                  const tabs = combinedLayouts[variant.label]
-                    .map((layout, i) => {
-                      const label = variant.hasLabel ? `<ion-label>Tab ${i + 1}</ion-label>` : '';
-                      const icon = variant.hasIcon ? `<ion-icon name="${icons[i % icons.length]}"></ion-icon>` : '';
+          const variantGroups = slotVariants
+            .map((variant) => {
+              if (variant.label === 'icon-only' || variant.label === 'label-only') {
+                const tabs = combinedLayouts[variant.label]
+                  .map((layout, i) => {
+                    const label = variant.hasLabel ? `<ion-label>Tab ${i + 1}</ion-label>` : '';
+                    const icon = variant.hasIcon ? `<ion-icon name="${icons[i % icons.length]}"></ion-icon>` : '';
 
-                      return `
+                    return `
                           <ion-tab-button tab="tab-${position}-${variant.label}-${layout}" layout="${layout}">
                             ${label}
                             ${icon}
@@ -41,52 +41,51 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
                             }" size="${badgeSize}" vertical="${position}">${contents[i % contents.length]}</ion-badge>
                           </ion-tab-button>
                         `;
-                    })
-                    .join('\n');
+                  })
+                  .join('\n');
 
-                  return `
+                return `
                   <h3>${variant.label}</h3>
                   <ion-tab-bar>${tabs}</ion-tab-bar>
                 `;
-                }
+              }
 
-                const layoutRows = layouts
-                  .map((layout) => {
-                    const tabs = contents
-                      .map((html, i) => {
-                        const label = variant.hasLabel ? `<ion-label>Tab ${i + 1}</ion-label>` : '';
-                        const icon = variant.hasIcon ? `<ion-icon name="${icons[i]}"></ion-icon>` : '';
+              const layoutRows = layouts
+                .map((layout) => {
+                  const tabs = contents
+                    .map((html, i) => {
+                      const label = variant.hasLabel ? `<ion-label>Tab ${i + 1}</ion-label>` : '';
+                      const icon = variant.hasIcon ? `<ion-icon name="${icons[i]}"></ion-icon>` : '';
 
-                        return `
+                      return `
                           <ion-tab-button tab="tab-${position}-${variant.label}-${layout}-${i}" layout="${layout}">
                             ${label}
                             ${icon}
                             <ion-badge hue="bold" shape="round" color="${colors[i]}" size="${badgeSize}" vertical="${position}">${html}</ion-badge>
                           </ion-tab-button>
                         `;
-                      })
-                      .join('\n');
+                    })
+                    .join('\n');
 
-                    return `
+                  return `
                       <h4>${layout}</h4>
                       <ion-tab-bar>${tabs}</ion-tab-bar>
                     `;
-                  })
-                  .join('\n');
+                })
+                .join('\n');
 
-                return `
+              return `
                   <h3>${variant.label}</h3>
                   ${layoutRows}
                 `;
-              })
-              .join('\n');
+            })
+            .join('\n');
 
-            return `
+          return `
               <h2>badge position: ${position}</h2>
               ${variantGroups}
             `;
-          })
-          .join('\n');
+        }).join('\n');
 
         await page.setContent(
           `

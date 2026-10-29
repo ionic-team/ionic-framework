@@ -7,7 +7,7 @@ import { config } from '../../global/config';
 import type { Color } from '../../interface';
 import type { Hue } from '../../themes/themes.interfaces';
 
-import type { IonChipFill, IonChipSize, IonChipShape } from './chip.interfaces';
+import type { IonChipFill, IonChipSize, IonChipShape } from './chip.interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
