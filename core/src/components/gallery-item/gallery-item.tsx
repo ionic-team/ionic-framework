@@ -2,11 +2,8 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, State, h } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 
-import { getIonTheme } from '../../global/ionic-global';
-
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - The content placed inside of the gallery item. This is typically an
  * `img`, but can be any element (e.g. a `figure` wrapping an image and caption).
@@ -71,12 +68,10 @@ export class GalleryItem implements ComponentInterface {
 
   render() {
     const { galleryLayout } = this;
-    const theme = getIonTheme(this);
 
     return (
       <Host
         class={{
-          [theme]: true,
           [`in-gallery-layout-${galleryLayout}`]: galleryLayout != undefined,
         }}
       >
