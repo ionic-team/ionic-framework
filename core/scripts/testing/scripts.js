@@ -14,7 +14,7 @@
  * The following URL parameters are supported:
  * - `rtl`: Set to `true` to enable right-to-left directionality.
  * - `ionic:_testing`: Set to `true` to identify testing environments.
- * - `ionic:theme`: Set to `ionic`, `ios`, or `md` to load a specific 
+ * - `ionic:theme`: Set to `ionic`, `ios`, `md` or `base` to load a specific 
  * theme. Defaults to `md`.
  * - `palette`: Set to `light`, `dark`, `high-contrast`, or 
  * `high-contrast-dark` to load a specific palette. Defaults to `light`.
@@ -53,7 +53,9 @@ const DEFAULT_PALETTE = 'light';
 
   /**
    * The `theme` param is used to load a specific theme.
-   * This can be `ionic`, `ios`, or `md`. Default to `md` for tests.
+   * This can be `ionic`, `ios`, `md`, or `base`. Default to `md` for tests.
+   * `base` loads only the base tokens, with no component tokens, to show
+   * how migrated components render without a theme.
    */
   const themeQuery = window.location.search.match(/ionic:theme=([a-z0-9]+)/i);
   const themeHash = window.location.hash.match(/ionic:theme=([a-z0-9]+)/i);
@@ -127,7 +129,7 @@ const DEFAULT_PALETTE = 'light';
   window.__ionicTestThemeReady = false;
 
   // Load theme tokens if the theme is valid
-  const validThemes = ['ionic', 'ios', 'md'];
+  const validThemes = ['ionic', 'ios', 'md', 'base'];
   if (themeName && validThemes.includes(themeName)) {
     loadThemeTokens(themeName, paletteName).finally(() => {
       window.__ionicTestThemeReady = true;
