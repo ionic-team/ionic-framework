@@ -23,5 +23,24 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(item).toHaveScreenshot(screenshot(`label-item`));
     });
+
+    test('should render a dimmed label in an item with a disabled input', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-label>Label</ion-label>
+          <ion-select aria-label="Fruit" placeholder="Select fruit" disabled>
+            <ion-select-option value="apple">Apple</ion-select-option>
+          </ion-select>
+        </ion-item>
+        `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveClass(/item-interactive-disabled/);
+      await expect(item).toHaveScreenshot(screenshot(`label-item-disabled`));
+    });
   });
 });

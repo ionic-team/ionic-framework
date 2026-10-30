@@ -439,7 +439,7 @@ $alert-button-font-size: dynamic-font(14px);
 
 While we usually aim for consistency across different modes, this isn't always necessary when dealing with Sass variables. If certain styles are present in one mode but absent in another, there's no need to include a Sass variable for the mode lacking those styles.
 
-For example, the color of the label changes when focused in `md` mode. However, in `ios`, the label does not receive different styling when focused, therefore it does not require the same styles or a Sass variable defined:
+For example, the color of a stacked or floating label changes when its item is focused in `md` mode. However, in `ios`, the label does not receive different styling when focused, therefore it does not require the same styles or a Sass variable defined:
 
 <table>
 <thead>
@@ -459,12 +459,10 @@ $label-md-text-color-focused: ion-color(primary, base);
 ```
 
 ```scss
-// label.md.scss
+// item.md.scss
 
-:host-context(.ion-focused).label-stacked:not(.ion-color),
-:host-context(.ion-focused).label-floating:not(.ion-color),
-:host-context(.item-has-focus).label-stacked:not(.ion-color),
-:host-context(.item-has-focus).label-floating:not(.ion-color) {
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-md-text-color-focused;
 }
 ```
@@ -488,12 +486,10 @@ $label-ios-text-color-focused: null;
 ```
 
 ```scss
-// label.ios.scss
+// item.ios.scss
 
-:host-context(.ion-focused).label-stacked:not(.ion-color),
-:host-context(.ion-focused).label-floating:not(.ion-color),
-:host-context(.item-has-focus).label-stacked:not(.ion-color),
-:host-context(.item-has-focus).label-floating:not(.ion-color) {
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-ios-text-color-focused;
 }
 ```

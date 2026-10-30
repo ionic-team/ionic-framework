@@ -790,6 +790,44 @@ There will be some CSS issues when converting to shadow. Below are some of the d
 :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
 ```
 
+### Parent Context
+
+In scoped components, Stencil rewrites `:host-context()` into descendant selectors that work in every browser. In shadow components, the browser handles `:host-context()` itself, and only Chromium supports it. Styles that depend on an ancestor need a different approach after converting.
+
+When the ancestor is known at render time, set a class on the host with the `hostContext` utility and target that class with `:host()`. Pass tag names to `hostContext` rather than classes that the ancestor adds when it renders. Tag names state exactly which components the styles apply to, and they do not depend on another component's internal classes:
+
+```tsx
+// ✅ Correct
+'in-item': hostContext('ion-item', this.el),
+
+// ❌ Incorrect: `.item` is an internal class added by several components when they render
+'in-item': hostContext('.item', this.el),
+```
+
+```css
+/* IN SCOPED */
+:host-context(ion-item) {
+
+/* IN SHADOW */
+:host(.in-item) {
+```
+
+Combine a tag name with a class only when the class describes the ancestor's state, such as `hostContext('ion-item.ion-color', this.el)`.
+
+`hostContext` only runs when the component renders, so it does not update when the ancestor's classes change later. When the styles depend on ancestor state that changes after render, such as a disabled state reported by a child, move the styles to the ancestor and target the child with `::slotted()`:
+
+```css
+/* IN SCOPED (label.scss) */
+:host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
+  opacity: 0.3;
+}
+
+/* IN SHADOW (item.common.scss) */
+:host(.item-interactive-disabled:not(.item-multiple-inputs)) ::slotted(ion-label) {
+  opacity: 0.3;
+}
+```
+
 ## Sass Variables
 
 For guidelines on when to use Sass Variables, see the [Sass Guidelines](./sass-guidelines.md).
@@ -857,39 +895,35 @@ For guidelines on exposing the icon for styling, see the [CSS Shadow Parts Guide
 
 ## RTL
 
-When you need to support both LTR and RTL modes, try to avoid using values such as `left` and `right`. For certain CSS properties, you can use the appropriate mixin to have this handled for you automatically.
+Components must follow the text direction of the nearest ancestor with a `dir` attribute, and must update when that direction changes. Handle direction in CSS or in JavaScript at the time it is needed. Do not add classes such as `my-cmp-rtl` to the host during render. A class set during render is not updated when `dir` changes on an ancestor, so the styles fall out of date.
 
-For example, if you wanted `transform-origin` to be RTL-aware, you would use the `transform-origin` mixin:
+Use the first approach that applies:
 
-```css
-@include transform-origin(start, center);
-```
+1. **Logical properties**: Avoid physical values such as `left` and `right`. When a logical property exists, use it or the mixin that outputs it. The `margin`, `padding` and `position` mixins output logical properties such as `margin-inline-start` and `inset-inline-start`:
 
-This would output `transform-origin: left center` in LTR mode and `transform-origin: right center` in RTL mode.
+    ```scss
+    @include margin(0, 8px, 0, 16px);
+    ```
 
-These mixins depend on the `:host-context` pseudo-class when used inside of shadow components, which is not supported in WebKit. As a result, these mixins will not work in Safari for macOS and iOS when applied to shadow components.
+2. **RTL mixins**: When there is no logical property, use the RTL-aware mixin. For example, to make `transform-origin` RTL-aware, use the `transform-origin` mixin:
 
-To work around this, you should set an RTL class on the host of your component and set your RTL styles by targeting that class:
+    ```scss
+    @include transform-origin(start, center);
+    ```
 
-```tsx
-<Host
-class={{
-  'my-cmp-rtl': document.dir === 'rtl'
-}}
->
- ...
-</Host>
-```
+    This outputs `transform-origin: left center` in LTR and `transform-origin: right center` in RTL. For properties without a dedicated mixin, wrap the RTL styles in the `rtl()` mixin.
 
-```css
-:host {
-  transform-origin: left center;
-}
+    Inside shadow components, these mixins output both a `:host-context([dir=rtl])` selector, which is supported by Chromium, and a `:dir(rtl)` selector, which is supported by Firefox and Safari 16.4+. In Safari 16.4 - 16.x, `:dir()` does not update when the direction changes after the page loads ([WebKit bug 257133](https://bugs.webkit.org/show_bug.cgi?id=257133)). Safari 17+ is not affected.
 
-:host(.my-cmp-rtl) {
-  transform-origin: right center;
-}
-```
+3. **JavaScript**: When direction affects behavior that CSS cannot express, such as gesture math, animations or positioning, call `isRTL(this.el)` from `@utils/rtl` at the time the value is needed. Do not store the result during render.
+
+    ```tsx
+    private onMove(detail: GestureDetail) {
+      const rtl = isRTL(this.el);
+      const delta = rtl ? -detail.deltaX : detail.deltaX;
+      ...
+    }
+    ```
 
 ## Themes vs. Modes
 
