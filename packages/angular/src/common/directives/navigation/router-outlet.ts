@@ -61,7 +61,8 @@ const blockRepeatLeave = (pageEl: HTMLElement) => {
 
 /**
  * `ChildrenOutletContexts` keeps each outlet's context in a private `contexts`
- * map. Saving and restoring it preserves tab state.
+ * map that is not part of Angular's public typings. Saving and restoring it
+ * preserves tab state, so confirm the field still exists when upgrading Angular.
  */
 type ChildrenOutletContextsInternals = { contexts: Map<string, OutletContext> };
 
