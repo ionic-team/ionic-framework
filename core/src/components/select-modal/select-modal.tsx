@@ -226,7 +226,7 @@ export class SelectModal implements ComponentInterface {
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          <ion-list>{this.multiple === true ? this.renderCheckboxOptions() : this.renderRadioOptions()}</ion-list>
+          {this.multiple === true ? <ion-list>{this.renderCheckboxOptions()}</ion-list> : this.renderRadioOptions()}
         </ion-content>
       </Host>
     );
