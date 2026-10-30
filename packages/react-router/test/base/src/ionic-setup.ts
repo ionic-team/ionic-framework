@@ -1,5 +1,5 @@
 /**
- * Ionic CSS and runtime config. Both App and RootSplatSiblingApp import this because
+ * Ionic CSS and runtime config. App and each separately rooted app import this because
  * App.test.tsx renders App with no index.tsx in the graph.
  *
  * Debug logging is on so a failing spec includes the navigation diagnostics.
