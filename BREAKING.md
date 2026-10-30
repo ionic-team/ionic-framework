@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 10.x
 
+- [Browser and Platform Support](#version-10x-browser-platform-support)
 - [Components](#version-10x-components)
   - [Button](#version-10x-button)
   - [Card](#version-10x-card)
@@ -27,6 +28,18 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Textarea](#version-10x-textarea)
 - [Framework Specific](#version-10x-framework-specific)
   - [Angular](#version-10x-angular)
+
+<h2 id="version-10x-browser-platform-support">Browser and Platform Support</h2>
+
+This section details the desktop browser versions that are supported by Ionic 10.
+
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ------------------ |
+| Chrome          | 89+                |
+| Safari          | 16+                |
+| Edge            | 89+                |
+| Firefox         | 89+                |
 
 <h2 id="version-10x-components">Components</h2>
 
