@@ -26,6 +26,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/LifecycleSetup.vue')
   },
   {
+    path: '/lifecycle-errors',
+    component: () => import('@/views/LifecycleErrorBoundary.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/LifecycleErrorPage.vue')
+      }
+    ]
+  },
+  {
     path: '/overlays',
     component: () => import('@/views/Overlays.vue')
   },

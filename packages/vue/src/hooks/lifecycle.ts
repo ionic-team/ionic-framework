@@ -1,6 +1,10 @@
 import { printIonWarning } from "@ionic/core/components";
 import type { ComponentInternalInstance } from "vue";
-import { getCurrentInstance } from "vue";
+import {
+  callWithAsyncErrorHandling,
+  ErrorCodes,
+  getCurrentInstance,
+} from "vue";
 
 import { LifecycleHooks } from "../utils";
 
@@ -29,7 +33,12 @@ const injectHook = (
         return;
       }
 
-      return args ? hook(...args) : hook();
+      return callWithAsyncErrorHandling(
+        hook,
+        component,
+        ErrorCodes.TRANSITION_HOOK,
+        args
+      );
     };
 
     hooks.push(wrappedHook);
