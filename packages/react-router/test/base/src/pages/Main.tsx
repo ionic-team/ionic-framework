@@ -10,6 +10,7 @@ import {
   IonLabel,
 } from '@ionic/react';
 import React from 'react';
+import { ROOT_SINGLE_VIEW_BASENAME } from '../root-single-view/basename';
 import { ROOT_SPLAT_SIBLING_BASENAME } from '../root-splat-sibling/basename';
 
 const Main: React.FC = () => {
@@ -172,6 +173,9 @@ const Main: React.FC = () => {
           {/* A separate React root, so a plain href rather than a routerLink. */}
           <IonItem href={`${ROOT_SPLAT_SIBLING_BASENAME}/feed`}>
             <IonLabel>Root Splat Sibling</IonLabel>
+          </IonItem>
+          <IonItem href={`${ROOT_SINGLE_VIEW_BASENAME}/a`}>
+            <IonLabel>Root Single View</IonLabel>
           </IonItem>
         </IonList>
 
