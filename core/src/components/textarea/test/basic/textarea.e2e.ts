@@ -295,10 +295,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('ion-textarea textarea')).not.toBeFocused();
     });
 
-    /**
-     * Browsers skip the label forwarding when a click lands on interactive
-     * content, so activating a slotted control leaves the textarea alone.
-     */
     ['ion-checkbox', 'ion-radio', 'ion-toggle'].forEach((tag) => {
       test(`should activate a slotted ${tag} without focusing the textarea`, async ({ page }) => {
         const control = page.locator(tag);
@@ -324,6 +320,129 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.locator('ion-textarea textarea').click();
 
       expect(clickEvent).toHaveReceivedEventTimes(1);
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions/modes
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('textarea: slotted control focus'), () => {
+    test('should focus the textarea after a slotted control stops the click propagating', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Notes">
+          <button slot="end" onclick="event.stopPropagation()">Clear</button>
+        </ion-textarea>
+      `,
+        config
+      );
+
+      await page.locator('button[slot="end"]').click();
+      await page.locator('ion-textarea textarea').click();
+
+      await expect(page.locator('ion-textarea textarea')).toBeFocused();
+    });
+
+    test('should navigate when a slotted link is clicked', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Notes">
+          <a slot="end" href="#linked">Help</a>
+        </ion-textarea>
+      `,
+        config
+      );
+
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('a[slot="end"]').click();
+
+      await expect(page).toHaveURL(/#linked$/);
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+      await expect(page.locator('ion-textarea textarea')).not.toBeFocused();
+    });
+
+    test('should toggle a slotted checkbox without focusing the textarea inside an item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-textarea label="Notes">
+            <ion-checkbox slot="end" aria-label="Remember"></ion-checkbox>
+          </ion-textarea>
+        </ion-item>
+      `,
+        config
+      );
+
+      const clickEvent = await page.spyOnEvent('click');
+      const checkbox = page.locator('ion-checkbox');
+
+      await checkbox.click();
+      await page.waitForChanges();
+
+      await expect(checkbox).toHaveAttribute('aria-checked', 'true');
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+      await expect(page.locator('ion-textarea textarea')).not.toBeFocused();
+    });
+
+    /**
+     * WebKit forwards the label's click to the textarea even when the click
+     * started on interactive content, which would pull focus off the control.
+     */
+    test('should leave focus on a slotted control when it is clicked', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Notes">
+          <input slot="end" aria-label="Tag" />
+        </ion-textarea>
+      `,
+        config
+      );
+
+      const control = page.locator('input[slot="end"]');
+
+      await control.click();
+
+      await expect(control).toBeFocused();
+    });
+
+    test('should not focus the textarea when a focused slotted ion-button is clicked', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Notes">
+          <ion-button slot="end">Send</ion-button>
+        </ion-textarea>
+      `,
+        config
+      );
+
+      const button = page.locator('ion-button[slot="end"] button');
+
+      await button.focus();
+      await button.click();
+
+      await expect(page.locator('ion-textarea textarea')).not.toBeFocused();
+    });
+
+    test('should emit the native click when the textarea is clicked directly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Notes"></ion-textarea>
+      `,
+        config
+      );
+
+      await page.evaluate(() => {
+        document.querySelector('ion-textarea')!.addEventListener('click', (ev) => {
+          (window as any).hostClicks = [...((window as any).hostClicks ?? []), ev.isTrusted];
+        });
+      });
+
+      await page.locator('ion-textarea textarea').click();
+
+      expect(await page.evaluate(() => (window as any).hostClicks)).toEqual([true]);
     });
   });
 });
