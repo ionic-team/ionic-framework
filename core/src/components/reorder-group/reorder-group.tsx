@@ -161,7 +161,8 @@ export class ReorderGroup implements ComponentInterface {
     let sum = 0;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
-      sum += child.offsetHeight;
+      // offsetHeight is rounded, which accumulates error with fractional heights
+      sum += child.getBoundingClientRect().height;
       heights.push(sum);
       child.$ionIndex = i;
     }
@@ -182,7 +183,7 @@ export class ReorderGroup implements ComponentInterface {
     }
 
     this.lastToIndex = indexForItem(item);
-    this.selectedItemHeight = item.offsetHeight;
+    this.selectedItemHeight = item.getBoundingClientRect().height;
     this.state = ReorderGroupState.Active;
 
     item.classList.add(ITEM_REORDER_SELECTED);
