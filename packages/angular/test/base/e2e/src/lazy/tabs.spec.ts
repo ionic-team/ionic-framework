@@ -513,4 +513,22 @@ test('Tabs should support conditional slots', async ({ page }) => {
 
   // The tab bar should be added to the bottom
   await expect(page.locator('ion-tabs .tabs-inner + ion-tab-bar')).toHaveCount(1);
+  test.describe('Deferred IonTabs initialization', () => {
+    test('should populate outlet before emitting initial ionTabsWillChange', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31674',
+      });
+
+      await page.goto('/lazy/tabs-outlet-init');
+      await page.locator('#show-tabs').click();
+
+      await expect(page.locator('app-tabs-outlet-init-tab-one')).toBeVisible();
+      await expect(page.locator('#will-change-log')).toHaveText('tab-one:true:undefined');
+
+      await page.locator('#tab-button-tab-two').click();
+      await expect(page.locator('app-tabs-outlet-init-tab-two')).toBeVisible();
+      await expect(page.locator('#will-change-log')).toHaveText('tab-one:true:undefined,tab-two:true:tab-one');
+    });
+  });
 });
