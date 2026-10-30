@@ -36,4 +36,35 @@ test.describe('Tabs', () => {
     await tabClick(page, 'tab1');
     await ionPageVisible(page, 'tab1');
   });
+
+  test('tab button should reset its tab after another tab was reset', async ({ page }) => {
+    await page.goto('/tabs/tab1');
+    await ionPageVisible(page, 'tab1');
+
+    await page.locator('div.ion-page[data-pageid=tab1] #child-one').click();
+    await ionPageVisible(page, 'tab1childone');
+
+    await tabClick(page, 'tab2');
+    await ionPageVisible(page, 'tab2');
+
+    await page.locator('div.ion-page[data-pageid=tab2] #child-one').click();
+    await ionPageVisible(page, 'tab2childone');
+
+    await tabClick(page, 'tab1');
+    await ionPageVisible(page, 'tab1childone');
+
+    // Resetting tab1 goes back to its root via router.go(-4)
+    await tabClick(page, 'tab1');
+    await ionPageVisible(page, 'tab1');
+    await ionPageDoesNotExist(page, 'tab1childone');
+
+    // Pushing tab2's child drops the browser history entry of the tab2 root
+    await tabClick(page, 'tab2');
+    await ionPageVisible(page, 'tab2childone');
+
+    await tabClick(page, 'tab2');
+    await ionPageVisible(page, 'tab2');
+    await ionPageDoesNotExist(page, 'tab2childone');
+    await expect(page).toHaveURL(/\/tabs\/tab2(\?|$)/);
+  });
 });
