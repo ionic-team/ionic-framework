@@ -78,6 +78,11 @@ export const routes: Routes = [
         path: 'tabs-slots',
         loadComponent: () => import('../tabs-slots.component').then(c => c.TabsSlotsComponent)
       },
+      { path: 'tabs-outlet-init', redirectTo: '/lazy/tabs-outlet-init/tab-one', pathMatch: 'full' },
+      {
+        path: 'tabs-outlet-init',
+        loadChildren: () => import('../tabs-outlet-init/tabs-outlet-init.module').then(m => m.TabsOutletInitModule)
+      },
       { path: 'tabs-basic', component: TabsBasicComponent },
       {
         path: 'nested-outlet',

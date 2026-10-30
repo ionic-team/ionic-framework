@@ -72,6 +72,15 @@ export const routes: Routes = [
           { path: 'tab-three', loadComponent: () => import('../tabs/tab3.component').then(c => c.TabThreeComponent) }
         ]
       },
+      { path: 'tabs-outlet-init', redirectTo: '/standalone/tabs-outlet-init/tab-one', pathMatch: 'full' },
+      {
+        path: 'tabs-outlet-init',
+        loadComponent: () => import('../tabs/tabs-outlet-init.component').then(c => c.TabsOutletInitComponent),
+        children: [
+          { path: 'tab-one', loadComponent: () => import('../tabs/tab1.component').then(c => c.TabOneComponent) },
+          { path: 'tab-two', loadComponent: () => import('../tabs/tab2.component').then(c => c.TabTwoComponent) }
+        ]
+      },
       { path: 'tabs-basic', loadComponent: () => import('../tabs-basic/tabs-basic.component').then(c => c.TabsBasicComponent) },
       { path: 'tabs-search-params', redirectTo: '/standalone/tabs-search-params/tab1?foo=bar', pathMatch: 'full' },
       {
