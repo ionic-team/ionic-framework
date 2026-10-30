@@ -273,6 +273,8 @@
 :host .calendar-day-wrapper {
   display: flex;
 
+  position: relative;
+
   align-items: center;
   justify-content: center;
 
@@ -285,6 +287,100 @@
   min-height: 0;
 
   overflow: visible;
+
+  /**
+   * Create a stacking context so the range track
+   * (::before with z-index: -1) stays behind the
+   * day button but above the host background.
+   */
+  z-index: 0;
+}
+
+// Range Selection Track
+// -----------------------------------
+
+/**
+ * Each day in the range draws its own piece of the track with a
+ * ::before. In-range days fill the cell, while the start and end
+ * caps cover the half between the pill center and the next day.
+ *
+ * Grid columns are `1fr`, so cell edges land on fractional pixels
+ * and a cell's track can fall a hairline short of its neighbor's.
+ * Each day therefore extends 1px toward the next day in the range,
+ * which the next day paints over except inside such a gap.
+ *
+ * @prop --range-background: The background color of the range selection track.
+ */
+:host .calendar-day-wrapper-in-range::before,
+:host .calendar-day-wrapper-range-start::before,
+:host .calendar-day-wrapper-range-end::before {
+  position: absolute;
+
+  top: 50%;
+
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+
+  height: var(--range-track-height);
+
+  transform: translateY(-50%);
+
+  /**
+   * `--range-background` is translucent by default, so it is layered
+   * over the datetime background to paint an opaque track. Where two
+   * days overlap, the color stays the same instead of doubling up
+   * into a darker line.
+   */
+  background: linear-gradient(var(--range-background), var(--range-background)),
+    linear-gradient(var(--background), var(--background));
+
+  content: "";
+
+  z-index: -1;
+}
+
+:host .calendar-day-wrapper-range-start::before {
+  inset-inline-start: 50%;
+}
+
+:host .calendar-day-wrapper-range-end::before {
+  inset-inline-end: 50%;
+}
+
+/**
+ * Only extend toward a day that draws the track as well. The last
+ * day of a week is followed by the next row, and the next day is
+ * unpainted when it ends the selection or is disabled inside the
+ * range, so extending there would leave a 1px nub.
+ */
+:host .calendar-day-wrapper-in-range:not(:nth-child(7n)):has(+ .calendar-day-wrapper-in-range)::before,
+:host .calendar-day-wrapper-in-range:not(:nth-child(7n)):has(+ .calendar-day-wrapper-range-end)::before,
+:host .calendar-day-wrapper-range-start:not(:nth-child(7n)):has(+ .calendar-day-wrapper-in-range)::before,
+:host .calendar-day-wrapper-range-start:not(:nth-child(7n)):has(+ .calendar-day-wrapper-range-end)::before {
+  inset-inline-end: -1px;
+}
+
+/**
+ * When a single day is both the start and end of the range,
+ * do not show a track since there is nothing to connect.
+ */
+:host .calendar-day-wrapper-range-start.calendar-day-wrapper-range-end::before {
+  display: none;
+}
+
+/**
+ * When the component is disabled, fade the whole grid once instead of
+ * fading each day. Fading a day makes it its own compositing group, so
+ * the 1px that each day extends toward the next would be painted twice
+ * and read as a darker seam. The day buttons drop their own disabled
+ * opacity so the grid is the only thing applying it.
+ */
+:host(.datetime-disabled.datetime-range) .calendar-month-grid {
+  opacity: 0.4;
+}
+
+:host(.datetime-disabled.datetime-range) .calendar-month-grid .calendar-day[disabled] {
+  opacity: 1;
 }
 
 /**

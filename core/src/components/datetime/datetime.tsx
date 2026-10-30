@@ -16,6 +16,7 @@ import type {
   DatetimePresentation,
   DatetimeChangeEventDetail,
   DatetimeParts,
+  DatetimeRangeParts,
   TitleSelectedDatesFormatter,
   DatetimeHighlight,
   DatetimeHighlightStyle,
@@ -104,6 +105,11 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @part calendar-day today - The calendar day that contains the current day.
  * @part calendar-day disabled - The calendar day that is disabled.
  *
+ * @part range-start - The calendar day button that is the start of a range selection.
+ * @part range-end - The calendar day button that is the end of a range selection.
+ * @part range-selection - The calendar day button that is part of a range selection (includes start and end).
+ * @part range-track - The calendar day wrapper element whose ::before pseudo-element draws the range highlight track.
+ *
  * @part datetime-header - The datetime header contains the content for the `title` slot and the selected date.
  * @part datetime-title - The element that contains the `title` slot content.
  * @part datetime-selected-date - The element that contains the selected date.
@@ -153,7 +159,7 @@ export class Datetime implements ComponentInterface {
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts | DatetimeParts[] = [];
+  @State() activeParts: DatetimeParts | DatetimeParts[] | DatetimeRangeParts = [];
 
   @State() workingParts: DatetimeParts = {
     month: 5,
@@ -294,6 +300,31 @@ export class Datetime implements ComponentInterface {
     return hasDatePresentation && !preferWheel;
   }
 
+  private get isMultipleMode() {
+    return this.selectionMode === 'multiple' || (this.selectionMode === undefined && this.multiple);
+  }
+
+  private get isRangeMode() {
+    return this.selectionMode === 'range';
+  }
+
+  /**
+   * Type guard: returns true if the given activeParts is a DatetimeRangeParts object.
+   */
+  private isRangeParts(parts: DatetimeParts | DatetimeParts[] | DatetimeRangeParts): parts is DatetimeRangeParts {
+    return this.isRangeMode && parts !== null && typeof parts === 'object' && !Array.isArray(parts) && 'start' in parts;
+  }
+
+  /**
+   * Returns the current range parts if in range mode, or undefined otherwise.
+   */
+  private get rangeParts(): DatetimeRangeParts | undefined {
+    if (this.isRangeParts(this.activeParts)) {
+      return this.activeParts;
+    }
+    return undefined;
+  }
+
   /**
    * The text to display on the picker's cancel button.
    */
@@ -403,8 +434,34 @@ export class Datetime implements ComponentInterface {
   /**
    * If `true`, multiple dates can be selected at once. Only
    * applies to `presentation="date"` and `preferWheel="false"`.
+   *
+   * @deprecated Use `selectionMode="multiple"` instead.
    */
   @Prop() multiple = false;
+
+  /**
+   * Controls the date selection behavior.
+   * `'multiple'` enables selecting multiple individual dates.
+   * `'range'` enables selecting a start and end date range.
+   * When unset, single-date selection is used.
+   *
+   * Range selection only works with `presentation="date"` and `preferWheel="false"`.
+   */
+  @Prop() selectionMode?: 'multiple' | 'range';
+
+  /**
+   * The text shown in the datetime header when the start of the range
+   * is empty, also used by screen readers to announce the start date.
+   * Only applies when `selectionMode="range"`.
+   */
+  @Prop() startDateLabel = 'Start date';
+
+  /**
+   * The text shown in the datetime header when the end of the range
+   * is empty, also used by screen readers to announce the end date.
+   * Only applies when `selectionMode="range"`.
+   */
+  @Prop() endDateLabel = 'End date';
 
   /**
    * Used to apply custom text and background colors to specific dates.
@@ -555,6 +612,20 @@ export class Datetime implements ComponentInterface {
     const { isCalendarPicker, activeParts, preferWheel, workingParts } = this;
 
     /**
+     * In range mode, only confirm when both start and end are selected.
+     */
+    if (this.isRangeMode) {
+      if (!this.isRangeParts(activeParts) || !activeParts.end) {
+        return;
+      }
+      this.setValue([convertDataToISO(activeParts.start), convertDataToISO(activeParts.end)]);
+      if (closeOverlay) {
+        this.closeParentOverlay(CONFIRM_ROLE);
+      }
+      return;
+    }
+
+    /**
      * We only update the value if the presentation is not a calendar picker.
      */
     if (activeParts !== undefined || !isCalendarPicker) {
@@ -571,7 +642,7 @@ export class Datetime implements ComponentInterface {
           this.setValue(undefined);
         }
       } else {
-        this.setValue(convertDataToISO(activeParts));
+        this.setValue(convertDataToISO(activeParts as DatetimeParts | DatetimeParts[]));
       }
     }
 
@@ -591,6 +662,23 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async reset(startDate?: string) {
+    if (this.isRangeMode) {
+      /**
+       * In range mode, reset clears the full range. If a startDate
+       * is provided, the calendar navigates to that month without
+       * selecting anything so the user begins a fresh selection.
+       */
+      this.activeParts = [];
+      if (startDate) {
+        const parsed = parseDate(startDate);
+        if (parsed) {
+          const target = Array.isArray(parsed) ? parsed[0] : parsed;
+          this.setWorkingParts(target);
+        }
+      }
+      return;
+    }
+
     this.processValue(startDate);
   }
 
@@ -629,8 +717,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private warnIfIncorrectValueUsage = () => {
-    const { multiple, value } = this;
-    if (!multiple && Array.isArray(value)) {
+    const { value } = this;
+    if (!this.isMultipleMode && !this.isRangeMode && Array.isArray(value)) {
       /**
        * We do some processing on the `value` array so
        * that it looks more like an array when logged to
@@ -640,7 +728,17 @@ export class Datetime implements ComponentInterface {
        * Custom behavior: ['a', 'b']
        */
       printIonWarning(
-        `[ion-datetime] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+        `[ion-datetime] - An array of values was passed, but neither selectionMode="multiple" nor selectionMode="range" is set. This is incorrect usage and may result in unexpected behaviors.
+
+  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
+`,
+        this.el
+      );
+    }
+
+    if (this.isRangeMode && Array.isArray(value) && value.length > 2) {
+      printIonWarning(
+        `[ion-datetime] - More than 2 values were passed with selectionMode="range". Only the first and last values will be used.
 
   Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
 `,
@@ -671,6 +769,9 @@ export class Datetime implements ComponentInterface {
 
   private getActivePart = () => {
     const { activeParts } = this;
+    if (this.isRangeParts(activeParts)) {
+      return activeParts.start;
+    }
     return Array.isArray(activeParts) ? activeParts[0] : activeParts;
   };
 
@@ -692,6 +793,32 @@ export class Datetime implements ComponentInterface {
     };
   };
 
+  /**
+   * Checks whether the span from start to end contains any disabled day.
+   * Used by range mode to prevent selecting across disabled dates.
+   */
+  private rangeContainsDisabledDate = (start: DatetimeParts, end: DatetimeParts): boolean => {
+    const { minParts, maxParts, parsedDayValues, isDateEnabled } = this;
+
+    let cursor = getNextDay(start);
+    while (isBefore(cursor, end)) {
+      if (isDayDisabled(cursor, minParts, maxParts, parsedDayValues)) {
+        return true;
+      }
+      if (isDateEnabled) {
+        try {
+          if (!isDateEnabled(convertDataToISO(cursor))) {
+            return true;
+          }
+        } catch {
+          // Swallow user callback exceptions during validation
+        }
+      }
+      cursor = getNextDay(cursor);
+    }
+    return false;
+  };
+
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
     /** if the datetime component is in readonly mode,
      * allow browsing of the calendar without changing
@@ -703,7 +830,7 @@ export class Datetime implements ComponentInterface {
 
     this.hasUnconfirmedSelection = true;
 
-    const { multiple, minParts, maxParts, activeParts } = this;
+    const { minParts, maxParts, activeParts } = this;
 
     /**
      * When setting the active parts, it is possible
@@ -718,8 +845,10 @@ export class Datetime implements ComponentInterface {
     const validatedParts = validateParts(parts, minParts, maxParts);
     this.setWorkingParts(validatedParts);
 
-    if (multiple) {
-      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
+    if (this.isRangeMode) {
+      this.setActivePartsRange(validatedParts);
+    } else if (this.isMultipleMode) {
+      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts as DatetimeParts];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
@@ -737,6 +866,26 @@ export class Datetime implements ComponentInterface {
     }
 
     this.confirm();
+  };
+
+  /**
+   * Handles range selection logic when a day is clicked.
+   *
+   * Creating a new range: first click sets start, second sets end.
+   * Modifying an existing range:
+   *   - Before range → new start
+   *   - Within range → new end
+   *   - After range → new end
+   * If the resulting span contains a disabled date, start a new range instead.
+   */
+  private setActivePartsRange = (parts: DatetimeParts) => {
+    const current = this.rangeParts;
+
+    if (!current || isBefore(parts, current.start) || this.rangeContainsDisabledDate(current.start, parts)) {
+      this.activeParts = { start: parts };
+    } else {
+      this.activeParts = { start: current.start, end: parts };
+    }
   };
 
   private get isCalendarPicker() {
@@ -1450,6 +1599,57 @@ export class Datetime implements ComponentInterface {
     }
 
     /**
+     * Range mode: convert the value array into DatetimeRangeParts.
+     */
+    if (this.isRangeMode) {
+      /**
+       * The calendar navigates to the start of the range, or to the default
+       * date when there is nothing selected, so that an empty range mode
+       * opens on the same month as the other selection modes.
+       */
+      let navigateTo: DatetimeParts;
+
+      if (hasValue && Array.isArray(valueToProcess)) {
+        let rangeValues = valueToProcess;
+
+        // If more than 2 entries, use first and last
+        if (rangeValues.length > 2) {
+          rangeValues = [rangeValues[0], rangeValues[rangeValues.length - 1]];
+        }
+
+        let startParts = rangeValues[0];
+        let endParts = rangeValues.length > 1 ? rangeValues[1] : undefined;
+
+        // Normalize reversed pairs so earlier date is start
+        if (endParts && isAfter(startParts, endParts)) {
+          const temp = startParts;
+          startParts = endParts;
+          endParts = temp;
+        }
+
+        this.activeParts = endParts ? { start: startParts, end: endParts } : { start: startParts };
+        navigateTo = startParts;
+      } else {
+        this.activeParts = [];
+        navigateTo = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
+      }
+
+      const targetValue = clampDate(navigateTo, minParts, maxParts);
+      const { month, day, year } = targetValue;
+      const didChangeMonth =
+        (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
+      const bodyIsVisible = el.classList.contains('datetime-ready');
+      const { isGridStyle, showMonthAndYear } = this;
+
+      if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+        this.animateToDate(targetValue);
+      } else {
+        this.setWorkingParts({ month, day, year, hour: 0, minute: 0, ampm: 'am' });
+      }
+      return;
+    }
+
+    /**
      * If there are multiple values, clamp to the last one.
      * This is because the last value is the one that the user
      * has most recently interacted with.
@@ -1548,9 +1748,16 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, formatOptions, highlightedDates, multiple, presentation, preferWheel } = this;
+    const { el, formatOptions, highlightedDates, multiple, selectionMode, presentation, preferWheel } = this;
 
-    if (multiple) {
+    if (selectionMode === undefined && multiple) {
+      printIonWarning(
+        '[ion-datetime] - The "multiple" property is deprecated. Use selectionMode="multiple" instead.',
+        el
+      );
+    }
+
+    if (this.isMultipleMode) {
       if (presentation !== 'date') {
         printIonWarning('[ion-datetime] - Multiple date selection is only supported for presentation="date".', el);
       }
@@ -1558,6 +1765,23 @@ export class Datetime implements ComponentInterface {
       if (preferWheel) {
         printIonWarning('[ion-datetime] - Multiple date selection is not supported with preferWheel="true".', el);
       }
+    }
+
+    if (this.isRangeMode) {
+      if (presentation !== 'date') {
+        printIonWarning('[ion-datetime] - Range selection is only supported for presentation="date".', el);
+      }
+
+      if (preferWheel) {
+        printIonWarning('[ion-datetime] - Range selection is not supported with preferWheel="true".', el);
+      }
+    }
+
+    if (selectionMode !== undefined && multiple) {
+      printIonWarning(
+        '[ion-datetime] - Both "selectionMode" and "multiple" are set. "selectionMode" takes precedence.',
+        el
+      );
     }
 
     if (highlightedDates !== undefined) {
@@ -1686,6 +1910,13 @@ export class Datetime implements ComponentInterface {
      * is disabled or readonly.
      */
     const isButtonDisabled = disabled || readonly;
+
+    /**
+     * In range mode, the confirm button should be disabled until
+     * both a start and end date have been selected.
+     */
+    const isRangeIncomplete = this.isRangeMode && (!this.isRangeParts(this.activeParts) || !this.activeParts.end);
+    const isConfirmDisabled = isButtonDisabled || isRangeIncomplete;
     const confirmFill = theme === 'ionic' ? 'solid' : undefined;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
@@ -1741,7 +1972,7 @@ export class Datetime implements ComponentInterface {
                     fill={confirmFill}
                     color={this.color}
                     onClick={() => this.confirm(true)}
-                    disabled={isButtonDisabled}
+                    disabled={isConfirmDisabled}
                   >
                     {this.doneText}
                   </ion-button>
@@ -2043,8 +2274,8 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          // Month wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
-          if (!this.multiple) {
+          // Month wheel is navigation-only in multi-select and range modes as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.isMultipleMode && !this.isRangeMode) {
             this.setActiveParts({
               ...activePart,
               month: ev.detail.value,
@@ -2092,8 +2323,8 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          // Year wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
-          if (!this.multiple) {
+          // Year wheel is navigation-only in multi-select and range modes as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.isMultipleMode && !this.isRangeMode) {
             this.setActiveParts({
               ...activePart,
               year: ev.detail.value,
@@ -2433,7 +2664,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showAdjacentDays).map((dateObject, index) => {
             const { day, dayOfWeek, isAdjacentDay } = dateObject;
-            const { el, highlightedDates, isDateEnabled, multiple, showAdjacentDays } = this;
+            const { el, highlightedDates, isDateEnabled, showAdjacentDays } = this;
             let _month = month;
             let _year = year;
             if (showAdjacentDays && isAdjacentDay && day !== null) {
@@ -2466,15 +2697,19 @@ export class Datetime implements ComponentInterface {
               ariaLabel,
               ariaSelected,
               disabled: isDayDisabled,
+              isRangeStart,
+              isRangeEnd,
+              isInRange,
               text,
             } = getCalendarDayState(
               this.locale,
               referenceParts,
-              this.activeParts,
+              this.isRangeParts(this.activeParts) ? [] : this.activeParts,
               this.todayParts,
               this.minParts,
               this.maxParts,
-              this.parsedDayValues
+              this.parsedDayValues,
+              this.rangeParts
             );
 
             const dateIsoString = convertDataToISO(referenceParts);
@@ -2507,13 +2742,19 @@ export class Datetime implements ComponentInterface {
 
             const isButtonDisabled = isCalDayDisabled || isDatetimeDisabled;
 
+            /**
+             * Determine if this day is part of the range selection.
+             * Range styling takes priority over highlightedDates.
+             */
+            const isPartOfRange = isRangeStart || isRangeEnd || isInRange;
+
             let dateStyle: DatetimeHighlightStyle | undefined = undefined;
 
             /**
-             * Custom highlight styles should not override the style for selected dates,
-             * nor apply to "filler days" at the start of the grid.
+             * Custom highlight styles should not override the style for selected dates
+             * or range selection, nor apply to "filler days" at the start of the grid.
              */
-            if (highlightedDates !== undefined && !isActive && day !== null && !isAdjacentDay) {
+            if (highlightedDates !== undefined && !isActive && !isPartOfRange && day !== null && !isAdjacentDay) {
               dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
@@ -2522,15 +2763,43 @@ export class Datetime implements ComponentInterface {
             // "Filler days" at the beginning of the grid should not get the calendar day
             // CSS parts added to them
             if (!isCalendarPadding && !isAdjacentDay) {
-              dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
-                isCalDayDisabled ? ' disabled' : ''
-              }`;
+              dateParts = `calendar-day${isActive || isRangeStart || isRangeEnd ? ' active' : ''}${
+                isToday ? ' today' : ''
+              }${isCalDayDisabled ? ' disabled' : ''}${isRangeStart ? ' range-start range-selection' : ''}${
+                isRangeEnd ? ' range-end range-selection' : ''
+              }${isInRange ? ' range-selection' : ''}`;
             } else if (isAdjacentDay) {
               dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}`;
             }
 
+            /**
+             * Build the wrapper's shadow part attribute for range track styling.
+             */
+            const wrapperParts = isPartOfRange && !isCalendarPadding && !isAdjacentDay ? 'range-track' : undefined;
+
+            /**
+             * Build the aria-label for range mode accessibility.
+             */
+            let rangeAriaLabel = ariaLabel;
+            if (this.isRangeMode && ariaLabel) {
+              if (isRangeStart) {
+                rangeAriaLabel += `, ${this.startDateLabel}`;
+              }
+              if (isRangeEnd) {
+                rangeAriaLabel += `, ${this.endDateLabel}`;
+              }
+            }
+
             return (
-              <div class="calendar-day-wrapper">
+              <div
+                class={{
+                  'calendar-day-wrapper': true,
+                  'calendar-day-wrapper-range-start': isRangeStart,
+                  'calendar-day-wrapper-in-range': isInRange,
+                  'calendar-day-wrapper-range-end': isRangeEnd,
+                }}
+                part={wrapperParts}
+              >
                 <button
                   // We need to use !important for the inline styles here because
                   // otherwise the CSS shadow parts will override these styles.
@@ -2559,15 +2828,18 @@ export class Datetime implements ComponentInterface {
                   class={{
                     'calendar-day-padding': isCalendarPadding,
                     'calendar-day': true,
-                    'calendar-day-active': isActive,
+                    'calendar-day-active': isActive || isRangeStart || isRangeEnd,
                     'calendar-day-constrained': isCalDayConstrained,
                     'calendar-day-today': isToday,
                     'calendar-day-adjacent-day': isAdjacentDay,
+                    'calendar-day-range-start': isRangeStart,
+                    'calendar-day-range-end': isRangeEnd,
+                    'calendar-day-in-range': isInRange,
                   }}
                   part={dateParts}
                   aria-hidden={isCalendarPadding ? 'true' : null}
-                  aria-selected={ariaSelected}
-                  aria-label={ariaLabel}
+                  aria-selected={isActive || isRangeStart || isRangeEnd ? 'true' : ariaSelected}
+                  aria-label={rangeAriaLabel}
                   onClick={() => {
                     if (isCalendarPadding) {
                       return;
@@ -2576,17 +2848,24 @@ export class Datetime implements ComponentInterface {
                     if (isAdjacentDay) {
                       // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
                       this.el.blur();
-                      this.activeParts = { ...activePart, ...referenceParts };
+                      if (!this.isRangeMode) {
+                        this.activeParts = { ...activePart, ...referenceParts };
+                      }
                       this.animateToDate(referenceParts);
-                      this.confirm();
+                      if (this.isRangeMode) {
+                        this.setActiveParts(referenceParts);
+                      } else {
+                        this.confirm();
+                      }
                     } else {
                       this.setWorkingParts({
                         ...this.workingParts,
                         ...referenceParts,
                       });
 
-                      // Multiple only needs date info so we can wipe out other fields like time.
-                      if (multiple) {
+                      if (this.isRangeMode) {
+                        this.setActiveParts(referenceParts);
+                      } else if (this.isMultipleMode) {
                         this.setActiveParts(referenceParts, isActive);
                       } else {
                         this.setActiveParts({
@@ -2703,11 +2982,23 @@ export class Datetime implements ComponentInterface {
   }
 
   private getHeaderSelectedDateText() {
-    const { activeParts, formatOptions, multiple, titleSelectedDatesFormatter } = this;
+    const { activeParts, formatOptions, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
+    const dateFormatOptions = formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' };
 
     let headerText: string;
-    if (multiple && isArray && activeParts.length !== 1) {
+
+    if (this.isRangeMode) {
+      headerText = this.getRangeHeaderText(dateFormatOptions);
+      if (titleSelectedDatesFormatter !== undefined) {
+        try {
+          const rangeValues = this.getRangeValueArray();
+          headerText = titleSelectedDatesFormatter(rangeValues);
+        } catch (e) {
+          printIonError('[ion-datetime] - Exception in provided `titleSelectedDatesFormatter`:', e);
+        }
+      }
+    } else if (this.isMultipleMode && isArray && activeParts.length !== 1) {
       headerText = `${activeParts.length} days`; // default/fallback for multiple selection
       if (titleSelectedDatesFormatter !== undefined) {
         try {
@@ -2718,14 +3009,37 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getLocalizedDateTime(
-        this.locale,
-        this.getActivePartsWithFallback(),
-        formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' }
-      );
+      headerText = getLocalizedDateTime(this.locale, this.getActivePartsWithFallback(), dateFormatOptions);
     }
 
     return headerText;
+  }
+
+  /**
+   * Returns the formatted range header text.
+   * Shows "Start date - End date" with placeholders from startDateLabel/endDateLabel.
+   */
+  private getRangeHeaderText(dateFormatOptions: Intl.DateTimeFormatOptions): string {
+    const range = this.rangeParts;
+    if (!range) {
+      return `${this.startDateLabel} - ${this.endDateLabel}`;
+    }
+
+    const startText = getLocalizedDateTime(this.locale, range.start, dateFormatOptions);
+    const endText = range.end ? getLocalizedDateTime(this.locale, range.end, dateFormatOptions) : this.endDateLabel;
+
+    return `${startText} - ${endText}`;
+  }
+
+  /**
+   * Returns the current range value as an ISO string array for
+   * titleSelectedDatesFormatter and ionChange.
+   */
+  private getRangeValueArray(): string[] {
+    const range = this.rangeParts;
+    if (!range) return [];
+    if (!range.end) return [convertDataToISO(range.start)];
+    return [convertDataToISO(range.start), convertDataToISO(range.end)];
   }
 
   private renderHeader(showExpandedHeader = true) {
@@ -2910,6 +3224,7 @@ export class Datetime implements ComponentInterface {
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,
             [`datetime-grid`]: isGridStyle,
+            [`datetime-range`]: this.isRangeMode,
           }),
         }}
       >

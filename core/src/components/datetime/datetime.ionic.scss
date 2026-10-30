@@ -11,7 +11,7 @@
    */
   --background: #{globals.$ion-bg-surface-default};
   --focus-ring-color: #{globals.$ion-border-focus-default};
-  --focus-ring-width: #{globals.$ion-border-radius-025};
+  --focus-ring-width: #{globals.$ion-border-size-050};
   /**
    * TODO(FW-6931): Remove these variables upon solving the root cause
    */
@@ -169,18 +169,18 @@
 
 // Disabled Day
 .calendar-day[disabled]:not(.calendar-day-constrained) {
-  color: globals.$ion-primitives-neutral-500;
+  color: globals.$ion-text-disabled;
 }
 
 // Current Day
 .calendar-day.calendar-day-today {
-  color: globals.$ion-semantics-primary-base;
+  color: globals.$ion-text-select;
 }
 
 // Selected Day
 .calendar-day.calendar-day-active,
 .calendar-day.calendar-day-active.calendar-day-adjacent-day {
-  background: globals.$ion-semantics-primary-100;
+  background: globals.$ion-bg-primary-subtle-default;
 }
 
 // Focused Day
@@ -190,7 +190,7 @@
 
 // Hovered Day
 @media (any-hover: hover) {
-  .calendar-day:not([disabled]):not(:active):hover {
+  .calendar-day:not([disabled]):not(:active):not(.calendar-day-in-range):hover {
     background: globals.$ion-semantics-primary-200;
   }
 }
@@ -209,6 +209,112 @@
 // Selected Adjacent Day
 .calendar-day.calendar-day-active.calendar-day-adjacent-day {
   color: globals.$ion-text-default;
+}
+
+// Range Selection
+// -----------------------------------
+
+:host {
+  --range-background: #{globals.$ion-bg-primary-subtle-default};
+  --range-track-height: #{globals.$ion-scale-1200};
+}
+
+// Range start: full circle
+// Use :host prefix for specificity over the general disabled day rule.
+:host .calendar-day.calendar-day-range-start {
+  @include globals.border-radius(globals.$ion-border-radius-full);
+
+  background: globals.$ion-bg-primary-base-default;
+  color: globals.$ion-text-inverse;
+}
+
+// Range end: full circle
+:host .calendar-day.calendar-day-range-end {
+  @include globals.border-radius(globals.$ion-border-radius-full);
+
+  background: globals.$ion-bg-primary-base-default;
+  color: globals.$ion-text-inverse;
+}
+
+// Single day range: both start and end, restore full circle
+.calendar-day.calendar-day-range-start.calendar-day-range-end {
+  @include globals.border-radius(globals.$ion-border-radius-full);
+}
+
+// In-range days: rectangular, no rounding
+.calendar-day.calendar-day-in-range {
+  @include globals.border-radius(0);
+
+  background: none;
+  color: globals.$ion-text-default;
+}
+
+// Current day keeps its blue text even when part of a range
+.calendar-day.calendar-day-today.calendar-day-in-range {
+  color: globals.$ion-text-select;
+}
+
+:host .calendar-day.calendar-day-today.calendar-day-range-start,
+:host .calendar-day.calendar-day-today.calendar-day-range-end {
+  color: globals.$ion-text-inverse;
+}
+
+// Hovered range start/end days
+@media (any-hover: hover) {
+  .calendar-day.calendar-day-range-start:not([disabled]):not(:active):hover,
+  .calendar-day.calendar-day-range-end:not([disabled]):not(:active):hover {
+    background: globals.$ion-bg-primary-base-press;
+  }
+}
+
+// Pressed range start/end/in-range days
+.calendar-day.calendar-day-range-start:active,
+.calendar-day.calendar-day-range-end:active {
+  background: globals.$ion-bg-primary-base-press;
+}
+
+.calendar-day.calendar-day-in-range:active {
+  background: globals.$ion-bg-primary-subtle-press;
+}
+
+// The ionic theme uses color (not opacity) for disabled days, so undo
+// the grid-level opacity from common.scss to avoid double-fading.
+:host(.datetime-disabled.datetime-range) .calendar-month-grid {
+  opacity: 1;
+}
+
+// Disabled range days show faded text over the range track.
+:host(:not(.datetime-readonly)) .calendar-day.calendar-day-in-range[disabled] {
+  color: globals.$ion-text-disabled;
+
+  opacity: 1;
+}
+
+:host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-start[disabled],
+:host(:not(.datetime-readonly)) .calendar-day.calendar-day-range-end[disabled] {
+  color: globals.$ion-text-inverse;
+
+  opacity: 1;
+}
+
+// Readonly range days should look like a normal range (not faded).
+// Needs higher specificity to override the general disabled day color.
+:host(.datetime-readonly) .calendar-day.calendar-day-range-start[disabled],
+:host(.datetime-readonly) .calendar-day.calendar-day-range-end[disabled] {
+  color: globals.$ion-text-inverse;
+}
+
+:host(.datetime-readonly) .calendar-day.calendar-day-in-range[disabled] {
+  color: globals.$ion-text-default;
+}
+
+:host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-in-range[disabled] {
+  color: globals.$ion-text-select;
+}
+
+:host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-range-start[disabled],
+:host(.datetime-readonly) .calendar-day.calendar-day-today.calendar-day-range-end[disabled] {
+  color: globals.$ion-text-inverse;
 }
 
 // Time / Header

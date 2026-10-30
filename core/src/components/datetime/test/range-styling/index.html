@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Range Styling</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .grid-item {
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      ion-datetime {
+        box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+      }
+
+      /* Custom range background color */
+      #customBackground {
+        --range-background: rgba(235, 68, 90, 0.1);
+      }
+
+      /* Custom range parts styling */
+      #customParts::part(range-start),
+      #customParts::part(range-end) {
+        background: rgb(235, 68, 90);
+        color: white;
+      }
+
+      #customParts::part(range-start) {
+        border-radius: 32px 0 0 32px;
+      }
+
+      #customParts::part(range-end) {
+        border-radius: 0 32px 32px 0;
+      }
+
+      /* Single day range: both start and end */
+      #customParts::part(range-start range-end) {
+        border-radius: 50%;
+      }
+
+      #customParts {
+        --range-background: rgba(235, 68, 90, 0.1);
+      }
+
+      /* Color prop with range */
+      #colorRange {
+        --range-background: rgba(var(--ion-color-secondary-rgb), 0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Range Styling</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <!-- Default styling -->
+          <div class="grid-item">
+            <h2>Default Range Styling</h2>
+            <ion-datetime id="defaultStyling" locale="en-US" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <!-- Custom background via CSS variable -->
+          <div class="grid-item">
+            <h2>Custom --range-background</h2>
+            <ion-datetime
+              id="customBackground"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+            ></ion-datetime>
+          </div>
+
+          <!-- Custom parts styling -->
+          <div class="grid-item">
+            <h2>Custom Shadow Parts (range-start, range-end)</h2>
+            <ion-datetime id="customParts" locale="en-US" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <!-- With color prop -->
+          <div class="grid-item">
+            <h2>Color Prop (secondary)</h2>
+            <ion-datetime
+              id="colorRange"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              color="secondary"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- Range spanning today -->
+          <div class="grid-item">
+            <h2>Range Spanning Today</h2>
+            <ion-datetime id="spanningToday" locale="en-US" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Set values for all range datetimes
+      document.querySelector('#defaultStyling').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#customBackground').value = ['2022-06-08', '2022-06-18'];
+      document.querySelector('#customParts').value = ['2022-06-08', '2022-06-18'];
+      document.querySelector('#colorRange').value = ['2022-06-05', '2022-06-15'];
+
+      // Range spanning today
+      const today = new Date();
+      const fiveDaysAgo = new Date(today);
+      fiveDaysAgo.setDate(today.getDate() - 5);
+      const fiveDaysFromNow = new Date(today);
+      fiveDaysFromNow.setDate(today.getDate() + 5);
+
+      const formatDate = (d) => d.toISOString().split('T')[0];
+      document.querySelector('#spanningToday').value = [formatDate(fiveDaysAgo), formatDate(fiveDaysFromNow)];
+    </script>
+  </body>
+</html>

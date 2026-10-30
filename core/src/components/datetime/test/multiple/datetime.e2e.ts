@@ -388,7 +388,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await dropdownButton.click();
         await page.waitForChanges();
 
-        const monthOption = page.locator('.month-column ion-picker-column-option').nth(0);
+        const monthOption = page.locator('.month-column ion-picker-column-option').filter({ hasText: 'August' });
         await monthOption.click();
         await page.waitForChanges();
 

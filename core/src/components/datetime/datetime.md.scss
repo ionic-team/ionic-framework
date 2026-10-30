@@ -186,6 +186,70 @@
   color: $text-color-step-500;
 }
 
+// Range Selection
+// -----------------------------------
+
+:host {
+  --range-background: #{ion-color(primary, base, 0.2)};
+  --range-track-height: #{$datetime-md-day-height};
+}
+
+:host(.ion-color) {
+  --range-background: #{current-color(base, 0.2)};
+}
+
+// Range start: full circle
+:host .calendar-day.calendar-day-range-start {
+  @include border-radius(50%);
+
+  background: ion-color(primary, base);
+  color: ion-color(primary, contrast);
+}
+
+// Range end: full circle
+:host .calendar-day.calendar-day-range-end {
+  @include border-radius(50%);
+
+  background: ion-color(primary, base);
+  color: ion-color(primary, contrast);
+}
+
+// Single day range: both start and end, restore full circle
+:host .calendar-day.calendar-day-range-start.calendar-day-range-end {
+  @include border-radius(50%);
+}
+
+// In-range days: rectangular, no rounding
+:host .calendar-day.calendar-day-in-range {
+  @include border-radius(0);
+
+  background: none;
+}
+
+:host .calendar-day.calendar-day-in-range.calendar-day-active,
+:host .calendar-day.calendar-day-in-range:focus {
+  background: none;
+
+  box-shadow: none;
+}
+
+:host(.ion-color) .calendar-day.calendar-day-range-start,
+:host(.ion-color) .calendar-day.calendar-day-range-end {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+// Current day keeps blue text when in range
+:host .calendar-day.calendar-day-today.calendar-day-in-range {
+  border: none;
+
+  color: ion-color(primary, base);
+}
+
+:host(.ion-color) .calendar-day.calendar-day-today.calendar-day-in-range {
+  color: current-color(base);
+}
+
 // Time / Header
 // -----------------------------------
 :host .datetime-time {
