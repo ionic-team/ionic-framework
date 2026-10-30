@@ -70,7 +70,7 @@ export const createSwipeBackGesture = (
     let realDur = 0;
     if (missingDistance > 5) {
       const dur = missingDistance / Math.abs(velocity);
-      realDur = Math.min(dur, 540);
+      realDur = Math.min(dur, 200);
     }
 
     onEndHandler(shouldComplete, stepValue <= 0 ? 0.01 : clamp(0, stepValue, 0.9999), realDur);
