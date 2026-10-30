@@ -16,13 +16,12 @@
     "test": "npx playwright test"
   },
   "dependencies": {
-    "@angular/animations": "^20.0.0",
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",
     "@angular/core": "^20.0.0",
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
-    "@angular/platform-browser-dynamic": "^20.0.0",
+    "@angular/platform-browser-dynamic": "^20.1.0",
     "@angular/platform-server": "^20.0.0",
     "@angular/router": "^20.0.0",
     "@angular/ssr": "^20.0.0",
