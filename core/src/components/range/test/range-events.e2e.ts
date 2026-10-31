@@ -284,3 +284,51 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
+
+/**
+ * The last tick sticks out past the end of the slider by a
+ * different amount in each mode, so this is tested in both modes.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('range: events: ticks'), () => {
+    test('should select the max value when clicking the last tick', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30738',
+      });
+
+      await page.setContent(
+        `
+        <style>
+          ion-range::part(tick),
+          ion-range::part(tick-active) {
+            width: 20px;
+          }
+        </style>
+
+        <div style="padding: 0 40px">
+          <ion-range aria-label="Range" value="20" step="10" snaps="true" ticks="true"></ion-range>
+        </div>
+      `,
+        config
+      );
+
+      const range = page.locator('ion-range');
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+      const sliderBox = await range.locator('.range-slider').boundingBox();
+      const lastTickBox = await range.locator('.range-tick').last().boundingBox();
+
+      // Click the part of the last tick that sticks out past the end of the slider.
+      const sliderEnd = sliderBox!.x + sliderBox!.width;
+      const lastTickEnd = lastTickBox!.x + lastTickBox!.width;
+      expect(lastTickEnd).toBeGreaterThan(sliderEnd + 2);
+
+      await page.mouse.click((sliderEnd + lastTickEnd) / 2, lastTickBox!.y + lastTickBox!.height / 2);
+
+      await ionChangeSpy.next();
+
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 100 });
+    });
+  });
+});
