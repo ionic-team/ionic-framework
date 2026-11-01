@@ -235,4 +235,58 @@ describe('ion-tabs', () => {
     expect(tabs.emitted().ionTabsWillChange.length).toEqual(1);
     expect(tabs.emitted().ionTabsDidChange.length).toEqual(1);
   });
+
+  // https://github.com/ionic-team/ionic-framework/issues/30435
+  it('should hide a parameterized tabs page when leaving it after visiting several tabs', async () => {
+    const Home = {
+      components: { IonPage },
+      template: `<ion-page data-pageid="home">Home</ion-page>`
+    }
+    const DynamicTabs = {
+      components: { IonPage, IonTabs, IonTabBar, IonRouterOutlet },
+      template: `
+        <ion-page data-pageid="tabs">
+          <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
+            <ion-tab-bar slot="bottom"></ion-tab-bar>
+          </ion-tabs>
+        </ion-page>
+      `,
+    }
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Home },
+        {
+          path: '/dynamic/:id',
+          component: DynamicTabs,
+          children: [
+            { path: 'a', component: Tab1 },
+            { path: 'b', component: Tab2 },
+            { path: 'c', component: Tab1 }
+          ]
+        }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/dynamic/123/a');
+    await waitForRouter();
+    router.push('/dynamic/123/b');
+    await waitForRouter();
+    router.push('/dynamic/123/c');
+    await waitForRouter();
+    router.push('/');
+    await waitForRouter();
+
+    expect(wrapper.find('[data-pageid="home"]').classes('ion-page-hidden')).toBe(false);
+    expect(wrapper.find('[data-pageid="tabs"]').classes('ion-page-hidden')).toBe(true);
+  });
 });

@@ -119,10 +119,23 @@ export const createViewStacks = (router: Router) => {
          * explicitly clear out parameters from page 1
          * so the page 2 params are properly passed
          * to the developer's app.
+         * Only the params of the matched route are compared, so a
+         * parameterized parent such as /dynamic/:id still matches
+         * when its child segment changes (i.e. /dynamic/1/a and /dynamic/1/b).
          */
-        const hasParameter = findMatchedRoute.path.includes(":");
-        if (hasParameter && path !== viewItem.pathname) {
-          return false;
+        const paramNames = findMatchedRoute.path.match(/:\w+/g);
+        if (paramNames && path !== viewItem.pathname) {
+          const viewItemParams = router.resolve(viewItem.pathname).params;
+          const hasDifferentParams = paramNames.some((paramName) => {
+            const name = paramName.slice(1);
+            return (
+              JSON.stringify(resolvedPath.params[name]) !==
+              JSON.stringify(viewItemParams[name])
+            );
+          });
+          if (hasDifferentParams) {
+            return false;
+          }
         }
 
         return viewItem;
