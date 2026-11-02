@@ -585,6 +585,43 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     // ---------------------------------------------------------------
+    // Adjacent days in range
+    // ---------------------------------------------------------------
+
+    test('adjacent days in range should have range part attributes', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          show-adjacent-days="true"
+          value="2022-06-27"
+        ></ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      // Select June 27 as start, then pick July 2 (adjacent day) as end
+      const jun27 = datetime.locator('[data-month="6"][data-day="27"]');
+      await jun27.click();
+      await page.waitForChanges();
+
+      const jul2 = datetime.locator('.calendar-day-adjacent-day[data-month="7"][data-day="2"]');
+      await jul2.click();
+      await page.waitForChanges();
+
+      // The adjacent end day should have range-end part
+      const jul2Wrapper = jul2.locator('..');
+      await expect(jul2).toHaveAttribute('part', /range-end/);
+      await expect(jul2).toHaveAttribute('part', /range-selection/);
+      await expect(jul2Wrapper).toHaveAttribute('part', /range-track/);
+    });
+
+    // ---------------------------------------------------------------
     // Month/year wheel should not change selection in range mode
     // ---------------------------------------------------------------
 
