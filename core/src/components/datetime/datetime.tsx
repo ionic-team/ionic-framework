@@ -2778,13 +2778,20 @@ export class Datetime implements ComponentInterface {
                 isRangeEnd ? ' range-end range-selection' : ''
               }${isInRange ? ' range-selection' : ''}`;
             } else if (isAdjacentDay) {
-              dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}`;
+              /**
+               * Adjacent days skip 'active' and 'today' parts but still
+               * include range parts so ::part() styling is consistent
+               * with the visual range track rendering.
+               */
+              dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}${
+                isRangeStart ? ' range-start range-selection' : ''
+              }${isRangeEnd ? ' range-end range-selection' : ''}${isInRange ? ' range-selection' : ''}`;
             }
 
             /**
              * Build the wrapper's shadow part attribute for range track styling.
              */
-            const wrapperParts = isPartOfRange && !isCalendarPadding && !isAdjacentDay ? 'range-track' : undefined;
+            const wrapperParts = isPartOfRange && !isCalendarPadding ? 'range-track' : undefined;
 
             /**
              * Build the aria-label for range mode accessibility.
