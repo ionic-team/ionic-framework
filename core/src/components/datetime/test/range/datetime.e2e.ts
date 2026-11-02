@@ -252,8 +252,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await expect(day8).toHaveAttribute('aria-label', 'Wednesday, June 8, Start date');
       await expect(day18).toHaveAttribute('aria-label', 'Saturday, June 18, End date');
-      // Days inside the range are not endpoints, so they get no label
-      await expect(day12).toHaveAttribute('aria-label', 'Sunday, June 12');
+      // Days inside the range are announced as "in range"
+      await expect(day12).toHaveAttribute('aria-label', 'Sunday, June 12, in range');
     });
 
     test('single-day range should be announced as both start and end', async () => {
@@ -275,6 +275,32 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await expect(day8).toHaveAttribute('aria-label', 'Wednesday, June 8, Check in');
       await expect(day18).toHaveAttribute('aria-label', 'Saturday, June 18, Check out');
+    });
+
+    test('selecting a start date should announce to pick an end date', async ({ page }) => {
+      await fixture.goto(config);
+
+      const day8 = fixture.getVisibleDay(8);
+      await day8.click();
+      await page.waitForChanges();
+
+      const liveRegion = page.locator('ion-datetime .sr-only[aria-live="polite"]');
+      await expect(liveRegion).toContainText('select end date');
+    });
+
+    test('aria-live announcement should clear after range is complete', async ({ page }) => {
+      await fixture.goto(config);
+
+      const day8 = fixture.getVisibleDay(8);
+      const day18 = fixture.getVisibleDay(18);
+
+      await day8.click();
+      await page.waitForChanges();
+      await day18.click();
+      await page.waitForChanges();
+
+      const liveRegion = page.locator('ion-datetime .sr-only[aria-live="polite"]');
+      await expect(liveRegion).toHaveCount(0);
     });
 
     // ---------------------------------------------------------------
