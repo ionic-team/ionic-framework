@@ -1632,7 +1632,12 @@ export class Datetime implements ComponentInterface {
         }
 
         this.activeParts = endParts ? { start: startParts, end: endParts } : { start: startParts };
-        navigateTo = startParts;
+        /**
+         * Stay on the end date's month when it is already showing, such as
+         * right after the user picks it, instead of jumping back to the start.
+         */
+        navigateTo =
+          endParts && endParts.month === workingParts.month && endParts.year === workingParts.year ? endParts : startParts;
       } else {
         this.activeParts = [];
         navigateTo = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;

@@ -337,6 +337,41 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(header).toHaveText(/Check out/);
     });
 
+    test('should stay on end date month after completing a cross-month range', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          value="2022-06-01"
+        ></ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      // Select a start day in June
+      const jun15 = datetime.locator('[data-month="6"][data-day="15"]');
+      await jun15.click();
+      await page.waitForChanges();
+
+      // Navigate to July
+      const nextMonthButton = datetime.locator('.calendar-next-prev ion-button:nth-child(2)');
+      await nextMonthButton.click();
+      await page.waitForChanges();
+
+      // Select an end day in July
+      const jul10 = datetime.locator('[data-month="7"][data-day="10"]');
+      await jul10.click();
+      await page.waitForChanges();
+
+      // Calendar should stay on July, not jump back to June
+      await expect(jul10).toBeVisible();
+    });
+
     // ---------------------------------------------------------------
     // Confirm / Reset / Cancel with buttons
     // ---------------------------------------------------------------
