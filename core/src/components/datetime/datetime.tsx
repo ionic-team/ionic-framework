@@ -3041,8 +3041,12 @@ export class Datetime implements ComponentInterface {
    */
   private getRangeValueArray(): string[] {
     const range = this.rangeParts;
-    if (!range) return [];
-    if (!range.end) return [convertDataToISO(range.start)];
+    if (!range) {
+      return [];
+    }
+    if (!range.end) {
+      return [convertDataToISO(range.start)];
+    }
     return [convertDataToISO(range.start), convertDataToISO(range.end)];
   }
 
