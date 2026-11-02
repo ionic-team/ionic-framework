@@ -41,7 +41,7 @@ export class ItemOptions implements ComponentInterface {
 
   render() {
     const theme = getIonTheme(this);
-    const isEnd = isEndSide(this.side);
+    const isEnd = isEndSide(this.side, this.el);
     return (
       <Host
         class={{
