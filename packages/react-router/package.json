@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "9.0.9",
+  "version": "9.0.10",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -37,8 +37,8 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/core": "^9.0.9",
-    "@ionic/react": "^9.0.9",
+    "@ionic/core": "^9.0.10",
+    "@ionic/react": "^9.0.10",
     "tslib": "*"
   },
   "peerDependencies": {
