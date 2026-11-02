@@ -219,14 +219,26 @@
   --range-track-height: #{globals.$ion-scale-1200};
 }
 
-// Range start and end: full circle
+// Range start: full circle
 // Use :host prefix for specificity over the general disabled day rule.
-:host .calendar-day.calendar-day-range-start,
+:host .calendar-day.calendar-day-range-start {
+  @include globals.border-radius(globals.$ion-border-radius-full);
+
+  background: globals.$ion-bg-primary-base-default;
+  color: globals.$ion-text-inverse;
+}
+
+// Range end: full circle
 :host .calendar-day.calendar-day-range-end {
   @include globals.border-radius(globals.$ion-border-radius-full);
 
   background: globals.$ion-bg-primary-base-default;
   color: globals.$ion-text-inverse;
+}
+
+// Single day range: both start and end, restore full circle
+.calendar-day.calendar-day-range-start.calendar-day-range-end {
+  @include globals.border-radius(globals.$ion-border-radius-full);
 }
 
 // In-range days: rectangular, no rounding
