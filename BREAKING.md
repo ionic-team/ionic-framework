@@ -56,9 +56,21 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 The following breaking changes apply to `ion-backdrop`:
 
-1. Theme classes (`ion-backdrop.md`, `ion-backdrop.ios`) are no longer supported.
+1. The `--ion-backdrop-color` global variable has been replaced. <sup>[1](#version-10x-backdrop-replaced-css-variables)</sup>
+2. Theme classes (`ion-backdrop.md`, `ion-backdrop.ios`) are no longer supported. <sup>[2](#version-10x-backdrop-theme-classes)</sup>
 
-<h5>Theme classes</h5>
+<h5 id="version-10x-backdrop-replaced-css-variables">Replaced CSS variables</h5>
+
+Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--ion-backdrop-color` | `IonBackdrop.background` | `--ion-backdrop-background` |
+
+> [!NOTE]
+> `--ion-backdrop-color` was set on `:root`, and `--ion-backdrop-background` has no effect there. Set it on the backdrop of each overlay instead: `ion-alert ion-backdrop` for alert, action sheet and loading, and the `backdrop` part for menu, modal and popover (`ion-modal::part(backdrop)`).
+
+<h5 id="version-10x-backdrop-theme-classes">Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-backdrop.md`, `ion-backdrop.ios`.
 

@@ -118,7 +118,7 @@ export const defaultTheme: DefaultTheme = {
 
   components: {
     IonBackdrop: {
-      background: `var(--ion-backdrop-color, ${baseColors.black})`,
+      background: baseColors.black,
     },
 
     IonBadge: {
