@@ -165,6 +165,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const startISO = await fixture.getISOFromDay(day8);
       const endISO = await fixture.getISOFromDay(day18);
       await expect(datetime).toHaveJSProperty('value', [startISO, endISO]);
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: [startISO, endISO] });
     });
 
     test('clicking a day before the start should set a new start', async ({ page }) => {
@@ -274,28 +275,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await expect(day8).toHaveAttribute('aria-label', 'Wednesday, June 8, Check in');
       await expect(day18).toHaveAttribute('aria-label', 'Saturday, June 18, Check out');
-    });
-
-    // ---------------------------------------------------------------
-    // ionChange event detail
-    // ---------------------------------------------------------------
-
-    test('ionChange should emit with array value detail', async ({ page }) => {
-      await fixture.goto(config);
-      const ionChangeSpy = await page.spyOnEvent('ionChange');
-
-      const day8 = fixture.getVisibleDay(8);
-      const day18 = fixture.getVisibleDay(18);
-
-      await day8.click();
-      await day18.click();
-      await ionChangeSpy.next();
-
-      const startISO = await fixture.getISOFromDay(day8);
-      const endISO = await fixture.getISOFromDay(day18);
-      expect(ionChangeSpy).toHaveReceivedEventDetail({
-        value: [startISO, endISO],
-      });
     });
 
     // ---------------------------------------------------------------
