@@ -347,17 +347,22 @@
   inset-inline-end: 50%;
 }
 
-/**
- * Only extend toward a day that draws the track as well. The last
- * day of a week is followed by the next row, and the next day is
- * unpainted when it ends the selection or is disabled inside the
- * range, so extending there would leave a 1px nub.
- */
-:host .calendar-day-wrapper-in-range:not(:nth-child(7n)):has(+ .calendar-day-wrapper-in-range)::before,
-:host .calendar-day-wrapper-in-range:not(:nth-child(7n)):has(+ .calendar-day-wrapper-range-end)::before,
-:host .calendar-day-wrapper-range-start:not(:nth-child(7n)):has(+ .calendar-day-wrapper-in-range)::before,
 :host .calendar-day-wrapper-range-start:not(:nth-child(7n)):has(+ .calendar-day-wrapper-range-end)::before {
   inset-inline-end: -1px;
+}
+
+/**
+ * A range that continues onto the next week runs the track
+ * through the grid padding to the edge of the calendar.
+ */
+:host .calendar-day-wrapper-in-range:nth-child(7n)::before,
+:host .calendar-day-wrapper-range-start:nth-child(7n)::before {
+  inset-inline-end: calc(var(--range-track-edge-overflow, 0px) * -1);
+}
+
+:host .calendar-day-wrapper-in-range:nth-child(7n + 1)::before,
+:host .calendar-day-wrapper-range-end:nth-child(7n + 1)::before {
+  inset-inline-start: calc(var(--range-track-edge-overflow, 0px) * -1);
 }
 
 /**

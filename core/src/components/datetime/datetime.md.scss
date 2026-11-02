@@ -192,6 +192,7 @@
 :host {
   --range-background: #{ion-color(primary, base, 0.12)};
   --range-track-height: #{$datetime-md-day-height};
+  --range-track-edge-overflow: 10px;
 }
 
 :host(.ion-color) {

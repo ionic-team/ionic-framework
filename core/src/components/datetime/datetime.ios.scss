@@ -334,6 +334,7 @@
 :host {
   --range-background: #{ion-color(primary, base, 0.12)};
   --range-track-height: #{$datetime-ios-day-height};
+  --range-track-edge-overflow: #{$datetime-ios-padding * 0.5};
 }
 
 :host(.ion-color) {
