@@ -117,6 +117,18 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
       await fixture.goto(config, RANGE_VALUE, { readonly: true });
       await fixture.expectRangeDatePicker('readonly', screenshot);
     });
+
+    test('focused in-range day should not have visual regressions', async ({ page }) => {
+      await fixture.goto(config, RANGE_VALUE);
+      const datetime = page.locator('ion-datetime');
+
+      // Focus a day inside the range via keyboard
+      const day12 = datetime.locator('[data-month="6"][data-day="12"]');
+      await day12.focus();
+      await page.waitForChanges();
+
+      await fixture.expectRangeDatePicker('in-range-focus', screenshot);
+    });
   });
 });
 
