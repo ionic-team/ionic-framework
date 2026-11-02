@@ -355,6 +355,16 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     // Confirm / Reset / Cancel with buttons
     // ---------------------------------------------------------------
 
+    test('confirm button should be disabled until the range is complete', async () => {
+      const datetime = await fixture.goto(config, [RANGE_START], { showDefaultButtons: true });
+      const confirmButton = datetime.locator('#confirm-button button');
+
+      await expect(confirmButton).toBeDisabled();
+
+      await datetime.locator('[data-month="6"][data-day="18"]').click();
+      await expect(confirmButton).toBeEnabled();
+    });
+
     test('with buttons, value should not update until confirm is called', async ({ page }) => {
       const datetime = await fixture.goto(config, undefined, { showDefaultButtons: true });
 
