@@ -369,15 +369,6 @@
   color: current-color(contrast);
 }
 
-// Current day keeps blue text when in range
-:host .calendar-day.calendar-day-today.calendar-day-in-range {
-  color: ion-color(primary, base);
-}
-
-:host(.ion-color) .calendar-day.calendar-day-today.calendar-day-in-range {
-  color: current-color(base);
-}
-
 // Time / Header
 // -----------------------------------
 :host .datetime-time {
