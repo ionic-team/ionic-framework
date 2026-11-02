@@ -17,6 +17,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Global Styles](#version-10x-global-styles)
 - [Components](#version-10x-components)
+  - [Backdrop](#version-10x-backdrop)
   - [Button](#version-10x-button)
   - [Card](#version-10x-card)
   - [Checkbox](#version-10x-checkbox)
@@ -50,6 +51,16 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - The deprecated color step CSS variables, `--ion-color-step-[number]`, have been removed and should be replaced with either `--ion-background-color-step-[number]` or `--ion-text-color-step-[number]` depending on the specific use case, as outlined in the [migration guide](https://ionicframework.com/docs/updating/8-0#step-color-tokens).
 
 <h2 id="version-10x-components">Components</h2>
+
+<h4 id="version-10x-backdrop">Backdrop</h4>
+
+The following breaking changes apply to `ion-backdrop`:
+
+1. Theme classes (`ion-backdrop.md`, `ion-backdrop.ios`) are no longer supported.
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-backdrop.md`, `ion-backdrop.ios`.
 
 <h4 id="version-10x-button">Button</h4>
 

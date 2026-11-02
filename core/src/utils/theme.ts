@@ -518,19 +518,88 @@ export const generateComponentsThemeCSS = (components: any): string => {
 
   for (const [component, componentTokens] of Object.entries(components)) {
     const componentTag = convertToKebabCase(component);
-    const vars = generateCSSVars(componentTokens, `--${componentTag}-`);
 
-    const componentBlock = `
-      ${componentTag} {
-        ${vars}
-      }
-    `;
-
-    css += componentBlock;
+    /**
+     * The component's own tokens, set on its tag and on any parent that renders
+     * it inside a shadow root (refer to `INTERNAL_CHILD_COMPONENTS`):
+     * `ion-backdrop, ion-menu, ion-modal, ion-popover { --ion-backdrop-*: … }`.
+     */
+    const selectors = [componentTag, ...getInternalRenderHosts(component)];
+    css += generateBlock(selectors, componentTokens as Record<string, unknown>, componentTag);
   }
 
   return css;
 };
+
+/**
+ * Components that render a child component inside their own shadow root.
+ *
+ * Token CSS is added to the document head, so its selectors can't reach an
+ * element inside a shadow root: `ion-backdrop { … }` styles every `ion-backdrop`
+ * in the page except the one that `ion-modal` renders itself.
+ * Custom properties do inherit into a shadow root, though, so each host listed
+ * here joins the child's selectors and passes the tokens down:
+ *
+ * ```css
+ * ion-backdrop,
+ * ion-menu,
+ * ion-modal,
+ * ion-popover {
+ *   --ion-backdrop-background: #000;
+ * }
+ * ```
+ *
+ * The internal backdrop inherits the value from its host, and its stylesheet reads it:
+ *
+ * ```html
+ * <ion-modal>                 <!-- --ion-backdrop-background: #000 -->
+ *   #shadow-root
+ *     <ion-backdrop>          <!-- inherits #000 -->
+ * </ion-modal>
+ * ```
+ *
+ * ```css
+ * // backdrop.scss, compiled
+ * :host {
+ *   background-color: var(--ion-backdrop-background);
+ * }
+ * ```
+ *
+ * A host can sit in another host's shadow root: `ion-datetime` renders an
+ * `ion-popover`, which renders an `ion-backdrop`. The outer host joins the
+ * selectors too, so the tokens pass down through both shadow roots.
+ *
+ * Add a component here when it starts rendering a migrated component, or a
+ * component listed here, in its shadow root. Otherwise that child renders with
+ * no tokens. A spec test checks this.
+ */
+export const INTERNAL_CHILD_COMPONENTS: Record<string, string[]> = {
+  IonDatetime: ['IonPopover'],
+  IonMenu: ['IonBackdrop'],
+  IonModal: ['IonBackdrop'],
+  IonPopover: ['IonBackdrop'],
+};
+
+/**
+ * Returns the tags of the components that render `component` in their shadow root,
+ * directly or inside another host's shadow root.
+ */
+const getInternalRenderHosts = (component: string): string[] => {
+  const hosts = Object.entries(INTERNAL_CHILD_COMPONENTS)
+    .filter(([, children]) => children.includes(component))
+    .map(([host]) => host);
+
+  return hosts.flatMap((host) => [convertToKebabCase(host), ...getInternalRenderHosts(host)]);
+};
+
+/**
+ * Generates one block of `--<tag>-` custom properties for a list of selectors.
+ */
+const generateBlock = (selectors: string[], tokens: Record<string, unknown>, tag: string): string => `
+      ${selectors.join(',\n      ')} {
+        ${generateCSSVars(tokens, `--${tag}-`)}
+      }
+    `;
 
 /**
  * Applies a component theme to an element if it exists in the custom theme

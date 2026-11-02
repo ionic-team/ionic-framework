@@ -1,19 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Event, Host, Listen, Prop, h } from '@stencil/core';
 
-import { getIonTheme } from '../../global/ionic-global';
-
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-backdrop',
-  styleUrls: {
-    ios: 'backdrop.ios.scss',
-    md: 'backdrop.md.scss',
-    ionic: 'backdrop.ionic.scss',
-  },
+  styleUrl: 'backdrop.scss',
   shadow: true,
 })
 export class Backdrop implements ComponentInterface {
@@ -53,14 +46,14 @@ export class Backdrop implements ComponentInterface {
   }
 
   render() {
-    const theme = getIonTheme(this);
+    const { tappable, visible } = this;
+
     return (
       <Host
         aria-hidden="true"
         class={{
-          [theme]: true,
-          'backdrop-hide': !this.visible,
-          'backdrop-no-tappable': !this.tappable,
+          'backdrop-hide': !visible,
+          'backdrop-no-tappable': !tappable,
         }}
       ></Host>
     );

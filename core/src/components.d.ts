@@ -470,10 +470,6 @@ export namespace Components {
          */
         "tappable": boolean;
         /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
-        /**
           * If `true`, the backdrop will be visible.
           * @default true
          */
@@ -6316,10 +6312,6 @@ declare namespace LocalJSX {
           * @default true
          */
         "tappable"?: boolean;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the backdrop will be visible.
           * @default true
