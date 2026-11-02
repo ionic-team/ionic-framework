@@ -430,6 +430,16 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(day18).not.toHaveClass(/calendar-day-range-end/);
     });
 
+    test('reset with a date should clear the range and show that month', async ({ page }) => {
+      const datetime = await fixture.goto(config, RANGE_VALUE);
+
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => el.reset('2022-12-01'));
+      await page.waitForChanges();
+
+      await expect(datetime.locator('.calendar-month-year-toggle')).toContainText('December 2022');
+      await expect(datetime.locator('.calendar-day-range-start')).toHaveCount(0);
+    });
+
     test('clear button should clear the range', async ({ page }) => {
       const datetime = await fixture.goto(config, RANGE_VALUE, {
         showDefaultButtons: true,
