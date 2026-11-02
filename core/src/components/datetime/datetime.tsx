@@ -2805,6 +2805,9 @@ export class Datetime implements ComponentInterface {
               if (isRangeEnd) {
                 rangeAriaLabel += `, ${this.endDateLabel}`;
               }
+              if (isInRange) {
+                rangeAriaLabel += ', in range';
+              }
             }
 
             return (
@@ -2917,6 +2920,25 @@ export class Datetime implements ComponentInterface {
       <div class="datetime-calendar" key="datetime-calendar">
         {this.renderCalendarHeader(theme)}
         {this.renderCalendarBody()}
+        {this.isRangeMode && this.rangeParts && !this.rangeParts.end && (
+          <div
+            aria-live="polite"
+            role="status"
+            style={{
+              position: 'absolute',
+              width: '1px',
+              height: '1px',
+              padding: '0',
+              margin: '-1px',
+              overflow: 'hidden',
+              clip: 'rect(0, 0, 0, 0)',
+              whiteSpace: 'nowrap',
+              border: '0',
+            }}
+          >
+            {`${this.startDateLabel} selected, select ${this.endDateLabel.toLowerCase()}`}
+          </div>
+        )}
       </div>
     );
   }
