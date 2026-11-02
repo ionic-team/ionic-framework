@@ -456,6 +456,20 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(day10).toHaveClass(/calendar-day-in-range/);
     });
 
+    test('range spanning two months should mark days in both months', async () => {
+      const datetime = await fixture.goto(config, ['2022-06-25', '2022-07-05']);
+
+      const june25 = datetime.locator('[data-month="6"][data-day="25"]');
+      const june30 = datetime.locator('[data-month="6"][data-day="30"]');
+      const july1 = datetime.locator('[data-month="7"][data-day="1"]');
+      const july5 = datetime.locator('[data-month="7"][data-day="5"]');
+
+      await expect(june25).toHaveClass(/calendar-day-range-start/);
+      await expect(june30).toHaveClass(/calendar-day-in-range/);
+      await expect(july1).toHaveClass(/calendar-day-in-range/);
+      await expect(july5).toHaveClass(/calendar-day-range-end/);
+    });
+
     // ---------------------------------------------------------------
     // Disabled dates within range
     // ---------------------------------------------------------------
