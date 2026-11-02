@@ -6,6 +6,7 @@ import {
   Element,
   Event,
   Host,
+  Listen,
   Method,
   Prop,
   State,
@@ -14,8 +15,9 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { NotchController, StartEndContainerController } from '@utils/forms';
+import type { ClickController, NotchController, StartEndContainerController } from '@utils/forms';
 import {
+  createClickController,
   getSlottedClickContent,
   createNotchController,
   createStartEndContainerController,
@@ -23,7 +25,7 @@ import {
   reportValidityToElementInternals,
 } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady, raf } from '@utils/helpers';
+import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -33,13 +35,6 @@ import type { Color } from '../../interface';
 import { getCounterText } from '../input/input.utils';
 
 import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
-
-/**
- * Content that handles its own click, so clicking it should not also activate
- * the textarea.
- */
-const INTERACTIVE_CONTENT =
-  'a[href], button, details, embed, iframe, select, textarea, input:not([type="hidden"]), audio[controls], video[controls], [contenteditable]:not([contenteditable="false"]), .ion-activatable, .ion-focusable';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -95,6 +90,7 @@ export class Textarea implements ComponentInterface {
   private notchController?: NotchController;
   private notchSpacerEl: HTMLElement | undefined;
   private startEndContainerController?: StartEndContainerController;
+  private clickController?: ClickController;
   private startContainerEl: HTMLElement | undefined;
   private endContainerEl: HTMLElement | undefined;
 
@@ -419,6 +415,8 @@ export class Textarea implements ComponentInterface {
 
     this.startEndContainerController.calculateContainerWidths();
 
+    this.clickController = createClickController(el, () => this.nativeInput);
+
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
       this.validationObserver = new MutationObserver(() => {
@@ -450,8 +448,10 @@ export class Textarea implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    this.disarmFocusRejection?.();
-    this.rejectingFocus = false;
+    if (this.clickController) {
+      this.clickController.destroy();
+      this.clickController = undefined;
+    }
 
     if (Build.isBrowser) {
       document.dispatchEvent(
@@ -517,7 +517,7 @@ export class Textarea implements ComponentInterface {
   @Method()
   async setFocus() {
     // An explicit focus request is never the focus a gesture delegated here.
-    this.rejectingFocus = false;
+    this.clickController?.cancelFocusRejection();
 
     if (this.nativeInput) {
       this.nativeInput.focus();
@@ -678,11 +678,7 @@ export class Textarea implements ComponentInterface {
   };
 
   private onFocus = (ev: FocusEvent) => {
-    // The textarea was not the target of this gesture, so drop the focus without reporting it.
-
-    if (this.rejectingFocus) {
-      this.nativeInput?.blur();
-
+    if (this.clickController?.rejectFocus(ev)) {
       return;
     }
 
@@ -772,111 +768,25 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Stops propagation for clicks on the textarea's own content (label text,
-   * textarea field) to prevent double-click events. Allows clicks on slotted
-   * content to propagate so event delegation works for parent handlers.
-   *
-   * Only slots belonging directly to this textarea should be considered.
-   * The textarea itself may have a slot attribute when placed in an item
-   * or toolbar, which does not make its content slotted content.
+   * Drops the duplicate click the label forwards to the textarea after a click
+   * on slotted content.
    */
-  /**
-   * Whether the click that began the current gesture already reached the
-   * consumer. Clicking the label makes the browser forward a second click to
-   * the native textarea; WebKit forwards it even when the gesture began on
-   * slotted content, where it would arrive as a duplicate.
-   */
-  private clickReachedConsumer = false;
-
-  /** Whether focus delegated to the native textarea belongs to slotted content instead. */
-  private rejectingFocus = false;
-  private disarmFocusRejection?: () => void;
-
-  /** Whether the click started on slotted content that handles its own click. */
-  private isInteractiveSlottedContent(ev: MouseEvent) {
-    const slotted = getSlottedClickContent(ev, this.el);
-
-    if (slotted === null) {
-      return false;
-    }
-
-    /**
-     * The composed path is used rather than `closest` so that a control which
-     * keeps its interactive element inside its own shadow root, such as
-     * `ion-datetime-button`, is still recognized.
-     */
-    const path = ev.composedPath();
-
-    return path.slice(0, path.indexOf(slotted) + 1).some((node) => {
-      const el = node as Node;
-
-      return el.nodeType === Node.ELEMENT_NODE && (el as Element).matches(INTERACTIVE_CONTENT);
-    });
+  @Listen('click', { capture: true })
+  onClickCapture(ev: Event) {
+    this.clickController?.handleClickCapture(ev);
   }
 
-  private onLabelPointerDown = (ev: MouseEvent) => {
-    this.clickReachedConsumer = false;
-
-    if (ev.button !== 0 || !this.isInteractiveSlottedContent(ev)) {
-      return;
-    }
-
-    this.armFocusRejection();
+  private onLabelMouseDown = (ev: MouseEvent) => {
+    this.clickController?.handleMouseDown(ev);
   };
 
   /**
-   * The gesture ends with the click the browser resolves from it, which can
-   * land outside the label when the pointer is released off the content, and
-   * for a drag or a release outside the window never arrives at all.
+   * Stops clicks on the label text and wrapper padding, since the click the
+   * label forwards to the textarea already represents them.
    */
-  private armFocusRejection() {
-    this.disarmFocusRejection?.();
-    this.rejectingFocus = true;
-
-    const events = ['click', 'dragstart', 'pointercancel'];
-    const disarm = () => {
-      this.disarmFocusRejection = undefined;
-      events.forEach((name) => document.removeEventListener(name, disarm));
-      raf(() => (this.rejectingFocus = false));
-    };
-
-    this.disarmFocusRejection = disarm;
-    events.forEach((name) => document.addEventListener(name, disarm));
-  }
-
   private onLabelClick = (ev: MouseEvent) => {
-    const target = ev.target as HTMLElement;
-
-    if (target === this.nativeInput) {
-      /**
-       * Either the click the label forwarded here, or a direct click on the
-       * textarea. Both should reach the consumer as a single click on the host,
-       * so only drop it when something else already did.
-       */
-      if (this.clickReachedConsumer) {
-        ev.stopPropagation();
-      }
-
-      this.clickReachedConsumer = false;
-
-      return;
-    }
-
-    /**
-     * Clicks on slotted content belong to the consumer and have to keep
-     * propagating. Everything else is internal chrome (the label, the
-     * start/end containers, the wrapper padding) and is represented by the
-     * click the label forwards to the native textarea.
-     */
-    const slotted = target.closest('[slot="start"], [slot="end"]');
-    const isSlotted = slotted !== null && slotted !== this.el && this.el.contains(slotted);
-
-    this.clickReachedConsumer = isSlotted;
-
-    if (!isSlotted) {
+    if (ev.target !== this.nativeInput && getSlottedClickContent(ev, this.el) === null) {
       ev.stopPropagation();
-
-      return;
     }
   };
 
@@ -1089,7 +999,7 @@ export class Textarea implements ComponentInterface {
         <label
           class="textarea-wrapper"
           htmlFor={inputId}
-          onMouseDown={this.onLabelPointerDown}
+          onMouseDown={this.onLabelMouseDown}
           onClick={this.onLabelClick}
           part="wrapper"
         >
