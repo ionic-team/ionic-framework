@@ -187,12 +187,6 @@ export class Datetime implements ComponentInterface {
   @State() forceRenderDate?: DatetimeParts;
 
   /**
-   * Announcement text for an aria-live region in range mode.
-   * Updated when the user picks a start date to prompt for an end date.
-   */
-  @State() rangeAnnouncement?: string;
-
-  /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, refer to [theming](/docs/theming/basics).
@@ -893,10 +887,8 @@ export class Datetime implements ComponentInterface {
 
     if (!current || isBefore(parts, current.start) || this.rangeContainsDisabledDate(current.start, parts)) {
       this.activeParts = { start: parts };
-      this.rangeAnnouncement = `${this.startDateLabel} selected, select ${this.endDateLabel.toLowerCase()}`;
     } else {
       this.activeParts = { start: current.start, end: parts };
-      this.rangeAnnouncement = undefined;
     }
   };
 
@@ -2813,9 +2805,6 @@ export class Datetime implements ComponentInterface {
               if (isRangeEnd) {
                 rangeAriaLabel += `, ${this.endDateLabel}`;
               }
-              if (isInRange) {
-                rangeAriaLabel += ', in range';
-              }
             }
 
             return (
@@ -2928,11 +2917,6 @@ export class Datetime implements ComponentInterface {
       <div class="datetime-calendar" key="datetime-calendar">
         {this.renderCalendarHeader(theme)}
         {this.renderCalendarBody()}
-        {this.rangeAnnouncement && (
-          <div class="sr-only" aria-live="polite" role="status">
-            {this.rangeAnnouncement}
-          </div>
-        )}
       </div>
     );
   }
