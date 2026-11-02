@@ -512,8 +512,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await day20.click();
       await page.waitForChanges();
 
-      // Range should not span the disabled 15th — should start a new range instead
-      await expect(day10).not.toHaveClass(/calendar-day-range-start/);
+      // Range 1 to 10 can't extend across the disabled 15th, so the 20th starts a new range
+      await expect(day10).not.toHaveClass(/calendar-day-range-end/);
       await expect(day20).toHaveClass(/calendar-day-range-start/);
     });
 
