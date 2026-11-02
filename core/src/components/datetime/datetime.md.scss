@@ -198,25 +198,13 @@
   --range-background: #{current-color(base, 0.2)};
 }
 
-// Range start: full circle
-:host .calendar-day.calendar-day-range-start {
-  @include border-radius(50%);
-
-  background: ion-color(primary, base);
-  color: ion-color(primary, contrast);
-}
-
-// Range end: full circle
+// Range start and end: full circle
+:host .calendar-day.calendar-day-range-start,
 :host .calendar-day.calendar-day-range-end {
   @include border-radius(50%);
 
   background: ion-color(primary, base);
   color: ion-color(primary, contrast);
-}
-
-// Single day range: both start and end, restore full circle
-:host .calendar-day.calendar-day-range-start.calendar-day-range-end {
-  @include border-radius(50%);
 }
 
 // In-range days: rectangular, no rounding
