@@ -190,12 +190,12 @@
 // -----------------------------------
 
 :host {
-  --range-background: #{ion-color(primary, base, 0.2)};
+  --range-background: #{ion-color(primary, base, 0.12)};
   --range-track-height: #{$datetime-md-day-height};
 }
 
 :host(.ion-color) {
-  --range-background: #{current-color(base, 0.2)};
+  --range-background: #{current-color(base, 0.12)};
 }
 
 // Range start and end: full circle

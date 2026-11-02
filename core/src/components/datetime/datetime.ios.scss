@@ -271,13 +271,13 @@
 }
 
 .calendar-day.calendar-day-active {
-  background: ion-color(primary, base, 0.2);
+  background: ion-color(primary, base, 0.12);
 
   font-size: dynamic-font-max(22px, 1.6);
 }
 
 :host(.ion-color) .calendar-day.calendar-day-active {
-  background: current-color(base, 0.2);
+  background: current-color(base, 0.12);
 }
 
 /**
@@ -332,12 +332,12 @@
 // -----------------------------------
 
 :host {
-  --range-background: #{ion-color(primary, base, 0.2)};
+  --range-background: #{ion-color(primary, base, 0.12)};
   --range-track-height: #{$datetime-ios-day-height};
 }
 
 :host(.ion-color) {
-  --range-background: #{current-color(base, 0.2)};
+  --range-background: #{current-color(base, 0.12)};
 }
 
 /**
