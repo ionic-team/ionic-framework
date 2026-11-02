@@ -322,8 +322,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const datetime = await fixture.goto(config, RANGE_VALUE, { showDefaultTitle: true });
       const header = datetime.locator('.datetime-selected-date');
 
-      await expect(header).toHaveText(/Jun 8/);
-      await expect(header).toHaveText(/Jun 18/);
+      await expect(header).toHaveText('Jun 8 - Jun 18');
     });
 
     test('header should use custom labels', async () => {
