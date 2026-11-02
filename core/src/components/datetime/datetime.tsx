@@ -2993,7 +2993,7 @@ export class Datetime implements ComponentInterface {
     let headerText: string;
 
     if (this.isRangeMode) {
-      headerText = this.getRangeHeaderText(dateFormatOptions);
+      headerText = this.getRangeHeaderText(formatOptions?.date ?? { month: 'short', day: 'numeric' });
       if (titleSelectedDatesFormatter !== undefined) {
         try {
           const rangeValues = this.getRangeValueArray();
