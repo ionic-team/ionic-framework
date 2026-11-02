@@ -2791,7 +2791,8 @@ export class Datetime implements ComponentInterface {
             /**
              * Build the wrapper's shadow part attribute for range track styling.
              */
-            const wrapperParts = isPartOfRange && !isCalendarPadding ? 'range-track' : undefined;
+            const hasCompleteRange = this.rangeParts?.end !== undefined;
+            const wrapperParts = isPartOfRange && hasCompleteRange && !isCalendarPadding ? 'range-track' : undefined;
 
             /**
              * Build the aria-label for range mode accessibility.
@@ -2810,7 +2811,8 @@ export class Datetime implements ComponentInterface {
               <div
                 class={{
                   'calendar-day-wrapper': true,
-                  'calendar-day-wrapper-range-start': isRangeStart,
+                  // A start without an end is only the circle until the range is complete
+                  'calendar-day-wrapper-range-start': isRangeStart && this.rangeParts?.end !== undefined,
                   'calendar-day-wrapper-in-range': isInRange,
                   'calendar-day-wrapper-range-end': isRangeEnd,
                 }}
