@@ -7,6 +7,7 @@ import { createColorClasses } from '@utils/theme';
 import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
+import { isAfter } from '../datetime/utils/comparison';
 import { getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { getHourCycle } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
@@ -251,14 +252,23 @@ export class DatetimeButton implements ComponentInterface {
         }
         break;
       case 'date':
-        if (isRangeMode && parsedValues.length === 2) {
-          // Range mode: display "startDate - endDate"
-          const startDate = getLocalizedDateTime(locale, parsedDatetimes[0], dateFormatOptions);
-          const endDate = getLocalizedDateTime(locale, parsedDatetimes[1], dateFormatOptions);
+        if (isRangeMode && parsedValues.length >= 2) {
+          /**
+           * Use the first and last entries in date order, matching
+           * how ion-datetime reads a range value.
+           */
+          let startIndex = 0;
+          let endIndex = parsedValues.length - 1;
+          if (isAfter(parsedDatetimes[startIndex], parsedDatetimes[endIndex])) {
+            [startIndex, endIndex] = [endIndex, startIndex];
+          }
+          const rangeValues = [parsedValues[startIndex], parsedValues[endIndex]];
+          const startDate = getLocalizedDateTime(locale, parsedDatetimes[startIndex], dateFormatOptions);
+          const endDate = getLocalizedDateTime(locale, parsedDatetimes[endIndex], dateFormatOptions);
           let rangeText = `${startDate} - ${endDate}`;
           if (titleSelectedDatesFormatter !== undefined) {
             try {
-              rangeText = titleSelectedDatesFormatter(parsedValues);
+              rangeText = titleSelectedDatesFormatter(rangeValues);
             } catch (e) {
               printIonError('[ion-datetime-button] - Exception in provided `titleSelectedDatesFormatter`:', e);
             }
