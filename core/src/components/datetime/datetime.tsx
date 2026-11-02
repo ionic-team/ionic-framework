@@ -108,7 +108,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @part range-start - The calendar day button that is the start of a range selection.
  * @part range-end - The calendar day button that is the end of a range selection.
  * @part range-selection - The calendar day button that is part of a range selection (includes start and end).
- * @part range-track - The calendar day wrapper element whose ::before pseudo-element draws the range highlight track.
+ * @part range-track - The track that connects the start and end days of a range selection.
  *
  * @part datetime-header - The datetime header contains the content for the `title` slot and the selected date.
  * @part datetime-title - The element that contains the `title` slot content.
