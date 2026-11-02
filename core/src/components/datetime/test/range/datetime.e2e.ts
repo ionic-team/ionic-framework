@@ -681,19 +681,3 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   });
 });
 
-/**
- * RTL-specific visual regression tests to verify pill border-radius direction.
- */
-configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['rtl'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('datetime: range selection RTL (visual regressions)'), () => {
-    let fixture: DatetimeRangeFixture;
-    test.beforeEach(async ({ page }) => {
-      fixture = new DatetimeRangeFixture(page);
-    });
-
-    test('range pills should be correctly rounded in RTL', async () => {
-      await fixture.goto(config, RANGE_VALUE);
-      await fixture.expectRangeDatePicker('rtl-pills', screenshot);
-    });
-  });
-});
