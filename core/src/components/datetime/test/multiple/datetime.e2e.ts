@@ -399,6 +399,33 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         ]);
       });
 
+      test('using month wheel should not change selection with selectionMode=multiple', async ({ page }) => {
+        await page.setContent(
+          `
+        <ion-datetime locale="en-US" selection-mode="multiple"></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-08', '2022-06-18'];
+        </script>
+      `,
+          config
+        );
+
+        await page.waitForSelector('.datetime-ready');
+        const datetime = page.locator('ion-datetime');
+
+        const dropdownButton = page.locator('.calendar-month-year-toggle');
+        await dropdownButton.click();
+        await page.waitForChanges();
+
+        const monthOption = page.locator('.month-column ion-picker-column-option').filter({ hasText: 'August' });
+        await monthOption.click();
+        await page.waitForChanges();
+
+        // Value should remain unchanged — wheel is navigation-only in multiple mode
+        await expect(datetime).toHaveJSProperty('value', ['2022-06-08', '2022-06-18']);
+      });
+
       test('using year wheel should change selection when multiple=false', async ({ page }, testInfo) => {
         testInfo.annotations.push({
           type: 'issue',
