@@ -470,6 +470,45 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(day20).toHaveClass(/calendar-day-range-start/);
     });
 
+    test('should not allow range spanning a month excluded by monthValues', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          month-values="1,3"
+          value="2022-01-20"
+        ></ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      // Select Jan 25 as range start
+      const jan25 = datetime.locator('[data-month="1"][data-day="25"]');
+      await jan25.click();
+      await page.waitForChanges();
+
+      // Navigate to March (two clicks: Jan → Feb → Mar)
+      const nextMonthButton = datetime.locator('.calendar-next-prev ion-button:nth-child(2)');
+      await nextMonthButton.click();
+      await page.waitForChanges();
+      await nextMonthButton.click();
+      await page.waitForChanges();
+
+      // Try to select Mar 5 — range spans excluded February
+      const mar5 = datetime.locator('[data-month="3"][data-day="5"]');
+      await mar5.click();
+      await page.waitForChanges();
+
+      // Range should not span the excluded month — should start a new range instead
+      await expect(jan25).not.toHaveClass(/calendar-day-range-start/);
+      await expect(mar5).toHaveClass(/calendar-day-range-start/);
+    });
+
     // ---------------------------------------------------------------
     // Disabled and readonly states
     // ---------------------------------------------------------------

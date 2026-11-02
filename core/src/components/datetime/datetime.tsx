@@ -798,11 +798,15 @@ export class Datetime implements ComponentInterface {
    * Used by range mode to prevent selecting across disabled dates.
    */
   private rangeContainsDisabledDate = (start: DatetimeParts, end: DatetimeParts): boolean => {
-    const { minParts, maxParts, parsedDayValues, isDateEnabled } = this;
+    const { minParts, maxParts, parsedDayValues, parsedMonthValues, parsedYearValues, isDateEnabled } = this;
 
     let cursor = getNextDay(start);
     while (isBefore(cursor, end)) {
-      if (isDayDisabled(cursor, minParts, maxParts, parsedDayValues)) {
+      if (
+        isDayDisabled(cursor, minParts, maxParts, parsedDayValues) ||
+        (parsedMonthValues !== undefined && !parsedMonthValues.includes(cursor.month)) ||
+        (parsedYearValues !== undefined && !parsedYearValues.includes(cursor.year))
+      ) {
         return true;
       }
       if (isDateEnabled) {
