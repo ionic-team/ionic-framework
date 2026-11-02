@@ -174,8 +174,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await day3.click();
       await page.waitForChanges();
 
-      // Clicking before the start resets to a new start — range is now partial
-      await expect(day3).toHaveClass(/calendar-day-active/);
+      // Clicking before the start resets to a new start, so the range is now partial
+      await expect(day3).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="18"]')).not.toHaveClass(/calendar-day-range-end/);
     });
 
     test('clicking a day within an existing range should set a new end', async ({ page }) => {
