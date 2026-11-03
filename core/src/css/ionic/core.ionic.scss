@@ -34,6 +34,20 @@ body.backdrop-no-scroll {
   overflow: hidden;
 }
 
+// Overlay Surfaces
+// --------------------------------------------------
+
+/**
+ * Modals and popovers use the elevated panel surface. The components
+ * slotted inside them paint their own opaque surface background, which
+ * would cover the overlay's fill, so they default to the same panel
+ * surface. `:where()` keeps the specificity at zero so any consumer
+ * `--background` override on these components still applies.
+ */
+:where(html.ionic ion-modal, html.ionic ion-popover) :where(ion-content, ion-toolbar, ion-item:not(ion-card ion-item)) {
+  --background: #{globals.$ion-bg-surface-elevation-3};
+}
+
 // Modal - Card Style
 // --------------------------------------------------
 
