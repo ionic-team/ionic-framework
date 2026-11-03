@@ -279,14 +279,18 @@ const DEFAULT_PALETTE = 'light';
   /*
    * Tracks when the ripples are frozen. Tests wait on this (see the Playwright
    * `goto` helper) so screenshots are not taken while a ripple is still growing.
+   * Only test runs freeze them, so test pages opened by hand don't keep a ripple
+   * on every activated element.
    */
-  window.__ionicTestRipplesFrozen = false;
+  if (isTestEnv) {
+    window.__ionicTestRipplesFrozen = false;
 
-  Promise.all([whenConfigReady(), themeReady])
-    .then(() => freezeRipples())
-    .finally(() => {
-      window.__ionicTestRipplesFrozen = true;
-    });
+    Promise.all([whenConfigReady(), themeReady])
+      .then(() => freezeRipples())
+      .finally(() => {
+        window.__ionicTestRipplesFrozen = true;
+      });
+  }
 
   window.Ionic = window.Ionic || {};
   window.Ionic.config = window.Ionic.config || {};
