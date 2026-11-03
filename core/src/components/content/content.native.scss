@@ -1,0 +1,10 @@
+@import "./content.common";
+@import "../../themes/native/native.globals";
+
+// Content
+// --------------------------------------------------
+
+:host {
+  --background: #{$background-color};
+  --color: #{$text-color};
+}
