@@ -2,6 +2,11 @@
   "name": "test-app",
   "version": "0.0.1",
   "private": true,
+  "overrides": {
+    "serve": {
+      "compression": "^1.8.2"
+    }
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^16.2.0",
@@ -47,7 +52,7 @@
     ]
   },
   "devDependencies": {
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.64.1",
     "@testing-library/dom": "^10.0.0",
     "@vitejs/plugin-react": "^4.0.0",
     "concurrently": "^6.3.0",
@@ -55,7 +60,7 @@
     "cypress-terminal-report": "^5.3.0",
     "serve": "^14.0.1",
     "vite": "^5.0.0",
-    "wait-on": "^6.0.0"
+    "wait-on": "^9.5.1"
   },
   "description": "An Ionic project",
   "engines": {

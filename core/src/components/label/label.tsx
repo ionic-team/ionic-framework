@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -112,7 +113,7 @@ export class Label implements ComponentInterface {
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           [`label-${position}`]: position !== undefined,
           [`label-no-animate`]: this.noAnimate,
-          'label-rtl': document.dir === 'rtl',
+          'label-rtl': isRTL(this.el),
         })}
       >
         <slot></slot>
