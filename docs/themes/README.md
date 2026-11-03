@@ -48,7 +48,6 @@ core/src/components/my-component/
 └── my-component.constant.ts    # Optional shared values, such as defaults
 ```
 
-- Name the interface and constant files in the singular: `my-component.interface.ts` and `my-component.constant.ts`.
 - Back each prop union with a `const` array, such as `ION_CHIP_SIZES`, so tests can loop over every value.
 
 ## Available Themes
