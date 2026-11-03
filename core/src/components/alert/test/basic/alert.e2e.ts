@@ -27,6 +27,22 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
       await expect(alertBtns.nth(0)).toBeFocused();
     });
 
+    test('should not show a focus outline on the wrapper', async ({ page, browserName }) => {
+      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+
+      const alertFixture = new AlertFixture(page, screenshot);
+
+      const alert = await alertFixture.open('#multipleButtons');
+      const alertWrapper = alert.locator('.alert-wrapper');
+
+      // focus the wrapper from the keyboard so it matches :focus-visible
+      await page.keyboard.press(tabKey);
+      await page.keyboard.press(`Shift+${tabKey}`);
+      await expect(alertWrapper).toBeFocused();
+
+      await expect(alertWrapper).toHaveCSS('outline-style', 'none');
+    });
+
     test('should set custom attributes', async ({ page }) => {
       const alertFixture = new AlertFixture(page, screenshot);
 
