@@ -374,7 +374,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.waitForChanges();
 
       // Calendar should stay on July, not jump back to June
-      await expect(jul10).toBeVisible();
+      const monthYearToggle = datetime.locator('.calendar-month-year-toggle');
+      await expect(monthYearToggle).toContainText('July 2022');
     });
 
     // ---------------------------------------------------------------
