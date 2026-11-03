@@ -645,7 +645,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const datetime = page.locator('ion-datetime');
 
       // Select June 27 as start, then pick July 2 (adjacent day) as end
-      const jun27 = datetime.locator('[data-month="6"][data-day="27"]');
+      const jun27 = datetime.locator('.calendar-month:nth-child(2) [data-month="6"][data-day="27"]');
       await jun27.click();
       await page.waitForChanges();
 
