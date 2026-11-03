@@ -343,20 +343,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('should stay on end date month after completing a cross-month range', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-datetime
-          locale="en-US"
-          presentation="date"
-          selection-mode="range"
-          value="2022-06-01"
-        ></ion-datetime>
-      `,
-        config
-      );
-
-      await page.locator('.datetime-ready').waitFor();
-      const datetime = page.locator('ion-datetime');
+      const datetime = await fixture.goto(config, ['2022-06-01']);
 
       // Select a start day in June
       const jun15 = datetime.locator('[data-month="6"][data-day="15"]');
