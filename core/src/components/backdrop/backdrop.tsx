@@ -12,6 +12,10 @@ import { Component, Event, Host, Listen, Prop, h } from '@stencil/core';
 export class Backdrop implements ComponentInterface {
   /**
    * If `true`, the backdrop will be visible.
+   * This property controls whether or not the backdrop's
+   * default background is shown. It does not control whether
+   * or not the backdrop blocks interaction, and it does not
+   * override a custom background set on `ion-backdrop`.
    */
   @Prop() visible = true;
 
