@@ -1,9 +1,10 @@
-import type { StartContainerController } from '../start-container-controller';
+import type { StartEndContainerController } from '../start-end-container-controller';
 import {
   SKIP_LABEL_TRANSITION_CLASS,
   START_CONTAINER_ADJUSTMENT_VAR,
-  createStartContainerController,
-} from '../start-container-controller';
+  START_END_CONTAINER_WIDTH_VAR,
+  createStartEndContainerController,
+} from '../start-end-container-controller';
 
 /**
  * The controller defers every measurement to an animation frame, so the tests
@@ -91,17 +92,24 @@ const restoreGlobals = () => {
   globalOverrides.clear();
 };
 
-describe('Start Container Controller', () => {
+describe('Start and End Container Controller', () => {
   let host: HTMLElement;
   let startContainer: HTMLElement;
-  let controller: StartContainerController;
+  let endContainer: HTMLElement;
+  let controller: StartEndContainerController;
   let shouldApply: boolean;
 
   const setStartWidth = (width: number) => {
     startContainer.getBoundingClientRect = () => ({ width } as DOMRect);
   };
 
+  const setEndWidth = (width: number) => {
+    endContainer.getBoundingClientRect = () => ({ width } as DOMRect);
+  };
+
   const getAdjustment = () => host.style.getPropertyValue(START_CONTAINER_ADJUSTMENT_VAR);
+
+  const getStartEndWidth = () => host.style.getPropertyValue(START_END_CONTAINER_WIDTH_VAR);
 
   const hasSkipClass = () => host.classList.contains(SKIP_LABEL_TRANSITION_CLASS);
 
@@ -110,7 +118,7 @@ describe('Start Container Controller', () => {
    * measurement frame and the follow-up transition frame run.
    */
   const measure = () => {
-    controller.calculateStartContainerWidth();
+    controller.calculateContainerWidths();
     flushFrames();
     flushFrames();
   };
@@ -127,14 +135,18 @@ describe('Start Container Controller', () => {
 
     host = document.createElement('div');
     startContainer = document.createElement('div');
+    endContainer = document.createElement('div');
     host.appendChild(startContainer);
+    host.appendChild(endContainer);
     document.body.appendChild(host);
 
     setStartWidth(32);
+    setEndWidth(0);
 
-    controller = createStartContainerController(
+    controller = createStartEndContainerController(
       host,
       () => startContainer,
+      () => endContainer,
       () => shouldApply
     );
   });
@@ -161,7 +173,7 @@ describe('Start Container Controller', () => {
     });
 
     it('should not measure until the next frame', () => {
-      controller.calculateStartContainerWidth();
+      controller.calculateContainerWidths();
 
       expect(getAdjustment()).toBe('');
     });
@@ -173,8 +185,8 @@ describe('Start Container Controller', () => {
        * the offset into the next frame, leaving one painted frame where the
        * content has changed but the label has not moved.
        */
-      requestAnimationFrame(() => controller.calculateStartContainerWidth());
-      controller.calculateStartContainerWidth();
+      requestAnimationFrame(() => controller.calculateContainerWidths());
+      controller.calculateContainerWidths();
 
       flushFrames();
 
@@ -206,11 +218,47 @@ describe('Start Container Controller', () => {
 
       expect(getAdjustment()).toBe('32px');
     });
+
+    it('should set the width to the combined start and end container widths', () => {
+      setEndWidth(48);
+
+      measure();
+
+      expect(getStartEndWidth()).toBe('80px');
+    });
+
+    it('should not negate the start and end width in rtl', () => {
+      host.dir = 'rtl';
+      setEndWidth(48);
+
+      measure();
+
+      expect(getStartEndWidth()).toBe('80px');
+    });
+
+    it('should round the combined start and end width to one decimal place', () => {
+      setStartWidth(32.06);
+      setEndWidth(48.02);
+
+      measure();
+
+      expect(getStartEndWidth()).toBe('80.1px');
+    });
+
+    it('should clear the start and end width when it no longer applies', () => {
+      measure();
+      expect(getStartEndWidth()).toBe('32px');
+
+      shouldApply = false;
+      measure();
+
+      expect(getStartEndWidth()).toBe('');
+    });
   });
 
   describe('label transition', () => {
     it('should suppress the transition for one frame when the offset changes', () => {
-      controller.calculateStartContainerWidth();
+      controller.calculateContainerWidths();
 
       flushFrames();
       expect(hasSkipClass()).toBe(true);
@@ -222,14 +270,29 @@ describe('Start Container Controller', () => {
     it('should not suppress the transition when the offset is unchanged', () => {
       measure();
 
-      controller.calculateStartContainerWidth();
+      controller.calculateContainerWidths();
       flushFrames();
 
       expect(hasSkipClass()).toBe(false);
     });
 
+    it('should not suppress the transition when only the end container changes', () => {
+      /**
+       * The end container can resize while the label is floating. Cutting
+       * the transition short would snap the label into place.
+       */
+      measure();
+
+      setEndWidth(48);
+      controller.calculateContainerWidths();
+      flushFrames();
+
+      expect(getStartEndWidth()).toBe('80px');
+      expect(hasSkipClass()).toBe(false);
+    });
+
     it('should keep the transition suppressed while consecutive changes are applied', () => {
-      controller.calculateStartContainerWidth();
+      controller.calculateContainerWidths();
       flushFrames();
 
       /**
@@ -237,7 +300,7 @@ describe('Start Container Controller', () => {
        * frame that applies the second one.
        */
       setStartWidth(64);
-      controller.calculateStartContainerWidth();
+      controller.calculateContainerWidths();
       flushFrames();
 
       expect(getAdjustment()).toBe('-64px');
@@ -246,18 +309,18 @@ describe('Start Container Controller', () => {
   });
 
   describe('resize observer', () => {
-    it('should observe the start container after measuring', () => {
+    it('should observe the start and end containers after measuring', () => {
       measure();
 
-      expect(activeObserver()?.observed).toEqual([startContainer]);
+      expect(activeObserver()?.observed).toEqual([startContainer, endContainer]);
     });
 
-    it('should not rebind the observer when the container is unchanged', () => {
+    it('should not rebind the observer when the containers are unchanged', () => {
       measure();
       measure();
 
       expect(MockResizeObserver.instances).toHaveLength(1);
-      expect(activeObserver()?.observed).toEqual([startContainer]);
+      expect(activeObserver()?.observed).toEqual([startContainer, endContainer]);
     });
 
     it('should rebind when the start container is replaced', () => {
@@ -269,7 +332,20 @@ describe('Start Container Controller', () => {
       measure();
 
       expect(firstObserver?.disconnected).toBe(true);
-      expect(activeObserver()?.observed).toEqual([startContainer]);
+      expect(activeObserver()?.observed).toEqual([startContainer, endContainer]);
+    });
+
+    it('should rebind when the end container is replaced', () => {
+      measure();
+      const firstObserver = activeObserver();
+
+      endContainer = document.createElement('div');
+      setEndWidth(48);
+      measure();
+
+      expect(firstObserver?.disconnected).toBe(true);
+      expect(activeObserver()?.observed).toEqual([startContainer, endContainer]);
+      expect(getStartEndWidth()).toBe('80px');
     });
 
     it('should re-measure when the container resizes', () => {
@@ -280,6 +356,16 @@ describe('Start Container Controller', () => {
       flushFrames();
 
       expect(getAdjustment()).toBe('-64px');
+    });
+
+    it('should re-measure when the end container resizes', () => {
+      measure();
+
+      setEndWidth(48);
+      activeObserver()?.callback();
+      flushFrames();
+
+      expect(getStartEndWidth()).toBe('80px');
     });
 
     it('should disconnect when the adjustment stops applying', () => {
@@ -302,7 +388,7 @@ describe('Start Container Controller', () => {
       measure();
 
       expect(getAdjustment()).toBe('-32px');
-      expect(activeObserver()?.observed).toEqual([startContainer]);
+      expect(activeObserver()?.observed).toEqual([startContainer, endContainer]);
     });
   });
 
@@ -317,7 +403,7 @@ describe('Start Container Controller', () => {
     });
 
     it('should not measure after a pending frame is cancelled', () => {
-      controller.calculateStartContainerWidth();
+      controller.calculateContainerWidths();
       controller.destroy();
 
       flushFrames();
@@ -326,7 +412,7 @@ describe('Start Container Controller', () => {
     });
 
     it('should not leave the transition suppressed when torn down mid-toggle', () => {
-      controller.calculateStartContainerWidth();
+      controller.calculateContainerWidths();
 
       // The class is applied, but the frame that removes it has not run yet
       flushFrames();
@@ -341,15 +427,16 @@ describe('Start Container Controller', () => {
       measure();
       controller.destroy();
 
-      controller = createStartContainerController(
+      controller = createStartEndContainerController(
         host,
         () => startContainer,
+        () => endContainer,
         () => shouldApply
       );
       measure();
 
       expect(getAdjustment()).toBe('-32px');
-      expect(activeObserver()?.observed).toEqual([startContainer]);
+      expect(activeObserver()?.observed).toEqual([startContainer, endContainer]);
     });
   });
 });

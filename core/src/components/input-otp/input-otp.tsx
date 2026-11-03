@@ -68,6 +68,12 @@ export class InputOTP implements ComponentInterface {
    */
   private isKeyboardNavigation = false;
 
+  /**
+   * The `length` watcher runs before new inputs render, so
+   * `componentDidRender` updates their tab indexes instead.
+   */
+  private updateTabIndexesAfterRender = false;
+
   @Element() el!: HTMLIonInputOtpElement;
 
   @AttachInternals() internals!: ElementInternals;
@@ -233,6 +239,12 @@ export class InputOTP implements ComponentInterface {
     this.updateElementInternals();
   }
 
+  @Watch('length')
+  lengthChanged() {
+    this.initializeValues();
+    this.updateTabIndexesAfterRender = true;
+  }
+
   /**
    * Processes the separators prop into an array of numbers.
    *
@@ -307,6 +319,13 @@ export class InputOTP implements ComponentInterface {
   componentDidLoad() {
     this.updateTabIndexes();
     this.updateElementInternals();
+  }
+
+  componentDidRender() {
+    if (this.updateTabIndexesAfterRender) {
+      this.updateTabIndexesAfterRender = false;
+      this.updateTabIndexes();
+    }
   }
 
   /**
@@ -939,7 +958,14 @@ export class InputOTP implements ComponentInterface {
                   tabIndex={index === tabbableIndex ? 0 : -1}
                   value={inputValues[index] || ''}
                   autocomplete="one-time-code"
-                  ref={(el) => (inputRefs[index] = el as HTMLInputElement)}
+                  ref={(el) => {
+                    if (el) {
+                      inputRefs[index] = el as HTMLInputElement;
+                    } else {
+                      // The input was removed, so drop its ref and any after it.
+                      inputRefs.splice(index);
+                    }
+                  }}
                   onInput={this.onInput(index)}
                   onBlur={this.onBlur}
                   onFocus={this.onFocus(index)}
