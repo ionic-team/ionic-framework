@@ -345,6 +345,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should stay on end date month after completing a cross-month range', async ({ page }) => {
       // Start with a complete range so the calendar opens on June 2022
       const datetime = await fixture.goto(config, RANGE_VALUE);
+      const monthYearToggle = datetime.locator('.calendar-month-year-toggle');
 
       // Click before the start to begin a new range
       const jun3 = datetime.locator('[data-month="6"][data-day="3"]');
@@ -354,14 +355,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Navigate to July and complete the range there
       const nextMonthButton = datetime.locator('.calendar-next-prev ion-button:nth-child(2)');
       await nextMonthButton.click();
-      await page.waitForChanges();
+
+      /**
+       * Wait for the month scroll to settle before clicking a day. Otherwise
+       * the scroll listener advances from the clicked month and overshoots.
+       */
+      await expect(monthYearToggle).toContainText('July 2022');
 
       const jul10 = datetime.locator('[data-month="7"][data-day="10"]');
       await jul10.click();
       await page.waitForChanges();
 
       // Calendar should stay on July, not jump back to June
-      await expect(datetime.locator('.calendar-month-year-toggle')).toContainText('July 2022');
+      await expect(monthYearToggle).toContainText('July 2022');
     });
 
     // ---------------------------------------------------------------
