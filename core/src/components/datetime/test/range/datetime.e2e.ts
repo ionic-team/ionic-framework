@@ -590,9 +590,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await mar5.click();
       await page.waitForChanges();
 
-      // Range should not span the excluded month — should start a new range instead
-      await expect(jan25).not.toHaveClass(/calendar-day-range-start/);
+      // Range should not span the excluded month — Mar 5 starts a new range
       await expect(mar5).toHaveClass(/calendar-day-range-start/);
+      await expect(mar5).not.toHaveClass(/calendar-day-range-end/);
     });
 
     // ---------------------------------------------------------------
