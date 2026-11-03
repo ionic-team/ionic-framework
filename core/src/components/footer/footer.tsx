@@ -55,11 +55,11 @@ export class Footer implements ComponentInterface {
   async connectedCallback() {
     const promise = createKeyboardController(async (keyboardOpen, waitForResize) => {
       /**
-       * If the keyboard is hiding, then we need to wait
-       * for the webview to resize. Otherwise, the footer
-       * will flicker before the webview resizes.
+       * Wait for the webview to resize before toggling the
+       * safe area padding. Otherwise, the footer will
+       * flicker before the webview resizes.
        */
-      if (keyboardOpen === false && waitForResize !== undefined) {
+      if (waitForResize !== undefined) {
         await waitForResize;
       }
 

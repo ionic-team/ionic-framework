@@ -91,7 +91,7 @@ export const createKeyboardController = async (
 
   const fireChangeCallback = (state: boolean, resizeMode: KeyboardResize | undefined) => {
     if (keyboardChangeCallback) {
-      keyboardChangeCallback(state, createResizePromiseIfNeeded(resizeMode));
+      keyboardChangeCallback(state, createResizePromiseIfNeeded(state, resizeMode));
     }
   };
 
@@ -102,7 +102,16 @@ export const createKeyboardController = async (
    * createResizePromiseIfNeeded provides a way for code to wait for the
    * resize event that was triggered as a result of the keyboard.
    */
-  const createResizePromiseIfNeeded = (resizeMode: KeyboardResize | undefined): Promise<void> | undefined => {
+  const createResizePromiseIfNeeded = (
+    keyboardOpen: boolean,
+    resizeMode: KeyboardResize | undefined
+  ): Promise<void> | undefined => {
+    /**
+     * The webview is at its initial height when it
+     * has not resized for the keyboard yet.
+     */
+    const isInitialHeight = initialResizeContainerHeight === getResizeContainerHeight(resizeMode);
+
     if (
       /**
        * If we are in an SSR environment then there is
@@ -112,10 +121,11 @@ export const createKeyboardController = async (
        */
       initialResizeContainerHeight === 0 ||
       /**
-       * If the keyboard is closed before the webview resizes initially
-       * then the webview will never resize.
+       * If the keyboard is opened after the webview has already
+       * shrunk, or closed before the webview resizes initially,
+       * then the webview will not resize again.
        */
-      initialResizeContainerHeight === getResizeContainerHeight(resizeMode)
+      isInitialHeight !== keyboardOpen
     ) {
       return;
     }
@@ -147,7 +157,7 @@ export const createKeyboardController = async (
          *
          * https://www.w3.org/TR/resize-observer/#intro
          */
-        if (containerElement.clientHeight === initialResizeContainerHeight) {
+        if ((containerElement.clientHeight !== initialResizeContainerHeight) === keyboardOpen) {
           /**
            * The resize happened, so stop listening
            * for resize on this element.
