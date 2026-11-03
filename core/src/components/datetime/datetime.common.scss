@@ -296,6 +296,14 @@
   z-index: 0;
 }
 
+/**
+ * The focus ring can extend past the cell, so lift the focused day
+ * above the following days, whose range track would otherwise cover it.
+ */
+:host .calendar-day-wrapper:focus-within {
+  z-index: 1;
+}
+
 // Range Selection Track
 // -----------------------------------
 
