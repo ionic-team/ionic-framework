@@ -1637,7 +1637,9 @@ export class Datetime implements ComponentInterface {
          * right after the user picks it, instead of jumping back to the start.
          */
         navigateTo =
-          endParts && endParts.month === workingParts.month && endParts.year === workingParts.year ? endParts : startParts;
+          endParts && endParts.month === workingParts.month && endParts.year === workingParts.year
+            ? endParts
+            : startParts;
       } else {
         this.activeParts = [];
         navigateTo = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
