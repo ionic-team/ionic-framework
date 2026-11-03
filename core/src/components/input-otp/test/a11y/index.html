@@ -36,7 +36,7 @@
 
       <h2>Host aria-describedby and aria-invalid</h2>
       <ion-input-otp id="host-aria" length="4" aria-label="Code"></ion-input-otp>
-      <p id="server-error">The server rejected this code</p>
+      <p id="server-error" hidden>The server rejected this code</p>
       <button id="toggle-host-aria">Toggle host error</button>
     </main>
 
@@ -50,13 +50,16 @@
       document.querySelector('#formatter').inputLabelFormatter = (index, length) => `Ziffer ${index + 1} von ${length}`;
 
       const hostAria = document.querySelector('#host-aria');
+      const serverError = document.querySelector('#server-error');
       document.querySelector('#toggle-host-aria').addEventListener('click', () => {
         if (hostAria.hasAttribute('aria-invalid')) {
           hostAria.removeAttribute('aria-invalid');
           hostAria.removeAttribute('aria-describedby');
+          serverError.hidden = true;
         } else {
           hostAria.setAttribute('aria-invalid', 'true');
           hostAria.setAttribute('aria-describedby', 'server-error');
+          serverError.hidden = false;
         }
       });
     </script>

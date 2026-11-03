@@ -115,7 +115,7 @@ export class InputOTP implements ComponentInterface {
   /**
    * A callback used to format the accessible name of each input box. It
    * receives the 0-based `index` of the box and the total `length`. By default
-   * the name is "Input 1 of 4", or "PIN, 1 of 4" with an `aria-label` of "PIN".
+   * the name is "Input 1 of 4", or "PIN 1 of 4" with an `aria-label` of "PIN".
    *
    * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
    * if you need to access `this` from within the callback.
@@ -242,7 +242,9 @@ export class InputOTP implements ComponentInterface {
 
   // The host keeps these (see `HOST_ARIA_ATTRIBUTES`), so re-render when they change
   @Watch('aria-describedby')
+  @Watch('aria-errormessage')
   @Watch('aria-invalid')
+  @Watch('aria-required')
   onHostAriaChange() {
     forceUpdate(this);
   }
@@ -980,7 +982,7 @@ export class InputOTP implements ComponentInterface {
       return { 'aria-label': position, 'aria-labelledby': `${hostLabelledBy} ${inputId}-${index}` };
     }
 
-    return { 'aria-label': hostLabel ? `${hostLabel}, ${position}` : `Input ${position}` };
+    return { 'aria-label': hostLabel ? `${hostLabel} ${position}` : `Input ${position}` };
   }
 
   render() {
@@ -1010,17 +1012,16 @@ export class InputOTP implements ComponentInterface {
     // Keep the description visible until the first render can check it
     const hasDescription = descriptionText !== '';
 
+    const groupAttributes = ariaController?.attributes ?? {};
+
     /**
      * Screen readers only announce these from the focused input. The
      * description stays on the group so it isn't repeated for every input.
      */
-    const {
-      'aria-errormessage': ariaErrorMessage,
-      'aria-required': ariaRequired,
-      ...groupAttributes
-    } = ariaController?.attributes ?? {};
     const hostDescribedBy = el.getAttribute('aria-describedby');
+    const hostErrorMessage = el.getAttribute('aria-errormessage') ?? undefined;
     const hostInvalid = el.getAttribute('aria-invalid') ?? undefined;
+    const hostRequired = el.getAttribute('aria-required') ?? undefined;
     const describedBy = [hostDescribedBy, this.getHintTextId()].filter(Boolean).join(' ');
 
     return (
@@ -1050,9 +1051,9 @@ export class InputOTP implements ComponentInterface {
                   id={`${inputId}-${index}`}
                   {...this.getInputLabelAttributes(index, groupAttributes)}
                   aria-describedby={describedBy || undefined}
-                  aria-errormessage={ariaErrorMessage}
+                  aria-errormessage={hostErrorMessage}
                   aria-invalid={isInvalid ? 'true' : hostInvalid}
-                  aria-required={ariaRequired}
+                  aria-required={hostRequired}
                   type="text"
                   autoCapitalize={autocapitalize}
                   inputmode={inputmode}
@@ -1100,7 +1101,7 @@ let inputIds = 0;
 
 /**
  * The attribute controller removes these from the host, so an app could never
- * clear them. They stay on the host instead, which only works for global
- * attributes since the host has no role.
+ * clear them. They stay on the host instead, which has no role, so
+ * `aria-required` is ignored there.
  */
-const HOST_ARIA_ATTRIBUTES = ['aria-describedby', 'aria-invalid'];
+const HOST_ARIA_ATTRIBUTES = ['aria-describedby', 'aria-errormessage', 'aria-invalid', 'aria-required'];

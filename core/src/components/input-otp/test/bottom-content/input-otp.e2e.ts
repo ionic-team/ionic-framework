@@ -7,7 +7,10 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input-otp: hint text rendering'), () => {
     test('should not have visual regressions when rendering helper text with a description', async ({ page }) => {
-      await page.setContent(`<ion-input-otp helper-text="Helper text">Description</ion-input-otp>`, config);
+      await page.setContent(
+        `<ion-input-otp style="width: fit-content" helper-text="Helper text">Description</ion-input-otp>`,
+        config
+      );
 
       const inputOtp = page.locator('ion-input-otp');
       await expect(inputOtp).toHaveScreenshot(screenshot(`input-otp-helper-text-description`));
@@ -23,14 +26,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(inputOtp).toHaveScreenshot(screenshot(`input-otp-helper-text-wrapping`));
     });
 
-    test('should not have visual regressions when rendering error text', async ({ page }) => {
+    test('should not have visual regressions when rendering error text with a description', async ({ page }) => {
       await page.setContent(
-        `<ion-input-otp class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text"></ion-input-otp>`,
+        `<ion-input-otp
+          class="ion-invalid ion-touched"
+          style="width: fit-content"
+          helper-text="Helper text"
+          error-text="Error text"
+        >Description</ion-input-otp>`,
         config
       );
 
       const inputOtp = page.locator('ion-input-otp');
-      await expect(inputOtp).toHaveScreenshot(screenshot(`input-otp-error-text`));
+      await expect(inputOtp).toHaveScreenshot(screenshot(`input-otp-error-text-description`));
     });
   });
 });
@@ -50,7 +58,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             --highlight-color-invalid: purple;
           }
         </style>
-        <ion-input-otp class="ion-invalid ion-touched custom-input-otp" error-text="Error text"></ion-input-otp>
+        <ion-input-otp class="ion-invalid ion-touched custom-input-otp" style="width: fit-content" error-text="Error text"></ion-input-otp>
       `,
         config
       );

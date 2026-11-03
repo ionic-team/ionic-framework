@@ -1482,7 +1482,7 @@ export namespace Components {
          */
         "helperText"?: string;
         /**
-          * A callback used to format the accessible name of each input box. It receives the 0-based `index` of the box and the total `length`. By default the name is "Input 1 of 4", or "PIN, 1 of 4" with an `aria-label` of "PIN".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
+          * A callback used to format the accessible name of each input box. It receives the 0-based `index` of the box and the total `length`. By default the name is "Input 1 of 4", or "PIN 1 of 4" with an `aria-label` of "PIN".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "inputLabelFormatter"?: InputOtpLabelFormatter;
         /**
@@ -6654,7 +6654,7 @@ declare namespace LocalJSX {
          */
         "helperText"?: string;
         /**
-          * A callback used to format the accessible name of each input box. It receives the 0-based `index` of the box and the total `length`. By default the name is "Input 1 of 4", or "PIN, 1 of 4" with an `aria-label` of "PIN".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
+          * A callback used to format the accessible name of each input box. It receives the 0-based `index` of the box and the total `length`. By default the name is "Input 1 of 4", or "PIN 1 of 4" with an `aria-label` of "PIN".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "inputLabelFormatter"?: InputOtpLabelFormatter;
         /**

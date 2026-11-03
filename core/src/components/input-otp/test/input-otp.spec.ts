@@ -21,7 +21,7 @@ describe('input-otp: input labels', () => {
       html: `<ion-input-otp length="4" aria-label="PIN"></ion-input-otp>`,
     });
 
-    expect(getInputLabels(page)).toEqual(['PIN, 1 of 4', 'PIN, 2 of 4', 'PIN, 3 of 4', 'PIN, 4 of 4']);
+    expect(getInputLabels(page)).toEqual(['PIN 1 of 4', 'PIN 2 of 4', 'PIN 3 of 4', 'PIN 4 of 4']);
   });
 
   it('should label each input with the output of inputLabelFormatter', async () => {
@@ -50,7 +50,7 @@ describe('input-otp: input labels', () => {
     };
     await page.waitForChanges();
 
-    expect(getInputLabels(page)).toEqual(['PIN, 1 of 2', 'PIN, 2 of 2']);
+    expect(getInputLabels(page)).toEqual(['PIN 1 of 2', 'PIN 2 of 2']);
     expect(consoleError).toHaveBeenCalled();
     consoleError.mockRestore();
   });
@@ -117,6 +117,7 @@ describe('input-otp: description', () => {
     const description = page.body.querySelector('ion-input-otp .input-otp-description')!;
     const helperText = page.body.querySelector('ion-input-otp .helper-text')!;
     expect(description.id).not.toBe('');
+    expect(description.classList.contains('input-otp-description-hidden')).toBe(false);
 
     const group = page.body.querySelector('ion-input-otp .input-otp-group')!;
     expect(group.getAttribute('aria-describedby')).toBe(description.id);

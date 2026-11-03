@@ -72,12 +72,25 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
         await expect(input).toHaveCSS('border-top-color', 'rgb(255, 0, 0)');
       });
 
-      test(`${fill} fill should not inherit --border-color from an ancestor`, async ({ page }, testInfo) => {
-        testInfo.annotations.push({
-          type: 'issue',
-          description: 'https://github.com/ionic-team/ionic-framework/issues/31619',
-        });
+      test(`${fill} fill should keep the invalid border over a --border-color set on the host`, async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            ion-input-otp.custom-border {
+              --border-color: rgb(255, 0, 0);
+              --highlight-color-invalid: rgb(0, 0, 255);
+            }
+          </style>
+          <ion-input-otp class="custom-border ion-touched ion-invalid" fill="${fill}"></ion-input-otp>
+        `,
+          config
+        );
 
+        const input = page.locator('ion-input-otp input').first();
+        await expect(input).toHaveCSS('border-top-color', 'rgb(0, 0, 255)');
+      });
+
+      test(`${fill} fill should not inherit --border-color from an ancestor`, async ({ page }) => {
         await page.setContent(
           `
           <ion-input-otp id="reference" fill="${fill}"></ion-input-otp>
