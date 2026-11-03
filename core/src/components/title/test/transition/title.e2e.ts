@@ -56,7 +56,13 @@ const pauseTransition = (page: E2EPage, frame: 'first' | 'last') => {
               });
             requestAnimationFrame(() => resolve());
           } else {
-            requestAnimationFrame(check);
+            /**
+             * Polls with a timer instead of a frame callback. In the ionic
+             * theme, WebKit can stop producing frames for longer than the
+             * transition while it paints the translucent header's blur
+             * layers, so the transition finishes between two frames.
+             */
+            setTimeout(check);
           }
         };
         check();
