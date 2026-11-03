@@ -44,7 +44,7 @@ body.backdrop-no-scroll {
  * surface. `:where()` keeps the specificity at zero so any consumer
  * `--background` override on these components still applies.
  */
-:where(html.ionic ion-modal, html.ionic ion-popover) :where(ion-content, ion-toolbar, ion-item) {
+:where(html.ionic ion-modal, html.ionic ion-popover) :where(ion-content, ion-toolbar, ion-item:not(ion-card ion-item)) {
   --background: #{globals.$ion-bg-surface-elevation-3};
 }
 
