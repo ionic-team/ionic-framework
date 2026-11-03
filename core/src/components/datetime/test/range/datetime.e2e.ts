@@ -122,10 +122,18 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
       await fixture.goto(config, RANGE_VALUE);
       const datetime = page.locator('ion-datetime');
 
-      // Focus a day inside the range via keyboard
-      const day12 = datetime.locator('[data-month="6"][data-day="12"]');
-      await day12.focus();
+      /**
+       * Focusing the calendar moves focus to the range start, so
+       * use the arrow keys to move focus into the middle of the range.
+       */
+      await datetime.locator('[data-month="6"][data-day="8"]').focus();
       await page.waitForChanges();
+
+      await page.keyboard.press('ArrowDown');
+      await page.waitForChanges();
+
+      const day15 = datetime.locator('[data-month="6"][data-day="15"]');
+      await expect(day15).toBeFocused();
 
       await fixture.expectRangeDatePicker('in-range-focus', screenshot);
     });
