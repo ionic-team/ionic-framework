@@ -2315,8 +2315,7 @@ export class Datetime implements ComponentInterface {
     const prevMonthDisabled = disabled || isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = disabled || isNextMonthDisabled(this.workingParts, this.maxParts);
 
-    // don't use the inheritAttributes util because it removes dir from the host, and we still need that
-    const hostDir = this.el.getAttribute('dir') || undefined;
+    const hostDir = isRTL(this.el) ? 'rtl' : 'ltr';
 
     return (
       <div class="calendar-header" part="calendar-header">
@@ -2336,6 +2335,7 @@ export class Datetime implements ComponentInterface {
               <span id="toggle-wrapper">
                 {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
+                  dir={hostDir}
                   aria-hidden="true"
                   icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
                   lazy={false}
