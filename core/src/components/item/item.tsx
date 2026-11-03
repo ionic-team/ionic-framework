@@ -4,6 +4,7 @@ import type { AttributeController } from '@utils/attribute-controller';
 import { createAttributeController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { raf } from '@utils/helpers';
+import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
@@ -367,6 +368,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerAnimation,
       routerDirection,
       multipleInputs,
+      el,
     } = this;
     const inheritedAriaAttributes = this.ariaController?.attributes ?? {};
     const childStyles = {} as StyleEventDetail;
@@ -473,7 +475,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-focus-indicator-room': slottedIndicatorNeedsRoom,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
-            'item-rtl': document.dir === 'rtl',
+            'item-rtl': isRTL(el),
           }),
         }}
         role={inList ? 'listitem' : null}

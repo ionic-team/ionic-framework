@@ -17,6 +17,7 @@ import {
   setOverlayId,
 } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
+import { isRTL } from '@utils/rtl';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
 
@@ -72,6 +73,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private workingDelegate?: FrameworkDelegate;
 
   private focusDescendantOnPresent = false;
+  private dirSetOnPresent = false;
 
   lastFocus?: HTMLElement;
 
@@ -497,6 +499,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const { inline, delegate } = this.getDelegate(true);
 
     /**
+     * When presented, ion-popover is hoisted from its place in the element
+     * hierarchy. Copy the current direction onto this element so that child
+     * elements can match.
+     */
+    if (!el.hasAttribute('dir')) {
+      el.setAttribute('dir', isRTL(el) ? 'rtl' : 'ltr');
+      this.dirSetOnPresent = true;
+    }
+
+    /**
      * Emit ionMount so JS Frameworks have an opportunity
      * to add the child component to the DOM. The child
      * component will be assigned to this.usersElement below.
@@ -650,6 +662,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
        */
       const { delegate } = this.getDelegate();
       await detachComponent(delegate, this.usersElement);
+
+      if (this.dirSetOnPresent) {
+        this.el.removeAttribute('dir');
+        this.dirSetOnPresent = false;
+      }
     }
 
     unlock();
