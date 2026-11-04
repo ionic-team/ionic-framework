@@ -674,7 +674,7 @@ export class Datetime implements ComponentInterface {
         const parsed = parseDate(startDate);
         if (parsed) {
           const target = Array.isArray(parsed) ? parsed[0] : parsed;
-          this.setWorkingParts(target);
+          this.setWorkingParts(clampDate(target, this.minParts, this.maxParts));
         }
       }
       return;
