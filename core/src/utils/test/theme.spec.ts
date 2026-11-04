@@ -12,6 +12,7 @@ import { config } from '@global/config';
 
 import { SCREEN_BREAKPOINT_NAMES, resetScreenBreakpoints } from '../breakpoints';
 import {
+  COLOR_KEY_SELECTORS,
   generateBreakpointCSS,
   generateColorClasses,
   generateComponentsThemeCSS,
@@ -991,6 +992,28 @@ describe('generateComponentsThemeCSS', () => {
     expect(css).toBe(expectedCSS);
   });
 
+  it('should exclude the color class from the parent of a default child', () => {
+    const components = {
+      IonToolbar: {
+        default: {
+          IonButton: {
+            color: 'red',
+          },
+        },
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-toolbar:not(.ion-color) ion-button {
+        --ion-button-color: red;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
   it('should keep the semantic tokens that are not a child as the parent tokens', () => {
     const components = {
       IonToolbar: {
@@ -1019,6 +1042,74 @@ describe('generateComponentsThemeCSS', () => {
   });
 });
 
+describe('nested child components', () => {
+  const isChild = (key: string) => /^Ion[A-Z]/.test(key);
+
+  const leafKeys = (tokens: any, prefix: string): string[] =>
+    tokens !== null && typeof tokens === 'object'
+      ? Object.entries(tokens).flatMap(([key, value]) => leafKeys(value, `${prefix}.${key}`))
+      : [prefix];
+
+  const ownLeafKeys = (tokens: any): string[] =>
+    Object.entries(tokens ?? {}).flatMap(([key, value]) => {
+      if (isChild(key)) {
+        return [];
+      }
+      if (COLOR_KEY_SELECTORS.has(key)) {
+        return ownLeafKeys(value).map((colorKey) => `${key}.${colorKey}`);
+      }
+      return leafKeys(value, key);
+    });
+
+  /**
+   * Every child nested in a component's tokens, with how deep it is, whether it
+   * sits under `default` or `semantic`, and the keys it sets.
+   */
+  const nestedChildren = (
+    tokens: any,
+    depth = 1,
+    colored = false
+  ): { child: string; depth: number; colored: boolean; keys: string[] }[] =>
+    Object.entries(tokens ?? {}).flatMap(([key, value]) => {
+      if (COLOR_KEY_SELECTORS.has(key)) {
+        return nestedChildren(value, depth, true);
+      }
+      if (!isChild(key)) {
+        return [];
+      }
+      return [{ child: key, depth, colored, keys: ownLeafKeys(value) }, ...nestedChildren(value, depth + 1, colored)];
+    });
+
+  /**
+   * The color class makes a child under `default` or `semantic` outrank a deeper
+   * child nested without it: `ion-toolbar:not(.ion-color) ion-button` beats
+   * `ion-toolbar ion-buttons ion-button`. The deeper child would lose every key
+   * the two share, so they must not share any.
+   */
+  it('should not let a plain child share keys with a shallower one under default or semantic', () => {
+    const clashes: string[] = [];
+
+    for (const [name, theme] of Object.entries({ ios: iosTheme, md: mdTheme, ionic: ionicTheme })) {
+      for (const [component, tokens] of Object.entries(theme.components ?? {})) {
+        const children = nestedChildren(tokens);
+
+        for (const plain of children.filter((child) => !child.colored)) {
+          for (const colored of children.filter(
+            (child) => child.colored && child.child === plain.child && child.depth < plain.depth
+          )) {
+            const shared = plain.keys.filter((key) => colored.keys.includes(key));
+            if (shared.length > 0) {
+              clashes.push(`${name} ${component}: ${shared.join(', ')}`);
+            }
+          }
+        }
+      }
+    }
+
+    expect(clashes).toEqual([]);
+  });
+});
+
 describe('INTERNAL_CHILD_COMPONENTS', () => {
   const COMPONENTS_DIR = join(__dirname, '../../components');
 
@@ -1032,7 +1123,7 @@ describe('INTERNAL_CHILD_COMPONENTS', () => {
 
   /**
    * Migrated components have tokens of their own in at least one theme. Entries
-   * that only nest children, directly or under `semantic`, are skipped.
+   * that only nest children, directly or under `default` or `semantic`, are skipped.
    */
   const migratedComponents = [
     ...new Set(
@@ -1040,7 +1131,9 @@ describe('INTERNAL_CHILD_COMPONENTS', () => {
         Object.entries(theme.components ?? {})
           .filter(([, tokens]) =>
             Object.entries(tokens ?? {}).some(([key, value]) =>
-              key === 'semantic' ? Object.keys(value ?? {}).some((semanticKey) => !isChild(semanticKey)) : !isChild(key)
+              COLOR_KEY_SELECTORS.has(key)
+                ? Object.keys(value ?? {}).some((colorKey) => !isChild(colorKey))
+                : !isChild(key)
             )
           )
           .map(([name]) => name)

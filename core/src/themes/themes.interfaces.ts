@@ -334,14 +334,25 @@ type Components = {
   IonToolbar?: {
     // TODO(FW-6864): Replace with the toolbar recipe once IonToolbar migrates
     [key: string]: any;
-    IonButton?: IonButtonRecipe;
 
+    /** In any toolbar */
     IonButtons?: {
       IonButton?: IonButtonRecipe;
     };
 
-    // In a toolbar with a color
+    /** In a toolbar without a color */
+    default?: {
+      IonButton?: IonButtonRecipe;
+
+      IonButtons?: {
+        IonButton?: IonButtonRecipe;
+      };
+    };
+
+    /** In a toolbar with a color */
     semantic?: {
+      IonButton?: IonButtonRecipe;
+
       IonButtons?: {
         IonButton?: IonButtonRecipe;
       };

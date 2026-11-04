@@ -821,81 +821,6 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonToolbar: {
-      IonButton: {
-        /**
-         * In a toolbar without a color, the global `--ion-toolbar-color` and
-         * `--ion-toolbar-background` properties color the buttons.
-         */
-        hue: {
-          bold: {
-            solid: {
-              default: {
-                background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              focus: {
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              // A solid button lightens the toolbar color on hover
-              hover: {
-                background: overlay(
-                  `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                  'rgba(255, 255, 255, 0.1)'
-                ),
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              activated: {
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-            },
-
-            outline: {
-              default: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-
-                border: {
-                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                },
-              },
-
-              focus: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-              },
-
-              hover: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-              },
-
-              // A pressed outline button fills with the toolbar color
-              activated: {
-                background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-              },
-            },
-
-            clear: {
-              default: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              focus: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              hover: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              activated: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-            },
-          },
-        },
-      },
-
       IonButtons: {
         IonButton: {
           // Buttons in a toolbar use a larger font and a regular weight
@@ -929,40 +854,13 @@ export const defaultTheme: DefaultTheme = {
                     weight: 'var(--ion-font-weight-normal)',
                   },
                 },
-
-                focus: {
-                  background: overlay(
-                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                    'rgba(0, 0, 0, 0.12)'
-                  ),
-                },
-
-                activated: {
-                  background: overlay(
-                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                    'rgba(0, 0, 0, 0.12)'
-                  ),
-                },
               },
 
-              // Outline and clear tints use primary, unless the app sets `--ion-toolbar-color`
               outline: {
                 default: {
                   font: {
                     weight: 'var(--ion-font-weight-normal)',
                   },
-                },
-
-                focus: {
-                  background: ionColor('primary', 'base', { alpha: 0.1 }),
-                },
-
-                hover: {
-                  background: 'transparent',
-                },
-
-                activated: {
-                  background: 'transparent',
                 },
               },
 
@@ -972,17 +870,131 @@ export const defaultTheme: DefaultTheme = {
                     weight: 'var(--ion-font-weight-normal)',
                   },
                 },
+              },
+            },
+          },
+        },
+      },
 
-                focus: {
-                  background: ionColor('primary', 'base', { alpha: 0.1 }),
+      default: {
+        IonButton: {
+          hue: {
+            bold: {
+              solid: {
+                default: {
+                  background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
                 },
 
+                focus: {
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+                },
+
+                // A solid button lightens the toolbar color on hover
                 hover: {
-                  background: 'transparent',
+                  background: overlay(
+                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                    'rgba(255, 255, 255, 0.1)'
+                  ),
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
                 },
 
                 activated: {
-                  background: 'transparent',
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+                },
+              },
+
+              outline: {
+                default: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+
+                  border: {
+                    color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                  },
+                },
+
+                focus: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                },
+
+                hover: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                },
+
+                // A pressed outline button fills with the toolbar color
+                activated: {
+                  background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                },
+              },
+
+              clear: {
+                default: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+                },
+
+                focus: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+                },
+
+                hover: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+                },
+
+                activated: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+                },
+              },
+            },
+          },
+        },
+
+        IonButtons: {
+          IonButton: {
+            hue: {
+              bold: {
+                solid: {
+                  focus: {
+                    background: overlay(
+                      `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                      'rgba(0, 0, 0, 0.12)'
+                    ),
+                  },
+
+                  activated: {
+                    background: overlay(
+                      `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                      'rgba(0, 0, 0, 0.12)'
+                    ),
+                  },
+                },
+
+                // Outline and clear tints use primary, unless the app sets `--ion-toolbar-color`
+                outline: {
+                  focus: {
+                    background: ionColor('primary', 'base', { alpha: 0.1 }),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                  },
+                },
+
+                clear: {
+                  focus: {
+                    background: ionColor('primary', 'base', { alpha: 0.1 }),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                  },
                 },
               },
             },

@@ -822,71 +822,6 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonToolbar: {
-      IonButton: {
-        /**
-         * In a toolbar without a color, the global `--ion-toolbar-color` and
-         * `--ion-toolbar-background` properties color the buttons.
-         */
-        hue: {
-          bold: {
-            solid: {
-              default: {
-                background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              focus: {
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              hover: {
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              activated: {
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-            },
-
-            outline: {
-              default: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-
-                border: {
-                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                },
-              },
-
-              focus: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-              },
-
-              hover: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-              },
-            },
-
-            clear: {
-              default: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              focus: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              hover: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              activated: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-            },
-          },
-        },
-      },
-
       IonButtons: {
         IonButton: {
           shape: {
@@ -905,93 +840,170 @@ export const defaultTheme: DefaultTheme = {
 
           hue: {
             bold: {
-              // The solid fill inverts the toolbar colors
               solid: {
                 default: {
-                  background: 'var(--ion-toolbar-color, var(--ion-text-color, #424242))',
-                  color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
-
                   box: {
                     shadow: 'none',
                   },
                 },
 
-                /**
-                 * The tint is the button's text color, which matches the page background
-                 * unless the app gives toolbars their own `--ion-toolbar-background`.
-                 */
-                focus: {
-                  background: overlay(
-                    'var(--ion-toolbar-color, var(--ion-text-color, #424242))',
-                    'rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24)'
-                  ),
-                  color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
-                },
-
-                hover: {
-                  background: overlay(
-                    'var(--ion-toolbar-color, var(--ion-text-color, #424242))',
-                    'rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.08)'
-                  ),
-                  color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
-                },
-
                 activated: {
-                  background: 'var(--ion-toolbar-color, var(--ion-text-color, #424242))',
-                  color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
-
                   box: {
                     shadow: 'none',
                   },
                 },
               },
+            },
+          },
+        },
+      },
 
-              // Outline and clear tints use the toolbar's text color, #424242 unless set
+      default: {
+        IonButton: {
+          hue: {
+            bold: {
+              solid: {
+                default: {
+                  background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+                },
+
+                focus: {
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+                },
+
+                hover: {
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+                },
+
+                activated: {
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+                },
+              },
+
               outline: {
                 default: {
-                  background: 'transparent',
-                  color: 'var(--ion-toolbar-color, currentColor)',
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
 
                   border: {
-                    color: 'var(--ion-toolbar-color, currentColor)',
+                    color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
                   },
                 },
 
                 focus: {
-                  background: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
-                  color: 'var(--ion-toolbar-color, currentColor)',
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
                 },
 
                 hover: {
-                  background: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.04)',
-                  color: 'var(--ion-toolbar-color, currentColor)',
-                },
-
-                activated: {
-                  background: 'transparent',
-                  color: 'currentColor',
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
                 },
               },
 
               clear: {
                 default: {
-                  background: 'transparent',
-                  color: 'var(--ion-toolbar-color, currentColor)',
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
                 },
 
                 focus: {
-                  background: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
-                  color: 'var(--ion-toolbar-color, currentColor)',
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
                 },
 
                 hover: {
-                  background: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.04)',
-                  color: 'var(--ion-toolbar-color, currentColor)',
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
                 },
 
                 activated: {
-                  background: 'transparent',
-                  color: 'var(--ion-toolbar-color, currentColor)',
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+                },
+              },
+            },
+          },
+        },
+
+        IonButtons: {
+          IonButton: {
+            hue: {
+              bold: {
+                // The solid fill inverts the toolbar colors
+                solid: {
+                  default: {
+                    background: 'var(--ion-toolbar-color, var(--ion-text-color, #424242))',
+                    color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
+                  },
+
+                  /**
+                   * The tint is the button's text color, which matches the page background
+                   * unless the app gives toolbars their own `--ion-toolbar-background`.
+                   */
+                  focus: {
+                    background: overlay(
+                      'var(--ion-toolbar-color, var(--ion-text-color, #424242))',
+                      'rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24)'
+                    ),
+                    color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
+                  },
+
+                  hover: {
+                    background: overlay(
+                      'var(--ion-toolbar-color, var(--ion-text-color, #424242))',
+                      'rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.08)'
+                    ),
+                    color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
+                  },
+
+                  activated: {
+                    background: 'var(--ion-toolbar-color, var(--ion-text-color, #424242))',
+                    color: 'var(--ion-toolbar-background, var(--ion-background-color, #fff))',
+                  },
+                },
+
+                // Outline and clear tints use the toolbar's text color, #424242 unless set
+                outline: {
+                  default: {
+                    background: 'transparent',
+                    color: 'var(--ion-toolbar-color, currentColor)',
+
+                    border: {
+                      color: 'var(--ion-toolbar-color, currentColor)',
+                    },
+                  },
+
+                  focus: {
+                    background: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
+                    color: 'var(--ion-toolbar-color, currentColor)',
+                  },
+
+                  hover: {
+                    background: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.04)',
+                    color: 'var(--ion-toolbar-color, currentColor)',
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+                },
+
+                clear: {
+                  default: {
+                    background: 'transparent',
+                    color: 'var(--ion-toolbar-color, currentColor)',
+                  },
+
+                  focus: {
+                    background: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
+                    color: 'var(--ion-toolbar-color, currentColor)',
+                  },
+
+                  hover: {
+                    background: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.04)',
+                    color: 'var(--ion-toolbar-color, currentColor)',
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                    color: 'var(--ion-toolbar-color, currentColor)',
+                  },
                 },
               },
             },

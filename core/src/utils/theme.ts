@@ -613,43 +613,59 @@ const getInternalRenderHosts = (component: string): string[] =>
 const isChildComponentKey = (key: string) => /^Ion[A-Z]/.test(key);
 
 /**
+ * Keys that group a parent's tokens by whether the parent has a color, and the
+ * selector each one adds to the parent of its nested children.
+ */
+export const COLOR_KEY_SELECTORS = new Map([
+  ['default', ':not(.ion-color)'],
+  ['semantic', '.ion-color'],
+]);
+
+/**
  * Separates a component's own tokens from the child components nested in them.
  * Each child comes with the selector of the parent it is nested in.
  *
- * Children nested under `semantic` only apply when the parent has a color, so
- * their parent selector gets the `.ion-color` class:
+ * Children nested under `semantic` only apply when the parent has a color, and
+ * those under `default` only when it has none, so their parent selector gets
+ * `.ion-color` or `:not(.ion-color)`:
  *
  * ```ts
  * IonToolbar: {
+ *   default: {
+ *     IonButton: { … },
+ *   },
  *   semantic: {
  *     IonButtons: { IonButton: { … } },
  *   },
  * }
  * ```
  *
- * Becomes `ion-toolbar.ion-color ion-buttons ion-button { … }`. Any other key
- * under `semantic` stays one of the parent's own tokens.
+ * Becomes `ion-toolbar:not(.ion-color) ion-button { … }` and
+ * `ion-toolbar.ion-color ion-buttons ion-button { … }`. Any other key under
+ * `default` or `semantic` stays one of the parent's own tokens.
  */
 const splitChildComponents = (componentTokens: any, selector: string) => {
   const ownTokens: Record<string, unknown> = {};
   const children: [string, unknown, string][] = [];
 
   for (const [key, value] of Object.entries(componentTokens ?? {})) {
+    const colorSelector = COLOR_KEY_SELECTORS.get(key);
+
     if (isChildComponentKey(key)) {
       children.push([key, value, selector]);
-    } else if (key === 'semantic' && value !== null && typeof value === 'object') {
-      const semanticTokens: Record<string, unknown> = {};
+    } else if (colorSelector !== undefined && value !== null && typeof value === 'object') {
+      const colorTokens: Record<string, unknown> = {};
 
-      for (const [semanticKey, semanticValue] of Object.entries(value)) {
-        if (isChildComponentKey(semanticKey)) {
-          children.push([semanticKey, semanticValue, `${selector}.ion-color`]);
+      for (const [colorKey, colorValue] of Object.entries(value)) {
+        if (isChildComponentKey(colorKey)) {
+          children.push([colorKey, colorValue, `${selector}${colorSelector}`]);
         } else {
-          semanticTokens[semanticKey] = semanticValue;
+          colorTokens[colorKey] = colorValue;
         }
       }
 
-      if (Object.keys(semanticTokens).length > 0) {
-        ownTokens[key] = semanticTokens;
+      if (Object.keys(colorTokens).length > 0) {
+        ownTokens[key] = colorTokens;
       }
     } else {
       ownTokens[key] = value;
