@@ -193,17 +193,6 @@ export class Toolbar implements ComponentInterface {
   }
 
   /**
-   * Returns the width an element takes up in the toolbar,
-   * including its horizontal margins.
-   */
-  private getOuterWidth(element: Element): number {
-    const { width } = element.getBoundingClientRect();
-    const { marginLeft, marginRight } = getComputedStyle(element);
-
-    return width + parseFloat(marginLeft) + parseFloat(marginRight);
-  }
-
-  /**
    * Measure the widths of the slots and update the CSS custom properties
    * for the minimum width of each pair of slots based on the largest width in each pair.
    * Returns whether we successfully measured all of the slots we expect to have content.
@@ -217,6 +206,14 @@ export class Toolbar implements ComponentInterface {
       { name: 'start-end', slots: ['start', 'end'] },
       { name: 'primary-secondary', slots: ['primary', 'secondary'] },
     ];
+
+    /**
+     * Once a size property is set, the slots cannot be narrower than it.
+     * Remove the properties first so each slot is measured at the width of
+     * its content, which lets the slots shrink when their content does.
+     * This runs before paint, so the slots are never painted without a size.
+     */
+    this.slotSizeVars.forEach((cssVar) => this.el.style.removeProperty(cssVar));
 
     // First, measure all slot widths
     const slotWidths = new Map<string, number>();
@@ -246,18 +243,7 @@ export class Toolbar implements ComponentInterface {
             this.el.style.setProperty(`--${name}-size`, 'auto');
           }
 
-          /**
-           * Measure the slotted content rather than the slot itself. Once the
-           * size property is set, the slot cannot be narrower than it, so
-           * measuring the slot would never let it shrink when the content does.
-           */
-          let contentWidth = 0;
-          assignedElements.forEach((element) => {
-            contentWidth += this.getOuterWidth(element);
-          });
-
-          // Round up so the content is never cut off by a fraction of a pixel.
-          const width = Math.ceil(contentWidth);
+          const width = slotElement.offsetWidth;
 
           if (width > 0) {
             slotWidths.set(slot, width);
