@@ -156,11 +156,13 @@
  * @prop --ion-button-hue-bold-solid-semantic-ripple-effect-opacity: Ripple opacity of the `bold` hue and `solid` fill combination when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-focus-color: Text color of the `bold` hue and `solid` fill combination in the focus state
  * @prop --ion-button-hue-bold-solid-focus-background: Background of the `bold` hue and `solid` fill combination in the focus state
+ * @prop --ion-button-hue-bold-solid-focus-box-shadow: Box shadow of the `bold` hue and `solid` fill combination in the focus state
  * @prop --ion-button-hue-bold-solid-semantic-focus-background: Background of the `bold` hue and `solid` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-semantic-focus-color: Text color of the `bold` hue and `solid` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-hover-color: Text color of the `bold` hue and `solid` fill combination in the hover state
  * @prop --ion-button-hue-bold-solid-hover-opacity: Opacity of the whole button of the `bold` hue and `solid` fill combination in the hover state
  * @prop --ion-button-hue-bold-solid-hover-background: Background of the `bold` hue and `solid` fill combination in the hover state
+ * @prop --ion-button-hue-bold-solid-hover-box-shadow: Box shadow of the `bold` hue and `solid` fill combination in the hover state
  * @prop --ion-button-hue-bold-solid-semantic-hover-background: Background of the `bold` hue and `solid` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-semantic-hover-color: Text color of the `bold` hue and `solid` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-activated-color: Text color of the `bold` hue and `solid` fill combination in the activated state
@@ -171,7 +173,12 @@
  * @prop --ion-button-hue-bold-solid-semantic-activated-color: Text color of the `bold` hue and `solid` fill combination in the activated state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-disabled-background: Background of the `bold` hue and `solid` fill combination in the disabled state
  * @prop --ion-button-hue-bold-solid-disabled-opacity: Opacity of the whole button of the `bold` hue and `solid` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-solid-disabled-color: Text color of the `bold` hue and `solid` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-solid-disabled-border-color: Border color of the `bold` hue and `solid` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-solid-disabled-box-shadow: Box shadow of the `bold` hue and `solid` fill combination in the disabled state
  * @prop --ion-button-hue-bold-solid-semantic-disabled-background: Background of the `bold` hue and `solid` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-solid-semantic-disabled-color: Text color of the `bold` hue and `solid` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-solid-semantic-disabled-border-color: Border color of the `bold` hue and `solid` fill combination in the disabled state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-default-border-width: Border width of the `bold` hue and `outline` fill combination in the default state
  * @prop --ion-button-hue-bold-outline-default-border-style: Border style of the `bold` hue and `outline` fill combination in the default state
  * @prop --ion-button-hue-bold-outline-default-background: Background of the `bold` hue and `outline` fill combination in the default state
@@ -185,11 +192,13 @@
  * @prop --ion-button-hue-bold-outline-semantic-ripple-effect-opacity: Ripple opacity of the `bold` hue and `outline` fill combination when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-focus-color: Text color of the `bold` hue and `outline` fill combination in the focus state
  * @prop --ion-button-hue-bold-outline-focus-background: Background of the `bold` hue and `outline` fill combination in the focus state
+ * @prop --ion-button-hue-bold-outline-focus-box-shadow: Box shadow of the `bold` hue and `outline` fill combination in the focus state
  * @prop --ion-button-hue-bold-outline-semantic-focus-background: Background of the `bold` hue and `outline` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-semantic-focus-color: Text color of the `bold` hue and `outline` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-hover-color: Text color of the `bold` hue and `outline` fill combination in the hover state
  * @prop --ion-button-hue-bold-outline-hover-opacity: Opacity of the whole button of the `bold` hue and `outline` fill combination in the hover state
  * @prop --ion-button-hue-bold-outline-hover-background: Background of the `bold` hue and `outline` fill combination in the hover state
+ * @prop --ion-button-hue-bold-outline-hover-box-shadow: Box shadow of the `bold` hue and `outline` fill combination in the hover state
  * @prop --ion-button-hue-bold-outline-semantic-hover-background: Background of the `bold` hue and `outline` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-semantic-hover-color: Text color of the `bold` hue and `outline` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-activated-color: Text color of the `bold` hue and `outline` fill combination in the activated state
@@ -200,7 +209,12 @@
  * @prop --ion-button-hue-bold-outline-semantic-activated-color: Text color of the `bold` hue and `outline` fill combination in the activated state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-disabled-background: Background of the `bold` hue and `outline` fill combination in the disabled state
  * @prop --ion-button-hue-bold-outline-disabled-opacity: Opacity of the whole button of the `bold` hue and `outline` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-outline-disabled-color: Text color of the `bold` hue and `outline` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-outline-disabled-border-color: Border color of the `bold` hue and `outline` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-outline-disabled-box-shadow: Box shadow of the `bold` hue and `outline` fill combination in the disabled state
  * @prop --ion-button-hue-bold-outline-semantic-disabled-background: Background of the `bold` hue and `outline` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-outline-semantic-disabled-color: Text color of the `bold` hue and `outline` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-outline-semantic-disabled-border-color: Border color of the `bold` hue and `outline` fill combination in the disabled state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-default-border-width: Border width of the `bold` hue and `clear` fill combination in the default state
  * @prop --ion-button-hue-bold-clear-default-border-style: Border style of the `bold` hue and `clear` fill combination in the default state
  * @prop --ion-button-hue-bold-clear-default-border-color: Border color of the `bold` hue and `clear` fill combination in the default state
@@ -215,11 +229,13 @@
  * @prop --ion-button-hue-bold-clear-semantic-ripple-effect-opacity: Ripple opacity of the `bold` hue and `clear` fill combination when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-focus-color: Text color of the `bold` hue and `clear` fill combination in the focus state
  * @prop --ion-button-hue-bold-clear-focus-background: Background of the `bold` hue and `clear` fill combination in the focus state
+ * @prop --ion-button-hue-bold-clear-focus-box-shadow: Box shadow of the `bold` hue and `clear` fill combination in the focus state
  * @prop --ion-button-hue-bold-clear-semantic-focus-background: Background of the `bold` hue and `clear` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-semantic-focus-color: Text color of the `bold` hue and `clear` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-hover-color: Text color of the `bold` hue and `clear` fill combination in the hover state
  * @prop --ion-button-hue-bold-clear-hover-opacity: Opacity of the whole button of the `bold` hue and `clear` fill combination in the hover state
  * @prop --ion-button-hue-bold-clear-hover-background: Background of the `bold` hue and `clear` fill combination in the hover state
+ * @prop --ion-button-hue-bold-clear-hover-box-shadow: Box shadow of the `bold` hue and `clear` fill combination in the hover state
  * @prop --ion-button-hue-bold-clear-semantic-hover-background: Background of the `bold` hue and `clear` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-semantic-hover-color: Text color of the `bold` hue and `clear` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-activated-color: Text color of the `bold` hue and `clear` fill combination in the activated state
@@ -230,5 +246,10 @@
  * @prop --ion-button-hue-bold-clear-semantic-activated-color: Text color of the `bold` hue and `clear` fill combination in the activated state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-disabled-background: Background of the `bold` hue and `clear` fill combination in the disabled state
  * @prop --ion-button-hue-bold-clear-disabled-opacity: Opacity of the whole button of the `bold` hue and `clear` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-clear-disabled-color: Text color of the `bold` hue and `clear` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-clear-disabled-border-color: Border color of the `bold` hue and `clear` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-clear-disabled-box-shadow: Box shadow of the `bold` hue and `clear` fill combination in the disabled state
  * @prop --ion-button-hue-bold-clear-semantic-disabled-background: Background of the `bold` hue and `clear` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-clear-semantic-disabled-color: Text color of the `bold` hue and `clear` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-clear-semantic-disabled-border-color: Border color of the `bold` hue and `clear` fill combination in the disabled state when a semantic color is applied
  */
