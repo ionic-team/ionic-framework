@@ -135,11 +135,6 @@ export class Datetime implements ComponentInterface {
   private parsedYearValues?: number[];
   private parsedDayValues?: number[];
 
-  /**
-   * Set when the user completes a range interactively, so processValue
-   * can skip navigation and keep the calendar on the current month.
-   */
-  private rangeCompletedInteractively = false;
 
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
@@ -894,7 +889,6 @@ export class Datetime implements ComponentInterface {
     if (!current || isBefore(parts, current.start) || this.rangeContainsDisabledDate(current.start, parts)) {
       this.activeParts = { start: parts };
     } else {
-      this.rangeCompletedInteractively = true;
       this.activeParts = { start: current.start, end: parts };
     }
   };
@@ -1640,15 +1634,13 @@ export class Datetime implements ComponentInterface {
 
         this.activeParts = endParts ? { start: startParts, end: endParts } : { start: startParts };
         /**
-         * When the user just completed the range interactively, stay on the
-         * current month instead of jumping back to the start. The flag is
-         * set in setActivePartsRange and consumed here.
+         * Stay on the end date's month when it is already showing, such as
+         * right after the user picks it, instead of jumping back to the start.
          */
-        if (endParts && this.rangeCompletedInteractively) {
-          this.rangeCompletedInteractively = false;
-          return;
-        }
         navigateTo = startParts;
+        if (endParts && endParts.month === workingParts.month && endParts.year === workingParts.year) {
+          navigateTo = endParts;
+        }
       } else {
         this.activeParts = [];
         navigateTo = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
