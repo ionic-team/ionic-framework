@@ -135,7 +135,6 @@ export class Datetime implements ComponentInterface {
   private parsedYearValues?: number[];
   private parsedDayValues?: number[];
 
-
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
   private destroyOverlayPresentListener?: () => void;
