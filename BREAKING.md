@@ -89,7 +89,7 @@ Use the new token structure for global styles, or the corresponding CSS variable
 | `--transition` | `IonButton.transition` | `--ion-button-transition` |
 
 > [!NOTE]
-> `--background-activated-opacity`, `--background-focused-opacity` and `--background-hover-opacity` have been removed with no one-to-one replacement. Each state's background is now a single color that includes its opacity, so set the final color, for example `color-mix(in srgb, var(--ion-color-primary) 12%, transparent)`. States are also drawn on the native element itself, so styles targeting `::part(native)::after` no longer affect them.
+> `--background-activated-opacity`, `--background-focused-opacity` and `--background-hover-opacity` have been removed. A state's background now replaces the button's background instead of tinting it, so the opacity goes in the value itself. For a solid button, layer the tint over the base color, for example `linear-gradient(rgba(var(--ion-color-primary-contrast-rgb), 0.24), rgba(var(--ion-color-primary-contrast-rgb), 0.24)) var(--ion-color-primary)`. Outline and clear buttons have no background of their own, so the tint alone is enough, for example `rgba(var(--ion-color-primary-rgb), 0.12)`. States are also drawn on the native element itself, so styles targeting `::part(native)::after` no longer affect them.
 
 > [!NOTE]
 > `--opacity` has been removed with no replacement. Set `opacity` on `ion-button` instead.
