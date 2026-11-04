@@ -118,7 +118,7 @@ type IonButtonStateDefinition = {
     };
   };
 
-  /** Unset colors keep the default ones */
+  /** An unset `color` or `border.color` keeps the default one */
   disabled?: {
     background?: string;
 
@@ -151,7 +151,7 @@ type IonButtonSemanticDefinition = {
 
   activated?: IonButtonColorDefinition;
 
-  /** Unset colors keep the default ones */
+  /** An unset `color` or `border.color` keeps the default one */
   disabled?: {
     background?: string;
 

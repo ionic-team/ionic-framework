@@ -197,8 +197,8 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 }
 
 /**
- * Only the ionic theme sizes and spaces a slotted spinner. The other
- * themes fall back to the spinner's own size and no margin.
+ * A theme can size a slotted spinner for each button size. Without
+ * those tokens, the spinner keeps its own size.
  */
 @each $size in $sizes {
   @each $spinner-size in $spinner-sizes {
