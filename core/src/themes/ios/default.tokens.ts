@@ -968,7 +968,7 @@ export const defaultTheme: DefaultTheme = {
                   },
                 },
 
-                // Outline and clear tints use primary, unless the app sets `--ion-toolbar-color`
+                // Outline and clear tints stay primary, since `--ion-toolbar-color` has no `-rgb` variable to tint with
                 outline: {
                   focus: {
                     background: ionColor('primary', 'base', { alpha: 0.1 }),
