@@ -81,8 +81,8 @@ The `md` button now uses the Material Design 2 values below. To keep a previous 
 | Spinner in a button | the spinner's own size (`28px` by default) | `1.2857em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
 | Outline border | `2px`, the button's color | `1px`, the text color at `12%` | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
 | Solid elevation on hover and focus | the resting elevation | elevation 4 | `IonButton.hue.bold.solid.hover.box.shadow` and `.focus.box.shadow` |
-| Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` |
-| Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` |
+| Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` (`.semantic.disabled.color` and `.background` with a `color`) |
+| Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` (`.semantic.rippleEffect.opacity` with a `color`) |
 
 Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no elevation on hover or focus.
 
