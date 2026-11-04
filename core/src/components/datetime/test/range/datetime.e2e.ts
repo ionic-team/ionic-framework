@@ -285,7 +285,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(day18).toHaveAttribute('aria-label', 'Saturday, June 18, Check out');
     });
 
-    test('selecting a start date should announce to pick an end date', async ({ page }) => {
+    test('selecting a start date should announce the header text', async ({ page }) => {
       await fixture.goto(config);
 
       const day8 = fixture.getVisibleDay(8);
@@ -293,10 +293,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.waitForChanges();
 
       const liveRegion = page.locator('ion-datetime [aria-live="polite"]');
-      await expect(liveRegion).toContainText('select end date');
+      await expect(liveRegion).toContainText('Jun 8 - End date');
     });
 
-    test('aria-live announcement should clear after range is complete', async ({ page }) => {
+    test('completing the range should announce both dates', async ({ page }) => {
       await fixture.goto(config);
 
       const day8 = fixture.getVisibleDay(8);
@@ -308,7 +308,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.waitForChanges();
 
       const liveRegion = page.locator('ion-datetime [aria-live="polite"]');
-      await expect(liveRegion).toHaveCount(0);
+      await expect(liveRegion).toContainText('Jun 8 - Jun 18');
     });
 
     // ---------------------------------------------------------------

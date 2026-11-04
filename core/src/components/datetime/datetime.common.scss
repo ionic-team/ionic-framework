@@ -304,6 +304,28 @@
   z-index: 1;
 }
 
+/**
+ * Keep the range announcement available to screen readers
+ * without showing it or covering the calendar.
+ */
+.datetime-range-announcement {
+  @include margin(-1px);
+  @include padding(0);
+
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  border: 0;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+}
+
 // Range Selection Track
 // -----------------------------------
 
