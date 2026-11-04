@@ -294,7 +294,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('selecting a start date should announce the header text', async ({ page }) => {
-      await fixture.goto(config);
+      const datetime = await fixture.goto(config, RANGE_VALUE);
+
+      // Clear the range so we start fresh, keeping the calendar on June
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => el.reset('2022-06-01'));
+      await page.waitForChanges();
 
       const day8 = fixture.getVisibleDay(8);
       await day8.click();
@@ -305,7 +309,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('completing the range should announce both dates', async ({ page }) => {
-      await fixture.goto(config);
+      const datetime = await fixture.goto(config, RANGE_VALUE);
+
+      // Clear the range so we start fresh, keeping the calendar on June
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => el.reset('2022-06-01'));
+      await page.waitForChanges();
 
       const day8 = fixture.getVisibleDay(8);
       const day18 = fixture.getVisibleDay(18);
