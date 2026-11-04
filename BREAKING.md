@@ -84,7 +84,7 @@ The `md` button now uses the Material Design 2 values below. To keep a previous 
 | Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` (`.semantic.disabled.color` and `.background` with a `color`) |
 | Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` (`.semantic.rippleEffect.opacity` with a `color`) |
 
-Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no elevation on hover or focus.
+Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width and no elevation on hover or focus.
 
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 
