@@ -135,8 +135,30 @@ const DEFAULT_PALETTE = 'light';
 
   // Load theme tokens if the theme is valid
   const validThemes = ['ionic', 'ios', 'md', 'base'];
+  let themeReady = Promise.resolve();
   if (themeName && validThemes.includes(themeName)) {
-    loadThemeTokens(themeName, paletteName).finally(() => {
+    // Store existing theme set from the app initialization
+    const customTheme = window.Ionic?.config?.customTheme;
+    // Load the default tokens for the theme
+    const themeLoaded = import(`/themes/${themeName}/default.tokens.js`).then((defaultTokens) =>
+      buildTheme(defaultTokens.defaultTheme, customTheme, paletteName)
+    );
+
+    /*
+     * Components read the theme's config when they first render, and don't
+     * render again when it changes. The tokens load asynchronously, so
+     * `initialize()` in ionic-global.ts can run before they arrive. Holding
+     * back the definitions of Ionic's components until the theme's config is
+     * set means none of them renders without it.
+     *
+     * Only pages with the theme in the URL query need this: `setContent`
+     * sets its own theme before Ionic loads.
+     */
+    if (themeQuery) {
+      holdComponentDefinitions(themeLoaded.then(setThemeConfig).catch(() => {}));
+    }
+
+    themeReady = loadThemeTokens(themeName, themeLoaded).finally(() => {
       window.__ionicTestThemeReady = true;
     });
   } else {
@@ -188,30 +210,82 @@ const DEFAULT_PALETTE = 'light';
   }
 
   // TODO(FW-6750): Determine if this function can be removed once the theme tokens can be imported directly into the test pages
-  async function loadThemeTokens(themeName, paletteName) {
-    try {
-      // Store existing theme set from the app initialization
-      const customTheme = window.Ionic?.config?.customTheme;
-      // Load the default tokens for the theme
-      const defaultTokens = await import(`/themes/${themeName}/default.tokens.js`);
-      let theme = defaultTokens.defaultTheme;
-      // Merge with existing theme to preserve any customizations
-      if (customTheme) {
-        theme = deepMerge(theme, customTheme);
+  function buildTheme(tokensTheme, customTheme, paletteName) {
+    let theme = tokensTheme;
+    // Merge with existing theme to preserve any customizations
+    if (customTheme) {
+      theme = deepMerge(theme, customTheme);
+    }
+
+    // If a specific palette is requested, modify the palette structure
+    // to set the enabled property to 'always'
+    // TODO(FW-4004): Implement dark palette
+    if (paletteName === 'dark' && theme.palette?.dark) {
+      theme.palette.dark.enabled = 'always';
+    // TODO(FW-4005): Implement high contrast palette
+    } else if (paletteName === 'high-contrast' && theme.palette?.highContrast) {
+      theme.palette.highContrast.enabled = 'always';
+    // TODO(FW-4005): Implement high contrast dark palette
+    } else if (paletteName === 'high-contrast-dark' && theme.palette?.highContrastDark) {
+      theme.palette.highContrastDark.enabled = 'always';
+    }
+
+    return theme;
+  }
+
+  /*
+   * Sets the theme's config before any component renders. Before `initialize()`
+   * runs, the stashed theme is merged by `initialize()` itself. After it runs,
+   * the theme's global keys, such as `rippleEffect`, are set the same way
+   * `initialize()` sets them.
+   */
+  function setThemeConfig(theme) {
+    window.Ionic = window.Ionic || {};
+    window.Ionic.config = window.Ionic.config || {};
+
+    const config = window.Ionic.config;
+    if (!config.set) {
+      config.customTheme = theme;
+      return;
+    }
+
+    config.set('customTheme', theme);
+
+    const { components, ...globalConfig } = theme.config || {};
+    Object.entries(globalConfig).forEach(([key, value]) => {
+      if (value !== null && typeof value === 'object') {
+        config.set(key, { ...config.get(key, {}), ...value });
+      } else {
+        config.set(key, value);
+      }
+    });
+  }
+
+  /*
+   * Defers defining Ionic's components until `ready` settles. Elements already
+   * on the page upgrade and render once they are defined.
+   */
+  function holdComponentDefinitions(ready) {
+    const define = customElements.define.bind(customElements);
+    let released = false;
+    ready.then(() => {
+      released = true;
+    });
+
+    customElements.define = (name, constructor, options) => {
+      if (released || !name.startsWith('ion-')) {
+        define(name, constructor, options);
+        return;
       }
 
-      // If a specific palette is requested, modify the palette structure
-      // to set the enabled property to 'always'
-      // TODO(FW-4004): Implement dark palette
-      if (paletteName === 'dark' && theme.palette?.dark) {
-        theme.palette.dark.enabled = 'always';
-      // TODO(FW-4005): Implement high contrast palette
-      } else if (paletteName === 'high-contrast' && theme.palette?.highContrast) {
-        theme.palette.highContrast.enabled = 'always';
-      // TODO(FW-4005): Implement high contrast dark palette
-      } else if (paletteName === 'high-contrast-dark' && theme.palette?.highContrastDark) {
-        theme.palette.highContrastDark.enabled = 'always';
-      }
+      ready.then(() => define(name, constructor, options));
+    };
+  }
+
+  // TODO(FW-6750): Determine if this function can be removed once the theme tokens can be imported directly into the test pages
+  async function loadThemeTokens(themeName, themeLoaded) {
+    try {
+      const theme = await themeLoaded;
 
       window.Ionic = window.Ionic || {};
       window.Ionic.config = window.Ionic.config || {};
@@ -251,6 +325,46 @@ const DEFAULT_PALETTE = 'light';
       console.error(`Failed to load theme tokens for ${themeName}:`, error);
     }
   }
+
+  /*
+   * Freezes the ripple of every element on the page that has the `ion-activated` class
+   * and renders an `ion-ripple-effect`, so screenshots show the full pressed state.
+   * The class alone leaves out the ripple, which only appears on a real press.
+   */
+  async function freezeRipples() {
+    const elements = [...document.querySelectorAll('.ion-activated')];
+
+    await Promise.all(
+      elements.map(async (el) => {
+        await el.componentOnReady?.();
+
+        // Only the `md` mode renders a ripple
+        const ripple = el.shadowRoot?.querySelector('ion-ripple-effect') ?? el.querySelector('ion-ripple-effect');
+        if (!ripple) {
+          return;
+        }
+
+        /*
+         * `addRipple` resolves once the ripple reaches its full size. Never calling
+         * the remove function it resolves with keeps the ripple on screen.
+         */
+        const rect = el.getBoundingClientRect();
+        await ripple.addRipple(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      })
+    );
+  }
+
+  /*
+   * Tracks when the ripples are frozen. Tests wait on this (see the Playwright
+   * `goto` helper) so screenshots are not taken while a ripple is still growing.
+   */
+  window.__ionicTestRipplesFrozen = false;
+
+  Promise.all([whenConfigReady(), themeReady])
+    .then(() => freezeRipples())
+    .finally(() => {
+      window.__ionicTestRipplesFrozen = true;
+    });
 
   window.Ionic = window.Ionic || {};
   window.Ionic.config = window.Ionic.config || {};
