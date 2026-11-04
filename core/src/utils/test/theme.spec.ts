@@ -1148,9 +1148,8 @@ describe('INTERNAL_CHILD_COMPONENTS', () => {
   const exempt = ['IonRippleEffect'];
 
   /**
-   * Token CSS can't reach a migrated child that a parent renders in its own shadow
-   * root, like datetime's buttons, unless the parent is in `INTERNAL_CHILD_COMPONENTS`.
-   * A missing entry fails silently, so this reads each shadow component's TSX.
+   * A missing `INTERNAL_CHILD_COMPONENTS` entry fails silently, so this reads
+   * each shadow component's TSX.
    */
   it('should list every migrated component rendered in a shadow root', () => {
     const missing: string[] = [];

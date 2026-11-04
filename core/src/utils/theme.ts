@@ -554,45 +554,12 @@ export const generateComponentsThemeCSS = (components: any): string => {
 };
 
 /**
- * Components that render a child component inside their own shadow root.
+ * Components that render a migrated child component in their own shadow root.
  *
- * Token CSS is added to the document head, so its selectors can't reach an
- * element inside a shadow root: `ion-button { … }` styles every `ion-button`
- * in the page except the Cancel button that `ion-datetime` renders itself.
- * Custom properties do inherit into a shadow root, though, so each host listed
- * here joins the child's selectors and passes the tokens down:
- *
- * ```css
- * ion-button,
- * ion-datetime,
- * ion-input-password-toggle {
- *   --ion-button-margin-top: 4px;
- * }
- *
- * ion-datetime,
- * ion-datetime ion-button {
- *   --ion-button-margin-top: 0px;
- * }
- * ```
- *
- * The internal button inherits the value from its host, and its stylesheet reads it:
- *
- * ```html
- * <ion-datetime>                        <!-- --ion-button-margin-top: 0px -->
- *   #shadow-root
- *     <ion-button>Cancel</ion-button>   <!-- inherits 0px -->
- * </ion-datetime>
- * ```
- *
- * ```css
- * // button.scss, compiled
- * :host {
- *   margin-top: var(--ion-button-margin-top);
- * }
- * ```
- *
- * Add a component here when it starts rendering a migrated component in its
- * shadow root, or that child renders with no tokens. A spec test checks this.
+ * Token CSS is added to the document head, so its selectors can't reach that
+ * child, but custom properties inherit into a shadow root. Each host listed here
+ * joins the child's selectors, so the child inherits its tokens from the host.
+ * A spec test fails when a host is missing.
  */
 export const INTERNAL_CHILD_COMPONENTS: Record<string, string[]> = {
   IonDatetime: ['IonButton'],
