@@ -102,6 +102,15 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
       await fixture.goto(config, RANGE_VALUE);
       await fixture.expectRangeDatePicker('committed', screenshot);
     });
+  });
+});
+
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: range selection states (visual regressions)'), () => {
+    let fixture: DatetimeRangeFixture;
+    test.beforeEach(async ({ page }) => {
+      fixture = new DatetimeRangeFixture(page);
+    });
 
     test('partial range (start only) should not have visual regressions', async () => {
       await fixture.goto(config, [RANGE_START]);
