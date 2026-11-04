@@ -514,23 +514,185 @@ export const generateBreakpointCSS = (): string => {
  * @returns string containing the component's themed CSS variables
  */
 export const generateComponentsThemeCSS = (components: any): string => {
-  let css = '';
+  const componentBlocks: string[] = [];
+  const childBlocks: string[] = [];
 
   for (const [component, componentTokens] of Object.entries(components)) {
     const componentTag = convertToKebabCase(component);
-    const vars = generateCSSVars(componentTokens, `--${componentTag}-`);
+    const { ownTokens, children } = splitChildComponents(componentTokens, componentTag);
 
-    const componentBlock = `
-      ${componentTag} {
-        ${vars}
-      }
-    `;
+    /**
+     * The component's own tokens, set on its tag and on any parent that renders
+     * it inside a shadow root (refer to `INTERNAL_CHILD_COMPONENTS`):
+     * `ion-button, ion-datetime, ion-input-password-toggle { --ion-button-*: … }`.
+     *
+     * An entry that only nests children has no tokens of its own, so it gets no
+     * empty block.
+     */
+    if (Object.keys(ownTokens).length > 0 || children.length === 0) {
+      const selectors = [componentTag, ...getInternalRenderHosts(component)];
+      componentBlocks.push(generateBlock(selectors, ownTokens, componentTag));
+    }
 
-    css += componentBlock;
+    /**
+     * A nested child's tokens, scoped to the parent:
+     * `IonToolbar: { IonButtons: { IonButton } }` sets the button's own
+     * `--ion-button-*` properties in `ion-toolbar ion-buttons ion-button { … }`.
+     */
+    for (const [child, childTokens, parentSelector] of children) {
+      childBlocks.push(...generateChildBlocks(component, child, childTokens, parentSelector));
+    }
   }
 
-  return css;
+  /**
+   * Child blocks come last, so a parent's overrides always win over the child's own tokens.
+   * A shadow root host sets both at the same specificity, so only the order decides:
+   * `ion-button, ion-datetime { --ion-button-*: … }` then
+   * `ion-datetime, ion-datetime ion-button { --ion-button-*: … }`.
+   */
+  return [...componentBlocks, ...childBlocks].join('');
 };
+
+/**
+ * Components that render a migrated child component in their own shadow root.
+ *
+ * Token CSS is added to the document head, so its selectors can't reach that
+ * child, but custom properties inherit into a shadow root. Each host listed here
+ * joins the child's selectors, so the child inherits its tokens from the host.
+ * A spec test fails when a host is missing.
+ */
+export const INTERNAL_CHILD_COMPONENTS: Record<string, string[]> = {
+  IonDatetime: ['IonButton'],
+  IonInputPasswordToggle: ['IonButton'],
+};
+
+/**
+ * Returns the tags of the components that render `component` in their shadow root.
+ */
+const getInternalRenderHosts = (component: string): string[] =>
+  Object.entries(INTERNAL_CHILD_COMPONENTS)
+    .filter(([, children]) => children.includes(component))
+    .map(([host]) => convertToKebabCase(host));
+
+/**
+ * A key such as `IonButton` inside a component's tokens is a child component.
+ */
+const isChildComponentKey = (key: string) => /^Ion[A-Z]/.test(key);
+
+/**
+ * Keys that group a parent's tokens by whether the parent has a color, and the
+ * selector each one adds to the parent of its nested children.
+ */
+export const COLOR_KEY_SELECTORS = new Map([
+  ['default', ':not(.ion-color)'],
+  ['semantic', '.ion-color'],
+]);
+
+/**
+ * Separates a component's own tokens from the child components nested in them.
+ * Each child comes with the selector of the parent it is nested in.
+ *
+ * Children nested under `semantic` only apply when the parent has a color, and
+ * those under `default` only when it has none, so their parent selector gets
+ * `.ion-color` or `:not(.ion-color)`:
+ *
+ * ```ts
+ * IonToolbar: {
+ *   default: {
+ *     IonButton: { … },
+ *   },
+ *   semantic: {
+ *     IonButtons: { IonButton: { … } },
+ *   },
+ * }
+ * ```
+ *
+ * Becomes `ion-toolbar:not(.ion-color) ion-button { … }` and
+ * `ion-toolbar.ion-color ion-buttons ion-button { … }`. Any other key under
+ * `default` or `semantic` stays one of the parent's own tokens.
+ */
+const splitChildComponents = (componentTokens: any, selector: string) => {
+  const ownTokens: Record<string, unknown> = {};
+  const children: [string, unknown, string][] = [];
+
+  for (const [key, value] of Object.entries(componentTokens ?? {})) {
+    const colorSelector = COLOR_KEY_SELECTORS.get(key);
+
+    if (isChildComponentKey(key)) {
+      children.push([key, value, selector]);
+    } else if (colorSelector !== undefined && value !== null && typeof value === 'object') {
+      const colorTokens: Record<string, unknown> = {};
+
+      for (const [colorKey, colorValue] of Object.entries(value)) {
+        if (isChildComponentKey(colorKey)) {
+          children.push([colorKey, colorValue, `${selector}${colorSelector}`]);
+        } else {
+          colorTokens[colorKey] = colorValue;
+        }
+      }
+
+      if (Object.keys(colorTokens).length > 0) {
+        ownTokens[key] = colorTokens;
+      }
+    } else {
+      ownTokens[key] = value;
+    }
+  }
+
+  return { ownTokens, children };
+};
+
+/**
+ * Generates the blocks for a child component nested in a parent's tokens, so the
+ * parent can theme the children it contains without new token names:
+ *
+ * ```ts
+ * IonDatetime: {
+ *   IonButton: { margin: { top: '0px' } },
+ * }
+ * ```
+ *
+ * Becomes:
+ *
+ * ```css
+ * ion-datetime,
+ * ion-datetime ion-button {
+ *   --ion-button-margin-top: 0px;
+ * }
+ * ```
+ *
+ * The descendant selector reaches buttons in the light DOM, and the parent's
+ * own selector is added when it renders the child in its shadow root (refer to
+ * `INTERNAL_CHILD_COMPONENTS`).
+ */
+const generateChildBlocks = (parent: string, child: string, childTokens: any, parentSelector: string): string[] => {
+  const childTag = convertToKebabCase(child);
+  const selector = `${parentSelector} ${childTag}`;
+  const { ownTokens, children } = splitChildComponents(childTokens, selector);
+
+  const blocks: string[] = [];
+
+  if (Object.keys(ownTokens).length > 0) {
+    const rendersInternally = INTERNAL_CHILD_COMPONENTS[parent]?.includes(child) ?? false;
+    const selectors = rendersInternally ? [parentSelector, selector] : [selector];
+    blocks.push(generateBlock(selectors, ownTokens, childTag));
+  }
+
+  for (const [grandchild, grandchildTokens, grandchildParentSelector] of children) {
+    blocks.push(...generateChildBlocks(child, grandchild, grandchildTokens, grandchildParentSelector));
+  }
+
+  return blocks;
+};
+
+/**
+ * Generates one block of `--<tag>-` custom properties for a list of selectors.
+ */
+const generateBlock = (selectors: string[], tokens: Record<string, unknown>, tag: string): string => `
+      ${selectors.join(',\n      ')} {
+        ${generateCSSVars(tokens, `--${tag}-`)}
+      }
+    `;
 
 /**
  * Applies a component theme to an element if it exists in the custom theme
@@ -617,6 +779,19 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
 
   const toHex = (n: number) => n.toString(16).padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
+/**
+ * Lays a translucent color over a base color, for a `background` value.
+ * Renders the same as `color-mix()`, which is above Ionic's browser floor.
+ *
+ * @param base Opaque color underneath (e.g. `ionColor('primary', 'base')`)
+ * @param color Translucent color on top (e.g. `'rgba(255, 255, 255, 0.24)'`)
+ *
+ * @returns A `background` value (e.g. `'linear-gradient(rgba(...), rgba(...)) var(...)'`)
+ */
+export const overlay = (base: string, color: string): string => {
+  return `linear-gradient(${color}, ${color}) ${base}`;
 };
 
 /**

@@ -1,23 +1,31 @@
 import { newSpecPage } from '@stencil/core/testing';
+import { readdirSync, readFileSync } from 'fs';
+import { join } from 'path';
 
 import { Buttons } from '../../components/buttons/buttons';
 import { CardContent } from '../../components/card-content/card-content';
 import { Chip } from '../../components/chip/chip';
+import { defaultTheme as ionicTheme } from '../../themes/ionic/default.tokens';
+import { defaultTheme as iosTheme } from '../../themes/ios/default.tokens';
+import { defaultTheme as mdTheme } from '../../themes/md/default.tokens';
 import { config } from '@global/config';
 
 import { SCREEN_BREAKPOINT_NAMES, resetScreenBreakpoints } from '../breakpoints';
 import {
+  COLOR_KEY_SELECTORS,
   generateBreakpointCSS,
   generateColorClasses,
   generateComponentsThemeCSS,
   generateCSSVars,
   generateGlobalThemeCSS,
   getClassList,
+  INTERNAL_CHILD_COMPONENTS,
   getClassMap,
   getCustomTheme,
   hexToRgb,
   injectCSS,
   mix,
+  overlay,
 } from '../theme';
 
 describe('getClassList()', () => {
@@ -846,6 +854,335 @@ describe('generateComponentsThemeCSS', () => {
 
     expect(css).toBe('');
   });
+
+  it('should generate a descendant block for a child component', () => {
+    const components = {
+      IonButtons: {
+        gap: '4px',
+        IonButton: {
+          padding: { top: '0px' },
+        },
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-buttons {
+        --ion-buttons-gap: 4px;
+      }
+
+      ion-buttons ion-button {
+        --ion-button-padding-top: 0px;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should add the parents that render a child internally to its selectors', () => {
+    const components = {
+      IonButton: {
+        padding: { top: '13px' },
+      },
+      IonDatetime: {
+        IonButton: {
+          padding: { top: '3px' },
+        },
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-button,
+      ion-datetime,
+      ion-input-password-toggle {
+        --ion-button-padding-top: 13px;
+      }
+
+      ion-datetime,
+      ion-datetime ion-button {
+        --ion-button-padding-top: 3px;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should generate child blocks after every component block', () => {
+    const components = {
+      IonButtons: {
+        IonButton: {
+          padding: { top: '0px' },
+        },
+      },
+      IonChip: {
+        gap: '4px',
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-chip {
+        --ion-chip-gap: 4px;
+      }
+
+      ion-buttons ion-button {
+        --ion-button-padding-top: 0px;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should not generate a block for a parent that only themes its children', () => {
+    const components = {
+      IonToolbar: {
+        IonButtons: {
+          IonButton: {
+            color: 'red',
+          },
+        },
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components);
+
+    expect(css.replace(/\s/g, '')).toBe(
+      `
+      ion-toolbar ion-buttons ion-button {
+        --ion-button-color: red;
+      }
+    `.replace(/\s/g, '')
+    );
+  });
+
+  it('should add the color class to the parent of a semantic child', () => {
+    const components = {
+      IonToolbar: {
+        IonButtons: {
+          IonButton: {
+            color: 'red',
+          },
+        },
+        semantic: {
+          IonButtons: {
+            IonButton: {
+              color: 'blue',
+            },
+          },
+        },
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-toolbar ion-buttons ion-button {
+        --ion-button-color: red;
+      }
+
+      ion-toolbar.ion-color ion-buttons ion-button {
+        --ion-button-color: blue;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should exclude the color class from the parent of a default child', () => {
+    const components = {
+      IonToolbar: {
+        default: {
+          IonButton: {
+            color: 'red',
+          },
+        },
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-toolbar:not(.ion-color) ion-button {
+        --ion-button-color: red;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should keep the semantic tokens that are not a child as the parent tokens', () => {
+    const components = {
+      IonToolbar: {
+        semantic: {
+          background: 'red',
+          IonButton: {
+            color: 'blue',
+          },
+        },
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-toolbar {
+        --ion-toolbar-semantic-background: red;
+      }
+
+      ion-toolbar.ion-color ion-button {
+        --ion-button-color: blue;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+});
+
+describe('nested child components', () => {
+  const isChild = (key: string) => /^Ion[A-Z]/.test(key);
+
+  const leafKeys = (tokens: any, prefix: string): string[] =>
+    tokens !== null && typeof tokens === 'object'
+      ? Object.entries(tokens).flatMap(([key, value]) => leafKeys(value, `${prefix}.${key}`))
+      : [prefix];
+
+  const ownLeafKeys = (tokens: any): string[] =>
+    Object.entries(tokens ?? {}).flatMap(([key, value]) => {
+      if (isChild(key)) {
+        return [];
+      }
+      if (COLOR_KEY_SELECTORS.has(key)) {
+        return ownLeafKeys(value).map((colorKey) => `${key}.${colorKey}`);
+      }
+      return leafKeys(value, key);
+    });
+
+  /**
+   * Every child nested in a component's tokens, with how deep it is, whether it
+   * sits under `default` or `semantic`, and the keys it sets.
+   */
+  const nestedChildren = (
+    tokens: any,
+    depth = 1,
+    colored = false
+  ): { child: string; depth: number; colored: boolean; keys: string[] }[] =>
+    Object.entries(tokens ?? {}).flatMap(([key, value]) => {
+      if (COLOR_KEY_SELECTORS.has(key)) {
+        return nestedChildren(value, depth, true);
+      }
+      if (!isChild(key)) {
+        return [];
+      }
+      return [{ child: key, depth, colored, keys: ownLeafKeys(value) }, ...nestedChildren(value, depth + 1, colored)];
+    });
+
+  /**
+   * The color class makes a child under `default` or `semantic` outrank a deeper
+   * child nested without it: `ion-toolbar:not(.ion-color) ion-button` beats
+   * `ion-toolbar ion-buttons ion-button`. The deeper child would lose every key
+   * the two share, so they must not share any.
+   */
+  it('should not let a plain child share keys with a shallower one under default or semantic', () => {
+    const clashes: string[] = [];
+
+    for (const [name, theme] of Object.entries({ ios: iosTheme, md: mdTheme, ionic: ionicTheme })) {
+      for (const [component, tokens] of Object.entries(theme.components ?? {})) {
+        const children = nestedChildren(tokens);
+
+        for (const plain of children.filter((child) => !child.colored)) {
+          for (const colored of children.filter(
+            (child) => child.colored && child.child === plain.child && child.depth < plain.depth
+          )) {
+            const shared = plain.keys.filter((key) => colored.keys.includes(key));
+            if (shared.length > 0) {
+              clashes.push(`${name} ${component}: ${shared.join(', ')}`);
+            }
+          }
+        }
+      }
+    }
+
+    expect(clashes).toEqual([]);
+  });
+});
+
+describe('INTERNAL_CHILD_COMPONENTS', () => {
+  const COMPONENTS_DIR = join(__dirname, '../../components');
+
+  const toPascalCase = (tag: string) =>
+    tag
+      .split('-')
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join('');
+
+  const isChild = (key: string) => /^Ion[A-Z]/.test(key);
+
+  /**
+   * Migrated components have tokens of their own in at least one theme. Entries
+   * that only nest children, directly or under `default` or `semantic`, are skipped.
+   */
+  const migratedComponents = [
+    ...new Set(
+      [iosTheme, mdTheme, ionicTheme].flatMap((theme) =>
+        Object.entries(theme.components ?? {})
+          .filter(([, tokens]) =>
+            Object.entries(tokens ?? {}).some(([key, value]) =>
+              COLOR_KEY_SELECTORS.has(key)
+                ? Object.keys(value ?? {}).some((colorKey) => !isChild(colorKey))
+                : !isChild(key)
+            )
+          )
+          .map(([name]) => name)
+      )
+    ),
+  ];
+
+  /**
+   * The ripple's only token falls back to the same value in its stylesheet,
+   * so it renders correctly inside a shadow root without being listed.
+   */
+  const exempt = ['IonRippleEffect'];
+
+  /**
+   * A missing `INTERNAL_CHILD_COMPONENTS` entry fails silently, so this reads
+   * each shadow component's TSX.
+   */
+  it('should list every migrated component rendered in a shadow root', () => {
+    const missing: string[] = [];
+
+    for (const dir of readdirSync(COMPONENTS_DIR)) {
+      const file = join(COMPONENTS_DIR, dir, `${dir}.tsx`);
+      let source: string;
+      try {
+        source = readFileSync(file, 'utf8');
+      } catch {
+        continue;
+      }
+
+      if (!source.includes('shadow: true')) {
+        continue;
+      }
+
+      const parent = toPascalCase(`ion-${dir}`);
+      const renderedTags = new Set([...source.matchAll(/<(ion-[a-z-]+)[\s>/]/g)].map((match) => match[1]));
+
+      for (const tag of renderedTags) {
+        const child = toPascalCase(tag);
+        if (child === parent || exempt.includes(child) || !migratedComponents.includes(child)) {
+          continue;
+        }
+        if (!INTERNAL_CHILD_COMPONENTS[parent]?.includes(child)) {
+          missing.push(`${parent} renders ${child}`);
+        }
+      }
+    }
+
+    expect(missing).toEqual([]);
+  });
 });
 
 describe('generateBreakpointCSS', () => {
@@ -1142,5 +1479,13 @@ describe('mix()', () => {
 
     // 100% weight should return mix color
     expect(mix('#123456', '#abcdef', '100%')).toBe('#abcdef');
+  });
+});
+
+describe('overlay()', () => {
+  it('should lay the translucent color over the base color as one background value', () => {
+    expect(overlay('var(--ion-color-primary)', 'rgba(255, 255, 255, 0.24)')).toBe(
+      'linear-gradient(rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.24)) var(--ion-color-primary)'
+    );
   });
 });
