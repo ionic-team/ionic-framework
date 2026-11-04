@@ -2872,10 +2872,15 @@ export class Datetime implements ComponentInterface {
                       if (!this.isRangeMode) {
                         this.activeParts = { ...activePart, ...referenceParts };
                       }
-                      this.animateToDate(referenceParts);
                       if (this.isRangeMode) {
-                        this.setActiveParts(referenceParts);
+                        /**
+                         * Wait for the calendar to reach the adjacent month before
+                         * updating the range. setActiveParts also moves workingParts,
+                         * which would make the scroll overshoot by a month.
+                         */
+                        this.animateToDate(referenceParts).then(() => this.setActiveParts(referenceParts));
                       } else {
+                        this.animateToDate(referenceParts);
                         this.confirm();
                       }
                     } else {
