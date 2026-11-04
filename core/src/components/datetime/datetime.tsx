@@ -669,6 +669,7 @@ export class Datetime implements ComponentInterface {
        * selecting anything so the user begins a fresh selection.
        */
       this.activeParts = [];
+      this.hasUnconfirmedSelection = false;
       if (startDate) {
         const parsed = parseDate(startDate);
         if (parsed) {

@@ -318,6 +318,47 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
       await expect(datetime.locator('[data-month="6"][data-day="18"]')).toHaveClass(/calendar-day-range-end/);
     });
 
+    test('should keep the selection set by reset() before dismissing a range without confirming', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-modal>
+          <ion-datetime locale="en-US" presentation="date" selection-mode="range" show-default-buttons="true"></ion-datetime>
+        </ion-modal>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-08', '2022-06-18'];
+        </script>
+      `,
+        config
+      );
+      const modal = page.locator('ion-modal');
+      const datetime = page.locator('ion-datetime');
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      // Open the modal and make an unconfirmed selection
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+      await page.locator('ion-datetime.datetime-ready').waitFor();
+
+      // Click a day to start a new range (unconfirmed)
+      await datetime.locator('[data-month="6"][data-day="25"]').click();
+      await page.waitForChanges();
+
+      // Call reset() to clear and dismiss without confirming
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => el.reset('2022-06-01'));
+      await modal.evaluate((el: HTMLIonModalElement) => el.dismiss(undefined, 'backdrop'));
+      await ionModalDidDismiss.next();
+
+      // Reopen — reset() should have stuck, no stale selection restored
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+      await page.locator('ion-datetime.datetime-ready').waitFor();
+
+      await expect(datetime.locator('.calendar-day-range-start')).toHaveCount(0);
+      await expect(datetime.locator('.calendar-day-range-end')).toHaveCount(0);
+    });
+
     test('should keep the selection when the time picker inside a popover is dismissed', async ({ page }) => {
       await page.setContent(
         `
