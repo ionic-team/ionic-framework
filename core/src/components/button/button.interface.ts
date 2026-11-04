@@ -137,7 +137,7 @@ type IonButtonSemanticDefinition = {
   };
 };
 
-/** The ripple shown while the button is pressed, which only renders in `md` mode */
+/** The ripple shown while the button is pressed, which only renders when `rippleEffect` is enabled */
 type IonButtonRippleEffectDefinition = {
   color?: string;
   opacity?: string | number;

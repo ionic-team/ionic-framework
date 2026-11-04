@@ -354,8 +354,9 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'contrast'),
             },
 
+            // The ripple is the pressed feedback
             activated: {
-              background: ionColor('primary', 'shade'),
+              background: ionColor('primary', 'base'),
               color: ionColor('primary', 'contrast'),
             },
 
@@ -389,7 +390,7 @@ export const defaultTheme: DefaultTheme = {
               },
 
               activated: {
-                background: currentColor('shade'),
+                background: currentColor('base'),
                 color: currentColor('contrast'),
               },
 
@@ -436,8 +437,9 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'foreground'),
             },
 
+            // The ripple is the pressed feedback
             activated: {
-              background: ionColor('primary', 'shade', { subtle: true }),
+              background: baseColors.backgroundColor,
               color: ionColor('primary', 'foreground'),
             },
 
@@ -474,7 +476,7 @@ export const defaultTheme: DefaultTheme = {
               },
 
               activated: {
-                background: currentColor('shade', { subtle: true }),
+                background: baseColors.backgroundColor,
                 color: currentColor('foreground'),
               },
 
@@ -515,8 +517,9 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'foreground'),
             },
 
+            // The ripple is the pressed feedback
             activated: {
-              background: ionColor('primary', 'shade', { subtle: true }),
+              background: 'transparent',
               color: ionColor('primary', 'foreground'),
             },
 
@@ -549,7 +552,7 @@ export const defaultTheme: DefaultTheme = {
               },
 
               activated: {
-                background: currentColor('shade', { subtle: true }),
+                background: 'transparent',
                 color: currentColor('foreground'),
               },
 
@@ -1008,6 +1011,10 @@ export const defaultTheme: DefaultTheme = {
                   color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
                 },
 
+                activated: {
+                  background: 'transparent',
+                },
+
                 disabled: {
                   background: 'transparent',
                 },
@@ -1080,6 +1087,10 @@ export const defaultTheme: DefaultTheme = {
                 },
 
                 focus: {
+                  background: 'transparent',
+                },
+
+                activated: {
                   background: 'transparent',
                 },
 
