@@ -6,7 +6,7 @@ import { config } from '../../global/config';
 import type { Color } from '../../interface';
 import type { Hue } from '../../themes/themes.interfaces';
 
-import type { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from './badge.interfaces';
+import type { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from './badge.interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.

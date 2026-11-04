@@ -37,9 +37,7 @@ export type IonTitleRecipe = {
     };
   };
 
-  letter?: {
-    spacing?: string;
-  };
+  letterSpacing?: string;
 
   // TODO(FW-6864): remove when ion-toolbar titlePlacement works in every theme (ios center, md start)
   position?: {

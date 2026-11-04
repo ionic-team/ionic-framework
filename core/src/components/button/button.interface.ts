@@ -1,5 +1,5 @@
 import type { Hue, IonMargin, IonPadding } from '../../themes/themes.interfaces';
-import type { SpinnerSize } from '../spinner/spinner.interfaces';
+import type { SpinnerSize } from '../spinner/spinner.interface';
 
 export const ION_BUTTON_FILLS = ['solid', 'outline', 'clear'] as const;
 export type IonButtonFill = (typeof ION_BUTTON_FILLS)[number];
@@ -137,7 +137,7 @@ type IonButtonSemanticDefinition = {
   };
 };
 
-/** The ripple shown while the button is pressed, which only renders in `md` mode */
+/** The ripple shown while the button is pressed, which only renders when `rippleEffect` is enabled */
 type IonButtonRippleEffectDefinition = {
   color?: string;
   opacity?: string | number;
