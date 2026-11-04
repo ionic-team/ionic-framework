@@ -677,6 +677,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(jul2).toHaveAttribute('part', /range-end/);
       await expect(jul2).toHaveAttribute('part', /range-selection/);
       await expect(jul2Wrapper).toHaveAttribute('part', /range-track/);
+
+      // Wait for the scroll to settle and verify the calendar didn't overshoot
+      const monthYearToggle = datetime.locator('.calendar-month-year-toggle');
+      await expect(monthYearToggle).toContainText('July 2022');
     });
 
     // ---------------------------------------------------------------
