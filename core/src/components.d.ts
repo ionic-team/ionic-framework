@@ -1296,11 +1296,11 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
+          * A callback used to format the header text that shows how many dates are selected. In multiple mode this is only used when there are 0 or more than 1 selected. In range mode it is always called with `[startDate]` or `[startDate, endDate]`. By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
+          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings when using `multiple="true"` or `selectionMode="range"`. For range mode the array contains `[startDate, endDate]`, or `[startDate]` for a partial selection.
          */
         "value"?: string | string[] | null;
         /**
@@ -7238,11 +7238,11 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
+          * A callback used to format the header text that shows how many dates are selected. In multiple mode this is only used when there are 0 or more than 1 selected. In range mode it is always called with `[startDate]` or `[startDate, endDate]`. By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
+          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings when using `multiple="true"` or `selectionMode="range"`. For range mode the array contains `[startDate, endDate]`, or `[startDate]` for a partial selection.
          */
         "value"?: string | string[] | null;
         /**
