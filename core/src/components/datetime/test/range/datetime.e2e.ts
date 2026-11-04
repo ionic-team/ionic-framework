@@ -260,8 +260,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await expect(day8).toHaveAttribute('aria-label', 'Wednesday, June 8, Start date');
       await expect(day18).toHaveAttribute('aria-label', 'Saturday, June 18, End date');
-      // Days inside the range are announced as "in range"
-      await expect(day12).toHaveAttribute('aria-label', 'Sunday, June 12, in range');
+      await expect(day12).toHaveAttribute('aria-label', 'Sunday, June 12');
     });
 
     test('single-day range should be announced as both start and end', async () => {

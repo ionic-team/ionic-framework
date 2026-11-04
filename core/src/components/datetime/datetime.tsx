@@ -2808,9 +2808,6 @@ export class Datetime implements ComponentInterface {
               if (isRangeEnd) {
                 rangeAriaLabel += `, ${this.endDateLabel}`;
               }
-              if (isInRange) {
-                rangeAriaLabel += ', in range';
-              }
             }
 
             return (
