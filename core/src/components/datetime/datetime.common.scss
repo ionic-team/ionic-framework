@@ -127,6 +127,26 @@
   .datetime-action-buttons ion-button[disabled] {
     opacity: 1;
   }
+
+  /**
+   * Disabled action buttons keep their enabled colors
+   * in readonly mode, for themes that show a disabled
+   * button through its colors
+   */
+  .datetime-action-buttons ion-button[disabled] {
+    @each $fill in (solid, outline, clear) {
+      // The datetime's buttons only use the bold hue
+      $token: --ion-button-hue-bold-#{$fill};
+
+      #{$token}-disabled-background: var(#{$token}-default-background);
+      #{$token}-disabled-border-color: var(#{$token}-default-border-color);
+      #{$token}-disabled-box-shadow: var(#{$token}-default-box-shadow);
+      #{$token}-disabled-color: var(#{$token}-default-color);
+      #{$token}-semantic-disabled-background: var(#{$token}-semantic-default-background);
+      #{$token}-semantic-disabled-border-color: var(#{$token}-semantic-default-border-color);
+      #{$token}-semantic-disabled-color: var(#{$token}-semantic-default-color);
+    }
+  }
 }
 
 /**
