@@ -81,4 +81,5 @@ export type IonSpinnerConfig = {
   size?: SpinnerSize;
 };
 
-export type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+export const ION_SPINNER_SIZES = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
+export type SpinnerSize = (typeof ION_SPINNER_SIZES)[number];
