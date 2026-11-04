@@ -57,6 +57,13 @@
   --ion-button-hue-bold-clear-focus-color: #{$text-color-step-350};
   --ion-button-hue-bold-clear-hover-color: #{$text-color-step-350};
   --ion-button-hue-bold-clear-activated-color: #{$text-color-step-350};
+
+  /**
+   * The tints are the arrow color at 12% and 4%. Step 350 is 65% of the text
+   * color, so they are the text color at 7.8% and 2.6%.
+   */
+  --ion-button-hue-bold-clear-focus-background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.078);
+  --ion-button-hue-bold-clear-hover-background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.026);
 }
 
 // These styles are copied from buttons.md.scss
