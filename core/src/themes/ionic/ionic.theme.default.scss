@@ -24,13 +24,23 @@
 
 // TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
 // ios and md. This will allow us to have a single color map.
+
+// Note on bold `contrast` values:
+// - Colors whose bold background stays dark in the dark palette (primary,
+//   secondary, success, danger) use $ion-text-light so the text stays white
+//   in both light and dark modes.
+// - Colors whose bold background stays light in the dark palette (warning,
+//   light) use $ion-text-dark so the text stays near-black in both modes.
+// - The remaining colors have bold backgrounds that are lightened in the dark
+//   palette, so they keep $ion-text-inverse, which flips with the theme to
+//   preserve contrast.
 $ionic-colors: (
   primary: (
     bold: (
       base: globals.$ion-bg-primary-base-default,
       base-rgb: globals.$ion-bg-primary-base-default-rgb,
-      contrast: globals.$ion-text-inverse,
-      contrast-rgb: globals.$ion-text-inverse-rgb,
+      contrast: globals.$ion-text-light,
+      contrast-rgb: globals.$ion-text-light-rgb,
       shade: globals.$ion-bg-primary-base-press,
       tint: globals.$ion-semantics-primary-600,
       foreground: globals.$ion-text-primary,
@@ -49,8 +59,8 @@ $ionic-colors: (
     bold: (
       base: globals.$ion-bg-info-base-default,
       base-rgb: globals.$ion-bg-info-base-default-rgb,
-      contrast: globals.$ion-text-inverse,
-      contrast-rgb: globals.$ion-text-inverse-rgb,
+      contrast: globals.$ion-text-light,
+      contrast-rgb: globals.$ion-text-light-rgb,
       shade: globals.$ion-bg-info-base-press,
       tint: globals.$ion-semantics-info-700,
       foreground: globals.$ion-text-info,
@@ -89,8 +99,8 @@ $ionic-colors: (
     bold: (
       base: globals.$ion-bg-success-base-default,
       base-rgb: globals.$ion-bg-success-base-default-rgb,
-      contrast: globals.$ion-text-inverse,
-      contrast-rgb: globals.$ion-text-inverse-rgb,
+      contrast: globals.$ion-text-light,
+      contrast-rgb: globals.$ion-text-light-rgb,
       shade: globals.$ion-bg-success-base-press,
       tint: globals.$ion-semantics-success-800,
       foreground: globals.$ion-text-success,
@@ -109,8 +119,8 @@ $ionic-colors: (
     bold: (
       base: globals.$ion-bg-warning-base-default,
       base-rgb: globals.$ion-bg-warning-base-default-rgb,
-      contrast: globals.$ion-text-default,
-      contrast-rgb: globals.$ion-text-default-rgb,
+      contrast: globals.$ion-text-dark,
+      contrast-rgb: globals.$ion-text-dark-rgb,
       shade: globals.$ion-bg-warning-base-press,
       tint: globals.$ion-primitives-yellow-300,
       foreground: globals.$ion-text-warning,
@@ -129,8 +139,8 @@ $ionic-colors: (
     bold: (
       base: globals.$ion-bg-danger-base-default,
       base-rgb: globals.$ion-bg-danger-base-default-rgb,
-      contrast: globals.$ion-text-inverse,
-      contrast-rgb: globals.$ion-text-inverse-rgb,
+      contrast: globals.$ion-text-light,
+      contrast-rgb: globals.$ion-text-light-rgb,
       shade: globals.$ion-bg-danger-base-press,
       tint: globals.$ion-semantics-danger-700,
       foreground: globals.$ion-text-danger,
@@ -349,8 +359,8 @@ $ionic-colors: (
     bold: (
       base: globals.$ion-primitives-base-white,
       base-rgb: globals.$ion-primitives-base-white-rgb,
-      contrast: globals.$ion-text-default,
-      contrast-rgb: globals.$ion-text-default-rgb,
+      contrast: globals.$ion-text-dark,
+      contrast-rgb: globals.$ion-text-dark-rgb,
       shade: globals.$ion-primitives-neutral-500,
       tint: globals.$ion-primitives-neutral-400,
       foreground: globals.$ion-text-default,
