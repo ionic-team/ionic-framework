@@ -474,13 +474,15 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('reset with a date should clear the range and show that month', async ({ page }) => {
-      const datetime = await fixture.goto(config, RANGE_VALUE);
+      const datetime = await fixture.goto(config, RANGE_VALUE, { showDefaultTitle: true });
 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => el.reset('2022-12-01'));
       await page.waitForChanges();
 
       await expect(datetime.locator('.calendar-month-year-toggle')).toContainText('December 2022');
-      await expect(datetime.locator('.calendar-day-range-start')).toHaveCount(0);
+      const header = datetime.locator('.datetime-selected-date');
+      await expect(header).toHaveText(/Start date/);
+      await expect(header).toHaveText(/End date/);
     });
 
     test('clear button should clear the range', async ({ page }) => {
