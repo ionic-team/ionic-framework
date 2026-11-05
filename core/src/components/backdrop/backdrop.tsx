@@ -35,7 +35,7 @@ export class Backdrop implements ComponentInterface {
   @Event() ionBackdropTap!: EventEmitter<void>;
 
   @Listen('click', { passive: false, capture: true })
-  protected onMouseDown(ev: TouchEvent) {
+  protected onClick(ev: MouseEvent) {
     this.emitTap(ev);
   }
 
