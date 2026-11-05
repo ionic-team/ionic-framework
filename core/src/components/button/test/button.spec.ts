@@ -158,6 +158,25 @@ describe('button: size', () => {
     expect(page.root!.classList.contains('button-size-medium')).toBe(true);
   });
 
+  // TODO(FW-7631): Remove this test when the deprecated default size is removed in v11.
+  it('should warn once about the deprecated default size', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+    const page = await newSpecPage({
+      components: [Button],
+      html: `<ion-button size="default">Button</ion-button>`,
+    });
+
+    // A second render reads the size again
+    page.root!.color = 'primary';
+    await page.waitForChanges();
+
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy.mock.calls[0][0]).toEqual(expect.stringContaining('The "default" size is deprecated'));
+
+    warnSpy.mockRestore();
+  });
+
   it('should use the size when it is set inside ion-item', async () => {
     const page = await newSpecPage({
       components: [Button],

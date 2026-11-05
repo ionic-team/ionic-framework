@@ -2,7 +2,8 @@ import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ViewChild, QueryList } from '@angular/core';
 import { IonTabs as IonTabsBase } from '@ionic/angular/common';
 
-import { IonTabBar, IonTab } from '../directives/proxies';
+import { IonTab } from '../directives/ion-tab';
+import { IonTabBar } from '../directives/ion-tab-bar';
 
 import { IonRouterOutlet } from './router-outlet';
 

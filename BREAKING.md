@@ -55,7 +55,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 The following breaking changes apply to `ion-button`:
 
-1. The `border-radius` of the `ios` button is now `6px` at every size, instead of `6px`, `14px` and `16px` for the small, default and large sizes. The `md` button now defaults to `999px` instead of `4px`. Both follow the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"` for `md`. For `ios`, set `IonButton.shape.soft.border.radius` for global styles or `--ion-button-shape-soft-border-radius` for component-specific styles to `14px`, and to `6px` and `16px` on small and large buttons.
+1. The `border-radius` of the `ios` button is now `6px` at every size, instead of `6px`, `14px` and `16px` for the small, default and large sizes. The `md` button now defaults to `999px` instead of `4px`. Both follow the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"` for `md`. For `ios`, set `IonButton.shape.soft.border.radius` for global styles or `--ion-button-shape-soft-border-radius` for component-specific styles to `14px`. The token has no size, so scope the CSS variable by size for small and large buttons, for example `ion-button[size="small"] { --ion-button-shape-soft-border-radius: 6px; }` and `16px` for `size="large"`.
 2. Icon-only buttons in the `start` and `end` slots of `ion-input`, `ion-select` and `ion-textarea` now follow the button's `shape` instead of always being circles. For `ios`, set the `shape` to `"round"` to keep them circular.
 3. The font size of `clear` buttons in the `ios` theme now matches the other fills at each size, instead of `17px` at the default size. To keep the previous size, set `--ion-button-size-medium-font-size` to `17px` on those buttons.
 4. The `ios` button is now `28px`, `34px` and `50px` tall at the small, default and large sizes, with less padding, following the iOS guidelines. To revert to the previous appearance, set `IonButton.size.<size>.min.height` for global styles or `--ion-button-size-<size>-min-height` for component-specific styles to `2.1em`, `3.1em` and `3.1em`, and the padding (`IonButton.size.<size>.padding` or `--ion-button-size-<size>-padding-*`) to `4px 0.9em`, `13px 1em` and `17px 1em`, along with the previous font sizes from item 7.
@@ -82,10 +82,10 @@ The `md` button now uses the Material Design 2 values below. To keep a previous 
 | Spinner in a button | the spinner's own size (`28px` by default) | `1.2857em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
 | Outline border | `2px`, the button's color | `1px`, the text color at `12%` | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
 | Solid elevation on hover and focus | the resting elevation | elevation 4 | `IonButton.hue.bold.solid.hover.box.shadow` and `.focus.box.shadow` |
-| Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` |
-| Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` |
+| Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` (`.semantic.disabled.color` and `.background` with a `color`) |
+| Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` (`.semantic.rippleEffect.opacity` with a `color`) |
 
-Buttons in toolbars keep their previous colors when disabled and have no elevation on hover or focus.
+Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width and no elevation on hover or focus.
 
 <h5 id="version-10x-button-ios-17">iOS 17 in <code>ios</code></h5>
 
@@ -101,7 +101,7 @@ The `ios` button now uses the iOS 17 values below. To keep a previous value, set
 | Icon spacing | `0.3em` into the padding and a `0.3em` gap | at the padding edge and a `0.2222em` gap (`4px` at the default size) | `IonButton.size.<size>.icon.leading.margin` and `.trailing.margin` |
 | Icon-only icon size | `1.308125em`, `1.125em` and `0.9em` | `1.1333em`, `1.2em` and `1.0588em` (same pixels at the new font size) | `IonButton.size.<size>.iconOnly.icon.font.size` |
 | Spinner in a button | the spinner's own size (`28px` by default) | `1.2em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
-| Disabled | the whole button at `0.5` opacity | the text color at `25%`, which outline also uses for its border, and on solid, an `8%` container | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.border.color` |
+| Disabled | the whole button at `0.5` opacity | the text color at `25%`, which outline also uses for its border, and on solid, an `8%` container | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.border.color` (`.semantic.disabled.color`, `.background` and `.border.color` with a `color`) |
 
 Buttons in toolbars keep their previous colors when disabled.
 
@@ -128,7 +128,7 @@ Use the new token structure for global styles, or the corresponding CSS variable
 | `--transition` | `IonButton.transition` | `--ion-button-transition` |
 
 > [!NOTE]
-> `--background-activated-opacity`, `--background-focused-opacity` and `--background-hover-opacity` have been removed with no one-to-one replacement. Each state's background is now a single color that includes its opacity, so set the final color, for example `color-mix(in srgb, var(--ion-color-primary) 12%, transparent)`. States are also drawn on the native element itself, so styles targeting `::part(native)::after` no longer affect them.
+> `--background-activated-opacity`, `--background-focused-opacity` and `--background-hover-opacity` have been removed. A state's background now replaces the button's background instead of tinting it, so the opacity goes in the value itself. For a solid button, layer the tint over the base color, for example `linear-gradient(rgba(var(--ion-color-primary-contrast-rgb), 0.24), rgba(var(--ion-color-primary-contrast-rgb), 0.24)) var(--ion-color-primary)`. Outline and clear buttons have no background of their own, so the tint alone is enough, for example `rgba(var(--ion-color-primary-rgb), 0.12)`. States are also drawn on the native element itself, so styles targeting `::part(native)::after` no longer affect them.
 
 > [!NOTE]
 > `--opacity` has been removed with no replacement. Set `opacity` on `ion-button` instead.

@@ -2,7 +2,9 @@ import type { IonPadding, IonMargin, Hue } from '../../themes/themes.interfaces'
 
 export type IonChipRecipe = {
   letterSpacing?: string | number;
-  lineHeight?: string | number;
+  line?: {
+    height?: string | number;
+  };
   margin?: IonMargin;
   padding?: IonPadding;
   gap?: string | number;
@@ -71,7 +73,9 @@ type IonChipColorDefinition = {
 };
 
 type IonChipSizeDefinition = {
-  minHeight?: string | number;
+  min?: {
+    height?: string | number;
+  };
 
   font?: {
     size?: string | number;
@@ -116,6 +120,9 @@ export type IonChipConfig = {
   shape?: IonChipShape;
 };
 
-export type IonChipFill = 'outline' | 'solid';
-export type IonChipSize = 'small' | 'large';
-export type IonChipShape = 'soft' | 'round' | 'rectangular';
+export const ION_CHIP_FILLS = ['solid', 'outline'] as const;
+export type IonChipFill = (typeof ION_CHIP_FILLS)[number];
+export const ION_CHIP_SIZES = ['small', 'large'] as const;
+export type IonChipSize = (typeof ION_CHIP_SIZES)[number];
+export const ION_CHIP_SHAPES = ['soft', 'round', 'rectangular'] as const;
+export type IonChipShape = (typeof ION_CHIP_SHAPES)[number];
