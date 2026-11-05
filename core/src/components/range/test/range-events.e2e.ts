@@ -284,3 +284,49 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
+
+/**
+ * The tick dimensions vary across modes.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('range: tick events'), () => {
+    test('should select the max value when the last tick is clicked', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30738',
+      });
+
+      await page.setContent(
+        `
+        <style>
+          ion-range::part(tick),
+          ion-range::part(tick-active) {
+            width: 20px;
+          }
+        </style>
+        <div style="padding: 0 40px">
+          <ion-range aria-label="Range" min="0" max="10" step="1" value="0" snaps="true" ticks="true"></ion-range>
+        </div>
+      `,
+        config
+      );
+
+      const range = page.locator('ion-range');
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+      const lastTick = range.locator('.range-tick').last();
+      const tickBox = (await lastTick.boundingBox())!;
+      const sliderBox = (await range.locator('.range-slider').boundingBox())!;
+
+      // Click the part of the tick that sits past the end of the slider.
+      const x = (sliderBox.x + sliderBox.width + tickBox.x + tickBox.width) / 2;
+      const y = tickBox.y + tickBox.height / 2;
+
+      await page.mouse.click(x, y);
+
+      await ionChangeSpy.next();
+
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 10 });
+    });
+  });
+});
