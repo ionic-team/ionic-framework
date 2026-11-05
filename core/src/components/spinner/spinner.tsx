@@ -8,7 +8,7 @@ import type { Color } from '../../interface';
 
 import type { SpinnerTypes } from './spinner-configs';
 import { SPINNERS } from './spinner-configs';
-import type { SpinnerSize, SpinnerDefinition } from './spinner.interfaces';
+import type { SpinnerSize, SpinnerDefinition } from './spinner.interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
