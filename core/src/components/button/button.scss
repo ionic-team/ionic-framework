@@ -126,9 +126,9 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
   :host(.button-size-#{$size}) .button-native {
     @include mixins.padding(
-      var(--padding-top, var(--ion-button-size-#{$size}-padding-top, 0px)),
+      var(--padding-top, var(--ion-button-size-#{$size}-padding-top)),
       var(--padding-end, var(--ion-button-size-#{$size}-padding-end)),
-      var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom, 0px)),
+      var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom)),
       var(--padding-start, var(--ion-button-size-#{$size}-padding-start))
     );
   }
