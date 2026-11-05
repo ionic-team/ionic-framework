@@ -413,7 +413,7 @@ export const defaultTheme: DefaultTheme = {
 
             default: {
               background: 'transparent',
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
 
               border: {
                 color: ionColor('primary', 'base'),
@@ -428,13 +428,13 @@ export const defaultTheme: DefaultTheme = {
 
             focus: {
               background: ionColor('primary', 'base', { alpha: 0.1 }),
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
             },
 
             // Fades the whole button instead of changing its color
             hover: {
               background: 'transparent',
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
               opacity: '0.6',
             },
 
@@ -456,7 +456,7 @@ export const defaultTheme: DefaultTheme = {
             semantic: {
               default: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
 
                 border: {
                   color: currentColor('base'),
@@ -465,12 +465,12 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.1 }),
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               hover: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               activated: {
@@ -538,17 +538,238 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.1 }),
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               hover: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               activated: {
                 background: 'transparent',
                 color: currentColor('foreground'),
+              },
+
+              disabled: {
+                background: 'transparent',
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+            },
+          },
+        },
+
+        subtle: {
+          solid: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-semi-bold)',
+              },
+            },
+
+            default: {
+              background: ionColor('primary', 'base', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+
+              font: {
+                weight: 'var(--ion-font-weight-normal)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            hover: {
+              background: ionColor('primary', 'tint', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            activated: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            disabled: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              focus: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              hover: {
+                background: currentColor('tint', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              activated: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              disabled: {
+                background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+            },
+          },
+
+          outline: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-semi-bold)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+
+              border: {
+                color: ionColor('primary', 'shade', { subtle: true }),
+                style: 'solid',
+                width: 'var(--ion-border-width-25)',
+              },
+
+              font: {
+                weight: 'var(--ion-font-weight-normal)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base', { alpha: 0.1 }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            // Fades the whole button instead of changing its color
+            hover: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+              opacity: '0.6',
+            },
+
+            activated: {
+              background: ionColor('primary', 'base', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            disabled: {
+              background: 'transparent',
+
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+
+                border: {
+                  color: currentColor('shade', { subtle: true }),
+                },
+              },
+
+              focus: {
+                background: currentColor('base', { alpha: 0.1 }),
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              hover: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              activated: {
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              disabled: {
+                background: 'transparent',
+
+                border: {
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+                },
+
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+            },
+          },
+
+          clear: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-semi-bold)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+
+              // The clear fill uses a regular weight font
+              font: {
+                weight: 'normal',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base', { alpha: 0.1 }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            // Fades the whole button instead of changing its color
+            hover: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+              opacity: '0.6',
+            },
+
+            activated: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+              opacity: '0.4',
+            },
+
+            disabled: {
+              background: 'transparent',
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              focus: {
+                background: currentColor('base', { alpha: 0.1 }),
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              hover: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              activated: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
               },
 
               disabled: {

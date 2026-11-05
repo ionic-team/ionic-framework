@@ -182,6 +182,7 @@ export const IonButton: StencilVueComponent<JSX.IonButton> = /*@__PURE__*/ defin
   'disabled',
   'expand',
   'fill',
+  'hue',
   'routerDirection',
   'routerAnimation',
   'download',
