@@ -114,10 +114,14 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
 @each $size in $sizes {
   :host(.button-size-#{$size}) {
-    min-width: var(--ion-button-size-#{$size}-min-width);
     min-height: var(--ion-button-size-#{$size}-min-height);
 
     font-size: var(--ion-button-size-#{$size}-font-size);
+  }
+
+  // Buttons in `ion-buttons` fit their content, so an icon without `slot="icon-only"` doesn't widen them
+  :host(.button-size-#{$size}:not(.in-buttons)) {
+    min-width: var(--ion-button-size-#{$size}-min-width);
   }
 
   :host(.button-size-#{$size}) .button-native {
@@ -197,8 +201,8 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 }
 
 /**
- * Only the ionic theme sizes and spaces a slotted spinner. The other
- * themes fall back to the spinner's own size and no margin.
+ * A theme can size a slotted spinner for each button size. Without
+ * those tokens, the spinner keeps its own size.
  */
 @each $size in $sizes {
   @each $spinner-size in $spinner-sizes {
@@ -385,20 +389,6 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   :host(.button-hue-bold.button-fill-#{$fill}.ion-color.ion-activated) .button-native {
     background: var(#{$token}-semantic-activated-background);
     color: var(#{$token}-semantic-activated-color);
-  }
-
-  /**
-   * Only `md` mode renders a ripple. When it does, the ripple shows the press,
-   * so the button keeps its default background and text color instead of the activated ones.
-   */
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-activated) .button-native:has(ion-ripple-effect) {
-    background: var(#{$token}-default-background);
-    color: var(#{$token}-default-color);
-  }
-
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-color.ion-activated) .button-native:has(ion-ripple-effect) {
-    background: var(#{$token}-semantic-default-background);
-    color: var(#{$token}-semantic-default-color);
   }
 }
 
