@@ -3,7 +3,9 @@ import type { IonPadding, IonMargin } from '../../themes/themes.interfaces';
 export type IonItemDividerRecipe = {
   background?: string;
   color?: string;
-  minHeight?: string;
+  min?: {
+    height?: string;
+  };
 
   padding?: IonPadding;
 

@@ -15,7 +15,7 @@
  * - `rtl`: Set to `true` to enable right-to-left directionality.
  * - `ionic:_testing`: Set to `true` to identify testing environments.
  * - `ionic:theme`: Set to `ionic`, `ios`, `md` or `base` to load a specific 
- * theme. Defaults to `md`.
+ * theme. Defaults to the mode, then `md`.
  * - `palette`: Set to `light`, `dark`, `high-contrast`, or 
  * `high-contrast-dark` to load a specific palette. Defaults to `light`.
  */
@@ -53,14 +53,19 @@ const DEFAULT_PALETTE = 'light';
 
   /**
    * The `theme` param is used to load a specific theme.
-   * This can be `ionic`, `ios`, `md`, or `base`. Default to `md` for tests.
+   * This can be `ionic`, `ios`, `md`, or `base`. Defaults to the mode, as in
+   * the app, then to `md`.
    * `base` loads only the base tokens, with no component tokens, to show
    * how migrated components render without a theme.
    */
   const themeQuery = window.location.search.match(/ionic:theme=([a-z0-9]+)/i);
   const themeHash = window.location.hash.match(/ionic:theme=([a-z0-9]+)/i);
   const themeAttr = document.documentElement.getAttribute('theme');
-  const themeName = themeQuery?.[1] || themeHash?.[1] || themeAttr || DEFAULT_THEME;
+  const modeQuery = window.location.search.match(/ionic:mode=([a-z]+)/i);
+  const modeHash = window.location.hash.match(/ionic:mode=([a-z]+)/i);
+  const modeAttr = document.documentElement.getAttribute('mode');
+  const modeName = modeQuery?.[1] || modeHash?.[1] || modeAttr;
+  const themeName = themeQuery?.[1] || themeHash?.[1] || themeAttr || modeName || DEFAULT_THEME;
 
   // TODO(): Remove this when the tokens are working for all components
   // and the themes all use the same bundle
@@ -132,7 +137,28 @@ const DEFAULT_PALETTE = 'light';
   const validThemes = ['ionic', 'ios', 'md', 'base'];
   let themeReady = Promise.resolve();
   if (themeName && validThemes.includes(themeName)) {
-    themeReady = loadThemeTokens(themeName, paletteName).finally(() => {
+    // Store existing theme set from the app initialization
+    const customTheme = window.Ionic?.config?.customTheme;
+    // Load the default tokens for the theme
+    const themeLoaded = import(`/themes/${themeName}/default.tokens.js`).then((defaultTokens) =>
+      buildTheme(defaultTokens.defaultTheme, customTheme, paletteName)
+    );
+
+    /*
+     * Components read the theme's config when they first render, and don't
+     * render again when it changes. The tokens load asynchronously, so
+     * `initialize()` in ionic-global.ts can run before they arrive. Holding
+     * back the definitions of Ionic's components until the theme's config is
+     * set means none of them renders without it.
+     *
+     * Only pages with the theme in the URL query need this: `setContent`
+     * sets its own theme before Ionic loads.
+     */
+    if (themeQuery) {
+      holdComponentDefinitions(themeLoaded.then(setThemeConfig).catch(() => {}));
+    }
+
+    themeReady = loadThemeTokens(themeName, themeLoaded).finally(() => {
       window.__ionicTestThemeReady = true;
     });
   } else {
@@ -184,30 +210,82 @@ const DEFAULT_PALETTE = 'light';
   }
 
   // TODO(FW-6750): Determine if this function can be removed once the theme tokens can be imported directly into the test pages
-  async function loadThemeTokens(themeName, paletteName) {
-    try {
-      // Store existing theme set from the app initialization
-      const customTheme = window.Ionic?.config?.customTheme;
-      // Load the default tokens for the theme
-      const defaultTokens = await import(`/themes/${themeName}/default.tokens.js`);
-      let theme = defaultTokens.defaultTheme;
-      // Merge with existing theme to preserve any customizations
-      if (customTheme) {
-        theme = deepMerge(theme, customTheme);
+  function buildTheme(tokensTheme, customTheme, paletteName) {
+    let theme = tokensTheme;
+    // Merge with existing theme to preserve any customizations
+    if (customTheme) {
+      theme = deepMerge(theme, customTheme);
+    }
+
+    // If a specific palette is requested, modify the palette structure
+    // to set the enabled property to 'always'
+    // TODO(FW-4004): Implement dark palette
+    if (paletteName === 'dark' && theme.palette?.dark) {
+      theme.palette.dark.enabled = 'always';
+    // TODO(FW-4005): Implement high contrast palette
+    } else if (paletteName === 'high-contrast' && theme.palette?.highContrast) {
+      theme.palette.highContrast.enabled = 'always';
+    // TODO(FW-4005): Implement high contrast dark palette
+    } else if (paletteName === 'high-contrast-dark' && theme.palette?.highContrastDark) {
+      theme.palette.highContrastDark.enabled = 'always';
+    }
+
+    return theme;
+  }
+
+  /*
+   * Sets the theme's config before any component renders. Before `initialize()`
+   * runs, the stashed theme is merged by `initialize()` itself. After it runs,
+   * the theme's global keys, such as `rippleEffect`, are set the same way
+   * `initialize()` sets them.
+   */
+  function setThemeConfig(theme) {
+    window.Ionic = window.Ionic || {};
+    window.Ionic.config = window.Ionic.config || {};
+
+    const config = window.Ionic.config;
+    if (!config.set) {
+      config.customTheme = theme;
+      return;
+    }
+
+    config.set('customTheme', theme);
+
+    const { components, ...globalConfig } = theme.config || {};
+    Object.entries(globalConfig).forEach(([key, value]) => {
+      if (value !== null && typeof value === 'object') {
+        config.set(key, { ...config.get(key, {}), ...value });
+      } else {
+        config.set(key, value);
+      }
+    });
+  }
+
+  /*
+   * Defers defining Ionic's components until `ready` settles. Elements already
+   * on the page upgrade and render once they are defined.
+   */
+  function holdComponentDefinitions(ready) {
+    const define = customElements.define.bind(customElements);
+    let released = false;
+    ready.then(() => {
+      released = true;
+    });
+
+    customElements.define = (name, constructor, options) => {
+      if (released || !name.startsWith('ion-')) {
+        define(name, constructor, options);
+        return;
       }
 
-      // If a specific palette is requested, modify the palette structure
-      // to set the enabled property to 'always'
-      // TODO(FW-4004): Implement dark palette
-      if (paletteName === 'dark' && theme.palette?.dark) {
-        theme.palette.dark.enabled = 'always';
-      // TODO(FW-4005): Implement high contrast palette
-      } else if (paletteName === 'high-contrast' && theme.palette?.highContrast) {
-        theme.palette.highContrast.enabled = 'always';
-      // TODO(FW-4005): Implement high contrast dark palette
-      } else if (paletteName === 'high-contrast-dark' && theme.palette?.highContrastDark) {
-        theme.palette.highContrastDark.enabled = 'always';
-      }
+      ready.then(() => define(name, constructor, options));
+    };
+  }
+
+  // TODO(FW-6750): Determine if this function can be removed once the theme tokens can be imported directly into the test pages
+  async function loadThemeTokens(themeName, themeLoaded) {
+    try {
+      const theme = await themeLoaded;
 
       window.Ionic = window.Ionic || {};
       window.Ionic.config = window.Ionic.config || {};
