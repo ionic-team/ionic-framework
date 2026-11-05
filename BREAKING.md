@@ -101,7 +101,7 @@ The `ios` button now uses the iOS 17 values below. To keep a previous value, set
 | Icon spacing | `0.3em` into the padding and a `0.3em` gap | at the padding edge and a `0.2222em` gap (`4px` at the default size) | `IonButton.size.<size>.icon.leading.margin` and `.trailing.margin` |
 | Icon-only icon size | `1.308125em`, `1.125em` and `0.9em` | `1.1333em`, `1.2em` and `1.0588em` (same pixels at the new font size) | `IonButton.size.<size>.iconOnly.icon.font.size` |
 | Spinner in a button | the spinner's own size (`28px` by default) | `1.2em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
-| Disabled | the whole button at `0.5` opacity | the text color at `25%`, which outline also uses for its border, and on solid, an `8%` container | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.border.color` |
+| Disabled | the whole button at `0.5` opacity | the text color at `25%`, which outline also uses for its border, and on solid, an `8%` container | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.border.color` (`.semantic.disabled.color`, `.background` and `.border.color` with a `color`) |
 
 Buttons in toolbars keep their previous colors when disabled.
 
