@@ -20,7 +20,7 @@ import type { IonButtonExpand, IonButtonFill, IonButtonShape, IonButtonSize } fr
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
- * @slot icon-only - Should be used on an icon in a button that has no text.
+ * @slot icon-only - An icon shown on its own, with any badge that has a `vertical` position. Text and elements without a slot are visually hidden, so they can still name the button for assistive technology. Content in the `start` and `end` slots isn't rendered.
  * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
  *
@@ -521,9 +521,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         >
           <span class="button-inner">
             <slot name="icon-only" onSlotchange={this.iconOnlySlotChanged}></slot>
-            <slot name="start"></slot>
+            {/* An icon-only button skips these slots, so outside styles can't show their content */}
+            {!hasIconOnly && <slot name="start"></slot>}
             <slot onSlotchange={this.onSlotChanged}></slot>
-            <slot name="end"></slot>
+            {!hasIconOnly && <slot name="end"></slot>}
           </span>
           {showRipple && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </TagType>
