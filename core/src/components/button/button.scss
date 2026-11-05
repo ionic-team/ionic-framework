@@ -501,4 +501,14 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
       var(--ion-button-size-#{$size}-badge-margin-start)
     );
   }
+
+  // A badge before the label keeps the gap on the label's side
+  :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(ion-badge[slot="start"]:not([vertical])) {
+    @include mixins.margin(
+      null,
+      var(--ion-button-size-#{$size}-badge-margin-start),
+      null,
+      var(--ion-button-size-#{$size}-badge-margin-end)
+    );
+  }
 }
