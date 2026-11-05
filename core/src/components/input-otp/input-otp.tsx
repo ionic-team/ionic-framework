@@ -548,7 +548,8 @@ export class InputOTP implements ComponentInterface {
    * Handles keyboard navigation for the OTP component.
    *
    * Navigation:
-   * - Backspace: Clears current input and moves to previous box if empty
+   * - Backspace: Clears current input, or clears the previous box and moves
+   *   focus to it if the current input is empty
    * - Arrow Left/Right: Moves focus between input boxes
    * - Tab: Allows normal tab navigation between components
    */
@@ -597,8 +598,18 @@ export class InputOTP implements ComponentInterface {
         this.updateValue(event);
         event.preventDefault();
       } else if (!this.inputValues[index] && index > 0) {
-        // If current input is empty, move to previous input
+        // If current input is empty, clear the previous input and move
+        // focus to it. The default action is prevented because browsers do
+        // not agree on which box it applies to: desktop browsers delete from
+        // the newly focused box, but the iOS keyboard deletes from the box
+        // that had focus when the key was pressed, which is empty.
+        const previousIndex = index - 1;
+        this.inputValues[previousIndex] = '';
+        this.inputRefs[previousIndex].value = '';
+        this.previousInputValues = [...this.inputValues];
+        this.updateValue(event);
         this.focusPrevious(index);
+        event.preventDefault();
       }
     } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       this.isKeyboardNavigation = true;
