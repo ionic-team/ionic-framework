@@ -30,6 +30,7 @@ import NavComponent from './pages/navigation/NavComponent';
 import NavModalComponent from './pages/navigation/NavModalComponent';
 import TabsDirectNavigation from './pages/TabsDirectNavigation';
 import TabsSimilarPrefixes from './pages/TabsSimilarPrefixes';
+import TabsTabTap from './pages/TabsTabTap';
 import IonModalConditional from './pages/overlay-components/IonModalConditional';
 import IonModalConditionalSibling from './pages/overlay-components/IonModalConditionalSibling';
 import IonModalDatetimeButton from './pages/overlay-components/IonModalDatetimeButton';
@@ -72,6 +73,7 @@ const App: React.FC = () => (
         <Route path="/tabs-basic/*" element={<TabsBasic />} />
         <Route path="/tabs-direct-navigation/*" element={<TabsDirectNavigation />} />
         <Route path="/tabs-similar-prefixes/*" element={<TabsSimilarPrefixes />} />
+        <Route path="/tabs-tab-tap/*" element={<TabsTabTap />} />
         <Route path="/icons" element={<Icons />} />
         <Route path="/inputs" element={<Inputs />} />
         <Route path="/reorder-group" element={<ReorderGroup />} />
