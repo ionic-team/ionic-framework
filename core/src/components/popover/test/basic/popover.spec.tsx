@@ -40,3 +40,38 @@ describe('popover: focus trap', () => {
     expect(popover.classList.contains(FOCUS_TRAP_DISABLE_CLASS)).toBe(false);
   });
 });
+
+describe('popover: keyboardClose', () => {
+  const presentWithFocusedInput = async (keyboardClose: boolean) => {
+    const page = await newSpecPage({
+      components: [Popover],
+      template: () => (
+        <div>
+          <input />
+          <ion-popover keyboardClose={keyboardClose} overlayIndex={1}></ion-popover>
+        </div>
+      ),
+    });
+
+    const input = page.body.querySelector('input')!;
+    const popover = page.body.querySelector('ion-popover')!;
+    const blur = jest.spyOn(input, 'blur');
+    Object.defineProperty(page.doc, 'activeElement', { configurable: true, get: () => input });
+
+    await popover.present();
+
+    return blur;
+  };
+
+  it('should not blur the focused element when keyboardClose is false', async () => {
+    const blur = await presentWithFocusedInput(false);
+
+    expect(blur).not.toHaveBeenCalled();
+  });
+
+  it('should blur the focused element when keyboardClose is true', async () => {
+    const blur = await presentWithFocusedInput(true);
+
+    expect(blur).toHaveBeenCalled();
+  });
+});
