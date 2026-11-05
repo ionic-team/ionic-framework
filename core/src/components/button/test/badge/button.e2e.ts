@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-import { ION_BADGE_SIZES, ION_BADGE_VERTICAL_POSITIONS } from '../../../badge/badge.interfaces';
+import { ION_BADGE_SIZES, ION_BADGE_VERTICAL_POSITIONS } from '../../../badge/badge.interface';
 import { ION_BUTTON_SIZES } from '../../button.interface';
 
 const contents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];

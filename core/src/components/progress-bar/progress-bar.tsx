@@ -1,12 +1,13 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { clamp } from '@utils/helpers';
+import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
 import type { Color } from '../../interface';
 
-import type { IonProgressBarShape } from './progress-bar.interfaces';
+import type { IonProgressBarShape } from './progress-bar.interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -22,6 +23,8 @@ import type { IonProgressBarShape } from './progress-bar.interfaces';
   shadow: true,
 })
 export class ProgressBar implements ComponentInterface {
+  @Element() el!: HTMLElement;
+
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
    * Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
@@ -71,7 +74,7 @@ export class ProgressBar implements ComponentInterface {
   }
 
   render() {
-    const { color, type, reversed, value, buffer } = this;
+    const { color, type, reversed, value, buffer, el } = this;
     const paused = config.getBoolean('_testing');
     const shape = this.shapeValue;
     // If the progress is displayed as a solid bar.
@@ -86,7 +89,7 @@ export class ProgressBar implements ComponentInterface {
           [`progress-bar-type-${type}`]: true,
           [`progress-bar-shape-${shape}`]: true,
           'progress-paused': paused,
-          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
+          'progress-bar-reversed': isRTL(el) ? !reversed : reversed,
           'progress-bar-solid': progressSolid,
         })}
       >

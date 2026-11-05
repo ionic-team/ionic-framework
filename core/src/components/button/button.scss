@@ -115,10 +115,14 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
 @each $size in $sizes {
   :host(.button-size-#{$size}) {
-    min-width: var(--ion-button-size-#{$size}-min-width);
     min-height: var(--ion-button-size-#{$size}-min-height);
 
     font-size: var(--ion-button-size-#{$size}-font-size);
+  }
+
+  // Buttons in `ion-buttons` fit their content, so an icon without `slot="icon-only"` doesn't widen them
+  :host(.button-size-#{$size}:not(.in-buttons)) {
+    min-width: var(--ion-button-size-#{$size}-min-width);
   }
 
   :host(.button-size-#{$size}) .button-native {
@@ -182,11 +186,10 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   }
 }
 
-// An icon-only button shows only its icon and badges with a `vertical` position
-:host(.button-has-icon-only) ::slotted([slot="start"]),
-:host(.button-has-icon-only) ::slotted([slot="end"]),
+// An icon-only button shows only its icon and badges with a `vertical` position.
+// Other content stays in the accessibility tree, so wrapped text still names the button.
 :host(.button-has-icon-only) ::slotted(:not([slot]):not(ion-badge[vertical])) {
-  display: none;
+  @include mixins.visually-hidden();
 }
 
 /**
@@ -217,8 +220,8 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 }
 
 /**
- * Only the ionic theme sizes and spaces a slotted spinner. The other
- * themes fall back to the spinner's own size and no margin.
+ * A theme can size a slotted spinner for each button size. Without
+ * those tokens, the spinner keeps its own size.
  */
 @each $size in $sizes {
   @each $spinner-size in $spinner-sizes {
@@ -513,19 +516,34 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 }
 
 :host(.button-has-badge) .button-native {
-  // Keeps a badge taller than the label from making the button taller than its min height
-  @include mixins.padding(var(--padding-top, 0), null, var(--padding-bottom, 0), null);
-
   overflow: visible;
 }
 
 @each $size in $sizes {
+  // The badge overlaps the vertical padding, so a badge taller than the label doesn't make the button taller than its min height.
+  // The block margins fall back to 0px because no theme sets them, and calc() needs a unit.
   :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(ion-badge:not([vertical])) {
     @include mixins.margin(
-      var(--ion-button-size-#{$size}-badge-margin-top),
+      calc(
+        var(--ion-button-size-#{$size}-badge-margin-top, 0px) -
+          var(--padding-top, var(--ion-button-size-#{$size}-padding-top, 0px))
+      ),
       var(--ion-button-size-#{$size}-badge-margin-end),
-      var(--ion-button-size-#{$size}-badge-margin-bottom),
+      calc(
+        var(--ion-button-size-#{$size}-badge-margin-bottom, 0px) -
+          var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom, 0px))
+      ),
       var(--ion-button-size-#{$size}-badge-margin-start)
+    );
+  }
+
+  // A badge before the label keeps the gap on the label's side
+  :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(ion-badge[slot="start"]:not([vertical])) {
+    @include mixins.margin(
+      null,
+      var(--ion-button-size-#{$size}-badge-margin-start),
+      null,
+      var(--ion-button-size-#{$size}-badge-margin-end)
     );
   }
 }

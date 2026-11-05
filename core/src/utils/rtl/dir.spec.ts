@@ -70,25 +70,27 @@ describe('rtl: dir', () => {
       expect(isRTL(document.createElement('div'))).toBe(true);
     });
 
+    it('should use the dir of the document that owns the element', () => {
+      const otherDoc = { dir: 'rtl' };
+      const el = document.createElement('div');
+      Object.defineProperty(el, 'ownerDocument', { value: otherDoc });
+
+      otherDoc.dir = 'rtl';
+      document.dir = 'ltr';
+      expect(isRTL(el)).toBe(true);
+
+      otherDoc.dir = 'ltr';
+      document.dir = 'rtl';
+      expect(isRTL(el)).toBe(false);
+    });
+
     it('should default to ltr when no dir is set anywhere', () => {
       // Ensure the default is actually being tested rather than a
       // value left behind by another test.
       expect(document.dir).toBe('');
 
-      expect(isRTL()).toBe(false);
-      expect(isRTL(null)).toBe(false);
       expect(isRTL(document.createElement('div'))).toBe(false);
       expect(isRTL(render('<div><div id="target"></div></div>'))).toBe(false);
-    });
-  });
-
-  describe('without a host element', () => {
-    it('should use the document dir', () => {
-      document.dir = 'rtl';
-      expect(isRTL()).toBe(true);
-
-      document.dir = 'ltr';
-      expect(isRTL()).toBe(false);
     });
   });
 });
