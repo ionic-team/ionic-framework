@@ -167,6 +167,29 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await expect(ionReorderEnd).toHaveReceivedEventDetail({ from: 0, to: 0, complete: undefined });
       });
 
+      test('should emit the correct position when items have fractional heights', async ({ page }) => {
+        // offsetHeight rounds 20.5px up to 21px, which would accumulate
+        // 0.5px of error per item and move the swap point down the list
+        const items = Array.from(
+          { length: 30 },
+          () => `<div style="height: 20.5px; overflow: hidden"><ion-reorder></ion-reorder></div>`
+        ).join('');
+        await page.setContent(`<ion-reorder-group disabled="false">${items}</ion-reorder-group>`, config);
+
+        const reorderGroup = page.locator('ion-reorder-group');
+        const ionReorderEnd = await page.spyOnEvent('ionReorderEnd');
+
+        const box = (await reorderGroup.boundingBox())!;
+        const startY = box.y + 10.25;
+
+        // Item 25 spans 512.5px to 533px from the top of the group
+        await dragElementBy(reorderGroup.locator('ion-reorder').first(), page, 0, 514.5 - 10.25, undefined, startY);
+
+        await page.waitForChanges();
+
+        await expect(ionReorderEnd).toHaveReceivedEventDetail({ from: 0, to: 25, complete: undefined });
+      });
+
       test('should emit with details when the reorder operation ends and the item has moved', async ({ page }) => {
         await page.setContent(
           `
