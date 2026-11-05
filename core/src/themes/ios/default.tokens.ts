@@ -585,18 +585,18 @@ export const defaultTheme: DefaultTheme = {
 
             leading: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '0.2222em',
-                bottom: '0',
-                start: '0',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
-                end: '0',
-                bottom: '0',
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
                 start: '0.2222em',
               },
             },
@@ -653,7 +653,7 @@ export const defaultTheme: DefaultTheme = {
 
           badge: {
             margin: {
-              end: '0',
+              end: 'var(--ion-spacing-0)',
               start: 'var(--ion-spacing-xxs)',
             },
           },
@@ -682,18 +682,18 @@ export const defaultTheme: DefaultTheme = {
 
             leading: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '0.2222em',
-                bottom: '0',
-                start: '0',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
-                end: '0',
-                bottom: '0',
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
                 start: '0.2222em',
               },
             },
@@ -750,7 +750,7 @@ export const defaultTheme: DefaultTheme = {
 
           badge: {
             margin: {
-              end: '0',
+              end: 'var(--ion-spacing-0)',
               start: 'var(--ion-spacing-xxs)',
             },
           },
@@ -779,18 +779,18 @@ export const defaultTheme: DefaultTheme = {
 
             leading: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '0.2222em',
-                bottom: '0',
-                start: '0',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
-                end: '0',
-                bottom: '0',
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
                 start: '0.2222em',
               },
             },
@@ -847,7 +847,7 @@ export const defaultTheme: DefaultTheme = {
 
           badge: {
             margin: {
-              end: '0',
+              end: 'var(--ion-spacing-0)',
               start: 'var(--ion-spacing-xxs)',
             },
           },
