@@ -454,6 +454,7 @@ export const IonInput: StencilVueComponent<JSX.IonInput, JSX.IonInput["value"]> 
   'autofocus',
   'clearInput',
   'clearInputIcon',
+  'clearButtonText',
   'clearOnEdit',
   'counter',
   'counterFormatter',
