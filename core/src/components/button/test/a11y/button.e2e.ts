@@ -177,6 +177,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await host.evaluate((el, attr) => el.setAttribute(attr, 'updated'), attr);
 
         await expect(nativeButton).toHaveAttribute(attr, 'updated');
+        // Post-load writes are cleared from the host after reflecting, same as the
+        // initial inherit, so VoiceOver does not stop on two labelled nodes.
+        await expect(host).not.toHaveAttribute(attr);
       });
     }
 
@@ -275,6 +278,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('should sync updates, empty values and removals after the initial copy', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31659',
+      });
+
       await page.setContent(`<ion-button aria-description="initial">Button</ion-button>`, config);
 
       const host = page.locator('ion-button');
@@ -284,19 +292,23 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(host).not.toHaveAttribute('aria-description');
       await expect(nativeButton).toHaveAttribute('aria-description', 'initial');
 
-      // Post-load writes stay on the host and are copied to the native button.
+      // Post-load writes are copied to the native button and cleared from the host.
       await host.evaluate((el) => el.setAttribute('aria-description', 'second'));
-      await expect(host).toHaveAttribute('aria-description', 'second');
+      await expect(host).not.toHaveAttribute('aria-description');
       await expect(nativeButton).toHaveAttribute('aria-description', 'second');
 
-      // An empty string is a valid ARIA attribute value.
+      // An empty string is a valid ARIA attribute value; it is also cleared from the host.
       await host.evaluate((el) => el.setAttribute('aria-description', ''));
+      await expect(host).not.toHaveAttribute('aria-description');
       await expect(nativeButton).toHaveAttribute('aria-description', '');
 
-      // A removal of a post-load write does reach the native button.
-      await host.evaluate((el) => el.removeAttribute('aria-description'));
-      await expect(host).not.toHaveAttribute('aria-description');
-      await expect(nativeButton).not.toHaveAttribute('aria-description');
+      // Overwrite with a non-empty value again, then clear via empty string — the same
+      // path used for values that came from the initial markup, since a host
+      // removeAttribute after reflect changes nothing (the attribute is already gone).
+      await host.evaluate((el) => el.setAttribute('aria-description', 'third'));
+      await expect(nativeButton).toHaveAttribute('aria-description', 'third');
+      await host.evaluate((el) => el.setAttribute('aria-description', ''));
+      await expect(nativeButton).toHaveAttribute('aria-description', '');
     });
 
     test('should keep a value from the initial markup when the host attribute is removed', async ({ page }) => {

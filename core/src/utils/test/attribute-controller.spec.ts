@@ -26,6 +26,15 @@ class MockMutationObserver {
     this.connected = false;
   }
 
+  /**
+   * Real MutationObservers queue the removeAttribute calls made inside a callback.
+   * `takeRecords` drains them so they are not delivered as developer clears. The stub
+   * has nothing queued; implementing it keeps the controller path covered.
+   */
+  takeRecords() {
+    return [];
+  }
+
   /** Stands in for the browser delivering an attribute mutation. */
   emit(...attributeNames: string[]) {
     this.callback(attributeNames.map((attributeName) => ({ attributeName })));
@@ -86,7 +95,7 @@ describe('createAttributeController()', () => {
     expect(MockMutationObserver.latest.observedFilter).toEqual(['aria-label']);
   });
 
-  it('should apply a later attribute change', () => {
+  it('should apply a later attribute change and clear it from the host', () => {
     const el = createHost({ 'aria-label': 'Save' });
     const onChange = jest.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
@@ -95,6 +104,7 @@ describe('createAttributeController()', () => {
     MockMutationObserver.latest.emit('aria-label');
 
     expect(controller.attributes).toEqual({ 'aria-label': 'Submit' });
+    expect(el.hasAttribute('aria-label')).toBe(false);
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
@@ -104,10 +114,29 @@ describe('createAttributeController()', () => {
 
     el.setAttribute('aria-label', 'Save');
     MockMutationObserver.latest.emit('aria-label');
+    expect(el.hasAttribute('aria-label')).toBe(false);
+
+    // Reflect already cleared the host. A later write must land again before a
+    // removeAttribute can be observed as a developer clear.
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.emit('aria-label');
     el.removeAttribute('aria-label');
     MockMutationObserver.latest.emit('aria-label');
 
     expect(controller.attributes['aria-label']).toBeNull();
+  });
+
+  it('should drain host-clear mutations via takeRecords so they do not clear the copy', () => {
+    const el = createHost();
+    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+    const takeRecords = jest.spyOn(MockMutationObserver.latest, 'takeRecords');
+
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.emit('aria-label');
+
+    expect(takeRecords).toHaveBeenCalled();
+    expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
+    expect(el.hasAttribute('aria-label')).toBe(false);
   });
 
   it('should not watch host owned attributes', () => {
@@ -156,7 +185,7 @@ describe('createAttributeController()', () => {
     expect(controller.attributes).toEqual({ 'aria-label': 'Submit' });
   });
 
-  it('should pick up a change made while not watching', () => {
+  it('should pick up a change made while not watching and clear it from the host', () => {
     const el = createHost();
     const onChange = jest.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
@@ -166,10 +195,27 @@ describe('createAttributeController()', () => {
     controller.init();
 
     expect(controller.attributes).toEqual({ 'aria-label': 'Submit' });
+    expect(el.hasAttribute('aria-label')).toBe(false);
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it('should clear an attribute removed while not watching', () => {
+  it('should not clear when removeAttribute runs while detached after reflect already cleared the host', () => {
+    const el = createHost();
+    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+
+    el.setAttribute('aria-label', 'Submit');
+    MockMutationObserver.latest.emit('aria-label');
+
+    // Reflect already took the attribute off the host, so a detached removeAttribute
+    // is a no-op — same limitation as clearing a value from the initial markup.
+    controller.destroy();
+    el.removeAttribute('aria-label');
+    controller.init();
+
+    expect(controller.attributes['aria-label']).toBe('Submit');
+  });
+
+  it('should clear via empty string while not watching', () => {
     const el = createHost();
     const controller = createAttributeController(el, ['aria-label'], jest.fn());
 
@@ -177,10 +223,11 @@ describe('createAttributeController()', () => {
     MockMutationObserver.latest.emit('aria-label');
 
     controller.destroy();
-    el.removeAttribute('aria-label');
+    el.setAttribute('aria-label', '');
     controller.init();
 
-    expect(controller.attributes['aria-label']).toBeNull();
+    expect(controller.attributes['aria-label']).toBe('');
+    expect(el.hasAttribute('aria-label')).toBe(false);
   });
 
   it('should track a detached write of an unchanged value, so a later removal is seen', () => {
