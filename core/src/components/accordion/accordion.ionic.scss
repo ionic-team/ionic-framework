@@ -74,9 +74,13 @@
 // Disabled Accordion
 // --------------------------------------------------
 
-:host(.accordion-disabled)::before {
-  @include globals.border-radius(inherit);
-  @include globals.disabled-state();
+// The background stays unchanged and only the text switches to the
+// disabled color, matching the design spec. The toggle icon is handled
+// in core.ionic.scss because it lives in the item's light DOM.
+:host(.accordion-disabled) ::slotted(ion-item[slot="header"]) {
+  --color: #{globals.$ion-text-disabled};
+}
 
-  z-index: 2;
+:host(.accordion-disabled) #content-wrapper {
+  color: globals.$ion-text-disabled;
 }
