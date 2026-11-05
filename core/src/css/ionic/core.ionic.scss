@@ -321,11 +321,16 @@ ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
   transition: globals.$ion-transition-time-300 transform globals.$ion-transition-curve-quick;
 }
 
-// The disabled accordion keeps its background and only switches the
-// text and icon to the disabled colors. The text is handled in
-// accordion.ionic.scss; the toggle icon has to be styled here because
-// it is injected into the slotted header item (light DOM).
-ion-accordion.accordion-disabled > [slot="header"] .ion-accordion-toggle-icon {
+// A disabled accordion keeps its background and switches its text and
+// icons to the disabled colors. Descendant selectors cover nested
+// accordions, which are disabled with their parent.
+ion-accordion.accordion-disabled [slot="header"],
+ion-accordion.accordion-disabled [slot="content"],
+ion-accordion.accordion-disabled [slot="content"] ion-item {
+  color: globals.$ion-text-disabled;
+}
+ion-accordion.accordion-disabled ion-icon,
+ion-accordion.accordion-disabled [slot="header"] .ion-accordion-toggle-icon {
   color: globals.$ion-icon-disabled;
 }
 
