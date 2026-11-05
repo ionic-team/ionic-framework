@@ -15,7 +15,17 @@
       <h1>Modal - a11y</h1>
 
       <button id="open-modal">Open Modal</button>
-      <ion-modal aria-label="My custom label" trigger="open-modal">My content</ion-modal>
+      <ion-modal id="a11y-modal" aria-label="My custom label" trigger="open-modal">My content</ion-modal>
+
+      <button id="open-labelledby-modal">Open Modal with aria-labelledby</button>
+      <ion-modal id="labelledby-modal" aria-labelledby="modal-title" trigger="open-labelledby-modal">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title id="modal-title">My modal title</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>My content</ion-content>
+      </ion-modal>
     </main>
   </body>
 </html>
