@@ -17,6 +17,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Global Styles](#version-10x-global-styles)
 - [Components](#version-10x-components)
+  - [Backdrop](#version-10x-backdrop)
   - [Button](#version-10x-button)
   - [Card](#version-10x-card)
   - [Checkbox](#version-10x-checkbox)
@@ -50,6 +51,28 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - The deprecated color step CSS variables, `--ion-color-step-[number]`, have been removed and should be replaced with either `--ion-background-color-step-[number]` or `--ion-text-color-step-[number]` depending on the specific use case, as outlined in the [migration guide](https://ionicframework.com/docs/updating/8-0#step-color-tokens).
 
 <h2 id="version-10x-components">Components</h2>
+
+<h4 id="version-10x-backdrop">Backdrop</h4>
+
+The following breaking changes apply to `ion-backdrop`:
+
+1. The `--ion-backdrop-color` global variable has been replaced. <sup>[1](#version-10x-backdrop-replaced-css-variables)</sup>
+2. Theme classes (`ion-backdrop.md`, `ion-backdrop.ios`) are no longer supported. <sup>[2](#version-10x-backdrop-theme-classes)</sup>
+
+<h5 id="version-10x-backdrop-replaced-css-variables">Replaced CSS variables</h5>
+
+Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--ion-backdrop-color` | `IonBackdrop.background` | `--ion-backdrop-background` |
+
+> [!NOTE]
+> `--ion-backdrop-color` was set on `:root`, and `--ion-backdrop-background` has no effect there. Set it on the backdrop of each overlay instead: `ion-alert ion-backdrop` for alert, action sheet and loading, and the `backdrop` part for menu, modal and popover (`ion-modal::part(backdrop)`).
+
+<h5 id="version-10x-backdrop-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-backdrop.md`, `ion-backdrop.ios`.
 
 <h4 id="version-10x-button">Button</h4>
 

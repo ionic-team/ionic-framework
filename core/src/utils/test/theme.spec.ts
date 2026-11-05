@@ -1,8 +1,13 @@
 import { newSpecPage } from '@stencil/core/testing';
+import { readdirSync, readFileSync } from 'fs';
+import { join } from 'path';
 
 import { Buttons } from '../../components/buttons/buttons';
 import { CardContent } from '../../components/card-content/card-content';
 import { Chip } from '../../components/chip/chip';
+import { defaultTheme as ionicTheme } from '../../themes/ionic/default.tokens';
+import { defaultTheme as iosTheme } from '../../themes/ios/default.tokens';
+import { defaultTheme as mdTheme } from '../../themes/md/default.tokens';
 import { config } from '@global/config';
 
 import { SCREEN_BREAKPOINT_NAMES, resetScreenBreakpoints } from '../breakpoints';
@@ -13,6 +18,7 @@ import {
   generateCSSVars,
   generateGlobalThemeCSS,
   getClassList,
+  INTERNAL_CHILD_COMPONENTS,
   getClassMap,
   getCustomTheme,
   hexToRgb,
@@ -845,6 +851,104 @@ describe('generateComponentsThemeCSS', () => {
     const css = generateComponentsThemeCSS(components);
 
     expect(css).toBe('');
+  });
+
+  it('should add the parents that render a child internally to its selectors', () => {
+    const components = {
+      IonBackdrop: {
+        background: 'red',
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-backdrop,
+      ion-menu,
+      ion-modal,
+      ion-popover,
+      ion-datetime {
+        --ion-backdrop-background: red;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+});
+
+describe('INTERNAL_CHILD_COMPONENTS', () => {
+  const COMPONENTS_DIR = join(__dirname, '../../components');
+
+  const toPascalCase = (tag: string) =>
+    tag
+      .split('-')
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join('');
+
+  const isChild = (key: string) => /^Ion[A-Z]/.test(key);
+
+  /**
+   * Migrated components have tokens of their own in at least one theme. Entries
+   * that only nest children, directly or under `semantic`, are skipped.
+   */
+  const migratedComponents = [
+    ...new Set(
+      [iosTheme, mdTheme, ionicTheme].flatMap((theme) =>
+        Object.entries(theme.components ?? {})
+          .filter(([, tokens]) =>
+            Object.entries(tokens ?? {}).some(([key, value]) =>
+              key === 'semantic' ? Object.keys(value ?? {}).some((semanticKey) => !isChild(semanticKey)) : !isChild(key)
+            )
+          )
+          .map(([name]) => name)
+      )
+    ),
+  ];
+
+  /**
+   * The ripple's only token falls back to the same value in its stylesheet,
+   * so it renders correctly inside a shadow root without being listed.
+   */
+  const exempt = ['IonRippleEffect'];
+
+  /**
+   * Token CSS can't reach a migrated child that a parent renders in its own shadow
+   * root, like a modal's backdrop, unless the parent is in `INTERNAL_CHILD_COMPONENTS`.
+   * The same goes for a listed host rendered in a shadow root, like datetime's popover.
+   * A missing entry fails silently, so this reads each shadow component's TSX.
+   */
+  it('should list every migrated component rendered in a shadow root', () => {
+    const missing: string[] = [];
+
+    for (const dir of readdirSync(COMPONENTS_DIR)) {
+      const file = join(COMPONENTS_DIR, dir, `${dir}.tsx`);
+      let source: string;
+      try {
+        source = readFileSync(file, 'utf8');
+      } catch {
+        continue;
+      }
+
+      if (!source.includes('shadow: true')) {
+        continue;
+      }
+
+      const parent = toPascalCase(`ion-${dir}`);
+      const renderedTags = new Set([...source.matchAll(/<(ion-[a-z-]+)[\s>/]/g)].map((match) => match[1]));
+
+      for (const tag of renderedTags) {
+        const child = toPascalCase(tag);
+        const isHost = child in INTERNAL_CHILD_COMPONENTS;
+        if (child === parent || exempt.includes(child) || (!migratedComponents.includes(child) && !isHost)) {
+          continue;
+        }
+        if (!INTERNAL_CHILD_COMPONENTS[parent]?.includes(child)) {
+          missing.push(`${parent} renders ${child}`);
+        }
+      }
+    }
+
+    expect(missing).toEqual([]);
   });
 });
 

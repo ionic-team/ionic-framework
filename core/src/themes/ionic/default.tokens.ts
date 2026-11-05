@@ -1,4 +1,4 @@
-import { currentColor, mix, dynamicFont, ionColor } from '../../utils/theme';
+import { rgba, currentColor, mix, dynamicFont, ionColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -113,6 +113,10 @@ export const defaultTheme: DefaultTheme = {
   },
 
   components: {
+    IonBackdrop: {
+      background: rgba('19, 21, 24', 0.7),
+    },
+
     IonBadge: {
       // Hues
       hue: {
