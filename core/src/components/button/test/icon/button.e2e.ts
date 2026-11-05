@@ -40,7 +40,8 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
 
       await expect(extra.locator('[slot="start"]')).toBeHidden();
       await expect(extra.locator('[slot="end"]')).toBeHidden();
-      await expect(page.locator('#inline-badge')).toBeHidden();
+      // Content without a slot is visually hidden, so it still names the button
+      await expect(page.locator('#inline-badge')).toHaveCSS('opacity', '0');
       await expect(page.locator('#vertical-badge')).toBeVisible();
 
       // The hidden text takes no space, so the button stays the size of a plain icon-only button
@@ -53,12 +54,16 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
     test('should use hidden text as the accessible name', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button><ion-icon slot="icon-only" name="add"></ion-icon>Add item</ion-button>
+        <ion-button id="bare"><ion-icon slot="icon-only" name="add"></ion-icon>Add item</ion-button>
+        <ion-button id="span"><ion-icon slot="icon-only" name="add"></ion-icon><span>Add item</span></ion-button>
+        <ion-button id="label"><ion-icon slot="icon-only" name="add"></ion-icon><ion-label>Add item</ion-label></ion-button>
       `,
         config
       );
 
-      await expect(page.getByRole('button')).toHaveAccessibleName('Add item');
+      for (const id of ['bare', 'span', 'label']) {
+        await expect(page.locator(`#${id}`).getByRole('button')).toHaveAccessibleName('Add item');
+      }
     });
   });
 });
