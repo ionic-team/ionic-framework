@@ -653,9 +653,7 @@ export const defaultTheme: DefaultTheme = {
 
           badge: {
             margin: {
-              top: '0',
               end: '0',
-              bottom: '0',
               start: 'var(--ion-spacing-xxs)',
             },
           },
@@ -752,9 +750,7 @@ export const defaultTheme: DefaultTheme = {
 
           badge: {
             margin: {
-              top: '0',
               end: '0',
-              bottom: '0',
               start: 'var(--ion-spacing-xxs)',
             },
           },
@@ -851,9 +847,7 @@ export const defaultTheme: DefaultTheme = {
 
           badge: {
             margin: {
-              top: '0',
               end: '0',
-              bottom: '0',
               start: 'var(--ion-spacing-xxs)',
             },
           },

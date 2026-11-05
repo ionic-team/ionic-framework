@@ -126,9 +126,9 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
   :host(.button-size-#{$size}) .button-native {
     @include mixins.padding(
-      var(--padding-top, var(--ion-button-size-#{$size}-padding-top)),
+      var(--padding-top, var(--ion-button-size-#{$size}-padding-top, 0px)),
       var(--padding-end, var(--ion-button-size-#{$size}-padding-end)),
-      var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom)),
+      var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom, 0px)),
       var(--padding-start, var(--ion-button-size-#{$size}-padding-start))
     );
   }
@@ -481,18 +481,23 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 }
 
 :host(.button-has-badge) .button-native {
-  // Keeps a badge taller than the label from making the button taller than its min height
-  @include mixins.padding(var(--padding-top, 0), null, var(--padding-bottom, 0), null);
-
   overflow: visible;
 }
 
 @each $size in $sizes {
+  // The badge overlaps the vertical padding, so a badge taller than the label doesn't make the button taller than its min height.
+  // The block margins fall back to 0px because no theme sets them, and calc() needs a unit.
   :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(ion-badge:not([vertical])) {
     @include mixins.margin(
-      var(--ion-button-size-#{$size}-badge-margin-top),
+      calc(
+        var(--ion-button-size-#{$size}-badge-margin-top, 0px) -
+          var(--padding-top, var(--ion-button-size-#{$size}-padding-top, 0px))
+      ),
       var(--ion-button-size-#{$size}-badge-margin-end),
-      var(--ion-button-size-#{$size}-badge-margin-bottom),
+      calc(
+        var(--ion-button-size-#{$size}-badge-margin-bottom, 0px) -
+          var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom, 0px))
+      ),
       var(--ion-button-size-#{$size}-badge-margin-start)
     );
   }

@@ -241,6 +241,7 @@ type IonButtonSizeDefinition = {
 
   /** A badge without a `vertical` position, which sits after the label of a text button */
   badge?: {
+    /** `top` and `bottom` add to the negative margins that cancel the button's vertical padding */
     margin?: IonMargin;
   };
 };
