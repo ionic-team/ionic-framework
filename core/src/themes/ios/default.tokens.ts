@@ -806,18 +806,18 @@ export const defaultTheme: DefaultTheme = {
 
             leading: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '0.2222em',
-                bottom: '0',
-                start: '0',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
-                end: '0',
-                bottom: '0',
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
                 start: '0.2222em',
               },
             },
@@ -874,9 +874,7 @@ export const defaultTheme: DefaultTheme = {
 
           badge: {
             margin: {
-              top: '0',
-              end: '0',
-              bottom: '0',
+              end: 'var(--ion-spacing-0)',
               start: 'var(--ion-spacing-xxs)',
             },
           },
@@ -905,18 +903,18 @@ export const defaultTheme: DefaultTheme = {
 
             leading: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '0.2222em',
-                bottom: '0',
-                start: '0',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
-                end: '0',
-                bottom: '0',
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
                 start: '0.2222em',
               },
             },
@@ -973,9 +971,7 @@ export const defaultTheme: DefaultTheme = {
 
           badge: {
             margin: {
-              top: '0',
-              end: '0',
-              bottom: '0',
+              end: 'var(--ion-spacing-0)',
               start: 'var(--ion-spacing-xxs)',
             },
           },
@@ -1004,18 +1000,18 @@ export const defaultTheme: DefaultTheme = {
 
             leading: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '0.2222em',
-                bottom: '0',
-                start: '0',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
-                end: '0',
-                bottom: '0',
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
                 start: '0.2222em',
               },
             },
@@ -1072,9 +1068,7 @@ export const defaultTheme: DefaultTheme = {
 
           badge: {
             margin: {
-              top: '0',
-              end: '0',
-              bottom: '0',
+              end: 'var(--ion-spacing-0)',
               start: 'var(--ion-spacing-xxs)',
             },
           },
@@ -1169,37 +1163,11 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonToolbar: {
+      // In a toolbar, a disabled button keeps its colors and fades
       IonButton: {
-        /**
-         * In a toolbar without a color, the global `--ion-toolbar-color` and
-         * `--ion-toolbar-background` properties color the buttons.
-         */
         hue: {
           bold: {
             solid: {
-              default: {
-                background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              focus: {
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              // A solid button lightens the toolbar color on hover
-              hover: {
-                background: overlay(
-                  `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                  'rgba(255, 255, 255, 0.1)'
-                ),
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              activated: {
-                color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
-              },
-
-              // In a toolbar, a disabled button keeps its colors and fades
               disabled: {
                 background: 'var(--ion-button-hue-bold-solid-default-background)',
                 color: 'var(--ion-button-hue-bold-solid-default-color)',
@@ -1216,28 +1184,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             outline: {
-              default: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-
-                border: {
-                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                },
-              },
-
-              focus: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-              },
-
-              hover: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-              },
-
-              // A pressed outline button fills with the toolbar color
-              activated: {
-                background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-              },
-
-              // In a toolbar, a disabled button keeps its colors and fades
               disabled: {
                 background: 'var(--ion-button-hue-bold-outline-default-background)',
 
@@ -1264,23 +1210,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             clear: {
-              default: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              focus: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              hover: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              activated: {
-                color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
-              },
-
-              // In a toolbar, a disabled button keeps its colors and fades
               disabled: {
                 color: 'var(--ion-button-hue-bold-clear-default-color)',
 
@@ -1330,36 +1259,13 @@ export const defaultTheme: DefaultTheme = {
                     weight: 'var(--ion-font-weight-normal)',
                   },
                 },
-
-                focus: {
-                  background: overlay(
-                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                    'rgba(0, 0, 0, 0.12)'
-                  ),
-                },
-
-                activated: {
-                  background: overlay(
-                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
-                    'rgba(0, 0, 0, 0.12)'
-                  ),
-                },
               },
 
-              // Outline and clear tints use primary, unless the app sets `--ion-toolbar-color`
               outline: {
                 default: {
                   font: {
                     weight: 'var(--ion-font-weight-normal)',
                   },
-                },
-
-                focus: {
-                  background: ionColor('primary', 'base', { alpha: 0.1 }),
-                },
-
-                hover: {
-                  background: 'transparent',
                 },
               },
 
@@ -1369,17 +1275,127 @@ export const defaultTheme: DefaultTheme = {
                     weight: 'var(--ion-font-weight-normal)',
                   },
                 },
+              },
+            },
+          },
+        },
+      },
 
-                focus: {
-                  background: ionColor('primary', 'base', { alpha: 0.1 }),
+      default: {
+        IonButton: {
+          hue: {
+            bold: {
+              solid: {
+                default: {
+                  background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
                 },
 
+                focus: {
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+                },
+
+                // A solid button lightens the toolbar color on hover
                 hover: {
-                  background: 'transparent',
+                  background: overlay(
+                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                    'rgba(255, 255, 255, 0.1)'
+                  ),
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
                 },
 
                 activated: {
-                  background: 'transparent',
+                  color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
+                },
+              },
+
+              outline: {
+                default: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+
+                  border: {
+                    color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                  },
+                },
+
+                focus: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                },
+
+                hover: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                },
+
+                // A pressed outline button fills with the toolbar color
+                activated: {
+                  background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                },
+              },
+
+              clear: {
+                default: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+                },
+
+                focus: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+                },
+
+                hover: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+                },
+
+                activated: {
+                  color: `var(--ion-toolbar-color, ${ionColor('primary', 'foreground')})`,
+                },
+              },
+            },
+          },
+        },
+
+        IonButtons: {
+          IonButton: {
+            hue: {
+              bold: {
+                solid: {
+                  focus: {
+                    background: overlay(
+                      `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                      'rgba(0, 0, 0, 0.12)'
+                    ),
+                  },
+
+                  activated: {
+                    background: overlay(
+                      `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                      'rgba(0, 0, 0, 0.12)'
+                    ),
+                  },
+                },
+
+                // Outline and clear tints stay primary, since `--ion-toolbar-color` has no `-rgb` variable to tint with
+                outline: {
+                  focus: {
+                    background: ionColor('primary', 'base', { alpha: 0.1 }),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                  },
+                },
+
+                clear: {
+                  focus: {
+                    background: ionColor('primary', 'base', { alpha: 0.1 }),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                  },
                 },
               },
             },
@@ -1491,7 +1507,9 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          minHeight: 'var(--ion-scaling-xs)',
+          min: {
+            height: 'var(--ion-scaling-xs)',
+          },
 
           font: {
             size: clamp(
@@ -1503,7 +1521,9 @@ export const defaultTheme: DefaultTheme = {
         },
 
         large: {
-          minHeight: 'var(--ion-scaling-md)',
+          min: {
+            height: 'var(--ion-scaling-md)',
+          },
 
           font: {
             size: clamp('13px', `${(components.chip.font.size / global.root).toFixed(2)}rem`, '22px'),
@@ -1944,7 +1964,9 @@ export const defaultTheme: DefaultTheme = {
     IonItemDivider: {
       background: `var(--ion-background-color-step-100, ${mix(baseColors.black, baseColors.white, '90%')})`,
       color: `var(--ion-text-color-step-150, ${mix(baseColors.white, baseColors.black, '85%')})`,
-      minHeight: 'var(--ion-scaling-sm)',
+      min: {
+        height: 'var(--ion-scaling-sm)',
+      },
 
       padding: {
         top: 'var(--ion-spacing-0)',
@@ -2123,7 +2145,9 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      lineHeight: 'var(--ion-scaling-250)',
+      line: {
+        height: 'var(--ion-scaling-250)',
+      },
 
       margin: {
         bottom: 'var(--ion-spacing-xxs)',

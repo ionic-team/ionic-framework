@@ -54,18 +54,34 @@
   @include margin(10px, 8px, 10px, 0);
 }
 
-:host .calendar-action-buttons .calendar-month-year-toggle ion-icon,
-:host .calendar-action-buttons ion-button {
+:host .calendar-action-buttons .calendar-month-year-toggle ion-icon {
   color: ion-color(primary, base);
 }
 
-:host(.ion-color) .calendar-action-buttons .calendar-month-year-toggle ion-icon,
-:host(.ion-color) .calendar-action-buttons ion-button {
+:host(.ion-color) .calendar-action-buttons .calendar-month-year-toggle ion-icon {
   color: current-color(base);
 }
 
+/**
+ * The month navigation buttons set the button's color tokens instead of
+ * `color`, so a disabled button still shows its disabled color.
+ *
+ * TODO(FW-6893): Move to datetime's tokens in its migration. A nested
+ * `IonDatetime.IonButton` token can't target just the month navigation buttons inside
+ * datetime's shadow root.
+ */
 :host .calendar-action-buttons ion-button {
   @include margin(0, 0, 0, 0);
+
+  @each $state in (default, focus, hover, activated) {
+    --ion-button-hue-bold-clear-#{$state}-color: #{ion-color(primary, base)};
+  }
+}
+
+:host(.ion-color) .calendar-action-buttons ion-button {
+  @each $state in (default, focus, hover, activated) {
+    --ion-button-hue-bold-clear-#{$state}-color: #{current-color(base)};
+  }
 }
 
 :host .calendar-action-buttons .calendar-next-prev {
