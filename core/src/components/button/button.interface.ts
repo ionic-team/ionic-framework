@@ -238,6 +238,16 @@ type IonButtonSizeDefinition = {
   icon?: IonButtonIconDefinition;
   iconOnly?: IonButtonIconOnlyDefinition;
   spinner?: IonButtonSpinnerDefinition;
+
+  /** A badge without a `vertical` position, next to the label of a text button */
+  badge?: {
+    /**
+     * `start` is the gap on the label's side and `end` is the margin on the
+     * other side. `top` and `bottom` add to the negative margins that cancel
+     * the button's vertical padding.
+     */
+    margin?: IonMargin;
+  };
 };
 
 type IonButtonShapeDefinition = {

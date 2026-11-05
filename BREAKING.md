@@ -62,11 +62,12 @@ The following breaking changes apply to `ion-button`:
 5. Icon-only buttons are now squares as tall as a text button of the same size. In `md`, this makes them a few pixels smaller at the small and default sizes and larger at the large size. To change their size, set the size's `min.height` as described above.
 6. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[6](#version-10x-button-md-material-design-2)</sup>
 7. The `ios` button follows iOS 17 for its font, icons and disabled state. <sup>[7](#version-10x-button-ios-17)</sup>
-8. CSS variables have been replaced. <sup>[8](#version-10x-button-replaced-css-variables)</sup>
-9. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[9](#version-10x-button-padding-variables)</sup>
-10. The fill, size, shape and expand classes have been renamed. <sup>[10](#version-10x-button-renamed-classes)</sup>
-11. The `default` size has been deprecated. <sup>[11](#version-10x-button-deprecated-default-size)</sup>
-12. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[12](#version-10x-button-theme-classes)</sup>
+8. A badge without a `vertical` position now has a gap between it and the label, and no longer makes the button taller than its `min.height`. To remove the gap, set `IonButton.size.<size>.badge.margin.start` for global styles or `--ion-button-size-<size>-badge-margin-start` for component-specific styles to `0`.
+9. CSS variables have been replaced. <sup>[9](#version-10x-button-replaced-css-variables)</sup>
+10. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[10](#version-10x-button-padding-variables)</sup>
+11. The fill, size, shape and expand classes have been renamed. <sup>[11](#version-10x-button-renamed-classes)</sup>
+12. The `default` size has been deprecated. <sup>[12](#version-10x-button-deprecated-default-size)</sup>
+13. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[13](#version-10x-button-theme-classes)</sup>
 
 <h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
 
