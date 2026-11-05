@@ -20,19 +20,19 @@ describe('datetime', () => {
     beforeEach(async () => {
       page = await newSpecPage({
         components: [Datetime],
-        html: `<ion-datetime></ion-datetime>`,
+        html: `<ion-datetime locale="en-US" value="2022-02-22"></ion-datetime>`,
       });
     });
 
-    it('should have aria-label "Show year picker" when collapsed', async () => {
+    it('should include the visible month/year and show action when collapsed', async () => {
       const datetime = page.body.querySelector('ion-datetime')!;
       const monthYearToggleBtn = datetime.shadowRoot!.querySelector('.calendar-month-year .calendar-month-year-toggle');
       const ariaLabel = monthYearToggleBtn!.getAttribute('aria-label');
 
-      expect(ariaLabel).toContain('Show year picker');
+      expect(ariaLabel).toBe('February 2022, Show year picker');
     });
 
-    it('should have aria-label "Hide year picker" when expanded', async () => {
+    it('should include the visible month/year and hide action when expanded', async () => {
       const datetime = page.body.querySelector('ion-datetime')!;
       const monthYearToggleBtn = datetime.shadowRoot!.querySelector<HTMLButtonElement>(
         '.calendar-month-year .calendar-month-year-toggle'
@@ -47,7 +47,18 @@ describe('datetime', () => {
       );
       const ariaLabel = monthYearToggleBtnAfter!.getAttribute('aria-label');
 
-      expect(ariaLabel).toContain('Hide year picker');
+      expect(ariaLabel).toBe('February 2022, Hide year picker');
+    });
+
+    it('should include the localized month/year when the locale changes', async () => {
+      const datetime = page.body.querySelector('ion-datetime')!;
+      datetime.locale = 'de-DE';
+
+      await page.waitForChanges();
+
+      const monthYearToggleBtn = datetime.shadowRoot!.querySelector('.calendar-month-year .calendar-month-year-toggle');
+
+      expect(monthYearToggleBtn!.getAttribute('aria-label')).toBe('Februar 2022, Show year picker');
     });
   });
 });
