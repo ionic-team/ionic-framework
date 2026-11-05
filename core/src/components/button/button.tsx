@@ -521,9 +521,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         >
           <span class="button-inner">
             <slot name="icon-only" onSlotchange={this.iconOnlySlotChanged}></slot>
-            <slot name="start"></slot>
+            {/* An icon-only button skips these slots, so outside styles can't show their content */}
+            {!hasIconOnly && <slot name="start"></slot>}
             <slot onSlotchange={this.onSlotChanged}></slot>
-            <slot name="end"></slot>
+            {!hasIconOnly && <slot name="end"></slot>}
           </span>
           {showRipple && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </TagType>

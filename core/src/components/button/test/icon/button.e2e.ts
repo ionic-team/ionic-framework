@@ -14,16 +14,18 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
 });
 
 /**
- * This behavior does not vary across modes or directions
+ * This behavior does not vary across modes or directions.
+ * The ionic theme's link styles set `display`, so it also
+ * checks that outside styles can't show hidden content.
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('button: icon only'), () => {
     test('should only show the icon and badges with a vertical position', async ({ page }) => {
       await page.setContent(
         `
         <ion-button id="plain"><ion-icon slot="icon-only" name="add"></ion-icon></ion-button>
         <ion-button id="extra">
-          <ion-icon slot="start" name="star"></ion-icon>
+          <a slot="start" href="#">Link</a>
           <ion-icon slot="icon-only" name="add"></ion-icon>
           Add item
           <ion-badge id="inline-badge">3</ion-badge>
