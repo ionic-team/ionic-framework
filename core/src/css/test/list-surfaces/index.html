@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List surfaces</title>
+    <link href="../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <body>
+    <ion-app>
+      <ion-content>
+        <div id="surfaces">
+          <ion-list id="outside-list"><ion-item lines="none">Outside the cards</ion-item></ion-list>
+          <ion-card id="default-card">
+            <ion-card-header><ion-card-title>Default card</ion-card-title></ion-card-header>
+            <ion-list><ion-item lines="none">In the card</ion-item></ion-list>
+          </ion-card>
+          <ion-card id="custom-card" style="--ion-card-background: #243b53">
+            <ion-card-header><ion-card-title>Custom card color</ion-card-title></ion-card-header>
+            <ion-list>
+              <ion-item lines="none">Uses the card color</ion-item>
+              <ion-item id="custom-item" lines="none" style="--background: #5f244f">Explicit item color</ion-item>
+            </ion-list>
+          </ion-card>
+          <ion-card id="custom-list-card" style="--ion-item-background: #5f244f">
+            <ion-card-header><ion-card-title>Explicit list color</ion-card-title></ion-card-header>
+            <ion-list><ion-item lines="none">Keeps the item token</ion-item></ion-list>
+          </ion-card>
+        </div>
+        <button id="open-modal" onclick="document.querySelector('ion-modal').present()">Open modal</button>
+        <ion-modal style="--width: 320px; --height: 380px">
+          <div class="ion-page">
+            <ion-content>
+              <ion-list id="modal-list"><ion-item lines="none">In the modal</ion-item></ion-list>
+              <ion-card id="modal-card">
+                <ion-card-header><ion-card-title>Card in the modal</ion-card-title></ion-card-header>
+                <ion-list><ion-item lines="none">Uses the card color</ion-item></ion-list>
+              </ion-card>
+              <ion-list
+                ><ion-item id="modal-custom-item" lines="none" style="--background: #5f244f"
+                  >Explicit item color</ion-item
+                ></ion-list
+              >
+            </ion-content>
+          </div>
+        </ion-modal>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
