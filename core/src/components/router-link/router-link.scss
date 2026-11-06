@@ -6,27 +6,79 @@
 
 :host {
   background: var(--ion-router-link-background);
+
+  text-decoration: var(--ion-router-link-text-decoration);
 }
 
 a {
   @include mixins.text-inherit();
+
+  // The focus ring below replaces the browser's own ring
+  outline: none;
 }
 
 // Router Link Hues
 // --------------------------------------------------
 
-:host(.router-link-hue-bold) {
-  color: var(--ion-router-link-hue-bold-default-color);
+/**
+ * States are written in this order: default -> visited -> activated.
+ * The rules share a specificity, so a later state overrides an earlier
+ * one: activated overrides visited. A state a theme doesn't set falls
+ * back to the default color.
+ */
+@each $hue in (bold, subtle) {
+  :host(.router-link-hue-#{$hue}) {
+    color: var(--ion-router-link-hue-#{$hue}-default-color);
+  }
+
+  :host(.router-link-hue-#{$hue}) a:visited {
+    color: var(--ion-router-link-hue-#{$hue}-visited-color, var(--ion-router-link-hue-#{$hue}-default-color));
+  }
+
+  :host(.router-link-hue-#{$hue}.ion-activated) a {
+    color: var(--ion-router-link-hue-#{$hue}-activated-color, var(--ion-router-link-hue-#{$hue}-default-color));
+  }
+
+  :host(.router-link-hue-#{$hue}.ion-color) {
+    color: var(--ion-router-link-hue-#{$hue}-semantic-default-color);
+  }
+
+  :host(.router-link-hue-#{$hue}.ion-color) a:visited {
+    color: var(
+      --ion-router-link-hue-#{$hue}-semantic-visited-color,
+      var(--ion-router-link-hue-#{$hue}-semantic-default-color)
+    );
+  }
+
+  :host(.router-link-hue-#{$hue}.ion-color.ion-activated) a {
+    color: var(
+      --ion-router-link-hue-#{$hue}-semantic-activated-color,
+      var(--ion-router-link-hue-#{$hue}-semantic-default-color)
+    );
+  }
 }
 
-:host(.router-link-hue-subtle) {
-  color: var(--ion-router-link-hue-subtle-default-color);
+// Router Link States
+// --------------------------------------------------
+
+/**
+ * States are written in this order: focus -> activated.
+ * The rules share a specificity, so activated overrides focus.
+ * A state a theme doesn't set falls back to the default decoration.
+ */
+:host(.ion-focused) {
+  text-decoration: var(--ion-router-link-state-focus-text-decoration, var(--ion-router-link-text-decoration));
 }
 
-:host(.router-link-hue-bold.ion-color) {
-  color: var(--ion-router-link-hue-bold-semantic-default-color);
+:host(.ion-activated) {
+  text-decoration: var(--ion-router-link-state-activated-text-decoration, var(--ion-router-link-text-decoration));
 }
 
-:host(.router-link-hue-subtle.ion-color) {
-  color: var(--ion-router-link-hue-subtle-semantic-default-color);
+:host(.ion-focused) a {
+  @include mixins.border-radius(var(--ion-router-link-state-focus-ring-radius));
+  @include mixins.focused-state(
+    var(--ion-router-link-state-focus-ring-width),
+    var(--ion-router-link-state-focus-ring-style),
+    var(--ion-router-link-state-focus-ring-color)
+  );
 }

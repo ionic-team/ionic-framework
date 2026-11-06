@@ -922,6 +922,10 @@ export const defaultTheme: DefaultTheme = {
     IonRouterLink: {
       hue: {
         bold: {
+          activated: {
+            color: '#09358a',
+          },
+
           default: {
             color: ionColor('primary', 'foreground'),
           },
@@ -930,6 +934,10 @@ export const defaultTheme: DefaultTheme = {
             default: {
               color: currentColor('foreground'),
             },
+          },
+
+          visited: {
+            color: '#09358a',
           },
         },
 
@@ -942,6 +950,23 @@ export const defaultTheme: DefaultTheme = {
             default: {
               color: currentColor('foreground', { subtle: true }),
             },
+          },
+        },
+      },
+
+      state: {
+        activated: {
+          text: {
+            decoration: 'underline',
+          },
+        },
+
+        focus: {
+          ring: {
+            color: '#b5c0f7',
+            radius: 'var(--ion-radii-sm)',
+            style: 'solid',
+            width: 'var(--ion-border-width-xxs)',
           },
         },
       },

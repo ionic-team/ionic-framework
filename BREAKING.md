@@ -461,7 +461,8 @@ The following breaking changes apply to `ion-router-link`:
 1. `--background` and `--color` have been replaced. <sup>[1](#version-10x-router-link-replaced-css-variables)</sup>
 2. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[2](#version-10x-router-link-hue)</sup>
 3. The text color now uses the color's `foreground` variant instead of `base`. <sup>[3](#version-10x-router-link-foreground)</sup>
-4. Theme classes (`ion-router-link.md`, `ion-router-link.ios`) are no longer supported. <sup>[4](#version-10x-router-link-theme-classes)</sup>
+4. A focused router link now shows a themed focus ring instead of the browser's. <sup>[4](#version-10x-router-link-focus-ring)</sup>
+5. Theme classes (`ion-router-link.md`, `ion-router-link.ios`) are no longer supported. <sup>[5](#version-10x-router-link-theme-classes)</sup>
 
 <h5 id="version-10x-router-link-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -494,6 +495,17 @@ A bold router link now uses the `foreground` variant of its color instead of `ba
 |---|---|---|---|
 | Default | `IonRouterLink.hue.bold.default.color` | `var(--ion-color-primary)` | `--ion-router-link-hue-bold-default-color` |
 | `color` set | `IonRouterLink.hue.bold.semantic.default.color` | `var(--ion-color-base)` | `--ion-router-link-hue-bold-semantic-default-color` |
+
+<h5 id="version-10x-router-link-focus-ring">Focus ring</h5>
+
+When a router link is focused with the keyboard, it now shows a ring from the theme instead of the browser's default ring: 2px in the primary color, with 4px corners. Customize it with the tokens for global styles, or the CSS variables for component-specific styles:
+
+| Property | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| Color | `IonRouterLink.state.focus.ring.color` | `--ion-router-link-state-focus-ring-color` |
+| Radius | `IonRouterLink.state.focus.ring.radius` | `--ion-router-link-state-focus-ring-radius` |
+| Style | `IonRouterLink.state.focus.ring.style` | `--ion-router-link-state-focus-ring-style` |
+| Width | `IonRouterLink.state.focus.ring.width` | `--ion-router-link-state-focus-ring-width` |
 
 <h5 id="version-10x-router-link-theme-classes">Theme classes</h5>
 
