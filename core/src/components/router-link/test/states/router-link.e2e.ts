@@ -11,8 +11,9 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
        * The padding keeps the focus ring, which sits outside the
        * link, inside the screenshot.
        *
-       * Visited is left out: a test browser has no history, so no
-       * link renders as visited.
+       * An empty href points at the current page, which the browser
+       * counts as visited. Firefox's test browser keeps no history,
+       * so its visited links show the default color.
        */
       await page.setContent(
         `
@@ -36,6 +37,11 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
             <div>
               <ion-router-link href="#" class="ion-activated">Default</ion-router-link>
               <ion-router-link href="#" class="ion-activated" color="danger">Danger</ion-router-link>
+            </div>
+
+            <div>
+              <ion-router-link href="">Default</ion-router-link>
+              <ion-router-link href="" color="danger">Danger</ion-router-link>
             </div>
           </div>
         `,
