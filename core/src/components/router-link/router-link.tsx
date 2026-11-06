@@ -3,13 +3,13 @@ import { Component, Host, Prop, h } from '@stencil/core';
 import { openURL } from '@utils/helpers';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonTheme } from '../../global/ionic-global';
+import { config } from '../../global/config';
 import type { AnimationBuilder, Color } from '../../interface';
+import type { Hue } from '../../themes/themes.interfaces';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-router-link',
@@ -29,6 +29,14 @@ export class RouterLink implements ComponentInterface {
    * If this property is set, an anchor tag will be rendered.
    */
   @Prop() href: string | undefined;
+
+  /**
+   * Set to `"bold"` for a router link with vibrant, bold colors or to `"subtle"` for
+   * a router link with muted, subtle colors.
+   *
+   * Defaults to `"bold"` if both the hue property and theme config are unset.
+   */
+  @Prop() hue?: Hue;
 
   /**
    * Specifies the relationship of the target object to the link object.
@@ -55,22 +63,32 @@ export class RouterLink implements ComponentInterface {
    */
   @Prop() target: string | undefined;
 
+  /**
+   * Gets the router link hue. Uses the `hue` property if set, otherwise
+   * checks the theme config and falls back to 'bold' if neither is provided.
+   */
+  get hueValue(): Hue {
+    const hueConfig = config.getObjectValue('IonRouterLink.hue', 'bold') as Hue;
+
+    return this.hue || hueConfig;
+  }
+
   private onClick = (ev: Event) => {
     openURL(this.href, ev, this.routerDirection, this.routerAnimation);
   };
 
   render() {
-    const theme = getIonTheme(this);
+    const { color, href, hueValue, rel, target } = this;
     const attrs = {
-      href: this.href,
-      rel: this.rel,
-      target: this.target,
+      href,
+      rel,
+      target,
     };
     return (
       <Host
         onClick={this.onClick}
-        class={createColorClasses(this.color, {
-          [theme]: true,
+        class={createColorClasses(color, {
+          [`router-link-hue-${hueValue}`]: true,
           'ion-activatable': true,
         })}
       >
