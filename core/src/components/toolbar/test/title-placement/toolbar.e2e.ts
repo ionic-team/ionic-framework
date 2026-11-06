@@ -146,8 +146,9 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
       );
 
       /**
-       * Pages stay hidden while they are being navigated to. Wait longer
-       * than the toolbar would take to give up measuring a hidden slot.
+       * Pages stay hidden while they are being navigated to. Keep the toolbar
+       * hidden long enough that it can only be centered by measuring the
+       * slots again once it is shown.
        */
       await page.waitForTimeout(1000);
       await page.locator('ion-header').evaluate((el: HTMLElement) => (el.style.display = ''));
