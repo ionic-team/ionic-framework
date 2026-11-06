@@ -128,7 +128,6 @@
   background: var(--bar-background-active);
 
   z-index: 1;
-  pointer-events: none;
 }
 
 .range-tick-active {
@@ -212,6 +211,13 @@
 }
 
 .range-knob-handle {
+  /**
+   * Place the knob handle above the ticks so that
+   * pressing the knob reaches the handle instead
+   * of the tick underneath it.
+   */
+  z-index: 2;
+
   &.ion-activated .range-knob:before,
   &.ion-focused .range-knob:before,
   &.range-knob-pressed .range-knob:before {
