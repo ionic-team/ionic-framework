@@ -9,6 +9,12 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
+          <style>
+            .container {
+              width: max-content;
+            }
+          </style>
+
           <div class="container">
             <ion-router-link href="#">Default</ion-router-link>
             <ion-router-link href="#" color="danger">Danger</ion-router-link>
