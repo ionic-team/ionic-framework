@@ -190,11 +190,10 @@ export class Toolbar implements ComponentInterface {
   /**
    * Measure the widths of the slots and update the CSS custom properties
    * for the minimum width of each pair of slots based on the largest width in each pair.
-   * Returns whether we successfully measured all of the slots we expect to have content.
-   * If not, the content probably hasn't rendered yet, and the ResizeObserver
-   * measures again once it does.
+   * Slots that measure 0 (for example, in a hidden toolbar) are skipped. The
+   * ResizeObserver measures them again when their content changes size.
    */
-  private measureAndUpdateSlots(): boolean {
+  private measureAndUpdateSlots() {
     // Define the relationship between slots based on the conditions array
     // Group slots that should have the same width
     const slotPairs = [
@@ -212,7 +211,6 @@ export class Toolbar implements ComponentInterface {
 
     // First, measure all slot widths
     const slotWidths = new Map<string, number>();
-    let allMeasurementsSuccessful = true;
 
     // Measure all slots with content
     const slots = ['start', 'end', 'primary', 'secondary'];
@@ -242,8 +240,6 @@ export class Toolbar implements ComponentInterface {
 
           if (width > 0) {
             slotWidths.set(slot, width);
-          } else {
-            allMeasurementsSuccessful = false;
           }
         }
       }
@@ -268,8 +264,6 @@ export class Toolbar implements ComponentInterface {
         this.el.style.setProperty(`--${name}-size`, `${maxWidth}px`);
       }
     });
-
-    return allMeasurementsSuccessful;
   }
 
   /**
