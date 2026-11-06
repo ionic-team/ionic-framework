@@ -155,5 +155,58 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
 
       await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
     });
+
+    test('should keep the title centered when buttons are added to an empty slot', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-header>
+            <ion-toolbar title-placement="center">
+              <ion-buttons slot="start">
+                <ion-button>Back</ion-button>
+              </ion-buttons>
+              <ion-title>Center Placement</ion-title>
+            </ion-toolbar>
+          </ion-header>
+        `,
+        config
+      );
+
+      await page.locator('ion-toolbar').evaluate((el) => {
+        el.insertAdjacentHTML(
+          'beforeend',
+          '<ion-buttons slot="end"><ion-button>Edit</ion-button><ion-button>Share</ion-button></ion-buttons>'
+        );
+      });
+
+      await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
+    });
+
+    test('should keep the title centered when buttons are added after the toolbar is moved', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-header>
+            <ion-toolbar title-placement="center">
+              <ion-buttons slot="start">
+                <ion-button>Back</ion-button>
+              </ion-buttons>
+              <ion-title>Center Placement</ion-title>
+              <ion-buttons slot="end">
+                <ion-button>Edit</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+        `,
+        config
+      );
+
+      // Moving the header disconnects and reconnects the toolbar.
+      await page.locator('ion-header').evaluate((el) => el.parentElement!.appendChild(el));
+
+      await page.locator('ion-buttons[slot="end"]').evaluate((el) => {
+        el.insertAdjacentHTML('beforeend', '<ion-button>Share</ion-button>');
+      });
+
+      await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
+    });
   });
 });
