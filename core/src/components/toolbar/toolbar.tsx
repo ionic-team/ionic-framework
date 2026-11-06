@@ -130,14 +130,9 @@ export class Toolbar implements ComponentInterface {
    * This ensures that slots shown by their met conditions
    * have a minimum width matching their required slot
    *
-   * The slotted content is watched with a ResizeObserver instead of being
-   * measured after a timeout:
-   * - The observer callback runs after layout and before paint, so the slot
-   *   widths are set in the same frame the content is first laid out. The
-   *   title is already centered when it is first painted and does not move.
-   * - The callback runs again whenever the slotted content changes size,
-   *   for example when a button is added or removed, or when a hidden
-   *   toolbar becomes visible.
+   * The slotted content is watched with a ResizeObserver, which runs
+   * before paint and again whenever the content changes size, so the
+   * title is centered on first paint and stays centered.
    */
   private updateSlotWidths() {
     // Stop watching the previous content before watching the current one.
