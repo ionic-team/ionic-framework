@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import type { Gesture, GestureDetail } from '@utils/gesture';
 import { raf } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
@@ -24,6 +24,7 @@ import type { SegmentChangeEventDetail, SegmentValue } from './segment-interface
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
+  private focusedButton?: HTMLIonSegmentButtonElement;
 
   // Value before the segment is dragged
   private valueBeforeGesture?: SegmentValue;
@@ -117,6 +118,7 @@ export class Segment implements ComponentInterface {
      * Used by `ion-segment-button` to determine if the button should be checked.
      */
     this.ionSelect.emit({ value });
+    this.updateTabindex();
 
     // The scroll listener should handle scrolling the active button into view as needed
     if (!this.segmentViewEl) {
@@ -167,6 +169,31 @@ export class Segment implements ComponentInterface {
     }
   }
 
+  /**
+   * Update the tab stop when a segment button changes.
+   * @internal
+   */
+  @Method()
+  async updateTabindex() {
+    const buttons = this.getButtons();
+    const enabled = buttons.filter((button) => !button.disabled);
+    const focused = enabled.find((button) => button === this.focusedButton);
+    const selected = enabled.find((button) => button.value === this.value);
+    const focusable = focused ?? selected ?? enabled[0];
+
+    for (const button of buttons) {
+      button.setButtonTabindex(button === focusable ? 0 : -1);
+    }
+  }
+
+  @Listen('focusin')
+  @Listen('focusout')
+  protected focusChanged(ev: FocusEvent) {
+    const target = ev.type === 'focusin' ? ev.target : ev.relatedTarget;
+    this.focusedButton = this.getButtons().find((button) => button === target);
+    this.updateTabindex();
+  }
+
   private gestureChanged() {
     if (this.gesture) {
       this.gesture.enable(!this.scrollable && !this.disabled && this.swipeGesture);
@@ -180,6 +207,7 @@ export class Segment implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    this.focusedButton = undefined;
     this.segmentViewEl = null;
   }
 
@@ -191,6 +219,7 @@ export class Segment implements ComponentInterface {
     this.segmentViewEl = this.getSegmentView();
 
     this.setCheckedClasses();
+    this.updateTabindex();
 
     /**
      * We need to wait for the buttons to all be rendered
