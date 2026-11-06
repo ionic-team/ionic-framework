@@ -977,6 +977,17 @@ export const defaultTheme: DefaultTheme = {
           },
         },
       },
+
+      state: {
+        focus: {
+          ring: {
+            color: ionColor('primary', 'base'),
+            radius: 'var(--ion-radii-xxs)',
+            style: 'solid',
+            width: 'var(--ion-border-width-xs)',
+          },
+        },
+      },
     },
 
     IonRow: {

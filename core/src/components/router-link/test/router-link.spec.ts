@@ -77,6 +77,15 @@ describe('router-link', () => {
     expect(page.root).toHaveClass('ion-activatable');
   });
 
+  it('should be focusable for the focus ring', async () => {
+    const page = await newSpecPage({
+      components: [RouterLink],
+      html: `<ion-router-link href="/page">Link</ion-router-link>`,
+    });
+
+    expect(page.root).toHaveClass('ion-focusable');
+  });
+
   describe('click', () => {
     const setup = async (href: string) => {
       const page = await newSpecPage({
