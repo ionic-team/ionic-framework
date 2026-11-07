@@ -46,4 +46,23 @@ test.describe('Tabs', () => {
       await expect(page).toHaveURL(/.*\/tabs-basic/);
     });
   });
+
+  test.describe('Deferred IonTabs initialization', () => {
+    test('should populate outlet before emitting initial ionTabsWillChange', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31674',
+      });
+
+      await page.goto('/standalone/tabs-outlet-init');
+      await page.locator('#show-tabs').click();
+
+      await expect(page.locator('app-tab-one')).toBeVisible();
+      await expect(page.locator('#will-change-log')).toHaveText('tab-one:true:undefined');
+
+      await page.locator('#tab-button-tab-two').click();
+      await expect(page.locator('app-tab-two')).toBeVisible();
+      await expect(page.locator('#will-change-log')).toHaveText('tab-one:true:undefined,tab-two:true:tab-one');
+    });
+  });
 });
