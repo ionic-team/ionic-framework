@@ -772,23 +772,34 @@ There will be some CSS issues when converting to shadow. Below are some of the d
 
 **Targeting host-context + host (with a :not)**
 
+```tsx
+'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
+```
+
 ```css
 /* IN SCOPED */
 :host-context(ion-toolbar.ion-color):not(.ion-color) {
 
 /* IN SHADOW */
-:host-context(ion-toolbar.ion-color):host(:not(.ion-color))  {
+:host(.in-toolbar-color:not(.ion-color)) {
 ```
 
 **Targeting host-context + host (with a :not) > slotted child**
+
+```tsx
+'in-toolbar': hostContext('ion-toolbar', this.el),
+'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
+```
 
 ```css
 /* IN SCOPED */
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(ion-segment-button) {
 
 /* IN SHADOW*/
-:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
+:host(.in-toolbar:not(.in-toolbar-color):not(.ion-color)) ::slotted(ion-segment-button) {
 ```
+
+See [Parent Context](#parent-context) for when to set a host class with `hostContext`.
 
 ### Parent Context
 
@@ -812,7 +823,7 @@ When the ancestor is known at render time, set a class on the host with the `hos
 :host(.in-item) {
 ```
 
-Combine a tag name with a class only when the class describes the ancestor's state, such as `hostContext('ion-item.ion-color', this.el)`.
+Combine a tag name with a class or attribute only when it describes the ancestor's state, such as `hostContext('ion-toolbar[color]', this.el)` or `hostContext('ion-item.ion-color', this.el)`. This is only checked when the component renders, so adding or removing `color` on the item afterward does not update `in-item-color`. This is an accepted limitation for item color, which is rarely changed after render.
 
 `hostContext` only runs when the component renders, so it does not update when the ancestor's classes change later. When the styles depend on ancestor state that changes after render, such as a disabled state reported by a child, move the styles to the ancestor and target the child with `::slotted()`:
 
