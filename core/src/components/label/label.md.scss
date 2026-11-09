@@ -1,5 +1,5 @@
 // TODO(FW-6850): Remove when label is migrated to Modular Ionic.
-@use "../../foundations/ionic.vars" as ionic;
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 @import "./label";
 @import "./label.md.vars";
 
@@ -41,18 +41,12 @@
   @include margin(0, 0, 2px);
 
   font-size: dynamic-font(24px);
-  font-weight: normal;
-
-  line-height: 1.2;
 }
 
 ::slotted(h2) {
   @include margin(2px, 0);
 
   font-size: dynamic-font(16px);
-  font-weight: normal;
-
-  line-height: 1.2;
 }
 
 /**
@@ -63,11 +57,11 @@
  * tokens for its headings.
  */
 :host(.ionic) ::slotted(h1) {
-  line-height: map-get(ionic.$ion-heading-h1-regular, line-height);
+  line-height: map-get(globals.$ion-heading-h1-regular, line-height);
 }
 
 :host(.ionic) ::slotted(h2) {
-  line-height: map-get(ionic.$ion-heading-h2-regular, line-height);
+  line-height: map-get(globals.$ion-heading-h2-regular, line-height);
 }
 
 ::slotted(h3),
@@ -75,11 +69,6 @@
 ::slotted(h5),
 ::slotted(h6) {
   @include margin(2px, 0);
-
-  font-size: dynamic-font(14px);
-  font-weight: normal;
-
-  line-height: normal;
 }
 
 ::slotted(p) {
@@ -90,12 +79,4 @@
   font-size: dynamic-font(14px);
 
   line-height: dynamic-font(20px);
-
-  text-overflow: inherit;
-
-  overflow: inherit;
-}
-
-:host(.in-item-color) ::slotted(p) {
-  color: inherit;
 }

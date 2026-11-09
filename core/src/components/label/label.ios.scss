@@ -33,18 +33,12 @@
   @include margin(3px, 0, 2px);
 
   font-size: dynamic-font(22px);
-  font-weight: normal;
-
-  line-height: 1.2;
 }
 
 ::slotted(h2) {
   @include margin(0, 0, 2px);
 
   font-size: dynamic-font(17px);
-  font-weight: normal;
-
-  line-height: 1.2;
 }
 
 ::slotted(h3),
@@ -52,11 +46,6 @@
 ::slotted(h5),
 ::slotted(h6) {
   @include margin(0, 0, 3px);
-
-  font-size: dynamic-font(14px);
-  font-weight: normal;
-
-  line-height: normal;
 }
 
 ::slotted(p) {
@@ -72,14 +61,6 @@
   font-size: $item-ios-paragraph-font-size;
 
   line-height: normal;
-
-  text-overflow: inherit;
-
-  overflow: inherit;
-}
-
-:host(.in-item-color) ::slotted(p) {
-  color: inherit;
 }
 
 ::slotted(h2:last-child),

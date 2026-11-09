@@ -79,7 +79,41 @@ slot {
 ::slotted(h4),
 ::slotted(h5),
 ::slotted(h6) {
+  font-weight: normal;
+
   text-overflow: inherit;
 
   overflow: inherit;
+}
+
+/**
+ * The global heading styles in typography.css skip headings slotted
+ * directly into ion-label, so the label sets the line height that
+ * those styles would otherwise provide.
+ */
+::slotted(h1),
+::slotted(h2) {
+  line-height: 1.2;
+}
+
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
+  font-size: dynamic-font(14px);
+
+  line-height: normal;
+}
+
+// Paragraphs
+// --------------------------------------------------
+
+::slotted(p) {
+  text-overflow: inherit;
+
+  overflow: inherit;
+}
+
+:host(.in-item-color) ::slotted(p) {
+  color: inherit;
 }
