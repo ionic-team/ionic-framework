@@ -388,7 +388,7 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   $token: --ion-button-hue-bold-#{$fill};
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-activated) {
-    color: var(#{$token}-activated-color);
+    color: var(#{$token}-activated-color, var(#{$token}-default-color));
   }
 
   // Disabled keeps its own opacity
@@ -397,14 +397,14 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-activated) .button-native {
-    background: var(#{$token}-activated-background);
+    background: var(#{$token}-activated-background, var(#{$token}-default-background));
 
     box-shadow: var(#{$token}-activated-box-shadow);
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-color.ion-activated) .button-native {
-    background: var(#{$token}-semantic-activated-background);
-    color: var(#{$token}-semantic-activated-color);
+    background: var(#{$token}-semantic-activated-background, var(#{$token}-semantic-default-background));
+    color: var(#{$token}-semantic-activated-color, var(#{$token}-semantic-default-color));
   }
 }
 
