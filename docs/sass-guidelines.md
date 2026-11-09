@@ -461,8 +461,8 @@ $label-md-text-color-focused: ion-color(primary, base);
 ```scss
 // item.md.scss
 
-:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
-:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating) {
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked:not(.ion-color)),
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating:not(.ion-color)) {
   color: $label-md-text-color-focused;
 }
 ```
@@ -488,8 +488,8 @@ $label-ios-text-color-focused: null;
 ```scss
 // item.ios.scss
 
-:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
-:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating) {
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked:not(.ion-color)),
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating:not(.ion-color)) {
   color: $label-ios-text-color-focused;
 }
 ```

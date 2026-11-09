@@ -44,3 +44,31 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+/**
+ * Only md changes the color of a stacked or floating
+ * label when its item is focused.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('label: in focused item'), () => {
+    test('should keep the label color when set in a focused item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-list>
+          <ion-item button="true" class="ion-focused">
+            <ion-label position="stacked">Default</ion-label>
+          </ion-item>
+          <ion-item button="true" class="ion-focused">
+            <ion-label position="stacked" color="danger">Danger</ion-label>
+          </ion-item>
+        </ion-list>
+        `,
+        config
+      );
+
+      const list = page.locator('ion-list');
+
+      await expect(list).toHaveScreenshot(screenshot(`label-item-focused-color`));
+    });
+  });
+});
