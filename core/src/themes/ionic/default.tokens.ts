@@ -968,6 +968,7 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
+      // In a toolbar without a color
       default: {
         IonButton: {
           hue: {
@@ -1076,6 +1077,7 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
+      // In a toolbar with a color
       semantic: {
         IonButton: {
           hue: {
