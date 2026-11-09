@@ -354,12 +354,6 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'contrast'),
             },
 
-            // The ripple is the pressed feedback
-            activated: {
-              background: ionColor('primary', 'base'),
-              color: ionColor('primary', 'contrast'),
-            },
-
             // A white wash over the button
             disabled: {
               background: ionColor('primary', 'base'),
@@ -386,11 +380,6 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: currentColor('shade'),
-                color: currentColor('contrast'),
-              },
-
-              activated: {
-                background: currentColor('base'),
                 color: currentColor('contrast'),
               },
 
@@ -437,12 +426,6 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'foreground'),
             },
 
-            // The ripple is the pressed feedback
-            activated: {
-              background: baseColors.backgroundColor,
-              color: ionColor('primary', 'foreground'),
-            },
-
             // A white wash over the button
             disabled: {
               background: baseColors.backgroundColor,
@@ -472,11 +455,6 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: currentColor('shade', { subtle: true }),
-                color: currentColor('foreground'),
-              },
-
-              activated: {
-                background: baseColors.backgroundColor,
                 color: currentColor('foreground'),
               },
 
@@ -517,12 +495,6 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'foreground'),
             },
 
-            // The ripple is the pressed feedback
-            activated: {
-              background: 'transparent',
-              color: ionColor('primary', 'foreground'),
-            },
-
             // A white wash over the button
             disabled: {
               background: 'transparent',
@@ -548,11 +520,6 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: currentColor('shade', { subtle: true }),
-                color: currentColor('foreground'),
-              },
-
-              activated: {
-                background: 'transparent',
                 color: currentColor('foreground'),
               },
 
