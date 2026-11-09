@@ -957,7 +957,7 @@ export const defaultTheme: DefaultTheme = {
                   },
                 },
 
-                // Outline and clear tints use the toolbar's text color, #424242 unless set
+                // Outline and clear tints use `--ion-text-color`, since `--ion-toolbar-color` has no `-rgb` variable
                 outline: {
                   default: {
                     background: 'transparent',
