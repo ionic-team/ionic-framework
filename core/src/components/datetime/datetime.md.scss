@@ -201,6 +201,34 @@
   color: $text-color-step-500;
 }
 
+// Range Selection
+// -----------------------------------
+
+:host {
+  --range-background: #{ion-color(primary, base, 0.12)};
+  --range-track-height: #{$datetime-md-day-height};
+  --range-track-edge-overflow: 10px;
+}
+
+:host(.ion-color) {
+  --range-background: #{current-color(base, 0.12)};
+}
+
+// Range start and end: full circle
+:host .calendar-day.calendar-day-range-start,
+:host .calendar-day.calendar-day-range-end {
+  @include border-radius(50%);
+
+  background: ion-color(primary, base);
+  color: ion-color(primary, contrast);
+}
+
+:host(.ion-color) .calendar-day.calendar-day-range-start,
+:host(.ion-color) .calendar-day.calendar-day-range-end {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
 // Time / Header
 // -----------------------------------
 :host .datetime-time {
