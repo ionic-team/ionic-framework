@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
@@ -30,6 +32,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLElement;
 
@@ -142,6 +145,11 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
   connectedCallback() {
     this.fab = this.el.closest('ion-fab');
+    this.tabindexController?.init();
+  }
+
+  disconnectedCallback() {
+    this.tabindexController?.destroy();
   }
 
   private onFocus = () => {
@@ -232,12 +240,14 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
   }
 
   render() {
     const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes, type } = this;
     const inList = hostContext('ion-fab-list', el);
     const mode = getIonMode(this);
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'
@@ -283,6 +293,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           onBlur={this.onBlur}
           onClick={(ev: Event) => type === 'button' && openURL(href, ev, this.routerDirection, this.routerAnimation)}
           {...inheritedAttributes}
+          {...tabindexAttributes}
         >
           <ion-icon
             aria-hidden="true"

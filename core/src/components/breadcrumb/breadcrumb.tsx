@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
@@ -28,6 +30,7 @@ import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface
 })
 export class Breadcrumb implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
   private collapsedRef?: HTMLElement;
 
   /** @internal */
@@ -128,6 +131,19 @@ export class Breadcrumb implements ComponentInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
+
+    // A breadcrumb without an `href` has no native link, so `tabindex` stays on the host.
+    if (this.isClickable()) {
+      this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
+    }
+  }
+
+  connectedCallback() {
+    this.tabindexController?.init();
+  }
+
+  disconnectedCallback() {
+    this.tabindexController?.destroy();
   }
 
   private isClickable(): boolean {
@@ -163,6 +179,8 @@ export class Breadcrumb implements ComponentInterface {
       target,
     } = this;
     const clickable = this.isClickable();
+    // Putting `tabindex` on the plain span would make a tab stop with no name.
+    const tabindexAttributes = clickable ? this.tabindexController?.attributes ?? {} : {};
     const TagType = this.href === undefined ? 'span' : ('a' as any);
 
     // Links can still be tabbed to when set to disabled if they have an href
@@ -207,6 +225,7 @@ export class Breadcrumb implements ComponentInterface {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           {...inheritedAttributes}
+          {...tabindexAttributes}
         >
           <slot name="start"></slot>
           <slot></slot>
