@@ -7,7 +7,7 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-bg-surface-default};
+  --background: #{globals.$ion-bg-surface-elevation-3};
   --backdrop-opacity: 0.7;
   --button-background: transparent;
   --button-background-selected: #{globals.$ion-bg-primary-subtle-default};
