@@ -283,7 +283,7 @@ const DEFAULT_PALETTE = 'light';
   function holdComponentDefinitions(ready) {
     const define = customElements.define.bind(customElements);
     let released = false;
-    ready.then(() => {
+    ready.finally(() => {
       released = true;
     });
 
@@ -293,7 +293,7 @@ const DEFAULT_PALETTE = 'light';
         return;
       }
 
-      ready.then(() => define(name, constructor, options));
+      ready.finally(() => define(name, constructor, options));
     };
   }
 
