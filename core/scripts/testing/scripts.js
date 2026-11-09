@@ -154,13 +154,28 @@ const DEFAULT_PALETTE = 'light';
      * Only pages with the theme in the URL query need this: `setContent`
      * sets its own theme before Ionic loads.
      */
+    let definitionsReady = Promise.resolve();
     if (themeQuery) {
-      holdComponentDefinitions(themeLoaded.then(setThemeConfig).catch(() => {}));
+      definitionsReady = themeLoaded.then(setThemeConfig).catch(() => {});
+      holdComponentDefinitions(definitionsReady);
     }
 
-    themeReady = loadThemeTokens(themeName, themeLoaded).finally(() => {
-      window.__ionicTestThemeReady = true;
-    });
+    /*
+     * While the definitions are held no component connects, so Stencil fires
+     * `appload` from its 30ms fallback before any component has loaded. Wait
+     * for the held components to load before the page counts as ready.
+     */
+    themeReady = Promise.all([loadThemeTokens(themeName, themeLoaded), definitionsReady])
+      .then(() =>
+        Promise.all(
+          [...document.querySelectorAll('*')]
+            .filter((el) => el.tagName.startsWith('ION-'))
+            .map((el) => el.componentOnReady?.())
+        )
+      )
+      .finally(() => {
+        window.__ionicTestThemeReady = true;
+      });
   } else {
     if (themeName) {
       console.warn(
@@ -268,7 +283,7 @@ const DEFAULT_PALETTE = 'light';
   function holdComponentDefinitions(ready) {
     const define = customElements.define.bind(customElements);
     let released = false;
-    ready.then(() => {
+    ready.finally(() => {
       released = true;
     });
 
@@ -278,7 +293,7 @@ const DEFAULT_PALETTE = 'light';
         return;
       }
 
-      ready.then(() => define(name, constructor, options));
+      ready.finally(() => define(name, constructor, options));
     };
   }
 

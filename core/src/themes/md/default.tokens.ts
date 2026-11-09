@@ -383,11 +383,8 @@ export const defaultTheme: DefaultTheme = {
               },
             },
 
-            // The ripple is the pressed feedback
+            // The ripple shows the press, and the button lifts
             activated: {
-              background: ionColor('primary', 'base'),
-              color: ionColor('primary', 'contrast'),
-
               box: {
                 shadow:
                   '0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)',
@@ -422,11 +419,6 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: overlay(currentColor('base'), currentColor('contrast', { alpha: 0.08 })),
-                color: currentColor('contrast'),
-              },
-
-              activated: {
-                background: currentColor('base'),
                 color: currentColor('contrast'),
               },
 
@@ -473,12 +465,6 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'foreground'),
             },
 
-            // The ripple is the pressed feedback
-            activated: {
-              background: 'transparent',
-              color: ionColor('primary', 'foreground'),
-            },
-
             disabled: {
               background: 'transparent',
 
@@ -510,11 +496,6 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
-                color: currentColor('foreground'),
-              },
-
-              activated: {
-                background: 'transparent',
                 color: currentColor('foreground'),
               },
 
@@ -560,12 +541,6 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'foreground'),
             },
 
-            // The ripple is the pressed feedback
-            activated: {
-              background: 'transparent',
-              color: ionColor('primary', 'foreground'),
-            },
-
             disabled: {
               background: 'transparent',
 
@@ -589,11 +564,6 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
-                color: currentColor('foreground'),
-              },
-
-              activated: {
-                background: 'transparent',
                 color: currentColor('foreground'),
               },
 
@@ -658,11 +628,8 @@ export const defaultTheme: DefaultTheme = {
               },
             },
 
-            // The ripple is the pressed feedback
+            // The ripple shows the press, and the button lifts
             activated: {
-              background: ionColor('primary', 'base', { subtle: true }),
-              color: ionColor('primary', 'contrast', { subtle: true }),
-
               box: {
                 shadow:
                   '0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)',
@@ -703,11 +670,6 @@ export const defaultTheme: DefaultTheme = {
                   currentColor('base', { subtle: true }),
                   currentColor('contrast', { alpha: 0.08, subtle: true })
                 ),
-                color: currentColor('contrast', { subtle: true }),
-              },
-
-              activated: {
-                background: currentColor('base', { subtle: true }),
                 color: currentColor('contrast', { subtle: true }),
               },
 
@@ -754,12 +716,6 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'foreground', { subtle: true }),
             },
 
-            // The ripple is the pressed feedback
-            activated: {
-              background: 'transparent',
-              color: ionColor('primary', 'foreground', { subtle: true }),
-            },
-
             disabled: {
               background: 'transparent',
 
@@ -791,11 +747,6 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
-                color: currentColor('foreground', { subtle: true }),
-              },
-
-              activated: {
-                background: 'transparent',
                 color: currentColor('foreground', { subtle: true }),
               },
 
@@ -841,12 +792,6 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'foreground', { subtle: true }),
             },
 
-            // The ripple is the pressed feedback
-            activated: {
-              background: 'transparent',
-              color: ionColor('primary', 'foreground', { subtle: true }),
-            },
-
             disabled: {
               background: 'transparent',
 
@@ -870,11 +815,6 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
-                color: currentColor('foreground', { subtle: true }),
-              },
-
-              activated: {
-                background: 'transparent',
                 color: currentColor('foreground', { subtle: true }),
               },
 
@@ -1399,6 +1339,7 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
+      // In a toolbar without a color
       default: {
         IonButton: {
           hue: {
@@ -1498,7 +1439,7 @@ export const defaultTheme: DefaultTheme = {
                   },
                 },
 
-                // Outline and clear tints use the toolbar's text color, #424242 unless set
+                // Outline and clear tints use `--ion-text-color`, since `--ion-toolbar-color` has no `-rgb` variable
                 outline: {
                   default: {
                     background: 'transparent',
