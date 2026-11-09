@@ -1281,6 +1281,7 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
+      // In a toolbar without a color
       default: {
         IonButton: {
           hue: {
