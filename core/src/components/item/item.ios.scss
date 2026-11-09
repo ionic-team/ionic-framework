@@ -195,6 +195,10 @@
   @include margin(null, null, 0, null);
 }
 
+:host(.item-has-value) ::slotted(ion-label.label-floating) {
+  @include transform(scale(0.82));
+}
+
 // iOS Stacked & Floating Inputs
 // --------------------------------------------------
 

@@ -218,6 +218,11 @@
   @include margin(0, 0, 0, 0);
 }
 
+:host(.ion-focused) ::slotted(ion-label.label-floating),
+:host(.item-has-value) ::slotted(ion-label.label-floating) {
+  @include transform(translateY(50%), scale(0.75));
+}
+
 :host(.item-label-stacked) ::slotted([slot="end"]),
 :host(.item-label-floating) ::slotted([slot="end"]) {
   @include margin(

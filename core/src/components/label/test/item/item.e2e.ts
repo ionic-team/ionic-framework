@@ -72,3 +72,50 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
     });
   });
 });
+
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(title('label: floating in item with value'), () => {
+      test('should float the label when the item has a value', async ({ page }) => {
+        /**
+         * The Angular value accessor adds `item-has-value`
+         * to the item when its input has a value.
+         */
+        await page.setContent(
+          `
+          <ion-item class="item-has-value">
+            <ion-label position="floating">Floating</ion-label>
+          </ion-item>
+          `,
+          config
+        );
+
+        const item = page.locator('ion-item');
+
+        await expect(item).toHaveScreenshot(screenshot(`label-item-floating-has-value`));
+      });
+    });
+  }
+);
+
+/**
+ * iOS does not float the label when its item is focused.
+ */
+configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('label: floating in focused item'), () => {
+    test('should float the label when the item is focused', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item button="true" class="ion-focused">
+          <ion-label position="floating">Floating</ion-label>
+        </ion-item>
+        `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`label-item-floating-focused`));
+    });
+  });
+});
