@@ -1,6 +1,10 @@
 import { win } from '@utils/browser';
 
-import { createAttributeController, createAriaAttributeController } from '../attribute-controller';
+import {
+  createAttributeController,
+  createAriaAttributeController,
+  createTabindexController,
+} from '../attribute-controller';
 
 /**
  * There is no `MutationObserver` in mock-doc, so the observer half of the controller is
@@ -17,13 +21,40 @@ class MockMutationObserver {
     MockMutationObserver.instances.push(this);
   }
 
-  observe(_el: Node, options: { attributeFilter?: string[] }) {
+  /** Removal records the browser would deliver on the next callback. */
+  queued: string[] = [];
+
+  observe(el: HTMLElement, options: { attributeFilter?: string[] }) {
     this.observedFilter = options.attributeFilter;
     this.connected = true;
+
+    // Like a browser, queue a record for every observed removal, including the callback's own.
+    const removeAttribute = el.removeAttribute.bind(el);
+    el.removeAttribute = (name: string) => {
+      if (this.connected && el.hasAttribute(name) && this.observedFilter?.includes(name)) {
+        this.queued.push(name);
+      }
+      removeAttribute(name);
+    };
   }
 
   disconnect() {
     this.connected = false;
+  }
+
+  takeRecords() {
+    const records = this.queued.map((attributeName) => ({ attributeName }));
+    this.queued = [];
+    return records;
+  }
+
+  /** Stands in for the browser delivering whatever records are still queued. */
+  flush() {
+    const names = this.queued;
+    this.queued = [];
+    if (names.length > 0) {
+      this.emit(...names);
+    }
   }
 
   /** Stands in for the browser delivering an attribute mutation. */
@@ -282,5 +313,79 @@ describe('createAriaAttributeController()', () => {
 
     expect(controller.attributes).toEqual({ 'aria-disabled': 'true' });
     expect(MockMutationObserver.latest.observedFilter).not.toContain('aria-disabled');
+  });
+});
+
+describe('createTabindexController()', () => {
+  beforeEach(installMockMutationObserver);
+
+  afterEach(restoreOverrides);
+
+  it('should move a tabindex written after load off the host', () => {
+    const el = createHost();
+    const onChange = jest.fn();
+    const controller = createTabindexController(el, onChange);
+
+    el.setAttribute('tabindex', '0');
+    MockMutationObserver.latest.emit('tabindex');
+
+    expect(controller.attributes).toEqual({ tabindex: '0' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('should move a tabindex written while not watching off the host on resume', () => {
+    const el = createHost({ tabindex: '0' });
+    const controller = createTabindexController(el, jest.fn());
+
+    controller.destroy();
+    el.setAttribute('tabindex', '1');
+    controller.init();
+
+    expect(controller.attributes).toEqual({ tabindex: '1' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should keep the value after the removal it queued is delivered', () => {
+    const el = createHost();
+    const controller = createTabindexController(el, jest.fn());
+
+    el.setAttribute('tabindex', '0');
+    MockMutationObserver.latest.emit('tabindex');
+    MockMutationObserver.latest.flush();
+
+    expect(controller.attributes).toEqual({ tabindex: '0' });
+  });
+
+  it('should leave a negative tabindex on the host', () => {
+    const el = createHost({ tabindex: '-1' });
+
+    const controller = createTabindexController(el, jest.fn());
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('should leave a negative tabindex written after load on the host', () => {
+    const el = createHost({ tabindex: '0' });
+    const controller = createTabindexController(el, jest.fn());
+
+    el.setAttribute('tabindex', '-1');
+    MockMutationObserver.latest.emit('tabindex');
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('should see a negative tabindex removed from the host', () => {
+    const el = createHost({ tabindex: '-1' });
+    const onChange = jest.fn();
+    const controller = createTabindexController(el, onChange);
+
+    el.removeAttribute('tabindex');
+    MockMutationObserver.latest.emit('tabindex');
+
+    expect(controller.attributes['tabindex']).toBeNull();
+    expect(onChange).toHaveBeenCalledTimes(1);
   });
 });

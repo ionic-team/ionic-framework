@@ -101,3 +101,31 @@ describe('item', () => {
     });
   });
 });
+
+describe('item: tabindex', () => {
+  it('should move tabindex from the host to the native button of a clickable item', async () => {
+    const page = await newSpecPage({
+      components: [Item],
+      html: '<ion-item button tabindex="0">Settings</ion-item>',
+    });
+
+    const item = page.body.querySelector('ion-item')!;
+    const nativeEl = item.shadowRoot!.querySelector('button')!;
+
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
+    expect(item.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should keep tabindex on the host of an item that is not clickable', async () => {
+    const page = await newSpecPage({
+      components: [Item],
+      html: '<ion-item tabindex="0">Settings</ion-item>',
+    });
+
+    const item = page.body.querySelector('ion-item')!;
+    const nativeEl = item.shadowRoot!.querySelector('.item-native')!;
+
+    expect(item.getAttribute('tabindex')).toBe('0');
+    expect(nativeEl.hasAttribute('tabindex')).toBe(false);
+  });
+});

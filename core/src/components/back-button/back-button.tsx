@@ -1,5 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import type { ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
@@ -27,6 +29,7 @@ import type { AnimationBuilder, Color } from '../../interface';
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLElement;
 
@@ -71,10 +74,19 @@ export class BackButton implements ComponentInterface, ButtonInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
 
     if (this.defaultHref === undefined) {
       this.defaultHref = config.get('backButtonDefaultHref');
     }
+  }
+
+  connectedCallback() {
+    this.tabindexController?.init();
+  }
+
+  disconnectedCallback() {
+    this.tabindexController?.destroy();
   }
 
   get backButtonIcon() {
@@ -137,6 +149,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     const showBackButton = defaultHref !== undefined;
     const mode = getIonMode(this);
     const ariaLabel = inheritedAttributes['aria-label'] || backButtonText || 'back';
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
 
     return (
       <Host
@@ -153,7 +166,14 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'show-back-button': showBackButton,
         })}
       >
-        <button type={type} disabled={disabled} class="button-native" part="native" aria-label={ariaLabel}>
+        <button
+          type={type}
+          disabled={disabled}
+          class="button-native"
+          part="native"
+          aria-label={ariaLabel}
+          {...tabindexAttributes}
+        >
           <span class="button-inner">
             {backButtonIcon && (
               <ion-icon

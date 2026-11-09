@@ -11,11 +11,11 @@ import { ariaAttributes, inheritAttributes } from '@utils/helpers';
  * Create the controller in `componentWillLoad`. It takes the initial copy and starts
  * watching right away, so `init()` is only needed to resume after a move.
  *
- * Two things to know before adopting it. Only the initial copy removes the attributes
- * from the host, so a value written after load sits on the host as well as on the
- * element it is applied to, which matters if the host has a role of its own. And an
- * attribute from the initial markup can never be removed, only overwritten, since the
- * copy already took it off the host and a `removeAttribute` there fires no mutation.
+ * Two things to know before adopting it. Unless `moveFromHost` says otherwise, only the
+ * initial copy removes the attributes from the host, so a value written after load sits
+ * on the host as well as on the element it is applied to, which matters if the host has
+ * a role of its own. And an attribute moved off the host can never be removed, only
+ * overwritten, since removing it from the host doesn't fire a mutation.
  * An empty string works for `aria-label` and friends, but a token-valued attribute
  * has to be set to its default instead, so `aria-pressed="false"` rather than empty.
  *
@@ -27,15 +27,21 @@ import { ariaAttributes, inheritAttributes } from '@utils/helpers';
  * attributes the component renders on its own `<Host>`, since a later change to one of
  * those is the component's own write, and for attributes that would put a second node in
  * the accessibility tree if the host kept a copy alongside the one we apply.
+ * @param moveFromHost Called on load and after every write to decide whether a value moves
+ * off the host. A rejected value stays on the host and is left out of `attributes`.
  */
 export const createAttributeController = (
   el: HTMLElement,
   attributes: string[],
   onChange: () => void,
-  hostOwnedAttributes: string[] = []
+  hostOwnedAttributes: string[] = [],
+  moveFromHost?: (name: string, value: string) => boolean
 ): AttributeController => {
   let inherited: Attributes = inheritAttributes(el, attributes);
   let observer: MutationObserver | undefined;
+
+  const staysOnHost = (name: string, value: string | null | undefined) =>
+    moveFromHost !== undefined && value != null && !moveFromHost(name, value);
 
   const watchedAttributes = attributes.filter((attr) => !hostOwnedAttributes.includes(attr));
 
@@ -53,6 +59,28 @@ export const createAttributeController = (
       hostWritten.add(name);
     }
   };
+
+  const moveOffHost = (changed: Attributes) => {
+    if (moveFromHost === undefined) {
+      return;
+    }
+
+    for (const [name, value] of Object.entries(changed)) {
+      if (value != null && !staysOnHost(name, value)) {
+        el.removeAttribute(name);
+        // Without this, the missing attribute would read as a developer removal later.
+        hostWritten.delete(name);
+      }
+    }
+  };
+
+  // The initial copy took everything off the host, so put back what has to stay there.
+  for (const [name, value] of Object.entries(inherited)) {
+    if (staysOnHost(name, value)) {
+      el.setAttribute(name, value!);
+      hostWritten.add(name);
+    }
+  }
 
   /**
    * Nothing is watching while the host is out of the tree, since `disconnectedCallback`
@@ -78,6 +106,8 @@ export const createAttributeController = (
 
       changed[name] = value;
     }
+
+    moveOffHost(changed);
 
     if (Object.keys(changed).length > 0) {
       inherited = { ...inherited, ...changed };
@@ -106,6 +136,11 @@ export const createAttributeController = (
         changed[name] = value;
       }
 
+      moveOffHost(changed);
+      // Drop the removals `moveOffHost` just queued, or they'd read back as the developer
+      // clearing the attribute.
+      observer?.takeRecords();
+
       inherited = { ...inherited, ...changed };
       onChange();
     });
@@ -127,7 +162,17 @@ export const createAttributeController = (
 
   return {
     get attributes() {
-      return inherited;
+      if (moveFromHost === undefined) {
+        return inherited;
+      }
+
+      const moved: Attributes = {};
+      for (const [name, value] of Object.entries(inherited)) {
+        if (!staysOnHost(name, value)) {
+          moved[name] = value;
+        }
+      }
+      return moved;
     },
     init,
     destroy,
@@ -150,6 +195,20 @@ export const createAriaAttributeController = (
   hostOwnedAttributes: string[] = []
 ): AttributeController => {
   return createAttributeController(el, ariaAttributes, onChange, hostOwnedAttributes);
+};
+
+/**
+ * Moves `tabindex` from the host to the native element in the shadow root, including later
+ * writes, since a host with a `tabindex` is an extra tab stop with no name. A negative
+ * `tabindex` stays on the host, where it already skips the shadow root and the focus
+ * utilities expect to find it.
+ *
+ * @internal
+ * @param el The host element to copy from and watch.
+ * @param onChange Called after `tabindex` changes, so the component can re-render.
+ */
+export const createTabindexController = (el: HTMLElement, onChange: () => void): AttributeController => {
+  return createAttributeController(el, ['tabindex'], onChange, [], (_, value) => parseInt(value, 10) >= 0);
 };
 
 export type AttributeController = {

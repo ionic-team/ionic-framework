@@ -466,3 +466,18 @@ describe('ion-select: option content property reflection', () => {
     expect(renderedIcon!.getAttribute('icon')).toBe('logo-ionic');
   });
 });
+
+describe('ion-select: tabindex', () => {
+  it('should move tabindex from the host to the native button', async () => {
+    const page = await newSpecPage({
+      components: [Select],
+      html: '<ion-select tabindex="0" label="Fruit"></ion-select>',
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+    const nativeEl = select.shadowRoot!.querySelector('button')!;
+
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
+    expect(select.hasAttribute('tabindex')).toBe(false);
+  });
+});

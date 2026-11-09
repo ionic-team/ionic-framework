@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AttributeController } from '@utils/attribute-controller';
-import { createAttributeController } from '@utils/attribute-controller';
+import { createAttributeController, createTabindexController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { raf } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
@@ -40,6 +40,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private indicatorControlObserver?: MutationObserver;
   private didLoad = false;
   private ariaController?: AttributeController;
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -184,6 +185,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
 
     this.ariaController?.init();
+    this.tabindexController?.init();
   }
 
   componentWillLoad() {
@@ -194,6 +196,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
      * reads it twice.
      */
     this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+
+    // An item that isn't clickable has no native button or link, so `tabindex` stays on the host.
+    if (this.isClickable()) {
+      this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
+    }
   }
 
   componentDidLoad() {
@@ -215,6 +222,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
 
     this.ariaController?.destroy();
+    this.tabindexController?.destroy();
   }
 
   private totalNestedInputs() {
@@ -376,6 +384,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+    // Putting `tabindex` on the plain div would make a tab stop with no name.
+    const tabindexAttributes = clickable ? this.tabindexController?.attributes ?? {} : {};
 
     const attrs =
       TagType === 'button'
@@ -483,6 +493,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         <TagType
           {...attrs}
           {...inheritedAriaAttributes}
+          {...tabindexAttributes}
           class="item-native"
           part="native"
           disabled={disabled}
