@@ -329,6 +329,48 @@
   color: $text-color-step-700;
 }
 
+// Range Selection
+// -----------------------------------
+
+:host {
+  --range-background: #{ion-color(primary, base, 0.12)};
+  --range-track-height: #{$datetime-ios-day-height};
+  --range-track-edge-overflow: #{$datetime-ios-padding * 0.5};
+}
+
+:host(.ion-color) {
+  --range-background: #{current-color(base, 0.12)};
+}
+
+/**
+ * The wrapper has `height: 0`, which makes `top: 50%` on the range
+ * track resolve to 0 and pins the track to the top of the cell.
+ * Override to `auto` so the track stays vertically centered. Apply
+ * it to every wrapper in range mode so range rows are not taller
+ * than the other rows.
+ */
+:host(.datetime-range) .calendar-day-wrapper {
+  height: auto;
+}
+
+// Range start: full circle
+// Range start and end: full circle
+:host .calendar-day.calendar-day-range-start,
+:host .calendar-day.calendar-day-range-end {
+  @include border-radius(50%);
+
+  background: ion-color(primary, base);
+  color: ion-color(primary, contrast);
+
+  font-weight: 600;
+}
+
+:host(.ion-color) .calendar-day.calendar-day-range-start,
+:host(.ion-color) .calendar-day.calendar-day-range-end {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
 // Time / Header
 // -----------------------------------
 :host .datetime-time {

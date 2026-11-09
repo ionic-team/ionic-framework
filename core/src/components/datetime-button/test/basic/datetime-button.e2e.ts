@@ -229,6 +229,26 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 
+  test.describe(title('datetime-button: range mode'), () => {
+    test('should normalize a reversed range value to chronological order', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
+        <ion-datetime id="datetime" presentation="date" selection-mode="range"></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2023-10-31', '2023-10-23'];
+        </script>
+      `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const dateButton = page.locator('#date-button');
+      await expect(dateButton).toContainText('Oct 23, 2023 - Oct 31, 2023');
+    });
+  });
+
   test.describe(title('datetime-button: wheel'), () => {
     test('should only show a single date button when presentation="date-time" and prefer-wheel="true"', async ({
       page,
