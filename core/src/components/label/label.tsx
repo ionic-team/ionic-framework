@@ -105,16 +105,17 @@ export class Label implements ComponentInterface {
   }
 
   render() {
-    const position = this.position;
+    const { color, el, noAnimate, position } = this;
     const theme = getIonTheme(this);
+
     return (
       <Host
-        class={createColorClasses(this.color, {
+        class={createColorClasses(color, {
           [theme]: true,
-          'in-item': hostContext('ion-item, ion-item-divider, ion-item-group', this.el),
-          'in-item-color': hostContext('ion-item.ion-color', this.el),
+          'in-item': hostContext('ion-item, ion-item-divider, ion-item-group', el),
+          'in-item-color': hostContext('ion-item.ion-color', el),
           [`label-${position}`]: position !== undefined,
-          [`label-no-animate`]: this.noAnimate,
+          [`label-no-animate`]: noAnimate,
         })}
       >
         <slot></slot>
