@@ -191,6 +191,12 @@ export interface IonicConfig {
   innerHTMLTemplatesEnabled?: boolean;
 
   /**
+   * Relevant Components: ion-action-sheet, ion-alert, ion-picker-column, ion-refresher, ion-reorder-group, ion-toggle
+   * If `false`, Ionic components won't trigger haptics. Defaults to `true`.
+   */
+  haptics?: boolean;
+
+  /**
    * Overrides the default platform detection methods.
    */
   platform?: PlatformConfig;
