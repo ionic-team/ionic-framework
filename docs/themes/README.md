@@ -50,6 +50,8 @@ core/src/components/my-component/
 
 - Back each prop union with a `const` array, such as `ION_CHIP_SIZES`, so tests can loop over every value.
 
+Refer to [Recipe Conventions](./recipes.md) for how to name and structure a recipe's keys and set its values.
+
 ## Available Themes
 
 ### iOS Theme (`@ionic/theme/ios`)
