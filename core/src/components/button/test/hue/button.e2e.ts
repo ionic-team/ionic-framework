@@ -52,7 +52,8 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ ti
                 display: flex;
                 flex-wrap: wrap;
                 align-items: center;
-                gap: 4px;
+                gap: 10px;
+                margin-block-end: 10px;
               }
             </style>
 
