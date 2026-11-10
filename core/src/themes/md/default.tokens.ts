@@ -1351,10 +1351,18 @@ export const defaultTheme: DefaultTheme = {
                 },
 
                 focus: {
+                  background: overlay(
+                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                    ionColor('primary', 'contrast', { alpha: 0.24 })
+                  ),
                   color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
                 },
 
                 hover: {
+                  background: overlay(
+                    `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                    ionColor('primary', 'contrast', { alpha: 0.08 })
+                  ),
                   color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
                 },
 

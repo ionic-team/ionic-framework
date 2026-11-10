@@ -61,7 +61,36 @@ The following breaking changes apply to `ion-button`:
 4. The `ios` button is now `28px`, `34px` and `50px` tall at the small, default and large sizes, with less padding, following the iOS guidelines. To revert to the previous appearance, set `IonButton.size.<size>.min.height` for global styles or `--ion-button-size-<size>-min-height` for component-specific styles to `2.1em`, `3.1em` and `3.1em`, and the padding (`IonButton.size.<size>.padding` or `--ion-button-size-<size>-padding-*`) to `4px 0.9em`, `13px 1em` and `17px 1em`, along with the previous font sizes from item 7.
 5. Icon-only buttons are now squares as tall as a text button of the same size. In `md`, this makes them a few pixels smaller at the small and default sizes and larger at the large size. To change their size, set the size's `min.height` as described above.
 6. In `md`, the focus and hover tint of `outline` and `clear` buttons in an `ion-buttons` inside a toolbar uses the text color (`--ion-text-color`), so it no longer follows a custom toolbar color such as `--ion-toolbar-color` or the toolbar's `--color`. To match a custom toolbar color, set `IonToolbar.default.IonButtons.IonButton.hue.bold.<fill>.focus.background` and `.hover.background` for global styles, or `--ion-button-hue-bold-<fill>-focus-background` and `--ion-button-hue-bold-<fill>-hover-background` for component-specific styles, using the color at `0.12` for focus and `0.04` for hover. The selector needs the fill class to override the toolbar's own rule, for example `ion-toolbar.my-toolbar ion-buttons ion-button.button-fill-clear { --ion-button-hue-bold-clear-focus-background: rgba(255, 105, 180, 0.12); }`.
-7. In `md`, `solid` buttons in an `ion-buttons` outside a toolbar now match standalone buttons, instead of taking the toolbar's dark colors. To keep the previous appearance, set `--ion-button-hue-bold-solid-default-background` to `var(--ion-toolbar-color, var(--ion-text-color, #424242))` and `--ion-button-hue-bold-solid-default-color` to `var(--ion-toolbar-background, var(--ion-background-color, #fff))` on those buttons.
+7. In `md`, buttons in an `ion-buttons` outside a toolbar now match standalone buttons. `solid` buttons use the primary color and a box shadow instead of the toolbar's dark colors with no shadow, and `outline` and `clear` buttons use the primary color instead of the text color. To keep the previous appearance, set the following on those buttons:
+
+   ~~~css
+   ion-buttons.my-buttons ion-button {
+     --ion-button-hue-bold-solid-default-background: var(--ion-toolbar-color, var(--ion-text-color, #424242));
+     --ion-button-hue-bold-solid-default-color: var(--ion-toolbar-background, var(--ion-background-color, #fff));
+     --ion-button-hue-bold-solid-default-box-shadow: none;
+     --ion-button-hue-bold-solid-activated-box-shadow: none;
+     --ion-button-hue-bold-solid-hover-box-shadow: none;
+     --ion-button-hue-bold-solid-focus-box-shadow: none;
+     --ion-button-hue-bold-solid-hover-background: linear-gradient(rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.08), rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.08)) var(--ion-button-hue-bold-solid-default-background);
+     --ion-button-hue-bold-solid-focus-background: linear-gradient(rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24), rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24)) var(--ion-button-hue-bold-solid-default-background);
+     --ion-button-hue-bold-solid-hover-color: var(--ion-button-hue-bold-solid-default-color);
+     --ion-button-hue-bold-solid-focus-color: var(--ion-button-hue-bold-solid-default-color);
+     --ion-button-hue-bold-solid-disabled-background: var(--ion-button-hue-bold-solid-default-background);
+
+     --ion-button-hue-bold-outline-default-color: currentColor;
+     --ion-button-hue-bold-outline-default-border-color: currentColor;
+     --ion-button-hue-bold-outline-hover-color: currentColor;
+     --ion-button-hue-bold-outline-focus-color: currentColor;
+     --ion-button-hue-bold-outline-hover-background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.04);
+     --ion-button-hue-bold-outline-focus-background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
+
+     --ion-button-hue-bold-clear-default-color: currentColor;
+     --ion-button-hue-bold-clear-hover-color: currentColor;
+     --ion-button-hue-bold-clear-focus-color: currentColor;
+     --ion-button-hue-bold-clear-hover-background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.04);
+     --ion-button-hue-bold-clear-focus-background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
+   }
+   ~~~
 8. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[8](#version-10x-button-md-material-design-2)</sup>
 9. The `ios` button follows iOS 17 for its font, icons and disabled state. <sup>[9](#version-10x-button-ios-17)</sup>
 10. A badge without a `vertical` position now has a gap between it and the label, and no longer makes the button taller than its `min.height`. To remove the gap, set `IonButton.size.<size>.badge.margin.start` for global styles or `--ion-button-size-<size>-badge-margin-start` for component-specific styles to `0`.
@@ -90,7 +119,7 @@ The `md` button now uses the Material Design 2 values below. To keep a previous 
 | Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` (`.semantic.disabled.color` and `.background` with a `color`) |
 | Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` (`.semantic.rippleEffect.opacity` with a `color`) |
 
-Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width and no elevation on hover or focus.
+Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width, and inside a toolbar no elevation on hover or focus.
 
 <h5 id="version-10x-button-ios-17">iOS 17 in <code>ios</code></h5>
 
