@@ -85,17 +85,32 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
     });
 
     test('should space a badge without a position from the label', async ({ page }) => {
-      const rows = ION_BUTTON_SIZES.map(
-        (buttonSize) => `<div class="row">${contents
+      const buttons = (buttonSize: string, slot = '') =>
+        contents
           .flatMap((html) =>
             ION_BADGE_SIZES.map(
               (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
                 Button
-                <ion-badge hue="bold" shape="round" color="danger" size="${badgeSize}">${html}</ion-badge>
+                <ion-badge ${slot} hue="bold" shape="round" color="danger" size="${badgeSize}">${html}</ion-badge>
               </ion-button>`
             )
           )
-          .join('\n')}
+          .join('\n');
+
+      const rows = ION_BUTTON_SIZES.map(
+        (buttonSize) => `
+          <div class="row">${buttons(buttonSize)}</div>
+          <div class="row">${buttons(buttonSize, 'slot="start"')}</div>
+        `
+      ).join('\n');
+
+      // A label that wraps keeps the button's vertical padding
+      const wrapped = ION_BUTTON_SIZES.map(
+        (buttonSize) => `<div class="wrapped">
+          <ion-button size="${buttonSize}" shape="round" expand="block">
+            Wrapped label
+            <ion-badge hue="bold" shape="round" color="danger">1</ion-badge>
+          </ion-button>
         </div>`
       ).join('\n');
 
@@ -115,10 +130,21 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
             .badge-container {
               width: max-content;
             }
+
+            .wrapped-row {
+              display: flex;
+              align-items: center;
+              gap: 30px;
+            }
+
+            .wrapped {
+              width: 140px;
+            }
           </style>
 
           <div class="badge-container">
             ${rows}
+            <div class="wrapped-row">${wrapped}</div>
           </div>
         `,
         config
