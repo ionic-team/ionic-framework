@@ -968,6 +968,7 @@ export const defaultTheme: DefaultTheme = {
                 },
 
                 focus: {
+                  background: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
                   color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
                 },
 
