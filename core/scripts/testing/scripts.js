@@ -303,6 +303,10 @@ const DEFAULT_PALETTE = 'light';
        * around it and miss the item's color. Elements outside the document
        * don't upgrade, so moving the page out while defining connects them
        * in document order when it's put back, parents first.
+       *
+       * This only affects test pages that hold the definitions. Apps
+       * don't hold them, so Stencil connects their elements in document
+       * order at startup.
        */
       const { body } = document;
       if (!body) {
