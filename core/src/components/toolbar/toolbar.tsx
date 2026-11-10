@@ -30,6 +30,7 @@ import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
 })
 export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();
+  private readonly slotNames = ['start', 'end', 'primary', 'secondary'];
   private readonly slotClasses = [
     'has-start-content',
     'has-end-content',
@@ -38,6 +39,12 @@ export class Toolbar implements ComponentInterface {
   ];
   private readonly showClasses = ['show-start', 'show-end', 'show-primary', 'show-secondary'];
   private readonly slotSizeVars = ['--start-end-size', '--primary-secondary-size'];
+  /**
+   * Watches the slotted content so the slot widths are measured
+   * again whenever that content changes size.
+   */
+  private slotResizeObserver?: ResizeObserver;
+  private didLoad = false;
 
   @Element() el!: HTMLIonToolbarElement;
 
@@ -80,9 +87,25 @@ export class Toolbar implements ComponentInterface {
     this.updateSlotClasses();
   }
 
+  connectedCallback() {
+    /**
+     * The resize observer is stopped when the toolbar is removed from the DOM.
+     * If the toolbar is added back (for example, when it is moved), start it again.
+     * On the first connection the toolbar has not rendered yet, so this is left
+     * to componentDidLoad.
+     */
+    if (this.didLoad) {
+      this.updateSlotClasses();
+    }
+  }
+
   componentDidLoad() {
+    this.didLoad = true;
     this.updateSlotClasses();
-    this.updateSlotWidths();
+  }
+
+  disconnectedCallback() {
+    this.stopObservingSlotSizes();
   }
 
   @Watch('titlePlacement')
@@ -107,30 +130,70 @@ export class Toolbar implements ComponentInterface {
    * Updates the CSS custom properties for slot widths
    * This ensures that slots shown by their met conditions
    * have a minimum width matching their required slot
+   *
+   * The slotted content is watched with a ResizeObserver, which runs
+   * before paint and again whenever the content changes size, so the
+   * title is centered on first paint and stays centered.
    */
-  private updateSlotWidths(tries: number = 0) {
-    // Set timeout to try to execute after everything is rendered
-    setTimeout(() => {
-      // Attempt to measure and update
-      const success = this.measureAndUpdateSlots();
+  private updateSlotWidths() {
+    // Stop watching the previous content before watching the current one.
+    this.stopObservingSlotSizes();
 
-      // If not all measurements were successful, try again in 100 ms
-      // cap recursion at 5 tries for safety
-      if (!success && tries < 5) {
-        setTimeout(() => {
-          this.updateSlotWidths(tries + 1);
-        }, 100);
+    // Browsers without ResizeObserver can only measure once.
+    if (typeof ResizeObserver === 'undefined') {
+      this.measureAndUpdateSlots();
+      return;
+    }
+
+    const elementsToObserve: Element[] = [];
+    this.slotNames.forEach((slot) => {
+      if (this.el.classList.contains(`has-${slot}-content`)) {
+        elementsToObserve.push(...this.getSlottedElements(slot));
       }
     });
+
+    if (elementsToObserve.length === 0) {
+      return;
+    }
+
+    /**
+     * The observer also calls the callback once right after observing
+     * an element, which takes care of the first measurement.
+     */
+    const observer = new ResizeObserver(() => this.measureAndUpdateSlots());
+    elementsToObserve.forEach((element) => observer.observe(element));
+    this.slotResizeObserver = observer;
+  }
+
+  /**
+   * Stops watching the slotted content for size changes.
+   */
+  private stopObservingSlotSizes() {
+    if (this.slotResizeObserver) {
+      this.slotResizeObserver.disconnect();
+      this.slotResizeObserver = undefined;
+    }
+  }
+
+  /**
+   * Returns the elements assigned to the given slot of the toolbar.
+   */
+  private getSlottedElements(slotName: string): Element[] {
+    const slotElement = this.getSlotElement(slotName);
+    if (!slotElement) {
+      return [];
+    }
+
+    return slotElement.assignedElements({ flatten: true });
   }
 
   /**
    * Measure the widths of the slots and update the CSS custom properties
    * for the minimum width of each pair of slots based on the largest width in each pair.
-   * Returns whether we successfully measured all of the slots we expect to have content.
-   * If not, the content probably hasn't rendered yet and we need to try again.
+   * Slots that measure 0 (for example, in a hidden toolbar) are skipped. The
+   * ResizeObserver measures them again when their content changes size.
    */
-  private measureAndUpdateSlots(): boolean {
+  private measureAndUpdateSlots() {
     // Define the relationship between slots based on the conditions array
     // Group slots that should have the same width
     const slotPairs = [
@@ -138,15 +201,21 @@ export class Toolbar implements ComponentInterface {
       { name: 'primary-secondary', slots: ['primary', 'secondary'] },
     ];
 
+    /**
+     * Once a size property is set, the slots cannot be narrower than it.
+     * Remove the properties first so each slot is measured at the width of
+     * its content, which lets the slots shrink when their content does.
+     * This runs before paint, so the slots are never painted without a size.
+     */
+    this.slotSizeVars.forEach((cssVar) => this.el.style.removeProperty(cssVar));
+
     // First, measure all slot widths
     const slotWidths = new Map<string, number>();
-    let allMeasurementsSuccessful = true;
 
     // Measure all slots with content
-    const slots = ['start', 'end', 'primary', 'secondary'];
-    slots.forEach((slot) => {
+    this.slotNames.forEach((slot) => {
       if (this.el.classList.contains(`has-${slot}-content`)) {
-        const slotElement = this.el.shadowRoot?.querySelector(`slot[name="${slot}"]`) as HTMLSlotElement | null;
+        const slotElement = this.getSlotElement(slot);
         if (slotElement) {
           // Check if the slot contains an img or ion-img
           const assignedElements = slotElement.assignedElements({ flatten: true });
@@ -170,8 +239,6 @@ export class Toolbar implements ComponentInterface {
 
           if (width > 0) {
             slotWidths.set(slot, width);
-          } else {
-            allMeasurementsSuccessful = false;
           }
         }
       }
@@ -196,14 +263,14 @@ export class Toolbar implements ComponentInterface {
         this.el.style.setProperty(`--${name}-size`, `${maxWidth}px`);
       }
     });
-
-    return allMeasurementsSuccessful;
   }
 
   /**
    * Removes all slot visibility classes and slot width CSS variables.
    */
   private removeSlotClasses() {
+    // The slot widths are no longer used, so there is nothing to watch.
+    this.stopObservingSlotSizes();
     this.el.classList.remove(...this.slotClasses, ...this.showClasses);
     this.slotSizeVars.forEach((cssVar) => this.el.style.removeProperty(cssVar));
   }
@@ -216,11 +283,9 @@ export class Toolbar implements ComponentInterface {
     }
 
     // Check if slots have content
-    const slots = ['start', 'end', 'primary', 'secondary'];
-
     const classesToAdd: string[] = [];
     const classesToRemove: string[] = [];
-    slots.forEach((slot) => {
+    this.slotNames.forEach((slot) => {
       const slotHasContent = this.hasSlotContent(slot);
       const slotClass = `has-${slot}-content`;
       if (slotHasContent) {
@@ -262,8 +327,12 @@ export class Toolbar implements ComponentInterface {
   }
 
   private hasSlotContent(slotName: string): boolean {
-    const slotNode = this.el.shadowRoot?.querySelector(`slot[name="${slotName}"]`) as HTMLSlotElement | null;
+    const slotNode = this.getSlotElement(slotName);
     return !!slotNode && slotNode.assignedNodes().length > 0;
+  }
+
+  private getSlotElement(slotName: string): HTMLSlotElement | null {
+    return this.el.shadowRoot?.querySelector<HTMLSlotElement>(`slot[name="${slotName}"]`) ?? null;
   }
 
   @Listen('ionStyle')
@@ -315,13 +384,13 @@ export class Toolbar implements ComponentInterface {
       >
         <div class="toolbar-background" part="background"></div>
         <div class="toolbar-container" part="container">
-          <slot name="start" onSlotchange={() => this.updateSlotClasses}></slot>
-          <slot name="secondary" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="start" onSlotchange={() => this.updateSlotClasses()}></slot>
+          <slot name="secondary" onSlotchange={() => this.updateSlotClasses()}></slot>
           <div class="toolbar-content" part="content">
             <slot></slot>
           </div>
-          <slot name="primary" onSlotchange={() => this.updateSlotClasses}></slot>
-          <slot name="end" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="primary" onSlotchange={() => this.updateSlotClasses()}></slot>
+          <slot name="end" onSlotchange={() => this.updateSlotClasses()}></slot>
         </div>
       </Host>
     );
