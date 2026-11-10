@@ -1,6 +1,7 @@
-import type { Hue } from '../../themes/themes.interfaces';
+import type { Hue, IonPadding } from '../../themes/themes.interfaces';
 
 type IonRouterLinkStateDefinition = {
+  background?: string;
   color?: string;
 };
 
@@ -9,11 +10,13 @@ export type IonRouterLinkRecipe = {
     [K in Hue]?: {
       activated?: IonRouterLinkStateDefinition;
       default?: IonRouterLinkStateDefinition;
+      focus?: IonRouterLinkStateDefinition;
 
       /** Any of the semantic colors like primary, secondary, etc. */
       semantic?: {
         activated?: IonRouterLinkStateDefinition;
         default?: IonRouterLinkStateDefinition;
+        focus?: IonRouterLinkStateDefinition;
         visited?: IonRouterLinkStateDefinition;
       };
 
@@ -29,9 +32,14 @@ export type IonRouterLinkRecipe = {
     };
 
     focus?: {
+      border?: {
+        radius?: string;
+      };
+
+      padding?: IonPadding;
+
       ring?: {
         color?: string;
-        radius?: string;
         style?: string;
         width?: string;
       };

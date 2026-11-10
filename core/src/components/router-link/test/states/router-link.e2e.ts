@@ -23,8 +23,22 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
               padding: 8px;
             }
 
+            /**
+             * Firefox sizes the container without the focus padding,
+             * so the focused row would wrap without nowrap.
+             */
             .container div {
               margin-bottom: 8px;
+
+              white-space: nowrap;
+            }
+
+            /**
+             * Keeps the focus backgrounds of the two focused
+             * links from touching.
+             */
+            ion-router-link + ion-router-link {
+              margin-inline-start: 8px;
             }
           </style>
 

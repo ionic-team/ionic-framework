@@ -962,9 +962,12 @@ export const defaultTheme: DefaultTheme = {
         },
 
         focus: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+
           ring: {
             color: '#b5c0f7',
-            radius: 'var(--ion-radii-sm)',
             style: 'solid',
             width: 'var(--ion-border-width-xxs)',
           },
