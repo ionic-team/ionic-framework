@@ -27,6 +27,9 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
   });
 });
 
+/**
+ * This behavior does not vary across directions.
+ */
 configs({
   directions: ['ltr'],
   palettes: ['light', 'dark', 'high-contrast', 'high-contrast-dark'],

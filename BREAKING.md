@@ -458,11 +458,12 @@ Remove any instances that target the theme classes: `ion-ripple-effect.md`, `ion
 
 The following breaking changes apply to `ion-router-link`:
 
-1. `--background` and `--color` have been replaced. <sup>[1](#version-10x-router-link-replaced-css-variables)</sup>
-2. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[2](#version-10x-router-link-hue)</sup>
-3. The text color now uses the color's `foreground` variant instead of `base`. <sup>[3](#version-10x-router-link-foreground)</sup>
-4. A focused router link now shows a themed focus ring instead of the browser's. <sup>[4](#version-10x-router-link-focus-ring)</sup>
-5. Theme classes (`ion-router-link.md`, `ion-router-link.ios`) are no longer supported. <sup>[5](#version-10x-router-link-theme-classes)</sup>
+1. `--color` has been replaced. <sup>[1](#version-10x-router-link-replaced-css-variables)</sup>
+2. `--background` has been removed. <sup>[2](#version-10x-router-link-removed-css-variables)</sup>
+3. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[3](#version-10x-router-link-hue)</sup>
+4. The text color now uses the color's `foreground` variant instead of `base`. <sup>[4](#version-10x-router-link-foreground)</sup>
+5. A focused router link now shows a themed focus ring instead of the browser's. <sup>[5](#version-10x-router-link-focus-ring)</sup>
+6. Mode classes (`ion-router-link.md`, `ion-router-link.ios`) are no longer supported. <sup>[6](#version-10x-router-link-mode-classes)</sup>
 
 <h5 id="version-10x-router-link-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -470,11 +471,14 @@ Use the new token structure for global styles, or the corresponding CSS variable
 
 | Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
-| `--background` | `IonRouterLink.background` | `--ion-router-link-background` |
 | `--color` | `IonRouterLink.hue.bold.default.color` | `--ion-router-link-hue-bold-default-color` |
 
 > [!NOTE]
 > `--color` only applied when `color` was not set. A router link with `hue="subtle"` reads `--ion-router-link-hue-subtle-default-color` instead.
+
+<h5 id="version-10x-router-link-removed-css-variables">Removed CSS variables</h5>
+
+`--background` has been removed, since a router link has no background of its own. To give a link a background, set `background` on `ion-router-link` directly.
 
 <h5 id="version-10x-router-link-hue">New <code>hue</code> property and color tokens</h5>
 
@@ -507,9 +511,9 @@ When a router link is focused with the keyboard, it now shows a ring from the th
 | Style | `IonRouterLink.state.focus.ring.style` | `--ion-router-link-state-focus-ring-style` |
 | Width | `IonRouterLink.state.focus.ring.width` | `--ion-router-link-state-focus-ring-width` |
 
-<h5 id="version-10x-router-link-theme-classes">Theme classes</h5>
+<h5 id="version-10x-router-link-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-router-link.md`, `ion-router-link.ios`.
+Remove any instances that target the mode classes: `ion-router-link.md`, `ion-router-link.ios`.
 
 <h4 id="version-10x-row">Row</h4>
 

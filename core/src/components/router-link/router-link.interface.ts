@@ -5,8 +5,6 @@ type IonRouterLinkStateDefinition = {
 };
 
 export type IonRouterLinkRecipe = {
-  background?: string;
-
   hue?: {
     [K in Hue]?: {
       activated?: IonRouterLinkStateDefinition;
