@@ -1,8 +1,6 @@
 import type { Hue } from '../../themes/themes.interfaces';
 
 export type IonRouterLinkRecipe = {
-  background?: string;
-
   hue?: {
     [K in Hue]?: {
       default?: {

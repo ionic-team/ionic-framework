@@ -4,10 +4,6 @@
 // Router Link
 // --------------------------------------------------
 
-:host {
-  background: var(--ion-router-link-background);
-}
-
 a {
   @include mixins.text-inherit();
 }
