@@ -29,3 +29,16 @@ describe('item option: tabindex', () => {
     expect(nativeEl.getAttribute('tabindex')).toBe('0');
   });
 });
+
+describe('item option: rel', () => {
+  it('should set the rel attribute on the link', async () => {
+    const page = await newSpecPage({
+      components: [ItemOption],
+      html: `<ion-item-option href="https://ionic.io" rel="noopener noreferrer">Ionic</ion-item-option>`,
+    });
+
+    const link = page.body.querySelector('ion-item-option')!.shadowRoot!.querySelector('a')!;
+
+    expect(link.getAttribute('rel')).toBe('noopener noreferrer');
+  });
+});
