@@ -137,8 +137,9 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
               gap: 30px;
             }
 
+            /* Fits the longest word, so the label wraps in every size */
             .wrapped {
-              width: 140px;
+              width: min-content;
             }
           </style>
 
