@@ -30,6 +30,7 @@ import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
 })
 export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();
+  private readonly slotNames = ['start', 'end', 'primary', 'secondary'];
   private readonly slotClasses = [
     'has-start-content',
     'has-end-content',
@@ -43,7 +44,7 @@ export class Toolbar implements ComponentInterface {
    * again whenever that content changes size.
    */
   private slotResizeObserver?: ResizeObserver;
-  private hasLoaded = false;
+  private didLoad = false;
 
   @Element() el!: HTMLIonToolbarElement;
 
@@ -93,13 +94,13 @@ export class Toolbar implements ComponentInterface {
      * On the first connection the toolbar has not rendered yet, so this is left
      * to componentDidLoad.
      */
-    if (this.hasLoaded) {
+    if (this.didLoad) {
       this.updateSlotClasses();
     }
   }
 
   componentDidLoad() {
-    this.hasLoaded = true;
+    this.didLoad = true;
     this.updateSlotClasses();
   }
 
@@ -145,8 +146,7 @@ export class Toolbar implements ComponentInterface {
     }
 
     const elementsToObserve: Element[] = [];
-    const slots = ['start', 'end', 'primary', 'secondary'];
-    slots.forEach((slot) => {
+    this.slotNames.forEach((slot) => {
       if (this.el.classList.contains(`has-${slot}-content`)) {
         elementsToObserve.push(...this.getSlottedElements(slot));
       }
@@ -179,7 +179,7 @@ export class Toolbar implements ComponentInterface {
    * Returns the elements assigned to the given slot of the toolbar.
    */
   private getSlottedElements(slotName: string): Element[] {
-    const slotElement = this.el.shadowRoot?.querySelector(`slot[name="${slotName}"]`) as HTMLSlotElement | null;
+    const slotElement = this.getSlotElement(slotName);
     if (!slotElement) {
       return [];
     }
@@ -213,10 +213,9 @@ export class Toolbar implements ComponentInterface {
     const slotWidths = new Map<string, number>();
 
     // Measure all slots with content
-    const slots = ['start', 'end', 'primary', 'secondary'];
-    slots.forEach((slot) => {
+    this.slotNames.forEach((slot) => {
       if (this.el.classList.contains(`has-${slot}-content`)) {
-        const slotElement = this.el.shadowRoot?.querySelector(`slot[name="${slot}"]`) as HTMLSlotElement | null;
+        const slotElement = this.getSlotElement(slot);
         if (slotElement) {
           // Check if the slot contains an img or ion-img
           const assignedElements = slotElement.assignedElements({ flatten: true });
@@ -284,11 +283,9 @@ export class Toolbar implements ComponentInterface {
     }
 
     // Check if slots have content
-    const slots = ['start', 'end', 'primary', 'secondary'];
-
     const classesToAdd: string[] = [];
     const classesToRemove: string[] = [];
-    slots.forEach((slot) => {
+    this.slotNames.forEach((slot) => {
       const slotHasContent = this.hasSlotContent(slot);
       const slotClass = `has-${slot}-content`;
       if (slotHasContent) {
@@ -330,8 +327,12 @@ export class Toolbar implements ComponentInterface {
   }
 
   private hasSlotContent(slotName: string): boolean {
-    const slotNode = this.el.shadowRoot?.querySelector(`slot[name="${slotName}"]`) as HTMLSlotElement | null;
+    const slotNode = this.getSlotElement(slotName);
     return !!slotNode && slotNode.assignedNodes().length > 0;
+  }
+
+  private getSlotElement(slotName: string): HTMLSlotElement | null {
+    return this.el.shadowRoot?.querySelector<HTMLSlotElement>(`slot[name="${slotName}"]`) ?? null;
   }
 
   @Listen('ionStyle')
