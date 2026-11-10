@@ -631,7 +631,7 @@ export const defaultTheme: DefaultTheme = {
 
             hover: {
               background: ionColor('primary', 'shade', { subtle: true }),
-              color: ionColor('primary', 'contrast', { subtle: true }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
             },
 
             // A white wash over the button
@@ -663,7 +663,7 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: currentColor('shade', { subtle: true }),
-                color: currentColor('contrast', { subtle: true }),
+                color: currentColor('foreground', { subtle: true }),
               },
 
               disabled: {
@@ -700,7 +700,7 @@ export const defaultTheme: DefaultTheme = {
 
             hover: {
               background: ionColor('primary', 'shade', { subtle: true }),
-              color: ionColor('primary', 'contrast', { subtle: true }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
             },
 
             // A white wash over the button
@@ -728,7 +728,7 @@ export const defaultTheme: DefaultTheme = {
 
               hover: {
                 background: currentColor('shade', { subtle: true }),
-                color: currentColor('contrast', { subtle: true }),
+                color: currentColor('foreground', { subtle: true }),
               },
 
               disabled: {
