@@ -15,3 +15,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
     });
   });
 });
+
+/**
+ * Only the ionic theme inherits the text color, and this
+ * behavior does not vary across directions.
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('content: basic'), () => {
+    test('should inherit the text color from body', async ({ page }) => {
+      await page.setContent(
+        `
+          <style>
+            body {
+              color: rgb(255, 0, 0);
+            }
+          </style>
+
+          <ion-content>
+            <p>Content</p>
+          </ion-content>
+        `,
+        config
+      );
+
+      await expect(page.locator('ion-content p')).toHaveCSS('color', 'rgb(255, 0, 0)');
+    });
+  });
+});
