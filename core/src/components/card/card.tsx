@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import { Element, Component, Host, Prop, Watch, h, forceUpdate } from '@stencil/core';
 import type { AttributeController } from '@utils/attribute-controller';
 import { createAttributeController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
@@ -87,13 +87,24 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() target: string | undefined;
 
+  @Watch('button')
+  @Watch('href')
+  clickableChanged() {
+    this.ariaController?.updateHost();
+  }
+
   componentWillLoad() {
     /**
-     * Only the initial copy takes the attribute off the host, so an `aria-label` written
-     * after load stays on the host too. That's harmless here, because unlike `ion-item`
-     * the card host renders no role of its own, so nothing reads the leftover copy.
+     * A non-clickable card renders no native element to apply the copy to, so an
+     * `aria-label` written after load has to stay on the host.
      */
-    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+    this.ariaController = createAttributeController(
+      this.el,
+      ['aria-label'],
+      () => forceUpdate(this),
+      [],
+      () => !this.isClickable()
+    );
   }
 
   connectedCallback() {

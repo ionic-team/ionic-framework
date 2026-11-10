@@ -105,22 +105,32 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeCard).toHaveAttribute('aria-label', 'initial');
 
-      // Post-load writes are copied to the native element and cleared from the host.
+      // A later write is copied to the native element and left on the host as an empty string.
       await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
-      await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeCard).toHaveAttribute('aria-label', 'second');
+      await expect(host).toHaveAttribute('aria-label', '');
 
-      // An empty string is a valid ARIA attribute value; it is also cleared from the host.
+      // An empty string is a valid ARIA attribute value.
       await host.evaluate((el) => el.setAttribute('aria-label', ''));
-      await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeCard).toHaveAttribute('aria-label', '');
 
-      // Overwrite again, then clear via empty string — same path as initial markup,
-      // since a host removeAttribute after reflect changes nothing.
+      // A removal of a post-load write does reach the native element.
       await host.evaluate((el) => el.setAttribute('aria-label', 'third'));
       await expect(nativeCard).toHaveAttribute('aria-label', 'third');
-      await host.evaluate((el) => el.setAttribute('aria-label', ''));
-      await expect(nativeCard).toHaveAttribute('aria-label', '');
+      await host.evaluate((el) => el.removeAttribute('aria-label'));
+      await expect(host).not.toHaveAttribute('aria-label');
+      await expect(nativeCard).not.toHaveAttribute('aria-label');
+    });
+
+    test('should keep an aria-label written after load on the host of a non-clickable card', async ({ page }) => {
+      await page.setContent(`<ion-card aria-label="initial">Card</ion-card>`, config);
+
+      const host = page.locator('ion-card');
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+      await page.waitForChanges();
+
+      await expect(host).toHaveAttribute('aria-label', 'updated');
     });
 
     test('should apply aria-label to the native element when the card becomes clickable', async ({ page }) => {
@@ -137,6 +147,38 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await host.evaluate((el: HTMLIonCardElement) => (el.button = true));
 
       await expect(host.locator('[part="native"]')).toHaveAttribute('aria-label', 'label');
+    });
+
+    test('should put an aria-label written after load back on the host when the card stops being clickable', async ({
+      page,
+    }) => {
+      await page.setContent(`<ion-card button="true">Card</ion-card>`, config);
+
+      const host = page.locator('ion-card');
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+      await expect(host).toHaveAttribute('aria-label', '');
+
+      await host.evaluate((el: HTMLIonCardElement) => (el.button = false));
+      await page.waitForChanges();
+
+      await expect(host).toHaveAttribute('aria-label', 'updated');
+    });
+
+    test('should put an aria-label written after load back on the host when the card loses its href', async ({
+      page,
+    }) => {
+      await page.setContent(`<ion-card href="#">Card</ion-card>`, config);
+
+      const host = page.locator('ion-card');
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+      await expect(host).toHaveAttribute('aria-label', '');
+
+      await host.evaluate((el: HTMLIonCardElement) => (el.href = undefined));
+      await page.waitForChanges();
+
+      await expect(host).toHaveAttribute('aria-label', 'updated');
     });
 
     test('should not sync ARIA attributes other than aria-label', async ({ page }) => {

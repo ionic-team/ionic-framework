@@ -203,14 +203,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
     /**
      * The ARIA state has to stay live, since `ion-input-password-toggle` rewrites
-     * `aria-label` and `aria-pressed` on its `ion-button` on every toggle. Watched
-     * attributes are cleared from the host after each reflect so assistive technology
-     * does not see two labelled nodes. We keep `aria-disabled` out of the watch because
-     * the `<Host>` below renders it from the `disabled` prop and those writes would
-     * clobber a developer's value, and `role` out because a post-load role on the native
-     * control would stack with the implicit button/link role.
+     * `aria-label` and `aria-pressed` on its `ion-button` on every toggle. We keep
+     * `aria-disabled` out of the watch because the `<Host>` below renders it from the
+     * `disabled` prop and those writes would clobber a developer's value.
      */
-    this.ariaController = createAriaAttributeController(this.el, () => forceUpdate(this), ['aria-disabled', 'role']);
+    this.ariaController = createAriaAttributeController(this.el, () => forceUpdate(this), ['aria-disabled']);
   }
 
   connectedCallback() {

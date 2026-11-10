@@ -177,9 +177,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await host.evaluate((el, attr) => el.setAttribute(attr, 'updated'), attr);
 
         await expect(nativeButton).toHaveAttribute(attr, 'updated');
-        // Post-load writes are cleared from the host after reflecting, same as the
-        // initial inherit, so VoiceOver does not stop on two labelled nodes.
-        await expect(host).not.toHaveAttribute(attr);
       });
     }
 
@@ -219,23 +216,18 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(nativeButton).toHaveAttribute('aria-disabled', 'true');
     });
 
-    test('should not sync role from the host', async ({ page }) => {
+    test('should sync role from the host', async ({ page }) => {
       await page.setContent(`<ion-button role="switch">Button</ion-button>`, config);
 
       const host = page.locator('ion-button');
       const nativeButton = host.locator('button');
 
-      // The initial copy moves role onto the native button, as it always has.
       await expect(nativeButton).toHaveAttribute('role', 'switch');
 
-      // A later write is only read, so it stays on the host. Copying it as well would put
-      // the same role on both elements, and two of that role in the accessibility tree.
-      await host.evaluate((el) => {
-        el.setAttribute('role', 'checkbox');
-        el.setAttribute('aria-label', 'barrier');
-      });
-      await expect(nativeButton).toHaveAttribute('aria-label', 'barrier');
-      await expect(nativeButton).toHaveAttribute('role', 'switch');
+      await host.evaluate((el) => el.setAttribute('role', 'checkbox'));
+
+      await expect(nativeButton).toHaveAttribute('role', 'checkbox');
+      await expect(host).toHaveAttribute('role', '');
     });
 
     test('should keep syncing after the button is detached and reattached', async ({ page }) => {
@@ -292,23 +284,67 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(host).not.toHaveAttribute('aria-description');
       await expect(nativeButton).toHaveAttribute('aria-description', 'initial');
 
-      // Post-load writes are copied to the native button and cleared from the host.
+      // A later write is copied to the native button and left on the host as an empty string.
       await host.evaluate((el) => el.setAttribute('aria-description', 'second'));
-      await expect(host).not.toHaveAttribute('aria-description');
       await expect(nativeButton).toHaveAttribute('aria-description', 'second');
+      await expect(host).toHaveAttribute('aria-description', '');
 
-      // An empty string is a valid ARIA attribute value; it is also cleared from the host.
+      // An empty string is a valid ARIA attribute value.
       await host.evaluate((el) => el.setAttribute('aria-description', ''));
-      await expect(host).not.toHaveAttribute('aria-description');
       await expect(nativeButton).toHaveAttribute('aria-description', '');
 
-      // Overwrite with a non-empty value again, then clear via empty string — the same
-      // path used for values that came from the initial markup, since a host
-      // removeAttribute after reflect changes nothing (the attribute is already gone).
+      // A removal of a post-load write does reach the native button.
       await host.evaluate((el) => el.setAttribute('aria-description', 'third'));
       await expect(nativeButton).toHaveAttribute('aria-description', 'third');
-      await host.evaluate((el) => el.setAttribute('aria-description', ''));
-      await expect(nativeButton).toHaveAttribute('aria-description', '');
+      await host.evaluate((el) => el.removeAttribute('aria-description'));
+      await expect(host).not.toHaveAttribute('aria-description');
+      await expect(nativeButton).not.toHaveAttribute('aria-description');
+    });
+
+    test('should not leave an aria-label on the host when the same value is written again', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31659',
+      });
+
+      await page.setContent(`<ion-button aria-label="Scan">Button</ion-button>`, config);
+
+      const host = page.locator('ion-button');
+      const nativeButton = host.locator('button');
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'Scan'));
+
+      await expect(host).toHaveAttribute('aria-label', '');
+      await expect(nativeButton).toHaveAttribute('aria-label', 'Scan');
+    });
+
+    test('should leave a state written after load on the host so it can be read back', async ({ page }) => {
+      await page.setContent(`<ion-button aria-pressed="false">Button</ion-button>`, config);
+
+      const host = page.locator('ion-button');
+      const nativeButton = host.locator('button');
+      const toggle = () =>
+        host.evaluate((el) =>
+          el.setAttribute('aria-pressed', el.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')
+        );
+
+      await toggle();
+      await expect(nativeButton).toHaveAttribute('aria-pressed', 'true');
+
+      await toggle();
+      await expect(nativeButton).toHaveAttribute('aria-pressed', 'false');
+      await expect(host).toHaveAttribute('aria-pressed', 'false');
+    });
+
+    test('should leave an aria-labelledby written after load on the host', async ({ page }) => {
+      await page.setContent(`<span id="label">Scan</span><ion-button>Button</ion-button>`, config);
+
+      const host = page.locator('ion-button');
+
+      await host.evaluate((el) => el.setAttribute('aria-labelledby', 'label'));
+
+      await expect(host.locator('button')).toHaveAttribute('aria-labelledby', 'label');
+      await expect(host).toHaveAttribute('aria-labelledby', 'label');
     });
 
     test('should keep a value from the initial markup when the host attribute is removed', async ({ page }) => {

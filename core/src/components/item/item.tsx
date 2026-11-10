@@ -131,6 +131,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.focusable = this.isFocusable();
   }
 
+  @Watch('button')
+  @Watch('href')
+  clickableChanged() {
+    this.ariaController?.updateHost();
+  }
+
   @Listen('ionColor')
   labelColorChanged(ev: CustomEvent<string>) {
     const { color } = this;
@@ -188,12 +194,17 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentWillLoad() {
     /**
-     * Only the initial copy takes the attribute off the host, so an `aria-label` written
-     * after load names both the native element and the Host, which is a `listitem` when
-     * the item is in an `ion-list`. The two names always agree, so a screen reader just
-     * reads it twice.
+     * A non-clickable item renders a `div`, which ARIA doesn't allow a name on, so an
+     * `aria-label` written after load also stays on the Host, which is a `listitem`
+     * when the item is in an `ion-list`.
      */
-    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+    this.ariaController = createAttributeController(
+      this.el,
+      ['aria-label'],
+      () => forceUpdate(this),
+      [],
+      () => !this.isClickable()
+    );
   }
 
   componentDidLoad() {
