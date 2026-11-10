@@ -193,7 +193,7 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 }
 
 /**
- * Text can't be selected, so the default slot passes it a zero font size.
+ * `::slotted()` can't target bare text, so the default slot gives it a zero font size.
  * Letter spacing is inherited in px, so it's reset too.
  */
 :host(.button-has-icon-only) slot:not([name]) {
