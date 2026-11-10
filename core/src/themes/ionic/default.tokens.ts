@@ -972,7 +972,9 @@ export const defaultTheme: DefaultTheme = {
                   color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
                 },
 
+                // A custom toolbar color has no shade, so hover keeps it
                 hover: {
+                  background: `var(--ion-toolbar-color, ${ionColor('primary', 'shade')})`,
                   color: `var(--ion-toolbar-background, ${ionColor('primary', 'contrast')})`,
                 },
 
