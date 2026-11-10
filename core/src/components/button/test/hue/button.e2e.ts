@@ -75,3 +75,63 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ ti
     });
   });
 });
+
+/**
+ * In the ionic theme, the ripple is the only pressed feedback, so pressing
+ * a hovered button keeps its text color. This behavior does not vary
+ * across directions.
+ */
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, config }) => {
+  test.describe(title('button: hue states'), () => {
+    /**
+     * `(any-hover: hover)` evaluates to "none" when the browser reports a
+     * touch device, so turn that off to apply the hover rules. Headless
+     * Firefox reports no hover capability regardless, so it skips the test.
+     */
+    test.use({
+      hasTouch: false,
+      isMobile: false,
+    });
+
+    HUES.forEach((hue) => {
+      ION_BUTTON_FILLS.forEach((fill) => {
+        ['', 'primary'].forEach((color) => {
+          test(`should keep the hover text color when pressing a ${hue} ${fill} button${
+            color ? ` with a color` : ''
+          }`, async ({ page, browserName }) => {
+            test.skip(browserName === 'firefox', 'Headless Firefox reports no hover capability');
+
+            await page.setContent(
+              `
+                <style>
+                  /**
+                   * Without the transition, the state's color applies at once,
+                   * so the check reads the final color.
+                   */
+                  ion-button {
+                    --ion-button-transition: none;
+                  }
+                </style>
+
+                <ion-button hue="${hue}" fill="${fill}" ${color ? `color="${color}"` : ''}>Button</ion-button>
+              `,
+              config
+            );
+
+            const button = page.locator('ion-button');
+            const native = button.locator('.button-native');
+            const getColor = (el: Element) => getComputedStyle(el).color;
+
+            await button.hover();
+
+            const hovered = await native.evaluate(getColor);
+
+            await button.evaluate((el) => el.classList.add('ion-activated'));
+
+            expect(await native.evaluate(getColor)).toBe(hovered);
+          });
+        });
+      });
+    });
+  });
+});
