@@ -282,10 +282,8 @@ const DEFAULT_PALETTE = 'light';
    */
   function holdComponentDefinitions(ready) {
     const define = customElements.define.bind(customElements);
+    const held = [];
     let released = false;
-    ready.finally(() => {
-      released = true;
-    });
 
     customElements.define = (name, constructor, options) => {
       if (released || !name.startsWith('ion-')) {
@@ -293,8 +291,30 @@ const DEFAULT_PALETTE = 'light';
         return;
       }
 
-      ready.finally(() => define(name, constructor, options));
+      held.push([name, constructor, options]);
     };
+
+    ready.finally(() => {
+      released = true;
+
+      /**
+       * Defining each component on its own connects its elements in
+       * definition order, so `ion-label` can render before the `ion-item`
+       * around it and miss the item's color. Elements outside the document
+       * don't upgrade, so moving the page out while defining connects them
+       * in document order when it's put back, parents first.
+       */
+      const { body } = document;
+      if (!body) {
+        held.forEach((args) => define(...args));
+        return;
+      }
+
+      const page = document.createDocumentFragment();
+      page.append(...body.childNodes);
+      held.forEach((args) => define(...args));
+      body.append(page);
+    });
   }
 
   // TODO(FW-6750): Determine if this function can be removed once the theme tokens can be imported directly into the test pages
