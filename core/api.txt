@@ -2255,6 +2255,7 @@ ion-router-link,css-prop,--ion-router-link-state-focus-padding-end
 ion-router-link,css-prop,--ion-router-link-state-focus-padding-start
 ion-router-link,css-prop,--ion-router-link-state-focus-padding-top
 ion-router-link,css-prop,--ion-router-link-state-focus-ring-color
+ion-router-link,css-prop,--ion-router-link-state-focus-ring-offset
 ion-router-link,css-prop,--ion-router-link-state-focus-ring-style
 ion-router-link,css-prop,--ion-router-link-state-focus-ring-width
 ion-router-link,css-prop,--ion-router-link-state-focus-text-decoration

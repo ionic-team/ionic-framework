@@ -40,6 +40,7 @@ export type IonRouterLinkRecipe = {
 
       ring?: {
         color?: string;
+        offset?: string;
         style?: string;
         width?: string;
       };

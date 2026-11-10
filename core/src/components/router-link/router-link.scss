@@ -93,7 +93,8 @@ a {
   @include mixins.focused-state(
     var(--ion-router-link-state-focus-ring-width),
     var(--ion-router-link-state-focus-ring-style),
-    var(--ion-router-link-state-focus-ring-color)
+    var(--ion-router-link-state-focus-ring-color),
+    $offset: var(--ion-router-link-state-focus-ring-offset)
   );
 }
 
