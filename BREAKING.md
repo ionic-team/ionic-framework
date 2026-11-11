@@ -31,15 +31,21 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 <h2 id="version-10x-browser-platform-support">Browser and Platform Support</h2>
 
-This section details the desktop browser versions that are supported by Ionic 10.
+This section details the desktop browser and mobile platform versions that are supported by Ionic 10.
 
 **Minimum Browser Versions**
 | Desktop Browser | Supported Versions |
 | --------------- | ------------------ |
 | Chrome          | 89+                |
-| Safari          | 16+                |
+| Safari          | 17+                |
 | Edge            | 89+                |
 | Firefox         | 89+                |
+
+**Minimum Mobile Platform Versions**
+| Platform | Supported Version      |
+| -------- | ---------------------- |
+| iOS      | 17+                    |
+| Android  | 5.1+ with Chromium 89+ |
 
 <h2 id="version-10x-components">Components</h2>
 
