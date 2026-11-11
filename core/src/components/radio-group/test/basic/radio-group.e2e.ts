@@ -135,5 +135,65 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(radioOne).not.toHaveClass(/radio-checked/);
       await expect(radioTwo).toHaveClass(/radio-checked/);
     });
+
+    test('click should deselect with allowEmptySelection when using compareWith and object values', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30560',
+      });
+
+      await page.setContent(
+        `
+        <ion-radio-group allow-empty-selection="true">
+          <ion-item>
+            <ion-radio id="one">One</ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <script>
+          const radioGroup = document.querySelector('ion-radio-group');
+          const radio = document.querySelector('ion-radio');
+          radioGroup.compareWith = 'id';
+          radioGroup.value = { id: 1, name: 'One' };
+          radio.value = { id: 1, name: 'One' };
+        </script>
+      `,
+        config
+      );
+
+      await radioFixture.checkRadio('mouse');
+      await radioFixture.expectChecked(false);
+      const radioGroup = page.locator('ion-radio-group');
+      await expect(radioGroup).toHaveJSProperty('value', undefined);
+    });
+
+    test('should not throw error when value is null and compareWith is used', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30560',
+      });
+
+      await page.setContent(
+        `
+        <ion-radio-group>
+          <ion-item>
+            <ion-radio id="one">One</ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <script>
+          const radioGroup = document.querySelector('ion-radio-group');
+          const radio = document.querySelector('ion-radio');
+          radioGroup.compareWith = 'id';
+          radioGroup.value = null;
+          radio.value = { id: 1, name: 'One' };
+        </script>
+      `,
+        config
+      );
+
+      await radioFixture.checkRadio('mouse');
+      await radioFixture.expectChecked(true);
+      const radioGroup = page.locator('ion-radio-group');
+      await expect(radioGroup).toHaveJSProperty('value', { id: 1, name: 'One' });
+    });
   });
 });
