@@ -569,6 +569,22 @@ export class Range implements ComponentInterface {
     const currentX = (detail as GestureDetail).currentX ?? (detail as MouseEvent).clientX;
 
     /**
+     * Scrolling is disabled in `onMove`, which also assigns `pressedKnob`.
+     * A tap on the bar never drags, so `pressedKnob` is still undefined here
+     * and the content's original `scrollY` was never captured.
+     *
+     * Restore scrolling only after a drag that disabled it. Checking this
+     * after `setPressedKnob` would treat a tap as a drag and apply the
+     * default `initialContentScrollY` (`true`), re-enabling scrolling on
+     * an `ion-content` that had `scroll-y="false"`.
+     *
+     * The user can scroll on the view in the next gesture event.
+     */
+    if (contentEl && this.pressedKnob !== undefined) {
+      resetContentScrollY(contentEl, initialContentScrollY);
+    }
+
+    /**
      * The `pressedKnob` can be undefined if the user never
      * dragged the knob. They just tapped on the bar.
      *
@@ -578,16 +594,6 @@ export class Range implements ComponentInterface {
      */
     if (this.pressedKnob === undefined) {
       this.setPressedKnob(currentX);
-    }
-
-    /**
-     * The user is no longer dragging the bar or
-     * knob (if they were dragging it).
-     *
-     * The user can now scroll on the view in the next gesture event.
-     */
-    if (contentEl && this.pressedKnob !== undefined) {
-      resetContentScrollY(contentEl, initialContentScrollY);
     }
 
     // update the active knob's position
