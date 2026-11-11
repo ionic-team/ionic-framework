@@ -929,7 +929,7 @@ describe('INTERNAL_CHILD_COMPONENTS', () => {
         continue;
       }
 
-      if (!source.includes('shadow: true')) {
+      if (!/shadow:\s*(true|\{)/.test(source)) {
         continue;
       }
 
