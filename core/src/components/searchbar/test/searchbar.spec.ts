@@ -36,4 +36,27 @@ describe('searchbar: rendering', () => {
     expect(nativeEl.getAttribute('lang')).toBe('es-ES');
     expect(nativeEl.getAttribute('dir')).toBe('rtl');
   });
+
+  it('should inherit aria-label to the native input', async () => {
+    const page = await newSpecPage({
+      components: [Searchbar],
+      html: '<ion-searchbar aria-label="Search products"></ion-searchbar>',
+    });
+
+    const searchbarEl = page.body.querySelector('ion-searchbar')!;
+    const nativeEl = searchbarEl.querySelector('input')!;
+
+    expect(nativeEl.getAttribute('aria-label')).toBe('Search products');
+    expect(searchbarEl.hasAttribute('aria-label')).toBe(false);
+  });
+
+  it('should use the default aria-label when none is provided', async () => {
+    const page = await newSpecPage({
+      components: [Searchbar],
+      html: '<ion-searchbar></ion-searchbar>',
+    });
+
+    const nativeEl = page.body.querySelector('ion-searchbar input')!;
+    expect(nativeEl.getAttribute('aria-label')).toBe('search text');
+  });
 });
