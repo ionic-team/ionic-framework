@@ -95,6 +95,7 @@ Fallbacks are only for what a token can't express:
 - `inherit` for properties such as `font-family`, since a custom property can't hold the `inherit` keyword
 - a value that only exists on a child element, since a token's `var()` resolves on the parent
 - rendering with no theme loaded
+- `revert-layer` on a `::slotted()` property, so a theme that leaves the token out keeps the child's own value
 
 ### A recipe key doesn't need a token
 
@@ -145,7 +146,7 @@ A parent can't resize a slotted child through the child's custom property, becau
 
 ```scss
 ::slotted(ion-avatar) {
-  width: var(--ion-item-divider-avatar-width);
+  width: var(--ion-item-divider-avatar-width, revert-layer);
 }
 ```
 
