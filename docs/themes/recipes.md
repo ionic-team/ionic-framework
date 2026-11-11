@@ -89,13 +89,14 @@ If resting values moved into `state.default`, adding the first state to a proper
 
 When one theme needs a value, set it in every theme's `default.tokens.ts` rather than relying on a `var()` fallback in the stylesheet. A fallback assumes a default that a new theme might not want, and an unset token still applies its declaration as `unset`.
 
-Fallbacks are only for what a token can't express:
+Fallbacks are only for these cases:
 
 - `0px` inside `calc()`
 - `inherit` for properties such as `font-family`, since a custom property can't hold the `inherit` keyword
 - a value that only exists on a child element, since a token's `var()` resolves on the parent
 - rendering with no theme loaded
 - `revert-layer` on a `::slotted()` property, so a theme that leaves the token out keeps the child's own value
+- a state falling back to its resting token, such as `var(--ion-chip-hue-bold-solid-hover-background, var(--ion-chip-hue-bold-solid-default-background))`, so a theme only lists the states it changes
 
 ### A recipe key doesn't need a token
 
