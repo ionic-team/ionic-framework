@@ -141,7 +141,7 @@ Remove any instances that target the mode classes: `ion-backdrop.md`, `ion-backd
    - `--color` is replaced by `IonChip.hue.subtle.solid.default` for global styles and `--ion-chip-hue-subtle-solid-default-color` for component-specific styles if the chip has a subtle hue and solid fill.
    - `--color` is replaced by `IonChip.hue.subtle.outline.default` for global styles and `--ion-chip-hue-subtle-outline-default-color` for component-specific styles if the chip has a subtle hue and outline fill.
 - The `outline` property has been deprecated. To achieve an outlined chip, set the `fill` property to `"outline"`. The class `.chip-outline` has also been updated to `.chip-fill-outline` for clarity.
-- Specific theme classes (e.g., `ion-chip.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
+- Specific mode classes (e.g., `ion-chip.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 - The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `IonChip.shape.round.border.radius` to specify a different value for global styles and `--ion-chip-shape-round-border-radius` for component-specific styles.
 
 <h4 id="version-10x-col">Col</h4>
@@ -151,7 +151,7 @@ The following breaking changes apply to `ion-col`:
 1. `--ion-grid-column-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens in the `col` namespace. <sup>[1](#version-10x-col-padding-variables)</sup>
 2. The breakpoint-suffixed `size`, `order` and `offset` properties have been deprecated. <sup>[2](#version-10x-col-deprecated-breakpoint-properties)</sup>
 3. The `push` and `pull` properties have been deprecated. <sup>[3](#version-10x-col-deprecated-push-and-pull-properties)</sup>
-4. Theme classes (`ion-col.md`, `ion-col.ios`) are no longer supported. <sup>[4](#version-10x-col-theme-classes)</sup>
+4. Mode classes (`ion-col.md`, `ion-col.ios`) are no longer supported. <sup>[4](#version-10x-col-mode-classes)</sup>
 
 <h5 id="version-10x-col-padding-variables">Padding variables</h5>
 
@@ -326,9 +326,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-<h5 id="version-10x-col-theme-classes">Theme classes</h5>
+<h5 id="version-10x-col-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-col.md`, `ion-col.ios`.
+Remove any instances that target the mode classes: `ion-col.md`, `ion-col.ios`.
 
 <h4 id="version-10x-content">Content</h4>
 
@@ -337,7 +337,7 @@ The following breaking changes apply to `ion-content`:
 1. `--background` and `--color` CSS variables have been replaced.
 2. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional).
 3. `--keyboard-offset`, `--offset-top`, and `--offset-bottom` have been renamed to the `--internal-*` namespace with no replacement.
-4. Theme classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
+4. Mode classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
 
 <h5>Removed CSS variables</h5>
 
@@ -374,9 +374,9 @@ The following CSS variables were previously documented `@prop`s on `ion-content`
 
 These are managed by `ion-content` itself (keyboard avoidance and header/footer offsets) and were never intended for consumer override. There is no replacement — any code that was setting them directly should be removed.
 
-<h5>Theme classes</h5>
+<h5>Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-content.md`, `ion-content.ios`.
+Remove any instances that target the mode classes: `ion-content.md`, `ion-content.ios`.
 
 <h4 id="version-10x-datetime">Datetime</h4>
 
@@ -388,7 +388,7 @@ The following breaking changes apply to `ion-grid`:
 
 1. `--ion-grid-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens. <sup>[1](#version-10x-grid-padding-variables)</sup>
 2. `--ion-grid-width-*` CSS variables for the fixed grid have been replaced with per-breakpoint tokens. <sup>[2](#version-10x-grid-fixed-width-variables)</sup>
-3. Theme classes (`ion-grid.md`, `ion-grid.ios`) are no longer supported. <sup>[3](#version-10x-grid-theme-classes)</sup>
+3. Mode classes (`ion-grid.md`, `ion-grid.ios`) are no longer supported. <sup>[3](#version-10x-grid-mode-classes)</sup>
 
 <h5 id="version-10x-grid-padding-variables">Padding variables</h5>
 
@@ -404,19 +404,19 @@ Grid padding was a single value per breakpoint and is now set per-side. Use the 
 |---|---|---|
 | `--ion-grid-width-{bp}` | `IonGrid.breakpoint.{bp}.width` | `--ion-grid-breakpoint-{bp}-width` |
 
-<h5 id="version-10x-grid-theme-classes">Theme classes</h5>
+<h5 id="version-10x-grid-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-grid.md`, `ion-grid.ios`.
+Remove any instances that target the mode classes: `ion-grid.md`, `ion-grid.ios`.
 
 <h4 id="version-10x-image">Image</h4>
 
 The following breaking changes apply to `ion-img`:
 
-1. Theme classes (`ion-img.md`, `ion-img.ios`) are no longer supported.
+1. Mode classes (`ion-img.md`, `ion-img.ios`) are no longer supported.
 
-<h5>Theme classes</h5>
+<h5>Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-img.md`, `ion-img.ios`.
+Remove any instances that target the mode classes: `ion-img.md`, `ion-img.ios`.
 
 <h4 id="version-10x-input-otp">Input Otp</h4>
 
@@ -437,17 +437,17 @@ If you were targeting the internals of `ion-input-otp` in your CSS, you will nee
    - `--inner-padding-end` is replaced by `IonItemDivider.inner.padding.end` for global styles and `--ion-item-divider-inner-padding-end` for component-specific overrides.
    - `--inner-padding-bottom` is replaced by `IonItemDivider.inner.padding.bottom` for global styles and `--ion-item-divider-inner-padding-bottom` for component-specific overrides.
    - `--inner-padding-start` is replaced by `IonItemDivider.inner.padding.start` for global styles and `--ion-item-divider-inner-padding-start` for component-specific overrides.
-- Specific theme classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
+- Specific mode classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
 <h4 id="version-10x-menu-toggle">Menu Toggle</h4>
 
 The following breaking changes apply to `ion-menu-toggle`:
 
-1. Theme classes (`ion-menu-toggle.md`, `ion-menu-toggle.ios`) are no longer supported.
+1. Mode classes (`ion-menu-toggle.md`, `ion-menu-toggle.ios`) are no longer supported.
 
-<h5>Theme classes</h5>
+<h5>Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-menu-toggle.md`, `ion-menu-toggle.ios`.
+Remove any instances that target the mode classes: `ion-menu-toggle.md`, `ion-menu-toggle.ios`.
 
 <h4 id="version-10x-radio-group">Radio Group</h4>
 
@@ -462,7 +462,7 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
 The following breaking changes apply to `ion-ripple-effect`:
 
 1. The previously undocumented `--ripple-opacity` CSS variable has been renamed to `--ion-ripple-effect-opacity`. <sup>[1](#version-10x-ripple-effect-opacity-variable)</sup>
-2. Theme classes (`ion-ripple-effect.md`, `ion-ripple-effect.ios`) are no longer supported. <sup>[2](#version-10x-ripple-effect-theme-classes)</sup>
+2. Mode classes (`ion-ripple-effect.md`, `ion-ripple-effect.ios`) are no longer supported. <sup>[2](#version-10x-ripple-effect-mode-classes)</sup>
 
 <h5 id="version-10x-ripple-effect-opacity-variable">Opacity variable</h5>
 
@@ -472,19 +472,19 @@ The ripple fade opacity is now part of the centralized Ionic Theming system. Use
 |---|---|---|
 | `--ripple-opacity` | `IonRippleEffect.opacity` | `--ion-ripple-effect-opacity` |
 
-<h5 id="version-10x-ripple-effect-theme-classes">Theme classes</h5>
+<h5 id="version-10x-ripple-effect-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-ripple-effect.md`, `ion-ripple-effect.ios`.
+Remove any instances that target the mode classes: `ion-ripple-effect.md`, `ion-ripple-effect.ios`.
 
 <h4 id="version-10x-row">Row</h4>
 
 The following breaking changes apply to `ion-row`:
 
-1. Theme classes (`ion-row.md`, `ion-row.ios`) are no longer supported. <sup>[1](#version-10x-row-theme-classes)</sup>
+1. Mode classes (`ion-row.md`, `ion-row.ios`) are no longer supported. <sup>[1](#version-10x-row-mode-classes)</sup>
 
-<h5 id="version-10x-row-theme-classes">Theme classes</h5>
+<h5 id="version-10x-row-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-row.md`, `ion-row.ios`.
+Remove any instances that target the mode classes: `ion-row.md`, `ion-row.ios`.
 
 <h4 id="version-10x-skeleton-text">Skeleton Text</h4>
 
@@ -492,7 +492,7 @@ The following breaking changes apply to `ion-skeleton-text`:
 
 1. `--background` and `--background-rgb` CSS variables have been replaced with per-state background tokens, each split into an RGB value and an alpha. <sup>[1](#version-10x-skeleton-text-replaced-css-variables)</sup>
 2. `--border-radius` has been replaced. <sup>[1](#version-10x-skeleton-text-replaced-css-variables)</sup>
-3. Theme classes (`ion-skeleton-text.md`, `ion-skeleton-text.ios`) are no longer supported. <sup>[2](#version-10x-skeleton-text-theme-classes)</sup>
+3. Mode classes (`ion-skeleton-text.md`, `ion-skeleton-text.ios`) are no longer supported. <sup>[2](#version-10x-skeleton-text-mode-classes)</sup>
 
 <h5 id="version-10x-skeleton-text-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -509,9 +509,9 @@ The previously fixed opacities are now adjustable through new per-state alpha to
 > [!NOTE]
 > `--background` (the resting color) has been removed with no one-to-one replacement; set `--ion-skeleton-text-default-background-rgb` (and optionally `--ion-skeleton-text-default-background-alpha`) instead. The single `--background-rgb` variable previously tinted both the resting fill and the animated shimmer. It is now split per state, so set both `--ion-skeleton-text-default-background-rgb` and `--ion-skeleton-text-animated-background-rgb` to recolor both.
 
-<h5 id="version-10x-skeleton-text-theme-classes">Theme classes</h5>
+<h5 id="version-10x-skeleton-text-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-skeleton-text.md`, `ion-skeleton-text.ios`.
+Remove any instances that target the mode classes: `ion-skeleton-text.md`, `ion-skeleton-text.ios`.
 
 <h4 id="version-10x-spinner">Spinner</h4>
 
@@ -520,7 +520,7 @@ Remove any instances that target the theme classes: `ion-skeleton-text.md`, `ion
 `--ion-spinner-color` for component-specific styles.
 - CSS classes now include the property name to improve clarity.
   - `.spinner-[spinner-name]` → `.spinner-name-[spinner-name]`
-- Specific theme classes (e.g., `ion-spinner.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
+- Specific mode classes (e.g., `ion-spinner.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
 <h4 id="version-10x-split-pane">Split Pane</h4>
 
@@ -531,7 +531,7 @@ Remove any instances that target the theme classes: `ion-skeleton-text.md`, `ion
 The following breaking changes apply to `ion-text`:
 
 1. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property.
-2. Theme classes (`ion-text.md`, `ion-text.ios`) are no longer supported.
+2. Mode classes (`ion-text.md`, `ion-text.ios`) are no longer supported.
 
 <h5>New `hue` property and color tokens</h5>
 
@@ -544,9 +544,9 @@ When `color` is set, the text color now reads from a token instead of `--ion-col
 | `bold` | `IonText.hue.bold.semantic.default.color` | `--ion-text-hue-bold-semantic-default-color` |
 | `subtle` | `IonText.hue.subtle.semantic.default.color` | `--ion-text-hue-subtle-semantic-default-color` |
 
-<h5>Theme classes</h5>
+<h5>Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-text.md`, `ion-text.ios`.
+Remove any instances that target the mode classes: `ion-text.md`, `ion-text.ios`.
 
 <h4 id="version-10x-textarea">Textarea</h4>
 
@@ -575,7 +575,7 @@ The following breaking changes apply to `ion-thumbnail`:
 
 1. `--size` has been split into separate `--ion-thumbnail-width` and `--ion-thumbnail-height` CSS variables. <sup>[1](#version-10x-thumbnail-replaced-css-variables)</sup>
 2. `--border-radius` has been replaced. <sup>[1](#version-10x-thumbnail-replaced-css-variables)</sup>
-3. Theme classes (`ion-thumbnail.md`, `ion-thumbnail.ios`) are no longer supported. <sup>[2](#version-10x-thumbnail-theme-classes)</sup>
+3. Mode classes (`ion-thumbnail.md`, `ion-thumbnail.ios`) are no longer supported. <sup>[2](#version-10x-thumbnail-mode-classes)</sup>
 
 <h5 id="version-10x-thumbnail-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -601,9 +601,9 @@ Use the **parent's** thumbnail tokens instead:
 | Inside `ion-item` | `IonItem.thumbnail.width` / `IonItem.thumbnail.height` | `--ion-item-thumbnail-width` / `--ion-item-thumbnail-height` |
 | Inside `ion-item-divider` | `IonItemDivider.thumbnail.width` / `IonItemDivider.thumbnail.height` | `--ion-item-divider-thumbnail-width` / `--ion-item-divider-thumbnail-height` |
 
-<h5>Theme classes</h5>
+<h5 id="version-10x-thumbnail-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-thumbnail.md`, `ion-thumbnail.ios`.
+Remove any instances that target the mode classes: `ion-thumbnail.md`, `ion-thumbnail.ios`.
 
 <h4 id="version-10x-title">Title</h4>
 
@@ -613,7 +613,7 @@ The following breaking changes apply to `ion-title`:
 2. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[2](#version-10x-title-hue)</sup>
 3. The size classes now include the property name, and a title without `size` is now `medium`. <sup>[3](#version-10x-title-size-classes)</sup>
 4. The `title-rtl` class has been removed. <sup>[4](#version-10x-title-rtl-class)</sup>
-5. Theme classes (`ion-title.md`, `ion-title.ios`) are no longer supported. <sup>[5](#version-10x-title-theme-classes)</sup>
+5. Mode classes (`ion-title.md`, `ion-title.ios`) are no longer supported. <sup>[5](#version-10x-title-mode-classes)</sup>
 6. In the `md` theme, a tap on the title's padding no longer counts as a tap on the title. <sup>[6](#version-10x-title-padding-taps)</sup>
 7. The `ios` small title has more padding at its sides, and the `md` title has tighter letter spacing. <sup>[7](#version-10x-title-spacing)</sup>
 
@@ -659,9 +659,9 @@ The classes `ion-title` adds for its size now include the property name. A title
 +ion-title:dir(rtl) { }
 ```
 
-<h5 id="version-10x-title-theme-classes">Theme classes</h5>
+<h5 id="version-10x-title-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-title.md`, `ion-title.ios`.
+Remove any instances that target the mode classes: `ion-title.md`, `ion-title.ios`.
 
 <h5 id="version-10x-title-padding-taps">Taps on the title's padding</h5>
 
