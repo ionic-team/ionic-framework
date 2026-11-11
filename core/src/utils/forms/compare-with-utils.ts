@@ -15,7 +15,7 @@ export const compareOptions = (
   if (typeof compareWith === 'function') {
     return compareWith(currentValue, compareValue);
   } else if (typeof compareWith === 'string') {
-    return currentValue[compareWith] === compareValue[compareWith];
+    return currentValue?.[compareWith] !== undefined && currentValue?.[compareWith] === compareValue?.[compareWith];
   } else {
     return Array.isArray(compareValue) ? compareValue.includes(currentValue) : currentValue === compareValue;
   }
@@ -33,7 +33,7 @@ export const isOptionSelected = (
   compareValue: any,
   compareWith?: string | CompareFn | null
 ) => {
-  if (currentValue === undefined) {
+  if (currentValue === undefined || currentValue === null) {
     return false;
   }
   if (Array.isArray(currentValue)) {
