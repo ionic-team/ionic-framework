@@ -123,7 +123,11 @@ A parent that changes a child's look sets the child's tokens from its own recipe
 ```ts
 IonDatetime: {
   IonButton: {
-    padding: { top: '3px', end: '5px', bottom: '3px', start: '5px' },
+    size: {
+      medium: {
+        padding: { top: '3px', end: '5px', bottom: '3px', start: '5px' },
+      },
+    },
   },
 },
 ```
