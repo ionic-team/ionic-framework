@@ -68,7 +68,7 @@ Use the new token structure for global styles, or the corresponding CSS variable
 | `--ion-backdrop-color` | `IonBackdrop.background` | `--ion-backdrop-background` |
 
 > [!NOTE]
-> `--ion-backdrop-color` was set on `:root`, and `--ion-backdrop-background` has no effect there. Set it on the backdrop of each overlay instead: `ion-alert ion-backdrop` for alert, action sheet and loading, and the `backdrop` part for menu, modal and popover (`ion-modal::part(backdrop)`).
+> `--ion-backdrop-color` was set on `:root`, and `--ion-backdrop-background` has no effect there. Set it on the backdrop of each overlay instead: the `ion-backdrop` inside alert, action sheet and loading (`ion-alert ion-backdrop`), and the `backdrop` part for menu, modal and popover (`ion-modal::part(backdrop)`).
 
 <h5 id="version-10x-backdrop-mode-classes">Mode classes</h5>
 
