@@ -73,7 +73,7 @@ jobs:
         git config user.email hi@ionicframework.com
       shell: bash
     - name: Create GitHub Release
-      run: lerna version ${{ inputs.version }} --yes --force-publish='*' --conventional-commits --create-release github --preid=${{ inputs.preid }}
+      run: npx lerna@5 version ${{ inputs.version }} --yes --force-publish='*' --conventional-commits --create-release github --preid=${{ inputs.preid }}
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: bash
@@ -136,7 +136,7 @@ jobs:
           # never reach the check below.
           deadline=$(( SECONDS + DEADLINE_SECONDS ))
           attempt=0
-          until timeout --kill-after=30 300 lerna exec "npm install --package-lock-only --prefer-online"; do
+          until timeout --kill-after=30 300 npx lerna@5 exec "npm install --package-lock-only --prefer-online"; do
             attempt=$(( attempt + 1 ))
             if [ "$SECONDS" -ge "$deadline" ]; then
               echo "::error::npm install --package-lock-only failed $attempt times over ${SECONDS}s; see the last attempt above for the error"
