@@ -519,11 +519,7 @@ export const generateComponentsThemeCSS = (components: any): string => {
   for (const [component, componentTokens] of Object.entries(components)) {
     const componentTag = convertToKebabCase(component);
 
-    /**
-     * The component's own tokens, set on its tag and on any parent that renders
-     * it inside a shadow root (refer to `INTERNAL_CHILD_COMPONENTS`):
-     * `ion-backdrop, ion-menu, ion-modal, ion-popover { --ion-backdrop-*: … }`.
-     */
+    // Also set on hosts that render this component in their shadow root (see `INTERNAL_CHILD_COMPONENTS`).
     const selectors = [componentTag, ...getInternalRenderHosts(component)];
     css += generateBlock(selectors, componentTokens as Record<string, unknown>, componentTag);
   }
@@ -544,24 +540,9 @@ export const generateComponentsThemeCSS = (components: any): string => {
  * ion-backdrop,
  * ion-menu,
  * ion-modal,
- * ion-popover {
+ * ion-popover,
+ * ion-datetime {
  *   --ion-backdrop-background: #000;
- * }
- * ```
- *
- * The internal backdrop inherits the value from its host, and its stylesheet reads it:
- *
- * ```html
- * <ion-modal>                 <!-- --ion-backdrop-background: #000 -->
- *   #shadow-root
- *     <ion-backdrop>          <!-- inherits #000 -->
- * </ion-modal>
- * ```
- *
- * ```css
- * // backdrop.scss, compiled
- * :host {
- *   background-color: var(--ion-backdrop-background);
  * }
  * ```
  *
