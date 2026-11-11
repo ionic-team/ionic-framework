@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import { debounceEvent, raf, componentOnReady, inheritAttributes } from '@utils/helpers';
+import { debounceEvent, raf, componentOnReady, inheritAttributes, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
@@ -282,6 +282,7 @@ export class Searchbar implements ComponentInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = {
+      ...inheritAriaAttributes(this.el),
       ...inheritAttributes(this.el, ['lang', 'dir']),
     };
   }
@@ -687,7 +688,7 @@ export class Searchbar implements ComponentInterface {
       >
         <div class="searchbar-input-container">
           <input
-            aria-label="search text"
+            aria-label={!('aria-labelledby' in this.inheritedAttributes) ? 'search text' : undefined}
             disabled={this.disabled}
             ref={(el) => (this.nativeInput = el)}
             class="searchbar-input"
