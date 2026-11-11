@@ -540,8 +540,6 @@ export const defaultTheme: DefaultTheme = {
     IonContent: {
       default: {
         background: baseColors.backgroundColor,
-        // Inherits the text color set on `body` or a closer ancestor
-        color: 'currentColor',
       },
 
       semantic: {

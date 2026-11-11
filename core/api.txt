@@ -822,7 +822,6 @@ ion-content,event,ionScroll,ScrollDetail,true
 ion-content,event,ionScrollEnd,ScrollBaseDetail,true
 ion-content,event,ionScrollStart,ScrollBaseDetail,true
 ion-content,css-prop,--ion-content-default-background
-ion-content,css-prop,--ion-content-default-color
 ion-content,css-prop,--ion-content-font-family
 ion-content,css-prop,--ion-content-overflow
 ion-content,css-prop,--ion-content-padding-bottom

@@ -17,10 +17,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 });
 
 /**
- * Only the ionic theme inherits the text color, and this
- * behavior does not vary across directions.
+ * This behavior does not vary across directions.
  */
-configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('content: basic'), () => {
     test('should inherit the text color from body', async ({ page }) => {
       await page.setContent(
