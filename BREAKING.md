@@ -259,6 +259,23 @@ Converted `ion-label` to use [Shadow DOM](https://developer.mozilla.org/en-US/do
   ```
 
   Complex selectors inside `:not()` require Chrome 88+, Firefox 84+ and Safari 9+, and `:where()` requires Chrome 88+, Firefox 78+ and Safari 14+.
+
+  This includes CSS resets such as Tailwind's Preflight and Bootstrap's Reboot. In v8, these resets did not change the headings and paragraphs inside `ion-label`, because the label styles took precedence. In v10, the reset takes precedence, so label headings and paragraphs lose their margins and use the reset's font size and weight. For example, with Tailwind's Preflight, `md` label headings render at `16px` with no margins instead of `24px`, `16px` and `14px`, and with Bootstrap's Reboot they render at `40px`, `32px` and `28px`.
+
+  A reset from a third-party stylesheet cannot be scoped, so restore the label styles with app styles that target the headings and paragraphs inside `ion-label`. These take precedence over the reset:
+
+  ```css
+  ion-label > h2 {
+    margin: 2px 0;
+
+    font-size: 1rem;
+    font-weight: normal;
+
+    line-height: 1.2;
+  }
+  ```
+
+  The default values for each heading, paragraph and theme are in [`label.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.scss), [`label.ios.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.ios.scss) and [`label.md.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.md.scss).
 - The global typography styles in `typography.css` no longer apply to headings that are direct children of `ion-label`. These headings are styled by `ion-label` instead.
 - App styles that target `ion-label` directly now take precedence over the default `ion-label` styles. For example, a class that sets `color` on an `ion-label` inside of an `ion-item` previously had no effect because the label applied `var(--color)`, and it now changes the label color. Remove these styles if they are no longer wanted, or use the `--color` CSS variable to set the color of a label inside of an item.
 
