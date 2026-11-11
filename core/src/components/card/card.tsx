@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import { Element, Component, Host, Prop, Watch, h, forceUpdate } from '@stencil/core';
 import type { AttributeController } from '@utils/attribute-controller';
 import { createAttributeController, createTabindexController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
@@ -97,9 +97,21 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
 
     // A card that isn't clickable has no native button or link, so `tabindex` stays on the host.
-    if (this.isClickable()) {
-      this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
-    }
+    this.tabindexController = createTabindexController(
+      this.el,
+      () => forceUpdate(this),
+      () => this.isClickable()
+    );
+  }
+
+  /**
+   * Changing `href` or `button` adds or removes the native element, so `tabindex` has to
+   * move with it.
+   */
+  @Watch('href')
+  @Watch('button')
+  clickableChanged() {
+    this.tabindexController?.refresh();
   }
 
   connectedCallback() {

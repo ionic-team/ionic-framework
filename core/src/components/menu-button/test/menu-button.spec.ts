@@ -12,7 +12,7 @@ describe('menu button: tabindex', () => {
     const menuButton = page.body.querySelector('ion-menu-button')!;
     const nativeEl = menuButton.shadowRoot!.querySelector('button')!;
 
-    expect(nativeEl.getAttribute('tabindex')).toBe('0');
     expect(menuButton.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
   });
 });

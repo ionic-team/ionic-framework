@@ -12,8 +12,8 @@ describe('tab button: tabindex', () => {
     const tabButton = page.body.querySelector('ion-tab-button')!;
     const nativeEl = tabButton.shadowRoot!.querySelector('a')!;
 
-    expect(nativeEl.getAttribute('tabindex')).toBe('0');
     expect(tabButton.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
   });
 
   it('should keep a disabled tab button out of the tab order', async () => {

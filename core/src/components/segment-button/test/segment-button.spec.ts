@@ -12,7 +12,7 @@ describe('segment button: tabindex', () => {
     const segmentButton = page.body.querySelector('ion-segment-button')!;
     const nativeEl = segmentButton.shadowRoot!.querySelector('button')!;
 
-    expect(nativeEl.getAttribute('tabindex')).toBe('0');
     expect(segmentButton.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
   });
 });

@@ -21,14 +21,22 @@ class MockMutationObserver {
     MockMutationObserver.instances.push(this);
   }
 
-  /** Removal records the browser would deliver on the next callback. */
+  /** Records the browser would deliver on the next callback. */
   queued: string[] = [];
 
   observe(el: HTMLElement, options: { attributeFilter?: string[] }) {
     this.observedFilter = options.attributeFilter;
     this.connected = true;
 
-    // Like a browser, queue a record for every observed removal, including the callback's own.
+    // Like a browser, queue a record for every observed write, including the callback's own.
+    const setAttribute = el.setAttribute.bind(el);
+    el.setAttribute = (name: string, value: string) => {
+      if (this.connected && this.observedFilter?.includes(name)) {
+        this.queued.push(name);
+      }
+      setAttribute(name, value);
+    };
+
     const removeAttribute = el.removeAttribute.bind(el);
     el.removeAttribute = (name: string) => {
       if (this.connected && el.hasAttribute(name) && this.observedFilter?.includes(name)) {
@@ -387,5 +395,101 @@ describe('createTabindexController()', () => {
 
     expect(controller.attributes['tabindex']).toBeNull();
     expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('should leave tabindex on the host when there is no native element', () => {
+    const el = createHost({ tabindex: '0' });
+
+    const controller = createTabindexController(el, jest.fn(), () => false);
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('0');
+  });
+
+  it('should put tabindex back on the host on refresh once there is no native element', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = true;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    hasNativeElement = false;
+    controller.refresh();
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('0');
+  });
+
+  it('should move tabindex off the host on refresh once there is a native element', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = false;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    hasNativeElement = true;
+    controller.refresh();
+    MockMutationObserver.latest.flush();
+
+    expect(controller.attributes).toEqual({ tabindex: '0' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should see tabindex removed from the host after refresh put it back', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = true;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    hasNativeElement = false;
+    controller.refresh();
+    controller.destroy();
+    el.removeAttribute('tabindex');
+    controller.init();
+
+    // A null clears it from the native element if the host becomes clickable again.
+    expect(controller.attributes['tabindex']).toBeNull();
+    expect(el.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should keep a tabindex written in the same tick as a refresh that moves it off the host', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = false;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    el.setAttribute('tabindex', '5');
+    hasNativeElement = true;
+    controller.refresh();
+
+    expect(controller.attributes).toEqual({ tabindex: '5' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should keep a tabindex written in the same tick as a refresh that puts it back on the host', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = true;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    el.setAttribute('tabindex', '2');
+    hasNativeElement = false;
+    controller.refresh();
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('2');
+
+    hasNativeElement = true;
+    controller.refresh();
+
+    expect(controller.attributes).toEqual({ tabindex: '2' });
+  });
+
+  it('should keep a tabindex written while detached when a refresh moves it off the host', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = false;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    controller.destroy();
+    el.setAttribute('tabindex', '3');
+    hasNativeElement = true;
+    controller.refresh();
+    controller.init();
+
+    expect(controller.attributes).toEqual({ tabindex: '3' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
   });
 });

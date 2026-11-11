@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, forceUpdate, h } from '@stencil/core';
 import type { AttributeController } from '@utils/attribute-controller';
 import { createTabindexController } from '@utils/attribute-controller';
 import type { Attributes } from '@utils/helpers';
@@ -133,9 +133,20 @@ export class Breadcrumb implements ComponentInterface {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
 
     // A breadcrumb without an `href` has no native link, so `tabindex` stays on the host.
-    if (this.isClickable()) {
-      this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
-    }
+    this.tabindexController = createTabindexController(
+      this.el,
+      () => forceUpdate(this),
+      () => this.isClickable()
+    );
+  }
+
+  /**
+   * Adding or removing `href` adds or removes the native link, so `tabindex` has to move
+   * with it.
+   */
+  @Watch('href')
+  hrefChanged() {
+    this.tabindexController?.refresh();
   }
 
   connectedCallback() {
@@ -179,8 +190,7 @@ export class Breadcrumb implements ComponentInterface {
       target,
     } = this;
     const clickable = this.isClickable();
-    // Putting `tabindex` on the plain span would make a tab stop with no name.
-    const tabindexAttributes = clickable ? this.tabindexController?.attributes ?? {} : {};
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
     const TagType = this.href === undefined ? 'span' : ('a' as any);
 
     // Links can still be tabbed to when set to disabled if they have an href

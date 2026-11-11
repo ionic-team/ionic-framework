@@ -27,8 +27,10 @@ import { ariaAttributes, inheritAttributes } from '@utils/helpers';
  * attributes the component renders on its own `<Host>`, since a later change to one of
  * those is the component's own write, and for attributes that would put a second node in
  * the accessibility tree if the host kept a copy alongside the one we apply.
- * @param moveFromHost Called on load and after every write to decide whether a value moves
- * off the host. A rejected value stays on the host and is left out of `attributes`.
+ * @param moveFromHost Called on load, after every write and on `refresh()` to decide whether
+ * a value moves off the host. A rejected value stays on the host and is left out of
+ * `attributes`. It can read component state, as long as the component calls `refresh()`
+ * when that state changes.
  */
 export const createAttributeController = (
   el: HTMLElement,
@@ -115,6 +117,28 @@ export const createAttributeController = (
     }
   };
 
+  const handleRecords = (mutations: { attributeName: string | null }[]) => {
+    const changed: Attributes = {};
+
+    for (const mutation of mutations) {
+      const name = mutation.attributeName!;
+      // A removed attribute reads back as null, which clears it from the element the
+      // values are spread onto.
+      const value = el.getAttribute(name);
+
+      setPresence(name, value);
+      changed[name] = value;
+    }
+
+    moveOffHost(changed);
+    // Drop the removals `moveOffHost` just queued, or they'd read back as the developer
+    // clearing the attribute.
+    observer?.takeRecords();
+
+    inherited = { ...inherited, ...changed };
+    onChange();
+  };
+
   const init = () => {
     // There is no MutationObserver in SSR or the hydrate build.
     if (observer !== undefined || watchedAttributes.length === 0 || win === undefined || !('MutationObserver' in win)) {
@@ -123,27 +147,7 @@ export const createAttributeController = (
 
     readMissedChanges();
 
-    observer = new MutationObserver((mutations) => {
-      const changed: Attributes = {};
-
-      for (const mutation of mutations) {
-        const name = mutation.attributeName!;
-        // A removed attribute reads back as null, which clears it from the element the
-        // values are spread onto.
-        const value = el.getAttribute(name);
-
-        setPresence(name, value);
-        changed[name] = value;
-      }
-
-      moveOffHost(changed);
-      // Drop the removals `moveOffHost` just queued, or they'd read back as the developer
-      // clearing the attribute.
-      observer?.takeRecords();
-
-      inherited = { ...inherited, ...changed };
-      onChange();
-    });
+    observer = new MutationObserver(handleRecords);
 
     observer.observe(el, { attributeFilter: watchedAttributes });
   };
@@ -151,6 +155,42 @@ export const createAttributeController = (
   const destroy = () => {
     observer?.disconnect();
     observer = undefined;
+  };
+
+  const refresh = () => {
+    if (moveFromHost === undefined) {
+      return;
+    }
+
+    // A write made earlier in the same tick hasn't reached `inherited` yet, so take it in
+    // first, or the loop below would act on the old value and drop the new one.
+    if (observer !== undefined) {
+      const pending = observer.takeRecords();
+      if (pending.length > 0) {
+        handleRecords(pending);
+      }
+    } else {
+      readMissedChanges();
+    }
+
+    for (const [name, value] of Object.entries(inherited)) {
+      if (value == null) {
+        continue;
+      }
+
+      const onHost = el.hasAttribute(name);
+
+      if (staysOnHost(name, value) && !onHost) {
+        el.setAttribute(name, value);
+        hostWritten.add(name);
+      } else if (!staysOnHost(name, value) && onHost) {
+        el.removeAttribute(name);
+        hostWritten.delete(name);
+      }
+    }
+
+    // Drop our own writes, or they'd read back as the developer's.
+    observer?.takeRecords();
   };
 
   /**
@@ -176,6 +216,7 @@ export const createAttributeController = (
     },
     init,
     destroy,
+    refresh,
   };
 };
 
@@ -206,9 +247,21 @@ export const createAriaAttributeController = (
  * @internal
  * @param el The host element to copy from and watch.
  * @param onChange Called after `tabindex` changes, so the component can re-render.
+ * @param hasNativeElement Whether the component renders a native element to move `tabindex`
+ * to. Call `refresh()` when the answer changes.
  */
-export const createTabindexController = (el: HTMLElement, onChange: () => void): AttributeController => {
-  return createAttributeController(el, ['tabindex'], onChange, [], (_, value) => parseInt(value, 10) >= 0);
+export const createTabindexController = (
+  el: HTMLElement,
+  onChange: () => void,
+  hasNativeElement: () => boolean = () => true
+): AttributeController => {
+  return createAttributeController(
+    el,
+    ['tabindex'],
+    onChange,
+    [],
+    (_, value) => hasNativeElement() && parseInt(value, 10) >= 0
+  );
 };
 
 export type AttributeController = {
@@ -227,4 +280,9 @@ export type AttributeController = {
    * Stops watching the host element. Call this from `disconnectedCallback`.
    */
   destroy: () => void;
+  /**
+   * Re-runs `moveFromHost` against the current values. Call this when state that
+   * `moveFromHost` reads changes, such as whether the component renders a native button.
+   */
+  refresh: () => void;
 };

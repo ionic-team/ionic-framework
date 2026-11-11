@@ -130,6 +130,16 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   buttonChanged() {
     // Update the focusable option when the button option is changed
     this.focusable = this.isFocusable();
+    this.tabindexController?.refresh();
+  }
+
+  /**
+   * Adding or removing `href` adds or removes the native element, so `tabindex` has to move
+   * with it. The same goes for `button` in `buttonChanged`.
+   */
+  @Watch('href')
+  hrefChanged() {
+    this.tabindexController?.refresh();
   }
 
   @Listen('ionColor')
@@ -198,9 +208,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
 
     // An item that isn't clickable has no native button or link, so `tabindex` stays on the host.
-    if (this.isClickable()) {
-      this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
-    }
+    this.tabindexController = createTabindexController(
+      this.el,
+      () => forceUpdate(this),
+      () => this.isClickable()
+    );
   }
 
   componentDidLoad() {
@@ -384,8 +396,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
-    // Putting `tabindex` on the plain div would make a tab stop with no name.
-    const tabindexAttributes = clickable ? this.tabindexController?.attributes ?? {} : {};
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
 
     const attrs =
       TagType === 'button'

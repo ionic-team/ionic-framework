@@ -112,8 +112,8 @@ describe('item: tabindex', () => {
     const item = page.body.querySelector('ion-item')!;
     const nativeEl = item.shadowRoot!.querySelector('button')!;
 
-    expect(nativeEl.getAttribute('tabindex')).toBe('0');
     expect(item.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
   });
 
   it('should keep tabindex on the host of an item that is not clickable', async () => {
@@ -123,6 +123,51 @@ describe('item: tabindex', () => {
     });
 
     const item = page.body.querySelector('ion-item')!;
+    const nativeEl = item.shadowRoot!.querySelector('.item-native')!;
+
+    expect(item.getAttribute('tabindex')).toBe('0');
+    expect(nativeEl.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should move tabindex from the host to the native anchor of an item with an href', async () => {
+    const page = await newSpecPage({
+      components: [Item],
+      html: '<ion-item href="#" tabindex="0">Settings</ion-item>',
+    });
+
+    const item = page.body.querySelector('ion-item')!;
+    const nativeEl = item.shadowRoot!.querySelector('a')!;
+
+    expect(item.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
+  });
+
+  it('should move tabindex off the host when the item becomes clickable', async () => {
+    const page = await newSpecPage({
+      components: [Item],
+      html: '<ion-item tabindex="0">Settings</ion-item>',
+    });
+
+    const item = page.body.querySelector('ion-item')!;
+    item.button = true;
+    await page.waitForChanges();
+
+    const nativeEl = item.shadowRoot!.querySelector('button')!;
+
+    expect(item.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
+  });
+
+  it('should move tabindex back onto the host when the item stops being clickable', async () => {
+    const page = await newSpecPage({
+      components: [Item],
+      html: '<ion-item href="#" tabindex="0">Settings</ion-item>',
+    });
+
+    const item = page.body.querySelector('ion-item')!;
+    item.href = undefined;
+    await page.waitForChanges();
+
     const nativeEl = item.shadowRoot!.querySelector('.item-native')!;
 
     expect(item.getAttribute('tabindex')).toBe('0');

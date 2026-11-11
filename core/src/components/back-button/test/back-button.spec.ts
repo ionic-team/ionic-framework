@@ -108,7 +108,7 @@ describe('back button: tabindex', () => {
     const backButton = page.body.querySelector('ion-back-button')!;
     const nativeEl = backButton.shadowRoot!.querySelector('button')!;
 
-    expect(nativeEl.getAttribute('tabindex')).toBe('0');
     expect(backButton.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
   });
 });

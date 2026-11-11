@@ -477,7 +477,7 @@ describe('ion-select: tabindex', () => {
     const select = page.body.querySelector('ion-select')!;
     const nativeEl = select.shadowRoot!.querySelector('button')!;
 
-    expect(nativeEl.getAttribute('tabindex')).toBe('0');
     expect(select.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
   });
 });

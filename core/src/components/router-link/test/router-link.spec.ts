@@ -12,7 +12,7 @@ describe('router link: tabindex', () => {
     const routerLink = page.body.querySelector('ion-router-link')!;
     const nativeEl = routerLink.shadowRoot!.querySelector('a')!;
 
-    expect(nativeEl.getAttribute('tabindex')).toBe('0');
     expect(routerLink.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
   });
 });
