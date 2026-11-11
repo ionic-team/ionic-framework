@@ -263,6 +263,28 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/tab-lifecycle/TabLifecycleOutside.vue')
   },
   {
+    path: '/tab-tap/',
+    component: () => import('@/views/tab-tap/TabTap.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/tab-tap/home'
+      },
+      {
+        path: 'home',
+        component: () => import('@/views/tab-tap/TabTapHome.vue')
+      },
+      {
+        path: 'home/child',
+        component: () => import('@/views/tab-tap/TabTapChild.vue')
+      },
+      {
+        path: 'other',
+        component: () => import('@/views/tab-tap/TabTapOther.vue')
+      }
+    ]
+  },
+  {
     path: '/tabs-similar-prefixes/',
     component: () => import('@/views/tabs-similar-prefixes/TabsSimilarPrefixes.vue'),
     children: [

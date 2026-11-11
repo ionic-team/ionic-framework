@@ -95,4 +95,61 @@ describe('IonTabs', () => {
       cy.get('@consoleLog').should('be.calledWith', 'onIonTabsDidChange:', 'tab2');
     });
   });
+
+  /**
+   * Verifies that pressing the active tab button scrolls the content
+   * to the top when the `tabTap` config is enabled.
+   *
+   * @see https://github.com/ionic-team/ionic-framework/issues/22558
+   */
+  describe('tabTap', () => {
+    const getScrollTop = ($content: JQuery<HTMLElement>) =>
+      $content[0].shadowRoot!.querySelector('.inner-scroll')!.scrollTop;
+
+    const scrollContentDown = (selector: string) => {
+      cy.get(selector).then(($content) => ($content[0] as HTMLIonContentElement).scrollToPoint(0, 500));
+      cy.get(selector).should(($content) => expect(getScrollTop($content)).to.be.greaterThan(0));
+    };
+
+    const spyOnScrollToTop = (selector: string) => {
+      cy.get(selector).then(($content) => cy.spy($content[0], 'scrollToTop').as('scrollToTop'));
+    };
+
+    const setTabTap = (value: boolean) => {
+      cy.window().then((win) => (win as any).Ionic.config.set('tabTap', value));
+    };
+
+    beforeEach(() => {
+      cy.visit('/tabs-tab-tap/home');
+    });
+
+    it('should scroll to the top when pressing the active tab button at the root of the tab', () => {
+      setTabTap(true);
+      scrollContentDown('[data-testid="home-page"] ion-content');
+
+      cy.get('[data-testid="home-tab"]').click();
+
+      cy.get('[data-testid="home-page"] ion-content').should(($content) => expect(getScrollTop($content)).to.equal(0));
+    });
+
+    it('should not scroll to the top when tabTap is not enabled', () => {
+      spyOnScrollToTop('[data-testid="home-page"] ion-content');
+
+      cy.get('[data-testid="home-tab"]').click();
+
+      cy.get('@scrollToTop').should('not.have.been.called');
+    });
+
+    it('should navigate to the root of the tab without scrolling the child page', () => {
+      setTabTap(true);
+      cy.get('[data-testid="detail-link"]').click();
+      cy.get('[data-testid="home-detail-page"]').should('be.visible');
+      spyOnScrollToTop('[data-testid="home-detail-page"] ion-content');
+
+      cy.get('[data-testid="home-tab"]').click();
+
+      cy.location('pathname').should('eq', '/tabs-tab-tap/home');
+      cy.get('@scrollToTop').should('not.have.been.called');
+    });
+  });
 });
