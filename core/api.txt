@@ -1908,6 +1908,8 @@ ion-note,css-prop,--ion-note-hue-bold-default-color
 ion-note,css-prop,--ion-note-hue-bold-semantic-default-color
 ion-note,css-prop,--ion-note-hue-subtle-default-color
 ion-note,css-prop,--ion-note-hue-subtle-semantic-default-color
+ion-note,css-prop,--ion-note-letter-spacing
+ion-note,css-prop,--ion-note-line-height
 
 ion-picker,shadow
 ion-picker,prop,mode,"ios" | "md",undefined,false,false

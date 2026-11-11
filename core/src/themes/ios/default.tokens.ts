@@ -864,7 +864,7 @@ export const defaultTheme: DefaultTheme = {
     IonNote: {
       font: {
         family: 'var(--ion-font-family)',
-        size: dynamicFontMin(global.root, 0.875, 16),
+        size: dynamicFontMin(global.root, 0.875, 17),
       },
 
       hue: {
@@ -891,6 +891,12 @@ export const defaultTheme: DefaultTheme = {
             },
           },
         },
+      },
+
+      letterSpacing: '-0.0235em',
+
+      line: {
+        height: '1.294',
       },
     },
 

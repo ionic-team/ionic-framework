@@ -8,6 +8,10 @@
 
   font-family: var(--ion-note-font-family, inherit);
   font-size: var(--ion-note-font-size);
+
+  letter-spacing: var(--ion-note-letter-spacing);
+
+  line-height: var(--ion-note-line-height);
 }
 
 // Note: Hue
