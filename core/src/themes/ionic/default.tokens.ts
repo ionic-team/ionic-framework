@@ -930,14 +930,14 @@ export const defaultTheme: DefaultTheme = {
             color: ionColor('primary', 'foreground'),
           },
 
+          visited: {
+            color: '#09358a',
+          },
+
           semantic: {
             default: {
               color: currentColor('foreground'),
             },
-          },
-
-          visited: {
-            color: '#09358a',
           },
         },
 

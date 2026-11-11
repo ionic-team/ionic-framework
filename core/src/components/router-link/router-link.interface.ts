@@ -11,6 +11,7 @@ export type IonRouterLinkRecipe = {
       activated?: IonRouterLinkStateDefinition;
       default?: IonRouterLinkStateDefinition;
       focus?: IonRouterLinkStateDefinition;
+      visited?: IonRouterLinkStateDefinition;
 
       /** Any of the semantic colors like primary, secondary, etc. */
       semantic?: {
@@ -19,8 +20,6 @@ export type IonRouterLinkRecipe = {
         focus?: IonRouterLinkStateDefinition;
         visited?: IonRouterLinkStateDefinition;
       };
-
-      visited?: IonRouterLinkStateDefinition;
     };
   };
 
