@@ -36,6 +36,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   @Element() el!: HTMLElement;
 
   @State() checked = false;
+  @State() private buttonTabindex = 0;
 
   /**
    * The `id` of the segment content.
@@ -46,6 +47,10 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
    * If `true`, the user cannot interact with the segment button.
    */
   @Prop({ mutable: true }) disabled = false;
+  @Watch('disabled')
+  protected disabledChanged() {
+    this.segmentEl?.updateTabindex();
+  }
 
   /**
    * Set the layout of the text and icon in the segment.
@@ -64,6 +69,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   @Watch('value')
   valueChanged() {
     this.updateState();
+    this.segmentEl?.updateTabindex();
   }
 
   connectedCallback() {
@@ -72,6 +78,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
       this.updateState();
       addEventListener(segmentEl, 'ionSelect', this.updateState);
       addEventListener(segmentEl, 'ionStyle', this.updateStyle);
+      segmentEl.updateTabindex();
     }
   }
 
@@ -119,6 +126,18 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
         `[ion-segment-button] - Element with id="${this.contentId}" is not an <ion-segment-content> element.`
       );
       return;
+    }
+  }
+
+  /**
+   * @internal
+   */
+  @Method()
+  async setButtonTabindex(value: number) {
+    this.buttonTabindex = value;
+    // Keep the native tab stop in sync before the next keyboard event.
+    if (this.nativeEl) {
+      this.nativeEl.tabIndex = value;
     }
   }
 
@@ -192,6 +211,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           class="button-native"
           part="native"
           disabled={disabled}
+          tabindex={this.buttonTabindex}
           {...this.inheritedAttributes}
         >
           <span class="button-inner">
