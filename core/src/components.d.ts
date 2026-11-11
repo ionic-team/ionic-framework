@@ -2707,13 +2707,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a note with vibrant, bold colors or to `"subtle"` for a note with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonPicker {
         "exitInputMode": () => Promise<void>;
@@ -8568,13 +8568,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a note with vibrant, bold colors or to `"subtle"` for a note with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonPicker {
         /**
@@ -10905,6 +10905,7 @@ declare namespace LocalJSX {
     }
     interface IonNoteAttributes {
         "color": Color;
+        "hue": Hue;
     }
     interface IonPickerColumnAttributes {
         "disabled": boolean;

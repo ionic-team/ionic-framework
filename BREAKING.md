@@ -29,6 +29,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input Otp](#version-10x-input-otp)
   - [Item Divider](#version-10x-item-divider)
   - [Menu Toggle](#version-10x-menu-toggle)
+  - [Note](#version-10x-note)
   - [Radio Group](#version-10x-radio-group)
   - [Ripple Effect](#version-10x-ripple-effect)
   - [Row](#version-10x-row)
@@ -425,6 +426,42 @@ The following breaking changes apply to `ion-menu-toggle`:
 <h5>Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-menu-toggle.md`, `ion-menu-toggle.ios`.
+
+<h4 id="version-10x-note">Note</h4>
+
+The following breaking changes apply to `ion-note`:
+
+1. `--color` has been replaced. <sup>[1](#version-10x-note-replaced-css-variables)</sup>
+2. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[2](#version-10x-note-hue)</sup>
+3. Mode classes (`ion-note.md`, `ion-note.ios`) are no longer supported. <sup>[3](#version-10x-note-mode-classes)</sup>
+
+<h5 id="version-10x-note-replaced-css-variables">Replaced CSS variables</h5>
+
+Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--color` | `IonNote.hue.bold.default.color` | `--ion-note-hue-bold-default-color` |
+
+> [!NOTE]
+> A note with `hue="subtle"` reads `IonNote.hue.subtle.default.color` for global styles, or `--ion-note-hue-subtle-default-color` for component-specific styles.
+
+<h5 id="version-10x-note-hue">New <code>hue</code> property and color tokens</h5>
+
+A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`.
+
+When `color` is set, a bold note now uses the color's `foreground` variant instead of `base`, which is darker so the text stays readable on the page. To revert to the previous appearance, set `IonNote.hue.bold.semantic.default.color` to `var(--ion-color-base)` for global styles, or `--ion-note-hue-bold-semantic-default-color` for component-specific styles.
+
+When `color` is set, the note color now reads from a token instead of `--ion-color-base` directly. Global overrides should use the theme tokens; component-specific overrides use the corresponding CSS variables:
+
+| Hue | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| `bold` | `IonNote.hue.bold.semantic.default.color` | `--ion-note-hue-bold-semantic-default-color` |
+| `subtle` | `IonNote.hue.subtle.semantic.default.color` | `--ion-note-hue-subtle-semantic-default-color` |
+
+<h5 id="version-10x-note-mode-classes">Mode classes</h5>
+
+Remove any instances that target the mode classes: `ion-note.md`, `ion-note.ios`.
 
 <h4 id="version-10x-radio-group">Radio Group</h4>
 

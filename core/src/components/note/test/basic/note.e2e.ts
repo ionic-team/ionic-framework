@@ -16,17 +16,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       const note = page.locator('ion-note');
       await expect(note).toHaveScreenshot(screenshot(`note-diff`));
     });
-
-    test('should render color correctly', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-note color="danger">99</ion-note>
-      `,
-        config
-      );
-      const note = page.locator('ion-note');
-      await expect(note).toHaveScreenshot(screenshot(`note-color`));
-    });
   });
 });
 

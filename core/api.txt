@@ -1900,11 +1900,14 @@ ion-nav-link,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-note,shadow
 ion-note,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-note,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-note,prop,mode,"ios" | "md",undefined,false,false
-ion-note,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-note,css-prop,--color,ionic
-ion-note,css-prop,--color,ios
-ion-note,css-prop,--color,md
+ion-note,css-prop,--ion-note-font-family
+ion-note,css-prop,--ion-note-font-size
+ion-note,css-prop,--ion-note-hue-bold-default-color
+ion-note,css-prop,--ion-note-hue-bold-semantic-default-color
+ion-note,css-prop,--ion-note-hue-subtle-default-color
+ion-note,css-prop,--ion-note-hue-subtle-semantic-default-color
 
 ion-picker,shadow
 ion-picker,prop,mode,"ios" | "md",undefined,false,false

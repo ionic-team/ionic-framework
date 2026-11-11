@@ -1,19 +1,30 @@
-@import "./note.ios.vars";
+@use "./note.docs";
 
-// iOS Note
+// Note
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --color: Color of the note
-   */
-  color: var(--color);
-
-  font-family: $font-family-base;
-
   box-sizing: border-box;
+
+  font-family: var(--ion-note-font-family, inherit);
+  font-size: var(--ion-note-font-size);
 }
 
-:host(.ion-color) {
-  color: #{current-color(base)};
+// Note: Hue
+// --------------------------------------------------
+
+:host(.note-hue-bold) {
+  color: var(--ion-note-hue-bold-default-color);
+}
+
+:host(.note-hue-subtle) {
+  color: var(--ion-note-hue-subtle-default-color);
+}
+
+:host(.note-hue-bold.ion-color) {
+  color: var(--ion-note-hue-bold-semantic-default-color);
+}
+
+:host(.note-hue-subtle.ion-color) {
+  color: var(--ion-note-hue-subtle-semantic-default-color);
 }
