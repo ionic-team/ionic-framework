@@ -433,7 +433,7 @@ The following breaking changes apply to `ion-note`:
 
 1. `--color` has been replaced. <sup>[1](#version-10x-note-replaced-css-variables)</sup>
 2. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[2](#version-10x-note-hue)</sup>
-3. Mode classes (`ion-note.md`, `ion-note.ios`) are no longer supported. <sup>[3](#version-10x-note-mode-classes)</sup>
+3. Theme classes (`ion-note.md`, `ion-note.ios`) are no longer supported. <sup>[3](#version-10x-note-theme-classes)</sup>
 4. The `ios` note is larger and has a set line height and letter spacing. <sup>[4](#version-10x-note-ios-typography)</sup>
 
 <h5 id="version-10x-note-replaced-css-variables">Replaced CSS variables</h5>
@@ -460,9 +460,9 @@ When `color` is set, the note color now reads from a token instead of `--ion-col
 | `bold` | `IonNote.hue.bold.semantic.default.color` | `--ion-note-hue-bold-semantic-default-color` |
 | `subtle` | `IonNote.hue.subtle.semantic.default.color` | `--ion-note-hue-subtle-semantic-default-color` |
 
-<h5 id="version-10x-note-mode-classes">Mode classes</h5>
+<h5 id="version-10x-note-theme-classes">Theme classes</h5>
 
-Remove any instances that target the mode classes: `ion-note.md`, `ion-note.ios`.
+Remove any instances that target the theme classes: `ion-note.md`, `ion-note.ios`.
 
 <h5 id="version-10x-note-ios-typography">iOS typography</h5>
 
