@@ -113,6 +113,10 @@ export const defaultTheme: DefaultTheme = {
   },
 
   components: {
+    IonBackdrop: {
+      background: baseColors.black,
+    },
+
     IonBadge: {
       // Hues
       hue: {
