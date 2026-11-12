@@ -187,6 +187,18 @@
   @include margin(10px, 8px, 10px, 0);
 }
 
+::slotted(ion-label.label-stacked) {
+  @include margin(null, null, 4px, null);
+}
+
+::slotted(ion-label.label-floating) {
+  @include margin(null, null, 0, null);
+}
+
+:host(.item-has-value) ::slotted(ion-label.label-floating) {
+  @include transform(scale(0.82));
+}
+
 // iOS Stacked & Floating Inputs
 // --------------------------------------------------
 
