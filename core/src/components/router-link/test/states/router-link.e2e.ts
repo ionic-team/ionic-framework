@@ -8,35 +8,26 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
   test.describe(title('router-link: states'), () => {
     test('should not have visual regressions', async ({ page }) => {
       /**
-       * The padding keeps the focus ring, which sits outside the
-       * link, inside the screenshot.
-       *
-       * An empty href points at the current page, which the browser
-       * counts as visited. Firefox's test browser keeps no history,
-       * so its visited links show the default color.
+       * Firefox's test browser keeps no history, so its visited
+       * links show the default color.
        */
       await page.setContent(
         `
           <style>
+            /* The padding keeps the focus ring inside the screenshot */
             .container {
               width: max-content;
               padding: 8px;
             }
 
-            /**
-             * Firefox sizes the container without the focus padding,
-             * so the focused row would wrap without nowrap.
-             */
+            /* Firefox sizes the container without the focus padding, so the row would wrap */
             .container div {
               margin-bottom: 8px;
 
               white-space: nowrap;
             }
 
-            /**
-             * Keeps the focus backgrounds of the two focused
-             * links from touching.
-             */
+            /* Keeps the focus backgrounds from touching */
             ion-router-link + ion-router-link {
               margin-inline-start: 8px;
             }
