@@ -491,7 +491,8 @@ The following breaking changes apply to `ion-router-link`:
 2. `--background` has been removed. <sup>[2](#version-10x-router-link-removed-css-variables)</sup>
 3. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[3](#version-10x-router-link-hue)</sup>
 4. The text color now uses the color's `foreground` variant instead of `base`. <sup>[4](#version-10x-router-link-foreground)</sup>
-5. Mode classes (`ion-router-link.md`, `ion-router-link.ios`) are no longer supported. <sup>[5](#version-10x-router-link-mode-classes)</sup>
+5. In the `md` and `ios` themes, a focused router link now shows a tinted background instead of the browser's focus ring. In the `ionic` theme, it shows a 2px ring. <sup>[5](#version-10x-router-link-focus)</sup>
+6. Mode classes (`ion-router-link.md`, `ion-router-link.ios`) are no longer supported. <sup>[6](#version-10x-router-link-mode-classes)</sup>
 
 <h5 id="version-10x-router-link-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -527,6 +528,20 @@ A bold router link now uses the `foreground` variant of its color instead of `ba
 |---|---|---|---|
 | Default | `IonRouterLink.hue.bold.default.color` | `var(--ion-color-primary)` | `--ion-router-link-hue-bold-default-color` |
 | `color` set | `IonRouterLink.hue.bold.semantic.default.color` | `var(--ion-color-base)` | `--ion-router-link-hue-bold-semantic-default-color` |
+
+<h5 id="version-10x-router-link-focus">Focus style</h5>
+
+When a router link is focused with the keyboard in the `md` and `ios` themes, it now shows a background tinted with its color instead of the browser's default focus ring, the same as a clear button: 12% opacity in `md` and 10% in `ios`. The background reaches 2px above and below the text and 4px to each side, without moving it. In the `ionic` theme, it shows a 2px ring with no background. Customize it with the tokens for global styles, or the CSS variables for component-specific styles:
+
+| Property | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| Background | `IonRouterLink.hue.bold.focus.background` | `--ion-router-link-hue-bold-focus-background` |
+| Background, `color` set | `IonRouterLink.hue.bold.semantic.focus.background` | `--ion-router-link-hue-bold-semantic-focus-background` |
+| Corner radius | `IonRouterLink.state.focus.border.radius` | `--ion-router-link-state-focus-border-radius` |
+| Padding | `IonRouterLink.state.focus.padding` | `--ion-router-link-state-focus-padding-top`, `-end`, `-bottom`, `-start` |
+
+> [!NOTE]
+> A router link with `hue="subtle"` reads the `subtle` tokens instead. To show a ring, set `IonRouterLink.state.focus.ring.color`, `.style` and `.width`.
 
 <h5 id="version-10x-router-link-mode-classes">Mode classes</h5>
 

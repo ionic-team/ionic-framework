@@ -925,8 +925,16 @@ export const defaultTheme: DefaultTheme = {
     IonRouterLink: {
       hue: {
         bold: {
+          activated: {
+            color: '#09358a',
+          },
+
           default: {
             color: ionColor('primary', 'foreground'),
+          },
+
+          visited: {
+            color: '#09358a',
           },
 
           semantic: {
@@ -937,14 +945,51 @@ export const defaultTheme: DefaultTheme = {
         },
 
         subtle: {
+          activated: {
+            color: '#09358a',
+          },
+
           default: {
             color: ionColor('primary', 'foreground', { subtle: true }),
+          },
+
+          visited: {
+            color: '#09358a',
           },
 
           semantic: {
             default: {
               color: currentColor('foreground', { subtle: true }),
             },
+          },
+        },
+      },
+
+      state: {
+        activated: {
+          text: {
+            decoration: 'underline',
+          },
+        },
+
+        focus: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+
+          // The ring hugs the text at the sides and its line box above and below
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-0)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-0)',
+          },
+
+          ring: {
+            color: '#b5c0f7',
+            offset: 'var(--ion-spacing-0)',
+            style: 'solid',
+            width: 'var(--ion-border-width-xxs)',
           },
         },
       },

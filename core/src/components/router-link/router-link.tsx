@@ -109,6 +109,7 @@ export class RouterLink implements ComponentInterface {
         class={createColorClasses(color, {
           [`router-link-hue-${hueValue}`]: true,
           'ion-activatable': true,
+          'ion-focusable': true,
         })}
       >
         <a {...attrs} {...tabindexAttributes}>

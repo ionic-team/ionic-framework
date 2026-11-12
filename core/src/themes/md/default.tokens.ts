@@ -1077,9 +1077,17 @@ export const defaultTheme: DefaultTheme = {
             color: ionColor('primary', 'foreground'),
           },
 
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.12 }),
+          },
+
           semantic: {
             default: {
               color: currentColor('foreground'),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.12 }),
             },
           },
         },
@@ -1089,10 +1097,33 @@ export const defaultTheme: DefaultTheme = {
             color: ionColor('primary', 'foreground', { subtle: true }),
           },
 
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.12 }),
+          },
+
           semantic: {
             default: {
               color: currentColor('foreground', { subtle: true }),
             },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.12 }),
+            },
+          },
+        },
+      },
+
+      state: {
+        focus: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-xxs)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-xxs)',
           },
         },
       },
