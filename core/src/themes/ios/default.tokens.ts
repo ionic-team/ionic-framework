@@ -131,6 +131,10 @@ export const defaultTheme: DefaultTheme = {
   },
 
   components: {
+    IonBackdrop: {
+      background: baseColors.black,
+    },
+
     IonBadge: {
       font: {
         family: 'var(--ion-font-family)',
