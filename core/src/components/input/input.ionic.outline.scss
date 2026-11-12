@@ -1,6 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
 :host(.input-fill-outline) {
-  --background: #{globals.$ion-bg-surface-default};
+  --background: #{globals.$ion-bg-input-default};
   --border-color: #{globals.$ion-border-input-default};
 }

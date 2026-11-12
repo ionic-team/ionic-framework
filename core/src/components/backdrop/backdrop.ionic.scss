@@ -1,8 +1,0 @@
-@use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./backdrop.common";
-
-:host {
-  background-color: rgba(globals.$ion-primitives-base-black-rgb, 0.7);
-
-  z-index: 2;
-}
