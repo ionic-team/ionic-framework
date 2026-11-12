@@ -62,6 +62,7 @@ import OutletUnmountBeforeReady from './pages/outlet-unmount-before-ready/Outlet
 import { PropsUpdateDirect, PropsUpdateRoutesWrapper } from './pages/props-update/PropsUpdate';
 import DisabledButton from './pages/disabled-button/DisabledButton';
 import SplatSibling from './pages/splat-sibling/SplatSibling';
+import StaleRegister from './pages/stale-register/StaleRegister';
 import { EmptyPathSibling, IndexSibling } from './pages/index-sibling/IndexSibling';
 
 const App: React.FC = () => {
@@ -135,6 +136,11 @@ const App: React.FC = () => {
           <Route path="/props-update-routes/*" element={<PropsUpdateRoutesWrapper />} />
           <Route path="/props-update-direct/*" element={<PropsUpdateDirect />} />
           <Route path="/splat-sibling/*" element={<SplatSibling />} />
+          <Route path="/stale-register/*" element={<StaleRegister base="/stale-register" catchAll />} />
+          <Route
+            path="/stale-register-no-catch-all/*"
+            element={<StaleRegister base="/stale-register-no-catch-all" catchAll={false} />}
+          />
           <Route path="/index-sibling/*" element={<IndexSibling />} />
           <Route path="/empty-path-sibling/*" element={<EmptyPathSibling />} />
         </IonRouterOutlet>

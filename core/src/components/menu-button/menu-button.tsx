@@ -1,5 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Prop, State, h } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import type { ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
@@ -28,6 +30,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -62,6 +65,15 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
+  }
+
+  connectedCallback() {
+    this.tabindexController?.init();
+  }
+
+  disconnectedCallback() {
+    this.tabindexController?.destroy();
   }
 
   componentDidLoad() {
@@ -80,6 +92,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
 
   render() {
     const { color, disabled, inheritedAttributes } = this;
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
     const mode = getIonMode(this);
     const menuIcon = config.get('menuIcon', mode === 'ios' ? menuOutline : menuSharp);
     const hidden = this.autoHide && !this.visible;
@@ -106,7 +119,14 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           'ion-focusable': true,
         })}
       >
-        <button {...attrs} disabled={disabled} class="button-native" part="native" aria-label={ariaLabel}>
+        <button
+          {...attrs}
+          disabled={disabled}
+          class="button-native"
+          part="native"
+          aria-label={ariaLabel}
+          {...tabindexAttributes}
+        >
           <span class="button-inner">
             <slot>
               <ion-icon part="icon" icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
