@@ -183,6 +183,22 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   }
 }
 
+// An icon-only button shows only its icon and badges with a `vertical` position.
+// Other content stays in the accessibility tree, so wrapped text still names the button.
+:host(.button-has-icon-only) ::slotted(:not([slot]):not(ion-badge[vertical])) {
+  @include mixins.visually-hidden();
+}
+
+/**
+ * `::slotted()` can't target bare text, so the default slot gives it a zero font size.
+ * Letter spacing is inherited in px, so it's reset too.
+ */
+:host(.button-has-icon-only) slot:not([name]) {
+  font-size: 0;
+
+  letter-spacing: 0;
+}
+
 // Button: Slotted Elements
 // --------------------------------------------------
 
