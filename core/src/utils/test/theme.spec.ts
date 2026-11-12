@@ -906,8 +906,11 @@ describe('INTERNAL_CHILD_COMPONENTS', () => {
   ];
 
   /**
-   * The ripple's only token falls back to the same value in its stylesheet,
-   * so it renders correctly inside a shadow root without being listed.
+   * Known gap: a custom theme's `IonRippleEffect.opacity` doesn't reach the ripple
+   * that `ion-button`, `ion-item`, `ion-chip` and other shadow components render.
+   * Every shipped theme sets the stylesheet's fallback value, so they look right.
+   * Listing the hosts isn't a fix: the token CSS would then beat app overrides like
+   * `ion-button { --ion-ripple-effect-opacity: 0.5 }`.
    */
   const exempt = ['IonRippleEffect'];
 
@@ -929,7 +932,7 @@ describe('INTERNAL_CHILD_COMPONENTS', () => {
         continue;
       }
 
-      if (!source.includes('shadow: true')) {
+      if (!/shadow:\s*(true|\{)/.test(source)) {
         continue;
       }
 

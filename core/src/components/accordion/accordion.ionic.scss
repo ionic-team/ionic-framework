@@ -73,10 +73,5 @@
 
 // Disabled Accordion
 // --------------------------------------------------
-
-:host(.accordion-disabled)::before {
-  @include globals.border-radius(inherit);
-  @include globals.disabled-state();
-
-  z-index: 2;
-}
+// The disabled colors are set in core.ionic.scss because the header
+// and content are slotted (light DOM).

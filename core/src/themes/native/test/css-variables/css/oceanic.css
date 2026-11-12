@@ -140,6 +140,9 @@
 
 ion-action-sheet ion-backdrop,
 ion-alert ion-backdrop,
-ion-loading ion-backdrop {
+ion-loading ion-backdrop,
+ion-menu::part(backdrop),
+ion-modal::part(backdrop),
+ion-popover::part(backdrop) {
   --ion-backdrop-background: #1b2b34;
 }
