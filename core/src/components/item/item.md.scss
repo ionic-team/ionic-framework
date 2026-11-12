@@ -213,6 +213,16 @@
 // Material Design Floating/Stacked Label
 // --------------------------------------------------
 
+::slotted(ion-label.label-stacked),
+::slotted(ion-label.label-floating) {
+  @include margin(0, 0, 0, 0);
+}
+
+:host(.ion-focused) ::slotted(ion-label.label-floating),
+:host(.item-has-value) ::slotted(ion-label.label-floating) {
+  @include transform(translateY(50%), scale(0.75));
+}
+
 :host(.item-label-stacked) ::slotted([slot="end"]),
 :host(.item-label-floating) ::slotted([slot="end"]) {
   @include margin(
@@ -253,9 +263,7 @@
   --min-height: 55px;
 }
 
-:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
-:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating),
-:host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
-:host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked:not(.ion-color)),
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating:not(.ion-color)) {
   color: $label-md-text-color-focused;
 }
