@@ -859,6 +859,12 @@ export const defaultTheme: DefaultTheme = {
           },
         },
       },
+
+      letterSpacing: '0',
+
+      line: {
+        height: dynamicFont(global.root, 24),
+      },
     },
 
     IonProgressBar: {
