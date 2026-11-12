@@ -335,10 +335,11 @@ Remove any instances that target the mode classes: `ion-col.md`, `ion-col.ios`.
 
 The following breaking changes apply to `ion-content`:
 
-1. `--background` and `--color` CSS variables have been replaced.
-2. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional).
-3. `--keyboard-offset`, `--offset-top`, and `--offset-bottom` have been renamed to the `--internal-*` namespace with no replacement.
-4. Mode classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
+1. The `--background` CSS variable has been replaced, and `--color` has been removed.
+2. Content inherits its text color from its parent in every theme.
+3. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional).
+4. `--keyboard-offset`, `--offset-top`, and `--offset-bottom` have been renamed to the `--internal-*` namespace with no replacement.
+5. Mode classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
 
 <h5>Removed CSS variables</h5>
 
@@ -347,7 +348,12 @@ The following breaking changes apply to `ion-content`:
 | Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--background` | `IonContent.background` | `--ion-content-default-background` |
-| `--color` | `IonContent.color` | `--ion-content-default-color` |
+
+`--color` has no replacement. Set `color` on `ion-content` or one of its ancestors instead.
+
+<h5>Inherited text color</h5>
+
+In the `ios` and `md` themes, content set its text color to `--ion-text-color`, which overrode any `color` set on an ancestor such as `ion-modal`. Content now inherits its text color in every theme, so it follows the closest ancestor that sets one.
 
 <h5>Padding variables</h5>
 
