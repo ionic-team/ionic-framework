@@ -30,6 +30,8 @@ ion-item-option.item-sliding-expandable-width-back {
 .item-sliding-active-slide .item {
   position: relative;
 
+  box-shadow: #{globals.$ion-elevation-2};
+
   opacity: 1;
   z-index: globals.$ion-z-index-100;
   pointer-events: none;
