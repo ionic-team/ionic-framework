@@ -887,6 +887,9 @@ export const defaultTheme: DefaultTheme = {
 
         padding: {
           top: components.item.note.slot.padding.top,
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-0)',
+          start: 'var(--ion-spacing-0)',
         },
       },
 
