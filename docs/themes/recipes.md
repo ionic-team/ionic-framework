@@ -157,4 +157,4 @@ A parent can't resize a slotted child through the child's custom property, becau
 - Back each prop union with a `const` array, such as `ION_CHIP_SIZES`, so tests can loop over every value.
 - Reuse a shared union when one exists, such as `Hue` and `HUES`, instead of declaring a component copy.
 - Name a variable that a component sets from its own script `--internal-*`, and leave it out of the recipe.
-- Document each token with a `@prop` comment in a Sass partial next to the stylesheet, `_my-component.docs.scss`, loaded with `@use "./my-component.docs";` at the top of `my-component.scss`. Stencil reads the comments from the compiled CSS, so they still reach the docs site and `api.txt`, and the stylesheet stays readable.
+- In a new migration, document each token with a `@prop` comment in a Sass partial next to the stylesheet, `_my-component.docs.scss`, loaded with `@use "./my-component.docs";` at the top of `my-component.scss`. Stencil reads the comments from the compiled CSS, so they still reach the docs site and `api.txt`, and the stylesheet stays readable.

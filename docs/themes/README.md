@@ -44,6 +44,7 @@ A component that uses the theme system keeps its recipe and config types next to
 core/src/components/my-component/
 ├── my-component.tsx            # Reads config defaults and renders CSS custom properties
 ├── my-component.scss           # Single base stylesheet for every theme
+├── _my-component.docs.scss     # @prop comments for the stylesheet's tokens
 ├── my-component.interface.ts   # Recipe and config types, plus const arrays for prop values
 └── my-component.constant.ts    # Optional shared values, such as defaults
 ```
