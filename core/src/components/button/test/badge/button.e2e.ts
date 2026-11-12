@@ -83,5 +83,120 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
 
       await expect(container).toHaveScreenshot(screenshot(`button-badge`));
     });
+
+    test('should space a badge without a position from the label', async ({ page }) => {
+      const buttons = (buttonSize: string, slot = '') =>
+        contents
+          .flatMap((html) =>
+            ION_BADGE_SIZES.map(
+              (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
+                Button
+                <ion-badge ${slot} hue="bold" shape="round" color="danger" size="${badgeSize}">${html}</ion-badge>
+              </ion-button>`
+            )
+          )
+          .join('\n');
+
+      const rows = ION_BUTTON_SIZES.map(
+        (buttonSize) => `
+          <div class="row">${buttons(buttonSize)}</div>
+          <div class="row">${buttons(buttonSize, 'slot="start"')}</div>
+        `
+      ).join('\n');
+
+      // A label that wraps keeps the button's vertical padding
+      const wrapped = ION_BUTTON_SIZES.map(
+        (buttonSize) => `<div class="wrapped">
+          <ion-button size="${buttonSize}" shape="round" expand="block">
+            Wrapped label
+            <ion-badge hue="bold" shape="round" color="danger">1</ion-badge>
+          </ion-button>
+        </div>`
+      ).join('\n');
+
+      await page.setContent(
+        `
+          <style>
+            .row {
+              display: grid;
+              grid-template-columns: repeat(3, auto);
+              justify-items: start;
+              align-items: center;
+              padding-bottom: 10px;
+              row-gap: 5px;
+              column-gap: 30px;
+            }
+
+            .badge-container {
+              width: max-content;
+            }
+
+            .wrapped-row {
+              display: flex;
+              align-items: center;
+              gap: 30px;
+            }
+
+            /* Fits the longest word, so the label wraps in every size */
+            .wrapped {
+              width: min-content;
+            }
+          </style>
+
+          <div class="badge-container">
+            ${rows}
+            <div class="wrapped-row">${wrapped}</div>
+          </div>
+        `,
+        config
+      );
+
+      const container = page.locator('.badge-container');
+
+      // Content wider than the viewport is cut off at the left edge in rtl
+      const box = await container.boundingBox();
+      await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
+
+      await expect(container).toHaveScreenshot(screenshot(`button-badge-no-position`));
+    });
+  });
+});
+
+/**
+ * Stacking does not vary across modes or directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('button: badge stacking'), () => {
+    test('should keep a badge above the next button', async ({ page }) => {
+      await page.setContent(
+        `
+        <div style="display: flex">
+          <ion-button id="with-badge">
+            Button
+            <ion-badge vertical="top">999+</ion-badge>
+          </ion-button>
+          <ion-button id="next">Button</ion-button>
+        </div>
+      `,
+        config
+      );
+
+      const badgeBox = (await page.locator('#with-badge ion-badge').boundingBox())!;
+      const nextBox = (await page.locator('#next').boundingBox())!;
+
+      // The area where the badge overflows into the next button
+      const left = Math.max(badgeBox.x, nextBox.x);
+      const right = Math.min(badgeBox.x + badgeBox.width, nextBox.x + nextBox.width);
+      const top = Math.max(badgeBox.y, nextBox.y);
+      const bottom = Math.min(badgeBox.y + badgeBox.height, nextBox.y + nextBox.height);
+      expect(right).toBeGreaterThan(left);
+      expect(bottom).toBeGreaterThan(top);
+
+      const topmost = await page.evaluate(
+        ([x, y]) => document.elementFromPoint(x, y)?.closest('ion-badge, ion-button')?.tagName,
+        [(left + right) / 2, (top + bottom) / 2]
+      );
+      expect(topmost).toBe('ION-BADGE');
+    });
   });
 });

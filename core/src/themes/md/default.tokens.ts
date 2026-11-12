@@ -611,18 +611,18 @@ export const defaultTheme: DefaultTheme = {
             // The negative margin moves the icon closer to the edge than a label would be
             leading: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '0.4444em',
-                bottom: '0',
+                bottom: 'var(--ion-spacing-0)',
                 start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '-0.2222em',
-                bottom: '0',
+                bottom: 'var(--ion-spacing-0)',
                 start: '0.4444em',
               },
             },
@@ -673,6 +673,13 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          badge: {
+            margin: {
+              end: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-sm)',
+            },
+          },
         },
 
         medium: {
@@ -700,18 +707,18 @@ export const defaultTheme: DefaultTheme = {
             // The negative margin moves the icon closer to the edge than a label would be
             leading: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '0.4444em',
-                bottom: '0',
+                bottom: 'var(--ion-spacing-0)',
                 start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '-0.2222em',
-                bottom: '0',
+                bottom: 'var(--ion-spacing-0)',
                 start: '0.4444em',
               },
             },
@@ -765,6 +772,13 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          badge: {
+            margin: {
+              end: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-sm)',
+            },
+          },
         },
 
         large: {
@@ -791,18 +805,18 @@ export const defaultTheme: DefaultTheme = {
             // The negative margin moves the icon closer to the edge than a label would be
             leading: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '0.4444em',
-                bottom: '0',
+                bottom: 'var(--ion-spacing-0)',
                 start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
+                top: 'var(--ion-spacing-0)',
                 end: '-0.2222em',
-                bottom: '0',
+                bottom: 'var(--ion-spacing-0)',
                 start: '0.4444em',
               },
             },
@@ -851,6 +865,13 @@ export const defaultTheme: DefaultTheme = {
                 height: '2.2041em',
                 width: '2.2041em',
               },
+            },
+          },
+
+          badge: {
+            margin: {
+              end: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-md)',
             },
           },
         },
