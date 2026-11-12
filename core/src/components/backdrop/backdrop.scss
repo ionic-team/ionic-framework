@@ -1,20 +1,28 @@
-@import "../../themes/mixins.scss";
+@use "../../themes/common.globals" as globals;
+@use "../../themes/mixins" as mixins;
+@use "./backdrop.docs";
 
 // Backdrop
 // --------------------------------------------------
 
 :host {
-  @include position(0, 0, 0, 0);
+  @include mixins.position(0, 0, 0, 0);
 
   display: block;
   position: absolute;
 
   transform: translateZ(0);
 
+  background-color: var(--ion-backdrop-background);
+
   contain: strict;
   cursor: pointer;
+
+  // Nearly transparent until an overlay or menu animation fades it in
   opacity: 0.01;
   touch-action: none;
+
+  z-index: globals.$z-index-backdrop;
 }
 
 :host(.backdrop-hide) {
