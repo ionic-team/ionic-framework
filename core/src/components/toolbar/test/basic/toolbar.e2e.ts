@@ -209,9 +209,9 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
           `
             <ion-header>
               <ion-toolbar>
-                <img src="https://picsum.photos/id/237/50/50" slot="start" />
+                <img src="/src/components/toolbar/test/basic/placeholder-50x50.png" slot="start" />
                 <ion-title>Toolbar</ion-title>
-                <ion-img src="https://picsum.photos/id/237/50/50" slot="end"></ion-img>
+                <ion-img src="/src/components/toolbar/test/basic/placeholder-50x50.png" slot="end"></ion-img>
               </ion-toolbar>
             </ion-header>
           `,
@@ -232,11 +232,11 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
             <ion-header>
               <ion-toolbar>
                 <div slot="start">
-                  <img src="https://picsum.photos/id/237/50/50" />
+                  <img src="/src/components/toolbar/test/basic/placeholder-50x50.png" />
                 </div>
                 <ion-title>Toolbar</ion-title>
                 <div slot="end">
-                  <ion-img src="https://picsum.photos/id/237/50/50"></ion-img>
+                  <ion-img src="/src/components/toolbar/test/basic/placeholder-50x50.png"></ion-img>
                 </div>
               </ion-toolbar>
             </ion-header>
