@@ -822,7 +822,6 @@ ion-content,event,ionScroll,ScrollDetail,true
 ion-content,event,ionScrollEnd,ScrollBaseDetail,true
 ion-content,event,ionScrollStart,ScrollBaseDetail,true
 ion-content,css-prop,--ion-content-default-background
-ion-content,css-prop,--ion-content-default-color
 ion-content,css-prop,--ion-content-font-family
 ion-content,css-prop,--ion-content-overflow
 ion-content,css-prop,--ion-content-padding-bottom
@@ -2236,14 +2235,40 @@ ion-router,event,ionRouteWillChange,RouterEventDetail,true
 ion-router-link,shadow
 ion-router-link,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-router-link,prop,href,string | undefined,undefined,false,false
+ion-router-link,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-router-link,prop,mode,"ios" | "md",undefined,false,false
 ion-router-link,prop,rel,string | undefined,undefined,false,false
 ion-router-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-router-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-router-link,prop,target,string | undefined,undefined,false,false
-ion-router-link,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-router-link,css-prop,--background
-ion-router-link,css-prop,--color
+ion-router-link,css-prop,--ion-router-link-hue-bold-activated-color
+ion-router-link,css-prop,--ion-router-link-hue-bold-default-color
+ion-router-link,css-prop,--ion-router-link-hue-bold-focus-background
+ion-router-link,css-prop,--ion-router-link-hue-bold-semantic-activated-color
+ion-router-link,css-prop,--ion-router-link-hue-bold-semantic-default-color
+ion-router-link,css-prop,--ion-router-link-hue-bold-semantic-focus-background
+ion-router-link,css-prop,--ion-router-link-hue-bold-semantic-visited-color
+ion-router-link,css-prop,--ion-router-link-hue-bold-visited-color
+ion-router-link,css-prop,--ion-router-link-hue-subtle-activated-color
+ion-router-link,css-prop,--ion-router-link-hue-subtle-default-color
+ion-router-link,css-prop,--ion-router-link-hue-subtle-focus-background
+ion-router-link,css-prop,--ion-router-link-hue-subtle-semantic-activated-color
+ion-router-link,css-prop,--ion-router-link-hue-subtle-semantic-default-color
+ion-router-link,css-prop,--ion-router-link-hue-subtle-semantic-focus-background
+ion-router-link,css-prop,--ion-router-link-hue-subtle-semantic-visited-color
+ion-router-link,css-prop,--ion-router-link-hue-subtle-visited-color
+ion-router-link,css-prop,--ion-router-link-state-activated-text-decoration
+ion-router-link,css-prop,--ion-router-link-state-focus-border-radius
+ion-router-link,css-prop,--ion-router-link-state-focus-padding-bottom
+ion-router-link,css-prop,--ion-router-link-state-focus-padding-end
+ion-router-link,css-prop,--ion-router-link-state-focus-padding-start
+ion-router-link,css-prop,--ion-router-link-state-focus-padding-top
+ion-router-link,css-prop,--ion-router-link-state-focus-ring-color
+ion-router-link,css-prop,--ion-router-link-state-focus-ring-offset
+ion-router-link,css-prop,--ion-router-link-state-focus-ring-style
+ion-router-link,css-prop,--ion-router-link-state-focus-ring-width
+ion-router-link,css-prop,--ion-router-link-state-focus-text-decoration
+ion-router-link,css-prop,--ion-router-link-text-decoration
 
 ion-router-outlet,shadow
 ion-router-outlet,prop,animated,boolean,true,false,false

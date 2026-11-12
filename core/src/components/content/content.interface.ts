@@ -24,7 +24,6 @@ export interface ScrollCustomEvent extends ScrollBaseCustomEvent {
 export interface IonContentRecipe {
   default: {
     background?: string;
-    color?: string;
   };
 
   semantic: {

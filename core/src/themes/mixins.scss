@@ -617,6 +617,8 @@ $rtl-use-host-context: true !default;
 }
 
 // Mixin that applies focus styles to interactive elements.
+// `$offset` sets the space between the ring and the element. Without
+// it, `$addOffset` offsets the ring by its own width.
 //
 // Example:
 //
@@ -626,13 +628,15 @@ $rtl-use-host-context: true !default;
 // }
 // ```
 // --------------------------------------------------
-@mixin focused-state($width: null, $style: solid, $color: null, $addOffset: true) {
+@mixin focused-state($width: null, $style: solid, $color: null, $addOffset: true, $offset: null) {
   @if $width == null or $color == null {
     outline: none;
   } @else {
     outline: $width $style $color;
 
-    @if $addOffset {
+    @if $offset != null {
+      outline-offset: $offset;
+    } @else if $addOffset {
       outline-offset: $width;
     }
   }
