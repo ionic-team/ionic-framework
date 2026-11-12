@@ -118,3 +118,33 @@ configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, sc
     });
   });
 });
+
+/**
+ * iOS stacked labels are not scaled, so their transform origin
+ * does not change their position.
+ */
+configs({ modes: ['md', 'ionic-md'], directions: ['rtl'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('label: stacked in ltr section of rtl document'), () => {
+    test('should scale the label from the start of the ltr section', async ({ page }) => {
+      /**
+       * The label should follow the direction of the nearest ancestor
+       * with a `dir` attribute, so it sits at the left edge of the item
+       * even though the document is RTL.
+       */
+      await page.setContent(
+        `
+        <div dir="ltr">
+          <ion-item>
+            <ion-label position="stacked">Stacked</ion-label>
+          </ion-item>
+        </div>
+        `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`label-item-stacked-ltr-in-rtl`));
+    });
+  });
+});

@@ -924,7 +924,7 @@ Use the first approach that applies:
 
     This outputs `transform-origin: left center` in LTR and `transform-origin: right center` in RTL. For properties without a dedicated mixin, wrap the RTL styles in the `rtl()` mixin.
 
-    Inside shadow components, these mixins output both a `:host-context([dir=rtl])` selector, which is supported by Chromium, and a `:dir(rtl)` selector, which is supported by Firefox and Safari 16.4+. In Safari 16.4 - 16.x, `:dir()` does not update when the direction changes after the page loads ([WebKit bug 257133](https://bugs.webkit.org/show_bug.cgi?id=257133)). Safari 17+ is not affected.
+    Inside shadow components, these mixins output a `:dir(rtl)` selector, which follows the nearest ancestor with a `dir` attribute and is supported by Chrome 120+, Firefox and Safari 16.4+. Browsers without `:dir()` support get a `:host-context([dir=rtl])` selector instead, which Chromium supports. It matches any ancestor with `dir="rtl"`, so in Chrome 89 - 119 an LTR section inside an RTL page still gets the RTL styles. In Safari 16.4 - 16.x, `:dir()` does not update when the direction changes after the page loads ([WebKit bug 257133](https://bugs.webkit.org/show_bug.cgi?id=257133)). Safari 17+ is not affected.
 
 3. **JavaScript**: When direction affects behavior that CSS cannot express, such as gesture math, animations or positioning, call `isRTL(this.el)` from `@utils/rtl` at the time the value is needed. Do not store the result during render.
 
