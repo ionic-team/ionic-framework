@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Prop, Watch, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import { createBadgeManager } from '@utils/badge-position';
 import type { AnchorInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
@@ -31,6 +33,7 @@ import type {
 export class TabButton implements ComponentInterface, AnchorInterface {
   private hasLoaded = false;
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLElement;
 
@@ -149,6 +152,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     this.inheritedAttributes = {
       ...inheritAttributes(this.el, ['aria-label']),
     };
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
 
     if (this.layout === undefined) {
       this.layout = config.get('tabButtonLayout', 'icon-top');
@@ -161,6 +165,8 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   connectedCallback() {
+    this.tabindexController?.init();
+
     if (this.hasLoaded) {
       this.badgeManager.init();
     }
@@ -173,6 +179,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
 
   disconnectedCallback() {
     this.badgeManager.destroy();
+    this.tabindexController?.destroy();
   }
 
   private getShape(): string | undefined {
@@ -240,6 +247,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     const theme = getIonTheme(this);
     const shape = this.getShape();
     const canActivate = this.canActivate();
+    const tabindex = this.tabindexController?.attributes.tabindex;
     const attrs = {
       download: this.download,
       href,
@@ -274,7 +282,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           role="tab"
           aria-selected={selected ? 'true' : null}
           aria-disabled={disabled ? 'true' : null}
-          tabindex={disabled ? '-1' : undefined}
+          tabindex={disabled ? '-1' : tabindex}
           {...inheritedAttributes}
         >
           <span class="button-inner">
