@@ -10,7 +10,7 @@
   --border-width: #{globals.$ion-border-size-025};
   --highlight-color-valid: #{globals.$ion-semantics-success-900};
   --highlight-color-invalid: #{globals.$ion-border-danger-default};
-  --placeholder-color: #{globals.$ion-primitives-neutral-800};
+  --placeholder-color: #{globals.$ion-text-subtlest};
   --placeholder-opacity: 1;
 
   @include globals.typography(globals.$ion-body-md-regular);
