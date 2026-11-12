@@ -7,6 +7,7 @@ import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { close } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -44,6 +45,12 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    * If `true`, the fab button will be show a close icon.
    */
   @Prop() activated = false;
+
+  /**
+   * If `true`, the fab button will animate between states, such as
+   * swapping its content for the close icon.
+   */
+  @Prop() animated = true;
 
   /**
    * If `true`, the user cannot interact with the fab button.
@@ -235,9 +242,10 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   }
 
   render() {
-    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes, type } = this;
+    const { el, disabled, color, href, activated, animated, show, translucent, size, inheritedAttributes, type } = this;
     const inList = hostContext('ion-fab-list', el);
     const mode = getIonMode(this);
+    const shouldAnimate = animated && config.getBoolean('animated', true);
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'
@@ -266,6 +274,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           'fab-button-in-list': inList,
           'fab-button-translucent-in-list': inList && translucent,
           'fab-button-close-active': activated,
+          'fab-button-animated': shouldAnimate,
           'fab-button-show': show,
           'fab-button-disabled': disabled,
           'fab-button-translucent': translucent,
