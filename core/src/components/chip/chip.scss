@@ -195,11 +195,6 @@
   color: var(--ion-chip-hue-bold-solid-default-color);
 }
 
-// Default: Activated
-:host(.chip-hue-bold.chip-fill-solid.ion-activated) {
-  background: var(--ion-chip-hue-bold-solid-activated-background, var(--ion-chip-hue-bold-solid-default-background));
-}
-
 // Default: Focus
 :host(.chip-hue-bold.chip-fill-solid.ion-focused) {
   background: var(--ion-chip-hue-bold-solid-focus-background, var(--ion-chip-hue-bold-solid-default-background));
@@ -212,18 +207,15 @@
   }
 }
 
+// Default: Activated
+:host(.chip-hue-bold.chip-fill-solid.ion-activated) {
+  background: var(--ion-chip-hue-bold-solid-activated-background, var(--ion-chip-hue-bold-solid-default-background));
+}
+
 // Colors
 :host(.chip-hue-bold.chip-fill-solid.ion-color) {
   background: var(--ion-chip-hue-bold-solid-semantic-default-background);
   color: var(--ion-chip-hue-bold-solid-semantic-default-color);
-}
-
-// Colors: Activated
-:host(.chip-hue-bold.chip-fill-solid.ion-color.ion-activated) {
-  background: var(
-    --ion-chip-hue-bold-solid-semantic-activated-background,
-    var(--ion-chip-hue-bold-solid-semantic-default-background)
-  );
 }
 
 // Colors: Focus
@@ -244,6 +236,14 @@
   }
 }
 
+// Colors: Activated
+:host(.chip-hue-bold.chip-fill-solid.ion-color.ion-activated) {
+  background: var(
+    --ion-chip-hue-bold-solid-semantic-activated-background,
+    var(--ion-chip-hue-bold-solid-semantic-default-background)
+  );
+}
+
 // Chip: Bold Outline
 // ---------------------------------------------
 
@@ -255,14 +255,6 @@
 
   background: var(--ion-chip-hue-bold-outline-default-background);
   color: var(--ion-chip-hue-bold-outline-default-color);
-}
-
-// Default: Activated
-:host(.chip-hue-bold.chip-fill-outline.ion-activated) {
-  background: var(
-    --ion-chip-hue-bold-outline-activated-background,
-    var(--ion-chip-hue-bold-outline-default-background)
-  );
 }
 
 // Default: Focus
@@ -277,6 +269,14 @@
   }
 }
 
+// Default: Activated
+:host(.chip-hue-bold.chip-fill-outline.ion-activated) {
+  background: var(
+    --ion-chip-hue-bold-outline-activated-background,
+    var(--ion-chip-hue-bold-outline-default-background)
+  );
+}
+
 // Colors
 :host(.chip-hue-bold.chip-fill-outline.ion-color) {
   border-width: var(--ion-chip-hue-bold-outline-semantic-default-border-width);
@@ -285,14 +285,6 @@
 
   background: var(--ion-chip-hue-bold-outline-semantic-default-background);
   color: var(--ion-chip-hue-bold-outline-semantic-default-color);
-}
-
-// Colors: Activated
-:host(.chip-hue-bold.chip-fill-outline.ion-color.ion-activated) {
-  background: var(
-    --ion-chip-hue-bold-outline-semantic-activated-background,
-    var(--ion-chip-hue-bold-outline-semantic-default-background)
-  );
 }
 
 // Colors: Focus
@@ -313,6 +305,14 @@
   }
 }
 
+// Colors: Activated
+:host(.chip-hue-bold.chip-fill-outline.ion-color.ion-activated) {
+  background: var(
+    --ion-chip-hue-bold-outline-semantic-activated-background,
+    var(--ion-chip-hue-bold-outline-semantic-default-background)
+  );
+}
+
 // Chip: Subtle Solid
 // ---------------------------------------------
 
@@ -320,14 +320,6 @@
 :host(.chip-hue-subtle.chip-fill-solid) {
   background: var(--ion-chip-hue-subtle-solid-default-background);
   color: var(--ion-chip-hue-subtle-solid-default-color);
-}
-
-// Default: Activated
-:host(.chip-hue-subtle.chip-fill-solid.ion-activated) {
-  background: var(
-    --ion-chip-hue-subtle-solid-activated-background,
-    var(--ion-chip-hue-subtle-solid-default-background)
-  );
 }
 
 // Default: Focus
@@ -342,18 +334,18 @@
   }
 }
 
+// Default: Activated
+:host(.chip-hue-subtle.chip-fill-solid.ion-activated) {
+  background: var(
+    --ion-chip-hue-subtle-solid-activated-background,
+    var(--ion-chip-hue-subtle-solid-default-background)
+  );
+}
+
 // Colors
 :host(.chip-hue-subtle.chip-fill-solid.ion-color) {
   background: var(--ion-chip-hue-subtle-solid-semantic-default-background);
   color: var(--ion-chip-hue-subtle-solid-semantic-default-color);
-}
-
-// Colors: Activated
-:host(.chip-hue-subtle.chip-fill-solid.ion-color.ion-activated) {
-  background: var(
-    --ion-chip-hue-subtle-solid-semantic-activated-background,
-    var(--ion-chip-hue-subtle-solid-semantic-default-background)
-  );
 }
 
 // Colors: Focus
@@ -374,6 +366,14 @@
   }
 }
 
+// Colors: Activated
+:host(.chip-hue-subtle.chip-fill-solid.ion-color.ion-activated) {
+  background: var(
+    --ion-chip-hue-subtle-solid-semantic-activated-background,
+    var(--ion-chip-hue-subtle-solid-semantic-default-background)
+  );
+}
+
 // Chip: Subtle Outline
 // ---------------------------------------------
 
@@ -385,14 +385,6 @@
 
   background: var(--ion-chip-hue-subtle-outline-default-background);
   color: var(--ion-chip-hue-subtle-outline-default-color);
-}
-
-// Default: Activated
-:host(.chip-hue-subtle.chip-fill-outline.ion-activated) {
-  background: var(
-    --ion-chip-hue-subtle-outline-activated-background,
-    var(--ion-chip-hue-subtle-outline-default-background)
-  );
 }
 
 // Default: Focus
@@ -413,6 +405,14 @@
   }
 }
 
+// Default: Activated
+:host(.chip-hue-subtle.chip-fill-outline.ion-activated) {
+  background: var(
+    --ion-chip-hue-subtle-outline-activated-background,
+    var(--ion-chip-hue-subtle-outline-default-background)
+  );
+}
+
 // Colors
 :host(.chip-hue-subtle.chip-fill-outline.ion-color) {
   border-width: var(--ion-chip-hue-subtle-outline-semantic-default-border-width);
@@ -421,14 +421,6 @@
 
   background: var(--ion-chip-hue-subtle-outline-semantic-default-background);
   color: var(--ion-chip-hue-subtle-outline-semantic-default-color);
-}
-
-// Colors: Activated
-:host(.chip-hue-subtle.chip-fill-outline.ion-color.ion-activated) {
-  background: var(
-    --ion-chip-hue-subtle-outline-semantic-activated-background,
-    var(--ion-chip-hue-subtle-outline-semantic-default-background)
-  );
 }
 
 // Colors: Focus
@@ -447,6 +439,14 @@
       var(--ion-chip-hue-subtle-outline-semantic-default-background)
     );
   }
+}
+
+// Colors: Activated
+:host(.chip-hue-subtle.chip-fill-outline.ion-color.ion-activated) {
+  background: var(
+    --ion-chip-hue-subtle-outline-semantic-activated-background,
+    var(--ion-chip-hue-subtle-outline-semantic-default-background)
+  );
 }
 
 // Chip States
