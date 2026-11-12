@@ -1,12 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-const SHAPES = ['soft', 'round', 'rectangular'];
-
-// `solid` is the default fill, so it renders without a `fill` attribute
-const FILLS = ['solid', 'outline', 'clear'];
-
-const SIZES = ['small', 'medium', 'large'];
+import { ION_BUTTON_FILLS, ION_BUTTON_SHAPES, ION_BUTTON_SIZES } from '../../button.interface';
 
 /**
  * This behavior does not vary across directions.
@@ -14,8 +9,9 @@ const SIZES = ['small', 'medium', 'large'];
 configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: shape'), () => {
     test('should not have visual regressions', async ({ page }) => {
-      const grids = SHAPES.flatMap((shape) =>
-        FILLS.map((fill) => {
+      const grids = ION_BUTTON_SHAPES.flatMap((shape) =>
+        ION_BUTTON_FILLS.map((fill) => {
+          // `solid` is the default fill, so it renders without a `fill` attribute
           const fillAttr = fill === 'solid' ? '' : ` fill="${fill}"`;
           // Clear buttons have no background, so focus them to show the shape
           const focusedAttr = fill === 'clear' ? ' class="ion-focused"' : '';
@@ -24,8 +20,8 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
 
           return `
             <div class="grid">
-              ${SIZES.map((size) => `<ion-button ${attrs(size)}>Button</ion-button>`).join('')}
-              ${SIZES.map(
+              ${ION_BUTTON_SIZES.map((size) => `<ion-button ${attrs(size)}>Button</ion-button>`).join('')}
+              ${ION_BUTTON_SIZES.map(
                 (size) => `
                 <ion-button ${attrs(size)}>
                   <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
