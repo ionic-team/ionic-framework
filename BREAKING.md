@@ -260,7 +260,7 @@ Converted `ion-label` to use [Shadow DOM](https://developer.mozilla.org/en-US/do
 
   Complex selectors inside `:not()` require Chrome 88+, Firefox 84+ and Safari 9+, and `:where()` requires Chrome 88+, Firefox 78+ and Safari 14+.
 
-  This includes CSS resets such as Tailwind's Preflight and Bootstrap's Reboot. In v8, these resets did not change the headings and paragraphs inside `ion-label`, because the label styles took precedence. In v10, the reset takes precedence, so label headings and paragraphs lose their margins and use the reset's font size and weight. For example, with Tailwind's Preflight, `md` label headings render at `16px` with no margins instead of `24px`, `16px` and `14px`, and with Bootstrap's Reboot they render at `40px`, `32px` and `28px`.
+  This includes CSS resets such as Tailwind's Preflight and Bootstrap's Reboot. In v9, these resets did not change the headings and paragraphs inside `ion-label`, because the label styles took precedence. In v10, the reset takes precedence, so label headings and paragraphs lose their margins and use the reset's font size and weight. For example, with Tailwind's Preflight, `md` label headings render at `16px` with no margins instead of `24px`, `16px` and `14px`, and with Bootstrap's Reboot they render at `40px`, `32px` and `28px`.
 
   A reset from a third-party stylesheet cannot be scoped, so restore the label styles with app styles that target the headings and paragraphs inside `ion-label`. These take precedence over the reset:
 
