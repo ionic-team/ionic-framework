@@ -493,7 +493,7 @@ When `color` is set, the text color now reads from a token instead of `--ion-col
 
 <h5 id="version-10x-router-link-foreground">Text color</h5>
 
-A bold router link now uses the `foreground` variant of its color instead of `base`, in every theme. `foreground` is darker, so the text stays readable on the page. This applies to the default link, which uses `primary`, and to a link with `color` set. To revert to the previous appearance, set the tokens for global styles or the CSS variables for component-specific styles:
+A bold router link now uses the `foreground` variant of its color instead of `base`, in every theme. In the light palette, `foreground` is a darker shade of the color, so the text stays readable on the page. This applies to the default link, which uses `primary`, and to a link with `color` set. To revert to the previous appearance, set the tokens for global styles or the CSS variables for component-specific styles:
 
 | Link | Token (global) | Value | CSS variable (component-specific) |
 |---|---|---|---|
