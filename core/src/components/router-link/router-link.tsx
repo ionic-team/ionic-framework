@@ -1,5 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import { openURL } from '@utils/helpers';
 import { createColorClasses } from '@utils/theme';
 
@@ -17,6 +19,10 @@ import type { RouterDirection } from '../router/utils/interface';
   shadow: true,
 })
 export class RouterLink implements ComponentInterface {
+  private tabindexController?: AttributeController;
+
+  @Element() el!: HTMLElement;
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -55,12 +61,25 @@ export class RouterLink implements ComponentInterface {
    */
   @Prop() target: string | undefined;
 
+  componentWillLoad() {
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
+  }
+
+  connectedCallback() {
+    this.tabindexController?.init();
+  }
+
+  disconnectedCallback() {
+    this.tabindexController?.destroy();
+  }
+
   private onClick = (ev: Event) => {
     openURL(this.href, ev, this.routerDirection, this.routerAnimation);
   };
 
   render() {
     const theme = getIonTheme(this);
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
     const attrs = {
       href: this.href,
       rel: this.rel,
@@ -74,7 +93,7 @@ export class RouterLink implements ComponentInterface {
           'ion-activatable': true,
         })}
       >
-        <a {...attrs}>
+        <a {...attrs} {...tabindexAttributes}>
           <slot></slot>
         </a>
       </Host>
