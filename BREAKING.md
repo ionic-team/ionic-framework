@@ -275,9 +275,17 @@ Converted `ion-label` to use [Shadow DOM](https://developer.mozilla.org/en-US/do
   }
   ```
 
-  The default values for each heading, paragraph and theme are in [`label.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.scss), [`label.ios.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.ios.scss) and [`label.md.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.md.scss).
+  The default values for each heading, paragraph and mode are in [`label.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.scss), [`label.ios.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.ios.scss) and [`label.md.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.md.scss).
 - The global typography styles in `typography.css` no longer apply to headings that are direct children of `ion-label`. These headings are styled by `ion-label` instead.
 - App styles that target `ion-label` directly now take precedence over the default `ion-label` styles. For example, a class that sets `color` on an `ion-label` inside of an `ion-item` previously had no effect because the label applied `var(--color)`, and it now changes the label color. Remove these styles if they are no longer wanted, or use the `--color` CSS variable to set the color of a label inside of an item.
+- Stacked and floating labels in an item with the `ion-invalid` and `ion-touched` classes no longer use the `--highlight-color-invalid` CSS variable in `md` mode. This only changes apps that set `--highlight-color-invalid` on `ion-item` or one of its ancestors. To keep the invalid color, add the following styles:
+
+  ```css
+  ion-item.md.ion-invalid.ion-touched ion-label.label-stacked:not(.ion-color),
+  ion-item.md.ion-invalid.ion-touched ion-label.label-floating:not(.ion-color) {
+    color: var(--highlight-color-invalid);
+  }
+  ```
 
 <h4 id="version-10x-radio-group">Radio Group</h4>
 
