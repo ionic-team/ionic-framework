@@ -17,6 +17,20 @@ body.backdrop-no-scroll {
   overflow: hidden;
 }
 
+// Overlay Surfaces
+// --------------------------------------------------
+
+/**
+ * Modals and popovers use the elevated panel surface. The components
+ * slotted inside them paint their own opaque surface background, which
+ * would cover the overlay's fill, so they default to the same panel
+ * surface. `:where()` keeps the specificity at zero so any consumer
+ * `--background` override on these components still applies.
+ */
+:where(html.ionic ion-modal, html.ionic ion-popover) :where(ion-content, ion-toolbar, ion-item:not(ion-card ion-item)) {
+  --background: #{globals.$ion-bg-surface-elevation-3};
+}
+
 // Modal - Card Style
 // --------------------------------------------------
 
@@ -288,6 +302,19 @@ ion-accordion > [slot="header"] .ion-accordion-toggle-icon {
 
 ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
   transition: globals.$ion-transition-time-300 transform globals.$ion-transition-curve-quick;
+}
+
+// A disabled accordion keeps its background and switches its text and
+// icons to the disabled colors. Descendant selectors cover nested
+// accordions, which are disabled with their parent.
+ion-accordion.accordion-disabled [slot="header"],
+ion-accordion.accordion-disabled [slot="content"],
+ion-accordion.accordion-disabled [slot="content"] ion-item {
+  color: globals.$ion-text-disabled;
+}
+ion-accordion.accordion-disabled ion-icon,
+ion-accordion.accordion-disabled [slot="header"] .ion-accordion-toggle-icon {
+  color: globals.$ion-icon-disabled;
 }
 
 @media (prefers-reduced-motion: reduce) {

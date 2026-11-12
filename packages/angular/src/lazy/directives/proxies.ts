@@ -260,14 +260,14 @@ export declare interface IonAvatar extends Components.IonAvatar {}
 
 
 @ProxyCmp({
-  inputs: ['mode', 'stopPropagation', 'tappable', 'theme', 'visible']
+  inputs: ['mode', 'stopPropagation', 'tappable', 'visible']
 })
 @Component({
   selector: 'ion-backdrop',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', { name: 'stopPropagation', transform: nullableBooleanAttribute }, { name: 'tappable', transform: nullableBooleanAttribute }, 'theme', { name: 'visible', transform: nullableBooleanAttribute }],
+  inputs: ['mode', { name: 'stopPropagation', transform: nullableBooleanAttribute }, { name: 'tappable', transform: nullableBooleanAttribute }, { name: 'visible', transform: nullableBooleanAttribute }],
   outputs: ['ionBackdropTap'],
   standalone: false
 })
@@ -700,7 +700,7 @@ Set `scrollEvents` to `true` to enable.
 
 
 @ProxyCmp({
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showAdjacentDays', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'endDateLabel', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'selectionMode', 'showAdjacentDays', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'startDateLabel', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
   methods: ['confirm', 'reset', 'cancel']
 })
 @Component({
@@ -708,7 +708,7 @@ Set `scrollEvents` to `true` to enable.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', { name: 'disabled', transform: nullableBooleanAttribute }, 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', { name: 'multiple', transform: nullableBooleanAttribute }, 'name', { name: 'preferWheel', transform: nullableBooleanAttribute }, 'presentation', { name: 'readonly', transform: nullableBooleanAttribute }, { name: 'showAdjacentDays', transform: nullableBooleanAttribute }, { name: 'showClearButton', transform: nullableBooleanAttribute }, { name: 'showDefaultButtons', transform: nullableBooleanAttribute }, { name: 'showDefaultTimeLabel', transform: nullableBooleanAttribute }, { name: 'showDefaultTitle', transform: nullableBooleanAttribute }, 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', { name: 'disabled', transform: nullableBooleanAttribute }, 'doneText', 'endDateLabel', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', { name: 'multiple', transform: nullableBooleanAttribute }, 'name', { name: 'preferWheel', transform: nullableBooleanAttribute }, 'presentation', { name: 'readonly', transform: nullableBooleanAttribute }, 'selectionMode', { name: 'showAdjacentDays', transform: nullableBooleanAttribute }, { name: 'showClearButton', transform: nullableBooleanAttribute }, { name: 'showDefaultButtons', transform: nullableBooleanAttribute }, { name: 'showDefaultTimeLabel', transform: nullableBooleanAttribute }, { name: 'showDefaultTitle', transform: nullableBooleanAttribute }, 'size', 'startDateLabel', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
   outputs: ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur'],
   standalone: false
 })

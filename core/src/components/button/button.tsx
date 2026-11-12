@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, State, forceUpdate, h } from '@stencil/core';
 import type { AttributeController } from '@utils/attribute-controller';
-import { createAriaAttributeController } from '@utils/attribute-controller';
+import { createAriaAttributeController, createTabindexController } from '@utils/attribute-controller';
 import { createBadgeManager } from '@utils/badge-position';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { hasShadowDom, openURL } from '@utils/helpers';
@@ -41,6 +41,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private ariaController?: AttributeController;
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLElement;
 
@@ -225,10 +226,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
      * two elements in the accessibility tree.
      */
     this.ariaController = createAriaAttributeController(this.el, () => forceUpdate(this), ['aria-disabled', 'role']);
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
   }
 
   connectedCallback() {
     this.ariaController?.init();
+    this.tabindexController?.init();
 
     if (this.hasLoaded) {
       this.badgeManager.init();
@@ -243,6 +246,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   disconnectedCallback() {
     this.ariaController?.destroy();
     this.badgeManager.destroy();
+    this.tabindexController?.destroy();
   }
 
   private get hasIconOnly() {
@@ -404,7 +408,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     const mode = getIonMode(this);
     const size = this.getSize();
     const shape = this.getShape();
-    const inheritedAttributes = this.ariaController?.attributes ?? {};
+    const inheritedAttributes = {
+      ...this.ariaController?.attributes,
+      ...this.tabindexController?.attributes,
+    };
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'
