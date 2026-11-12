@@ -22,6 +22,14 @@ const isThemeSupported = (theme: string) => ['ios', 'md', 'ionic'].includes(them
 const isIonicElement = (elm: HTMLElement) => elm.tagName?.startsWith('ION-');
 
 /**
+ * App config keys that are deprecated in favor of the theme config.
+ * A value set by the application for one of these keys takes
+ * precedence over the value from the theme until the key is removed.
+ */
+// TODO(FW-7974): remove rippleEffect in v11
+const DEPRECATED_THEME_CONFIG_KEYS: (keyof IonicConfig)[] = ['rippleEffect'];
+
+/**
  * Returns the mode value of the element reference or the closest
  * parent with a valid mode. If no mode is set, then fallback
  * to the default mode.
@@ -177,38 +185,37 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   }
 
   /**
-   * Apply any global config values from the resolved theme
-   * excluding component-specific overrides. The resolved theme
-   * is the base theme merged with the custom theme, so a value
-   * from the custom theme takes precedence over the base theme.
-   * The theme only provides defaults, so any value set by the
-   * application takes precedence over the value from the theme.
+   * Apply any global config values from the custom theme
+   * excluding component-specific overrides.
    */
-  const resolvedTheme: DefaultTheme | undefined = config.get('customTheme');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { components, ...themeGlobalConfig } = resolvedTheme?.config || {};
+  const { components, ...customGlobalConfig } = customTheme?.config || {};
 
-  const isPlainObject = (value: unknown): value is Record<string, unknown> =>
-    typeof value === 'object' && value !== null && !Array.isArray(value);
-
-  Object.entries(themeGlobalConfig).forEach(([key, value]) => {
+  Object.entries(customGlobalConfig).forEach(([key, value]) => {
     const configKey = key as keyof IonicConfig;
-    const appValue = config.get(configKey);
 
-    // The theme value is used when the application has not set one.
-    if (appValue === undefined) {
-      config.set(configKey, value);
+    /**
+     * A deprecated app config key keeps the value set by the
+     * application, so apps that set it continue to work until
+     * the key is removed.
+     */
+    if (DEPRECATED_THEME_CONFIG_KEYS.includes(configKey) && config.get(configKey) !== undefined) {
+      return;
+    }
+
+    // For object-based config values, we merge with existing settings.
+    if (value !== null && typeof value === 'object') {
+      const existingConfig = config.get(configKey, {});
+      config.set(configKey, { ...existingConfig, ...value });
       return;
     }
 
     /**
-     * For object-based config values, such as 'screenBreakpoints',
-     * the theme fills in the keys the application has not set.
-     * Any other value set by the application is kept as is.
+     * For primitive values (boolean, string, number), we set the
+     * value directly.
+     * This covers global flags like 'rippleEffect' or 'animated'.
      */
-    if (isPlainObject(value) && isPlainObject(appValue)) {
-      config.set(configKey, { ...value, ...appValue });
-    }
+    config.set(configKey, value);
   });
 
   /**

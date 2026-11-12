@@ -17,6 +17,7 @@ export const defaultTheme: DefaultTheme = {
 
   config: {
     formHighlight: false,
+    rippleEffect: false,
   },
 
   spacing: {
