@@ -92,6 +92,8 @@ The following breaking changes apply to `ion-button`:
      --ion-button-hue-bold-solid-default-color: var(--ion-toolbar-background, var(--ion-background-color, #fff));
      --ion-button-hue-bold-solid-default-box-shadow: none;
      --ion-button-hue-bold-solid-activated-box-shadow: none;
+     --ion-button-hue-bold-solid-hover-box-shadow: none;
+     --ion-button-hue-bold-solid-focus-box-shadow: none;
      --ion-button-hue-bold-solid-hover-background: linear-gradient(rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.08), rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.08)) var(--ion-button-hue-bold-solid-default-background);
      --ion-button-hue-bold-solid-focus-background: linear-gradient(rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24), rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24)) var(--ion-button-hue-bold-solid-default-background);
      --ion-button-hue-bold-solid-hover-color: var(--ion-button-hue-bold-solid-default-color);
@@ -112,11 +114,31 @@ The following breaking changes apply to `ion-button`:
      --ion-button-hue-bold-clear-focus-background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
    }
    ~~~
-8. CSS variables have been replaced. <sup>[8](#version-10x-button-replaced-css-variables)</sup>
-9. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[9](#version-10x-button-padding-variables)</sup>
-10. The fill, size, shape and expand classes have been renamed. <sup>[10](#version-10x-button-renamed-classes)</sup>
-11. The `default` size has been deprecated. <sup>[11](#version-10x-button-deprecated-default-size)</sup>
-12. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[12](#version-10x-button-theme-classes)</sup>
+8. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[8](#version-10x-button-md-material-design-2)</sup>
+9. CSS variables have been replaced. <sup>[9](#version-10x-button-replaced-css-variables)</sup>
+10. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[10](#version-10x-button-padding-variables)</sup>
+11. The fill, size, shape and expand classes have been renamed. <sup>[11](#version-10x-button-renamed-classes)</sup>
+12. The `default` size has been deprecated. <sup>[12](#version-10x-button-deprecated-default-size)</sup>
+13. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[13](#version-10x-button-theme-classes)</sup>
+
+<h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
+
+The `md` button now uses the Material Design 2 values below. To keep a previous value, set the token for global styles, or the matching `--ion-button-*` CSS variable for component-specific styles. Replace `<fill>` with `solid`, `outline` or `clear`, and `<size>` with `small`, `medium` or `large`.
+
+| Property | Previous | New | Token |
+|---|---|---|---|
+| Padding at the default size | `1.1em` | `1.1429em` (`16px` at the default size) | `IonButton.size.medium.padding.start` and `.end` |
+| Min width at the default size | none | `64px` | `IonButton.size.medium.min.width` |
+| Letter spacing | `0.06em` | `0.0893em` | `IonButton.letter.spacing` |
+| Icon size | `1.35em` | `1.2857em` (`18px` at the default size) | `IonButton.size.<size>.icon.font.size` |
+| Gap between icon and label | `0.3em` | `0.4444em` (`8px` at the default size) | `IonButton.size.<size>.icon.leading.margin.end` and `.trailing.margin.start` |
+| Spinner in a button | the spinner's own size (`28px` by default) | `1.2857em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
+| Outline border | `2px`, the button's color | `1px`, the text color at `12%` | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
+| Solid elevation on hover and focus | the resting elevation | elevation 4 | `IonButton.hue.bold.solid.hover.box.shadow` and `.focus.box.shadow` |
+| Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` (`.semantic.disabled.color` and `.background` with a `color`) |
+| Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` (`.semantic.rippleEffect.opacity` with a `color`) |
+
+Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width, and inside a toolbar no elevation on hover or focus.
 
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 

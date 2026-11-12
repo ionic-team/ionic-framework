@@ -338,6 +338,8 @@ type Components = {
     [key: string]: any;
 
     /** In any toolbar */
+    IonButton?: IonButtonRecipe;
+
     IonButtons?: {
       IonButton?: IonButtonRecipe;
     };

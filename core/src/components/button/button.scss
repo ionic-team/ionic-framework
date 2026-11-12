@@ -114,10 +114,14 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
 @each $size in $sizes {
   :host(.button-size-#{$size}) {
-    min-width: var(--ion-button-size-#{$size}-min-width);
     min-height: var(--ion-button-size-#{$size}-min-height);
 
     font-size: var(--ion-button-size-#{$size}-font-size);
+  }
+
+  // Buttons in `ion-buttons` fit their content, so an icon without `slot="icon-only"` doesn't widen them
+  :host(.button-size-#{$size}:not(.in-buttons)) {
+    min-width: var(--ion-button-size-#{$size}-min-width);
   }
 
   :host(.button-size-#{$size}) .button-native {
@@ -197,8 +201,8 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 }
 
 /**
- * Only the ionic theme sizes and spaces a slotted spinner. The other
- * themes fall back to the spinner's own size and no margin.
+ * A theme can size a slotted spinner for each button size. Without
+ * those tokens, the spinner keeps its own size.
  */
 @each $size in $sizes {
   @each $spinner-size in $spinner-sizes {
@@ -326,6 +330,8 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-focused) .button-native {
     background: var(#{$token}-focus-background);
+
+    box-shadow: var(#{$token}-focus-box-shadow);
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-color.ion-focused) .button-native {
@@ -350,6 +356,8 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
     :host(.button-hue-bold.button-fill-#{$fill}:hover) .button-native {
       background: var(#{$token}-hover-background);
+
+      box-shadow: var(#{$token}-hover-box-shadow);
     }
 
     :host(.button-hue-bold.button-fill-#{$fill}.ion-color:hover) .button-native {
@@ -389,15 +397,29 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
   $token: --ion-button-hue-bold-#{$fill};
 
   :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) {
+    // Keeps the default color when the theme doesn't set one
+    color: var(#{$token}-disabled-color, var(#{$token}-default-color));
+
     opacity: var(#{$token}-disabled-opacity);
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) .button-native {
+    // Keeps the default border color when the theme doesn't set one
+    border-color: var(#{$token}-disabled-border-color, var(#{$token}-default-border-color));
+
     background: var(#{$token}-disabled-background);
+
+    box-shadow: var(#{$token}-disabled-box-shadow);
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-color.button-disabled) .button-native {
+    // Keeps the default border color when the theme doesn't set one
+    border-color: var(#{$token}-semantic-disabled-border-color, var(#{$token}-semantic-default-border-color));
+
     background: var(#{$token}-semantic-disabled-background);
+
+    // Keeps the default color when the theme doesn't set one
+    color: var(#{$token}-semantic-disabled-color, var(#{$token}-semantic-default-color));
   }
 }
 
