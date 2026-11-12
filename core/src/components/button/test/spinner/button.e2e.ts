@@ -1,6 +1,9 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+/**
+ * This behavior does not vary across directions.
+ */
 configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('button: spinner'), () => {
     test('should not have visual regressions', async ({ page }) => {

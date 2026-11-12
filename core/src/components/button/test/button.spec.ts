@@ -212,6 +212,17 @@ describe('button: hue', () => {
 
     expect(page.root!.classList.contains('button-hue-subtle')).toBe(true);
   });
+
+  it('should use the hue when it is set', async () => {
+    config.reset({ customTheme: { config: { components: { IonButton: { hue: 'subtle' } } } } });
+
+    const page = await newSpecPage({
+      components: [Button],
+      html: `<ion-button hue="bold">Button</ion-button>`,
+    });
+
+    expect(page.root!.classList.contains('button-hue-bold')).toBe(true);
+  });
 });
 
 describe('button: ripple effect', () => {

@@ -5,6 +5,9 @@ import { ION_BUTTON_FILLS } from '../../button.interface';
 
 const STATES = ['activated', 'focused'];
 
+/**
+ * This behavior does not vary across directions.
+ */
 configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: states'), () => {
     STATES.forEach((state) => {

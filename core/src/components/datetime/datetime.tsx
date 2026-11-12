@@ -1959,10 +1959,12 @@ export class Datetime implements ComponentInterface {
               ['has-clear-button']: this.showClearButton,
             }}
           >
+            {/* The datetime styles its buttons through the `bold` hue tokens, so a hue from the config can't restyle them */}
             <slot name="buttons">
               {showDefaultButtons && (
                 <ion-button
                   id="cancel-button"
+                  hue="bold"
                   color={this.color}
                   onClick={() => this.cancel(true)}
                   disabled={isButtonDisabled}
@@ -1974,6 +1976,7 @@ export class Datetime implements ComponentInterface {
                 {showClearButton && (
                   <ion-button
                     id="clear-button"
+                    hue="bold"
                     color={this.color}
                     onClick={() => clearButtonClick()}
                     disabled={isButtonDisabled}
@@ -1984,6 +1987,7 @@ export class Datetime implements ComponentInterface {
                 {showDefaultButtons && (
                   <ion-button
                     id="confirm-button"
+                    hue="bold"
                     fill={confirmFill}
                     color={this.color}
                     onClick={() => this.confirm(true)}
@@ -2595,8 +2599,10 @@ export class Datetime implements ComponentInterface {
             </button>
           </div>
 
+          {/* The datetime styles its buttons through the `bold` hue tokens, so a hue from the config can't restyle them */}
           <div class="calendar-next-prev">
             <ion-button
+              hue="bold"
               aria-label="Previous month"
               disabled={prevMonthDisabled}
               onClick={() => this.prevMonth()}
@@ -2612,6 +2618,7 @@ export class Datetime implements ComponentInterface {
               ></ion-icon>
             </ion-button>
             <ion-button
+              hue="bold"
               aria-label="Next month"
               disabled={nextMonthDisabled}
               onClick={() => this.nextMonth()}
