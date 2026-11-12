@@ -114,8 +114,8 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
         ['', 'primary'].forEach((color) => {
           test(`should show the activated background when pressing a hovered ${hue} ${fill} chip${
             color ? ` with a color` : ''
-          }`, async ({ page, browserName }) => {
-            test.skip(browserName === 'firefox', 'Headless Firefox reports no hover capability');
+          }`, async ({ page, skip }) => {
+            skip.browser('firefox', 'Headless Firefox reports no hover capability');
 
             const prefix = `--ion-chip-hue-${hue}-${fill}${color ? '-semantic' : ''}`;
 
