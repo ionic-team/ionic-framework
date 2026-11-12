@@ -1,3 +1,4 @@
+import type { IonBackdropRecipe } from '../components/backdrop/backdrop.interface';
 import type { IonBadgeConfig, IonBadgeRecipe } from '../components/badge/badge.interface';
 import type { IonButtonConfig, IonButtonRecipe } from '../components/button/button.interface';
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interface';
@@ -299,6 +300,7 @@ export type DefaultTheme = BaseTheme & {
 
 type Components = {
   IonAvatar?: any;
+  IonBackdrop?: IonBackdropRecipe;
   IonBadge?: IonBadgeRecipe;
   IonButton?: IonButtonRecipe;
   IonChip?: IonChipRecipe;
