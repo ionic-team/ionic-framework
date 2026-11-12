@@ -6,6 +6,9 @@
     "@ionic/react-router": {
       "react-router": "$react-router",
       "react-router-dom": "$react-router-dom"
+    },
+    "serve": {
+      "compression": "^1.8.2"
     }
   },
   "dependencies": {
@@ -63,7 +66,7 @@
     "cypress-terminal-report": "^5.3.0",
     "serve": "^14.0.1",
     "vite": "^5.0.0",
-    "wait-on": "^6.0.0"
+    "wait-on": "^9.5.1"
   },
   "description": "An Ionic project",
   "engines": {

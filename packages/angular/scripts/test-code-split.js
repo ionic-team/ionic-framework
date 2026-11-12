@@ -1,8 +1,8 @@
 /**
  * Validates that per-component imports let a bundler code-split Ionic components.
- * Inspects `www/stats.json`, the esbuild metafile, to see which output chunk a
- * component landed in. `ion-toggle` is used by only the home page, so it
- * should not be bundled with the landing page.
+ * Inspects `www/browser-stats.json`, the esbuild metafile, to see which output
+ * chunk a component landed in. `ion-toggle` is used by only the home page, so
+ * it should not be bundled with the landing page.
  *
  * Build core and the angular package before running this test.
  */
@@ -12,7 +12,7 @@ const path = require('path');
 const { execSync } = require('node:child_process');
 
 const PROJECT_DIR = path.join(__dirname, '../test/code-split');
-const STATS_FILE = path.join(PROJECT_DIR, 'www/stats.json');
+const STATS_FILE = path.join(PROJECT_DIR, 'www/browser-stats.json');
 
 
 function collectChunks(stats, startChunkName, chunkSet)
