@@ -468,7 +468,7 @@ Remove any instances that target the mode classes: `ion-note.md`, `ion-note.ios`
 
 In the `ios` theme, the note now matches the detail text of an iOS list row, in accordance with the iOS guidelines:
 
-- The font size is now `17px` instead of `16px`. To revert to the previous appearance, set `IonNote.font.size` for global styles, or `--ion-note-font-size` for component-specific styles.
+- The font size is now `17px` instead of `16px`. To revert to the previous appearance, set `IonNote.font.size` to `max(14px, 1rem)` for global styles, or `--ion-note-font-size` for component-specific styles.
 - The line height is now `1.294` (`22px` at `17px`) instead of inherited. To revert to the previous appearance, set `IonNote.line.height` to `inherit` for global styles, or `--ion-note-line-height` for component-specific styles.
 - The letter spacing is now `-0.0235em` (`-0.4px` at `17px`) instead of inherited. To revert to the previous appearance, set `IonNote.letterSpacing` to `inherit` for global styles, or `--ion-note-letter-spacing` for component-specific styles.
 
