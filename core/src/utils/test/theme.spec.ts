@@ -910,6 +910,28 @@ describe('generateComponentsThemeCSS', () => {
     expect(css).toBe(expectedCSS);
   });
 
+  it('should add the outer hosts of a nested host to the selectors', () => {
+    const components = {
+      IonBackdrop: {
+        background: 'red',
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-backdrop,
+      ion-menu,
+      ion-modal,
+      ion-popover,
+      ion-datetime {
+        --ion-backdrop-background: red;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
   it('should generate child blocks after every component block', () => {
     const components = {
       IonButtons: {
