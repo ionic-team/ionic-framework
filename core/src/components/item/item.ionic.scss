@@ -77,12 +77,17 @@ slot[name="end"]::slotted(*) {
   content: "";
 }
 
-// Ionic Floating Label
+// Ionic Stacked & Floating Labels
 // --------------------------------------------------
 
 :host(.ion-focused) ::slotted(ion-label.label-floating),
 :host(.item-has-value) ::slotted(ion-label.label-floating) {
   @include globals.transform(translateY(50%), scale(0.75));
+}
+
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked:not(.ion-color)),
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating:not(.ion-color)) {
+  color: globals.ion-color(primary, base);
 }
 
 // Ionic Item Lines

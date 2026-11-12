@@ -46,10 +46,11 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * Only md changes the color of a stacked or floating
- * label when its item is focused.
+ * iOS does not change the color of a stacked or floating
+ * label when its item is focused. It is included to verify
+ * that the label keeps its default color.
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('label: in focused item'), () => {
     test('should keep the label color when set in a focused item', async ({ page }) => {
       await page.setContent(
