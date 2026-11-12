@@ -3344,6 +3344,10 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
+          * Set to `"bold"` for a router link with vibrant, bold colors or to `"subtle"` for a router link with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -3364,10 +3368,6 @@ export namespace Components {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target": string | undefined;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonRouterOutlet {
         /**
@@ -9260,6 +9260,10 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
+          * Set to `"bold"` for a router link with vibrant, bold colors or to `"subtle"` for a router link with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -9280,10 +9284,6 @@ declare namespace LocalJSX {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target"?: string | undefined;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonRouterOutlet {
         /**
@@ -11011,6 +11011,7 @@ declare namespace LocalJSX {
     interface IonRouterLinkAttributes {
         "color": Color;
         "href": string | undefined;
+        "hue": Hue;
         "rel": string | undefined;
         "routerDirection": RouterDirection;
         "target": string | undefined;
