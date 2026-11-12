@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "9.0.10",
+  "version": "9.0.11",
   "description": "Base components for Ionic",
   "engines": {
     "node": ">= 16"
@@ -71,7 +71,7 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.13.0",
+    "@axe-core/playwright": "^4.14.0",
     "@capacitor/core": "^8.0.0",
     "@capacitor/haptics": "^8.0.0",
     "@capacitor/keyboard": "^8.0.0",
@@ -80,11 +80,11 @@
     "@eslint/js": "^9.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@playwright/test": "^1.64.0",
+    "@playwright/test": "^1.64.1",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
-    "@stencil/angular-output-target": "^1.5.0",
-    "@stencil/react-output-target": "^1.6.2",
+    "@stencil/angular-output-target": "^1.5.3",
+    "@stencil/react-output-target": "^1.7.0",
     "@stencil/sass": "^3.0.9",
     "@stencil/vue-output-target": "0.14.7",
     "@types/jest": "^29.5.6",
@@ -104,7 +104,7 @@
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
     "outsystems-design-tokens": "^2.6.0",
-    "playwright-core": "^1.64.0",
+    "playwright-core": "^1.64.1",
     "prettier": "^2.8.8",
     "rollup": "^2.26.4",
     "sass": "^1.33.0",

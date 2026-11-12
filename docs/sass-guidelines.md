@@ -199,7 +199,6 @@ $text-color-rgb: var(--ion-text-color-rgb, $text-color-rgb-value);
 ```scss
 // ionic.theme.default.ios.scss
 
-$backdrop-ios-color: var(--ion-backdrop-color, #000);
 $overlay-ios-background-color: var(
   --ion-overlay-background-color,
   var(--ion-background-color-step-100, #f9f9f9)
