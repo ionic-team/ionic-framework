@@ -46,16 +46,22 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
             <div>
               <ion-router-link href="#" class="ion-focused">Default</ion-router-link>
               <ion-router-link href="#" class="ion-focused" color="danger">Danger</ion-router-link>
+              <ion-router-link href="#" class="ion-focused" hue="subtle">Subtle</ion-router-link>
+              <ion-router-link href="#" class="ion-focused" hue="subtle" color="danger">Subtle danger</ion-router-link>
             </div>
 
             <div>
               <ion-router-link href="#" class="ion-activated">Default</ion-router-link>
               <ion-router-link href="#" class="ion-activated" color="danger">Danger</ion-router-link>
+              <ion-router-link href="#" class="ion-activated" hue="subtle">Subtle</ion-router-link>
+              <ion-router-link href="#" class="ion-activated" hue="subtle" color="danger">Subtle danger</ion-router-link>
             </div>
 
             <div>
               <ion-router-link href="">Default</ion-router-link>
               <ion-router-link href="" color="danger">Danger</ion-router-link>
+              <ion-router-link href="" hue="subtle">Subtle</ion-router-link>
+              <ion-router-link href="" hue="subtle" color="danger">Subtle danger</ion-router-link>
             </div>
           </div>
         `,
