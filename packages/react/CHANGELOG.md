@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.11](https://github.com/ionic-team/ionic-framework/compare/v9.0.10...v9.0.11) (2026-11-11)
+
+### Bug Fixes
+
+* **react-router:** show page that mounts during a navigation ([#31718](https://github.com/ionic-team/ionic-framework/issues/31718)) ([c6680bb](https://github.com/ionic-team/ionic-framework/commit/c6680bb8d22faae7a27c93ba0b73f6a44096ca4e)), closes [#31696](https://github.com/ionic-team/ionic-framework/issues/31696) [#28878](https://github.com/ionic-team/ionic-framework/issues/28878)
+
+
 ## [9.0.10](https://github.com/ionic-team/ionic-framework/compare/v9.0.9...v9.0.10) (2026-10-28)
 
 **Note:** Version bump only for package @ionic/react
