@@ -942,8 +942,16 @@ export const defaultTheme: DefaultTheme = {
         },
 
         subtle: {
+          activated: {
+            color: '#09358a',
+          },
+
           default: {
             color: ionColor('primary', 'foreground', { subtle: true }),
+          },
+
+          visited: {
+            color: '#09358a',
           },
 
           semantic: {
