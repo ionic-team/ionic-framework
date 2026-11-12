@@ -1502,11 +1502,6 @@ ion-item-divider,css-prop,--ion-item-divider-label-margin-start
 ion-item-divider,css-prop,--ion-item-divider-label-margin-top
 ion-item-divider,css-prop,--ion-item-divider-min-height
 ion-item-divider,css-prop,--ion-item-divider-note-align-self
-ion-item-divider,css-prop,--ion-item-divider-note-font-size
-ion-item-divider,css-prop,--ion-item-divider-note-margin-bottom
-ion-item-divider,css-prop,--ion-item-divider-note-margin-end
-ion-item-divider,css-prop,--ion-item-divider-note-margin-start
-ion-item-divider,css-prop,--ion-item-divider-note-margin-top
 ion-item-divider,css-prop,--ion-item-divider-note-padding-bottom
 ion-item-divider,css-prop,--ion-item-divider-note-padding-end
 ion-item-divider,css-prop,--ion-item-divider-note-padding-start
