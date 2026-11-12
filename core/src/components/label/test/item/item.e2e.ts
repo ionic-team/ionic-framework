@@ -74,6 +74,10 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
   });
 });
 
+/**
+ * The ios, md and ionic themes each float the label
+ * with their own item styles, so this runs in all three.
+ */
 configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('label: floating in item with value'), () => {
     test('should float the label when the item has a value', async ({ page }) => {
