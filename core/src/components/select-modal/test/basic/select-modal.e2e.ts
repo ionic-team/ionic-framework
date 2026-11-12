@@ -128,3 +128,23 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
     });
   });
 });
+
+/**
+ * Verifies that a non-zero safe-area-top does not add
+ * extra padding above the toolbar in the centered select modal.
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select-modal: safe-area'), () => {
+    let selectModalPage: SelectModalPage;
+
+    test.beforeEach(async ({ page }) => {
+      selectModalPage = new SelectModalPage(page);
+    });
+
+    test('should not have extra top padding with non-zero safe-area-top', async ({ page }) => {
+      await page.addStyleTag({ content: ':root { --ion-safe-area-top: 80px; }' });
+      await selectModalPage.setup(config, checkedOptions, false);
+      await selectModalPage.screenshot(screenshot, 'select-modal-safe-area-top-diff');
+    });
+  });
+});
