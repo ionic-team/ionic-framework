@@ -355,7 +355,7 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'contrast'),
 
               font: {
-                weight: 'var(--ion-font-weight-medium)',
+                weight: 'var(--ion-font-weight-normal)',
               },
             },
 
@@ -375,9 +375,8 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: ionColor('primary', 'base'),
-
-              opacity: '0.5',
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
             },
 
             // Any of the semantic colors like primary, secondary, etc.
@@ -403,7 +402,8 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: currentColor('base'),
+                background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
               },
             },
           },
@@ -426,7 +426,7 @@ export const defaultTheme: DefaultTheme = {
               },
 
               font: {
-                weight: 'var(--ion-font-weight-medium)',
+                weight: 'var(--ion-font-weight-normal)',
               },
             },
 
@@ -450,7 +450,11 @@ export const defaultTheme: DefaultTheme = {
             disabled: {
               background: 'transparent',
 
-              opacity: '0.5',
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
             },
 
             semantic: {
@@ -480,6 +484,12 @@ export const defaultTheme: DefaultTheme = {
 
               disabled: {
                 background: 'transparent',
+
+                border: {
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+                },
+
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
               },
             },
           },
@@ -521,8 +531,7 @@ export const defaultTheme: DefaultTheme = {
 
             disabled: {
               background: 'transparent',
-
-              opacity: '0.5',
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
             },
 
             semantic: {
@@ -548,6 +557,7 @@ export const defaultTheme: DefaultTheme = {
 
               disabled: {
                 background: 'transparent',
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
               },
             },
           },
@@ -558,40 +568,40 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           min: {
-            height: 'clamp(23px, 2.16em, 54px)',
+            height: 'clamp(23px, 1.8667em, 54px)',
           },
 
           padding: {
             top: 'var(--ion-spacing-xxs)',
-            end: '0.77em',
+            end: '0.6667em',
             bottom: 'var(--ion-spacing-xxs)',
-            start: '0.77em',
+            start: '0.6667em',
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 13)}, 39px)`,
+            size: `min(${dynamicFont(global.root, 15)}, 45px)`,
           },
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2em',
             },
 
             leading: {
               margin: {
                 top: '0',
-                end: '0.3em',
+                end: '0.2222em',
                 bottom: '0',
-                start: '-0.3em',
+                start: '0',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2em',
+                end: '0',
                 bottom: '0',
-                start: '0.3em',
+                start: '0.2222em',
               },
             },
           },
@@ -610,7 +620,37 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 12px, default font size: 17px, max font size: 40px
                  */
-                size: 'clamp(12.1394px, 1.308125em, 40.1856px)',
+                size: 'clamp(12.1394px, 1.1333em, 40.1856px)',
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.6857em',
+                width: '0.6857em',
+              },
+
+              small: {
+                height: '0.8571em',
+                width: '0.8571em',
+              },
+
+              medium: {
+                height: '1.2em',
+                width: '1.2em',
+              },
+
+              large: {
+                height: '1.5429em',
+                width: '1.5429em',
+              },
+
+              xlarge: {
+                height: '2.0571em',
+                width: '2.0571em',
               },
             },
           },
@@ -618,40 +658,40 @@ export const defaultTheme: DefaultTheme = {
 
         medium: {
           min: {
-            height: 'clamp(30px, 2.125em, 60px)',
+            height: 'clamp(30px, 2.2667em, 60px)',
           },
 
           padding: {
             top: '7px',
-            end: '0.875em',
+            end: '0.9333em',
             bottom: '7px',
-            start: '0.875em',
+            start: '0.9333em',
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 16)}, 48px)`,
+            size: `min(${dynamicFont(global.root, 15)}, 45px)`,
           },
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2em',
             },
 
             leading: {
               margin: {
                 top: '0',
-                end: '0.3em',
+                end: '0.2222em',
                 bottom: '0',
-                start: '-0.3em',
+                start: '0',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2em',
+                end: '0',
                 bottom: '0',
-                start: '0.3em',
+                start: '0.2222em',
               },
             },
           },
@@ -670,7 +710,37 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
                  */
-                size: 'clamp(15.12px, 1.125em, 43.02px)',
+                size: 'clamp(15.12px, 1.2em, 43.02px)',
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.6857em',
+                width: '0.6857em',
+              },
+
+              small: {
+                height: '0.8571em',
+                width: '0.8571em',
+              },
+
+              medium: {
+                height: '1.2em',
+                width: '1.2em',
+              },
+
+              large: {
+                height: '1.5429em',
+                width: '1.5429em',
+              },
+
+              xlarge: {
+                height: '2.0571em',
+                width: '2.0571em',
               },
             },
           },
@@ -678,40 +748,40 @@ export const defaultTheme: DefaultTheme = {
 
         large: {
           min: {
-            height: 'clamp(46px, 2.5em, 78px)',
+            height: 'clamp(46px, 2.9412em, 78px)',
           },
 
           padding: {
             top: '14px',
-            end: '1em',
+            end: '1.1765em',
             bottom: '14px',
-            start: '1em',
+            start: '1.1765em',
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 20)}, 60px)`,
+            size: `min(${dynamicFont(global.root, 17)}, 51px)`,
           },
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2em',
             },
 
             leading: {
               margin: {
                 top: '0',
-                end: '0.3em',
+                end: '0.2222em',
                 bottom: '0',
-                start: '-0.3em',
+                start: '0',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2em',
+                end: '0',
                 bottom: '0',
-                start: '0.3em',
+                start: '0.2222em',
               },
             },
           },
@@ -730,7 +800,37 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
                  */
-                size: 'clamp(15.12px, 0.9em, 43.056px)',
+                size: 'clamp(15.12px, 1.0588em, 43.056px)',
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.6857em',
+                width: '0.6857em',
+              },
+
+              small: {
+                height: '0.8571em',
+                width: '0.8571em',
+              },
+
+              medium: {
+                height: '1.2em',
+                width: '1.2em',
+              },
+
+              large: {
+                height: '1.5429em',
+                width: '1.5429em',
+              },
+
+              xlarge: {
+                height: '2.0571em',
+                width: '2.0571em',
               },
             },
           },
@@ -825,6 +925,69 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonToolbar: {
+      // In a toolbar, a disabled button keeps its colors and fades
+      IonButton: {
+        hue: {
+          bold: {
+            solid: {
+              disabled: {
+                background: 'var(--ion-button-hue-bold-solid-default-background)',
+                color: 'var(--ion-button-hue-bold-solid-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  background: 'var(--ion-button-hue-bold-solid-semantic-default-background)',
+                  color: 'var(--ion-button-hue-bold-solid-semantic-default-color)',
+                },
+              },
+            },
+
+            outline: {
+              disabled: {
+                background: 'var(--ion-button-hue-bold-outline-default-background)',
+
+                border: {
+                  color: 'var(--ion-button-hue-bold-outline-default-border-color)',
+                },
+
+                color: 'var(--ion-button-hue-bold-outline-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  background: 'var(--ion-button-hue-bold-outline-semantic-default-background)',
+
+                  border: {
+                    color: 'var(--ion-button-hue-bold-outline-semantic-default-border-color)',
+                  },
+
+                  color: 'var(--ion-button-hue-bold-outline-semantic-default-color)',
+                },
+              },
+            },
+
+            clear: {
+              disabled: {
+                color: 'var(--ion-button-hue-bold-clear-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  color: 'var(--ion-button-hue-bold-clear-semantic-default-color)',
+                },
+              },
+            },
+          },
+        },
+      },
+
       IonButtons: {
         IonButton: {
           // Buttons in a toolbar use a larger font and a regular weight
@@ -980,10 +1143,6 @@ export const defaultTheme: DefaultTheme = {
                   },
 
                   hover: {
-                    background: 'transparent',
-                  },
-
-                  activated: {
                     background: 'transparent',
                   },
                 },
