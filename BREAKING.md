@@ -32,6 +32,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Menu Toggle](#version-10x-menu-toggle)
   - [Radio Group](#version-10x-radio-group)
   - [Ripple Effect](#version-10x-ripple-effect)
+  - [Router Link](#version-10x-router-link)
   - [Row](#version-10x-row)
   - [Skeleton Text](#version-10x-skeleton-text)
   - [Spinner](#version-10x-spinner)
@@ -481,6 +482,55 @@ The ripple fade opacity is now part of the centralized Ionic Theming system. Use
 <h5 id="version-10x-ripple-effect-mode-classes">Mode classes</h5>
 
 Remove any instances that target the mode classes: `ion-ripple-effect.md`, `ion-ripple-effect.ios`.
+
+<h4 id="version-10x-router-link">Router Link</h4>
+
+The following breaking changes apply to `ion-router-link`:
+
+1. `--color` has been replaced. <sup>[1](#version-10x-router-link-replaced-css-variables)</sup>
+2. `--background` has been removed. <sup>[2](#version-10x-router-link-removed-css-variables)</sup>
+3. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[3](#version-10x-router-link-hue)</sup>
+4. The text color now uses the color's `foreground` variant instead of `base`. <sup>[4](#version-10x-router-link-foreground)</sup>
+5. Mode classes (`ion-router-link.md`, `ion-router-link.ios`) are no longer supported. <sup>[5](#version-10x-router-link-mode-classes)</sup>
+
+<h5 id="version-10x-router-link-replaced-css-variables">Replaced CSS variables</h5>
+
+Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--color` | `IonRouterLink.hue.bold.default.color` | `--ion-router-link-hue-bold-default-color` |
+
+> [!NOTE]
+> `--color` only applied when `color` was not set. A router link with `hue="subtle"` reads `--ion-router-link-hue-subtle-default-color` instead.
+
+<h5 id="version-10x-router-link-removed-css-variables">Removed CSS variables</h5>
+
+`--background` has been removed, since a router link has no background of its own. To give a link a background, set `background` on `ion-router-link` directly.
+
+<h5 id="version-10x-router-link-hue">New <code>hue</code> property and color tokens</h5>
+
+A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`.
+
+When `color` is set, the text color now reads from a token instead of `--ion-color-base` directly:
+
+| Hue | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| `bold` | `IonRouterLink.hue.bold.semantic.default.color` | `--ion-router-link-hue-bold-semantic-default-color` |
+| `subtle` | `IonRouterLink.hue.subtle.semantic.default.color` | `--ion-router-link-hue-subtle-semantic-default-color` |
+
+<h5 id="version-10x-router-link-foreground">Text color</h5>
+
+A bold router link now uses the `foreground` variant of its color instead of `base`, in every theme. In the light palette, `foreground` is a darker shade of the color, so the text stays readable on the page. This applies to the default link, which uses `primary`, and to a link with `color` set. To revert to the previous appearance, set the tokens for global styles or the CSS variables for component-specific styles:
+
+| Link | Token (global) | Value | CSS variable (component-specific) |
+|---|---|---|---|
+| Default | `IonRouterLink.hue.bold.default.color` | `var(--ion-color-primary)` | `--ion-router-link-hue-bold-default-color` |
+| `color` set | `IonRouterLink.hue.bold.semantic.default.color` | `var(--ion-color-base)` | `--ion-router-link-hue-bold-semantic-default-color` |
+
+<h5 id="version-10x-router-link-mode-classes">Mode classes</h5>
+
+Remove any instances that target the mode classes: `ion-router-link.md`, `ion-router-link.ios`.
 
 <h4 id="version-10x-row">Row</h4>
 

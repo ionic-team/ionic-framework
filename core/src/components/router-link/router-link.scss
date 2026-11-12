@@ -1,24 +1,28 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/mixins" as mixins;
+@use "./router-link.docs";
 
-// Anchor
+// Router Link
 // --------------------------------------------------
 
-:host {
-  /**
-   * @prop --background: Background of the router link
-   * @prop --color: Text color of the router link
-   */
-  --background: transparent;
-  --color: #{ion-color(primary, base)};
-
-  background: var(--background);
-  color: var(--color);
-}
-
-:host(.ion-color) {
-  color: current-color(base);
-}
-
 a {
-  @include text-inherit();
+  @include mixins.text-inherit();
+}
+
+// Router Link Hues
+// --------------------------------------------------
+
+:host(.router-link-hue-bold) {
+  color: var(--ion-router-link-hue-bold-default-color);
+}
+
+:host(.router-link-hue-subtle) {
+  color: var(--ion-router-link-hue-subtle-default-color);
+}
+
+:host(.router-link-hue-bold.ion-color) {
+  color: var(--ion-router-link-hue-bold-semantic-default-color);
+}
+
+:host(.router-link-hue-subtle.ion-color) {
+  color: var(--ion-router-link-hue-subtle-semantic-default-color);
 }

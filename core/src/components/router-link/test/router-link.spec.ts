@@ -1,6 +1,48 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { config } from '../../../global/config';
 import { RouterLink } from '../router-link';
+
+describe('router-link: hue', () => {
+  afterEach(() => {
+    config.reset({});
+  });
+
+  it('should default to the bold hue', async () => {
+    const page = await newSpecPage({
+      components: [RouterLink],
+      html: `<ion-router-link>Link</ion-router-link>`,
+    });
+
+    expect(page.root).toHaveClass('router-link-hue-bold');
+  });
+
+  it('should use the hue from the config', async () => {
+    config.reset({
+      customTheme: { config: { components: { IonRouterLink: { hue: 'subtle' } } } },
+    });
+
+    const page = await newSpecPage({
+      components: [RouterLink],
+      html: `<ion-router-link>Link</ion-router-link>`,
+    });
+
+    expect(page.root).toHaveClass('router-link-hue-subtle');
+  });
+
+  it('should prefer the hue property over the config', async () => {
+    config.reset({
+      customTheme: { config: { components: { IonRouterLink: { hue: 'subtle' } } } },
+    });
+
+    const page = await newSpecPage({
+      components: [RouterLink],
+      html: `<ion-router-link hue="bold">Link</ion-router-link>`,
+    });
+
+    expect(page.root).toHaveClass('router-link-hue-bold');
+  });
+});
 
 describe('router-link', () => {
   it('should pass href, rel and target to the anchor', async () => {

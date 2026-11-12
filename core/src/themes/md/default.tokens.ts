@@ -43,6 +43,10 @@ export const defaultTheme: DefaultTheme = {
         shape: 'rectangular',
       },
 
+      IonRouterLink: {
+        hue: 'bold',
+      },
+
       IonSpinner: {
         size: 'medium',
       },
@@ -1064,6 +1068,34 @@ export const defaultTheme: DefaultTheme = {
 
     IonRippleEffect: {
       opacity: '0.16',
+    },
+
+    IonRouterLink: {
+      hue: {
+        bold: {
+          default: {
+            color: ionColor('primary', 'foreground'),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: ionColor('primary', 'foreground', { subtle: true }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
     },
 
     IonRow: {
