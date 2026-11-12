@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, State, forceUpdate, h } from '@stencil/core';
 import type { AttributeController } from '@utils/attribute-controller';
-import { createAriaAttributeController } from '@utils/attribute-controller';
+import { createAriaAttributeController, createTabindexController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { hasShadowDom } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -36,6 +36,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private ariaController?: AttributeController;
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLElement;
 
@@ -208,14 +209,17 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
      * `disabled` prop and those writes would clobber a developer's value.
      */
     this.ariaController = createAriaAttributeController(this.el, () => forceUpdate(this), ['aria-disabled']);
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
   }
 
   connectedCallback() {
     this.ariaController?.init();
+    this.tabindexController?.init();
   }
 
   disconnectedCallback() {
     this.ariaController?.destroy();
+    this.tabindexController?.destroy();
   }
 
   private get hasIconOnly() {
@@ -335,7 +339,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   render() {
     const mode = getIonMode(this);
     const { buttonType, type, disabled, rel, target, size, href, color, expand, hasIconOnly, shape, strong } = this;
-    const inheritedAttributes = this.ariaController?.attributes ?? {};
+    const inheritedAttributes = {
+      ...this.ariaController?.attributes,
+      ...this.tabindexController?.attributes,
+    };
     const finalSize = size === undefined && this.inItem ? 'small' : size;
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =

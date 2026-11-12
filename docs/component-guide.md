@@ -475,7 +475,7 @@ The controller keeps the copy in sync when the host attribute changes after load
 > [!IMPORTANT]
 > Pass `hostOwnedAttributes` for any attribute that should be copied at load but not watched afterwards, like the `aria-disabled` that `ion-button` renders on its `<Host>` from its `disabled` prop. Watching it would let the component's own renders overwrite a developer's value.
 >
-> Pass `keepOnHost` to `createAttributeController` when the component sometimes renders no element that can carry the copy, like `ion-card` without `href` or `button`, or the generic `div` of a non-clickable `ion-item`, which ARIA doesn't allow a name on. While it returns `true`, a value written after load stays on the host as written. Call the controller's `updateHost()` when something it reads changes, so the value moves to match.
+> Pass `keepOnHost` to `createAttributeController` when the component sometimes renders no element that can carry the copy, like `ion-card` without `href` or `button`, or the generic `div` of a non-clickable `ion-item`, which ARIA doesn't allow a name on. While it returns `true`, a value written after load stays on the host as written. Call the controller's `refresh()` when something it reads changes, so the value moves to match.
 
 > [!NOTE]
 > Attributes that reference an element by ID (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-activedescendant`) cannot resolve a light DOM ID from inside the shadow root, so only copy those when the target is in the same tree.
@@ -607,7 +607,7 @@ The controller keeps the copy in sync when the host attribute changes after load
 > [!IMPORTANT]
 > Pass `hostOwnedAttributes` for any attribute that should be copied at load but not watched afterwards, like the `aria-disabled` that `ion-button` renders on its `<Host>` from its `disabled` prop. Watching it would let the component's own renders overwrite a developer's value.
 >
-> Pass `keepOnHost` to `createAttributeController` when the component sometimes renders no element that can carry the copy, like `ion-card` without `href` or `button`, or the generic `div` of a non-clickable `ion-item`, which ARIA doesn't allow a name on. While it returns `true`, a value written after load stays on the host as written. Call the controller's `updateHost()` when something it reads changes, so the value moves to match.
+> Pass `keepOnHost` to `createAttributeController` when the component sometimes renders no element that can carry the copy, like `ion-card` without `href` or `button`, or the generic `div` of a non-clickable `ion-item`, which ARIA doesn't allow a name on. While it returns `true`, a value written after load stays on the host as written. Call the controller's `refresh()` when something it reads changes, so the value moves to match.
 
 > [!NOTE]
 > Attributes that reference an element by ID (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-activedescendant`) cannot resolve a light DOM ID from inside the shadow root, so only copy those when the target is in the same tree.

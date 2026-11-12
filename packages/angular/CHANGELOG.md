@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.11](https://github.com/ionic-team/ionic-framework/compare/v9.0.10...v9.0.11) (2026-11-11)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [9.0.10](https://github.com/ionic-team/ionic-framework/compare/v9.0.9...v9.0.10) (2026-10-28)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [9.0.9](https://github.com/ionic-team/ionic-framework/compare/v9.0.8...v9.0.9) (2026-10-21)
 
 ### Bug Fixes

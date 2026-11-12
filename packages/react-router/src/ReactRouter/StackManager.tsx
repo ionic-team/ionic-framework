@@ -1270,8 +1270,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    *
    * @param page The element of the rendered `<IonPage>`.
    * @param routeInfo The route information that associates with `<IonPage>`.
+   * @param ownerViewItem The view item that rendered `<IonPage>`, if known.
    */
-  registerIonPage(page: HTMLElement, routeInfo: RouteInfo) {
+  registerIonPage(page: HTMLElement, routeInfo: RouteInfo, ownerViewItem?: ViewItem) {
     /**
      * DO NOT remove ion-page-invisible here.
      *
@@ -1291,7 +1292,13 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
     this.pendingPageTransition = false;
 
-    const foundView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+    const pathView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+    /**
+     * The lookup can use a stale pathname (see `ViewStackContextProvider`), so
+     * prefer the view that rendered the page when the two disagree.
+     */
+    const foundView =
+      pathView && ownerViewItem?.outletId === this.id && pathView !== ownerViewItem ? ownerViewItem : pathView;
 
     if (foundView) {
       const oldPageElement = foundView.ionPageElement;

@@ -160,6 +160,12 @@ const Main: React.FC = () => {
           <IonItem routerLink="/wildcard-no-heuristic">
             <IonLabel>Wildcard No Heuristic</IonLabel>
           </IonItem>
+          <IonItem routerLink="/stale-register/join">
+            <IonLabel>Stale Register (catch-all)</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/stale-register-no-catch-all/join">
+            <IonLabel>Stale Register (no catch-all)</IonLabel>
+          </IonItem>
           <IonItem routerLink="/splat-sibling">
             <IonLabel>Splat Sibling</IonLabel>
           </IonItem>
