@@ -554,25 +554,51 @@ export const generateComponentsThemeCSS = (components: any): string => {
 };
 
 /**
- * Components that render a migrated child component in their own shadow root.
+ * Components that render a child component inside their own shadow root.
  *
- * Token CSS is added to the document head, so its selectors can't reach that
- * child, but custom properties inherit into a shadow root. Each host listed here
- * joins the child's selectors, so the child inherits its tokens from the host.
- * A spec test fails when a host is missing.
+ * Token CSS is added to the document head, so its selectors can't reach an
+ * element inside a shadow root: `ion-backdrop { … }` styles every `ion-backdrop`
+ * in the page except the one that `ion-modal` renders itself.
+ * Custom properties do inherit into a shadow root, though, so each host listed
+ * here joins the child's selectors and passes the tokens down:
+ *
+ * ```css
+ * ion-backdrop,
+ * ion-menu,
+ * ion-modal,
+ * ion-popover,
+ * ion-datetime {
+ *   --ion-backdrop-background: #000;
+ * }
+ * ```
+ *
+ * A host can sit in another host's shadow root: `ion-datetime` renders an
+ * `ion-popover`, which renders an `ion-backdrop`. The outer host joins the
+ * selectors too, so the tokens pass down through both shadow roots.
+ *
+ * Add a component here when it starts rendering a migrated component, or a
+ * component listed here, in its shadow root. Otherwise that child renders with
+ * no tokens. A spec test checks this.
  */
 export const INTERNAL_CHILD_COMPONENTS: Record<string, string[]> = {
-  IonDatetime: ['IonButton'],
+  IonDatetime: ['IonButton', 'IonPopover'],
   IonInputPasswordToggle: ['IonButton'],
+  IonMenu: ['IonBackdrop'],
+  IonModal: ['IonBackdrop'],
+  IonPopover: ['IonBackdrop'],
 };
 
 /**
- * Returns the tags of the components that render `component` in their shadow root.
+ * Returns the tags of the components that render `component` in their shadow root,
+ * directly or inside another host's shadow root.
  */
-const getInternalRenderHosts = (component: string): string[] =>
-  Object.entries(INTERNAL_CHILD_COMPONENTS)
+const getInternalRenderHosts = (component: string): string[] => {
+  const hosts = Object.entries(INTERNAL_CHILD_COMPONENTS)
     .filter(([, children]) => children.includes(component))
-    .map(([host]) => convertToKebabCase(host));
+    .map(([host]) => host);
+
+  return hosts.flatMap((host) => [convertToKebabCase(host), ...getInternalRenderHosts(host)]);
+};
 
 /**
  * A key such as `IonButton` inside a component's tokens is a child component.

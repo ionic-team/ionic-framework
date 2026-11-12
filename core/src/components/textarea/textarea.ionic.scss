@@ -14,7 +14,7 @@
   --highlight-color-focused: #{globals.ion-color(primary, base)};
   --placeholder-color: #{globals.$ion-text-subtlest};
   --placeholder-opacity: 1;
-  --background: #{globals.$ion-bg-surface-default};
+  --background: #{globals.$ion-bg-input-default};
   --padding-bottom: #{globals.$ion-space-200};
 
   @include globals.typography(globals.$ion-body-md-regular);

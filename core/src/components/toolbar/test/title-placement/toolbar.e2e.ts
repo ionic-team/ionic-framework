@@ -46,50 +46,25 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * Returns how far the title text is from the center of the toolbar.
- */
-const getTitleOffset = (page: E2EPage) => {
-  return page.locator('ion-toolbar').evaluate((toolbar) => {
-    const range = document.createRange();
-    range.selectNodeContents(toolbar.querySelector('ion-title')!);
-    const text = range.getBoundingClientRect();
-    const box = toolbar.getBoundingClientRect();
-
-    return Math.abs(text.left + text.width / 2 - (box.left + box.width / 2));
-  });
-};
-
-/**
  * TODO(FW-6864): add ios and md when ion-toolbar titlePlacement works in every theme
  * This behavior does not vary across directions.
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('toolbar: title-placement'), () => {
-    test('should center the title when buttons are added after the toolbar loads', async ({ page }) => {
-      await page.setContent(
-        `
-          <ion-header>
-            <ion-toolbar title-placement="center">
-              <ion-title>Title</ion-title>
-            </ion-toolbar>
-          </ion-header>
-        `,
-        config
-      );
+  test.describe(title('toolbar: title-placement center sizing'), () => {
+    /**
+     * Returns how far the title is from the center of the toolbar, in pixels.
+     */
+    const getTitleOffset = async (page: E2EPage) => {
+      const toolbarBox = (await page.locator('ion-toolbar').boundingBox())!;
+      const titleBox = (await page.locator('ion-title .toolbar-title').boundingBox())!;
 
-      const toolbar = page.locator('ion-toolbar');
-      await toolbar.evaluate((toolbar) => {
-        toolbar.insertAdjacentHTML(
-          'afterbegin',
-          '<ion-buttons slot="start"><ion-button>Long button text</ion-button></ion-buttons>'
-        );
-      });
+      const toolbarCenter = toolbarBox.x + toolbarBox.width / 2;
+      const titleCenter = titleBox.x + titleBox.width / 2;
 
-      await expect(toolbar).toHaveClass(/show-end/);
-      await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
-    });
+      return Math.abs(titleCenter - toolbarCenter);
+    };
 
-    test('should center the title when buttons resize after the toolbar moves', async ({ page }) => {
+    test('should keep the title centered when buttons are added to a slot', async ({ page }) => {
       await page.setContent(
         `
           <ion-header>
@@ -97,7 +72,152 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
               <ion-buttons slot="start">
                 <ion-button>Back</ion-button>
               </ion-buttons>
-              <ion-title>Title</ion-title>
+              <ion-title>Center Placement</ion-title>
+              <ion-buttons slot="end">
+                <ion-button>Edit</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+        `,
+        config
+      );
+
+      await page.locator('ion-buttons[slot="end"]').evaluate((el) => {
+        el.insertAdjacentHTML('beforeend', '<ion-button>Share</ion-button>');
+      });
+
+      await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
+    });
+
+    test('should give the title the space freed when buttons are removed from a slot', async ({ page }) => {
+      /**
+       * Each toolbar is in its own header so both get the same styles.
+       * The reference toolbar renders the final content from the start.
+       */
+      const getHeader = (id: string, endButtons: string) => `
+        <ion-header id="${id}">
+          <ion-toolbar title-placement="center">
+            <ion-buttons slot="start">
+              <ion-button>Back</ion-button>
+            </ion-buttons>
+            <ion-title>Center Placement</ion-title>
+            <ion-buttons slot="end">${endButtons}</ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+      `;
+      await page.setContent(
+        getHeader('changed', '<ion-button>Edit</ion-button><ion-button id="share">Share</ion-button>') +
+          getHeader('reference', '<ion-button>Edit</ion-button>'),
+        config
+      );
+
+      const getTitleWidth = async (headerId: string) =>
+        (await page.locator(`#${headerId} ion-title .toolbar-title`).boundingBox())!.width;
+
+      await page.locator('#share').evaluate((el) => el.remove());
+
+      // Once the Share button is gone, both toolbars have the same content.
+      await expect
+        .poll(async () => {
+          const changedWidth = await getTitleWidth('changed');
+          const referenceWidth = await getTitleWidth('reference');
+          return changedWidth - referenceWidth;
+        })
+        .toBe(0);
+    });
+
+    test('should center the title when a hidden toolbar becomes visible', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-header style="display: none">
+            <ion-toolbar title-placement="center">
+              <ion-buttons slot="start">
+                <ion-button>Back</ion-button>
+              </ion-buttons>
+              <ion-title>Center Placement</ion-title>
+              <ion-buttons slot="end">
+                <ion-button>Edit</ion-button>
+                <ion-button>Share</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+        `,
+        config
+      );
+
+      /**
+       * Pages stay hidden while they are being navigated to. Keep the toolbar
+       * hidden long enough that it can only be centered by measuring the
+       * slots again once it is shown.
+       */
+      await page.waitForTimeout(1000);
+      await page.locator('ion-header').evaluate((el: HTMLElement) => (el.style.display = ''));
+
+      await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
+    });
+
+    test('should keep the title centered when buttons are added to an empty slot', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-header>
+            <ion-toolbar title-placement="center">
+              <ion-buttons slot="start">
+                <ion-button>Back</ion-button>
+              </ion-buttons>
+              <ion-title>Center Placement</ion-title>
+            </ion-toolbar>
+          </ion-header>
+        `,
+        config
+      );
+
+      await page.locator('ion-toolbar').evaluate((el) => {
+        el.insertAdjacentHTML(
+          'beforeend',
+          '<ion-buttons slot="end"><ion-button>Edit</ion-button><ion-button>Share</ion-button></ion-buttons>'
+        );
+      });
+
+      await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
+    });
+
+    test('should keep the title centered when buttons are added after the toolbar is moved', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-header>
+            <ion-toolbar title-placement="center">
+              <ion-buttons slot="start">
+                <ion-button>Back</ion-button>
+              </ion-buttons>
+              <ion-title>Center Placement</ion-title>
+              <ion-buttons slot="end">
+                <ion-button>Edit</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+        `,
+        config
+      );
+
+      // Moving the header disconnects and reconnects the toolbar.
+      await page.locator('ion-header').evaluate((el) => el.parentElement!.appendChild(el));
+
+      await page.locator('ion-buttons[slot="end"]').evaluate((el) => {
+        el.insertAdjacentHTML('beforeend', '<ion-button>Share</ion-button>');
+      });
+
+      await expect.poll(() => getTitleOffset(page)).toBeLessThanOrEqual(1);
+    });
+
+    test('should keep the title centered when buttons resize after the toolbar is moved', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-header>
+            <ion-toolbar title-placement="center">
+              <ion-buttons slot="start">
+                <ion-button>Back</ion-button>
+              </ion-buttons>
+              <ion-title>Center Placement</ion-title>
             </ion-toolbar>
           </ion-header>
         `,
