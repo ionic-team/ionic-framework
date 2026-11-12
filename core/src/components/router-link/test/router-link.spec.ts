@@ -77,7 +77,7 @@ describe('router-link', () => {
     expect(page.root).toHaveClass('ion-activatable');
   });
 
-  it('should be focusable for the focus ring', async () => {
+  it('should add the ion-focusable class', async () => {
     const page = await newSpecPage({
       components: [RouterLink],
       html: `<ion-router-link href="/page">Link</ion-router-link>`,

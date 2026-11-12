@@ -11,7 +11,7 @@
 a {
   @include mixins.text-inherit();
 
-  // The focus ring below replaces the browser's own ring
+  // The theme's focus ring or background below replaces the browser's own ring
   outline: none;
 }
 
