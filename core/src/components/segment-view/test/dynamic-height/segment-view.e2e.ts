@@ -46,7 +46,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
             <ion-input value="" label="Email"></ion-input>
           </ion-segment-content>
           <ion-segment-content id="third">
-            <ion-img class="img-part" src="https://picsum.photos/200/300"></ion-img>
+            <ion-img class="img-part" src="/src/components/card/test/img.jpg"></ion-img>
           </ion-segment-content>
         </ion-segment-view>
       `,

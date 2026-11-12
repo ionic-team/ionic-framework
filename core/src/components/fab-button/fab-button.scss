@@ -82,8 +82,6 @@
 
   transform: var(--transform);
 
-  transition: var(--transition);
-
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
@@ -125,9 +123,6 @@
   justify-content: center;
 
   height: 100%;
-
-  transition: all ease-in-out 300ms;
-  transition-property: transform, opacity;
 
   z-index: 1;
 }
@@ -218,9 +213,6 @@
 
   transform: scale(.4) rotateZ(-45deg);
 
-  transition: all ease-in-out 300ms;
-  transition-property: transform, opacity;
-
   font-size: var(--close-icon-font-size);
 
   opacity: 0;
@@ -246,6 +238,43 @@
 
 ion-ripple-effect {
   color: var(--ripple-color);
+}
+
+
+// FAB Button: Animated
+// --------------------------------------------------
+
+:host(.fab-button-animated) .button-native {
+  transition: var(--transition);
+}
+
+:host(.fab-button-animated) .button-inner,
+:host(.fab-button-animated) .close-icon {
+  transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
+}
+
+
+// FAB Button: Reduced Motion
+// --------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.fab-button-animated) .button-native {
+    transform: none;
+
+    transition: none;
+  }
+
+  /**
+   * Fade the content and close icon instead
+   * of rotating and scaling them.
+   */
+  :host(.fab-button-animated) .button-inner,
+  :host(.fab-button-animated) .close-icon {
+    transform: none;
+
+    transition-property: opacity;
+  }
 }
 
 // Translucent FAB button

@@ -597,6 +597,7 @@ ion-fab,method,close,close() => Promise<void>
 
 ion-fab-button,shadow
 ion-fab-button,prop,activated,boolean,false,false,false
+ion-fab-button,prop,animated,boolean,true,false,false
 ion-fab-button,prop,closeIcon,string,close,false,false
 ion-fab-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-fab-button,prop,disabled,boolean,false,false,false
