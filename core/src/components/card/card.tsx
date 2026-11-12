@@ -90,11 +90,17 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentWillLoad() {
     /**
-     * Only the initial copy takes the attribute off the host, so an `aria-label` written
-     * after load stays on the host too. That's harmless here, because unlike `ion-item`
-     * the card host renders no role of its own, so nothing reads the leftover copy.
+     * A non-clickable card renders no native element to apply the copy to, so an
+     * `aria-label` written after load has to stay on the host.
      */
-    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+    this.ariaController = createAttributeController(
+      this.el,
+      ['aria-label'],
+      () => forceUpdate(this),
+      [],
+      undefined,
+      () => !this.isClickable()
+    );
 
     // A card that isn't clickable has no native button or link, so `tabindex` stays on the host.
     this.tabindexController = createTabindexController(
@@ -105,12 +111,13 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   /**
-   * Changing `href` or `button` adds or removes the native element, so `tabindex` has to
-   * move with it.
+   * Changing `href` or `button` adds or removes the native element, so `tabindex` and a
+   * label written after load have to move with it.
    */
   @Watch('href')
   @Watch('button')
   clickableChanged() {
+    this.ariaController?.refresh();
     this.tabindexController?.refresh();
   }
 

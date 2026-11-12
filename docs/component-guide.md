@@ -470,10 +470,12 @@ In the following example the `aria-label` is copied from the Host using `createA
 > [!NOTE]
 > Use `createAttributeController` to specify which attributes should be copied or `createAriaAttributeController` to copy all of the possible `aria` attributes.
 
-The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load.
+The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load. An `aria-label`, `aria-description` or `role` written after load is replaced on the host with an empty string, so the host doesn't show up as a second node in the accessibility tree and a later removal still reaches the native element. Anything else written after load stays on the host as written.
 
 > [!IMPORTANT]
-> Pass `hostOwnedAttributes`, the last argument of either function, for any attribute that should be copied at load but not watched afterwards. There are two cases. One is an attribute the component renders on its own `<Host>`, like the `aria-disabled` that `ion-button` renders from its `disabled` prop, where watching it would let the component's own renders overwrite a developer's value. The other is an attribute that would put a second node in the accessibility tree if the host kept a copy, like `role`, since only the initial copy removes attributes from the host and anything written after load stays there too.
+> Pass `hostOwnedAttributes` for any attribute that should be copied at load but not watched afterwards, like the `aria-disabled` that `ion-button` renders on its `<Host>` from its `disabled` prop. Watching it would let the component's own renders overwrite a developer's value.
+>
+> Pass `keepOnHost` to `createAttributeController` when the component sometimes renders no element that can carry the copy, like `ion-card` without `href` or `button`, or the generic `div` of a non-clickable `ion-item`, which ARIA doesn't allow a name on. While it returns `true`, a value written after load stays on the host as written. Call the controller's `refresh()` when something it reads changes, so the value moves to match.
 
 > [!NOTE]
 > Attributes that reference an element by ID (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-activedescendant`) cannot resolve a light DOM ID from inside the shadow root, so only copy those when the target is in the same tree.
@@ -600,10 +602,12 @@ In the following example the `aria-label` is copied from the Host using `createA
 > [!NOTE]
 > Use `createAttributeController` to specify which attributes should be copied or `createAriaAttributeController` to copy all of the possible `aria` attributes.
 
-The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load.
+The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load. An `aria-label`, `aria-description` or `role` written after load is replaced on the host with an empty string, so the host doesn't show up as a second node in the accessibility tree and a later removal still reaches the native element. Anything else written after load stays on the host as written.
 
 > [!IMPORTANT]
-> Pass `hostOwnedAttributes`, the last argument of either function, for any attribute that should be copied at load but not watched afterwards. There are two cases. One is an attribute the component renders on its own `<Host>`, like the `aria-disabled` that `ion-button` renders from its `disabled` prop, where watching it would let the component's own renders overwrite a developer's value. The other is an attribute that would put a second node in the accessibility tree if the host kept a copy, like `role`, since only the initial copy removes attributes from the host and anything written after load stays there too.
+> Pass `hostOwnedAttributes` for any attribute that should be copied at load but not watched afterwards, like the `aria-disabled` that `ion-button` renders on its `<Host>` from its `disabled` prop. Watching it would let the component's own renders overwrite a developer's value.
+>
+> Pass `keepOnHost` to `createAttributeController` when the component sometimes renders no element that can carry the copy, like `ion-card` without `href` or `button`, or the generic `div` of a non-clickable `ion-item`, which ARIA doesn't allow a name on. While it returns `true`, a value written after load stays on the host as written. Call the controller's `refresh()` when something it reads changes, so the value moves to match.
 
 > [!NOTE]
 > Attributes that reference an element by ID (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-activedescendant`) cannot resolve a light DOM ID from inside the shadow root, so only copy those when the target is in the same tree.

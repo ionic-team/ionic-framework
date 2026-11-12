@@ -226,19 +226,65 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeItem).toHaveAttribute('aria-label', 'initial');
 
-      // Post-load writes stay on the host and are copied to the native element.
+      // A later write is copied to the native element and left on the host as an empty string.
       await host.evaluate((el) => el.setAttribute('aria-label', 'second'));
-      await expect(host).toHaveAttribute('aria-label', 'second');
       await expect(nativeItem).toHaveAttribute('aria-label', 'second');
+      await expect(host).toHaveAttribute('aria-label', '');
 
       // An empty string is a valid ARIA attribute value.
       await host.evaluate((el) => el.setAttribute('aria-label', ''));
       await expect(nativeItem).toHaveAttribute('aria-label', '');
 
       // A removal of a post-load write does reach the native element.
+      await host.evaluate((el) => el.setAttribute('aria-label', 'third'));
+      await expect(nativeItem).toHaveAttribute('aria-label', 'third');
       await host.evaluate((el) => el.removeAttribute('aria-label'));
       await expect(host).not.toHaveAttribute('aria-label');
       await expect(nativeItem).not.toHaveAttribute('aria-label');
+    });
+
+    test('should keep an aria-label written after load on the host of a non-clickable item', async ({ page }) => {
+      await page.setContent(`<ion-list><ion-item aria-label="initial">Item</ion-item></ion-list>`, config);
+
+      const host = page.locator('ion-item');
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+      await page.waitForChanges();
+
+      await expect(host).toHaveAttribute('aria-label', 'updated');
+    });
+
+    test('should move an aria-label written after load off the host when the item becomes clickable', async ({
+      page,
+    }) => {
+      await page.setContent(`<ion-list><ion-item>Item</ion-item></ion-list>`, config);
+
+      const host = page.locator('ion-item');
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+      await page.waitForChanges();
+      await expect(host).toHaveAttribute('aria-label', 'updated');
+
+      await host.evaluate((el: HTMLIonItemElement) => (el.button = true));
+      await page.waitForChanges();
+
+      await expect(host).toHaveAttribute('aria-label', '');
+      await expect(host.locator('button')).toHaveAttribute('aria-label', 'updated');
+    });
+
+    test('should move an aria-label written after load off the host when the item gets an href', async ({ page }) => {
+      await page.setContent(`<ion-list><ion-item>Item</ion-item></ion-list>`, config);
+
+      const host = page.locator('ion-item');
+
+      await host.evaluate((el) => el.setAttribute('aria-label', 'updated'));
+      await page.waitForChanges();
+
+      await host.evaluate((el: HTMLIonItemElement) => (el.href = '#'));
+      await page.waitForChanges();
+
+      await expect(host).toHaveAttribute('aria-label', '');
+      await expect(host.locator('a')).toHaveAttribute('aria-label', 'updated');
     });
 
     test('should not sync ARIA attributes other than aria-label', async ({ page }) => {
