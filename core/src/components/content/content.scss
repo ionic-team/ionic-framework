@@ -7,7 +7,6 @@
 :host {
   /**
    * @prop --ion-content-default-background: Background of the content
-   * @prop --ion-content-default-color: Color of the content
    * @prop --ion-content-semantic-default-background: Background of the content when a semantic color is applied
    * @prop --ion-content-semantic-default-color: Color of the content when a semantic color is applied
    * @prop --ion-content-font-family: Font family of the content
@@ -67,7 +66,7 @@
 
   position: absolute;
 
-  color: var(--ion-content-default-color);
+  color: currentColor;
 
   box-sizing: border-box;
 
