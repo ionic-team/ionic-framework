@@ -87,15 +87,8 @@ export const components = {
 
     note: {
       slot: {
-        font: {
-          size: 11,
-        },
-
         padding: {
-          top: 'var(--ion-spacing-450)',
-          end: 'var(--ion-spacing-0)',
-          bottom: 'var(--ion-spacing-250)',
-          start: 'var(--ion-spacing-0)',
+          top: 'var(--ion-spacing-400)',
         },
       },
     },

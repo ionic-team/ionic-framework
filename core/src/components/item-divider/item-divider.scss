@@ -51,12 +51,7 @@
    * @prop --ion-item-divider-icon-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-icon when it is in the end slot of the item divider
    *
    * Slotted Note
-   * @prop --ion-item-divider-note-margin-top: Top margin of the slotted ion-note
-   * @prop --ion-item-divider-note-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-note
-   * @prop --ion-item-divider-note-margin-bottom: Bottom margin of the slotted ion-note
-   * @prop --ion-item-divider-note-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-note
    * @prop --ion-item-divider-note-align-self: Align self of the slotted ion-note
-   * @prop --ion-item-divider-note-font-size: Font size of the slotted ion-note
    * @prop --ion-item-divider-note-padding-top: Top padding of the slotted ion-note when it has a slot
    * @prop --ion-item-divider-note-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the slotted ion-note when it has a slot
    * @prop --ion-item-divider-note-padding-bottom: Bottom padding of the slotted ion-note when it has a slot
@@ -258,16 +253,7 @@
 
 // Note
 ::slotted(ion-note) {
-  @include mixins.margin(
-    var(--ion-item-divider-note-margin-top),
-    var(--ion-item-divider-note-margin-end),
-    var(--ion-item-divider-note-margin-bottom),
-    var(--ion-item-divider-note-margin-start)
-  );
-
   align-self: var(--ion-item-divider-note-align-self);
-
-  font-size: var(--ion-item-divider-note-font-size, revert-layer);
 }
 
 ::slotted(ion-note[slot]) {

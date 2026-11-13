@@ -892,22 +892,11 @@ export const defaultTheme: DefaultTheme = {
           self: 'flex-start',
         },
 
-        font: {
-          size: dynamicFont(global.root, components.item.note.slot.font.size),
-        },
-
-        margin: {
-          top: 'var(--ion-spacing-0)',
+        padding: {
+          top: components.item.note.slot.padding.top,
           end: 'var(--ion-spacing-0)',
           bottom: 'var(--ion-spacing-0)',
           start: 'var(--ion-spacing-0)',
-        },
-
-        padding: {
-          top: components.item.note.slot.padding.top,
-          end: components.item.note.slot.padding.end,
-          bottom: components.item.note.slot.padding.bottom,
-          start: components.item.note.slot.padding.start,
         },
       },
 
@@ -987,7 +976,7 @@ export const defaultTheme: DefaultTheme = {
     IonNote: {
       font: {
         family: 'var(--ion-font-family)',
-        size: dynamicFont(global.root, 14),
+        size: dynamicFont(global.root, 12),
       },
 
       hue: {
@@ -1014,6 +1003,12 @@ export const defaultTheme: DefaultTheme = {
             },
           },
         },
+      },
+
+      letterSpacing: '0.0333em',
+
+      line: {
+        height: dynamicFont(global.root, 16),
       },
     },
 

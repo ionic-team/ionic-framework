@@ -756,22 +756,11 @@ export const defaultTheme: DefaultTheme = {
           self: 'flex-start',
         },
 
-        font: {
-          size: dynamicFont(global.root, components.item.note.slot.font.size),
-        },
-
-        margin: {
-          top: 'var(--ion-spacing-0)',
-          end: 'var(--ion-spacing-0)',
-          bottom: 'var(--ion-spacing-0)',
-          start: 'var(--ion-spacing-0)',
-        },
-
         padding: {
           top: components.item.note.slot.padding.top,
-          end: components.item.note.slot.padding.end,
+          end: 'var(--ion-spacing-0)',
           bottom: components.item.note.slot.padding.bottom,
-          start: components.item.note.slot.padding.start,
+          start: 'var(--ion-spacing-0)',
         },
       },
 

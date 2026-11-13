@@ -84,11 +84,6 @@ export type IonItemDividerRecipe = {
       self?: string;
     };
 
-    font?: {
-      size?: string;
-    };
-
-    margin?: IonMargin;
     padding?: IonPadding;
   };
 
