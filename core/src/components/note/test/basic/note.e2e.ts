@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * Note has no custom RTL logic
+ * This behavior does not vary across directions.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('note: rendering'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
@@ -87,7 +87,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
         <ion-item-divider>
-          <ion-note slot="start">End Note</ion-note>
+          <ion-note slot="end">End Note</ion-note>
         </ion-item-divider>
       `,
         config
