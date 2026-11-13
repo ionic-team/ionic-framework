@@ -23,12 +23,12 @@ const pageShow = (persisted: boolean) => ({ persisted } as PageTransitionEvent);
 
 describe('syncValueOnPageRestore', () => {
   let nativeInput: HTMLInputElement;
-  let onValueChange: jest.Mock;
+  let onPasswordCleared: jest.Mock;
   let now: number;
 
   beforeEach(() => {
     frames = [];
-    onValueChange = jest.fn();
+    onPasswordCleared = jest.fn();
     now = 0;
     jest.spyOn(Date, 'now').mockImplementation(() => now);
 
@@ -53,74 +53,102 @@ describe('syncValueOnPageRestore', () => {
     }
   });
 
-  it('should read the field on the next frame, after the browser clears it', () => {
-    syncValueOnPageRestore(pageShow(true), nativeInput, () => 'typed', onValueChange);
+  describe('text field', () => {
+    it('should put the value back after the browser clears the field', () => {
+      syncValueOnPageRestore(pageShow(true), nativeInput, () => 'typed', onPasswordCleared);
 
-    // The browser clears the field after pageshow, before the next frame.
-    nativeInput.value = '';
-    expect(onValueChange).not.toHaveBeenCalled();
+      // The browser clears the field after pageshow, before the next frame.
+      nativeInput.value = '';
+      flushFrames();
 
-    flushFrames();
+      expect(nativeInput.value).toBe('typed');
+      expect(onPasswordCleared).not.toHaveBeenCalled();
+    });
 
-    expect(onValueChange).toHaveBeenCalledTimes(1);
-    expect(onValueChange).toHaveBeenCalledWith('');
+    it('should put back the value from when the frame runs', () => {
+      let value = 'typed';
+      syncValueOnPageRestore(pageShow(true), nativeInput, () => value, onPasswordCleared);
+
+      // The app sets a new value before the browser's clear lands.
+      value = 'restored';
+      nativeInput.value = '';
+      flushFrames();
+
+      expect(nativeInput.value).toBe('restored');
+    });
+  });
+
+  describe('password field', () => {
+    beforeEach(() => {
+      nativeInput.type = 'password';
+    });
+
+    it('should report the cleared field on the next frame', () => {
+      syncValueOnPageRestore(pageShow(true), nativeInput, () => 'typed', onPasswordCleared);
+
+      nativeInput.value = '';
+      expect(onPasswordCleared).not.toHaveBeenCalled();
+
+      flushFrames();
+
+      expect(nativeInput.value).toBe('');
+      expect(onPasswordCleared).toHaveBeenCalledTimes(1);
+      expect(onPasswordCleared).toHaveBeenCalledWith('');
+    });
+
+    it('should compare against the value when the frame runs', () => {
+      let value = 'typed';
+      syncValueOnPageRestore(pageShow(true), nativeInput, () => value, onPasswordCleared);
+
+      // The app sets the value before the frame, which updates the field too.
+      value = 'restored';
+      nativeInput.value = 'restored';
+      flushFrames();
+
+      expect(onPasswordCleared).not.toHaveBeenCalled();
+    });
   });
 
   it('should keep checking each frame until the browser clears the field', () => {
-    syncValueOnPageRestore(pageShow(true), nativeInput, () => 'typed', onValueChange);
+    syncValueOnPageRestore(pageShow(true), nativeInput, () => 'typed', onPasswordCleared);
 
     flushFrames();
-    expect(onValueChange).not.toHaveBeenCalled();
+    expect(nativeInput.value).toBe('typed');
 
     // The clear lands a few frames late, still within the check duration.
     now = PAGE_RESTORE_CHECK_DURATION / 2;
     nativeInput.value = '';
     flushFrames();
 
-    expect(onValueChange).toHaveBeenCalledTimes(1);
-    expect(onValueChange).toHaveBeenCalledWith('');
+    expect(nativeInput.value).toBe('typed');
   });
 
-  it('should stop checking once the value is synced', () => {
-    syncValueOnPageRestore(pageShow(true), nativeInput, () => 'typed', onValueChange);
+  it('should stop checking once the field is synced', () => {
+    syncValueOnPageRestore(pageShow(true), nativeInput, () => 'typed', onPasswordCleared);
 
     nativeInput.value = '';
     flushFrames();
 
-    expect(onValueChange).toHaveBeenCalledTimes(1);
     expect(frames).toHaveLength(0);
   });
 
   it('should stop checking once the check duration ends', () => {
-    syncValueOnPageRestore(pageShow(true), nativeInput, () => 'typed', onValueChange);
+    syncValueOnPageRestore(pageShow(true), nativeInput, () => 'typed', onPasswordCleared);
 
     now = PAGE_RESTORE_CHECK_DURATION;
     flushFrames();
 
-    expect(onValueChange).not.toHaveBeenCalled();
     expect(frames).toHaveLength(0);
   });
 
-  it('should compare against the value when the frame runs', () => {
-    let value = 'typed';
-    syncValueOnPageRestore(pageShow(true), nativeInput, () => value, onValueChange);
-
-    // The app sets the value before the frame, which updates the field too.
-    value = 'restored';
-    nativeInput.value = 'restored';
-    flushFrames();
-
-    expect(onValueChange).not.toHaveBeenCalled();
-  });
-
   it('should not check the field when the page is not restored', () => {
-    syncValueOnPageRestore(pageShow(false), nativeInput, () => 'typed', onValueChange);
+    syncValueOnPageRestore(pageShow(false), nativeInput, () => 'typed', onPasswordCleared);
 
     expect(frames).toHaveLength(0);
   });
 
   it('should not check the field when there is no native input', () => {
-    syncValueOnPageRestore(pageShow(true), undefined, () => 'typed', onValueChange);
+    syncValueOnPageRestore(pageShow(true), undefined, () => 'typed', onPasswordCleared);
 
     expect(frames).toHaveLength(0);
   });

@@ -135,11 +135,12 @@ describe('input: clear icon', () => {
 });
 
 describe('input: back/forward cache restore', () => {
-  it('should sync the value when the browser clears the field on restore', async () => {
-    const page = await newSpecPage({
-      components: [Input],
-      html: '<ion-input value="typed"></ion-input>',
-    });
+  /**
+   * Clears the field the way Safari does after restoring the page, then
+   * waits for the frame that checks it.
+   */
+  const restorePage = async (html: string) => {
+    const page = await newSpecPage({ components: [Input], html });
 
     const inputEl = page.body.querySelector('ion-input')!;
     const nativeEl = inputEl.querySelector('input')!;
@@ -153,6 +154,23 @@ describe('input: back/forward cache restore', () => {
     await new Promise((resolve) => page.win.requestAnimationFrame(resolve));
     await page.waitForChanges();
 
+    return { inputEl, nativeEl, ionInputSpy };
+  };
+
+  it('should put the value back in the field when the browser clears it', async () => {
+    const { inputEl, nativeEl, ionInputSpy } = await restorePage('<ion-input value="typed"></ion-input>');
+
+    expect(nativeEl.value).toBe('typed');
+    expect(inputEl.value).toBe('typed');
+    expect(ionInputSpy).not.toHaveBeenCalled();
+  });
+
+  it('should sync the value when the browser clears a password field', async () => {
+    const { inputEl, nativeEl, ionInputSpy } = await restorePage(
+      '<ion-input type="password" value="typed"></ion-input>'
+    );
+
+    expect(nativeEl.value).toBe('');
     expect(inputEl.value).toBe('');
     expect(ionInputSpy).toHaveBeenCalledTimes(1);
     expect(ionInputSpy.mock.calls[0][0].detail.value).toBe('');

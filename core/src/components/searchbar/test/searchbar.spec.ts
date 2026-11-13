@@ -39,11 +39,12 @@ describe('searchbar: rendering', () => {
 });
 
 describe('searchbar: back/forward cache restore', () => {
-  it('should sync the value when the browser clears the field on restore', async () => {
-    const page = await newSpecPage({
-      components: [Searchbar],
-      html: '<ion-searchbar value="typed"></ion-searchbar>',
-    });
+  /**
+   * Clears the field the way Safari does after restoring the page, then
+   * waits for the frame that checks it.
+   */
+  const restorePage = async (html: string) => {
+    const page = await newSpecPage({ components: [Searchbar], html });
 
     const searchbarEl = page.body.querySelector('ion-searchbar')!;
     const nativeEl = searchbarEl.querySelector('input')!;
@@ -57,6 +58,23 @@ describe('searchbar: back/forward cache restore', () => {
     await new Promise((resolve) => page.win.requestAnimationFrame(resolve));
     await page.waitForChanges();
 
+    return { searchbarEl, nativeEl, ionInputSpy };
+  };
+
+  it('should put the value back in the field when the browser clears it', async () => {
+    const { searchbarEl, nativeEl, ionInputSpy } = await restorePage('<ion-searchbar value="typed"></ion-searchbar>');
+
+    expect(nativeEl.value).toBe('typed');
+    expect(searchbarEl.value).toBe('typed');
+    expect(ionInputSpy).not.toHaveBeenCalled();
+  });
+
+  it('should sync the value when the browser clears a password field', async () => {
+    const { searchbarEl, nativeEl, ionInputSpy } = await restorePage(
+      '<ion-searchbar type="password" value="typed"></ion-searchbar>'
+    );
+
+    expect(nativeEl.value).toBe('');
     expect(searchbarEl.value).toBe('');
     expect(ionInputSpy).toHaveBeenCalledTimes(1);
     expect(ionInputSpy.mock.calls[0][0].detail.value).toBe('');
