@@ -20,8 +20,15 @@
 
 :host(.ion-activated) {
   --box-shadow: #{$fab-ios-box-shadow-activated};
-  --transform: #{$fab-ios-transform};
   --transition: #{$fab-ios-transition-activated};
+}
+
+/**
+ * Without a transition, the press scale
+ * would make the button jump in size.
+ */
+:host(.fab-button-animated.ion-activated) {
+  --transform: #{$fab-ios-transform};
 }
 
 ::slotted(ion-icon) {

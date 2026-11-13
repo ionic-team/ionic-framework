@@ -662,6 +662,7 @@ ion-fab-button,css-prop,--ripple-color,md
 ion-fab-button,css-prop,--transition,ios
 ion-fab-button,css-prop,--transition,md
 ion-fab-button,part,close-icon
+ion-fab-button,part,inner
 ion-fab-button,part,native
 
 ion-fab-list,shadow

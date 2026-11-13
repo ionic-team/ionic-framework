@@ -17,6 +17,7 @@ import type { RouterDirection } from '../router/utils/interface';
  *
  * @part native - The native HTML button or anchor element that wraps all child elements.
  * @part close-icon - The close icon that is displayed when a fab list opens (uses ion-icon).
+ * @part inner - The wrapper around the button's content, hidden when a fab list opens.
  */
 @Component({
   tag: 'ion-fab-button',
@@ -300,7 +301,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
             class="close-icon"
             lazy={false}
           ></ion-icon>
-          <span class="button-inner">
+          <span class="button-inner" part="inner">
             <slot></slot>
           </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

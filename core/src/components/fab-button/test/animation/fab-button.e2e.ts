@@ -10,7 +10,7 @@ const getStyles = async (fabButton: Locator, property: StyleProperty) => {
 
   return {
     native: await getStyle('[part="native"]'),
-    inner: await getStyle('.button-inner'),
+    inner: await getStyle('[part="inner"]'),
     closeIcon: await getStyle('[part="close-icon"]'),
   };
 };
@@ -110,6 +110,40 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-fab-button>
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      `,
+        config
+      );
+
+      const fabButton = page.locator('ion-fab-button');
+      await fabButton.evaluate((el) => el.classList.add('ion-activated'));
+
+      expect(await getStyles(fabButton, 'transform')).toMatchObject({ native: 'none' });
+    });
+
+    test('should scale the pressed button by default', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-fab-button>
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      `,
+        config
+      );
+
+      const fabButton = page.locator('ion-fab-button');
+      await fabButton.evaluate((el) => el.classList.add('ion-activated'));
+
+      await expect
+        .poll(async () => (await getStyles(fabButton, 'transform')).native)
+        .toBe('matrix(1.1, 0, 0, 1.1, 0, 0)');
+    });
+
+    test('should not scale the pressed button when animated is false', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-fab-button animated="false">
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
       `,
