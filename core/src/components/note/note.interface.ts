@@ -20,6 +20,12 @@ export type IonNoteRecipe = {
       };
     };
   };
+
+  letterSpacing?: string;
+
+  line?: {
+    height?: string;
+  };
 };
 
 export type IonNoteConfig = {

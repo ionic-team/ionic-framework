@@ -464,6 +464,7 @@ The following breaking changes apply to `ion-note`:
 1. `--color` has been replaced. <sup>[1](#version-10x-note-replaced-css-variables)</sup>
 2. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[2](#version-10x-note-hue)</sup>
 3. Mode classes (`ion-note.md`, `ion-note.ios`) are no longer supported. <sup>[3](#version-10x-note-mode-classes)</sup>
+4. The `ios` note is larger and has a set line height and letter spacing. <sup>[4](#version-10x-note-ios-typography)</sup>
 
 <h5 id="version-10x-note-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -492,6 +493,14 @@ When `color` is set, the note color now reads from a token instead of `--ion-col
 <h5 id="version-10x-note-mode-classes">Mode classes</h5>
 
 Remove any instances that target the mode classes: `ion-note.md`, `ion-note.ios`.
+
+<h5 id="version-10x-note-ios-typography">iOS typography</h5>
+
+In the `ios` theme, the note now matches the detail text of an iOS list row, in accordance with the iOS guidelines:
+
+- The font size is now `17px` instead of `16px`. To revert to the previous appearance, set `IonNote.font.size` to `max(14px, 1rem)` for global styles, or `--ion-note-font-size` for component-specific styles.
+- The line height is now `1.294` (`22px` at `17px`) instead of inherited. To revert to the previous appearance, set `IonNote.line.height` to `inherit` for global styles, or `--ion-note-line-height` for component-specific styles.
+- The letter spacing is now `-0.0235em` (`-0.4px` at `17px`) instead of inherited. To revert to the previous appearance, set `IonNote.letterSpacing` to `inherit` for global styles, or `--ion-note-letter-spacing` for component-specific styles.
 
 <h4 id="version-10x-radio-group">Radio Group</h4>
 
