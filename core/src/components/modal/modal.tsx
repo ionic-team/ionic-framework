@@ -98,6 +98,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
   private resetSheetContentScroll?: () => void;
   private inheritedAttributes: Attributes = {};
+  private ariaLabelledBy?: string;
   private statusBarStyle?: StatusBarStyle;
 
   private inline = false;
@@ -497,7 +498,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { breakpoints, initialBreakpoint, el, htmlAttributes } = this;
     const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
 
-    const attributesToInherit = ['aria-label', 'role'];
+    const attributesToInherit = ['aria-label', 'aria-labelledby', 'role'];
     this.inheritedAttributes = inheritAttributes(el, attributesToInherit);
 
     // Cache original parent before modal gets moved to body during presentation
@@ -541,6 +542,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
       });
     }
 
+    /**
+     * An ID reference only resolves against the tree of the element that
+     * carries it. The wrapper is in the shadow root while the element the
+     * modal is labelled with is authored in the light DOM, so copying
+     * `aria-labelledby` onto the wrapper as an attribute would leave the
+     * dialog unnamed. The referenced elements are applied through element
+     * reflection in `syncAriaLabelledBy` instead.
+     */
+    const { 'aria-labelledby': ariaLabelledBy, ...inheritedAttributes } = this.inheritedAttributes;
+    this.ariaLabelledBy = ariaLabelledBy;
+    this.inheritedAttributes = inheritedAttributes;
+
     if (isSheetModal) {
       this.currentBreakpoint = this.initialBreakpoint;
     }
@@ -574,6 +587,45 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * is configured.
      */
     this.triggerChanged();
+    this.syncAriaLabelledBy();
+  }
+
+  /**
+   * Names the dialog with the elements referenced by `aria-labelledby`.
+   *
+   * An ID reference only resolves against the tree of the element that
+   * carries it, so the attribute cannot name the dialog with content the
+   * developer authored in the light DOM from inside the shadow root. Element
+   * reflection is not scoped to a tree, which lets the dialog be named by
+   * that content.
+   *
+   * This runs again whenever the content is mounted or changes, since a modal
+   * presented through a controller has no content to resolve when it loads.
+   */
+  private syncAriaLabelledBy() {
+    const { ariaLabelledBy, el, wrapperEl } = this;
+
+    if (wrapperEl === undefined || !('ariaLabelledByElements' in wrapperEl)) {
+      return;
+    }
+
+    const ids = ariaLabelledBy !== undefined ? ariaLabelledBy.split(/\s+/).filter((id) => id.length > 0) : [];
+    const elementsById = new Map<string, Element>();
+
+    if (ids.length > 0) {
+      const root = el.getRootNode() as Document | ShadowRoot;
+      root.querySelectorAll('[id]').forEach((childEl) => elementsById.set(childEl.id, childEl));
+    }
+
+    const labelledByElements = ids
+      .map((id) => elementsById.get(id))
+      .filter((labelledByEl): labelledByEl is Element => labelledByEl !== undefined);
+
+    /**
+     * An empty reflection overrides an `aria-label` on the wrapper, so it is
+     * only applied when the reference resolves to at least one element.
+     */
+    wrapperEl.ariaLabelledByElements = labelledByElements.length > 0 ? labelledByElements : null;
   }
 
   /**
@@ -676,6 +728,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     } else if (!this.keepContentsMounted) {
       await waitForMount();
     }
+
+    this.syncAriaLabelledBy();
 
     writeTask(() => this.el.classList.add('show-modal'));
 
@@ -1380,6 +1434,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * the end of the body and is no longer an actual child of the modal.
    */
   private onSlotChange = ({ target }: Event) => {
+    this.syncAriaLabelledBy();
+
     const slot = target as HTMLSlotElement;
     slot.assignedElements().forEach((el) => {
       el.querySelectorAll('ion-modal').forEach((childModal) => {

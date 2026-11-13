@@ -9,11 +9,22 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const button = page.locator('#open-modal');
-      const modal = page.locator('ion-modal .modal-wrapper');
+      const modal = page.locator('#a11y-modal .modal-wrapper');
 
       await expect(modal).toHaveAttribute('role', 'dialog');
 
       await button.click();
+      await ionModalDidPresent.next();
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test('should name the dialog with aria-labelledby', async ({ page }) => {
+      await page.goto(`/src/components/modal/test/a11y`, config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      await page.locator('#open-labelledby-modal').click();
       await ionModalDidPresent.next();
 
       const results = await new AxeBuilder({ page }).analyze();
@@ -26,7 +37,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const button = page.locator('#open-modal');
-      const wrapper = page.locator('ion-modal .modal-wrapper');
+      const wrapper = page.locator('#a11y-modal .modal-wrapper');
 
       // Open with the keyboard so :focus-visible applies to the wrapper.
       await button.focus();
