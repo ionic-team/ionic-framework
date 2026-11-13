@@ -133,3 +133,28 @@ describe('input: clear icon', () => {
     expect(icon.getAttribute('icon')).toBe('foo');
   });
 });
+
+describe('input: back/forward cache restore', () => {
+  it('should sync the value when the browser clears the field on restore', async () => {
+    const page = await newSpecPage({
+      components: [Input],
+      html: '<ion-input value="typed"></ion-input>',
+    });
+
+    const inputEl = page.body.querySelector('ion-input')!;
+    const nativeEl = inputEl.querySelector('input')!;
+    const ionInputSpy = jest.fn();
+    inputEl.addEventListener('ionInput', ionInputSpy);
+
+    nativeEl.value = '';
+    const ev = new Event('pageshow');
+    Object.defineProperty(ev, 'persisted', { value: true });
+    page.win.dispatchEvent(ev);
+    await new Promise((resolve) => page.win.requestAnimationFrame(resolve));
+    await page.waitForChanges();
+
+    expect(inputEl.value).toBe('');
+    expect(ionInputSpy).toHaveBeenCalledTimes(1);
+    expect(ionInputSpy.mock.calls[0][0].detail.value).toBe('');
+  });
+});

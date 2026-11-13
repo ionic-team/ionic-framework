@@ -19,6 +19,7 @@ import {
   createNotchController,
   createStartEndContainerController,
   checkInvalidState,
+  syncValueOnPageRestore,
 } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
@@ -400,6 +401,19 @@ export class Input implements ComponentInterface {
   @Listen('click', { capture: true })
   onClickCapture(ev: Event) {
     this.clickController?.handleClickCapture(ev);
+  }
+
+  @Listen('pageshow', { target: 'window' })
+  onPageShow(ev: PageTransitionEvent) {
+    syncValueOnPageRestore(
+      ev,
+      this.nativeInput,
+      () => this.getValue(),
+      (value) => {
+        this.value = value;
+        this.emitInputChange();
+      }
+    );
   }
 
   componentWillLoad() {
