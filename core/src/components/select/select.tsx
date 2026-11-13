@@ -13,6 +13,8 @@ import {
   h,
   forceUpdate,
 } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { ClickController, NotchController, StartEndContainerController } from '@utils/forms';
 import {
@@ -97,6 +99,7 @@ export class Select implements ComponentInterface {
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
   private slotMutationController?: SlotMutationController;
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
@@ -360,6 +363,8 @@ export class Select implements ComponentInterface {
   async connectedCallback() {
     const { el } = this;
 
+    this.tabindexController?.init();
+
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
       this.startEndContainerController?.calculateContainerWidths();
 
@@ -442,6 +447,7 @@ export class Select implements ComponentInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
 
     this.hintTextId = this.getHintTextId();
   }
@@ -461,6 +467,8 @@ export class Select implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    this.tabindexController?.destroy();
+
     if (this.mutationO) {
       this.mutationO.disconnect();
       this.mutationO = undefined;
@@ -1273,6 +1281,7 @@ export class Select implements ComponentInterface {
 
   private renderListbox() {
     const { disabled, inputId, isExpanded, required } = this;
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
 
     return (
       <button
@@ -1287,6 +1296,7 @@ export class Select implements ComponentInterface {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(focusEl) => (this.focusEl = focusEl)}
+        {...tabindexAttributes}
       ></button>
     );
   }
