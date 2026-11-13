@@ -175,6 +175,22 @@ describe('Ionic Global', () => {
     });
 
     /**
+     * The ripple effect is deprecated as an app config key, so the value
+     * set by the application is kept over the value from the theme.
+     */
+    it('should use the application value over the theme value for the ripple effect', () => {
+      initialize({ rippleEffect: false, customTheme: { config: { rippleEffect: true } } } as any);
+
+      expect(config.get('rippleEffect')).toBe(false);
+    });
+
+    it('should use the theme value for the ripple effect when the application has not set one', () => {
+      initialize({ customTheme: { config: { rippleEffect: true } } } as any);
+
+      expect(config.get('rippleEffect')).toBe(true);
+    });
+
+    /**
      * The media queries are generated from the configured widths too, so they
      * have to be emitted once the theme's config has been merged as well.
      */
