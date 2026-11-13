@@ -114,6 +114,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
         : {
             download: this.download,
             href: this.href,
+            rel: this.rel,
             target: this.target,
           };
 
