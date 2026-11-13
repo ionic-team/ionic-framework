@@ -182,6 +182,16 @@ export class StackController {
     if (leavingView) {
       const views = this.getStack(leavingView.stackId);
       const enteringView = views[views.length - 2];
+
+      /**
+       * The swipe gesture checks canGoBack when the pointer goes down, but
+       * only starts the transition once the pointer has moved far enough.
+       * A navigation that finishes in between can leave nothing to go back to.
+       */
+      if (!enteringView) {
+        return Promise.resolve();
+      }
+
       const customAnimation = enteringView.animationBuilder;
 
       return this.wait(() => {
