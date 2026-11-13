@@ -106,6 +106,24 @@ test.describe('Tabs', () => {
         await testState(page, 3, 'account');
       });
 
+      test('should go back in history with the back button within a tab', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/23448',
+        });
+
+        const tab = await getSelectedTab(page);
+        await tab.locator('#goto-tab1-page2').click();
+        await testTabTitle(page, 'Tab 1 - Page 2 (1)');
+
+        await page.locator('ion-back-button').click();
+        await testTabTitle(page, 'Tab 1 - Page 1');
+
+        // Page 2 is still the forward entry, so no entry was pushed.
+        await page.goForward();
+        await testTabTitle(page, 'Tab 1 - Page 2 (1)');
+      });
+
       test('should navigate deep then go home', async ({ page }) => {
         const tab = await getSelectedTab(page);
         await tab.locator('#goto-tab1-page2').click();
@@ -338,6 +356,27 @@ test.describe('Tabs', () => {
 
         tab = await getSelectedTab(page);
         await expect(tab.locator('ion-title')).toContainText('Tab 1 - Page 1');
+      });
+
+      test('should go back in history when leaving the tabs outlet after navigating within a tab', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/23448',
+        });
+
+        await page.locator('#goto-tab1-page2').click();
+        await testTabTitle(page, 'Tab 1 - Page 2 (1)');
+
+        await page.locator('#goto-global').click();
+        await expect(page.locator('ion-title').filter({ hasText: 'Global Page' })).toBeVisible();
+
+        await page.locator('#goto-prev-pop').click();
+        await testTabTitle(page, 'Tab 1 - Page 2 (1)');
+        await ionPageDoesNotExist(page, 'app-tabs-global');
+
+        // The global page is still the forward entry, so no entry was pushed.
+        await page.goForward();
+        await expect(page.locator('ion-title').filter({ hasText: 'Global Page' })).toBeVisible();
       });
     });
 
