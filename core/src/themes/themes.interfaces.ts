@@ -6,8 +6,10 @@ import type { IonContentRecipe } from '../components/content/content.interface';
 import type { IonGalleryRecipe } from '../components/gallery/gallery.interface';
 import type { IonGridRecipe } from '../components/grid/grid.interface';
 import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interface';
+import type { IonNoteConfig, IonNoteRecipe } from '../components/note/note.interface';
 import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interface';
 import type { IonRippleEffectRecipe } from '../components/ripple-effect/ripple-effect.interface';
+import type { IonRouterLinkConfig, IonRouterLinkRecipe } from '../components/router-link/router-link.interface';
 import type { IonRowRecipe } from '../components/row/row.interface';
 import type { IonSkeletonTextRecipe } from '../components/skeleton-text/skeleton-text.interface';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interface';
@@ -257,7 +259,9 @@ export type IonicConfig = IonicGlobalConfig & {
   components?: {
     IonBadge?: IonBadgeConfig;
     IonChip?: IonChipConfig;
+    IonNote?: IonNoteConfig;
     IonProgressBar?: IonProgressBarConfig;
+    IonRouterLink?: IonRouterLinkConfig;
     IonSpinner?: IonSpinnerConfig;
     IonText?: IonTextConfig;
     IonTitle?: IonTitleConfig;
@@ -306,8 +310,10 @@ type Components = {
   IonGallery?: IonGalleryRecipe;
   IonGrid?: IonGridRecipe;
   IonItemDivider?: IonItemDividerRecipe;
+  IonNote?: IonNoteRecipe;
   IonProgressBar?: IonProgressBarRecipe;
   IonRippleEffect?: IonRippleEffectRecipe;
+  IonRouterLink?: IonRouterLinkRecipe;
   IonRow?: IonRowRecipe;
   IonSkeletonText?: IonSkeletonTextRecipe;
   IonSpinner?: IonSpinnerRecipe;

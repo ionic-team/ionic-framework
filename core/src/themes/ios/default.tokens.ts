@@ -45,8 +45,16 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonNote: {
+        hue: 'bold',
+      },
+
       IonProgressBar: {
         shape: 'round',
+      },
+
+      IonRouterLink: {
+        hue: 'bold',
       },
 
       IonSpinner: {
@@ -860,6 +868,45 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
+    IonNote: {
+      font: {
+        family: 'var(--ion-font-family)',
+        size: dynamicFontMin(global.root, 0.875, 17),
+      },
+
+      hue: {
+        bold: {
+          default: {
+            color: `var(--ion-text-color-step-650, ${mix(baseColors.white, baseColors.black, '35%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: `var(--ion-text-color-step-650, ${mix(baseColors.white, baseColors.black, '35%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letterSpacing: '-0.0235em',
+
+      line: {
+        height: '1.294',
+      },
+    },
+
     IonProgressBar: {
       height: 'var(--ion-scaling-100)',
 
@@ -948,6 +995,65 @@ export const defaultTheme: DefaultTheme = {
 
     IonRippleEffect: {
       opacity: '0.16',
+    },
+
+    IonRouterLink: {
+      hue: {
+        bold: {
+          default: {
+            color: ionColor('primary', 'foreground'),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.1 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.1 }),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: ionColor('primary', 'foreground', { subtle: true }),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.1 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.1 }),
+            },
+          },
+        },
+      },
+
+      state: {
+        focus: {
+          border: {
+            radius: 'var(--ion-radii-xxs)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-xxs)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-xxs)',
+          },
+        },
+      },
     },
 
     IonRow: {

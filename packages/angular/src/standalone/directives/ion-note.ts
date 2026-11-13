@@ -10,14 +10,14 @@ import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion
 
 @ProxyCmp({
   defineCustomElementFn: defineIonNote,
-  inputs: ['color', 'mode', 'theme']
+  inputs: ['color', 'hue', 'mode']
 })
 @Component({
   selector: 'ion-note',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'theme'],
+  inputs: ['color', 'hue', 'mode'],
 })
 export class IonNote {
   protected el: HTMLIonNoteElement;
