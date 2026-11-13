@@ -403,6 +403,9 @@ export class Input implements ComponentInterface {
     this.clickController?.handleClickCapture(ev);
   }
 
+  /**
+   * Safari clears the field when it restores the page from the back/forward cache.
+   */
   @Listen('pageshow', { target: 'window' })
   onPageShow(ev: PageTransitionEvent) {
     syncValueOnPageRestore(

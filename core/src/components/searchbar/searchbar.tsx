@@ -277,6 +277,9 @@ export class Searchbar implements ComponentInterface {
     });
   }
 
+  /**
+   * Safari clears the field when it restores the page from the back/forward cache.
+   */
   @Listen('pageshow', { target: 'window' })
   onPageShow(ev: PageTransitionEvent) {
     syncValueOnPageRestore(
