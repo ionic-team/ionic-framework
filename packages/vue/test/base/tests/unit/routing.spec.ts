@@ -17,7 +17,7 @@ import {
   NavigationFailureType,
   onBeforeRouteLeave
 } from 'vue-router';
-import { inject } from 'vue';
+import { defineAsyncComponent, inject } from 'vue';
 import { waitForRouter } from './utils';
 
 enableAutoUnmount(afterEach);
@@ -2322,5 +2322,58 @@ describe('Routing', () => {
       { id: 'home', hidden: true },
       { id: 'list', hidden: false }
     ]);
+  });
+
+  it('should not run the transition of a newer page when a superseded page mounts first', async () => {
+    const createLoadingPage = (id: string) => {
+      let load = () => {};
+      const page = defineAsyncComponent(
+        () => new Promise<ReturnType<typeof createPage>>((resolve) => {
+          load = () => resolve(createPage(id));
+        })
+      );
+
+      return { page, load: () => load() };
+    };
+
+    const list = createLoadingPage('list');
+    const detail = createLoadingPage('detail');
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: createPage('home') },
+        { path: '/list', component: list.page },
+        { path: '/detail', component: detail.page }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    router.push('/list');
+    await waitForRouter();
+    router.push('/detail');
+    await waitForRouter();
+
+    // /list finishes loading after the route moved on to /detail.
+    list.load();
+    await waitForRouter();
+    detail.load();
+    await waitForRouter();
+
+    expect(warnSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('does not have the required <ion-page> component')
+    );
+    expect(viewStack(wrapper)).toContainEqual({ id: 'detail', hidden: false });
+
+    warnSpy.mockRestore();
   });
 });
