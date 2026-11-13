@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { syncValueOnPageRestore } from '@utils/forms';
 import { debounceEvent, raf, componentOnReady, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
@@ -274,6 +275,22 @@ export class Searchbar implements ComponentInterface {
       this.positionElements();
       forceUpdate(this);
     });
+  }
+
+  /**
+   * Safari clears the field when it restores the page from the back/forward cache.
+   */
+  @Listen('pageshow', { target: 'window' })
+  onPageShow(ev: PageTransitionEvent) {
+    syncValueOnPageRestore(
+      ev,
+      this.nativeInput,
+      () => this.getValue(),
+      (value) => {
+        this.value = value;
+        this.emitInputChange();
+      }
+    );
   }
 
   connectedCallback() {

@@ -4,3 +4,4 @@ export * from './compare-with-utils';
 export * from './item-multiple-inputs';
 export * from './click-controller';
 export * from './validity';
+export * from './page-restore';
