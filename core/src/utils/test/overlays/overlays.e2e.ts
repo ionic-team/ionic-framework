@@ -529,5 +529,31 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(wrapper).toHaveAttribute('role', 'dialog');
       await expect(wrapper).toBeFocused();
     });
+
+    test('should not move focus from the focused element when keyboardClose is false', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31199',
+      });
+      await page.setContent(
+        `
+        <textarea id="test-textarea"></textarea>
+        <ion-popover keyboard-close="false">
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+      `,
+        config
+      );
+
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const popover = page.locator('ion-popover');
+      const textarea = page.locator('#test-textarea');
+
+      await textarea.focus();
+      await popover.evaluate((el: HTMLIonPopoverElement) => el.present());
+      await ionPopoverDidPresent.next();
+
+      await expect(textarea).toBeFocused();
+    });
   });
 });
