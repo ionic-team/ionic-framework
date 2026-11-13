@@ -724,7 +724,8 @@ export const IonNavLink: StencilVueComponent<JSX.IonNavLink> = /*@__PURE__*/ def
 
 
 export const IonNote: StencilVueComponent<JSX.IonNote> = /*@__PURE__*/ defineContainer<JSX.IonNote>('ion-note', defineIonNote, [
-  'color'
+  'color',
+  'hue'
 ]);
 
 

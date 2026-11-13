@@ -45,6 +45,10 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonNote: {
+        hue: 'bold',
+      },
+
       IonProgressBar: {
         shape: 'round',
       },
@@ -859,6 +863,39 @@ export const defaultTheme: DefaultTheme = {
         trailing: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
+          },
+        },
+      },
+    },
+
+    IonNote: {
+      font: {
+        family: 'var(--ion-font-family)',
+        size: dynamicFontMin(global.root, 0.875, 16),
+      },
+
+      hue: {
+        bold: {
+          default: {
+            color: `var(--ion-text-color-step-650, ${mix(baseColors.white, baseColors.black, '35%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: `var(--ion-text-color-step-650, ${mix(baseColors.white, baseColors.black, '35%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
           },
         },
       },
