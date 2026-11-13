@@ -12,8 +12,8 @@ import type { Color, Gesture, GestureDetail } from '../../interface';
 import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 
 import type {
-  KnobName,
-  KnobPosition,
+  RangeKnobName,
+  RangeKnobPosition,
   RangeChangeEventDetail,
   RangeKnobMoveEndEventDetail,
   RangeKnobMoveStartEventDetail,
@@ -93,10 +93,10 @@ export class Range implements ComponentInterface {
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
-  @State() private activatedKnob: KnobName;
-  @State() private focusedKnob: KnobName;
-  @State() private hoveredKnob: KnobName;
-  @State() private pressedKnob: KnobName;
+  @State() private activatedKnob: RangeKnobName | undefined;
+  @State() private focusedKnob: RangeKnobName | undefined;
+  @State() private hoveredKnob: RangeKnobName | undefined;
+  @State() private pressedKnob: RangeKnobName | undefined;
 
   /**
    * The color to use from your application's color palette.
@@ -359,7 +359,7 @@ export class Range implements ComponentInterface {
          * should not move.
          */
         threshold: 10,
-        onStart: () => this.onStart(),
+        onStart: (ev) => this.onStart(ev.startX),
         onMove: (ev) => this.onMove(ev),
         onEnd: (ev) => this.onEnd(ev),
       });
@@ -452,25 +452,24 @@ export class Range implements ComponentInterface {
     }
   }
 
-  private handleKeyboard = (knob: KnobName, isIncrease: boolean) => {
-    const { ensureValueInBounds } = this;
-
+  private handleKeyboard = (knob: RangeKnobName, isIncrease: boolean) => {
     let step = this.step;
     step = step > 0 ? step : 1;
     step = step / (this.max - this.min);
     if (!isIncrease) {
       step *= -1;
     }
+    this.ionKnobMoveStart.emit(this.getKnobMoveDetail(knob));
+
     if (knob === 'A') {
       this.ratioA = clamp(0, this.ratioA + step, 1);
     } else {
       this.ratioB = clamp(0, this.ratioB + step, 1);
     }
 
-    this.ionKnobMoveStart.emit({ value: ensureValueInBounds(this.value) });
     this.updateValue();
     this.emitValueChange();
-    this.ionKnobMoveEnd.emit({ value: ensureValueInBounds(this.value) });
+    this.ionKnobMoveEnd.emit(this.getKnobMoveDetail(knob));
   };
   private getValue(): RangeValue {
     const value = this.value ?? 0;
@@ -502,59 +501,36 @@ export class Range implements ComponentInterface {
   }
 
   /**
-   * The value should be updated on touch end or
-   * when the component is being dragged.
-   * This follows the native behavior of mobile devices.
+   * Called when the user starts dragging the bar or knob,
+   * or taps the bar. The view doesn't scroll during a drag
+   * so the user doesn't get disoriented.
    *
-   * For example: When the user lifts their finger from the
-   * screen after tapping the bar or dragging the bar or knob.
+   * @param startX The x coordinate where the interaction started.
    */
-  private onStart() {
-    this.ionKnobMoveStart.emit({ value: this.ensureValueInBounds(this.value) });
+  private onStart(startX: number) {
+    const { contentEl } = this;
+
+    if (contentEl) {
+      this.initialContentScrollY = disableContentScrollY(contentEl);
+    }
+
+    /**
+     * Pick the knob before emitting so the start event can
+     * report it. It stays the same for the rest of the drag.
+     */
+    const knob = this.setPressedKnob(startX);
+
+    this.ionKnobMoveStart.emit(this.getKnobMoveDetail(knob));
   }
 
   /**
    * The value should be updated while dragging the
    * bar or knob.
    *
-   * While the user is dragging, the view
-   * should not scroll. This is to prevent the user from
-   * feeling disoriented while dragging.
-   *
-   * The user can scroll on the view if the knob or
-   * bar is not being dragged.
-   *
    * @param detail The details of the gesture event.
    */
   private onMove(detail: GestureDetail) {
-    const { contentEl, pressedKnob } = this;
-    const currentX = detail.currentX;
-
-    /**
-     * Since the user is dragging on the bar or knob, the view should not scroll.
-     *
-     * This only needs to be done once.
-     */
-    if (contentEl && this.pressedKnob === undefined) {
-      this.initialContentScrollY = disableContentScrollY(contentEl);
-    }
-
-    /**
-     * The `pressedKnob` can be undefined if the user just
-     * started dragging the knob.
-     *
-     * This is necessary to determine which knob the user is dragging,
-     * especially when using dual knobs.
-     * Plus, it determines when to apply certain styles.
-     *
-     * This only needs to be done once since the knob won't change
-     * while the user is dragging.
-     */
-    if (pressedKnob === undefined) {
-      this.setPressedKnob(currentX);
-    }
-
-    this.update(currentX);
+    this.update(detail.currentX);
   }
 
   /**
@@ -569,29 +545,20 @@ export class Range implements ComponentInterface {
     const currentX = (detail as GestureDetail).currentX ?? (detail as MouseEvent).clientX;
 
     /**
-     * The `pressedKnob` can be undefined if the user never
-     * dragged the knob. They just tapped on the bar.
-     *
-     * This is necessary to determine which knob the user is changing,
-     * especially when using dual knobs.
-     * Plus, it determines when to apply certain styles.
-     */
-    if (this.pressedKnob === undefined) {
-      this.setPressedKnob(currentX);
-    }
-
-    /**
      * The user is no longer dragging the bar or
      * knob (if they were dragging it).
      *
      * The user can now scroll on the view in the next gesture event.
      */
-    if (contentEl && this.pressedKnob !== undefined) {
+    if (contentEl) {
       resetContentScrollY(contentEl, initialContentScrollY);
     }
 
     // update the active knob's position
     this.update(currentX);
+
+    // The pressed knob is always set because `onStart` runs first.
+    const knob = this.pressedKnob!;
 
     /**
      * Reset the pressed knob to undefined since the user
@@ -600,7 +567,7 @@ export class Range implements ComponentInterface {
     this.pressedKnob = undefined;
 
     this.emitValueChange();
-    this.ionKnobMoveEnd.emit({ value: this.ensureValueInBounds(this.value) });
+    this.ionKnobMoveEnd.emit(this.getKnobMoveDetail(knob));
   }
 
   private update(currentX: number) {
@@ -628,7 +595,15 @@ export class Range implements ComponentInterface {
     this.updateValue();
   }
 
-  private setPressedKnob(currentX: number) {
+  private getKnobMoveDetail(knob: RangeKnobName): RangeKnobMoveStartEventDetail & RangeKnobMoveEndEventDetail {
+    return {
+      value: this.ensureValueInBounds(this.value),
+      knob,
+      position: getKnobPosition(knob, this.ratioA, this.ratioB, this.dualKnobs),
+    };
+  }
+
+  private setPressedKnob(currentX: number): RangeKnobName {
     const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
 
     // figure out which knob they started closer to
@@ -636,7 +611,9 @@ export class Range implements ComponentInterface {
     if (isRTL(this.el)) {
       ratio = 1 - ratio;
     }
-    this.pressedKnob = !this.dualKnobs || Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio) ? 'A' : 'B';
+    const knob = !this.dualKnobs || Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio) ? 'A' : 'B';
+    this.pressedKnob = knob;
+    return knob;
   }
 
   private get valA() {
@@ -722,7 +699,7 @@ export class Range implements ComponentInterface {
     }
   };
 
-  private onKnobFocus = (knob: KnobName) => {
+  private onKnobFocus = (knob: RangeKnobName) => {
     // Clicking focuses the range which is needed for the keyboard,
     // but we only want to add the ion-focused class when focused via Tab.
     if (!this.focusFromPointer) {
@@ -756,7 +733,7 @@ export class Range implements ComponentInterface {
     }, 0);
   };
 
-  private onKnobMouseEnter = (knob: KnobName) => {
+  private onKnobMouseEnter = (knob: RangeKnobName) => {
     this.hoveredKnob = knob;
   };
 
@@ -903,7 +880,7 @@ export class Range implements ComponentInterface {
            * dragged, the pressedKnob will be defined.
            */
           if (this.pressedKnob === undefined) {
-            this.onStart();
+            this.onStart(ev.clientX);
             this.onEnd(ev);
           }
         }}
@@ -1068,8 +1045,8 @@ export class Range implements ComponentInterface {
 }
 
 interface RangeKnob {
-  knob: KnobName;
-  position: KnobPosition;
+  knob: RangeKnobName;
+  position: RangeKnobPosition;
   dualKnobs: boolean;
   value: number;
   ratio: number;
@@ -1083,10 +1060,10 @@ interface RangeKnob {
   pin: boolean;
   pinFormatter: PinFormatter;
   inheritedAttributes: Attributes;
-  handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
-  onKnobFocus: (knob: KnobName) => void;
+  handleKeyboard: (name: RangeKnobName, isIncrease: boolean) => void;
+  onKnobFocus: (knob: RangeKnobName) => void;
   onKnobBlur: () => void;
-  onKnobMouseEnter: (knob: KnobName) => void;
+  onKnobMouseEnter: (knob: RangeKnobName) => void;
   onKnobMouseLeave: () => void;
 }
 
@@ -1231,7 +1208,12 @@ const renderKnob = (
  * the same knob. In that case, we treat knob "A" as the lower position and
  * knob "B" as the upper position.
  */
-const getKnobPosition = (knob: 'A' | 'B', ratioA: number, ratioB: number, dualKnobs: boolean): 'lower' | 'upper' => {
+const getKnobPosition = (
+  knob: RangeKnobName,
+  ratioA: number,
+  ratioB: number,
+  dualKnobs: boolean
+): RangeKnobPosition => {
   if (!dualKnobs) {
     return 'lower';
   }

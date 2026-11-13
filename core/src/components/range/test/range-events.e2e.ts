@@ -38,10 +38,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         // Once the knob is dragged, the start event should fire with
         // the initial value.
-        expect(rangeStart).toHaveReceivedEventDetail({ value: 20 });
+        expect(rangeStart).toHaveReceivedEventDetail({ value: 20, knob: 'A', position: 'lower' });
         // Once the knob is released, the end event should fire with
         // the final value.
-        expect(rangeEnd).toHaveReceivedEventDetail({ value: 100 });
+        expect(rangeEnd).toHaveReceivedEventDetail({ value: 100, knob: 'A', position: 'lower' });
 
         /**
          * Verify both events fire if range is tapped without dragging.
@@ -53,10 +53,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         // Once the tap is released, the start event should fire with
         // the initial value.
-        expect(rangeStart).toHaveReceivedEventDetail({ value: 100 });
+        expect(rangeStart).toHaveReceivedEventDetail({ value: 100, knob: 'A', position: 'lower' });
         // Once the tap is released, the end event should fire with
         // the final value.
-        expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
+        expect(rangeEnd).toHaveReceivedEventDetail({ value: 50, knob: 'A', position: 'lower' });
       });
 
       test('should emit start/end events, keyboard', async ({ page }) => {
@@ -71,8 +71,135 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await rangeStart.next();
         await rangeEnd.next();
 
-        expect(rangeStart).toHaveReceivedEventDetail({ value: 20 });
-        expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
+        expect(rangeStart).toHaveReceivedEventDetail({ value: 20, knob: 'A', position: 'lower' });
+        expect(rangeEnd).toHaveReceivedEventDetail({ value: 21, knob: 'A', position: 'lower' });
+      });
+
+      test.describe('dual knobs', () => {
+        test.beforeEach(async ({ page }) => {
+          /**
+           * Requires padding to prevent the knobs from being clipped.
+           */
+          await page.setContent(
+            `
+            <div style="padding: 0 20px">
+              <ion-range aria-label="Range" dual-knobs="true"></ion-range>
+            </div>
+            <script>
+              document.querySelector('ion-range').value = { lower: 20, upper: 80 };
+            </script>
+          `,
+            config
+          );
+        });
+
+        test('should report which knob is dragged', async ({ page }) => {
+          const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
+          const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
+
+          const knobB = page.locator('ion-range .range-knob-handle-b');
+
+          await dragElementBy(knobB, page, -50);
+
+          await rangeStart.next();
+          await rangeEnd.next();
+
+          expect(rangeStart).toHaveReceivedEventDetail({
+            value: { lower: 20, upper: 80 },
+            knob: 'B',
+            position: 'upper',
+          });
+          expect(rangeEnd.lastEvent?.detail).toMatchObject({ knob: 'B', position: 'upper' });
+        });
+
+        test('should report the position before and after a knob is dragged past the other', async ({ page }) => {
+          const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
+          const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
+
+          const knobA = page.locator('ion-range .range-knob-handle-a');
+          const knobBox = (await knobA.boundingBox())!;
+          const sliderBox = (await page.locator('ion-range .range-slider').boundingBox())!;
+
+          // Drag knob A just past the end of the slider so it lands on the max value.
+          const dragByX = sliderBox.x + sliderBox.width + 10 - (knobBox.x + knobBox.width / 2);
+          await dragElementBy(knobA, page, dragByX);
+
+          await rangeStart.next();
+          await rangeEnd.next();
+
+          expect(rangeStart).toHaveReceivedEventDetail({
+            value: { lower: 20, upper: 80 },
+            knob: 'A',
+            position: 'lower',
+          });
+          expect(rangeEnd).toHaveReceivedEventDetail({
+            value: { lower: 80, upper: 100 },
+            knob: 'A',
+            position: 'upper',
+          });
+        });
+
+        test('should report the knob closest to where the bar is tapped', async ({ page }) => {
+          const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
+          const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
+
+          const box = (await page.locator('ion-range .range-slider').boundingBox())!;
+
+          // Tap at 90%, which is closer to knob B (80) than knob A (20).
+          await page.mouse.click(box.x + box.width * 0.9, box.y + box.height / 2);
+
+          await rangeStart.next();
+          await rangeEnd.next();
+
+          expect(rangeStart).toHaveReceivedEventDetail({
+            value: { lower: 20, upper: 80 },
+            knob: 'B',
+            position: 'upper',
+          });
+          expect(rangeEnd).toHaveReceivedEventDetail({ value: { lower: 20, upper: 90 }, knob: 'B', position: 'upper' });
+        });
+
+        test('should report which knob is moved with the keyboard', async ({ page }) => {
+          const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
+          const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
+
+          await page.locator('ion-range .range-knob-handle-b').focus();
+          await page.keyboard.press('ArrowRight');
+
+          await rangeStart.next();
+          await rangeEnd.next();
+
+          expect(rangeStart).toHaveReceivedEventDetail({
+            value: { lower: 20, upper: 80 },
+            knob: 'B',
+            position: 'upper',
+          });
+          expect(rangeEnd).toHaveReceivedEventDetail({ value: { lower: 20, upper: 81 }, knob: 'B', position: 'upper' });
+        });
+
+        test('should report the position before and after a knob crosses the other with the keyboard', async ({
+          page,
+        }) => {
+          const range = page.locator('ion-range');
+          await range.evaluate((el: HTMLIonRangeElement) => (el.value = { lower: 50, upper: 50 }));
+          await page.waitForChanges();
+
+          const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
+          const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
+
+          await page.locator('ion-range .range-knob-handle-a').focus();
+          await page.keyboard.press('ArrowRight');
+
+          await rangeStart.next();
+          await rangeEnd.next();
+
+          expect(rangeStart).toHaveReceivedEventDetail({
+            value: { lower: 50, upper: 50 },
+            knob: 'A',
+            position: 'lower',
+          });
+          expect(rangeEnd).toHaveReceivedEventDetail({ value: { lower: 50, upper: 51 }, knob: 'A', position: 'upper' });
+        });
       });
 
       test('should emit end event on tap', async ({ page }, testInfo) => {
@@ -281,6 +408,49 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         expect(ionInputSpy).toHaveReceivedEventDetail({ value: 50 });
       });
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes. LTR is
+ * covered by the dual knobs tests above.
+ */
+configs({ modes: ['ios'], directions: ['rtl'] }).forEach(({ title, config }) => {
+  test.describe(title('range: events:'), () => {
+    test('should report the knob closest to where the bar is tapped', async ({ page }) => {
+      /**
+       * Requires padding to prevent the knobs from being clipped.
+       */
+      await page.setContent(
+        `
+        <div style="padding: 0 20px">
+          <ion-range aria-label="Range" dual-knobs="true"></ion-range>
+        </div>
+        <script>
+          document.querySelector('ion-range').value = { lower: 20, upper: 80 };
+        </script>
+      `,
+        config
+      );
+
+      const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
+      const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
+
+      const box = (await page.locator('ion-range .range-slider').boundingBox())!;
+
+      // In RTL, tapping at 10% from the left is 90% of the value, closer to knob B (80).
+      await page.mouse.click(box.x + box.width * 0.1, box.y + box.height / 2);
+
+      await rangeStart.next();
+      await rangeEnd.next();
+
+      expect(rangeStart).toHaveReceivedEventDetail({
+        value: { lower: 20, upper: 80 },
+        knob: 'B',
+        position: 'upper',
+      });
+      expect(rangeEnd).toHaveReceivedEventDetail({ value: { lower: 20, upper: 90 }, knob: 'B', position: 'upper' });
     });
   });
 });
