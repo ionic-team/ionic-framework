@@ -65,6 +65,8 @@ export {
   RangeChangeEventDetail,
   RangeKnobMoveStartEventDetail,
   RangeKnobMoveEndEventDetail,
+  RangeKnobMoveStartCustomEvent,
+  RangeKnobMoveEndCustomEvent,
   RefresherCustomEvent,
   RefresherEventDetail,
   ReorderMoveCustomEvent,

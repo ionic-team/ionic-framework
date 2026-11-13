@@ -102,6 +102,8 @@ export type {
   RangeChangeEventDetail,
   RangeKnobMoveStartEventDetail,
   RangeKnobMoveEndEventDetail,
+  RangeKnobMoveStartCustomEvent,
+  RangeKnobMoveEndCustomEvent,
   RefresherCustomEvent,
   RefresherEventDetail,
   RefresherPullEndCustomEvent,
