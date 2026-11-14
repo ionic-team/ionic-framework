@@ -158,11 +158,8 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
       await select.click();
       await ionModalWillPresent.next();
 
-      const modal = page.locator('ion-modal');
-      const paddingTop = await modal.evaluate((el: HTMLIonModalElement) => {
-        const header = el.querySelector('ion-header');
-        return getComputedStyle(header!).paddingTop;
-      });
+      const toolbar = page.locator('ion-modal ion-header ion-toolbar');
+      const paddingTop = await toolbar.evaluate((el) => getComputedStyle(el).paddingTop);
 
       expect(paddingTop).toBe('0px');
     });
@@ -193,10 +190,8 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
       await modal.evaluate((el: HTMLIonModalElement) => el.present());
       await ionModalWillPresent.next();
 
-      const paddingTop = await modal.evaluate((el: HTMLIonModalElement) => {
-        const header = el.querySelector('ion-header');
-        return getComputedStyle(header!).paddingTop;
-      });
+      const toolbar = page.locator('ion-modal ion-header ion-toolbar');
+      const paddingTop = await toolbar.evaluate((el) => getComputedStyle(el).paddingTop);
 
       expect(paddingTop).toBe('80px');
     });
