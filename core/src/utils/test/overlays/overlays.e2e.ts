@@ -529,5 +529,94 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(wrapper).toHaveAttribute('role', 'dialog');
       await expect(wrapper).toBeFocused();
     });
+
+    [
+      {
+        tagName: 'ion-modal',
+        content: `<button id="first">First</button><button id="last">Last</button>`,
+      },
+      {
+        // Matches real popover usage; Firefox can focus a bare `.popover-content` scroller
+        tagName: 'ion-popover',
+        content: `<ion-content><button id="first">First</button><button id="last">Last</button></ion-content>`,
+      },
+    ].forEach(({ tagName, content }) => {
+      test.describe(tagName, () => {
+        test('should keep focus inside the overlay when tabbing past either end', async ({ page, pageUtils }) => {
+          await page.setContent(
+            `
+            <button id="before">Before</button>
+            <${tagName}>${content}</${tagName}>
+          `,
+            config
+          );
+
+          const overlay = page.locator(tagName);
+          const firstButton = page.locator('#first');
+          const lastButton = page.locator('#last');
+
+          await overlay.evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => el.present());
+          // present() moves focus into the overlay a frame after it resolves
+          await page.waitForFunction(
+            (selector) => document.querySelector(selector)!.contains(document.activeElement),
+            tagName
+          );
+          await firstButton.focus();
+
+          /**
+           * Records any element outside the overlay that receives focus.
+           * The trap pulls focus back as soon as it lands outside, so
+           * checking only the final focused element would miss a leak.
+           */
+          await page.evaluate((selector) => {
+            const overlayEl = document.querySelector(selector)!;
+            (window as any).focusedOutside = [];
+            document.addEventListener(
+              'focus',
+              (ev) => {
+                const target = ev.target as HTMLElement;
+                if (!overlayEl.contains(target)) {
+                  (window as any).focusedOutside.push(target.id || target.tagName);
+                }
+              },
+              true
+            );
+          }, tagName);
+
+          await pageUtils.pressKeys('Shift+Tab');
+          await expect(lastButton).toBeFocused();
+
+          await pageUtils.pressKeys('Tab');
+          await expect(firstButton).toBeFocused();
+
+          const focusedOutside = await page.evaluate(() => (window as any).focusedOutside);
+          expect(focusedOutside).toEqual([]);
+        });
+
+        test('should let focus leave the overlay when focusTrap is false', async ({ page, pageUtils }) => {
+          await page.setContent(
+            `
+            <button id="before">Before</button>
+            <${tagName} focus-trap="false">${content}</${tagName}>
+          `,
+            config
+          );
+
+          const overlay = page.locator(tagName);
+
+          await overlay.evaluate((el: HTMLIonModalElement | HTMLIonPopoverElement) => el.present());
+          // present() moves focus into the overlay a frame after it resolves
+          await page.waitForFunction(
+            (selector) => document.querySelector(selector)!.contains(document.activeElement),
+            tagName
+          );
+
+          await page.locator('#first').focus();
+          await pageUtils.pressKeys('Shift+Tab');
+
+          await expect(page.locator('#before')).toBeFocused();
+        });
+      });
+    });
   });
 });

@@ -222,12 +222,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.keyboard.press(tabKey);
 
-      // for Firefox, ion-textarea is focused first
-      // need to tab again to get to native input
-      if (browserName === 'firefox') {
-        await page.keyboard.press(tabKey);
-      }
-
       await expect(innerNativeTextarea).toBeFocused();
 
       await page.keyboard.press('ArrowDown');
