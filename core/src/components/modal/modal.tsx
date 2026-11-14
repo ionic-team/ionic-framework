@@ -7,6 +7,7 @@ import type { Attributes } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
+import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -1760,6 +1761,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
+        <OverlayFocusBoundary overlay={this.el} edge="start" />
+
         <div
           /*
             role and aria-modal must be used on the
@@ -1794,6 +1797,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
           )}
           <slot onSlotchange={this.onSlotChange}></slot>
         </div>
+
+        <OverlayFocusBoundary overlay={this.el} edge="end" />
       </Host>
     );
   }

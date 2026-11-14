@@ -7,6 +7,7 @@ import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
+import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -913,7 +914,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop tappable={this.backdropDismiss} />
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="start" />
 
         <div
           class="alert-wrapper ion-overlay-wrapper"
@@ -951,7 +952,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           {this.renderAlertButtons()}
         </div>
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="end" />
       </Host>
     );
   }

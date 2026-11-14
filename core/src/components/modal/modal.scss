@@ -111,6 +111,14 @@ ion-backdrop {
   background: transparent;
 }
 
+/**
+ * Removes the focus boundaries from the tab order
+ * so focus can leave the modal when the trap is off.
+ */
+:host(.ion-disable-focus-trap) .ion-overlay-focus-boundary {
+  display: none;
+}
+
 @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
   :host {
     --width: #{$modal-inset-width};
