@@ -5,6 +5,14 @@
 // Ionic Select Modal
 // --------------------------------------------------
 
+// The select's centered modal never reaches the top edge unless the viewport
+// is too short to fit its 340px min-height, so it does not need the top safe area.
+@media (min-height: 351px) {
+  :host-context(ion-modal.select-modal.modal-default) {
+    --ion-safe-area-top: 0px;
+  }
+}
+
 :host(.in-modal-default) ion-content::part(scroll) {
   --padding-bottom: #{globals.$ion-space-400};
 }

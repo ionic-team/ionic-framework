@@ -116,7 +116,15 @@ export const getModalCoveredAxes = (hostEl: HTMLElement): ModalCoveredAxes => {
   const width = getOverlaySizeType(styles.getPropertyValue('--width'));
   const height = getOverlaySizeType(styles.getPropertyValue('--height'));
 
-  if (width === 'fullscreen' && height === 'fullscreen') {
+  // A fullscreen --width/--height can still be clamped by a definite
+  // --max-width/--max-height (e.g. the centered select modal sets
+  // --max-height: 340px). When clamped, the modal may not reach the
+  // viewport edges, so we fall through to measure the wrapper instead.
+  const maxWidth = getOverlaySizeType(styles.getPropertyValue('--max-width'));
+  const maxHeight = getOverlaySizeType(styles.getPropertyValue('--max-height'));
+  const isClamped = maxWidth === 'definite' || maxHeight === 'definite';
+
+  if (width === 'fullscreen' && height === 'fullscreen' && !isClamped) {
     return { vertical: true, horizontal: true };
   }
 

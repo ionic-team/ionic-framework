@@ -128,3 +128,72 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
     });
   });
 });
+
+/**
+ * The safe-area override only exists in the Ionic theme,
+ * where the select modal is a centered dialog on phones.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select-modal: safe-area'), () => {
+    test('centered select modal should not have extra top padding with non-zero safe-area-top', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-select label="Fruit" interface="modal">
+            <ion-select-option value="apples">Apples</ion-select-option>
+            <ion-select-option value="bananas">Bananas</ion-select-option>
+          </ion-select>
+        </ion-app>
+        `,
+        config
+      );
+
+      await page.evaluate(() => {
+        document.documentElement.style.setProperty('--ion-safe-area-top', '80px');
+      });
+
+      const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
+      const select = page.locator('ion-select');
+      await select.click();
+      await ionModalWillPresent.next();
+
+      const toolbar = page.locator('ion-modal ion-header ion-toolbar');
+      const paddingTop = await toolbar.evaluate((el) => getComputedStyle(el).paddingTop);
+
+      expect(paddingTop).toBe('0px');
+    });
+
+    test('fullscreen modal with ion-select-modal should keep safe-area-top padding', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-modal>
+            <ion-select-modal></ion-select-modal>
+          </ion-modal>
+          <script>
+            const selectModal = document.querySelector('ion-select-modal');
+            selectModal.options = ${JSON.stringify(checkedOptions)};
+            selectModal.multiple = false;
+          </script>
+        </ion-app>
+        `,
+        config
+      );
+
+      await page.evaluate(() => {
+        document.documentElement.style.setProperty('--ion-safe-area-top', '80px');
+      });
+
+      const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
+      const modal = page.locator('ion-modal');
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalWillPresent.next();
+
+      const toolbar = page.locator('ion-modal ion-header ion-toolbar');
+      const paddingTop = await toolbar.evaluate((el) => getComputedStyle(el).paddingTop);
+
+      expect(paddingTop).toBe('80px');
+    });
+  });
+});
