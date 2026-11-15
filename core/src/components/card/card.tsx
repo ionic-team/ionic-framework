@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import { Element, Component, Host, Prop, Watch, h, forceUpdate } from '@stencil/core';
 import type { AttributeController } from '@utils/attribute-controller';
-import { createAttributeController } from '@utils/attribute-controller';
+import { createAttributeController, createTabindexController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { createColorClasses, openURL } from '@utils/theme';
 
@@ -24,6 +24,7 @@ import type { RouterDirection } from '../router/utils/interface';
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
   private ariaController?: AttributeController;
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLElement;
   /**
@@ -89,19 +90,45 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentWillLoad() {
     /**
-     * Only the initial copy takes the attribute off the host, so an `aria-label` written
-     * after load stays on the host too. That's harmless here, because unlike `ion-item`
-     * the card host renders no role of its own, so nothing reads the leftover copy.
+     * A non-clickable card renders no native element to apply the copy to, so an
+     * `aria-label` written after load has to stay on the host.
      */
-    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+    this.ariaController = createAttributeController(
+      this.el,
+      ['aria-label'],
+      () => forceUpdate(this),
+      [],
+      undefined,
+      () => !this.isClickable()
+    );
+
+    // A card that isn't clickable has no native button or link, so `tabindex` stays on the host.
+    this.tabindexController = createTabindexController(
+      this.el,
+      () => forceUpdate(this),
+      () => this.isClickable()
+    );
+  }
+
+  /**
+   * Changing `href` or `button` adds or removes the native element, so `tabindex` and a
+   * label written after load have to move with it.
+   */
+  @Watch('href')
+  @Watch('button')
+  clickableChanged() {
+    this.ariaController?.refresh();
+    this.tabindexController?.refresh();
   }
 
   connectedCallback() {
     this.ariaController?.init();
+    this.tabindexController?.init();
   }
 
   disconnectedCallback() {
     this.ariaController?.destroy();
+    this.tabindexController?.destroy();
   }
 
   private isClickable(): boolean {
@@ -116,6 +143,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
     const { href, routerAnimation, routerDirection } = this;
     const inheritedAriaAttributes = this.ariaController?.attributes ?? {};
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
     const attrs =
       TagType === 'button'
@@ -131,6 +159,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
       <TagType
         {...attrs}
         {...inheritedAriaAttributes}
+        {...tabindexAttributes}
         class="card-native"
         part="native"
         disabled={this.disabled}

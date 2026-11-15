@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -64,7 +65,7 @@ export class ToolbarTitle implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           [`title-${size}`]: true,
-          'title-rtl': document.dir === 'rtl',
+          'title-rtl': isRTL(this.el),
         })}
       >
         <div class="toolbar-title">

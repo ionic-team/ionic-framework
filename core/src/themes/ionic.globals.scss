@@ -53,6 +53,10 @@ $form-control-min-width: 2ch;
 /// iOS does not have a floating label design spec, so we standardize on 0.75.
 $form-control-label-stacked-scale: 0.75;
 
+// Easing for the color, transform, and max-width transitions of a form
+// control label as it moves between resting and floating.
+$form-control-label-transition-easing: cubic-bezier(.4, 0, .2, 1);
+
 
 // Z-Index
 // --------------------------------------------------

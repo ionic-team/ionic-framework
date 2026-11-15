@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.11](https://github.com/ionic-team/ionic-framework/compare/v9.0.10...v9.0.11) (2026-11-11)
+
+### Bug Fixes
+
+* **a11y:** forward host tabindex to the native element ([#31720](https://github.com/ionic-team/ionic-framework/issues/31720)) ([efaca43](https://github.com/ionic-team/ionic-framework/commit/efaca43c1a0f5971c366c81973ce0836451f9f47)), closes [#31623](https://github.com/ionic-team/ionic-framework/issues/31623)
+
+
+## [9.0.10](https://github.com/ionic-team/ionic-framework/compare/v9.0.9...v9.0.10) (2026-10-28)
+
+### Bug Fixes
+
+* **alert:** only block Enter on checkbox inputs, not the whole document ([#31643](https://github.com/ionic-team/ionic-framework/issues/31643)) ([28d2940](https://github.com/ionic-team/ionic-framework/commit/28d294035a6de45e797467d9aaca83b95d3baf4a)), closes [#30811](https://github.com/ionic-team/ionic-framework/issues/30811)
+* **menu:** allow menus inside split pane main content to open ([#31586](https://github.com/ionic-team/ionic-framework/issues/31586)) ([3eebee3](https://github.com/ionic-team/ionic-framework/commit/3eebee37bd13f52fc7d87cb468986d16138acf40)), closes [#30591](https://github.com/ionic-team/ionic-framework/issues/30591) [#28801](https://github.com/ionic-team/ionic-framework/issues/28801)
+* **rtl:** respect `dir` of ancestor elements throughout components ([#31459](https://github.com/ionic-team/ionic-framework/issues/31459)) ([25a114f](https://github.com/ionic-team/ionic-framework/commit/25a114f4077cae0aa2d633e32d26638096eeb9f1))
+* **vue:** render resolved href for object router-link ([#31663](https://github.com/ionic-team/ionic-framework/issues/31663)) ([d73cacb](https://github.com/ionic-team/ionic-framework/commit/d73cacbc5891aa982b078f8e3554a5e14a8fb1bb)), closes [#30848](https://github.com/ionic-team/ionic-framework/issues/30848)
+
+
+## [9.0.9](https://github.com/ionic-team/ionic-framework/compare/v9.0.8...v9.0.9) (2026-10-21)
+
+### Bug Fixes
+
+* **datetime:** discard unconfirmed selection on cancel ([#31558](https://github.com/ionic-team/ionic-framework/issues/31558)) ([cecd3af](https://github.com/ionic-team/ionic-framework/commit/cecd3afdaea91a2e5f4ada6cd4aaedf6f436e6c9)), closes [#30777](https://github.com/ionic-team/ionic-framework/issues/30777) [#27975](https://github.com/ionic-team/ionic-framework/issues/27975) [#27976](https://github.com/ionic-team/ionic-framework/issues/27976)
+* **input, select, textarea:** prevent floating label from overflowing while it floats ([#31567](https://github.com/ionic-team/ionic-framework/issues/31567)) ([ecd6f5a](https://github.com/ionic-team/ionic-framework/commit/ecd6f5a7c0ed987f4357b7a0e3954d9291be170d))
+* **nav:** defer non-animated swipe back until the gesture completes ([#31552](https://github.com/ionic-team/ionic-framework/issues/31552)) ([5f3f5fc](https://github.com/ionic-team/ionic-framework/commit/5f3f5fcae2bc83cb4301bc6e47c7e0b64f6d3d76)), closes [#29793](https://github.com/ionic-team/ionic-framework/issues/29793)
+
+
+## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
+
+### Bug Fixes
+
+* **modal:** stop sheets dismissing on upward drags ([#31553](https://github.com/ionic-team/ionic-framework/issues/31553)) ([3e3544e](https://github.com/ionic-team/ionic-framework/commit/3e3544e4303d9dd49eb834cddddacd54bbe01fe4))
+
+
 ## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
 
 ### Bug Fixes

@@ -53,6 +53,9 @@
         <ion-item router-link="/tabs-basic" id="tab-basic">
           <ion-label>Tabs with Basic Navigation</ion-label>
         </ion-item>
+        <ion-item router-link="/tabs-standalone" id="tabs-standalone">
+          <ion-label>Tab Bar without Tabs</ion-label>
+        </ion-item>
         <ion-item router-link="/tabs-similar-prefixes" id="tabs-similar-prefixes">
           <ion-label>Tabs with Similar Route Prefixes</ion-label>
         </ion-item>

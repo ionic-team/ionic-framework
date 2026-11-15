@@ -11,12 +11,21 @@
 
   /**
    * The measured width of the start container, as a negative offset
-   * in LTR and a positive one in RTL. Written to the host by the
-   * start container controller, so renaming it here requires renaming
+   * in LTR and a positive one in RTL. Written to the host by the start
+   * and end container controller, so renaming it here requires renaming
    * it there too. Declared with a default so the label is positioned
    * correctly before the first measurement runs.
    */
   --internal-start-container-adjustment: 0px;
+
+  /**
+   * The measured combined width of the start and end containers.
+   * Written to the host by the start and end container controller, so
+   * renaming it here requires renaming it there too. Declared with a
+   * default so the floating label falls back to the width of the
+   * control before the first measurement runs.
+   */
+  --internal-start-end-container-width: 0px;
 
   min-height: 56px;
 }
@@ -91,9 +100,8 @@
   position: absolute;
 
   /**
-   * While resting this is the width of the select, which already
-   * excludes the start and end slots. Once the label floats the
-   * containing block becomes the wrapper and the rule below takes over.
+   * This is the width of the select, which already
+   * excludes the start and end slots.
    */
   max-width: 100%;
 }
@@ -110,11 +118,12 @@
 }
 
 /**
- * The resting label is positioned relative to the control so it can size to
- * the space between the start and end slots. When floating, the label needs
- * to escape the control and position itself relative to the wrapper instead.
+ * The label is positioned relative to the control whether it is resting
+ * over the select or floating in the notch, so its max-width always resolves
+ * against the same width. This lets the max-width animate between the
+ * resting and floating values without jumping.
  */
-:host(.select-fill-outline:not(.label-floating)) .select-control {
+:host(.select-fill-outline) .select-control {
   position: relative;
 }
 
@@ -126,10 +135,11 @@
   @include margin(0);
 
   /**
-   * Label text should not extend
-   * beyond the bounds of the select.
+   * Label text should not extend beyond the bounds of the select.
+   * The control excludes the start and end slots, but the notch spans
+   * the full width of the outline, so their width is added back.
    */
-  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$select-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale});
+  max-width: calc((100% + var(--internal-start-end-container-width) - #{$select-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale});
 }
 
 /**

@@ -6,7 +6,7 @@
  */
 
 import type { RouteInfo, ViewItem } from '@ionic/react';
-import { generateId, IonRoute, ViewLifeCycleManager, ViewStacks } from '@ionic/react';
+import { generateId, IonRoute, StackContext, ViewLifeCycleManager, ViewStacks } from '@ionic/react';
 import React from 'react';
 import type { PathMatch } from 'react-router';
 import { Navigate, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
@@ -265,6 +265,26 @@ const ViewRouteContextProvider: React.FC<{
     setHeldValue(value);
   }
   return <RouteContext.Provider value={heldValue}>{children}</RouteContext.Provider>;
+};
+
+/**
+ * Passes the view that rendered a page to `registerIonPage`. A page that mounts
+ * during a navigation registers with the previous pathname, so the path lookup
+ * alone can pick the wrong view.
+ */
+const ViewStackContextProvider: React.FC<{
+  viewItem: ViewItem;
+  children: React.ReactNode;
+}> = ({ viewItem, children }) => {
+  const parent = React.useContext(StackContext);
+  const value = React.useMemo(
+    () => ({
+      ...parent,
+      registerIonPage: (page: HTMLElement, routeInfo: RouteInfo) => parent.registerIonPage(page, routeInfo, viewItem),
+    }),
+    [parent, viewItem]
+  );
+  return <StackContext.Provider value={value}>{children}</StackContext.Provider>;
 };
 
 export class ReactRouterViewStack extends ViewStacks {
@@ -640,7 +660,7 @@ export class ReactRouterViewStack extends ViewStacks {
               removeView={() => this.remove(viewItem)}
             >
               <ViewRouteContextProvider value={routeContextValue} hold={holdRouteContext}>
-                {componentElement}
+                <ViewStackContextProvider viewItem={viewItem}>{componentElement}</ViewStackContextProvider>
               </ViewRouteContextProvider>
             </ViewLifeCycleManager>
           );

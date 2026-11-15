@@ -4,7 +4,7 @@ import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { assert } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import type { TransitionOptions } from '@utils/transition';
-import { lifecycle, setPageHidden, transition } from '@utils/transition';
+import { blockSwipeClicks, lifecycle, setPageHidden, transition } from '@utils/transition';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -30,6 +30,7 @@ import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToVie
 export class Nav implements ComponentInterface {
   private transInstr: TransitionInstruction[] = [];
   private sbAni?: Animation;
+  private unblockSwipeClicks?: () => void;
   private gestureOrAnimationInProgress = false;
   private isTransitioning = false;
   private destroyed = false;
@@ -145,6 +146,14 @@ export class Nav implements ComponentInterface {
       this.gesture.destroy();
       this.gesture = undefined;
     }
+
+    // Destroying the gesture skips onEnd, so end a deferred swipe here.
+    if (this.unblockSwipeClicks) {
+      this.unblockSwipeClicks();
+      this.unblockSwipeClicks = undefined;
+      this.gestureOrAnimationInProgress = false;
+    }
+
     this.transInstr.length = 0;
     this.views.length = 0;
     this.destroyed = true;
@@ -919,6 +928,16 @@ export class Nav implements ComponentInterface {
 
   private onStart() {
     this.gestureOrAnimationInProgress = true;
+
+    /**
+     * Without animations there's nothing for the swipe to drive, so
+     * wait until the gesture ends to decide whether to go back.
+     */
+    if (!(this.animated && config.getBoolean('animated', true))) {
+      this.unblockSwipeClicks = blockSwipeClicks(this.el);
+      return;
+    }
+
     this.pop({ direction: 'back', progressAnimation: true });
   }
 
@@ -958,6 +977,17 @@ export class Nav implements ComponentInterface {
       this.sbAni.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
     } else {
       this.gestureOrAnimationInProgress = false;
+
+      const { unblockSwipeClicks } = this;
+      if (unblockSwipeClicks) {
+        this.unblockSwipeClicks = undefined;
+
+        if (shouldComplete) {
+          this.pop({ direction: 'back' });
+        }
+
+        unblockSwipeClicks();
+      }
     }
   }
 

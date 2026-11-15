@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.11](https://github.com/ionic-team/ionic-framework/compare/v9.0.10...v9.0.11) (2026-11-11)
+
+### Bug Fixes
+
+* **react-router:** show page that mounts during a navigation ([#31718](https://github.com/ionic-team/ionic-framework/issues/31718)) ([c6680bb](https://github.com/ionic-team/ionic-framework/commit/c6680bb8d22faae7a27c93ba0b73f6a44096ca4e)), closes [#31696](https://github.com/ionic-team/ionic-framework/issues/31696) [#28878](https://github.com/ionic-team/ionic-framework/issues/28878)
+
+
+## [9.0.10](https://github.com/ionic-team/ionic-framework/compare/v9.0.9...v9.0.10) (2026-10-28)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [9.0.9](https://github.com/ionic-team/ionic-framework/compare/v9.0.8...v9.0.9) (2026-10-21)
+
+### Bug Fixes
+
+* **nav:** defer non-animated swipe back until the gesture completes ([#31552](https://github.com/ionic-team/ionic-framework/issues/31552)) ([5f3f5fc](https://github.com/ionic-team/ionic-framework/commit/5f3f5fcae2bc83cb4301bc6e47c7e0b64f6d3d76)), closes [#29793](https://github.com/ionic-team/ionic-framework/issues/29793)
+
+
+## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
+
+### Bug Fixes
+
+* **react-router:** stop hidden views from re-rendering on every navigation ([#31541](https://github.com/ionic-team/ionic-framework/issues/31541)) ([4ae0196](https://github.com/ionic-team/ionic-framework/commit/4ae01961e8ed65e26369e09d478fabeffba5ed6d)), closes [#31528](https://github.com/ionic-team/ionic-framework/issues/31528)
+
+
 ## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
 
 ### Bug Fixes

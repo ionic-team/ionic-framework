@@ -1270,8 +1270,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    *
    * @param page The element of the rendered `<IonPage>`.
    * @param routeInfo The route information that associates with `<IonPage>`.
+   * @param ownerViewItem The view item that rendered `<IonPage>`, if known.
    */
-  registerIonPage(page: HTMLElement, routeInfo: RouteInfo) {
+  registerIonPage(page: HTMLElement, routeInfo: RouteInfo, ownerViewItem?: ViewItem) {
     /**
      * DO NOT remove ion-page-invisible here.
      *
@@ -1291,7 +1292,13 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
     this.pendingPageTransition = false;
 
-    const foundView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+    const pathView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+    /**
+     * The lookup can use a stale pathname (see `ViewStackContextProvider`), so
+     * prefer the view that rendered the page when the two disagree.
+     */
+    const foundView =
+      pathView && ownerViewItem?.outletId === this.id && pathView !== ownerViewItem ? ownerViewItem : pathView;
 
     if (foundView) {
       const oldPageElement = foundView.ionPageElement;
@@ -1460,7 +1467,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     };
 
     const onStart = async () => {
-      // Core only calls onEnd when a progress animation exists, so with animations off a
+      // Core skips onEnd when an animated swipe ends without a progress animation, so a
       // previous gesture can leave its mark behind. Drop any stale one before marking.
       this.clearSwipeRevealedView();
 
@@ -1494,9 +1501,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
       // When the gesture starts, kick off a transition controlled via swipe gesture
       if (enteringViewItem && leavingViewItem) {
-        // Without a leaving view there is no progress animation, and core only calls
-        // swipeHandler.onEnd when one exists, so nothing would clear the mark until the
-        // next transition.
+        // Without a leaving view there is no progress animation, and core skips
+        // swipeHandler.onEnd for an animated swipe without one, so nothing would clear the
+        // mark until the next transition.
         markSwipeRevealed(enteringViewItem);
         this.swipeRevealedViewItem = enteringViewItem;
 
