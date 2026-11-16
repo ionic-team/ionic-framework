@@ -1699,14 +1699,14 @@ export declare interface IonNavLink extends Components.IonNavLink {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'mode', 'theme']
+  inputs: ['color', 'hue', 'mode']
 })
 @Component({
   selector: 'ion-note',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'theme'],
+  inputs: ['color', 'hue', 'mode'],
   standalone: false
 })
 export class IonNote {
