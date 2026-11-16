@@ -135,7 +135,6 @@ const DEFAULT_PALETTE = 'light';
 
   // Load theme tokens if the theme is valid
   const validThemes = ['ionic', 'ios', 'md', 'base'];
-  let themeReady = Promise.resolve();
   if (themeName && validThemes.includes(themeName)) {
     // Store existing theme set from the app initialization
     const customTheme = window.Ionic?.config?.customTheme;
@@ -165,7 +164,7 @@ const DEFAULT_PALETTE = 'light';
      * `appload` from its 30ms fallback before any component has loaded. Wait
      * for the held components to load before the page counts as ready.
      */
-    themeReady = Promise.all([loadThemeTokens(themeName, themeLoaded), definitionsReady])
+    Promise.all([loadThemeTokens(themeName, themeLoaded), definitionsReady])
       .then(() =>
         Promise.all(
           [...document.querySelectorAll('*')]
@@ -364,46 +363,6 @@ const DEFAULT_PALETTE = 'light';
       console.error(`Failed to load theme tokens for ${themeName}:`, error);
     }
   }
-
-  /*
-   * Freezes the ripple of every element on the page that has the `ion-activated` class
-   * and renders an `ion-ripple-effect`, so screenshots show the full pressed state.
-   * The class alone leaves out the ripple, which only appears on a real press.
-   */
-  async function freezeRipples() {
-    const elements = [...document.querySelectorAll('.ion-activated')];
-
-    await Promise.all(
-      elements.map(async (el) => {
-        await el.componentOnReady?.();
-
-        // Only the `md` mode renders a ripple
-        const ripple = el.shadowRoot?.querySelector('ion-ripple-effect') ?? el.querySelector('ion-ripple-effect');
-        if (!ripple) {
-          return;
-        }
-
-        /*
-         * `addRipple` resolves once the ripple reaches its full size. Never calling
-         * the remove function it resolves with keeps the ripple on screen.
-         */
-        const rect = el.getBoundingClientRect();
-        await ripple.addRipple(rect.left + rect.width / 2, rect.top + rect.height / 2);
-      })
-    );
-  }
-
-  /*
-   * Tracks when the ripples are frozen. Tests wait on this (see the Playwright
-   * `goto` helper) so screenshots are not taken while a ripple is still growing.
-   */
-  window.__ionicTestRipplesFrozen = false;
-
-  Promise.all([whenConfigReady(), themeReady])
-    .then(() => freezeRipples())
-    .finally(() => {
-      window.__ionicTestRipplesFrozen = true;
-    });
 
   window.Ionic = window.Ionic || {};
   window.Ionic.config = window.Ionic.config || {};
