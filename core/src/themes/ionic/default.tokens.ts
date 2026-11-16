@@ -360,8 +360,6 @@ export const defaultTheme: DefaultTheme = {
 
             // A white wash over the button
             disabled: {
-              background: ionColor('primary', 'base'),
-
               opacity: '0.4',
             },
 
@@ -385,10 +383,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('shade'),
                 color: currentColor('contrast'),
-              },
-
-              disabled: {
-                background: currentColor('base'),
               },
 
               rippleEffect: {
@@ -432,8 +426,6 @@ export const defaultTheme: DefaultTheme = {
 
             // A white wash over the button
             disabled: {
-              background: baseColors.backgroundColor,
-
               opacity: '0.4',
             },
 
@@ -460,10 +452,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('shade', { subtle: true }),
                 color: currentColor('foreground'),
-              },
-
-              disabled: {
-                background: baseColors.backgroundColor,
               },
 
               rippleEffect: {
@@ -501,8 +489,6 @@ export const defaultTheme: DefaultTheme = {
 
             // A white wash over the button
             disabled: {
-              background: 'transparent',
-
               opacity: '0.4',
             },
 
@@ -525,10 +511,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('shade', { subtle: true }),
                 color: currentColor('foreground'),
-              },
-
-              disabled: {
-                background: 'transparent',
               },
 
               rippleEffect: {
@@ -989,10 +971,6 @@ export const defaultTheme: DefaultTheme = {
                 activated: {
                   background: 'transparent',
                 },
-
-                disabled: {
-                  background: 'transparent',
-                },
               },
 
               clear: {
@@ -1067,10 +1045,6 @@ export const defaultTheme: DefaultTheme = {
                 },
 
                 activated: {
-                  background: 'transparent',
-                },
-
-                disabled: {
                   background: 'transparent',
                 },
               },

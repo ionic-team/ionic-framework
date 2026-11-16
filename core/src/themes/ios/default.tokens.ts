@@ -375,8 +375,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: ionColor('primary', 'base'),
-
               opacity: '0.5',
             },
 
@@ -400,10 +398,6 @@ export const defaultTheme: DefaultTheme = {
               activated: {
                 background: currentColor('shade'),
                 color: currentColor('contrast'),
-              },
-
-              disabled: {
-                background: currentColor('base'),
               },
             },
           },
@@ -448,8 +442,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               opacity: '0.5',
             },
 
@@ -476,10 +468,6 @@ export const defaultTheme: DefaultTheme = {
               activated: {
                 background: currentColor('base'),
                 color: currentColor('contrast'),
-              },
-
-              disabled: {
-                background: 'transparent',
               },
             },
           },
@@ -520,8 +508,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               opacity: '0.5',
             },
 
@@ -544,10 +530,6 @@ export const defaultTheme: DefaultTheme = {
               activated: {
                 background: 'transparent',
                 color: currentColor('foreground'),
-              },
-
-              disabled: {
-                background: 'transparent',
               },
             },
           },

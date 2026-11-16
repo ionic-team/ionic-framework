@@ -386,8 +386,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: ionColor('primary', 'base'),
-
               opacity: '0.5',
             },
 
@@ -406,10 +404,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: overlay(currentColor('base'), currentColor('contrast', { alpha: 0.08 })),
                 color: currentColor('contrast'),
-              },
-
-              disabled: {
-                background: currentColor('base'),
               },
             },
           },
@@ -447,8 +441,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               opacity: '0.5',
             },
 
@@ -470,10 +462,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
                 color: currentColor('base'),
-              },
-
-              disabled: {
-                background: 'transparent',
               },
             },
           },
@@ -505,8 +493,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               opacity: '0.5',
             },
 
@@ -524,10 +510,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
                 color: currentColor('foreground'),
-              },
-
-              disabled: {
-                background: 'transparent',
               },
             },
           },

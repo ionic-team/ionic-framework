@@ -96,7 +96,6 @@ The following breaking changes apply to `ion-button`:
      --ion-button-hue-bold-solid-focus-background: linear-gradient(rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24), rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24)) var(--ion-button-hue-bold-solid-default-background);
      --ion-button-hue-bold-solid-hover-color: var(--ion-button-hue-bold-solid-default-color);
      --ion-button-hue-bold-solid-focus-color: var(--ion-button-hue-bold-solid-default-color);
-     --ion-button-hue-bold-solid-disabled-background: var(--ion-button-hue-bold-solid-default-background);
 
      --ion-button-hue-bold-outline-default-color: currentColor;
      --ion-button-hue-bold-outline-default-border-color: currentColor;
