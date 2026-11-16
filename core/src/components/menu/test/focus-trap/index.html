@@ -24,6 +24,9 @@
           <ion-item>
             <ion-button id="open-modal-button">Open Modal</ion-button>
           </ion-item>
+          <ion-item>
+            <ion-button id="close-menu-button" onclick="closeMenu()">Close Menu</ion-button>
+          </ion-item>
           <ion-modal id="modal" trigger="open-modal-button">
             <ion-content class="ion-padding">
               Modal content
@@ -37,6 +40,9 @@
       <div class="ion-page" id="main">
         <ion-header>
           <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-menu-button id="menu-button" auto-hide="false"></ion-menu-button>
+            </ion-buttons>
             <ion-title>Menu - Basic</ion-title>
           </ion-toolbar>
         </ion-header>
@@ -50,6 +56,9 @@
       const modal = document.querySelector('ion-modal');
       const openMenu = () => {
         menu.open();
+      };
+      const closeMenu = () => {
+        menu.close();
       };
       const dismissModal = () => {
         modal.dismiss();
