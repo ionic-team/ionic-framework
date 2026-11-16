@@ -51,7 +51,9 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
           }
         </style>
 
-        <div id="container">${grids}</div>
+        <ion-content>
+          <div id="container">${grids}</div>
+        </ion-content>
       `,
         config
       );
