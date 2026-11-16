@@ -171,9 +171,7 @@ Update any styles that target these classes:
 | `.button-small` | `.button-size-small` |
 | `.button-default` | `.button-size-medium` |
 | `.button-large` | `.button-size-large` |
-| `.button-soft` | `.button-shape-soft` |
 | `.button-round` | `.button-shape-round` |
-| `.button-rectangular` | `.button-shape-rectangular` |
 | `.button-block` | `.button-expand-block` |
 | `.button-full` | `.button-expand-full` |
 
