@@ -128,6 +128,48 @@
             ></ion-datetime>
           </div>
 
+          <!-- Min/max with range outside bounds (ROU-13214) -->
+          <div class="grid-item">
+            <h2>Range Outside Min/Max (Jun 1-30, min 5, max 25)</h2>
+            <ion-datetime
+              id="minMaxOutOfBounds"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              min="2022-06-05"
+              max="2022-06-25"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- Min/max with range partially outside (start before min) -->
+          <div class="grid-item">
+            <h2>Start Before Min (Jun 1-20, min 5)</h2>
+            <ion-datetime
+              id="startBeforeMin"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              min="2022-06-05"
+              max="2022-06-25"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- Min/max with range entirely outside -->
+          <div class="grid-item">
+            <h2>Range Entirely Before Min (Jun 1-3, min 10)</h2>
+            <ion-datetime
+              id="rangeBeforeMin"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              min="2022-06-10"
+              max="2022-06-25"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
           <!-- With highlighted dates -->
           <div class="grid-item">
             <h2>With Highlighted Dates</h2>
@@ -205,6 +247,15 @@
 
       // With header - set a partial range (start only)
       document.querySelector('#withHeader').value = ['2022-06-10'];
+
+      // ROU-13214: Range outside min/max bounds
+      document.querySelector('#minMaxOutOfBounds').value = ['2022-06-01', '2022-06-30'];
+
+      // ROU-13214: Start before min
+      document.querySelector('#startBeforeMin').value = ['2022-06-01', '2022-06-20'];
+
+      // ROU-13214: Range entirely before min (should clear)
+      document.querySelector('#rangeBeforeMin').value = ['2022-06-01', '2022-06-05'];
 
       // Disabled dates: 15th of every month
       const disabledDatetime = document.querySelector('#disabledDates');

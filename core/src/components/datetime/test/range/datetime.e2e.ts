@@ -643,6 +643,154 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     // ---------------------------------------------------------------
+    // Min/max clamping
+    // ---------------------------------------------------------------
+
+    test('range dates outside min/max should not be highlighted', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-05"
+          max="2022-06-25"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-01', '2022-06-30'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      // Out-of-range dates should not be highlighted
+      const day1 = datetime.locator('[data-month="6"][data-day="1"]');
+      const day30 = datetime.locator('[data-month="6"][data-day="30"]');
+      await expect(day1).not.toHaveClass(/calendar-day-range-start/);
+      await expect(day30).not.toHaveClass(/calendar-day-range-end/);
+
+      // Range should be clamped to min/max
+      const day5 = datetime.locator('[data-month="6"][data-day="5"]');
+      const day25 = datetime.locator('[data-month="6"][data-day="25"]');
+      await expect(day5).toHaveClass(/calendar-day-range-start/);
+      await expect(day25).toHaveClass(/calendar-day-range-end/);
+
+      // Days in between should still be in range
+      const day15 = datetime.locator('[data-month="6"][data-day="15"]');
+      await expect(day15).toHaveClass(/calendar-day-in-range/);
+    });
+
+    test('range with only start outside min should clamp start to min', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-05"
+          max="2022-06-25"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-01', '2022-06-20'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      await expect(datetime.locator('[data-month="6"][data-day="1"]')).not.toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="5"]')).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="20"]')).toHaveClass(/calendar-day-range-end/);
+    });
+
+    test('range with only end outside max should clamp end to max', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-05"
+          max="2022-06-25"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-10', '2022-06-30'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      await expect(datetime.locator('[data-month="6"][data-day="10"]')).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="30"]')).not.toHaveClass(/calendar-day-range-end/);
+      await expect(datetime.locator('[data-month="6"][data-day="25"]')).toHaveClass(/calendar-day-range-end/);
+    });
+
+    test('range entirely before min should clear the selection', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-10"
+          max="2022-06-25"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-01', '2022-06-05'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      // Entire range is before min — no day should be highlighted
+      await expect(datetime.locator('[data-month="6"][data-day="1"]')).not.toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="5"]')).not.toHaveClass(/calendar-day-range-end/);
+      await expect(datetime.locator('[data-month="6"][data-day="10"]')).not.toHaveClass(/calendar-day-range-start/);
+    });
+
+    test('range entirely after max should clear the selection', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-05"
+          max="2022-06-20"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-25', '2022-06-30'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      // Entire range is after max — no day should be highlighted
+      await expect(datetime.locator('[data-month="6"][data-day="25"]')).not.toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="30"]')).not.toHaveClass(/calendar-day-range-end/);
+      await expect(datetime.locator('[data-month="6"][data-day="20"]')).not.toHaveClass(/calendar-day-range-end/);
+    });
+
+    // ---------------------------------------------------------------
     // Disabled and readonly states
     // ---------------------------------------------------------------
 

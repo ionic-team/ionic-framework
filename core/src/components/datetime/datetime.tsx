@@ -1633,7 +1633,21 @@ export class Datetime implements ComponentInterface {
           endParts = temp;
         }
 
-        this.activeParts = endParts ? { start: startParts, end: endParts } : { start: startParts };
+        // Clamp range bounds to min/max so out-of-range dates are not highlighted.
+        // If the entire range falls outside min/max, clear the selection.
+        const clampedStart = clampDate(startParts, minParts, maxParts);
+        const clampedEnd = endParts ? clampDate(endParts, minParts, maxParts) : undefined;
+
+        const rangeFullyOutOfBounds =
+          clampedEnd && endParts && isSameDay(clampedStart, clampedEnd) && !isSameDay(startParts, endParts);
+
+        if (rangeFullyOutOfBounds) {
+          this.activeParts = [];
+        } else {
+          startParts = clampedStart;
+          endParts = clampedEnd;
+          this.activeParts = endParts ? { start: startParts, end: endParts } : { start: startParts };
+        }
         /**
          * Stay on the end date's month when it is already showing, such as
          * right after the user picks it, instead of jumping back to the start.
