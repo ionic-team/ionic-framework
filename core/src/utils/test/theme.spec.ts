@@ -1164,14 +1164,19 @@ describe('INTERNAL_CHILD_COMPONENTS', () => {
   ];
 
   /**
-   * The ripple's only token falls back to the same value in its stylesheet,
-   * so it renders correctly inside a shadow root without being listed.
+   * Known gap: a custom theme's `IonRippleEffect.opacity` doesn't reach the ripple
+   * that `ion-button`, `ion-item`, `ion-chip` and other shadow components render.
+   * Every shipped theme sets the stylesheet's fallback value, so they look right.
+   * Listing the hosts isn't a fix: the token CSS would then beat app overrides like
+   * `ion-button { --ion-ripple-effect-opacity: 0.5 }`.
    */
   const exempt = ['IonRippleEffect'];
 
   /**
-   * A missing `INTERNAL_CHILD_COMPONENTS` entry fails silently, so this reads
-   * each shadow component's TSX.
+   * Token CSS can't reach a migrated child that a parent renders in its own shadow
+   * root, like a modal's backdrop, unless the parent is in `INTERNAL_CHILD_COMPONENTS`.
+   * The same goes for a listed host rendered in a shadow root, like datetime's popover.
+   * A missing entry fails silently, so this reads each shadow component's TSX.
    */
   it('should list every migrated component rendered in a shadow root', () => {
     const missing: string[] = [];
@@ -1185,7 +1190,7 @@ describe('INTERNAL_CHILD_COMPONENTS', () => {
         continue;
       }
 
-      if (!source.includes('shadow: true')) {
+      if (!/shadow:\s*(true|\{)/.test(source)) {
         continue;
       }
 
@@ -1194,7 +1199,8 @@ describe('INTERNAL_CHILD_COMPONENTS', () => {
 
       for (const tag of renderedTags) {
         const child = toPascalCase(tag);
-        if (child === parent || exempt.includes(child) || !migratedComponents.includes(child)) {
+        const isHost = child in INTERNAL_CHILD_COMPONENTS;
+        if (child === parent || exempt.includes(child) || (!migratedComponents.includes(child) && !isHost)) {
           continue;
         }
         if (!INTERNAL_CHILD_COMPONENTS[parent]?.includes(child)) {
