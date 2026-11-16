@@ -118,6 +118,7 @@ The following breaking changes apply to `ion-button`:
 12. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[12](#version-10x-button-theme-classes)</sup>
 13. `round` buttons no longer have extra horizontal padding. <sup>[13](#version-10x-button-round-padding)</sup>
 14. The `default` fill has been deprecated. <sup>[14](#version-10x-button-deprecated-default-fill)</sup>
+15. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[15](#version-10x-button-toolbar-classes)</sup>
 
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -210,6 +211,10 @@ ion-button[shape="round"]:not([size]):not(.button-has-icon-only) {
 <h5 id="version-10x-button-deprecated-default-fill">Deprecated <code>default</code> fill</h5>
 
 The `default` value of the `fill` property is deprecated. It logs a warning and renders the same as `solid`, including inside an `ion-buttons`, where a button without a `fill` renders `clear`. Use `fill="solid"` instead, or remove the `fill` property to keep the `clear` default inside an `ion-buttons`.
+
+<h5 id="version-10x-button-toolbar-classes">Toolbar classes</h5>
+
+`ion-button` no longer adds the `in-toolbar` and `in-toolbar-color` classes. Target the toolbar instead: replace `ion-button.in-toolbar` with `ion-toolbar ion-button`, and `ion-button.in-toolbar-color` with `ion-toolbar[color] ion-button`.
 
 <h4 id="version-10x-card">Card</h4>
 
