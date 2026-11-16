@@ -515,7 +515,7 @@ export const generateBreakpointCSS = (): string => {
  */
 export const generateComponentsThemeCSS = (components: any): string => {
   const componentBlocks: string[] = [];
-  const childBlocks: string[] = [];
+  const childBlocks: ChildBlock[] = [];
 
   for (const [component, componentTokens] of Object.entries(components)) {
     const componentTag = convertToKebabCase(component);
@@ -537,7 +537,7 @@ export const generateComponentsThemeCSS = (components: any): string => {
     /**
      * A nested child's tokens, scoped to the parent:
      * `IonToolbar: { IonButtons: { IonButton } }` sets the button's own
-     * `--ion-button-*` properties in `ion-toolbar ion-buttons ion-button { … }`.
+     * `--ion-button-*` properties in `:where(ion-toolbar ion-buttons) ion-button { … }`.
      */
     for (const [child, childTokens, parentSelector] of children) {
       childBlocks.push(...generateChildBlocks(component, child, childTokens, parentSelector));
@@ -546,11 +546,22 @@ export const generateComponentsThemeCSS = (components: any): string => {
 
   /**
    * Child blocks come last, so a parent's overrides always win over the child's own tokens.
-   * A shadow root host sets both at the same specificity, so only the order decides:
+   * Every child selector has the same specificity as the child's own tag (refer to
+   * `lowerSpecificity`), so only the order decides:
    * `ion-button, ion-datetime { --ion-button-*: … }` then
-   * `ion-datetime, ion-datetime ion-button { --ion-button-*: … }`.
+   * `ion-datetime, :where(ion-datetime) ion-button { --ion-button-*: … }`.
+   *
+   * Among the child blocks, the order follows the specificity each selector would
+   * have without `:where()`, so a more specific parent still wins:
+   * `:where(ion-toolbar:not(.ion-color)) ion-button` comes after
+   * `:where(ion-toolbar ion-buttons) ion-button`. The sort is stable, so blocks
+   * with the same specificity keep their order.
    */
-  return [...componentBlocks, ...childBlocks].join('');
+  const sortedChildBlocks = childBlocks
+    .sort((a, b) => compareSpecificity(a.specificity, b.specificity))
+    .map(({ css }) => css);
+
+  return [...componentBlocks, ...sortedChildBlocks].join('');
 };
 
 /**
@@ -682,7 +693,7 @@ const splitChildComponents = (componentTokens: any, selector: string) => {
  *
  * ```css
  * ion-datetime,
- * ion-datetime ion-button {
+ * :where(ion-datetime) ion-button {
  *   --ion-button-margin-top: 0px;
  * }
  * ```
@@ -691,17 +702,20 @@ const splitChildComponents = (componentTokens: any, selector: string) => {
  * own selector is added when it renders the child in its shadow root (refer to
  * `INTERNAL_CHILD_COMPONENTS`).
  */
-const generateChildBlocks = (parent: string, child: string, childTokens: any, parentSelector: string): string[] => {
+const generateChildBlocks = (parent: string, child: string, childTokens: any, parentSelector: string): ChildBlock[] => {
   const childTag = convertToKebabCase(child);
   const selector = `${parentSelector} ${childTag}`;
   const { ownTokens, children } = splitChildComponents(childTokens, selector);
 
-  const blocks: string[] = [];
+  const blocks: ChildBlock[] = [];
 
   if (Object.keys(ownTokens).length > 0) {
     const rendersInternally = INTERNAL_CHILD_COMPONENTS[parent]?.includes(child) ?? false;
     const selectors = rendersInternally ? [parentSelector, selector] : [selector];
-    blocks.push(generateBlock(selectors, ownTokens, childTag));
+    blocks.push({
+      css: generateBlock(selectors.map(lowerSpecificity), ownTokens, childTag),
+      specificity: selectors.map(getSpecificity).reduce((a, b) => (compareSpecificity(a, b) >= 0 ? a : b)),
+    });
   }
 
   for (const [grandchild, grandchildTokens, grandchildParentSelector] of children) {
@@ -709,6 +723,40 @@ const generateChildBlocks = (parent: string, child: string, childTokens: any, pa
   }
 
   return blocks;
+};
+
+type Specificity = [classes: number, types: number];
+
+type ChildBlock = { css: string; specificity: Specificity };
+
+/**
+ * The specificity of a generated child selector, which is made only of
+ * component tags and the `.ion-color` class (inside `:not()` or not).
+ */
+const getSpecificity = (selector: string): Specificity => [
+  (selector.match(/\.[\w-]+/g) ?? []).length,
+  selector.split(' ').length,
+];
+
+const compareSpecificity = (a: Specificity, b: Specificity) => a[0] - b[0] || a[1] - b[1];
+
+/**
+ * Gives a child selector the specificity of the child's tag alone, so an app's
+ * override on the child, such as `.my-button` or `ion-button.my-button`, wins
+ * over the parent's tokens:
+ *
+ * - `ion-toolbar:not(.ion-color) ion-buttons ion-button` becomes
+ *   `:where(ion-toolbar:not(.ion-color) ion-buttons) ion-button`
+ * - a parent that renders the child in its shadow root, such as
+ *   `ion-toolbar.ion-color`, becomes `ion-toolbar:where(.ion-color)`
+ */
+const lowerSpecificity = (selector: string): string => {
+  const compounds = selector.split(' ');
+  const last = compounds.pop()!;
+  const [, tag, qualifiers] = last.match(/^([\w-]+)(.*)$/)!;
+  const subject = qualifiers ? `${tag}:where(${qualifiers})` : tag;
+
+  return compounds.length > 0 ? `:where(${compounds.join(' ')}) ${subject}` : subject;
 };
 
 /**

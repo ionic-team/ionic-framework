@@ -872,7 +872,7 @@ describe('generateComponentsThemeCSS', () => {
         --ion-buttons-gap: 4px;
       }
 
-      ion-buttons ion-button {
+      :where(ion-buttons) ion-button {
         --ion-button-padding-top: 0px;
       }
     `.replace(/\s/g, '');
@@ -902,7 +902,7 @@ describe('generateComponentsThemeCSS', () => {
       }
 
       ion-datetime,
-      ion-datetime ion-button {
+      :where(ion-datetime) ion-button {
         --ion-button-padding-top: 3px;
       }
     `.replace(/\s/g, '');
@@ -951,7 +951,7 @@ describe('generateComponentsThemeCSS', () => {
         --ion-chip-gap: 4px;
       }
 
-      ion-buttons ion-button {
+      :where(ion-buttons) ion-button {
         --ion-button-padding-top: 0px;
       }
     `.replace(/\s/g, '');
@@ -974,7 +974,7 @@ describe('generateComponentsThemeCSS', () => {
 
     expect(css.replace(/\s/g, '')).toBe(
       `
-      ion-toolbar ion-buttons ion-button {
+      :where(ion-toolbar ion-buttons) ion-button {
         --ion-button-color: red;
       }
     `.replace(/\s/g, '')
@@ -1002,11 +1002,11 @@ describe('generateComponentsThemeCSS', () => {
     const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
 
     const expectedCSS = `
-      ion-toolbar ion-buttons ion-button {
+      :where(ion-toolbar ion-buttons) ion-button {
         --ion-button-color: red;
       }
 
-      ion-toolbar.ion-color ion-buttons ion-button {
+      :where(ion-toolbar.ion-color ion-buttons) ion-button {
         --ion-button-color: blue;
       }
     `.replace(/\s/g, '');
@@ -1028,7 +1028,7 @@ describe('generateComponentsThemeCSS', () => {
     const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
 
     const expectedCSS = `
-      ion-toolbar:not(.ion-color) ion-button {
+      :where(ion-toolbar:not(.ion-color)) ion-button {
         --ion-button-color: red;
       }
     `.replace(/\s/g, '');
@@ -1055,8 +1055,39 @@ describe('generateComponentsThemeCSS', () => {
         --ion-toolbar-semantic-background: red;
       }
 
-      ion-toolbar.ion-color ion-button {
+      :where(ion-toolbar.ion-color) ion-button {
         --ion-button-color: blue;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should order the child blocks by the specificity of their selectors without :where()', () => {
+    const components = {
+      IonToolbar: {
+        default: {
+          IonButton: {
+            color: 'red',
+          },
+        },
+        IonButtons: {
+          IonButton: {
+            padding: { top: '0px' },
+          },
+        },
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      :where(ion-toolbar ion-buttons) ion-button {
+        --ion-button-padding-top: 0px;
+      }
+
+      :where(ion-toolbar:not(.ion-color)) ion-button {
+        --ion-button-color: red;
       }
     `.replace(/\s/g, '');
 
@@ -1104,9 +1135,9 @@ describe('nested child components', () => {
 
   /**
    * The color class makes a child under `default` or `semantic` outrank a deeper
-   * child nested without it: `ion-toolbar:not(.ion-color) ion-button` beats
-   * `ion-toolbar ion-buttons ion-button`. The deeper child would lose every key
-   * the two share, so they must not share any.
+   * child nested without it: `:where(ion-toolbar:not(.ion-color)) ion-button` comes
+   * after `:where(ion-toolbar ion-buttons) ion-button`. The deeper child would lose
+   * every key the two share, so they must not share any.
    */
   it('should not let a plain child share keys with a shallower one under default or semantic', () => {
     const clashes: string[] = [];
