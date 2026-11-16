@@ -224,7 +224,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('third tap after a full range should start a new range', async ({ page }) => {
-      const datetime = await fixture.goto(config);
+      await fixture.goto(config);
 
       const day8 = fixture.getVisibleDay(8);
       const day18 = fixture.getVisibleDay(18);

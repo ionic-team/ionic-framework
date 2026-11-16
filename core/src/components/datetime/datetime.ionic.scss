@@ -211,12 +211,20 @@
   color: globals.$ion-text-default;
 }
 
+// Calendar / Body
+// -----------------------------------
+
+:host .calendar-body .calendar-month .calendar-month-grid {
+  @include globals.padding(0, globals.$ion-space-200);
+}
+
 // Range Selection
 // -----------------------------------
 
 :host {
   --range-background: #{globals.$ion-bg-primary-subtle-default};
   --range-track-height: #{globals.$ion-scale-1200};
+  --range-track-edge-overflow: #{globals.$ion-space-200};
 }
 
 // Range start and end: full circle

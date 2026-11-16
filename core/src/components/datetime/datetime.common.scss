@@ -305,6 +305,16 @@
 }
 
 /**
+ * Range start and end circles can overflow their grid row.
+ * Lift them above adjacent in-range wrappers so the next
+ * row's range track does not paint over the circle.
+ */
+:host .calendar-day-wrapper-range-start,
+:host .calendar-day-wrapper-range-end {
+  z-index: 1;
+}
+
+/**
  * Keep the range announcement available to screen readers
  * without showing it or covering the calendar.
  */
