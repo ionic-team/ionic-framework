@@ -618,5 +618,38 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         });
       });
     });
+
+    test('should let focus leave a sheet modal below its backdropBreakpoint', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <button id="before">Before</button>
+        <ion-modal handle="false" initial-breakpoint="0.3" backdrop-breakpoint="0.5">
+          <button id="first">First</button><button id="last">Last</button>
+        </ion-modal>
+        <script>
+          document.querySelector('ion-modal').breakpoints = [0.3, 0.5, 1];
+        </script>
+      `,
+        config
+      );
+
+      const modal = page.locator('ion-modal');
+      const firstButton = page.locator('#first');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      // present() moves focus into the overlay a frame after it resolves
+      await page.waitForFunction(() => document.querySelector('ion-modal')!.contains(document.activeElement));
+      await firstButton.focus();
+      await pageUtils.pressKeys('Shift+Tab');
+
+      await expect(page.locator('#before')).toBeFocused();
+
+      // The focus trap turns back on above the backdropBreakpoint
+      await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(1));
+      await firstButton.focus();
+      await pageUtils.pressKeys('Shift+Tab');
+
+      await expect(page.locator('#last')).toBeFocused();
+    });
   });
 });
