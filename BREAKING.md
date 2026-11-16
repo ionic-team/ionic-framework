@@ -116,6 +116,7 @@ The following breaking changes apply to `ion-button`:
 10. The fill, size, shape and expand classes have been renamed. <sup>[10](#version-10x-button-renamed-classes)</sup>
 11. The `default` size has been deprecated. <sup>[11](#version-10x-button-deprecated-default-size)</sup>
 12. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[12](#version-10x-button-theme-classes)</sup>
+13. `round` buttons no longer have extra horizontal padding. <sup>[13](#version-10x-button-round-padding)</sup>
 
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -182,6 +183,28 @@ The `default` value of the `size` property is deprecated. It logs a warning and 
 <h5 id="version-10x-button-theme-classes">Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-button.md`, `ion-button.ios`.
+
+<h5 id="version-10x-button-round-padding">Round padding</h5>
+
+In 9.x, `round` buttons had `0` vertical and `26px` horizontal padding: at every size in `ios`, and at the default size in `md`. Buttons now keep the padding of their size. To revert, set the padding on the `shape` attribute, since `md` buttons now render `.button-shape-round` by default:
+
+```css
+/* ios */
+ion-button[shape="round"]:not(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 26px;
+  --padding-end: 26px;
+}
+
+/* md */
+ion-button[shape="round"]:not([size]):not(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 26px;
+  --padding-end: 26px;
+}
+```
 
 <h4 id="version-10x-card">Card</h4>
 
