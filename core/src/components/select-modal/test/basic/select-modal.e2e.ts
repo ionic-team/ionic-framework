@@ -130,8 +130,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
 });
 
 /**
- * The safe-area override only exists in the Ionic theme,
- * where the select modal is a centered dialog on phones.
+ * The select modal is only a centered dialog in the Ionic theme.
  * This behavior does not vary across directions.
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {

@@ -106,7 +106,8 @@ export const onRootSafeAreaTopChange = (callback: (safeAreaTop: number) => void)
  * corresponding safe-area insets. A modal that does not span an axis reaches
  * neither edge on that axis.
  *
- * When both `--width` and `--height` are `fullscreen`, coverage can be
+ * When both `--width` and `--height` are `fullscreen` and neither
+ * `--max-width` nor `--max-height` is a definite size, coverage can be
  * determined directly. Otherwise, coverage is based on the rendered wrapper,
  * including cases where content sizing or `--max-height` causes the modal
  * to reach the viewport.
@@ -116,9 +117,8 @@ export const getModalCoveredAxes = (hostEl: HTMLElement): ModalCoveredAxes => {
   const width = getOverlaySizeType(styles.getPropertyValue('--width'));
   const height = getOverlaySizeType(styles.getPropertyValue('--height'));
 
-  // A fullscreen --width/--height can still be clamped by a definite
-  // --max-width/--max-height (e.g. the centered select modal sets
-  // --max-height: 340px). When clamped, the modal may not reach the
+  // --max-width/--max-height (e.g. the select modal in the Ionic theme
+  // sets --max-height: 45%). When clamped, the modal may not reach the
   // viewport edges, so we fall through to measure the wrapper instead.
   const maxWidth = getOverlaySizeType(styles.getPropertyValue('--max-width'));
   const maxHeight = getOverlaySizeType(styles.getPropertyValue('--max-height'));

@@ -466,10 +466,10 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
     test('modal with fullscreen dimensions clamped by max-width/max-height should predict zeroed safe-area', async ({
       page,
     }) => {
-      // A modal whose --width/--height are both 100% (fullscreen) but
-      // --max-width: 90% and --max-height: 50% clamp the rendered size.
-      // Without the isClamped check in getModalCoveredAxes, the fullscreen
-      // shortcut returns full coverage, causing a safe-area flash.
+      // --width and --height are both 100%, but --max-width: 90% and
+      // --max-height: 50% keep the modal off every screen edge, so the
+      // initial prediction should zero all insets instead of inheriting
+      // them and flashing the safe-area padding.
       expect(await getPredictedSafeArea(page, '#max-constrained-dialog')).toEqual({
         top: '0px',
         bottom: '0px',
