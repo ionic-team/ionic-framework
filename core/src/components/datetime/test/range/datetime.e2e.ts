@@ -185,38 +185,66 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(ionChangeSpy).toHaveReceivedEventDetail({ value: [startISO, endISO] });
     });
 
-    test('clicking a day before the start should set a new start', async ({ page }) => {
+    test('clicking a day before the start should start a new range', async ({ page }) => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
 
       const day3 = datetime.locator('[data-month="6"][data-day="3"]');
       await day3.click();
       await page.waitForChanges();
 
-      // Clicking before the start resets to a new start, so the range is now partial
+      // Once a full range is selected, the next tap starts a new range
       await expect(day3).toHaveClass(/calendar-day-range-start/);
       await expect(datetime.locator('[data-month="6"][data-day="18"]')).not.toHaveClass(/calendar-day-range-end/);
     });
 
-    test('clicking a day within an existing range should set a new end', async ({ page }) => {
+    test('clicking a day within an existing range should start a new range', async ({ page }) => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
-      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
       const day12 = datetime.locator('[data-month="6"][data-day="12"]');
       await day12.click();
-      await ionChangeSpy.next();
+      await page.waitForChanges();
 
-      await expect(datetime).toHaveJSProperty('value', ['2022-06-08', '2022-06-12']);
+      // Once a full range is selected, the next tap starts a new range
+      await expect(day12).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="8"]')).not.toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="18"]')).not.toHaveClass(/calendar-day-range-end/);
     });
 
-    test('clicking a day after the end should set a new end', async ({ page }) => {
+    test('clicking a day after the end should start a new range', async ({ page }) => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
-      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
       const day22 = datetime.locator('[data-month="6"][data-day="22"]');
       await day22.click();
-      await ionChangeSpy.next();
+      await page.waitForChanges();
 
-      await expect(datetime).toHaveJSProperty('value', ['2022-06-08', '2022-06-22']);
+      // Once a full range is selected, the next tap starts a new range
+      await expect(day22).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="8"]')).not.toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="18"]')).not.toHaveClass(/calendar-day-range-end/);
+    });
+
+    test('third tap after a full range should start a new range', async ({ page }) => {
+      const datetime = await fixture.goto(config);
+
+      const day8 = fixture.getVisibleDay(8);
+      const day18 = fixture.getVisibleDay(18);
+      const day12 = fixture.getVisibleDay(12);
+
+      // First tap: set start
+      await day8.click();
+      await page.waitForChanges();
+
+      // Second tap: set end (full range)
+      await day18.click();
+      await page.waitForChanges();
+
+      // Third tap: should restart range
+      await day12.click();
+      await page.waitForChanges();
+
+      await expect(day12).toHaveClass(/calendar-day-range-start/);
+      await expect(day8).not.toHaveClass(/calendar-day-range-start/);
+      await expect(day18).not.toHaveClass(/calendar-day-range-end/);
     });
 
     // ---------------------------------------------------------------

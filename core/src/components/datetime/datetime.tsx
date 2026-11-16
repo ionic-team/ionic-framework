@@ -880,16 +880,14 @@ export class Datetime implements ComponentInterface {
    * Handles range selection logic when a day is clicked.
    *
    * Creating a new range: first click sets start, second sets end.
-   * Modifying an existing range:
-   *   - Before range → new start
-   *   - Within range → new end
-   *   - After range → new end
+   * Once a full range is selected (both start and end), the next
+   * tap always starts a new range with the clicked date as the start.
    * If the resulting span contains a disabled date, start a new range instead.
    */
   private setActivePartsRange = (parts: DatetimeParts) => {
     const current = this.rangeParts;
 
-    if (!current || isBefore(parts, current.start) || this.rangeContainsDisabledDate(current.start, parts)) {
+    if (!current || current.end || this.rangeContainsDisabledDate(current.start, parts)) {
       this.activeParts = { start: parts };
     } else {
       this.activeParts = { start: current.start, end: parts };
