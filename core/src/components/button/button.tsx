@@ -463,6 +463,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       shapeValue,
       sizeValue,
       strong,
+      rippleType,
+      inButtons,
     } = this;
     const mode = getIonMode(this);
     // TODO(FW-7893): remove the mode fallback once the base theme's config always applies
@@ -509,7 +511,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           'in-datetime': this.inDatetime,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
-          'in-buttons': this.inButtons,
+          'in-buttons': inButtons,
           'button-has-icon-only': hasIconOnly,
           'button-has-badge': hasBadge,
           'button-disabled': disabled,
@@ -532,7 +534,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             <slot onSlotchange={this.onSlotChanged}></slot>
             <slot name="end"></slot>
           </span>
-          {showRipple && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          {showRipple && <ion-ripple-effect type={rippleType}></ion-ripple-effect>}
         </TagType>
       </Host>
     );
