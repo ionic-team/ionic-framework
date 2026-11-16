@@ -1,4 +1,4 @@
-import { rgba, currentColor, mix, dynamicFont, ionColor, overlay } from '../../utils/theme';
+import { rgba, currentColor, mix, dynamicFont, dynamicFontClamp, ionColor, overlay } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -569,7 +569,7 @@ export const defaultTheme: DefaultTheme = {
 
             icon: {
               font: {
-                size: 'clamp(13.002px, 1.23125em, 40.385px)',
+                size: dynamicFontClamp(global.root, 0.66, 19.7, 2.05, 'em'),
               },
             },
           },
@@ -629,7 +629,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through MD design.
                  * min font size: 15px, default font size: 22.4px, max font size: 43px
                  */
-                size: 'clamp(15.104px, 1.6em, 43.008px)',
+                size: dynamicFontClamp(global.root, 0.59, 25.6, 1.68, 'em'),
               },
             },
           },
@@ -686,7 +686,7 @@ export const defaultTheme: DefaultTheme = {
 
             icon: {
               font: {
-                size: 'clamp(15.008px, 1.4em, 43.008px)',
+                size: dynamicFontClamp(global.root, 0.67, 22.4, 1.92, 'em'),
               },
             },
           },

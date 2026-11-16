@@ -5,6 +5,7 @@ import {
   mix,
   dynamicFont,
   dynamicFontMax,
+  dynamicFontClamp,
   dynamicFontMin,
   ionColor,
   overlay,
@@ -540,7 +541,7 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           min: {
-            height: 'clamp(23px, 2.16em, 54px)',
+            height: clamp('23px', '2.16em', '54px'),
           },
 
           padding: {
@@ -592,7 +593,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 12px, default font size: 17px, max font size: 40px
                  */
-                size: 'clamp(12.1394px, 1.308125em, 40.1856px)',
+                size: dynamicFontClamp(global.root, 0.58, 20.93, 1.92, 'em'),
               },
             },
           },
@@ -600,7 +601,7 @@ export const defaultTheme: DefaultTheme = {
 
         medium: {
           min: {
-            height: 'clamp(30px, 2.125em, 60px)',
+            height: clamp('30px', '2.125em', '60px'),
           },
 
           padding: {
@@ -652,7 +653,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
                  */
-                size: 'clamp(15.12px, 1.125em, 43.02px)',
+                size: dynamicFontClamp(global.root, 0.84, 18, 2.39, 'em'),
               },
             },
           },
@@ -660,7 +661,7 @@ export const defaultTheme: DefaultTheme = {
 
         large: {
           min: {
-            height: 'clamp(46px, 2.5em, 78px)',
+            height: clamp('46px', '2.5em', '78px'),
           },
 
           padding: {
@@ -712,7 +713,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
                  */
-                size: 'clamp(15.12px, 0.9em, 43.056px)',
+                size: dynamicFontClamp(global.root, 1.05, 14.4, 2.99, 'em'),
               },
             },
           },
@@ -771,7 +772,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             font: {
-              size: 'clamp(17px, 1.0625rem, 21.08px)',
+              size: dynamicFontClamp(global.root, 1, 17, 1.24),
             },
           },
         },
@@ -813,7 +814,7 @@ export const defaultTheme: DefaultTheme = {
           size: {
             medium: {
               font: {
-                size: 'clamp(17px, 1.0625rem, 21.08px)',
+                size: dynamicFontClamp(global.root, 1, 17, 1.24),
               },
             },
           },

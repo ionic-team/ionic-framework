@@ -1065,3 +1065,33 @@ export const dynamicFontMax = (
 
   return `min(${baseScale}, ${maxSize}px)`;
 };
+
+/**
+ * Converts a pixel value to a dynamic unit (defaulting to rem)
+ * but imposes minimum and maximum font sizes using CSS clamp().
+ *
+ * Examples based on a root font size of 16px:
+ * - `dynamicFontClamp('16px', 1, 17, 1.24)` returns `'clamp(17px, 1.0625rem, 21.08px)'`
+ * - The rem value scales with root font size, from 100% up to 124% of 17px
+ *
+ * @internal
+ * @param configRootFontSize - The root font size from the theme config.
+ * @param minScale - The minimum scale of the font (e.g. 0.8 for 80%).
+ * @param size - The numeric pixel value.
+ * @param maxScale - The maximum scale of the font (e.g. 1.2 for 120%).
+ * @param unit - The CSS unit string.
+ * @returns A string containing the CSS clamp() function with the minimum pixel value, the dynamic font value and the maximum pixel value (e.g., 'clamp(17px, 1.0625rem, 21.08px)').
+ */
+export const dynamicFontClamp = (
+  configRootFontSize: string | number,
+  minScale: number,
+  size: number,
+  maxScale: number,
+  unit: string | undefined = baselineUnit
+): string => {
+  const baseScale = dynamicFont(configRootFontSize, size, unit);
+  const minSize = roundScaledSize(size * minScale);
+  const maxSize = roundScaledSize(size * maxScale);
+
+  return clamp(`${minSize}px`, baseScale, `${maxSize}px`);
+};
