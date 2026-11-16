@@ -3,6 +3,7 @@ import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stenci
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
+import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -367,7 +368,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="start" />
 
         <div class="loading-wrapper ion-overlay-wrapper">
           {spinner && (
@@ -379,7 +380,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
           {message !== undefined && this.renderLoadingMessage(msgId)}
         </div>
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="end" />
       </Host>
     );
   }
