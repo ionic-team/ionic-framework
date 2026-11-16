@@ -614,7 +614,7 @@ export namespace Components {
          */
         "expand"?: IonButtonExpand;
         /**
-          * Set to `"clear"` for a transparent button that resembles a flat button, `"outline"` for a transparent button with a border, or `"solid"` for a button with a filled background.  Defaults to `"solid"` if both the fill property and theme config are unset, or `"clear"` inside of buttons, datetime, or list header.
+          * Set to `"clear"` for a transparent button that resembles a flat button, `"outline"` for a transparent button with a border, or `"solid"` for a button with a filled background.  Defaults to `"solid"` if both the fill property and theme config are unset, or `"clear"` inside of buttons, datetime, or list header.  `"default"` is deprecated and renders the same as `"solid"`.
          */
         "fill"?: IonButtonFill | 'default';
         /**
@@ -6484,7 +6484,7 @@ declare namespace LocalJSX {
          */
         "expand"?: IonButtonExpand;
         /**
-          * Set to `"clear"` for a transparent button that resembles a flat button, `"outline"` for a transparent button with a border, or `"solid"` for a button with a filled background.  Defaults to `"solid"` if both the fill property and theme config are unset, or `"clear"` inside of buttons, datetime, or list header.
+          * Set to `"clear"` for a transparent button that resembles a flat button, `"outline"` for a transparent button with a border, or `"solid"` for a button with a filled background.  Defaults to `"solid"` if both the fill property and theme config are unset, or `"clear"` inside of buttons, datetime, or list header.  `"default"` is deprecated and renders the same as `"solid"`.
          */
         "fill"?: IonButtonFill | 'default';
         /**

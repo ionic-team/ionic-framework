@@ -36,6 +36,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inDatetime = false;
   private inItem = false;
   private hasWarnedSizeDefault = false;
+  private hasWarnedFillDefault = false;
   private inListHeader = false;
   private inButtons = false;
   private formButtonEl: HTMLButtonElement | null = null;
@@ -93,6 +94,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    *
    * Defaults to `"solid"` if both the fill property and theme config are unset,
    * or `"clear"` inside of buttons, datetime, or list header.
+   *
+   * `"default"` is deprecated and renders the same as `"solid"`.
    */
   @Prop({ reflect: true, mutable: true }) fill?: IonButtonFill | 'default';
 
@@ -283,8 +286,20 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * Gets the button fill. Uses the `fill` property if set, otherwise `clear` inside of
    * buttons, datetime or list header, then the theme config. Defaults to `solid` if none apply.
    */
-  get fillValue(): IonButtonFill | 'default' {
+  get fillValue(): IonButtonFill {
     const { fill } = this;
+
+    if (fill === 'default') {
+      if (!this.hasWarnedFillDefault) {
+        this.hasWarnedFillDefault = true;
+        printIonWarning(
+          '[ion-button] - The "default" fill is deprecated. Use "solid" instead.\nExample: <ion-button fill="solid">',
+          this.el
+        );
+      }
+
+      return 'solid';
+    }
 
     if (fill !== undefined) {
       return fill;

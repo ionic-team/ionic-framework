@@ -117,6 +117,7 @@ The following breaking changes apply to `ion-button`:
 11. The `default` size has been deprecated. <sup>[11](#version-10x-button-deprecated-default-size)</sup>
 12. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[12](#version-10x-button-theme-classes)</sup>
 13. `round` buttons no longer have extra horizontal padding. <sup>[13](#version-10x-button-round-padding)</sup>
+14. The `default` fill has been deprecated. <sup>[14](#version-10x-button-deprecated-default-fill)</sup>
 
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -170,7 +171,7 @@ Update any styles that target these classes:
 | `.button-outline` | `.button-fill-outline` |
 | `.button-clear` | `.button-fill-clear` |
 | `.button-small` | `.button-size-small` |
-| `.button-default` | `.button-size-medium` |
+| `.button-default` | `.button-size-medium` for `size="default"`, `.button-fill-solid` for `fill="default"` |
 | `.button-large` | `.button-size-large` |
 | `.button-round` | `.button-shape-round` |
 | `.button-block` | `.button-expand-block` |
@@ -205,6 +206,10 @@ ion-button[shape="round"]:not([size]):not(.button-has-icon-only) {
   --padding-end: 26px;
 }
 ```
+
+<h5 id="version-10x-button-deprecated-default-fill">Deprecated <code>default</code> fill</h5>
+
+The `default` value of the `fill` property is deprecated. It logs a warning and renders the same as `solid`, including inside an `ion-buttons`, where a button without a `fill` renders `clear`. Use `fill="solid"` instead, or remove the `fill` property to keep the `clear` default inside an `ion-buttons`.
 
 <h4 id="version-10x-card">Card</h4>
 
