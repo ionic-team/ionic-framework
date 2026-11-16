@@ -551,7 +551,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 13)}, 39px)`,
+            size: dynamicFontMax(global.root, 3, 13),
           },
 
           icon: {
@@ -611,7 +611,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 16)}, 48px)`,
+            size: dynamicFontMax(global.root, 3, 16),
           },
 
           icon: {
@@ -671,7 +671,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 20)}, 60px)`,
+            size: dynamicFontMax(global.root, 3, 20),
           },
 
           icon: {
