@@ -508,7 +508,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           // TODO(FW-6838): read the hue prop first in the hue PR
           [`${buttonType}-hue-${hueValue}`]: true,
           [`${buttonType}-strong`]: strong,
-          'in-datetime': this.inDatetime,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'in-buttons': inButtons,
