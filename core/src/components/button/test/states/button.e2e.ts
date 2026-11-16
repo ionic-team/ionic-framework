@@ -22,7 +22,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
         await page.setContent(
           `
           <style>
-            .states-container {
+            #container {
               display: grid;
               grid-template-columns: repeat(2, auto);
               justify-content: start;
@@ -31,12 +31,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
             }
           </style>
 
-          <div class="states-container">${buttons}</div>
+          <div id="container">${buttons}</div>
         `,
           config
         );
 
-        const container = page.locator('.states-container');
+        const container = page.locator('#container');
 
         await expect(container).toHaveScreenshot(screenshot(`button-${state}`));
       });

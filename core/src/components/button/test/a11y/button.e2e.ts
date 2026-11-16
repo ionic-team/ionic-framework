@@ -90,7 +90,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             font-size: 310%;
           }
 
-          .scale-container {
+          #container {
             display: flex;
             flex-direction: column;
             align-items: start;
@@ -98,7 +98,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           }
         </style>
 
-        <div class="scale-container">
+        <div id="container">
           <ion-button>Default</ion-button>
           <ion-button fill="clear">Clear</ion-button>
           <ion-button size="small">Small</ion-button>
@@ -108,7 +108,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const container = page.locator('.scale-container');
+      const container = page.locator('#container');
 
       await expect(container).toHaveScreenshot(screenshot(`button-scale`));
     });

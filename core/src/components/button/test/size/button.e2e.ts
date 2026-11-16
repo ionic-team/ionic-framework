@@ -7,7 +7,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
       await page.setContent(
         `
         <style>
-          .sizes-container {
+          #container {
             display: flex;
             flex-direction: column;
             align-items: start;
@@ -16,7 +16,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
           }
         </style>
 
-        <div class="sizes-container">
+        <div id="container">
           <ion-button size="small" fill="solid">Small Button</ion-button>
           <ion-button size="medium" fill="solid">Medium Button</ion-button>
           <ion-button size="large" fill="solid">Large Button</ion-button>
@@ -34,7 +34,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
         config
       );
 
-      const container = page.locator('.sizes-container');
+      const container = page.locator('#container');
 
       await expect(container).toHaveScreenshot(screenshot(`button-size`));
     });
