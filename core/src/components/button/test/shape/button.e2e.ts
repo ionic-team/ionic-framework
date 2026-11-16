@@ -56,6 +56,8 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
         config
       );
 
+      await page.setIonViewport();
+
       const container = page.locator('#container');
 
       await expect(container).toHaveScreenshot(screenshot(`button-shape`));
