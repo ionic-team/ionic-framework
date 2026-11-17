@@ -599,6 +599,22 @@ export const defaultTheme: DefaultTheme = {
             start: '0.9em',
           },
 
+          // MD2 text buttons have half the padding of contained buttons
+          clear: {
+            padding: {
+              end: '0.45em',
+              start: '0.45em',
+            },
+          },
+
+          // MD2 outlined buttons count the border as part of the padding
+          outline: {
+            padding: {
+              end: 'calc(0.9em - var(--ion-border-width-xxxs))',
+              start: 'calc(0.9em - var(--ion-border-width-xxxs))',
+            },
+          },
+
           font: {
             size: dynamicFont(global.root, 13),
           },
@@ -686,6 +702,22 @@ export const defaultTheme: DefaultTheme = {
             end: '1.1429em',
             bottom: 'var(--ion-spacing-sm)',
             start: '1.1429em',
+          },
+
+          // MD2 text buttons have half the padding of contained buttons
+          clear: {
+            padding: {
+              end: '0.5714em',
+              start: '0.5714em',
+            },
+          },
+
+          // MD2 outlined buttons count the border as part of the padding
+          outline: {
+            padding: {
+              end: 'calc(1.1429em - var(--ion-border-width-xxxs))',
+              start: 'calc(1.1429em - var(--ion-border-width-xxxs))',
+            },
           },
 
           font: {
@@ -777,6 +809,22 @@ export const defaultTheme: DefaultTheme = {
             end: '1em',
             bottom: 'var(--ion-spacing-350)',
             start: '1em',
+          },
+
+          // MD2 text buttons have half the padding of contained buttons
+          clear: {
+            padding: {
+              end: '0.5em',
+              start: '0.5em',
+            },
+          },
+
+          // MD2 outlined buttons count the border as part of the padding
+          outline: {
+            padding: {
+              end: 'calc(1em - var(--ion-border-width-xxxs))',
+              start: 'calc(1em - var(--ion-border-width-xxxs))',
+            },
           },
 
           font: {
@@ -913,11 +961,14 @@ export const defaultTheme: DefaultTheme = {
               height: 'var(--ion-scaling-md)',
             },
 
-            padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-sm)',
-              bottom: 'var(--ion-spacing-75)',
-              start: 'var(--ion-spacing-sm)',
+            // Datetime's buttons are `clear` in md, so this replaces the `clear` padding
+            clear: {
+              padding: {
+                top: 'var(--ion-spacing-75)',
+                end: 'var(--ion-spacing-sm)',
+                bottom: 'var(--ion-spacing-75)',
+                start: 'var(--ion-spacing-sm)',
+              },
             },
           },
         },

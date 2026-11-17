@@ -20,6 +20,18 @@
  * @prop --ion-button-size-small-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `small` button size
  * @prop --ion-button-size-small-padding-bottom: Bottom padding of the `small` button size
  * @prop --ion-button-size-small-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `small` button size
+ * @prop --ion-button-size-small-solid-padding-top: Top padding of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-solid-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-solid-padding-bottom: Bottom padding of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-solid-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-top: Top padding of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-bottom: Bottom padding of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-top: Top padding of a `clear` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `clear` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-bottom: Bottom padding of a `clear` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `clear` button of the `small` size, instead of the size's padding
  * @prop --ion-button-size-small-icon-font-size: Font size of the icons of the `small` button size
  * @prop --ion-button-size-small-icon-leading-margin-top: Top margin of an icon in the `start` slot of the `small` button size
  * @prop --ion-button-size-small-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of an icon in the `start` slot of the `small` button size
@@ -59,6 +71,18 @@
  * @prop --ion-button-size-medium-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `medium` button size
  * @prop --ion-button-size-medium-padding-bottom: Bottom padding of the `medium` button size
  * @prop --ion-button-size-medium-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `medium` button size
+ * @prop --ion-button-size-medium-solid-padding-top: Top padding of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-solid-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-solid-padding-bottom: Bottom padding of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-solid-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-top: Top padding of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-bottom: Bottom padding of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-top: Top padding of a `clear` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `clear` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-bottom: Bottom padding of a `clear` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `clear` button of the `medium` size, instead of the size's padding
  * @prop --ion-button-size-medium-icon-font-size: Font size of the icons of the `medium` button size
  * @prop --ion-button-size-medium-icon-leading-margin-top: Top margin of an icon in the `start` slot of the `medium` button size
  * @prop --ion-button-size-medium-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of an icon in the `start` slot of the `medium` button size
@@ -98,6 +122,18 @@
  * @prop --ion-button-size-large-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `large` button size
  * @prop --ion-button-size-large-padding-bottom: Bottom padding of the `large` button size
  * @prop --ion-button-size-large-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `large` button size
+ * @prop --ion-button-size-large-solid-padding-top: Top padding of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-solid-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-solid-padding-bottom: Bottom padding of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-solid-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-top: Top padding of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-bottom: Bottom padding of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-top: Top padding of a `clear` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `clear` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-bottom: Bottom padding of a `clear` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `clear` button of the `large` size, instead of the size's padding
  * @prop --ion-button-size-large-icon-font-size: Font size of the icons of the `large` button size
  * @prop --ion-button-size-large-icon-leading-margin-top: Top margin of an icon in the `start` slot of the `large` button size
  * @prop --ion-button-size-large-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of an icon in the `start` slot of the `large` button size

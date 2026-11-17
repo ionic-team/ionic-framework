@@ -113,23 +113,26 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 // --------------------------------------------------
 
 @each $size in $sizes {
-  :host(.button-size-#{$size}) {
-    min-height: var(--ion-button-size-#{$size}-min-height);
+  // A fill can set its own padding, such as a narrower `clear` button, or use the size's
+  @each $fill in $fills {
+    $padding: --ion-button-size-#{$size}-padding;
+    $fill-padding: --ion-button-size-#{$size}-#{$fill}-padding;
 
-    font-size: var(--ion-button-size-#{$size}-font-size);
+    :host(.button-size-#{$size}.button-fill-#{$fill}) .button-native {
+      @include mixins.padding(
+        var(--padding-top, var(#{$fill-padding}-top, var(#{$padding}-top))),
+        var(--padding-end, var(#{$fill-padding}-end, var(#{$padding}-end))),
+        var(--padding-bottom, var(#{$fill-padding}-bottom, var(#{$padding}-bottom))),
+        var(--padding-start, var(#{$fill-padding}-start, var(#{$padding}-start)))
+      );
+    }
   }
 
   :host(.button-size-#{$size}) {
     min-width: var(--ion-button-size-#{$size}-min-width);
-  }
+    min-height: var(--ion-button-size-#{$size}-min-height);
 
-  :host(.button-size-#{$size}) .button-native {
-    @include mixins.padding(
-      var(--padding-top, var(--ion-button-size-#{$size}-padding-top)),
-      var(--padding-end, var(--ion-button-size-#{$size}-padding-end)),
-      var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom)),
-      var(--padding-start, var(--ion-button-size-#{$size}-padding-start))
-    );
+    font-size: var(--ion-button-size-#{$size}-font-size);
   }
 }
 
