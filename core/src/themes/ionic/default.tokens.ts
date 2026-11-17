@@ -891,6 +891,15 @@ export const defaultTheme: DefaultTheme = {
     // Parents that theme the buttons they contain
     IonInputPasswordToggle: {
       IonButton: {
+        // The toggle keeps its 40px size, so it doesn't make the input taller
+        size: {
+          medium: {
+            min: {
+              height: 'var(--ion-scaling-1000)',
+            },
+          },
+        },
+
         hue: {
           bold: {
             clear: {
