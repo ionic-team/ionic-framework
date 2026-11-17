@@ -71,6 +71,14 @@
   z-index: $z-index-overlay-wrapper;
 }
 
+/**
+ * Removes the focus boundaries from the tab order
+ * so focus can leave the popover when the trap is off.
+ */
+:host(.ion-disable-focus-trap) .ion-overlay-focus-boundary {
+  display: none;
+}
+
 .popover-content {
   display: flex;
   position: absolute;
