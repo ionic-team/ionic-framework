@@ -128,7 +128,7 @@
             ></ion-datetime>
           </div>
 
-          <!-- Min/max with range outside bounds (ROU-13214) -->
+          <!-- Min/max with range outside bounds -->
           <div class="grid-item">
             <h2>Range Outside Min/Max (Jun 1-30, min 5, max 25)</h2>
             <ion-datetime
@@ -248,13 +248,13 @@
       // With header - set a partial range (start only)
       document.querySelector('#withHeader').value = ['2022-06-10'];
 
-      // ROU-13214: Range outside min/max bounds
+      // Range outside min/max bounds
       document.querySelector('#minMaxOutOfBounds').value = ['2022-06-01', '2022-06-30'];
 
-      // ROU-13214: Start before min
+      // Start before min
       document.querySelector('#startBeforeMin').value = ['2022-06-01', '2022-06-20'];
 
-      // ROU-13214: Range entirely before min (should clear)
+      // Range entirely before min (should clear)
       document.querySelector('#rangeBeforeMin').value = ['2022-06-01', '2022-06-05'];
 
       // Disabled dates: 15th of every month
