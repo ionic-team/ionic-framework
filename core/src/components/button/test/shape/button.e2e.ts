@@ -48,7 +48,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
         </style>
 
         <ion-content>
-          <div id="container">${grids}</div>
+          ${grids}
         </ion-content>
       `,
         config
@@ -56,9 +56,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
 
       await page.setIonViewport();
 
-      const container = page.locator('#container');
-
-      await expect(container).toHaveScreenshot(screenshot(`button-shape`));
+      await expect(page).toHaveScreenshot(screenshot(`button-shape`));
     });
   });
 });

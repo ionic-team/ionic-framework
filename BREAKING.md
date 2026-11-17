@@ -115,15 +115,16 @@ The following breaking changes apply to `ion-button`:
      --ion-button-hue-bold-clear-focus-background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
    }
    ~~~
-8. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[8](#version-10x-button-md-material-design-2)</sup>
-9. CSS variables have been replaced. <sup>[9](#version-10x-button-replaced-css-variables)</sup>
-10. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[10](#version-10x-button-padding-variables)</sup>
-11. The fill, size, shape and expand classes have been renamed. <sup>[11](#version-10x-button-renamed-classes)</sup>
-12. The `default` size has been deprecated. <sup>[12](#version-10x-button-deprecated-default-size)</sup>
-13. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[13](#version-10x-button-mode-classes)</sup>
-14. `round` buttons no longer have extra horizontal padding. <sup>[14](#version-10x-button-round-padding)</sup>
-15. The `default` fill has been deprecated. <sup>[15](#version-10x-button-deprecated-default-fill)</sup>
-16. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[16](#version-10x-button-toolbar-classes)</sup>
+8. Spinners in the `start` and `end` slots of `ios` and `md` buttons are now spaced from the label like icons. To remove the space, set `IonButton.size.<size>.spinner.leading.margin` and `IonButton.size.<size>.spinner.trailing.margin` for global styles, or `--ion-button-size-<size>-spinner-leading-margin-*` and `--ion-button-size-<size>-spinner-trailing-margin-*` for component-specific styles, to `0`.
+9. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[9](#version-10x-button-md-material-design-2)</sup>
+10. CSS variables have been replaced. <sup>[10](#version-10x-button-replaced-css-variables)</sup>
+11. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[11](#version-10x-button-padding-variables)</sup>
+12. The fill, size, shape and expand classes have been renamed. <sup>[12](#version-10x-button-renamed-classes)</sup>
+13. The `default` size has been deprecated. <sup>[13](#version-10x-button-deprecated-default-size)</sup>
+14. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[14](#version-10x-button-mode-classes)</sup>
+15. `round` buttons no longer have extra horizontal padding. <sup>[15](#version-10x-button-round-padding)</sup>
+16. The `default` fill has been deprecated. <sup>[16](#version-10x-button-deprecated-default-fill)</sup>
+17. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[17](#version-10x-button-toolbar-classes)</sup>
 
 <h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
 

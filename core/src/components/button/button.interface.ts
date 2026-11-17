@@ -200,12 +200,12 @@ type IonButtonSpinnerDefinition = {
     };
   };
 
-  /** Spinner in the `start` slot */
+  /** Spinner in the `start` slot. Unset margins match `icon.leading.margin` */
   leading?: {
     margin?: IonMargin;
   };
 
-  /** Spinner in the `end` slot */
+  /** Spinner in the `end` slot. Unset margins match `icon.trailing.margin` */
   trailing?: {
     margin?: IonMargin;
   };
