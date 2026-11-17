@@ -64,14 +64,14 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
             }
           </style>
 
-          <div class="badge-container">
+          <div id="container">
             ${sections}
           </div>
         `,
         config
       );
 
-      const container = page.locator('.badge-container');
+      const container = page.locator('#container');
 
       /**
        * Buttons overflow the default viewport, causing

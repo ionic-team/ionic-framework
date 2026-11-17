@@ -1,4 +1,4 @@
-import { rgba, currentColor, mix, dynamicFont, ionColor, overlay } from '../../utils/theme';
+import { rgba, currentColor, mix, dynamicFont, dynamicFontClamp, ionColor, overlay } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -46,8 +46,16 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonNote: {
+        hue: 'bold',
+      },
+
       IonProgressBar: {
         shape: 'rectangular',
+      },
+
+      IonRouterLink: {
+        hue: 'bold',
       },
 
       IonSpinner: {
@@ -386,8 +394,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: ionColor('primary', 'base'),
-
               opacity: '0.5',
             },
 
@@ -406,10 +412,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: overlay(currentColor('base'), currentColor('contrast', { alpha: 0.08 })),
                 color: currentColor('contrast'),
-              },
-
-              disabled: {
-                background: currentColor('base'),
               },
             },
           },
@@ -447,8 +449,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               opacity: '0.5',
             },
 
@@ -470,10 +470,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
                 color: currentColor('base'),
-              },
-
-              disabled: {
-                background: 'transparent',
               },
             },
           },
@@ -505,8 +501,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               opacity: '0.5',
             },
 
@@ -524,10 +518,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
                 color: currentColor('foreground'),
-              },
-
-              disabled: {
-                background: 'transparent',
               },
             },
           },
@@ -587,7 +577,7 @@ export const defaultTheme: DefaultTheme = {
 
             icon: {
               font: {
-                size: 'clamp(13.002px, 1.23125em, 40.385px)',
+                size: dynamicFontClamp(global.root, 0.66, 19.7, 2.05, 'em'),
               },
             },
           },
@@ -647,7 +637,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through MD design.
                  * min font size: 15px, default font size: 22.4px, max font size: 43px
                  */
-                size: 'clamp(15.104px, 1.6em, 43.008px)',
+                size: dynamicFontClamp(global.root, 0.59, 25.6, 1.68, 'em'),
               },
             },
           },
@@ -704,7 +694,7 @@ export const defaultTheme: DefaultTheme = {
 
             icon: {
               font: {
-                size: 'clamp(15.008px, 1.4em, 43.008px)',
+                size: dynamicFontClamp(global.root, 0.67, 22.4, 1.92, 'em'),
               },
             },
           },
@@ -1443,7 +1433,6 @@ export const defaultTheme: DefaultTheme = {
     IonContent: {
       default: {
         background: baseColors.backgroundColor,
-        color: baseColors.textColor,
       },
 
       semantic: {
@@ -1648,22 +1637,11 @@ export const defaultTheme: DefaultTheme = {
           self: 'flex-start',
         },
 
-        font: {
-          size: dynamicFont(global.root, components.item.note.slot.font.size),
-        },
-
-        margin: {
-          top: 'var(--ion-spacing-0)',
+        padding: {
+          top: components.item.note.slot.padding.top,
           end: 'var(--ion-spacing-0)',
           bottom: 'var(--ion-spacing-0)',
           start: 'var(--ion-spacing-0)',
-        },
-
-        padding: {
-          top: components.item.note.slot.padding.top,
-          end: components.item.note.slot.padding.end,
-          bottom: components.item.note.slot.padding.bottom,
-          start: components.item.note.slot.padding.start,
         },
       },
 
@@ -1737,6 +1715,45 @@ export const defaultTheme: DefaultTheme = {
         text: {
           overflow: 'initial',
         },
+      },
+    },
+
+    IonNote: {
+      font: {
+        family: 'var(--ion-font-family)',
+        size: dynamicFont(global.root, 12),
+      },
+
+      hue: {
+        bold: {
+          default: {
+            color: `var(--ion-text-color-step-400, ${mix(baseColors.white, baseColors.black, '60%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: `var(--ion-text-color-step-400, ${mix(baseColors.white, baseColors.black, '60%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letterSpacing: '0.0333em',
+
+      line: {
+        height: dynamicFont(global.root, 16),
       },
     },
 
@@ -1828,6 +1845,65 @@ export const defaultTheme: DefaultTheme = {
 
     IonRippleEffect: {
       opacity: '0.16',
+    },
+
+    IonRouterLink: {
+      hue: {
+        bold: {
+          default: {
+            color: ionColor('primary', 'foreground'),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.12 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.12 }),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: ionColor('primary', 'foreground', { subtle: true }),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.12 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.12 }),
+            },
+          },
+        },
+      },
+
+      state: {
+        focus: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-xxs)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-xxs)',
+          },
+        },
+      },
     },
 
     IonRow: {

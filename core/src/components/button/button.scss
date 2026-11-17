@@ -392,12 +392,13 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     opacity: var(#{$token}-disabled-opacity);
   }
 
+  // Disabled keeps the resting background unless a theme sets its own
   :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) .button-native {
-    background: var(#{$token}-disabled-background);
+    background: var(#{$token}-disabled-background, var(#{$token}-default-background));
   }
 
   :host(.button-hue-bold.button-fill-#{$fill}.ion-color.button-disabled) .button-native {
-    background: var(#{$token}-semantic-disabled-background);
+    background: var(#{$token}-semantic-disabled-background, var(#{$token}-semantic-default-background));
   }
 }
 
