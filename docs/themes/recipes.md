@@ -27,6 +27,17 @@ line: { height? }                             // not lineHeight
 
 Use camel case only when no other CSS property shares the first word, such as `letterSpacing` and `zIndex`. The generated variable is the same either way (`--ion-chip-min-height`), so this only changes the TypeScript shape.
 
+### Name the part first, then its position
+
+A child or slotted part comes first, then `leading` or `trailing`, then the property, so everything about one part sits under one key:
+
+```ts
+icon: { leading: { margin? }, trailing: { margin? } }   // not leading: { icon: { margin? } }
+```
+
+- `leading` is the part at the inline start (a `start` slot or `:first-child`), and `trailing` is the part at the inline end.
+- A position only qualifies its part. Put a value under `leading` or `trailing` only when the part's two positions need different values, and keep shared values on the part itself, like `IonChip.icon.font.size`.
+
 ### Use the shared spacing types
 
 `padding` and `margin` use `IonPadding` and `IonMargin` from `themes.interfaces.ts`, which have `top`, `end`, `bottom` and `start` keys. Logical names keep the tokens correct in right-to-left layouts.
