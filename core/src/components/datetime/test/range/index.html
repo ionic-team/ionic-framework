@@ -295,13 +295,6 @@
       const formatDate = (d) => d.toISOString().split('T')[0];
       document.querySelector('#spanningToday').value = [formatDate(fiveDaysAgo), formatDate(fiveDaysFromNow)];
 
-      // Log value changes for all range datetimes
-      document.querySelectorAll('ion-datetime').forEach((dt) => {
-        dt.addEventListener('ionChange', (ev) => {
-          console.log(`[${dt.id || 'datetime'}] value:`, ev.detail.value);
-        });
-      });
-
       // Disabled with value
       document.querySelector('#disabledRange').value = ['2022-06-08', '2022-06-18'];
 
