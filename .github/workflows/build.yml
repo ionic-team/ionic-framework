@@ -142,7 +142,8 @@ jobs:
       matrix:
         apps: [ng16, ng17, ng18, ng19, ng20]
     needs: [build-angular, build-angular-server]
-    runs-on: ubuntu-latest
+    # Playwright 1.54 in the Angular test apps doesn't support Ubuntu 26.04
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
     - uses: ./.github/workflows/actions/test-angular-e2e
