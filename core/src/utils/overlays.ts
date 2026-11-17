@@ -533,10 +533,18 @@ const connectListeners = (doc: Document) => {
 
         if (!isInsideOverlay) return;
 
-        // Get all focusable elements from both light and shadow DOM
+        /**
+         * Get all focusable elements from both light and shadow DOM.
+         * Focus boundaries in a shadow root are skipped: shadow elements
+         * are listed after the slotted content, so the boundaries would
+         * sit out of order and wrap focus to the wrong end. Boundaries
+         * in scoped overlays stay, since they are in document order.
+         */
         let allFocusable = [
           ...lastOverlay.querySelectorAll<HTMLElement>(focusableQueryString),
-          ...(lastOverlay.shadowRoot?.querySelectorAll<HTMLElement>(focusableQueryString) || []),
+          ...Array.from(lastOverlay.shadowRoot?.querySelectorAll<HTMLElement>(focusableQueryString) ?? []).filter(
+            (el) => !el.classList.contains('ion-overlay-focus-boundary')
+          ),
         ];
 
         /**
