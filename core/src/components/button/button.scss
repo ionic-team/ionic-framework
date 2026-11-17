@@ -9,6 +9,12 @@ $sizes: small, medium, large;
 $shapes: crisp, soft, round, rectangular;
 $spinner-sizes: xsmall, small, medium, large, xlarge;
 
+// A badge in the `start` slot takes the leading margins, and any other badge the trailing ones
+$badge-positions: (
+  trailing: "ion-badge:not([vertical])",
+  leading: 'ion-badge[slot="start"]:not([vertical])',
+);
+
 :host {
   /**
    * Ancestors such as `.ion-padding` containers set `--padding-*` for themselves,
@@ -490,7 +496,7 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 @each $size in $sizes {
   // The badge overlaps the vertical padding, so a badge taller than the label doesn't make the button taller than its min height.
   // The block margins fall back to 0px because calc() needs a unit.
-  @each $position, $selector in (trailing: "ion-badge:not([vertical])", leading: 'ion-badge[slot="start"]:not([vertical])') {
+  @each $position, $selector in $badge-positions {
     $margin: --ion-button-size-#{$size}-badge-#{$position}-margin;
 
     :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(#{$selector}) {
