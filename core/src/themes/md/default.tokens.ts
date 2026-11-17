@@ -1171,8 +1171,9 @@ export const defaultTheme: DefaultTheme = {
                 default: {
                   color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
 
+                  // MD2's border is the text color at 12%, like the focus tint
                   border: {
-                    color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                    color: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
                   },
                 },
 
@@ -1249,8 +1250,18 @@ export const defaultTheme: DefaultTheme = {
                     background: 'transparent',
                     color: 'var(--ion-toolbar-color, currentColor)',
 
+                    // MD2's border is the text color at 12%, like the focus tint
                     border: {
-                      color: 'var(--ion-toolbar-color, currentColor)',
+                      color: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
+                    },
+                  },
+
+                  // A button with a `color` gets the same border as the others in the toolbar
+                  semantic: {
+                    default: {
+                      border: {
+                        color: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
+                      },
                     },
                   },
 
@@ -1326,13 +1337,17 @@ export const defaultTheme: DefaultTheme = {
                   },
                 },
 
+                /**
+                 * MD2's border is the text color at 12%. A button with its own `color` keeps the
+                 * standalone border, since its color class replaces `--ion-color-contrast-rgb`.
+                 */
                 outline: {
                   default: {
                     background: 'transparent',
                     color: 'currentColor',
 
                     border: {
-                      color: currentColor('contrast'),
+                      color: currentColor('contrast', { alpha: 0.12 }),
                     },
                   },
 

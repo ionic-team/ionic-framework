@@ -133,12 +133,12 @@ The `md` button now uses the Material Design 2 values below. To keep a previous 
 | Icon size | `1.35em` | `1.2857em` (`18px` at the default size) | `IonButton.size.<size>.icon.font.size` |
 | Gap between icon and label | `0.3em` | `0.4444em` (`8px` at the default size) | `IonButton.size.<size>.icon.leading.margin.end` and `.trailing.margin.start` |
 | Spinner in a button | the spinner's own size (`28px` by default) | `1.2857em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
-| Outline border | `2px`, the button's color | `1px`, the text color at `12%` | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
+| Outline border | `2px`, the button's color, or the toolbar's color in a toolbar | `1px`, the text color at `12%`, in toolbars too | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
 | Solid elevation on hover and focus | the resting elevation | elevation 4 | `IonButton.hue.bold.solid.hover.box.shadow` and `.focus.box.shadow` |
 | Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` (`.semantic.disabled.color` and `.background` with a `color`) |
 | Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` (`.semantic.rippleEffect.opacity` with a `color`) |
 
-Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width, and inside a toolbar no elevation on hover or focus.
+Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width, and inside a toolbar no elevation on hover or focus. In a toolbar with a `color`, an outline button with its own `color` keeps the standalone border, the page's text color at `12%`, since its color replaces the toolbar's.
 
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 
