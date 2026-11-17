@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-bg-surface-default};
-  --box-shadow: #{globals.$ion-elevation-3};
+  --background: #{globals.$ion-bg-surface-elevation-3};
+  --box-shadow: #{globals.$ion-elevation-4};
   // Backdrop opacity is 1 because the backdrop's background color has an alpha value
   --backdrop-opacity: 0.7;
 

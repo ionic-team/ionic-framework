@@ -150,6 +150,39 @@ describe('Click Controller', () => {
   });
 
   /**
+   * ion-textarea keeps its native control in its shadow root, so its click is
+   * retargeted to the host. The mock document doesn't retarget, so the
+   * recorded target is still the control.
+   */
+  describe('with a native control in the shadow root', () => {
+    let shadowInput: HTMLInputElement;
+
+    const composedClick = (target: Element) =>
+      target.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
+
+    beforeEach(() => {
+      shadowInput = document.createElement('input');
+      shadowInput.id = 'shadow-native';
+      host.attachShadow({ mode: 'open' }).appendChild(shadowInput);
+
+      attach(() => shadowInput);
+    });
+
+    it('should let the native control click through without emitting another', () => {
+      composedClick(shadowInput);
+
+      expect(propagated).toEqual(['shadow-native']);
+    });
+
+    it('should not emit the click the label forwards after slotted content', () => {
+      click(slotted);
+      composedClick(shadowInput);
+
+      expect(propagated).toEqual(['slotted']);
+    });
+  });
+
+  /**
    * ion-select has no labelable control of its own, so the browser
    * forwards to an internal control that re-bubbles targeting the host.
    * That forwarded click is swallowed rather than re-emitted.
@@ -191,6 +224,87 @@ describe('Click Controller', () => {
       click(host);
 
       expect(propagated).toEqual(['host']);
+    });
+  });
+
+  /**
+   * ion-textarea uses `delegatesFocus`, so a press on its slotted content can
+   * move focus to the native control. The mock document has no focus model, so
+   * these don't check where focus ends up.
+   */
+  describe('focus rejection', () => {
+    let slottedButton: HTMLButtonElement;
+
+    const press = (target: Element, button = 0) =>
+      target.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button }));
+
+    const focusFrom = (relatedTarget: Element | null) => ({ relatedTarget } as unknown as FocusEvent);
+
+    beforeEach(() => {
+      slottedButton = document.createElement('button');
+      slottedButton.setAttribute('slot', 'end');
+      host.appendChild(slottedButton);
+
+      attach(() => nativeInput);
+      host.addEventListener('mousedown', (ev) => controller.handleMouseDown(ev as MouseEvent));
+    });
+
+    it('should reject focus after a press on interactive slotted content', () => {
+      press(slottedButton);
+
+      expect(controller.rejectFocus(focusFrom(null))).toBe(true);
+    });
+
+    it('should not reject focus after a press on non-interactive slotted content', () => {
+      press(slotted);
+
+      expect(controller.rejectFocus(focusFrom(null))).toBe(false);
+    });
+
+    it('should not reject focus after a secondary button press', () => {
+      press(slottedButton, 2);
+
+      expect(controller.rejectFocus(focusFrom(null))).toBe(false);
+    });
+
+    ['click', 'dragstart', 'pointercancel'].forEach((type) => {
+      it(`should stop rejecting focus the frame after a ${type}`, () => {
+        press(slottedButton);
+        document.dispatchEvent(new Event(type));
+
+        expect(controller.rejectFocus(focusFrom(null))).toBe(true);
+
+        flushFrames();
+
+        expect(controller.rejectFocus(focusFrom(null))).toBe(false);
+      });
+    });
+
+    it('should stop rejecting focus as soon as the rejection is cancelled', () => {
+      press(slottedButton);
+      controller.cancelFocusRejection();
+
+      expect(controller.rejectFocus(focusFrom(null))).toBe(false);
+    });
+
+    it('should return focus to the slotted content it came from', () => {
+      const focus = jest.spyOn(slottedButton, 'focus');
+
+      press(slottedButton);
+      controller.rejectFocus(focusFrom(slottedButton));
+
+      expect(focus).toHaveBeenCalled();
+    });
+
+    it('should not move focus to an element outside the host', () => {
+      const outside = document.createElement('button');
+      document.body.appendChild(outside);
+      const focus = jest.spyOn(outside, 'focus');
+
+      press(slottedButton);
+      controller.rejectFocus(focusFrom(outside));
+
+      expect(focus).not.toHaveBeenCalled();
     });
   });
 });

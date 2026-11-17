@@ -7,7 +7,8 @@
 :host {
   --width: 250px;
   --max-height: 90%;
-  --box-shadow: #{globals.$ion-elevation-4};
+  --background: #{globals.$ion-bg-surface-elevation-3};
+  --box-shadow: #{globals.$ion-elevation-3};
   --backdrop-opacity: 0.3;
 }
 

@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import type { AnchorInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes } from '@utils/helpers';
@@ -29,6 +31,7 @@ import type {
 })
 export class TabButton implements ComponentInterface, AnchorInterface {
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLElement;
 
@@ -110,10 +113,19 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     this.inheritedAttributes = {
       ...inheritAttributes(this.el, ['aria-label']),
     };
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
 
     if (this.layout === undefined) {
       this.layout = config.get('tabButtonLayout', 'icon-top');
     }
+  }
+
+  connectedCallback() {
+    this.tabindexController?.init();
+  }
+
+  disconnectedCallback() {
+    this.tabindexController?.destroy();
   }
 
   private getShape(): string | undefined {
@@ -177,6 +189,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     const theme = getIonTheme(this);
     const shape = this.getShape();
     const canActivate = this.canActivate();
+    const tabindex = this.tabindexController?.attributes.tabindex;
     const attrs = {
       download: this.download,
       href,
@@ -211,7 +224,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           role="tab"
           aria-selected={selected ? 'true' : null}
           aria-disabled={disabled ? 'true' : null}
-          tabindex={disabled ? '-1' : undefined}
+          tabindex={disabled ? '-1' : tabindex}
           {...inheritedAttributes}
         >
           <span class="button-inner">

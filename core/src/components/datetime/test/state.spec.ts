@@ -13,6 +13,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: null,
       ariaLabel: 'Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refC)).toEqual({
@@ -22,6 +25,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: 'true',
       ariaLabel: 'Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refB, refA)).toEqual({
@@ -31,6 +37,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: null,
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refA)).toEqual({
@@ -40,6 +49,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refA, undefined, undefined, [1])).toEqual({
@@ -49,6 +61,9 @@ describe('getCalendarDayState()', () => {
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refA, undefined, undefined, [2])).toEqual({
@@ -58,7 +73,97 @@ describe('getCalendarDayState()', () => {
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
       text: '1',
+      isRangeStart: false,
+      isRangeEnd: false,
+      isInRange: false,
     });
+  });
+
+  it('should return isRangeStart true when day matches range start', () => {
+    const start = { month: 6, day: 8, year: 2022 };
+    const end = { month: 6, day: 18, year: 2022 };
+    const today = { month: 6, day: 15, year: 2022 };
+    const rangeParts = { start, end };
+
+    const result = getCalendarDayState('en-US', start, [], today, undefined, undefined, undefined, rangeParts);
+    expect(result.isRangeStart).toEqual(true);
+    expect(result.isRangeEnd).toEqual(false);
+    expect(result.isInRange).toEqual(false);
+  });
+
+  it('should return isRangeEnd true when day matches range end', () => {
+    const start = { month: 6, day: 8, year: 2022 };
+    const end = { month: 6, day: 18, year: 2022 };
+    const today = { month: 6, day: 15, year: 2022 };
+    const rangeParts = { start, end };
+
+    const result = getCalendarDayState('en-US', end, [], today, undefined, undefined, undefined, rangeParts);
+    expect(result.isRangeEnd).toEqual(true);
+    expect(result.isRangeStart).toEqual(false);
+    expect(result.isInRange).toEqual(false);
+  });
+
+  it('should return isInRange true for days between range start and end', () => {
+    const start = { month: 6, day: 8, year: 2022 };
+    const end = { month: 6, day: 18, year: 2022 };
+    const middle = { month: 6, day: 12, year: 2022 };
+    const today = { month: 6, day: 15, year: 2022 };
+    const rangeParts = { start, end };
+
+    const result = getCalendarDayState('en-US', middle, [], today, undefined, undefined, undefined, rangeParts);
+    expect(result.isInRange).toEqual(true);
+    expect(result.isRangeStart).toEqual(false);
+    expect(result.isRangeEnd).toEqual(false);
+  });
+
+  it('should return all range flags false for days outside the range', () => {
+    const start = { month: 6, day: 8, year: 2022 };
+    const end = { month: 6, day: 18, year: 2022 };
+    const outside = { month: 6, day: 5, year: 2022 };
+    const today = { month: 6, day: 15, year: 2022 };
+    const rangeParts = { start, end };
+
+    const result = getCalendarDayState('en-US', outside, [], today, undefined, undefined, undefined, rangeParts);
+    expect(result.isRangeStart).toEqual(false);
+    expect(result.isRangeEnd).toEqual(false);
+    expect(result.isInRange).toEqual(false);
+  });
+
+  it('should return both isRangeStart and isRangeEnd true for single-day range', () => {
+    const day = { month: 6, day: 10, year: 2022 };
+    const today = { month: 6, day: 15, year: 2022 };
+    const rangeParts = { start: day, end: day };
+
+    const result = getCalendarDayState('en-US', day, [], today, undefined, undefined, undefined, rangeParts);
+    expect(result.isRangeStart).toEqual(true);
+    expect(result.isRangeEnd).toEqual(true);
+    expect(result.isInRange).toEqual(false);
+  });
+
+  it('should not mark disabled days as isInRange', () => {
+    const start = { month: 6, day: 8, year: 2022 };
+    const end = { month: 6, day: 18, year: 2022 };
+    const today = { month: 6, day: 15, year: 2022 };
+    const rangeParts = { start, end };
+
+    // Day 12 is disabled via min (setting min to day 13 disables day 12)
+    const disabledDay = { month: 6, day: 12, year: 2022 };
+    const minParts = { month: 6, day: 13, year: 2022 };
+
+    const result = getCalendarDayState('en-US', disabledDay, [], today, minParts, undefined, undefined, rangeParts);
+    expect(result.isInRange).toEqual(false);
+    expect(result.disabled).toEqual(true);
+  });
+
+  it('should return isRangeStart true but not isRangeEnd when range has no end', () => {
+    const start = { month: 6, day: 8, year: 2022 };
+    const today = { month: 6, day: 15, year: 2022 };
+    const rangeParts = { start };
+
+    const result = getCalendarDayState('en-US', start, [], today, undefined, undefined, undefined, rangeParts);
+    expect(result.isRangeStart).toEqual(true);
+    expect(result.isRangeEnd).toEqual(false);
+    expect(result.isInRange).toEqual(false);
   });
 });
 

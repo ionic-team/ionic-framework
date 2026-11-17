@@ -13,13 +13,15 @@ import {
   h,
   forceUpdate,
 } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
-import type { ClickController, NotchController, StartContainerController } from '@utils/forms';
+import type { ClickController, NotchController, StartEndContainerController } from '@utils/forms';
 import {
   compareOptions,
   createClickController,
   createNotchController,
-  createStartContainerController,
+  createStartEndContainerController,
   getSlottedClickContent,
   isOptionSelected,
   checkInvalidState,
@@ -99,13 +101,15 @@ export class Select implements ComponentInterface {
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
   private slotMutationController?: SlotMutationController;
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
   private validationObserver?: MutationObserver;
   private notchController?: NotchController;
-  private startContainerController?: StartContainerController;
+  private startEndContainerController?: StartEndContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private endContainerEl: HTMLElement | undefined;
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
 
   private clickController?: ClickController;
@@ -382,8 +386,10 @@ export class Select implements ComponentInterface {
   async connectedCallback() {
     const { el } = this;
 
+    this.tabindexController?.init();
+
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
-      this.startContainerController?.calculateStartContainerWidth();
+      this.startEndContainerController?.calculateContainerWidths();
 
       forceUpdate(this);
     });
@@ -394,15 +400,16 @@ export class Select implements ComponentInterface {
       () => this.labelSlot
     );
 
-    this.startContainerController = createStartContainerController(
+    this.startEndContainerController = createStartEndContainerController(
       el,
       () => this.startContainerEl,
+      () => this.endContainerEl,
       () => {
         return Build.isBrowser && getIonTheme(this) === 'md' && this.fill === 'outline';
       }
     );
 
-    this.startContainerController.calculateStartContainerWidth();
+    this.startEndContainerController.calculateContainerWidths();
 
     this.clickController = createClickController(el);
 
@@ -463,6 +470,7 @@ export class Select implements ComponentInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
 
     this.hintTextId = this.getHintTextId();
   }
@@ -482,6 +490,12 @@ export class Select implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    if (this.clickController) {
+      this.clickController.destroy();
+      this.clickController = undefined;
+    }
+    this.tabindexController?.destroy();
+
     if (this.mutationO) {
       this.mutationO.disconnect();
       this.mutationO = undefined;
@@ -497,9 +511,9 @@ export class Select implements ComponentInterface {
       this.notchController = undefined;
     }
 
-    if (this.startContainerController) {
-      this.startContainerController.destroy();
-      this.startContainerController = undefined;
+    if (this.startEndContainerController) {
+      this.startEndContainerController.destroy();
+      this.startEndContainerController = undefined;
     }
 
     // Clean up validation observer to prevent memory leaks.
@@ -1135,7 +1149,7 @@ export class Select implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
-    this.startContainerController?.calculateStartContainerWidth();
+    this.startEndContainerController?.calculateContainerWidths();
   }
 
   /**
@@ -1226,7 +1240,7 @@ export class Select implements ComponentInterface {
           {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
         </div>
       </div>,
-      <div key="end" class="select-end" part="end">
+      <div key="end" class="select-end" part="end" ref={(el) => (this.endContainerEl = el)}>
         {/**
          * The icon is rendered in the end container when the
          * select has a floating or stacked label so it is
@@ -1373,6 +1387,7 @@ export class Select implements ComponentInterface {
 
   private renderListbox() {
     const { disabled, inputId, isExpanded, required } = this;
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
 
     return (
       <button
@@ -1387,6 +1402,7 @@ export class Select implements ComponentInterface {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(focusEl) => (this.focusEl = focusEl)}
+        {...tabindexAttributes}
       ></button>
     );
   }

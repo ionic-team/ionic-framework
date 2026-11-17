@@ -1,9 +1,10 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AttributeController } from '@utils/attribute-controller';
-import { createAttributeController } from '@utils/attribute-controller';
+import { createAttributeController, createTabindexController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { raf } from '@utils/helpers';
+import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
@@ -42,6 +43,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private indicatorControlObserver?: MutationObserver;
   private didLoad = false;
   private ariaController?: AttributeController;
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -131,6 +133,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   buttonChanged() {
     // Update the focusable option when the button option is changed
     this.focusable = this.isFocusable();
+    this.ariaController?.refresh();
+    this.tabindexController?.refresh();
+  }
+
+  /**
+   * Adding or removing `href` adds or removes the native element, so `tabindex` and a label
+   * written after load have to move with it. The same goes for `button` in `buttonChanged`.
+   */
+  @Watch('href')
+  hrefChanged() {
+    this.ariaController?.refresh();
+    this.tabindexController?.refresh();
   }
 
   @Listen('ionColor')
@@ -186,16 +200,30 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
 
     this.ariaController?.init();
+    this.tabindexController?.init();
   }
 
   componentWillLoad() {
     /**
-     * Only the initial copy takes the attribute off the host, so an `aria-label` written
-     * after load names both the native element and the Host, which is a `listitem` when
-     * the item is in an `ion-list`. The two names always agree, so a screen reader just
-     * reads it twice.
+     * A non-clickable item renders a `div`, which ARIA doesn't allow a name on, so an
+     * `aria-label` written after load also stays on the Host, which is a `listitem`
+     * when the item is in an `ion-list`.
      */
-    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+    this.ariaController = createAttributeController(
+      this.el,
+      ['aria-label'],
+      () => forceUpdate(this),
+      [],
+      undefined,
+      () => !this.isClickable()
+    );
+
+    // An item that isn't clickable has no native button or link, so `tabindex` stays on the host.
+    this.tabindexController = createTabindexController(
+      this.el,
+      () => forceUpdate(this),
+      () => this.isClickable()
+    );
   }
 
   componentDidLoad() {
@@ -217,6 +245,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
 
     this.ariaController?.destroy();
+    this.tabindexController?.destroy();
   }
 
   private totalNestedInputs() {
@@ -405,6 +434,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerAnimation,
       routerDirection,
       multipleInputs,
+      el,
     } = this;
     const inheritedAriaAttributes = this.ariaController?.attributes ?? {};
     const childStyles = {} as StyleEventDetail;
@@ -412,6 +442,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
 
     const attrs =
       TagType === 'button'
@@ -511,7 +542,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-focus-indicator-room': slottedIndicatorNeedsRoom,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
-            'item-rtl': document.dir === 'rtl',
+            'item-rtl': isRTL(el),
           }),
         }}
         role={inList ? 'listitem' : null}
@@ -519,6 +550,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         <TagType
           {...attrs}
           {...inheritedAriaAttributes}
+          {...tabindexAttributes}
           class="item-native"
           part="native"
           disabled={disabled}

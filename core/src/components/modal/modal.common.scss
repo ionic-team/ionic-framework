@@ -106,6 +106,14 @@ ion-backdrop {
   background: transparent;
 }
 
+/**
+ * Removes the focus boundaries from the tab order
+ * so focus can leave the modal when the trap is off.
+ */
+:host(.ion-disable-focus-trap) .ion-overlay-focus-boundary {
+  display: none;
+}
+
 // Sheet Modal
 // --------------------------------------------------
 

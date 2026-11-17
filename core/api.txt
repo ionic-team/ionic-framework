@@ -675,15 +675,33 @@ ion-content,method,scrollToTop,scrollToTop(duration?: number) => Promise<void>
 ion-content,event,ionScroll,ScrollDetail,true
 ion-content,event,ionScrollEnd,ScrollBaseDetail,true
 ion-content,event,ionScrollStart,ScrollBaseDetail,true
-ion-content,css-prop,--background
-ion-content,css-prop,--color
-ion-content,css-prop,--keyboard-offset
-ion-content,css-prop,--offset-bottom
-ion-content,css-prop,--offset-top
-ion-content,css-prop,--padding-bottom
-ion-content,css-prop,--padding-end
-ion-content,css-prop,--padding-start
-ion-content,css-prop,--padding-top
+ion-content,css-prop,--background,ionic
+ion-content,css-prop,--background,ios
+ion-content,css-prop,--background,md
+ion-content,css-prop,--color,ionic
+ion-content,css-prop,--color,ios
+ion-content,css-prop,--color,md
+ion-content,css-prop,--keyboard-offset,ionic
+ion-content,css-prop,--keyboard-offset,ios
+ion-content,css-prop,--keyboard-offset,md
+ion-content,css-prop,--offset-bottom,ionic
+ion-content,css-prop,--offset-bottom,ios
+ion-content,css-prop,--offset-bottom,md
+ion-content,css-prop,--offset-top,ionic
+ion-content,css-prop,--offset-top,ios
+ion-content,css-prop,--offset-top,md
+ion-content,css-prop,--padding-bottom,ionic
+ion-content,css-prop,--padding-bottom,ios
+ion-content,css-prop,--padding-bottom,md
+ion-content,css-prop,--padding-end,ionic
+ion-content,css-prop,--padding-end,ios
+ion-content,css-prop,--padding-end,md
+ion-content,css-prop,--padding-start,ionic
+ion-content,css-prop,--padding-start,ios
+ion-content,css-prop,--padding-start,md
+ion-content,css-prop,--padding-top,ionic
+ion-content,css-prop,--padding-top,ios
+ion-content,css-prop,--padding-top,md
 ion-content,part,background
 ion-content,part,scroll
 
@@ -694,6 +712,7 @@ ion-datetime,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "se
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
+ion-datetime,prop,endDateLabel,string,'End date',false,false
 ion-datetime,prop,firstDayOfWeek,number,0,false,false
 ion-datetime,prop,formatOptions,undefined | { date: DateTimeFormatOptions; time?: DateTimeFormatOptions | undefined; } | { date?: DateTimeFormatOptions | undefined; time: DateTimeFormatOptions; },undefined,false,false
 ion-datetime,prop,highlightedDates,((dateIsoString: string) => DatetimeHighlightStyle | undefined) | DatetimeHighlight[] | undefined,undefined,false,false
@@ -711,12 +730,14 @@ ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,preferWheel,boolean,false,false,false
 ion-datetime,prop,presentation,"date" | "date-time" | "month" | "month-year" | "time" | "time-date" | "year",'date-time',false,false
 ion-datetime,prop,readonly,boolean,false,false,false
+ion-datetime,prop,selectionMode,"multiple" | "range" | undefined,undefined,false,false
 ion-datetime,prop,showAdjacentDays,boolean,false,false,false
 ion-datetime,prop,showClearButton,boolean,false,false,false
 ion-datetime,prop,showDefaultButtons,boolean,false,false,false
 ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
 ion-datetime,prop,showDefaultTitle,boolean,false,false,false
 ion-datetime,prop,size,"cover" | "fixed",'fixed',false,false
+ion-datetime,prop,startDateLabel,string,'Start date',false,false
 ion-datetime,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-datetime,prop,titleSelectedDatesFormatter,((selectedDates: string[]) => string) | undefined,undefined,false,false
 ion-datetime,prop,value,null | string | string[] | undefined,undefined,false,false
@@ -735,6 +756,9 @@ ion-datetime,css-prop,--background-rgb,ios
 ion-datetime,css-prop,--background-rgb,md
 ion-datetime,css-prop,--focus-ring-color,ionic
 ion-datetime,css-prop,--focus-ring-width,ionic
+ion-datetime,css-prop,--range-background,ionic
+ion-datetime,css-prop,--range-background,ios
+ion-datetime,css-prop,--range-background,md
 ion-datetime,css-prop,--title-color,ios
 ion-datetime,css-prop,--title-color,md
 ion-datetime,css-prop,--wheel-fade-background-rgb,ios
@@ -756,6 +780,10 @@ ion-datetime,part,month-year-button
 ion-datetime,part,navigation-button
 ion-datetime,part,next-button
 ion-datetime,part,previous-button
+ion-datetime,part,range-end
+ion-datetime,part,range-selection
+ion-datetime,part,range-start
+ion-datetime,part,range-track
 ion-datetime,part,time-button
 ion-datetime,part,time-button active
 ion-datetime,part,wheel
@@ -1369,7 +1397,7 @@ ion-item-sliding,method,getSlidingRatio,getSlidingRatio() => Promise<number>
 ion-item-sliding,method,open,open(side: Side | undefined) => Promise<void>
 ion-item-sliding,event,ionDrag,any,true
 
-ion-label,scoped
+ion-label,shadow
 ion-label,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-label,prop,mode,"ios" | "md",undefined,false,false
 ion-label,prop,position,"fixed" | "floating" | "stacked" | undefined,undefined,false,false

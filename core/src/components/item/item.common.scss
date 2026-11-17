@@ -144,6 +144,10 @@
   pointer-events: none;
 }
 
+:host(.item-interactive-disabled:not(.item-multiple-inputs)) ::slotted(ion-label) {
+  opacity: 0.3;
+}
+
 :host(.item-disabled) {
   cursor: default;
   opacity: 0.3;
@@ -312,6 +316,29 @@ a {
    * want them to grow indefinitely.
    */
   max-width: 100%;
+}
+
+/**
+ * Item styles win over the label's own styles when both target the
+ * same property, so positioned labels need their sizing set here
+ * to override the slotted label sizing above.
+ */
+::slotted(ion-label.label-fixed) {
+  flex: 0 0 100px;
+
+  width: 100px;
+  max-width: 200px;
+}
+
+::slotted(ion-label.label-stacked),
+::slotted(ion-label.label-floating) {
+  width: auto;
+}
+
+// Overflow hidden is required for the proper
+// margins between skeleton text elements
+:host(.item-skeleton-text) ::slotted(ion-label) {
+  overflow: hidden;
 }
 
 // Item Input

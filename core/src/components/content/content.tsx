@@ -39,7 +39,11 @@ import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
  */
 @Component({
   tag: 'ion-content',
-  styleUrl: 'content.scss',
+  styleUrls: {
+    ios: 'content.ios.scss',
+    md: 'content.md.scss',
+    ionic: 'content.ionic.scss',
+  },
   shadow: true,
 })
 export class Content implements ComponentInterface {

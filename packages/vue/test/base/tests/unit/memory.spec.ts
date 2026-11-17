@@ -10,6 +10,9 @@ import {
   IonApp,
   IonRouterOutlet,
   IonPage,
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
 } from '@ionic/vue';
 import { waitForRouter } from './utils';
 
@@ -111,5 +114,116 @@ describe('createMemoryHistory', () => {
     router.go(2);
     await waitForRouter();
     expect(router.currentRoute.value.path).toBe('/page3');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/29785
+  describe('tapping the active tab', () => {
+    const Tabs = {
+      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonRouterOutlet },
+      template: `
+        <ion-page>
+          <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
+            <ion-tab-bar slot="bottom">
+              <ion-tab-button tab="tab1" href="/tabs/tab1">Tab 1</ion-tab-button>
+              <ion-tab-button tab="tab2" href="/tabs/tab2">Tab 2</ion-tab-button>
+            </ion-tab-bar>
+          </ion-tabs>
+        </ion-page>
+      `,
+    };
+    const Tab1 = {
+      components: { IonPage },
+      template: '<ion-page>Tab 1</ion-page>',
+    };
+    const Tab1Child = {
+      components: { IonPage },
+      template: '<ion-page>Tab 1 Child</ion-page>',
+    };
+    const Tab2 = {
+      components: { IonPage },
+      template: '<ion-page>Tab 2</ion-page>',
+    };
+
+    const createTabsRouter = () =>
+      createRouter({
+        history: createMemoryHistory(process.env.BASE_URL),
+        routes: [
+          { path: '/', redirect: '/tabs/tab1' },
+          {
+            path: '/tabs/',
+            component: Tabs,
+            children: [
+              { path: 'tab1', component: Tab1 },
+              { path: 'tab1/child', component: Tab1Child },
+              { path: 'tab2', component: Tab2 },
+            ],
+          },
+        ],
+      });
+
+    const tapTab = async (wrapper: ReturnType<typeof mount>, tab: string) => {
+      const button = wrapper
+        .findAllComponents(IonTabButton)
+        .find((b) => b.props('tab') === tab)!;
+      await button.trigger('click');
+      await waitForRouter();
+    };
+
+    it('should return to the tab root from a child page', async () => {
+      const router = createTabsRouter();
+
+      router.push('/tabs/tab1');
+      await router.isReady();
+      const wrapper = mount(App, {
+        global: { plugins: [router, IonicVue] },
+      });
+      await waitForRouter();
+
+      router.push('/tabs/tab1/child');
+      await waitForRouter();
+      expect(router.currentRoute.value.path).toBe('/tabs/tab1/child');
+
+      await tapTab(wrapper, 'tab1');
+
+      expect(router.currentRoute.value.path).toBe('/tabs/tab1');
+    });
+
+    it('should return to the tab root when the app started on a child page', async () => {
+      const router = createTabsRouter();
+
+      router.push('/tabs/tab1/child');
+      await router.isReady();
+      const wrapper = mount(App, {
+        global: { plugins: [router, IonicVue] },
+      });
+      await waitForRouter();
+
+      await tapTab(wrapper, 'tab1');
+
+      expect(router.currentRoute.value.path).toBe('/tabs/tab1');
+    });
+
+    it('should replace the child page entry rather than push over it', async () => {
+      const router = createTabsRouter();
+
+      router.push('/tabs/tab1');
+      await router.isReady();
+      const wrapper = mount(App, {
+        global: { plugins: [router, IonicVue] },
+      });
+      await waitForRouter();
+
+      router.push('/tabs/tab1/child');
+      await waitForRouter();
+
+      await tapTab(wrapper, 'tab1');
+      expect(router.currentRoute.value.path).toBe('/tabs/tab1');
+
+      router.back();
+      await waitForRouter();
+
+      expect(router.currentRoute.value.path).toBe('/tabs/tab1');
+    });
   });
 })

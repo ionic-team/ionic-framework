@@ -206,6 +206,69 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
 });
 
 /**
+ * This behavior does not vary across modes/directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('alert: Enter key with checkbox inputs'), () => {
+    test('should not block Enter in elements outside of the alert', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30811',
+      });
+
+      await page.setContent(
+        `
+        <textarea></textarea>
+        <ion-alert header="Alert"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [{ type: 'checkbox', label: 'Checkbox', value: 'checkbox' }];
+        </script>
+      `,
+        config
+      );
+
+      // The alert isn't presented since it would trap focus away from the textarea
+      const textarea = page.locator('textarea');
+      await textarea.click();
+      await textarea.press('a');
+      await textarea.press('Enter');
+      await textarea.press('b');
+
+      await expect(textarea).toHaveValue('a\nb');
+    });
+
+    test('should dismiss the alert when pressing Enter on a button', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-alert header="Alert"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [{ type: 'checkbox', label: 'Checkbox', value: 'checkbox' }];
+          alert.buttons = ['OK'];
+        </script>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+      const alert = page.locator('ion-alert');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await alert.locator('.alert-button').press('Enter');
+      await ionAlertDidDismiss.next();
+
+      await expect(alert).toBeHidden();
+    });
+  });
+});
+
+/**
  * This behavior does not vary across directions
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {

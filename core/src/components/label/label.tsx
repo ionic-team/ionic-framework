@@ -16,7 +16,7 @@ import type { Color, StyleEventDetail } from '../../interface';
     md: 'label.md.scss',
     ionic: 'label.md.scss',
   },
-  scoped: true,
+  shadow: true,
 })
 export class Label implements ComponentInterface {
   private inRange = false;
@@ -105,16 +105,17 @@ export class Label implements ComponentInterface {
   }
 
   render() {
-    const position = this.position;
+    const { color, el, noAnimate, position } = this;
     const theme = getIonTheme(this);
+
     return (
       <Host
-        class={createColorClasses(this.color, {
+        class={createColorClasses(color, {
           [theme]: true,
-          'in-item-color': hostContext('ion-item.ion-color', this.el),
+          'in-item': hostContext('ion-item, ion-item-divider, ion-item-group', el),
+          'in-item-color': hostContext('ion-item.ion-color', el),
           [`label-${position}`]: position !== undefined,
-          [`label-no-animate`]: this.noAnimate,
-          'label-rtl': document.dir === 'rtl',
+          [`label-no-animate`]: noAnimate,
         })}
       >
         <slot></slot>

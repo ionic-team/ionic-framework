@@ -68,7 +68,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         selectModal.cancelText = 'Dismiss';
       });
 
-      await expect(cancelButton).toHaveAttribute('aria-label', 'Dismiss');
+      // ion-button moves a label written after load onto its native button
+      await expect(cancelButton.locator('button')).toHaveAttribute('aria-label', 'Dismiss');
     });
 
     test('should not set aria-label on the cancel button when cancelIcon is false', async () => {

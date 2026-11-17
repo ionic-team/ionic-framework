@@ -364,6 +364,89 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         expect(box!.width).toBeGreaterThanOrEqual(twoCharacterWidth);
       });
     });
+
+    /**
+     * The label truncates beside the wide slot and has room for its full
+     * text once it floats into the notch. It must not reveal that full text
+     * while it is still at its resting size, or it overflows the input
+     * partway through the transition.
+     */
+    test('should keep the label inside the input while it floats above a wide end slot', async ({ page }) => {
+      /**
+       * The label is longer than the input, so revealing all of it at its
+       * resting size pushes it past the border, not only over the slot.
+       */
+      await page.setContent(
+        `
+          <ion-input
+            fill="outline"
+            label="Enter the email address associated with your account"
+            label-placement="floating"
+            style="width: 260px"
+          >
+            ${endSlot}
+          </ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+
+      /**
+       * The first measurement of the start container disables the label
+       * transition for a frame. Wait for it to finish so the label is not
+       * floated while its transitions are turned off.
+       */
+      await expect(input).toHaveAttribute('style', /--internal-start-container-adjustment/);
+      await expect(input).not.toHaveClass(/skip-label-transition/);
+
+      /**
+       * Pauses the label's transitions and steps through them so every
+       * point of the animation is checked regardless of frame timing.
+       */
+      const overflow = await input.evaluate(async (el: HTMLIonInputElement) => {
+        const label = el.querySelector('.label-text-wrapper')!;
+        const wrapper = el.querySelector('.input-wrapper')!;
+        const maxRight = wrapper.getBoundingClientRect().right - parseFloat(getComputedStyle(wrapper).paddingRight);
+
+        /**
+         * The class that starts the transitions is added on the next render.
+         * A mutation observer runs right after that render, before the next
+         * frame, so the transitions are caught at their start. Waiting for a
+         * frame or using `page.waitForChanges()` can let the 150ms transitions
+         * finish on a slow machine, at which point the browser discards them
+         * and there is nothing to step through.
+         */
+        await new Promise<void>((resolve) => {
+          const observer = new MutationObserver(() => {
+            if (el.classList.contains('label-floating')) {
+              observer.disconnect();
+              resolve();
+            }
+          });
+          observer.observe(el, { attributeFilter: ['class'] });
+
+          el.value = '100';
+        });
+
+        // Without this a label that already finished floating would pass
+        const transitions = label.getAnimations();
+        if (transitions.length === 0) {
+          throw new Error('The label did not transition');
+        }
+        transitions.forEach((transition) => transition.pause());
+
+        // Step through the 150ms label transition in 15ms increments
+        const overflows = Array.from({ length: 11 }, (_, step) => {
+          transitions.forEach((transition) => (transition.currentTime = step * 15));
+          return label.getBoundingClientRect().right - maxRight;
+        });
+
+        return Math.max(...overflows);
+      });
+
+      expect(overflow).toBeLessThanOrEqual(1);
+    });
   });
 });
 

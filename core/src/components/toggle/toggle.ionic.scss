@@ -5,13 +5,13 @@
 // -----------------------------------------
 
 :host {
-  --track-background: #{globals.$ion-primitives-neutral-500};
+  --track-background: #{globals.$ion-bg-neutral-base-default};
   --track-background-checked: #{globals.ion-color(primary, base)};
   --border-radius: #{globals.$ion-border-radius-full};
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
-  --handle-background: #{globals.$ion-bg-surface-default};
-  --handle-background-checked: #{globals.$ion-bg-surface-default};
+  --handle-background: #{globals.$ion-bg-surface-inverse};
+  --handle-background-checked: #{globals.$ion-bg-surface-inverse};
   --handle-border-radius: #{globals.$ion-border-radius-full};
   --handle-height: #{globals.$ion-scale-500};
   --handle-max-height: #{globals.$ion-scale-500};

@@ -203,7 +203,12 @@
    */
   max-width: 200px;
 
-  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  /**
+   * The max-width animates with the transform so the label does not
+   * reveal its full floating width while it is still at full size.
+   */
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    max-width 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .textarea-wrapper textarea {

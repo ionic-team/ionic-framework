@@ -5,6 +5,7 @@ import type {
   DatetimeHighlightCallback,
   DatetimeHighlightStyle,
   DatetimeParts,
+  DatetimeRangeParts,
 } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
@@ -100,7 +101,8 @@ export const getCalendarDayState = (
   todayParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
-  dayValues?: number[]
+  dayValues?: number[],
+  rangeParts?: DatetimeRangeParts
 ) => {
   /**
    * activeParts signals what day(s) are currently selected in the datetime.
@@ -121,6 +123,23 @@ export const getCalendarDayState = (
   const disabled = isDayDisabled(refParts, minParts, maxParts, dayValues);
 
   /**
+   * Range state: determine if this day is the range start, end, or in between.
+   */
+  let isRangeStart = false;
+  let isRangeEnd = false;
+  let isInRange = false;
+
+  if (rangeParts) {
+    const { start, end } = rangeParts;
+    isRangeStart = isSameDay(refParts, start);
+
+    if (end) {
+      isRangeEnd = isSameDay(refParts, end);
+      isInRange = !disabled && !isRangeStart && !isRangeEnd && isAfter(refParts, start) && isBefore(refParts, end);
+    }
+  }
+
+  /**
    * Note that we always return one object regardless of whether activeParts
    * was an array, since we pare down to one value for isActive.
    */
@@ -128,6 +147,9 @@ export const getCalendarDayState = (
     disabled,
     isActive,
     isToday,
+    isRangeStart,
+    isRangeEnd,
+    isInRange,
     ariaSelected: isActive ? 'true' : null,
     ariaLabel: generateDayAriaLabel(locale, isToday, refParts),
     text: refParts.day != null ? getDay(locale, refParts) : null,

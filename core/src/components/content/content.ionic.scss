@@ -1,0 +1,16 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./content.common";
+
+// Ionic Content
+// --------------------------------------------------
+
+:host {
+  --background: var(--ion-background-color, #{globals.$ion-bg-body});
+
+  /**
+   * Inherit the text color set on `body`
+   * (or any closer ancestor) instead of
+   * resetting it.
+   */
+  --color: currentColor;
+}

@@ -14,7 +14,7 @@
   // Border
   --border-width: #{globals.$ion-border-size-025};
   --border-style: solid;
-  --border-color: #{globals.$ion-primitives-neutral-800};
+  --border-color: #{globals.$ion-border-input-default};
   --checkmark-width: 3;
 
   // Focus
@@ -27,7 +27,7 @@
   --checkbox-background: #{globals.$ion-bg-input-default};
   --checkbox-background-checked: #{globals.$ion-bg-primary-base-default};
   --border-color-checked: #{globals.$ion-semantics-primary-base};
-  --checkmark-color: #{globals.$ion-bg-surface-default};
+  --checkmark-color: #{globals.$ion-text-light};
   --transition: none;
 
   z-index: 2;

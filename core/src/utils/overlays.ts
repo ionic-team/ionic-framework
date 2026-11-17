@@ -1,7 +1,7 @@
 import { doc } from '@utils/browser';
 import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
-import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
+import { addCloseWatcherCondition, shouldUseCloseWatcher, updateCloseWatcher } from '@utils/hardware-back-button';
 import { printIonError, printIonWarning } from '@utils/logging';
 
 import { config } from '../global/config';
@@ -35,6 +35,12 @@ import {
 
 let lastOverlayIndex = 0;
 let lastId = 0;
+
+/**
+ * Every overlay except toast, which doesn't trap
+ * focus or close on back.
+ */
+const NON_TOAST_OVERLAYS = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-popover';
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
@@ -368,18 +374,9 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
 
       /**
        * Otherwise, we must be focusing an element
-       * inside of the overlay. The two possible options
-       * here are an input/button/etc or the ion-focus-trap
-       * element. The focus trap element is used to prevent
-       * the keyboard focus from leaving the overlay when
-       * using Tab or screen assistants.
+       * inside of the overlay.
        */
     } else {
-      /**
-       * We do not want to focus the traps, so get the overlay
-       * wrapper element as the traps live outside of the wrapper.
-       */
-
       const overlayRoot = getElementRoot(lastOverlay);
       if (!overlayRoot.contains(target)) {
         return;
@@ -396,41 +393,12 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * Additionally, if the backdrop was tapped we should not
        * move focus back inside the wrapper as that could cause
        * an interactive elements focus state to activate.
+       *
+       * The focus boundaries outside of the wrapper move
+       * focus back inside on their own.
        */
       if (overlayWrapper.contains(target) || target === overlayRoot.querySelector('ion-backdrop')) {
         lastOverlay.lastFocus = target;
-      } else {
-        /**
-         * Otherwise, we must have focused one of the focus traps.
-         * We need to wrap the focus to either the first element
-         * or the last element.
-         */
-
-        /**
-         * Once we call `focusFirstDescendant` and focus the first
-         * descendant, another focus event will fire which will
-         * cause `lastOverlay.lastFocus` to be updated before
-         * we can run the code after that. We will cache the value
-         * here to avoid that.
-         */
-        const lastFocus = lastOverlay.lastFocus;
-
-        // Focus the first element in the overlay wrapper
-        focusFirstDescendant(overlayWrapper, lastOverlay);
-
-        /**
-         * If the cached last focused element is the
-         * same as the active element, then we need
-         * to wrap focus to the last descendant. This happens
-         * when the first descendant is focused, and the user
-         * presses Shift + Tab. The previous line will focus
-         * the same descendant again (the first one), causing
-         * last focus to equal the active element.
-         */
-        if (lastFocus === doc.activeElement) {
-          focusLastDescendant(overlayWrapper, lastOverlay);
-        }
-        lastOverlay.lastFocus = doc.activeElement as HTMLElement;
       }
     }
   };
@@ -565,10 +533,18 @@ const connectListeners = (doc: Document) => {
 
         if (!isInsideOverlay) return;
 
-        // Get all focusable elements from both light and shadow DOM
+        /**
+         * Get all focusable elements from both light and shadow DOM.
+         * Focus boundaries in a shadow root are skipped: shadow elements
+         * are listed after the slotted content, so the boundaries would
+         * sit out of order and wrap focus to the wrong end. Boundaries
+         * in scoped overlays stay, since they are in document order.
+         */
         let allFocusable = [
           ...lastOverlay.querySelectorAll<HTMLElement>(focusableQueryString),
-          ...(lastOverlay.shadowRoot?.querySelectorAll<HTMLElement>(focusableQueryString) || []),
+          ...Array.from(lastOverlay.shadowRoot?.querySelectorAll<HTMLElement>(focusableQueryString) ?? []).filter(
+            (el) => !el.classList.contains('ion-overlay-focus-boundary')
+          ),
         ];
 
         /**
@@ -696,6 +672,12 @@ const connectListeners = (doc: Document) => {
       },
       true
     );
+
+    /**
+     * Whether the overlay actually dismisses is checked at press time,
+     * since `backdropDismiss` can change while it's open.
+     */
+    addCloseWatcherCondition(() => getPresentedOverlay(doc, NON_TOAST_OVERLAYS) !== undefined);
 
     // handle back-button click
     doc.addEventListener('ionBackButton', (ev) => {
@@ -839,7 +821,8 @@ export const setRootAriaHidden = (hidden = false) => {
  * Cleans up root `aria-hidden` and `backdrop-no-scroll` when
  * an overlay is removed from the DOM without going through
  * the `dismiss()` flow (e.g., when a framework unmounts the
- * overlay during a route change).
+ * overlay during a route change). Also releases the
+ * CloseWatcher if nothing is left to close.
  *
  * Should be called from an overlay's `disconnectedCallback`
  * when the overlay was still presented at the time of removal.
@@ -848,6 +831,8 @@ export const cleanupRootFocusTrapAccessibility = () => {
   if (typeof document === 'undefined') {
     return;
   }
+
+  updateCloseWatcher();
 
   const remainingOverlays = getPresentedOverlays(document);
   const hasRemainingLocking = remainingOverlays.some((o) => locksAppRoot(o as OverlayWithFocusTrapProps));
@@ -873,7 +858,9 @@ const applyRootLock = (el: OverlayWithFocusTrapProps) => {
 
 /**
  * Re-applies the root lock that `cleanupRootFocusTrapAccessibility()` released.
- * Call from `connectedCallback` when the overlay is still presented.
+ * Call from `connectedCallback` when the overlay is still presented. Also
+ * re-arms the CloseWatcher, which every overlay needs, so that happens
+ * before the `locksAppRoot` check.
  *
  * A synchronous move keeps the overlay connected, so the lock survives. A
  * detach with a re-insert in a later task releases it, which is the shape a
@@ -883,6 +870,8 @@ export const restoreRootFocusTrapAccessibility = (overlayEl: HTMLIonOverlayEleme
   if (typeof document === 'undefined') {
     return;
   }
+
+  updateCloseWatcher();
 
   const el = overlayEl as OverlayWithFocusTrapProps;
   if (!locksAppRoot(el)) {
@@ -1149,6 +1138,12 @@ export const dismiss = async <OverlayDismissOptions>(
 
   overlay.el.remove();
 
+  /**
+   * Release the back button if nothing
+   * else is left to close.
+   */
+  updateCloseWatcher();
+
   return true;
 };
 
@@ -1165,6 +1160,13 @@ const overlayAnimation = async (
 ): Promise<boolean> => {
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
+
+  /**
+   * Removing `overlay-hidden` makes the overlay count
+   * as presented, so back can dismiss it while it
+   * animates in.
+   */
+  updateCloseWatcher();
 
   const aniRoot = overlay.el;
   const animation = animationBuilder(aniRoot, opts);

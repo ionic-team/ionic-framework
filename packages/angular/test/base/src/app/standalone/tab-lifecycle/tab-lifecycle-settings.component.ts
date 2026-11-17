@@ -1,0 +1,49 @@
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonRouterLink,
+  IonTitle,
+  IonToolbar,
+  ViewDidEnter,
+  ViewDidLeave,
+  ViewWillEnter,
+  ViewWillLeave,
+} from '@ionic/angular';
+
+import { logLifecycle } from './lifecycle-log';
+
+@Component({
+  selector: 'app-tab-lifecycle-settings',
+  template: `
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Settings Tab</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-button id="go-outside-settings" routerLink="/standalone/tab-lifecycle-outside">Go Outside Tabs</ion-button>
+    </ion-content>
+  `,
+  standalone: true,
+  imports: [RouterLink, IonButton, IonContent, IonHeader, IonRouterLink, IonTitle, IonToolbar],
+})
+export class TabLifecycleSettingsComponent implements ViewWillEnter, ViewDidEnter, ViewWillLeave, ViewDidLeave {
+  ionViewWillEnter() {
+    logLifecycle('settings:ionViewWillEnter');
+  }
+
+  ionViewDidEnter() {
+    logLifecycle('settings:ionViewDidEnter');
+  }
+
+  ionViewWillLeave() {
+    logLifecycle('settings:ionViewWillLeave');
+  }
+
+  ionViewDidLeave() {
+    logLifecycle('settings:ionViewDidLeave');
+  }
+}

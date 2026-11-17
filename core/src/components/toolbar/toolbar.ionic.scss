@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-bg-surface-default};
+  --background: #{globals.$ion-bg-body};
   --color: #{globals.$ion-text-default};
   --border-color: currentColor;
   --padding-top: #{globals.$ion-space-200};

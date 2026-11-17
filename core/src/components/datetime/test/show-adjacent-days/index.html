@@ -28,7 +28,12 @@
 
       @media screen and (max-width: 800px) {
         .grid {
-          grid-template-columns: 1fr;
+          /**
+           * minmax(0, ...) keeps the column at the viewport width.
+           * A bare 1fr can't shrink below the datetime's min-content
+           * width, which WebKit measures across all three months.
+           */
+          grid-template-columns: minmax(0, 1fr);
           padding: 0;
         }
       }

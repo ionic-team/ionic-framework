@@ -1,4 +1,5 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/functions.color" as color;
+@import "../../themes/mixins";
 
 // Content
 // --------------------------------------------------
@@ -19,8 +20,6 @@
    * @prop --offset-top: Offset top of the content
    * @prop --offset-bottom: Offset bottom of the content
    */
-  --background: #{$background-color};
-  --color: #{$text-color};
   --padding-top: 0px;
   --padding-bottom: 0px;
   --padding-start: 0px;
@@ -44,14 +43,14 @@
   padding: 0 !important;
   /* stylelint-enable */
 
-  font-family: $font-family-base;
+  font-family: var(--ion-font-family, inherit);
 
   contain: size style;
 }
 
 :host(.ion-color) .inner-scroll {
-  background: current-color(base);
-  color: current-color(contrast);
+  background: color.current-color(base);
+  color: color.current-color(contrast);
 }
 
 #background-content {

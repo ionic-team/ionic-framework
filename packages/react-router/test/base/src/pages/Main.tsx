@@ -58,6 +58,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/suspense-outlet/content" id="go-to-suspense-outlet">
             <IonLabel>Suspense Outlet</IonLabel>
           </IonItem>
+          <IonItem routerLink="/outlet-unmount-before-ready">
+            <IonLabel>Outlet Unmount Before Ready</IonLabel>
+          </IonItem>
         </IonList>
 
         <IonList>
@@ -90,6 +93,9 @@ const Main: React.FC = () => {
           </IonItem>
           <IonItem routerLink="/tab-lifecycle">
             <IonLabel>Tab Lifecycle</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/hidden-view-renders">
+            <IonLabel>Hidden View Renders</IonLabel>
           </IonItem>
         </IonList>
 
@@ -153,6 +159,12 @@ const Main: React.FC = () => {
           </IonItem>
           <IonItem routerLink="/wildcard-no-heuristic">
             <IonLabel>Wildcard No Heuristic</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/stale-register/join">
+            <IonLabel>Stale Register (catch-all)</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/stale-register-no-catch-all/join">
+            <IonLabel>Stale Register (no catch-all)</IonLabel>
           </IonItem>
           <IonItem routerLink="/splat-sibling">
             <IonLabel>Splat Sibling</IonLabel>

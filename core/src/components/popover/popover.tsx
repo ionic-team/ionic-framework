@@ -5,6 +5,7 @@ import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
+import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -17,6 +18,7 @@ import {
   setOverlayId,
 } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
+import { isRTL } from '@utils/rtl';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
 
@@ -74,6 +76,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private workingDelegate?: FrameworkDelegate;
 
   private focusDescendantOnPresent = false;
+  private dirSetOnPresent = false;
 
   lastFocus?: HTMLElement;
 
@@ -499,6 +502,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const { inline, delegate } = this.getDelegate(true);
 
     /**
+     * When presented, ion-popover is hoisted from its place in the element
+     * hierarchy. Copy the current direction onto this element so that child
+     * elements can match.
+     */
+    if (!el.hasAttribute('dir')) {
+      el.setAttribute('dir', isRTL(el) ? 'rtl' : 'ltr');
+      this.dirSetOnPresent = true;
+    }
+
+    /**
      * Emit ionMount so JS Frameworks have an opportunity
      * to add the child component to the DOM. The child
      * component will be assigned to this.usersElement below.
@@ -652,6 +665,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
        */
       const { delegate } = this.getDelegate();
       await detachComponent(delegate, this.usersElement);
+
+      if (this.dirSetOnPresent) {
+        this.el.removeAttribute('dir');
+        this.dirSetOnPresent = false;
+      }
     }
 
     unlock();
@@ -780,12 +798,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
       >
         {!parentPopover && <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop} part="backdrop" />}
 
+        <OverlayFocusBoundary overlay={this.el} edge="start" />
+
         <div class="popover-wrapper ion-overlay-wrapper" onClick={dismissOnSelect ? () => this.dismiss() : undefined}>
           {enableArrow && <div class="popover-arrow" part="arrow"></div>}
           <div class="popover-content" part="content">
             <slot></slot>
           </div>
         </div>
+
+        <OverlayFocusBoundary overlay={this.el} edge="end" />
       </Host>
     );
   }
