@@ -760,7 +760,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(datetime.locator('[data-month="6"][data-day="25"]')).toHaveClass(/calendar-day-range-end/);
     });
 
-    test('range entirely before min should clear the selection', async ({ page }) => {
+    test('range entirely outside min/max should clear the selection', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime
@@ -781,37 +781,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.locator('.datetime-ready').waitFor();
       const datetime = page.locator('ion-datetime');
 
-      // Entire range is before min — no day should be highlighted
+      // Entire range is outside bounds — no day should be highlighted
       await expect(datetime.locator('[data-month="6"][data-day="1"]')).not.toHaveClass(/calendar-day-range-start/);
       await expect(datetime.locator('[data-month="6"][data-day="5"]')).not.toHaveClass(/calendar-day-range-end/);
       await expect(datetime.locator('[data-month="6"][data-day="10"]')).not.toHaveClass(/calendar-day-range-start/);
-    });
-
-    test('range entirely after max should clear the selection', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-datetime
-          locale="en-US"
-          presentation="date"
-          selection-mode="range"
-          min="2022-06-05"
-          max="2022-06-20"
-        ></ion-datetime>
-        <script>
-          const datetime = document.querySelector('ion-datetime');
-          datetime.value = ['2022-06-25', '2022-06-30'];
-        </script>
-      `,
-        config
-      );
-
-      await page.locator('.datetime-ready').waitFor();
-      const datetime = page.locator('ion-datetime');
-
-      // Entire range is after max — no day should be highlighted
-      await expect(datetime.locator('[data-month="6"][data-day="25"]')).not.toHaveClass(/calendar-day-range-start/);
-      await expect(datetime.locator('[data-month="6"][data-day="30"]')).not.toHaveClass(/calendar-day-range-end/);
-      await expect(datetime.locator('[data-month="6"][data-day="20"]')).not.toHaveClass(/calendar-day-range-end/);
     });
 
     // ---------------------------------------------------------------

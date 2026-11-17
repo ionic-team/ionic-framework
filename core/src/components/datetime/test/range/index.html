@@ -128,20 +128,6 @@
             ></ion-datetime>
           </div>
 
-          <!-- Min/max with range outside bounds -->
-          <div class="grid-item">
-            <h2>Range Outside Min/Max (Jun 1-30, min 5, max 25)</h2>
-            <ion-datetime
-              id="minMaxOutOfBounds"
-              locale="en-US"
-              presentation="date"
-              selection-mode="range"
-              min="2022-06-05"
-              max="2022-06-25"
-              show-default-title="true"
-            ></ion-datetime>
-          </div>
-
           <!-- Min/max with range partially outside (start before min) -->
           <div class="grid-item">
             <h2>Start Before Min (Jun 1-20, min 5)</h2>
@@ -156,15 +142,29 @@
             ></ion-datetime>
           </div>
 
-          <!-- Min/max with range entirely outside -->
+          <!-- Min/max with range partially outside (end after max) -->
           <div class="grid-item">
-            <h2>Range Entirely Before Min (Jun 1-3, min 10)</h2>
+            <h2>End After Max (Jun 10-30, max 25)</h2>
             <ion-datetime
-              id="rangeBeforeMin"
+              id="endAfterMax"
               locale="en-US"
               presentation="date"
               selection-mode="range"
-              min="2022-06-10"
+              min="2022-06-05"
+              max="2022-06-25"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
+
+          <!-- Range entirely outside min/max (should clear) -->
+          <div class="grid-item">
+            <h2>Range Entirely Outside (Jan 1-3, min Jun 5)</h2>
+            <ion-datetime
+              id="rangeEntirelyOutside"
+              locale="en-US"
+              presentation="date"
+              selection-mode="range"
+              min="2022-06-05"
               max="2022-06-25"
               show-default-title="true"
             ></ion-datetime>
@@ -248,14 +248,14 @@
       // With header - set a partial range (start only)
       document.querySelector('#withHeader').value = ['2022-06-10'];
 
-      // Range outside min/max bounds
-      document.querySelector('#minMaxOutOfBounds').value = ['2022-06-01', '2022-06-30'];
-
       // Start before min
       document.querySelector('#startBeforeMin').value = ['2022-06-01', '2022-06-20'];
 
-      // Range entirely before min (should clear)
-      document.querySelector('#rangeBeforeMin').value = ['2022-06-01', '2022-06-05'];
+      // End after max
+      document.querySelector('#endAfterMax').value = ['2022-06-10', '2022-06-30'];
+
+      // Range entirely outside (should clear selection)
+      document.querySelector('#rangeEntirelyOutside').value = ['2022-01-01', '2022-01-03'];
 
       // Disabled dates: 15th of every month
       const disabledDatetime = document.querySelector('#disabledDates');
@@ -294,6 +294,13 @@
       fiveDaysFromNow.setDate(today.getDate() + 5);
       const formatDate = (d) => d.toISOString().split('T')[0];
       document.querySelector('#spanningToday').value = [formatDate(fiveDaysAgo), formatDate(fiveDaysFromNow)];
+
+      // Log value changes for all range datetimes
+      document.querySelectorAll('ion-datetime').forEach((dt) => {
+        dt.addEventListener('ionChange', (ev) => {
+          console.log(`[${dt.id || 'datetime'}] value:`, ev.detail.value);
+        });
+      });
 
       // Disabled with value
       document.querySelector('#disabledRange').value = ['2022-06-08', '2022-06-18'];
