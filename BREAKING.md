@@ -115,7 +115,7 @@ The following breaking changes apply to `ion-button`:
 9. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[9](#version-10x-button-padding-variables)</sup>
 10. The fill, size, shape and expand classes have been renamed. <sup>[10](#version-10x-button-renamed-classes)</sup>
 11. The `default` size has been deprecated. <sup>[11](#version-10x-button-deprecated-default-size)</sup>
-12. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[12](#version-10x-button-theme-classes)</sup>
+12. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[12](#version-10x-button-mode-classes)</sup>
 13. `round` buttons no longer have extra horizontal padding. <sup>[13](#version-10x-button-round-padding)</sup>
 14. The `default` fill has been deprecated. <sup>[14](#version-10x-button-deprecated-default-fill)</sup>
 15. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[15](#version-10x-button-toolbar-classes)</sup>
@@ -184,9 +184,9 @@ Update any styles that target these classes:
 
 The `default` value of the `size` property is deprecated. It logs a warning and renders the same as `medium`. Use `size="medium"` instead.
 
-<h5 id="version-10x-button-theme-classes">Theme classes</h5>
+<h5 id="version-10x-button-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-button.md`, `ion-button.ios`.
+Remove any instances that target the mode classes: `ion-button.md`, `ion-button.ios`.
 
 <h5 id="version-10x-button-round-padding">Round padding</h5>
 
