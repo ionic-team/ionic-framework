@@ -20,6 +20,18 @@
  * @prop --ion-button-size-small-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `small` button size
  * @prop --ion-button-size-small-padding-bottom: Bottom padding of the `small` button size
  * @prop --ion-button-size-small-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `small` button size
+ * @prop --ion-button-size-small-solid-padding-top: Top padding of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-solid-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-solid-padding-bottom: Bottom padding of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-solid-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-top: Top padding of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-bottom: Bottom padding of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-top: Top padding of a `clear` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `clear` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-bottom: Bottom padding of a `clear` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `clear` button of the `small` size, instead of the size's padding
  * @prop --ion-button-size-small-icon-font-size: Font size of the icons of the `small` button size
  * @prop --ion-button-size-small-icon-leading-margin-top: Top margin of an icon in the `start` slot of the `small` button size
  * @prop --ion-button-size-small-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of an icon in the `start` slot of the `small` button size
@@ -52,10 +64,14 @@
  * @prop --ion-button-size-small-spinner-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of a spinner in the `end` slot of the `small` button size
  * @prop --ion-button-size-small-spinner-trailing-margin-bottom: Bottom margin of a spinner in the `end` slot of the `small` button size
  * @prop --ion-button-size-small-spinner-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of a spinner in the `end` slot of the `small` button size
- * @prop --ion-button-size-small-badge-margin-top: Top margin of a badge without a `vertical` position in a text button of the `small` size, added to the negative margin that cancels the button's top padding
- * @prop --ion-button-size-small-badge-margin-end: Margin on the side away from the label of a badge without a `vertical` position in a text button of the `small` size
- * @prop --ion-button-size-small-badge-margin-bottom: Bottom margin of a badge without a `vertical` position in a text button of the `small` size, added to the negative margin that cancels the button's bottom padding
- * @prop --ion-button-size-small-badge-margin-start: Gap between the label and a badge without a `vertical` position in a text button of the `small` size
+ * @prop --ion-button-size-small-badge-leading-margin-top: Top margin of a badge in the `start` slot without a `vertical` position in a text button of the `small` size, added to the negative margin that cancels the button's top padding
+ * @prop --ion-button-size-small-badge-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of a badge in the `start` slot without a `vertical` position in a text button of the `small` size
+ * @prop --ion-button-size-small-badge-leading-margin-bottom: Bottom margin of a badge in the `start` slot without a `vertical` position in a text button of the `small` size, added to the negative margin that cancels the button's bottom padding
+ * @prop --ion-button-size-small-badge-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of a badge in the `start` slot without a `vertical` position in a text button of the `small` size
+ * @prop --ion-button-size-small-badge-trailing-margin-top: Top margin of a badge after the label without a `vertical` position in a text button of the `small` size, added to the negative margin that cancels the button's top padding
+ * @prop --ion-button-size-small-badge-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of a badge after the label without a `vertical` position in a text button of the `small` size
+ * @prop --ion-button-size-small-badge-trailing-margin-bottom: Bottom margin of a badge after the label without a `vertical` position in a text button of the `small` size, added to the negative margin that cancels the button's bottom padding
+ * @prop --ion-button-size-small-badge-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of a badge after the label without a `vertical` position in a text button of the `small` size
  * @prop --ion-button-size-medium-min-width: Minimum width of the `medium` button size
  * @prop --ion-button-size-medium-min-height: Minimum height of the `medium` button size, and the width and height of an icon-only button of that size
  * @prop --ion-button-size-medium-font-size: Font size of the `medium` button size
@@ -63,6 +79,18 @@
  * @prop --ion-button-size-medium-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `medium` button size
  * @prop --ion-button-size-medium-padding-bottom: Bottom padding of the `medium` button size
  * @prop --ion-button-size-medium-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `medium` button size
+ * @prop --ion-button-size-medium-solid-padding-top: Top padding of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-solid-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-solid-padding-bottom: Bottom padding of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-solid-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-top: Top padding of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-bottom: Bottom padding of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-top: Top padding of a `clear` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `clear` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-bottom: Bottom padding of a `clear` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `clear` button of the `medium` size, instead of the size's padding
  * @prop --ion-button-size-medium-icon-font-size: Font size of the icons of the `medium` button size
  * @prop --ion-button-size-medium-icon-leading-margin-top: Top margin of an icon in the `start` slot of the `medium` button size
  * @prop --ion-button-size-medium-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of an icon in the `start` slot of the `medium` button size
@@ -95,10 +123,14 @@
  * @prop --ion-button-size-medium-spinner-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of a spinner in the `end` slot of the `medium` button size
  * @prop --ion-button-size-medium-spinner-trailing-margin-bottom: Bottom margin of a spinner in the `end` slot of the `medium` button size
  * @prop --ion-button-size-medium-spinner-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of a spinner in the `end` slot of the `medium` button size
- * @prop --ion-button-size-medium-badge-margin-top: Top margin of a badge without a `vertical` position in a text button of the `medium` size, added to the negative margin that cancels the button's top padding
- * @prop --ion-button-size-medium-badge-margin-end: Margin on the side away from the label of a badge without a `vertical` position in a text button of the `medium` size
- * @prop --ion-button-size-medium-badge-margin-bottom: Bottom margin of a badge without a `vertical` position in a text button of the `medium` size, added to the negative margin that cancels the button's bottom padding
- * @prop --ion-button-size-medium-badge-margin-start: Gap between the label and a badge without a `vertical` position in a text button of the `medium` size
+ * @prop --ion-button-size-medium-badge-leading-margin-top: Top margin of a badge in the `start` slot without a `vertical` position in a text button of the `medium` size, added to the negative margin that cancels the button's top padding
+ * @prop --ion-button-size-medium-badge-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of a badge in the `start` slot without a `vertical` position in a text button of the `medium` size
+ * @prop --ion-button-size-medium-badge-leading-margin-bottom: Bottom margin of a badge in the `start` slot without a `vertical` position in a text button of the `medium` size, added to the negative margin that cancels the button's bottom padding
+ * @prop --ion-button-size-medium-badge-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of a badge in the `start` slot without a `vertical` position in a text button of the `medium` size
+ * @prop --ion-button-size-medium-badge-trailing-margin-top: Top margin of a badge after the label without a `vertical` position in a text button of the `medium` size, added to the negative margin that cancels the button's top padding
+ * @prop --ion-button-size-medium-badge-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of a badge after the label without a `vertical` position in a text button of the `medium` size
+ * @prop --ion-button-size-medium-badge-trailing-margin-bottom: Bottom margin of a badge after the label without a `vertical` position in a text button of the `medium` size, added to the negative margin that cancels the button's bottom padding
+ * @prop --ion-button-size-medium-badge-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of a badge after the label without a `vertical` position in a text button of the `medium` size
  * @prop --ion-button-size-large-min-width: Minimum width of the `large` button size
  * @prop --ion-button-size-large-min-height: Minimum height of the `large` button size, and the width and height of an icon-only button of that size
  * @prop --ion-button-size-large-font-size: Font size of the `large` button size
@@ -106,6 +138,18 @@
  * @prop --ion-button-size-large-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `large` button size
  * @prop --ion-button-size-large-padding-bottom: Bottom padding of the `large` button size
  * @prop --ion-button-size-large-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `large` button size
+ * @prop --ion-button-size-large-solid-padding-top: Top padding of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-solid-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-solid-padding-bottom: Bottom padding of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-solid-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-top: Top padding of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-bottom: Bottom padding of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-top: Top padding of a `clear` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `clear` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-bottom: Bottom padding of a `clear` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `clear` button of the `large` size, instead of the size's padding
  * @prop --ion-button-size-large-icon-font-size: Font size of the icons of the `large` button size
  * @prop --ion-button-size-large-icon-leading-margin-top: Top margin of an icon in the `start` slot of the `large` button size
  * @prop --ion-button-size-large-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of an icon in the `start` slot of the `large` button size
@@ -138,10 +182,14 @@
  * @prop --ion-button-size-large-spinner-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of a spinner in the `end` slot of the `large` button size
  * @prop --ion-button-size-large-spinner-trailing-margin-bottom: Bottom margin of a spinner in the `end` slot of the `large` button size
  * @prop --ion-button-size-large-spinner-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of a spinner in the `end` slot of the `large` button size
- * @prop --ion-button-size-large-badge-margin-top: Top margin of a badge without a `vertical` position in a text button of the `large` size, added to the negative margin that cancels the button's top padding
- * @prop --ion-button-size-large-badge-margin-end: Margin on the side away from the label of a badge without a `vertical` position in a text button of the `large` size
- * @prop --ion-button-size-large-badge-margin-bottom: Bottom margin of a badge without a `vertical` position in a text button of the `large` size, added to the negative margin that cancels the button's bottom padding
- * @prop --ion-button-size-large-badge-margin-start: Gap between the label and a badge without a `vertical` position in a text button of the `large` size
+ * @prop --ion-button-size-large-badge-leading-margin-top: Top margin of a badge in the `start` slot without a `vertical` position in a text button of the `large` size, added to the negative margin that cancels the button's top padding
+ * @prop --ion-button-size-large-badge-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of a badge in the `start` slot without a `vertical` position in a text button of the `large` size
+ * @prop --ion-button-size-large-badge-leading-margin-bottom: Bottom margin of a badge in the `start` slot without a `vertical` position in a text button of the `large` size, added to the negative margin that cancels the button's bottom padding
+ * @prop --ion-button-size-large-badge-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of a badge in the `start` slot without a `vertical` position in a text button of the `large` size
+ * @prop --ion-button-size-large-badge-trailing-margin-top: Top margin of a badge after the label without a `vertical` position in a text button of the `large` size, added to the negative margin that cancels the button's top padding
+ * @prop --ion-button-size-large-badge-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of a badge after the label without a `vertical` position in a text button of the `large` size
+ * @prop --ion-button-size-large-badge-trailing-margin-bottom: Bottom margin of a badge after the label without a `vertical` position in a text button of the `large` size, added to the negative margin that cancels the button's bottom padding
+ * @prop --ion-button-size-large-badge-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of a badge after the label without a `vertical` position in a text button of the `large` size
  * @prop --ion-button-shape-crisp-border-radius: Border radius of the `crisp` button shape
  * @prop --ion-button-shape-soft-border-radius: Border radius of the `soft` button shape
  * @prop --ion-button-shape-round-border-radius: Border radius of the `round` button shape

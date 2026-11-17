@@ -9,6 +9,12 @@ $sizes: small, medium, large;
 $shapes: crisp, soft, round, rectangular;
 $spinner-sizes: xsmall, small, medium, large, xlarge;
 
+// A badge in the `start` slot takes the leading margins, and any other badge the trailing ones
+$badge-positions: (
+  trailing: "ion-badge:not([vertical])",
+  leading: 'ion-badge[slot="start"]:not([vertical])',
+);
+
 :host {
   /**
    * Ancestors such as `.ion-padding` containers set `--padding-*` for themselves,
@@ -113,24 +119,26 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 // --------------------------------------------------
 
 @each $size in $sizes {
+  // A fill can set its own padding, such as a narrower `clear` button, or use the size's
+  @each $fill in $fills {
+    $padding: --ion-button-size-#{$size}-padding;
+    $fill-padding: --ion-button-size-#{$size}-#{$fill}-padding;
+
+    :host(.button-size-#{$size}.button-fill-#{$fill}) .button-native {
+      @include mixins.padding(
+        var(--padding-top, var(#{$fill-padding}-top, var(#{$padding}-top))),
+        var(--padding-end, var(#{$fill-padding}-end, var(#{$padding}-end))),
+        var(--padding-bottom, var(#{$fill-padding}-bottom, var(#{$padding}-bottom))),
+        var(--padding-start, var(#{$fill-padding}-start, var(#{$padding}-start)))
+      );
+    }
+  }
+
   :host(.button-size-#{$size}) {
+    min-width: var(--ion-button-size-#{$size}-min-width);
     min-height: var(--ion-button-size-#{$size}-min-height);
 
     font-size: var(--ion-button-size-#{$size}-font-size);
-  }
-
-  // Buttons in `ion-buttons` fit their content, so an icon without `slot="icon-only"` doesn't widen them
-  :host(.button-size-#{$size}:not(.in-buttons)) {
-    min-width: var(--ion-button-size-#{$size}-min-width);
-  }
-
-  :host(.button-size-#{$size}) .button-native {
-    @include mixins.padding(
-      var(--padding-top, var(--ion-button-size-#{$size}-padding-top)),
-      var(--padding-end, var(--ion-button-size-#{$size}-padding-end)),
-      var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom)),
-      var(--padding-start, var(--ion-button-size-#{$size}-padding-start))
-    );
   }
 }
 
@@ -419,11 +427,12 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     opacity: var(#{$token}-disabled-opacity);
   }
 
+  // Disabled keeps the resting background unless a theme sets its own
   :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) .button-native {
     // Keeps the default border color when the theme doesn't set one
     border-color: var(#{$token}-disabled-border-color, var(#{$token}-default-border-color));
 
-    background: var(#{$token}-disabled-background);
+    background: var(#{$token}-disabled-background, var(#{$token}-default-background));
 
     box-shadow: var(#{$token}-disabled-box-shadow);
   }
@@ -432,7 +441,7 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     // Keeps the default border color when the theme doesn't set one
     border-color: var(#{$token}-semantic-disabled-border-color, var(#{$token}-semantic-default-border-color));
 
-    background: var(#{$token}-semantic-disabled-background);
+    background: var(#{$token}-semantic-disabled-background, var(#{$token}-semantic-default-background));
 
     // Keeps the default color when the theme doesn't set one
     color: var(#{$token}-semantic-disabled-color, var(#{$token}-semantic-default-color));
@@ -502,29 +511,17 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
 @each $size in $sizes {
   // The badge overlaps the vertical padding, so a badge taller than the label doesn't make the button taller than its min height.
-  // The block margins fall back to 0px because no theme sets them, and calc() needs a unit.
-  :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(ion-badge:not([vertical])) {
-    @include mixins.margin(
-      calc(
-        var(--ion-button-size-#{$size}-badge-margin-top, 0px) -
-          var(--padding-top, var(--ion-button-size-#{$size}-padding-top, 0px))
-      ),
-      var(--ion-button-size-#{$size}-badge-margin-end),
-      calc(
-        var(--ion-button-size-#{$size}-badge-margin-bottom, 0px) -
-          var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom, 0px))
-      ),
-      var(--ion-button-size-#{$size}-badge-margin-start)
-    );
-  }
+  // The block margins fall back to 0px because calc() needs a unit.
+  @each $position, $selector in $badge-positions {
+    $margin: --ion-button-size-#{$size}-badge-#{$position}-margin;
 
-  // A badge before the label keeps the gap on the label's side
-  :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(ion-badge[slot="start"]:not([vertical])) {
-    @include mixins.margin(
-      null,
-      var(--ion-button-size-#{$size}-badge-margin-start),
-      null,
-      var(--ion-button-size-#{$size}-badge-margin-end)
-    );
+    :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(#{$selector}) {
+      @include mixins.margin(
+        calc(var(#{$margin}-top, 0px) - var(--padding-top, var(--ion-button-size-#{$size}-padding-top, 0px))),
+        var(#{$margin}-end),
+        calc(var(#{$margin}-bottom, 0px) - var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom, 0px))),
+        var(#{$margin}-start)
+      );
+    }
   }
 }
