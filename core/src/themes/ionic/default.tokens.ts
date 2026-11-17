@@ -616,24 +616,6 @@ export const defaultTheme: DefaultTheme = {
                 width: 'var(--ion-scaling-900)',
               },
             },
-
-            leading: {
-              margin: {
-                top: 'var(--ion-spacing-0)',
-                end: 'var(--ion-spacing-sm)',
-                bottom: 'var(--ion-spacing-0)',
-                start: 'var(--ion-spacing-0)',
-              },
-            },
-
-            trailing: {
-              margin: {
-                top: 'var(--ion-spacing-0)',
-                end: 'var(--ion-spacing-0)',
-                bottom: 'var(--ion-spacing-0)',
-                start: 'var(--ion-spacing-sm)',
-              },
-            },
           },
         },
 
@@ -719,24 +701,6 @@ export const defaultTheme: DefaultTheme = {
               xlarge: {
                 height: 'var(--ion-scaling-900)',
                 width: 'var(--ion-scaling-900)',
-              },
-            },
-
-            leading: {
-              margin: {
-                top: 'var(--ion-spacing-0)',
-                end: 'var(--ion-spacing-250)',
-                bottom: 'var(--ion-spacing-0)',
-                start: 'var(--ion-spacing-0)',
-              },
-            },
-
-            trailing: {
-              margin: {
-                top: 'var(--ion-spacing-0)',
-                end: 'var(--ion-spacing-0)',
-                bottom: 'var(--ion-spacing-0)',
-                start: 'var(--ion-spacing-250)',
               },
             },
           },
@@ -826,24 +790,6 @@ export const defaultTheme: DefaultTheme = {
                 width: 'var(--ion-scaling-lg)',
               },
             },
-
-            leading: {
-              margin: {
-                top: 'var(--ion-spacing-0)',
-                end: 'var(--ion-spacing-md)',
-                bottom: 'var(--ion-spacing-0)',
-                start: 'var(--ion-spacing-0)',
-              },
-            },
-
-            trailing: {
-              margin: {
-                top: 'var(--ion-spacing-0)',
-                end: 'var(--ion-spacing-0)',
-                bottom: 'var(--ion-spacing-0)',
-                start: 'var(--ion-spacing-md)',
-              },
-            },
           },
         },
       },
@@ -891,6 +837,15 @@ export const defaultTheme: DefaultTheme = {
     // Parents that theme the buttons they contain
     IonInputPasswordToggle: {
       IonButton: {
+        // The toggle keeps its 40px size, so it doesn't make the input taller
+        size: {
+          medium: {
+            min: {
+              height: 'var(--ion-scaling-1000)',
+            },
+          },
+        },
+
         hue: {
           bold: {
             clear: {
