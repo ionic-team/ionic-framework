@@ -85,6 +85,11 @@
             Present Content Sized Dialog (overflowing, full width)
           </button>
 
+          <h2>Max-Constrained Dialog</h2>
+          <button id="max-constrained-dialog" onclick="presentMaxConstrainedDialog()">
+            Present Max-Constrained Dialog
+          </button>
+
           <h2>Diagnostic Info</h2>
           <div id="diagnostic">
             <p>Window Width: <span id="window-width"></span></p>
@@ -276,6 +281,39 @@
           .content-sized-dialog {
             --width: ${width};
             --height: fit-content;
+          }
+        `;
+        document.head.appendChild(style);
+
+        element.querySelector('.dismiss').addEventListener('click', () => modal.dismiss());
+        document.body.appendChild(modal);
+
+        await modal.present();
+        updateModalDiagnostics(modal);
+
+        await modal.onDidDismiss();
+        modal.remove();
+        style.remove();
+      }
+
+      /**
+       * A modal with fullscreen --width/--height but clamped by
+       * --max-width/--max-height. Verifies that the initial prediction
+       * falls through to measure the wrapper instead of assuming full
+       * viewport coverage.
+       */
+      async function presentMaxConstrainedDialog() {
+        const element = createModalContent('Max-Constrained Dialog');
+        const modal = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+          cssClass: 'max-constrained-dialog',
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+          .max-constrained-dialog {
+            --max-width: 90%;
+            --max-height: 50%;
           }
         `;
         document.head.appendChild(style);
