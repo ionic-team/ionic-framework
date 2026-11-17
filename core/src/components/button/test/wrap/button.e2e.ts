@@ -12,7 +12,7 @@ const ICONS_TEXT = `
 
 const styles = `
   <style>
-    .wrap-container {
+    #container {
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -27,7 +27,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
         ${styles}
 
-        <div class="wrap-container">
+        <div id="container">
           <ion-button>${LONG_TEXT}</ion-button>
           <ion-button size="small">${LONG_TEXT}</ion-button>
           <ion-button size="large">${LONG_TEXT}</ion-button>
@@ -41,7 +41,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const container = page.locator('.wrap-container');
+      const container = page.locator('#container');
 
       await expect(container).toHaveScreenshot(screenshot(`button-wrap`));
     });
@@ -51,7 +51,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
         ${styles}
 
-        <div class="wrap-container">
+        <div id="container">
           <ion-item>
             <ion-button slot="end">${LONG_TEXT}</ion-button>
           </ion-item>
@@ -72,7 +72,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const container = page.locator('.wrap-container');
+      const container = page.locator('#container');
 
       await expect(container).toHaveScreenshot(screenshot(`button-wrap-in-parents`));
     });

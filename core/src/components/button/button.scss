@@ -405,11 +405,12 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     opacity: var(#{$token}-disabled-opacity);
   }
 
+  // Disabled keeps the resting background unless a theme sets its own
   :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) .button-native {
     // Keeps the default border color when the theme doesn't set one
     border-color: var(#{$token}-disabled-border-color, var(#{$token}-default-border-color));
 
-    background: var(#{$token}-disabled-background);
+    background: var(#{$token}-disabled-background, var(#{$token}-default-background));
 
     box-shadow: var(#{$token}-disabled-box-shadow);
   }
@@ -418,7 +419,7 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     // Keeps the default border color when the theme doesn't set one
     border-color: var(#{$token}-semantic-disabled-border-color, var(#{$token}-semantic-default-border-color));
 
-    background: var(#{$token}-semantic-disabled-background);
+    background: var(#{$token}-semantic-disabled-background, var(#{$token}-semantic-default-background));
 
     // Keeps the default color when the theme doesn't set one
     color: var(#{$token}-semantic-disabled-color, var(#{$token}-semantic-default-color));
