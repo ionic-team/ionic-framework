@@ -119,8 +119,7 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     font-size: var(--ion-button-size-#{$size}-font-size);
   }
 
-  // Buttons in `ion-buttons` fit their content, so an icon without `slot="icon-only"` doesn't widen them
-  :host(.button-size-#{$size}:not(.in-buttons)) {
+  :host(.button-size-#{$size}) {
     min-width: var(--ion-button-size-#{$size}-min-width);
   }
 

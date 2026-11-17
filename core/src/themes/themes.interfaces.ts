@@ -325,6 +325,10 @@ type Components = {
    * Parents that style the buttons inside them. When a parent migrates,
    * its recipe type replaces the entry here and keeps the `IonButton` key.
    */
+  IonButtons?: {
+    IonButton?: IonButtonRecipe;
+  };
+
   IonDatetime?: {
     IonButton?: IonButtonRecipe;
   };

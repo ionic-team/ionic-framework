@@ -885,6 +885,19 @@ export const defaultTheme: DefaultTheme = {
     },
 
     // Parents that theme the buttons they contain
+    IonButtons: {
+      IonButton: {
+        size: {
+          medium: {
+            // Buttons in `ion-buttons` fit their content, so an icon without `slot="icon-only"` doesn't widen them
+            min: {
+              width: 'auto',
+            },
+          },
+        },
+      },
+    },
+
     IonDatetime: {
       IonButton: {
         margin: {
