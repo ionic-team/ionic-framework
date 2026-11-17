@@ -135,3 +135,36 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, config }
     });
   });
 });
+
+/**
+ * The ionic toolbar doesn't support `color` yet, so its background stays
+ * the page color and subtle text is readable there. This behavior does
+ * not vary across directions.
+ */
+configs({ directions: ['ltr'], modes: ['ios', 'md'] }).forEach(({ title, config }) => {
+  test.describe(title('button: hue in a toolbar'), () => {
+    ['outline', 'clear'].forEach((fill) => {
+      test(`should give subtle ${fill} buttons the same text color as bold in a toolbar with a color`, async ({
+        page,
+      }) => {
+        await page.setContent(
+          `
+            <ion-toolbar color="primary">
+              <ion-buttons slot="end">
+                <ion-button id="bold" fill="${fill}">Bold</ion-button>
+                <ion-button id="subtle" hue="subtle" fill="${fill}">Subtle</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          `,
+          config
+        );
+
+        const getColor = (el: Element) => getComputedStyle(el).color;
+        const bold = await page.locator('#bold .button-native').evaluate(getColor);
+        const subtle = await page.locator('#subtle .button-native').evaluate(getColor);
+
+        expect(subtle).toBe(bold);
+      });
+    });
+  });
+});

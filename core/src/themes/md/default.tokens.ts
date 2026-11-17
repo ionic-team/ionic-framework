@@ -1582,6 +1582,57 @@ export const defaultTheme: DefaultTheme = {
                   },
                 },
               },
+
+              // Subtle text uses `foreground`, which can't be read on the toolbar's color, so outline and clear match bold
+              subtle: {
+                outline: {
+                  default: {
+                    background: 'transparent',
+                    color: 'currentColor',
+
+                    border: {
+                      color: currentColor('contrast'),
+                    },
+                  },
+
+                  focus: {
+                    background: currentColor('contrast', { alpha: 0.12 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  hover: {
+                    background: currentColor('contrast', { alpha: 0.04 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+                },
+
+                clear: {
+                  default: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+
+                  focus: {
+                    background: currentColor('contrast', { alpha: 0.12 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  hover: {
+                    background: currentColor('contrast', { alpha: 0.04 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+                },
+              },
             },
           },
         },
