@@ -98,6 +98,36 @@ describe('button: fill', () => {
     const button = page.body.querySelector('ion-button')!;
     expect(button.classList.contains('button-fill-solid')).toBe(true);
   });
+
+  it('should render the deprecated default fill as solid inside ion-buttons', async () => {
+    const page = await newSpecPage({
+      components: [Button],
+      html: `<ion-buttons><ion-button fill="default">Button</ion-button></ion-buttons>`,
+    });
+
+    const button = page.body.querySelector('ion-button')!;
+    expect(button.classList.contains('button-fill-solid')).toBe(true);
+    expect(button.classList.contains('button-fill-default')).toBe(false);
+  });
+
+  // TODO(FW-7631): Remove this test when the deprecated default fill is removed in v11.
+  it('should warn once about the deprecated default fill', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+    const page = await newSpecPage({
+      components: [Button],
+      html: `<ion-button fill="default">Button</ion-button>`,
+    });
+
+    // A second render reads the fill again
+    page.root!.color = 'primary';
+    await page.waitForChanges();
+
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy.mock.calls[0][0]).toEqual(expect.stringContaining('The "default" fill is deprecated'));
+
+    warnSpy.mockRestore();
+  });
 });
 
 describe('button: size', () => {

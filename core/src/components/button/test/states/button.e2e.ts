@@ -25,7 +25,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
         await page.setContent(
           `
           <style>
-            .states-container {
+            #container {
               display: grid;
               grid-template-columns: repeat(2, auto);
               justify-content: start;
@@ -34,14 +34,46 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
             }
           </style>
 
-          <div class="states-container">${buttons}</div>
+          <div id="container">${buttons}</div>
         `,
           config
         );
 
-        const container = page.locator('.states-container');
+        /**
+         * A press shows a ripple along with `ion-activated`, so add one from
+         * the center of each button, the same way a tap does in md and ionic-md.
+         * The ripple is paused once it has faded in, while it is still growing.
+         */
+        if (state === 'activated') {
+          await page.locator('ion-button ion-ripple-effect').evaluateAll((ripples: HTMLIonRippleEffectElement[]) => {
+            ripples.forEach((ripple) => {
+              const { left, top, width, height } = ripple.getBoundingClientRect();
+              ripple.addRipple(left + width / 2, top + height / 2);
+            });
+          });
 
-        await expect(container).toHaveScreenshot(screenshot(`button-${state}`));
+          const rippleEffects = page.locator('ion-ripple-effect .ripple-effect');
+
+          // Wait for every ripple to be added, or the ones added late are not paused
+          await expect(rippleEffects).toHaveCount(await page.locator('ion-button ion-ripple-effect').count());
+
+          await rippleEffects.evaluateAll((effects) => {
+            effects.forEach((effect) => {
+              effect.getAnimations().forEach((animation) => {
+                animation.pause();
+                animation.currentTime = 75;
+              });
+            });
+          });
+        }
+
+        const container = page.locator('#container');
+
+        /**
+         * Animations are allowed so the paused ripple is not fast-forwarded
+         * to its end.
+         */
+        await expect(container).toHaveScreenshot(screenshot(`button-${state}`), { animations: 'allow' });
       });
     });
   });

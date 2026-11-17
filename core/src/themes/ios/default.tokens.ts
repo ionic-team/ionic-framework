@@ -5,6 +5,7 @@ import {
   mix,
   dynamicFont,
   dynamicFontMax,
+  dynamicFontClamp,
   dynamicFontMin,
   ionColor,
   overlay,
@@ -53,8 +54,16 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonNote: {
+        hue: 'bold',
+      },
+
       IonProgressBar: {
         shape: 'round',
+      },
+
+      IonRouterLink: {
+        hue: 'bold',
       },
 
       IonSpinner: {
@@ -448,8 +457,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               border: {
                 color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
               },
@@ -483,8 +490,6 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: 'transparent',
-
                 border: {
                   color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
                 },
@@ -530,7 +535,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
             },
 
@@ -556,7 +560,6 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: 'transparent',
                 color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
               },
             },
@@ -669,8 +672,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               border: {
                 color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
               },
@@ -704,8 +705,6 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: 'transparent',
-
                 border: {
                   color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
                 },
@@ -751,7 +750,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
             },
 
@@ -777,7 +775,6 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: 'transparent',
                 color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
               },
             },
@@ -789,7 +786,7 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           min: {
-            height: 'clamp(23px, 1.8667em, 54px)',
+            height: clamp('23px', '1.8667em', '54px'),
           },
 
           padding: {
@@ -800,7 +797,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 15)}, 45px)`,
+            size: dynamicFontMax(global.root, 3, 15),
           },
 
           icon: {
@@ -840,8 +837,9 @@ export const defaultTheme: DefaultTheme = {
                 /**
                  * The values were provided through a native iOS app.
                  * min font size: 12px, default font size: 17px, max font size: 40px
+                 * The `em` is relative to the button's font size, not the root, so it can't use `dynamicFontClamp`
                  */
-                size: 'clamp(12.1394px, 1.1333em, 40.1856px)',
+                size: clamp('12.1394px', '1.1333em', '40.1856px'),
               },
             },
           },
@@ -877,38 +875,10 @@ export const defaultTheme: DefaultTheme = {
           },
 
           badge: {
-            margin: {
-              end: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-xxs)',
-            },
-          },
-        },
-
-        medium: {
-          min: {
-            height: 'clamp(30px, 2.2667em, 60px)',
-          },
-
-          padding: {
-            top: '7px',
-            end: '0.9333em',
-            bottom: '7px',
-            start: '0.9333em',
-          },
-
-          font: {
-            size: `min(${dynamicFont(global.root, 15)}, 45px)`,
-          },
-
-          icon: {
-            font: {
-              size: '1.2em',
-            },
-
             leading: {
               margin: {
                 top: 'var(--ion-spacing-0)',
-                end: '0.2222em',
+                end: 'var(--ion-spacing-xxs)',
                 bottom: 'var(--ion-spacing-0)',
                 start: 'var(--ion-spacing-0)',
               },
@@ -919,7 +889,48 @@ export const defaultTheme: DefaultTheme = {
                 top: 'var(--ion-spacing-0)',
                 end: 'var(--ion-spacing-0)',
                 bottom: 'var(--ion-spacing-0)',
-                start: '0.2222em',
+                start: 'var(--ion-spacing-xxs)',
+              },
+            },
+          },
+        },
+
+        medium: {
+          min: {
+            height: clamp('30px', '2em', '60px'),
+          },
+
+          padding: {
+            top: '7px',
+            end: '0.7059em',
+            bottom: '7px',
+            start: '0.7059em',
+          },
+
+          font: {
+            size: dynamicFontMax(global.root, 3, 17),
+          },
+
+          icon: {
+            font: {
+              size: '1.2em',
+            },
+
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: '0.1961em',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: '0.1961em',
               },
             },
           },
@@ -937,8 +948,9 @@ export const defaultTheme: DefaultTheme = {
                 /**
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
+                 * The `em` is relative to the button's font size, not the root, so it can't use `dynamicFontClamp`
                  */
-                size: 'clamp(15.12px, 1.2em, 43.02px)',
+                size: clamp('15.12px', '1.0588em', '43.056px'),
               },
             },
           },
@@ -974,16 +986,29 @@ export const defaultTheme: DefaultTheme = {
           },
 
           badge: {
-            margin: {
-              end: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-xxs)',
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-xxs)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-xxs)',
+              },
             },
           },
         },
 
         large: {
           min: {
-            height: 'clamp(46px, 2.9412em, 78px)',
+            height: clamp('46px', '2.9412em', '78px'),
           },
 
           padding: {
@@ -994,7 +1019,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 17)}, 51px)`,
+            size: dynamicFontMax(global.root, 3, 17),
           },
 
           icon: {
@@ -1005,7 +1030,7 @@ export const defaultTheme: DefaultTheme = {
             leading: {
               margin: {
                 top: 'var(--ion-spacing-0)',
-                end: '0.2222em',
+                end: '0.1961em',
                 bottom: 'var(--ion-spacing-0)',
                 start: 'var(--ion-spacing-0)',
               },
@@ -1016,7 +1041,7 @@ export const defaultTheme: DefaultTheme = {
                 top: 'var(--ion-spacing-0)',
                 end: 'var(--ion-spacing-0)',
                 bottom: 'var(--ion-spacing-0)',
-                start: '0.2222em',
+                start: '0.1961em',
               },
             },
           },
@@ -1034,8 +1059,9 @@ export const defaultTheme: DefaultTheme = {
                 /**
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
+                 * The `em` is relative to the button's font size, not the root, so it can't use `dynamicFontClamp`
                  */
-                size: 'clamp(15.12px, 1.0588em, 43.056px)',
+                size: clamp('15.12px', '1.0588em', '43.056px'),
               },
             },
           },
@@ -1071,9 +1097,22 @@ export const defaultTheme: DefaultTheme = {
           },
 
           badge: {
-            margin: {
-              end: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-xxs)',
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-xxs)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-xxs)',
+              },
             },
           },
         },
@@ -1131,7 +1170,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             font: {
-              size: 'clamp(17px, 1.0625rem, 21.08px)',
+              size: dynamicFontClamp(global.root, 1, 17, 1.24),
             },
           },
         },
@@ -1189,8 +1228,6 @@ export const defaultTheme: DefaultTheme = {
 
             outline: {
               disabled: {
-                background: 'var(--ion-button-hue-bold-outline-default-background)',
-
                 border: {
                   color: 'var(--ion-button-hue-bold-outline-default-border-color)',
                 },
@@ -1202,8 +1239,6 @@ export const defaultTheme: DefaultTheme = {
 
               semantic: {
                 disabled: {
-                  background: 'var(--ion-button-hue-bold-outline-semantic-default-background)',
-
                   border: {
                     color: 'var(--ion-button-hue-bold-outline-semantic-default-border-color)',
                   },
@@ -1236,7 +1271,7 @@ export const defaultTheme: DefaultTheme = {
           size: {
             medium: {
               font: {
-                size: 'clamp(17px, 1.0625rem, 21.08px)',
+                size: dynamicFontClamp(global.root, 1, 17, 1.24),
               },
             },
           },
@@ -1436,6 +1471,61 @@ export const defaultTheme: DefaultTheme = {
                   },
                 },
 
+                outline: {
+                  default: {
+                    background: 'transparent',
+                    color: 'currentColor',
+
+                    border: {
+                      color: 'currentColor',
+                    },
+                  },
+
+                  focus: {
+                    background: currentColor('contrast', { alpha: 0.1 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+
+                  activated: {
+                    background: currentColor('contrast'),
+                    color: currentColor('base'),
+                  },
+                },
+
+                clear: {
+                  default: {
+                    background: 'transparent',
+                    color: 'currentColor',
+
+                    border: {
+                      color: 'currentColor',
+                    },
+                  },
+
+                  focus: {
+                    background: currentColor('contrast', { alpha: 0.1 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                    color: currentColor('contrast'),
+                  },
+                },
+              },
+
+              // Subtle text uses `foreground`, which can't be read on the toolbar's color, so outline and clear match bold
+              subtle: {
                 outline: {
                   default: {
                     background: 'transparent',
@@ -1866,7 +1956,6 @@ export const defaultTheme: DefaultTheme = {
     IonContent: {
       default: {
         background: baseColors.backgroundColor,
-        color: baseColors.textColor,
       },
 
       semantic: {
@@ -2041,6 +2130,45 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
+    IonNote: {
+      font: {
+        family: 'var(--ion-font-family)',
+        size: dynamicFontMin(global.root, 0.875, 17),
+      },
+
+      hue: {
+        bold: {
+          default: {
+            color: `var(--ion-text-color-step-650, ${mix(baseColors.white, baseColors.black, '35%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: `var(--ion-text-color-step-650, ${mix(baseColors.white, baseColors.black, '35%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letterSpacing: '-0.0235em',
+
+      line: {
+        height: '1.294',
+      },
+    },
+
     IonProgressBar: {
       height: 'var(--ion-scaling-100)',
 
@@ -2129,6 +2257,65 @@ export const defaultTheme: DefaultTheme = {
 
     IonRippleEffect: {
       opacity: '0.16',
+    },
+
+    IonRouterLink: {
+      hue: {
+        bold: {
+          default: {
+            color: ionColor('primary', 'foreground'),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.1 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.1 }),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: ionColor('primary', 'foreground', { subtle: true }),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.1 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.1 }),
+            },
+          },
+        },
+      },
+
+      state: {
+        focus: {
+          border: {
+            radius: 'var(--ion-radii-xxs)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-xxs)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-xxs)',
+          },
+        },
+      },
     },
 
     IonRow: {
