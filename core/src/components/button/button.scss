@@ -113,24 +113,26 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 // --------------------------------------------------
 
 @each $size in $sizes {
+  // A fill can set its own padding, such as a narrower `clear` button, or use the size's
+  @each $fill in $fills {
+    $padding: --ion-button-size-#{$size}-padding;
+    $fill-padding: --ion-button-size-#{$size}-#{$fill}-padding;
+
+    :host(.button-size-#{$size}.button-fill-#{$fill}) .button-native {
+      @include mixins.padding(
+        var(--padding-top, var(#{$fill-padding}-top, var(#{$padding}-top))),
+        var(--padding-end, var(#{$fill-padding}-end, var(#{$padding}-end))),
+        var(--padding-bottom, var(#{$fill-padding}-bottom, var(#{$padding}-bottom))),
+        var(--padding-start, var(#{$fill-padding}-start, var(#{$padding}-start)))
+      );
+    }
+  }
+
   :host(.button-size-#{$size}) {
+    min-width: var(--ion-button-size-#{$size}-min-width);
     min-height: var(--ion-button-size-#{$size}-min-height);
 
     font-size: var(--ion-button-size-#{$size}-font-size);
-  }
-
-  // Buttons in `ion-buttons` fit their content, so an icon without `slot="icon-only"` doesn't widen them
-  :host(.button-size-#{$size}:not(.in-buttons)) {
-    min-width: var(--ion-button-size-#{$size}-min-width);
-  }
-
-  :host(.button-size-#{$size}) .button-native {
-    @include mixins.padding(
-      var(--padding-top, var(--ion-button-size-#{$size}-padding-top)),
-      var(--padding-end, var(--ion-button-size-#{$size}-padding-end)),
-      var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom)),
-      var(--padding-start, var(--ion-button-size-#{$size}-padding-start))
-    );
   }
 }
 
@@ -403,11 +405,12 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     opacity: var(#{$token}-disabled-opacity);
   }
 
+  // Disabled keeps the resting background unless a theme sets its own
   :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) .button-native {
     // Keeps the default border color when the theme doesn't set one
     border-color: var(#{$token}-disabled-border-color, var(#{$token}-default-border-color));
 
-    background: var(#{$token}-disabled-background);
+    background: var(#{$token}-disabled-background, var(#{$token}-default-background));
 
     box-shadow: var(#{$token}-disabled-box-shadow);
   }
@@ -416,7 +419,7 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     // Keeps the default border color when the theme doesn't set one
     border-color: var(#{$token}-semantic-disabled-border-color, var(#{$token}-semantic-default-border-color));
 
-    background: var(#{$token}-semantic-disabled-background);
+    background: var(#{$token}-semantic-disabled-background, var(#{$token}-semantic-default-background));
 
     // Keeps the default color when the theme doesn't set one
     color: var(#{$token}-semantic-disabled-color, var(#{$token}-semantic-default-color));

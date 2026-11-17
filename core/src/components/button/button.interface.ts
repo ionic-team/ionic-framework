@@ -222,6 +222,10 @@ type IonButtonIconOnlyDefinition = {
   };
 };
 
+type IonButtonSizeFillDefinition = {
+  padding?: IonPadding;
+};
+
 type IonButtonSizeDefinition = {
   font?: {
     size?: string | number;
@@ -237,6 +241,11 @@ type IonButtonSizeDefinition = {
 
   icon?: IonButtonIconDefinition;
   iconOnly?: IonButtonIconOnlyDefinition;
+
+  /** A fill's own padding at this size, used instead of the size's `padding` */
+  solid?: IonButtonSizeFillDefinition;
+  outline?: IonButtonSizeFillDefinition;
+  clear?: IonButtonSizeFillDefinition;
   spinner?: IonButtonSpinnerDefinition;
 
   /** A badge without a `vertical` position, next to the label of a text button */

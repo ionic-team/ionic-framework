@@ -42,8 +42,16 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonNote: {
+        hue: 'bold',
+      },
+
       IonProgressBar: {
         shape: 'round',
+      },
+
+      IonRouterLink: {
+        hue: 'bold',
       },
 
       IonSpinner: {
@@ -360,8 +368,6 @@ export const defaultTheme: DefaultTheme = {
 
             // A white wash over the button
             disabled: {
-              background: ionColor('primary', 'base'),
-
               opacity: '0.4',
             },
 
@@ -385,10 +391,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('shade'),
                 color: currentColor('contrast'),
-              },
-
-              disabled: {
-                background: currentColor('base'),
               },
 
               rippleEffect: {
@@ -432,8 +434,6 @@ export const defaultTheme: DefaultTheme = {
 
             // A white wash over the button
             disabled: {
-              background: baseColors.backgroundColor,
-
               opacity: '0.4',
             },
 
@@ -460,10 +460,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('shade', { subtle: true }),
                 color: currentColor('foreground'),
-              },
-
-              disabled: {
-                background: baseColors.backgroundColor,
               },
 
               rippleEffect: {
@@ -501,8 +497,6 @@ export const defaultTheme: DefaultTheme = {
 
             // A white wash over the button
             disabled: {
-              background: 'transparent',
-
               opacity: '0.4',
             },
 
@@ -525,10 +519,6 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('shade', { subtle: true }),
                 color: currentColor('foreground'),
-              },
-
-              disabled: {
-                background: 'transparent',
               },
 
               rippleEffect: {
@@ -1049,10 +1039,6 @@ export const defaultTheme: DefaultTheme = {
                 activated: {
                   background: 'transparent',
                 },
-
-                disabled: {
-                  background: 'transparent',
-                },
               },
 
               clear: {
@@ -1127,10 +1113,6 @@ export const defaultTheme: DefaultTheme = {
                 },
 
                 activated: {
-                  background: 'transparent',
-                },
-
-                disabled: {
                   background: 'transparent',
                 },
               },
@@ -1415,7 +1397,6 @@ export const defaultTheme: DefaultTheme = {
     IonContent: {
       default: {
         background: baseColors.backgroundColor,
-        color: baseColors.textColor,
       },
 
       semantic: {
@@ -1620,22 +1601,11 @@ export const defaultTheme: DefaultTheme = {
           self: 'flex-start',
         },
 
-        font: {
-          size: dynamicFont(global.root, components.item.note.slot.font.size),
-        },
-
-        margin: {
-          top: 'var(--ion-spacing-0)',
-          end: 'var(--ion-spacing-0)',
-          bottom: 'var(--ion-spacing-0)',
-          start: 'var(--ion-spacing-0)',
-        },
-
         padding: {
           top: components.item.note.slot.padding.top,
-          end: components.item.note.slot.padding.end,
+          end: 'var(--ion-spacing-0)',
           bottom: components.item.note.slot.padding.bottom,
-          start: components.item.note.slot.padding.start,
+          start: 'var(--ion-spacing-0)',
         },
       },
 
@@ -1709,6 +1679,45 @@ export const defaultTheme: DefaultTheme = {
         text: {
           overflow: 'initial',
         },
+      },
+    },
+
+    IonNote: {
+      font: {
+        family: 'var(--ion-font-family)',
+        size: dynamicFont(global.root, 14),
+      },
+
+      hue: {
+        bold: {
+          default: {
+            color: `var(--ion-text-color-step-400, ${mix(baseColors.white, baseColors.black, '60%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: `var(--ion-text-color-step-400, ${mix(baseColors.white, baseColors.black, '60%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letterSpacing: '0',
+
+      line: {
+        height: dynamicFont(global.root, 24),
       },
     },
 
@@ -1788,6 +1797,79 @@ export const defaultTheme: DefaultTheme = {
 
     IonRippleEffect: {
       opacity: '0.16',
+    },
+
+    IonRouterLink: {
+      hue: {
+        bold: {
+          activated: {
+            color: '#09358a',
+          },
+
+          default: {
+            color: ionColor('primary', 'foreground'),
+          },
+
+          visited: {
+            color: '#09358a',
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          activated: {
+            color: '#09358a',
+          },
+
+          default: {
+            color: ionColor('primary', 'foreground', { subtle: true }),
+          },
+
+          visited: {
+            color: '#09358a',
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      state: {
+        activated: {
+          text: {
+            decoration: 'underline',
+          },
+        },
+
+        focus: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+
+          // The ring hugs the text at the sides and its line box above and below
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-0)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-0)',
+          },
+
+          ring: {
+            color: '#b5c0f7',
+            offset: 'var(--ion-spacing-0)',
+            style: 'solid',
+            width: 'var(--ion-border-width-xxs)',
+          },
+        },
+      },
     },
 
     IonRow: {
