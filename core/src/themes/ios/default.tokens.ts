@@ -5,6 +5,7 @@ import {
   mix,
   dynamicFont,
   dynamicFontMax,
+  dynamicFontClamp,
   dynamicFontMin,
   ionColor,
   overlay,
@@ -53,8 +54,16 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonNote: {
+        hue: 'bold',
+      },
+
       IonProgressBar: {
         shape: 'round',
+      },
+
+      IonRouterLink: {
+        hue: 'bold',
       },
 
       IonSpinner: {
@@ -375,8 +384,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: ionColor('primary', 'base'),
-
               opacity: '0.5',
             },
 
@@ -400,10 +407,6 @@ export const defaultTheme: DefaultTheme = {
               activated: {
                 background: currentColor('shade'),
                 color: currentColor('contrast'),
-              },
-
-              disabled: {
-                background: currentColor('base'),
               },
             },
           },
@@ -448,8 +451,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               opacity: '0.5',
             },
 
@@ -476,10 +477,6 @@ export const defaultTheme: DefaultTheme = {
               activated: {
                 background: currentColor('base'),
                 color: currentColor('contrast'),
-              },
-
-              disabled: {
-                background: 'transparent',
               },
             },
           },
@@ -520,8 +517,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               opacity: '0.5',
             },
 
@@ -545,10 +540,6 @@ export const defaultTheme: DefaultTheme = {
                 background: 'transparent',
                 color: currentColor('foreground'),
               },
-
-              disabled: {
-                background: 'transparent',
-              },
             },
           },
         },
@@ -558,7 +549,7 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           min: {
-            height: 'clamp(23px, 2.16em, 54px)',
+            height: clamp('23px', '2.16em', '54px'),
           },
 
           padding: {
@@ -569,7 +560,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 13)}, 39px)`,
+            size: dynamicFontMax(global.root, 3, 13),
           },
 
           icon: {
@@ -610,7 +601,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 12px, default font size: 17px, max font size: 40px
                  */
-                size: 'clamp(12.1394px, 1.308125em, 40.1856px)',
+                size: dynamicFontClamp(global.root, 0.58, 20.93, 1.92, 'em'),
               },
             },
           },
@@ -618,7 +609,7 @@ export const defaultTheme: DefaultTheme = {
 
         medium: {
           min: {
-            height: 'clamp(30px, 2.125em, 60px)',
+            height: clamp('30px', '2.125em', '60px'),
           },
 
           padding: {
@@ -629,7 +620,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 16)}, 48px)`,
+            size: dynamicFontMax(global.root, 3, 16),
           },
 
           icon: {
@@ -670,7 +661,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
                  */
-                size: 'clamp(15.12px, 1.125em, 43.02px)',
+                size: dynamicFontClamp(global.root, 0.84, 18, 2.39, 'em'),
               },
             },
           },
@@ -678,7 +669,7 @@ export const defaultTheme: DefaultTheme = {
 
         large: {
           min: {
-            height: 'clamp(46px, 2.5em, 78px)',
+            height: clamp('46px', '2.5em', '78px'),
           },
 
           padding: {
@@ -689,7 +680,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 20)}, 60px)`,
+            size: dynamicFontMax(global.root, 3, 20),
           },
 
           icon: {
@@ -730,7 +721,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
                  */
-                size: 'clamp(15.12px, 0.9em, 43.056px)',
+                size: dynamicFontClamp(global.root, 1.05, 14.4, 2.99, 'em'),
               },
             },
           },
@@ -789,7 +780,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             font: {
-              size: 'clamp(17px, 1.0625rem, 21.08px)',
+              size: dynamicFontClamp(global.root, 1, 17, 1.24),
             },
           },
         },
@@ -831,7 +822,7 @@ export const defaultTheme: DefaultTheme = {
           size: {
             medium: {
               font: {
-                size: 'clamp(17px, 1.0625rem, 21.08px)',
+                size: dynamicFontClamp(global.root, 1, 17, 1.24),
               },
             },
           },
@@ -1465,7 +1456,6 @@ export const defaultTheme: DefaultTheme = {
     IonContent: {
       default: {
         background: baseColors.backgroundColor,
-        color: baseColors.textColor,
       },
 
       semantic: {
@@ -1640,6 +1630,45 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
+    IonNote: {
+      font: {
+        family: 'var(--ion-font-family)',
+        size: dynamicFontMin(global.root, 0.875, 17),
+      },
+
+      hue: {
+        bold: {
+          default: {
+            color: `var(--ion-text-color-step-650, ${mix(baseColors.white, baseColors.black, '35%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: `var(--ion-text-color-step-650, ${mix(baseColors.white, baseColors.black, '35%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letterSpacing: '-0.0235em',
+
+      line: {
+        height: '1.294',
+      },
+    },
+
     IonProgressBar: {
       height: 'var(--ion-scaling-100)',
 
@@ -1728,6 +1757,65 @@ export const defaultTheme: DefaultTheme = {
 
     IonRippleEffect: {
       opacity: '0.16',
+    },
+
+    IonRouterLink: {
+      hue: {
+        bold: {
+          default: {
+            color: ionColor('primary', 'foreground'),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.1 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.1 }),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: ionColor('primary', 'foreground', { subtle: true }),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.1 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.1 }),
+            },
+          },
+        },
+      },
+
+      state: {
+        focus: {
+          border: {
+            radius: 'var(--ion-radii-xxs)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-xxs)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-xxs)',
+          },
+        },
+      },
     },
 
     IonRow: {
