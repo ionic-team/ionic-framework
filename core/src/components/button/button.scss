@@ -250,21 +250,28 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
     );
   }
 
+  // A spinner takes the icon's margins unless a theme sets its own
   :host(.button-size-#{$size}) ::slotted(ion-spinner[slot="start"]) {
+    $spinner: --ion-button-size-#{$size}-spinner-leading-margin;
+    $icon: --ion-button-size-#{$size}-icon-leading-margin;
+
     @include mixins.margin(
-      var(--ion-button-size-#{$size}-spinner-leading-margin-top),
-      var(--ion-button-size-#{$size}-spinner-leading-margin-end),
-      var(--ion-button-size-#{$size}-spinner-leading-margin-bottom),
-      var(--ion-button-size-#{$size}-spinner-leading-margin-start)
+      var(#{$spinner}-top, var(#{$icon}-top)),
+      var(#{$spinner}-end, var(#{$icon}-end)),
+      var(#{$spinner}-bottom, var(#{$icon}-bottom)),
+      var(#{$spinner}-start, var(#{$icon}-start))
     );
   }
 
   :host(.button-size-#{$size}) ::slotted(ion-spinner[slot="end"]) {
+    $spinner: --ion-button-size-#{$size}-spinner-trailing-margin;
+    $icon: --ion-button-size-#{$size}-icon-trailing-margin;
+
     @include mixins.margin(
-      var(--ion-button-size-#{$size}-spinner-trailing-margin-top),
-      var(--ion-button-size-#{$size}-spinner-trailing-margin-end),
-      var(--ion-button-size-#{$size}-spinner-trailing-margin-bottom),
-      var(--ion-button-size-#{$size}-spinner-trailing-margin-start)
+      var(#{$spinner}-top, var(#{$icon}-top)),
+      var(#{$spinner}-end, var(#{$icon}-end)),
+      var(#{$spinner}-bottom, var(#{$icon}-bottom)),
+      var(#{$spinner}-start, var(#{$icon}-start))
     );
   }
 }
