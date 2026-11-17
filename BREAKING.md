@@ -147,14 +147,14 @@ The `ios` button now uses the iOS 17 values below. To keep a previous value, set
 
 | Property | Previous | New | Token |
 |---|---|---|---|
-| Font size | `13px`, `16px` and `20px` | `15px`, `15px` and `17px` | `IonButton.size.<size>.font.size` |
+| Font size | `13px`, `16px` and `20px` | `15px`, `17px` and `17px` | `IonButton.size.<size>.font.size` |
 | Font weight of solid and outline | `500` | `400` | `IonButton.hue.bold.<fill>.default.font.weight` |
-| Horizontal padding | `0.77em`, `0.875em` and `1em` | `0.6667em`, `0.9333em` and `1.1765em` (same pixels at the new font size) | `IonButton.size.<size>.padding.start` and `.end` |
-| Min height | `2.16em`, `2.125em` and `2.5em` | `1.8667em`, `2.2667em` and `2.9412em` (same pixels at the new font size) | `IonButton.size.<size>.min.height` |
+| Horizontal padding | `0.77em`, `0.875em` and `1em` | `0.6667em`, `0.7059em` and `1.1765em` (`10px`, `12px` and `20px`, where medium was `14px`) | `IonButton.size.<size>.padding.start` and `.end` |
+| Min height | `2.16em`, `2.125em` and `2.5em` | `1.8667em`, `2em` and `2.9412em` (same pixels at the new font size) | `IonButton.size.<size>.min.height` |
 | Icon size next to a label | `1.35em` | `1.2em` | `IonButton.size.<size>.icon.font.size` |
-| Icon spacing | `0.3em` into the padding and a `0.3em` gap | at the padding edge and a `0.2222em` gap (`4px` at the default size) | `IonButton.size.<size>.icon.leading.margin` and `.trailing.margin` |
-| Icon-only icon size | `1.308125em`, `1.125em` and `0.9em` | `1.1333em`, `1.2em` and `1.0588em` (same pixels at the new font size) | `IonButton.size.<size>.iconOnly.icon.font.size` |
-| Spinner in a button | the spinner's own size (`28px` by default) | `1.2em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
+| Icon spacing | `0.3em` into the padding and a `0.3em` gap | at the padding edge and a `4px` gap (`0.2222em` at small, `0.1961em` at medium and large) | `IonButton.size.<size>.icon.leading.margin` and `.trailing.margin` |
+| Icon-only icon size | `1.308125em`, `1.125em` and `0.9em` | `1.1333em`, `1.0588em` and `1.0588em` (same pixels at the new font size) | `IonButton.size.<size>.iconOnly.icon.font.size` |
+| Spinner in a button | the spinner's own size (`28px` by default) | `1.2em` by default (`20.4px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
 | Disabled | the whole button at `0.5` opacity | the text color at `25%`, which outline also uses for its border, and on solid, an `8%` container | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.border.color` (`.semantic.disabled.color`, `.background` and `.border.color` with a `color`) |
 
 Buttons in toolbars keep their previous colors when disabled.

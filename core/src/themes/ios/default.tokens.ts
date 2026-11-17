@@ -658,18 +658,18 @@ export const defaultTheme: DefaultTheme = {
 
         medium: {
           min: {
-            height: 'clamp(30px, 2.2667em, 60px)',
+            height: 'clamp(30px, 2em, 60px)',
           },
 
           padding: {
             top: '7px',
-            end: '0.9333em',
+            end: '0.7059em',
             bottom: '7px',
-            start: '0.9333em',
+            start: '0.7059em',
           },
 
           font: {
-            size: `min(${dynamicFont(global.root, 15)}, 45px)`,
+            size: `min(${dynamicFont(global.root, 17)}, 51px)`,
           },
 
           icon: {
@@ -680,7 +680,7 @@ export const defaultTheme: DefaultTheme = {
             leading: {
               margin: {
                 top: '0',
-                end: '0.2222em',
+                end: '0.1961em',
                 bottom: '0',
                 start: '0',
               },
@@ -691,7 +691,7 @@ export const defaultTheme: DefaultTheme = {
                 top: '0',
                 end: '0',
                 bottom: '0',
-                start: '0.2222em',
+                start: '0.1961em',
               },
             },
           },
@@ -710,7 +710,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
                  */
-                size: 'clamp(15.12px, 1.2em, 43.02px)',
+                size: 'clamp(15.12px, 1.0588em, 43.056px)',
               },
             },
           },
@@ -770,7 +770,7 @@ export const defaultTheme: DefaultTheme = {
             leading: {
               margin: {
                 top: '0',
-                end: '0.2222em',
+                end: '0.1961em',
                 bottom: '0',
                 start: '0',
               },
@@ -781,7 +781,7 @@ export const defaultTheme: DefaultTheme = {
                 top: '0',
                 end: '0',
                 bottom: '0',
-                start: '0.2222em',
+                start: '0.1961em',
               },
             },
           },
