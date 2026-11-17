@@ -97,3 +97,18 @@ describe('back button', () => {
     });
   });
 });
+
+describe('back button: tabindex', () => {
+  it('should move tabindex from the host to the native button', async () => {
+    const page = await newSpecPage({
+      components: [BackButton],
+      html: '<ion-back-button tabindex="0"></ion-back-button>',
+    });
+
+    const backButton = page.body.querySelector('ion-back-button')!;
+    const nativeEl = backButton.shadowRoot!.querySelector('button')!;
+
+    expect(backButton.hasAttribute('tabindex')).toBe(false);
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
+  });
+});

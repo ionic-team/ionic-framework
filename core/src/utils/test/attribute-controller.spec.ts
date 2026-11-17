@@ -1,6 +1,10 @@
 import { win } from '@utils/browser';
 
-import { createAttributeController, createAriaAttributeController } from '../attribute-controller';
+import {
+  createAttributeController,
+  createAriaAttributeController,
+  createTabindexController,
+} from '../attribute-controller';
 
 /**
  * There is no `MutationObserver` in mock-doc, so the observer half of the controller is
@@ -17,13 +21,48 @@ class MockMutationObserver {
     MockMutationObserver.instances.push(this);
   }
 
-  observe(_el: Node, options: { attributeFilter?: string[] }) {
+  /** Records the browser would deliver on the next callback. */
+  queued: string[] = [];
+
+  observe(el: HTMLElement, options: { attributeFilter?: string[] }) {
     this.observedFilter = options.attributeFilter;
     this.connected = true;
+
+    // Like a browser, queue a record for every observed write, including the callback's own.
+    const setAttribute = el.setAttribute.bind(el);
+    el.setAttribute = (name: string, value: string) => {
+      if (this.connected && this.observedFilter?.includes(name)) {
+        this.queued.push(name);
+      }
+      setAttribute(name, value);
+    };
+
+    const removeAttribute = el.removeAttribute.bind(el);
+    el.removeAttribute = (name: string) => {
+      if (this.connected && el.hasAttribute(name) && this.observedFilter?.includes(name)) {
+        this.queued.push(name);
+      }
+      removeAttribute(name);
+    };
   }
 
   disconnect() {
     this.connected = false;
+  }
+
+  takeRecords() {
+    const records = this.queued.map((attributeName) => ({ attributeName }));
+    this.queued = [];
+    return records;
+  }
+
+  /** Stands in for the browser delivering whatever records are still queued. */
+  flush() {
+    const names = this.queued;
+    this.queued = [];
+    if (names.length > 0) {
+      this.emit(...names);
+    }
   }
 
   /** Stands in for the browser delivering an attribute mutation. */
@@ -86,15 +125,29 @@ describe('createAttributeController()', () => {
     expect(MockMutationObserver.latest.observedFilter).toEqual(['aria-label']);
   });
 
-  it('should apply a later attribute change', () => {
+  it('should apply a later attribute change and leave an empty string on the host', () => {
     const el = createHost({ 'aria-label': 'Save' });
     const onChange = jest.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
 
     el.setAttribute('aria-label', 'Submit');
-    MockMutationObserver.latest.emit('aria-label');
+    MockMutationObserver.latest.flush();
 
     expect(controller.attributes).toEqual({ 'aria-label': 'Submit' });
+    expect(el.getAttribute('aria-label')).toBe('');
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not read its own empty string on the host as a change', () => {
+    const el = createHost();
+    const onChange = jest.fn();
+    const controller = createAttributeController(el, ['aria-label'], onChange);
+
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.flush();
+    MockMutationObserver.latest.flush();
+
+    expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
@@ -103,9 +156,26 @@ describe('createAttributeController()', () => {
     const controller = createAttributeController(el, ['aria-label'], jest.fn());
 
     el.setAttribute('aria-label', 'Save');
-    MockMutationObserver.latest.emit('aria-label');
+    MockMutationObserver.latest.flush();
     el.removeAttribute('aria-label');
-    MockMutationObserver.latest.emit('aria-label');
+    MockMutationObserver.latest.flush();
+
+    expect(controller.attributes['aria-label']).toBeNull();
+    expect(el.hasAttribute('aria-label')).toBe(false);
+  });
+
+  it('should leave a later write on the host while keepOnHost returns true', () => {
+    const el = createHost();
+    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => true);
+
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.flush();
+
+    expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
+    expect(el.getAttribute('aria-label')).toBe('Save');
+
+    el.removeAttribute('aria-label');
+    MockMutationObserver.latest.flush();
 
     expect(controller.attributes['aria-label']).toBeNull();
   });
@@ -144,19 +214,18 @@ describe('createAttributeController()', () => {
 
   it('should resume watching after destroy', () => {
     const el = createHost();
-    const onChange = jest.fn();
-    const controller = createAttributeController(el, ['aria-label'], onChange);
+    const controller = createAttributeController(el, ['aria-label'], jest.fn());
 
     controller.destroy();
     controller.init();
 
     el.setAttribute('aria-label', 'Submit');
-    MockMutationObserver.latest.emit('aria-label');
+    MockMutationObserver.latest.flush();
 
     expect(controller.attributes).toEqual({ 'aria-label': 'Submit' });
   });
 
-  it('should pick up a change made while not watching', () => {
+  it('should pick up a change made while not watching and leave an empty string on the host', () => {
     const el = createHost();
     const onChange = jest.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
@@ -166,6 +235,7 @@ describe('createAttributeController()', () => {
     controller.init();
 
     expect(controller.attributes).toEqual({ 'aria-label': 'Submit' });
+    expect(el.getAttribute('aria-label')).toBe('');
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
@@ -174,7 +244,7 @@ describe('createAttributeController()', () => {
     const controller = createAttributeController(el, ['aria-label'], jest.fn());
 
     el.setAttribute('aria-label', 'Submit');
-    MockMutationObserver.latest.emit('aria-label');
+    MockMutationObserver.latest.flush();
 
     controller.destroy();
     el.removeAttribute('aria-label');
@@ -183,16 +253,19 @@ describe('createAttributeController()', () => {
     expect(controller.attributes['aria-label']).toBeNull();
   });
 
-  it('should track a detached write of an unchanged value, so a later removal is seen', () => {
+  it('should replace a detached write of an unchanged value without re-rendering', () => {
     const el = createHost({ 'aria-label': 'Save' });
-    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+    const onChange = jest.fn();
+    const controller = createAttributeController(el, ['aria-label'], onChange);
 
-    // Re-setting the value the copy already captured puts the attribute back on the
-    // host, even though nothing about the rendered value changed.
     controller.destroy();
     el.setAttribute('aria-label', 'Save');
     controller.init();
 
+    expect(el.getAttribute('aria-label')).toBe('');
+    expect(onChange).not.toHaveBeenCalled();
+
+    // The empty string left in its place means a later removal is still seen.
     controller.destroy();
     el.removeAttribute('aria-label');
     controller.init();
@@ -200,19 +273,147 @@ describe('createAttributeController()', () => {
     expect(controller.attributes['aria-label']).toBeNull();
   });
 
-  it('should not re-render when a detached write matches the current value', () => {
+  it('should not re-render on resume when nothing changed while not watching', () => {
     const el = createHost();
     const onChange = jest.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
 
     el.setAttribute('aria-label', 'Save');
-    MockMutationObserver.latest.emit('aria-label');
+    MockMutationObserver.latest.flush();
     onChange.mockClear();
 
     controller.destroy();
     controller.init();
 
+    expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
+    expect(el.getAttribute('aria-label')).toBe('');
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('should put the copied value back on the host while not watching', () => {
+    const el = createHost();
+    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.flush();
+    controller.destroy();
+
+    expect(el.getAttribute('aria-label')).toBe('Save');
+  });
+
+  it('should apply a write that was not delivered before destroy', () => {
+    const el = createHost();
+    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.flush();
+
+    el.setAttribute('aria-label', 'Submit');
+    controller.destroy();
+    controller.init();
+
+    expect(controller.attributes).toEqual({ 'aria-label': 'Submit' });
+
+    el.removeAttribute('aria-label');
+    controller.destroy();
+    controller.init();
+
+    expect(controller.attributes['aria-label']).toBeNull();
+    expect(el.hasAttribute('aria-label')).toBe(false);
+  });
+
+  it('should put a value back on the host when keepOnHost turns true', () => {
+    const el = createHost();
+    const onChange = jest.fn();
+    let keep = false;
+    const controller = createAttributeController(el, ['aria-label'], onChange, [], undefined, () => keep);
+
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.flush();
+    expect(el.getAttribute('aria-label')).toBe('');
+    onChange.mockClear();
+
+    keep = true;
+    controller.refresh();
+
+    expect(el.getAttribute('aria-label')).toBe('Save');
+    MockMutationObserver.latest.flush();
+    expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('should keep the copied value through a move after refresh leaves it replaced', () => {
+    const el = createHost();
+    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => false);
+
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.flush();
+    controller.refresh();
+
+    controller.destroy();
+    controller.init();
+
+    expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
+    expect(el.getAttribute('aria-label')).toBe('');
+  });
+
+  it('should leave an attribute that does not name the host on the host as written', () => {
+    const el = createHost();
+    const controller = createAttributeController(el, ['aria-pressed', 'aria-labelledby'], jest.fn());
+
+    el.setAttribute('aria-pressed', 'true');
+    el.setAttribute('aria-labelledby', 'label');
+    MockMutationObserver.latest.flush();
+
+    expect(controller.attributes).toEqual({ 'aria-pressed': 'true', 'aria-labelledby': 'label' });
+    expect(el.getAttribute('aria-pressed')).toBe('true');
+    expect(el.getAttribute('aria-labelledby')).toBe('label');
+  });
+
+  it('should not touch the host when refresh is called while not watching', () => {
+    const el = createHost();
+    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => false);
+
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.flush();
+
+    controller.destroy();
+    controller.refresh();
+    controller.init();
+
+    expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
+    expect(el.getAttribute('aria-label')).toBe('');
+  });
+
+  it('should replace a value kept on the host when keepOnHost turns false', () => {
+    const el = createHost();
+    let keep = true;
+    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => keep);
+
+    el.setAttribute('aria-label', 'Save');
+    MockMutationObserver.latest.flush();
+    expect(el.getAttribute('aria-label')).toBe('Save');
+
+    keep = false;
+    controller.refresh();
+
+    expect(el.getAttribute('aria-label')).toBe('');
+    MockMutationObserver.latest.flush();
+    expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
+  });
+
+  it('should apply a write made in the same task as refresh', () => {
+    const el = createHost();
+    let keep = true;
+    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => keep);
+
+    el.setAttribute('aria-label', 'Save');
+    keep = false;
+    controller.refresh();
+    MockMutationObserver.latest.flush();
+
+    expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
+    expect(el.getAttribute('aria-label')).toBe('');
   });
 
   it('should apply every attribute in one mutation batch with a single re-render', () => {
@@ -222,7 +423,7 @@ describe('createAttributeController()', () => {
 
     el.setAttribute('aria-label', 'Save');
     el.setAttribute('aria-description', 'Saves the draft');
-    MockMutationObserver.latest.emit('aria-label', 'aria-description');
+    MockMutationObserver.latest.flush();
 
     expect(controller.attributes).toEqual({ 'aria-label': 'Save', 'aria-description': 'Saves the draft' });
     expect(onChange).toHaveBeenCalledTimes(1);
@@ -282,5 +483,175 @@ describe('createAriaAttributeController()', () => {
 
     expect(controller.attributes).toEqual({ 'aria-disabled': 'true' });
     expect(MockMutationObserver.latest.observedFilter).not.toContain('aria-disabled');
+  });
+});
+
+describe('createTabindexController()', () => {
+  beforeEach(installMockMutationObserver);
+
+  afterEach(restoreOverrides);
+
+  it('should move a tabindex written after load off the host', () => {
+    const el = createHost();
+    const onChange = jest.fn();
+    const controller = createTabindexController(el, onChange);
+
+    el.setAttribute('tabindex', '0');
+    MockMutationObserver.latest.emit('tabindex');
+
+    expect(controller.attributes).toEqual({ tabindex: '0' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('should move a tabindex written while not watching off the host on resume', () => {
+    const el = createHost({ tabindex: '0' });
+    const controller = createTabindexController(el, jest.fn());
+
+    controller.destroy();
+    el.setAttribute('tabindex', '1');
+    controller.init();
+
+    expect(controller.attributes).toEqual({ tabindex: '1' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should keep the value after the removal it queued is delivered', () => {
+    const el = createHost();
+    const controller = createTabindexController(el, jest.fn());
+
+    el.setAttribute('tabindex', '0');
+    MockMutationObserver.latest.emit('tabindex');
+    MockMutationObserver.latest.flush();
+
+    expect(controller.attributes).toEqual({ tabindex: '0' });
+  });
+
+  it('should leave a negative tabindex on the host', () => {
+    const el = createHost({ tabindex: '-1' });
+
+    const controller = createTabindexController(el, jest.fn());
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('should leave a negative tabindex written after load on the host', () => {
+    const el = createHost({ tabindex: '0' });
+    const controller = createTabindexController(el, jest.fn());
+
+    el.setAttribute('tabindex', '-1');
+    MockMutationObserver.latest.emit('tabindex');
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('should see a negative tabindex removed from the host', () => {
+    const el = createHost({ tabindex: '-1' });
+    const onChange = jest.fn();
+    const controller = createTabindexController(el, onChange);
+
+    el.removeAttribute('tabindex');
+    MockMutationObserver.latest.emit('tabindex');
+
+    expect(controller.attributes['tabindex']).toBeNull();
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('should leave tabindex on the host when there is no native element', () => {
+    const el = createHost({ tabindex: '0' });
+
+    const controller = createTabindexController(el, jest.fn(), () => false);
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('0');
+  });
+
+  it('should put tabindex back on the host on refresh once there is no native element', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = true;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    hasNativeElement = false;
+    controller.refresh();
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('0');
+  });
+
+  it('should move tabindex off the host on refresh once there is a native element', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = false;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    hasNativeElement = true;
+    controller.refresh();
+    MockMutationObserver.latest.flush();
+
+    expect(controller.attributes).toEqual({ tabindex: '0' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should see tabindex removed from the host after refresh put it back', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = true;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    hasNativeElement = false;
+    controller.refresh();
+    controller.destroy();
+    el.removeAttribute('tabindex');
+    controller.init();
+
+    // A null clears it from the native element if the host becomes clickable again.
+    expect(controller.attributes['tabindex']).toBeNull();
+    expect(el.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should keep a tabindex written in the same tick as a refresh that moves it off the host', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = false;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    el.setAttribute('tabindex', '5');
+    hasNativeElement = true;
+    controller.refresh();
+
+    expect(controller.attributes).toEqual({ tabindex: '5' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('should keep a tabindex written in the same tick as a refresh that puts it back on the host', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = true;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    el.setAttribute('tabindex', '2');
+    hasNativeElement = false;
+    controller.refresh();
+
+    expect(controller.attributes).toEqual({});
+    expect(el.getAttribute('tabindex')).toBe('2');
+
+    hasNativeElement = true;
+    controller.refresh();
+
+    expect(controller.attributes).toEqual({ tabindex: '2' });
+  });
+
+  it('should keep a tabindex written while detached when a refresh moves it off the host', () => {
+    const el = createHost({ tabindex: '0' });
+    let hasNativeElement = false;
+    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+
+    controller.destroy();
+    el.setAttribute('tabindex', '3');
+    hasNativeElement = true;
+    controller.refresh();
+    controller.init();
+
+    expect(controller.attributes).toEqual({ tabindex: '3' });
+    expect(el.hasAttribute('tabindex')).toBe(false);
   });
 });
