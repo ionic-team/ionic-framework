@@ -247,6 +247,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(day18).not.toHaveClass(/calendar-day-range-end/);
     });
 
+    test('tapping an earlier date second should normalize start and end', async ({ page }) => {
+      const datetime = await fixture.goto(config);
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+      const day20 = fixture.getVisibleDay(20);
+      const day10 = fixture.getVisibleDay(10);
+
+      // First tap: set start to day 20
+      await day20.click();
+      await page.waitForChanges();
+
+      // Second tap: set end to day 10 (before start)
+      await day10.click();
+      await ionChangeSpy.next();
+
+      // Should normalize so start=10, end=20
+      await expect(day10).toHaveClass(/calendar-day-range-start/);
+      await expect(day20).toHaveClass(/calendar-day-range-end/);
+
+      const startISO = await fixture.getISOFromDay(day10);
+      const endISO = await fixture.getISOFromDay(day20);
+      await expect(datetime).toHaveJSProperty('value', [startISO, endISO]);
+    });
+
     // ---------------------------------------------------------------
     // Single-day range
     // ---------------------------------------------------------------

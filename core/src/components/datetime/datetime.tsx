@@ -890,7 +890,13 @@ export class Datetime implements ComponentInterface {
     if (!current || current.end || this.rangeContainsDisabledDate(current.start, parts)) {
       this.activeParts = { start: parts };
     } else {
-      this.activeParts = { start: current.start, end: parts };
+      const start = current.start;
+      // Normalize so start is always before end
+      if (isBefore(parts, start)) {
+        this.activeParts = { start: parts, end: start };
+      } else {
+        this.activeParts = { start, end: parts };
+      }
     }
   };
 
