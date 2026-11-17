@@ -35,6 +35,7 @@ on:
         options:
           - latest
           - next
+          - v8-lts
       preid:
         description: 'Which prerelease identifier should be used? (Only for production releases)'
         required: false
