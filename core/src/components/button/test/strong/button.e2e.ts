@@ -12,7 +12,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
         <style>
-          .strong-container {
+          #container {
             display: flex;
             flex-direction: column;
             align-items: start;
@@ -21,7 +21,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           }
         </style>
 
-        <div class="strong-container">
+        <div id="container">
           <ion-button fill="solid" strong="true">Button</ion-button>
           <ion-button fill="clear" strong="true">Button</ion-button>
           <ion-buttons>
@@ -35,7 +35,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const container = page.locator('.strong-container');
+      const container = page.locator('#container');
 
       await expect(container).toHaveScreenshot(screenshot(`button-strong`));
     });

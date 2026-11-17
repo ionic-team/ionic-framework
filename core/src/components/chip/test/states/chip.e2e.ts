@@ -1,6 +1,9 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { HUES } from '../../../../themes/themes.interfaces';
+import { ION_CHIP_FILLS } from '../../chip.interface';
+
 /**
  * This behavior does not vary across directions.
  *
@@ -87,6 +90,61 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
 
       expect(backgroundColor.trim()).toBe('rgb(0, 128, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes or directions.
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('chip: pressed state'), () => {
+    /**
+     * `(any-hover: hover)` evaluates to "none" when the browser reports a
+     * touch device, so turn that off to apply the hover rules. Headless
+     * Firefox reports no hover capability regardless, so it skips the test.
+     */
+    test.use({
+      hasTouch: false,
+      isMobile: false,
+    });
+
+    HUES.forEach((hue) => {
+      ION_CHIP_FILLS.forEach((fill) => {
+        ['', 'primary'].forEach((color) => {
+          test(`should show the activated background when pressing a hovered ${hue} ${fill} chip${
+            color ? ` with a color` : ''
+          }`, async ({ page, skip }) => {
+            skip.browser('firefox', 'Headless Firefox reports no hover capability');
+
+            const prefix = `--ion-chip-hue-${hue}-${fill}${color ? '-semantic' : ''}`;
+
+            await page.setContent(
+              `
+                <style>
+                  ion-chip {
+                    ${prefix}-hover-background: rgb(255, 0, 0);
+                    ${prefix}-activated-background: rgb(0, 0, 255);
+                  }
+                </style>
+
+                <ion-chip hue="${hue}" fill="${fill}"${color ? ` color="${color}"` : ''}>
+                  <ion-label>Chip</ion-label>
+                </ion-chip>
+              `,
+              config
+            );
+
+            const chip = page.locator('ion-chip');
+
+            await chip.hover();
+            await chip.evaluate((el) => el.classList.add('ion-activated'));
+            await page.waitForChanges();
+
+            await expect(chip).toHaveCSS('background-color', 'rgb(0, 0, 255)');
+          });
+        });
+      });
     });
   });
 });

@@ -30,8 +30,10 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input Otp](#version-10x-input-otp)
   - [Item Divider](#version-10x-item-divider)
   - [Menu Toggle](#version-10x-menu-toggle)
+  - [Note](#version-10x-note)
   - [Radio Group](#version-10x-radio-group)
   - [Ripple Effect](#version-10x-ripple-effect)
+  - [Router Link](#version-10x-router-link)
   - [Row](#version-10x-row)
   - [Skeleton Text](#version-10x-skeleton-text)
   - [Spinner](#version-10x-spinner)
@@ -83,7 +85,7 @@ The following breaking changes apply to `ion-button`:
 3. The font size of `clear` buttons in the `ios` theme now matches the other fills at each size, instead of `17px` at the default size. To keep the previous size, set `--ion-button-size-medium-font-size` to `17px` on those buttons.
 4. The `ios` button is now `28px`, `34px` and `50px` tall at the small, default and large sizes, with less padding, following the iOS guidelines. To revert to the previous appearance, set `IonButton.size.<size>.min.height` for global styles or `--ion-button-size-<size>-min-height` for component-specific styles to `2.1em`, `3.1em` and `3.1em`, and the padding (`IonButton.size.<size>.padding` or `--ion-button-size-<size>-padding-*`) to `4px 0.9em`, `13px 1em` and `17px 1em`, along with the previous font sizes from [item 9](#version-10x-button-ios-17).
 5. Icon-only buttons are now squares as tall as a text button of the same size. In `md`, this makes them a few pixels smaller at the small and default sizes and larger at the large size. To change their size, set the size's `min.height` as described above.
-6. In `md`, the focus and hover tint of `outline` and `clear` buttons in an `ion-buttons` inside a toolbar uses the text color (`--ion-text-color`), so it no longer follows a custom toolbar color such as `--ion-toolbar-color` or the toolbar's `--color`. To match a custom toolbar color, set `IonToolbar.default.IonButtons.IonButton.hue.bold.<fill>.focus.background` and `.hover.background` for global styles, or `--ion-button-hue-bold-<fill>-focus-background` and `--ion-button-hue-bold-<fill>-hover-background` for component-specific styles, using the color at `0.12` for focus and `0.04` for hover. The selector needs the fill class to override the toolbar's own rule, for example `ion-toolbar.my-toolbar ion-buttons ion-button.button-fill-clear { --ion-button-hue-bold-clear-focus-background: rgba(255, 105, 180, 0.12); }`.
+6. In `md`, the focus and hover tint of `outline` and `clear` buttons in an `ion-buttons` inside a toolbar uses the text color (`--ion-text-color`), so it no longer follows a custom toolbar color such as `--ion-toolbar-color` or the toolbar's `--color`. To match a custom toolbar color, set `IonToolbar.default.IonButtons.IonButton.hue.bold.<fill>.focus.background` and `.hover.background` for global styles, or `--ion-button-hue-bold-<fill>-focus-background` and `--ion-button-hue-bold-<fill>-hover-background` for component-specific styles, using the color at `0.12` for focus and `0.04` for hover. For example, `ion-toolbar.my-toolbar ion-buttons ion-button { --ion-button-hue-bold-clear-focus-background: rgba(255, 105, 180, 0.12); }`.
 7. In `md`, buttons in an `ion-buttons` outside a toolbar now match standalone buttons. `solid` buttons use the primary color and a box shadow instead of the toolbar's dark colors with no shadow, and `outline` and `clear` buttons use the primary color instead of the text color. To keep the previous appearance, set the following on those buttons:
 
    ~~~css
@@ -98,7 +100,6 @@ The following breaking changes apply to `ion-button`:
      --ion-button-hue-bold-solid-focus-background: linear-gradient(rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24), rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24)) var(--ion-button-hue-bold-solid-default-background);
      --ion-button-hue-bold-solid-hover-color: var(--ion-button-hue-bold-solid-default-color);
      --ion-button-hue-bold-solid-focus-color: var(--ion-button-hue-bold-solid-default-color);
-     --ion-button-hue-bold-solid-disabled-background: var(--ion-button-hue-bold-solid-default-background);
 
      --ion-button-hue-bold-outline-default-color: currentColor;
      --ion-button-hue-bold-outline-default-border-color: currentColor;
@@ -120,7 +121,10 @@ The following breaking changes apply to `ion-button`:
 11. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[11](#version-10x-button-padding-variables)</sup>
 12. The fill, size, shape and expand classes have been renamed. <sup>[12](#version-10x-button-renamed-classes)</sup>
 13. The `default` size has been deprecated. <sup>[13](#version-10x-button-deprecated-default-size)</sup>
-14. Theme classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[14](#version-10x-button-theme-classes)</sup>
+14. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[14](#version-10x-button-mode-classes)</sup>
+15. `round` buttons no longer have extra horizontal padding. <sup>[15](#version-10x-button-round-padding)</sup>
+16. The `default` fill has been deprecated. <sup>[16](#version-10x-button-deprecated-default-fill)</sup>
+17. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[17](#version-10x-button-toolbar-classes)</sup>
 
 <h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
 
@@ -128,18 +132,18 @@ The `md` button now uses the Material Design 2 values below. To keep a previous 
 
 | Property | Previous | New | Token |
 |---|---|---|---|
-| Padding at the default size | `1.1em` | `1.1429em` (`16px` at the default size) | `IonButton.size.medium.padding.start` and `.end` |
+| Horizontal padding | `1.1em` at the default size, the same for every fill | `1.1429em` (`16px`) at the default size. At every size, `outline` is `1px` less to count its border, and `clear` is half | `IonButton.size.<size>.padding.start` and `.end`, or `IonButton.size.<size>.<fill>.padding` for one fill |
 | Min width at the default size | none | `64px` | `IonButton.size.medium.min.width` |
 | Letter spacing | `0.06em` | `0.0893em` | `IonButton.letter.spacing` |
 | Icon size | `1.35em` | `1.2857em` (`18px` at the default size) | `IonButton.size.<size>.icon.font.size` |
 | Gap between icon and label | `0.3em` | `0.4444em` (`8px` at the default size) | `IonButton.size.<size>.icon.leading.margin.end` and `.trailing.margin.start` |
 | Spinner in a button | the spinner's own size (`28px` by default) | `1.2857em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
-| Outline border | `2px`, the button's color | `1px`, the text color at `12%` | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
+| Outline border | `2px`, the button's color, or the toolbar's color in a toolbar | `1px`, the text color at `12%`, in toolbars too | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
 | Solid elevation on hover and focus | the resting elevation | elevation 4 | `IonButton.hue.bold.solid.hover.box.shadow` and `.focus.box.shadow` |
 | Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` (`.semantic.disabled.color` and `.background` with a `color`) |
 | Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` (`.semantic.rippleEffect.opacity` with a `color`) |
 
-Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width, and inside a toolbar no elevation on hover or focus.
+Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width, and inside a toolbar no elevation on hover or focus. In a toolbar with a `color`, an outline button with its own `color` keeps the standalone border, the page's text color at `12%`, since its color replaces the toolbar's.
 
 <h5 id="version-10x-button-ios-17">iOS 17 in <code>ios</code></h5>
 
@@ -162,6 +166,8 @@ Buttons in toolbars keep their previous colors when disabled.
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 
 Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides. Replace `<fill>` with `solid`, `outline` or `clear`, and `<shape>` with `crisp`, `soft`, `round` or `rectangular`. Buttons with a `color` read the same tokens under `semantic`, for example `IonButton.hue.bold.solid.semantic.default.background`.
+
+A CSS variable set on the button overrides the tokens of the component it sits in, such as `ion-toolbar` or `ion-datetime`, since their rules have the same specificity as `ion-button` alone. For example, `.my-button { --ion-button-hue-bold-solid-default-background: red; }` also applies to a button in a toolbar.
 
 | Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
@@ -211,11 +217,9 @@ Update any styles that target these classes:
 | `.button-outline` | `.button-fill-outline` |
 | `.button-clear` | `.button-fill-clear` |
 | `.button-small` | `.button-size-small` |
-| `.button-default` | `.button-size-medium` |
+| `.button-default` | `.button-size-medium` for `size="default"`, `.button-fill-solid` for `fill="default"` |
 | `.button-large` | `.button-size-large` |
-| `.button-soft` | `.button-shape-soft` |
 | `.button-round` | `.button-shape-round` |
-| `.button-rectangular` | `.button-shape-rectangular` |
 | `.button-block` | `.button-expand-block` |
 | `.button-full` | `.button-expand-full` |
 
@@ -223,9 +227,39 @@ Update any styles that target these classes:
 
 The `default` value of the `size` property is deprecated. It logs a warning and renders the same as `medium`. Use `size="medium"` instead.
 
-<h5 id="version-10x-button-theme-classes">Theme classes</h5>
+<h5 id="version-10x-button-mode-classes">Mode classes</h5>
 
-Remove any instances that target the theme classes: `ion-button.md`, `ion-button.ios`.
+Remove any instances that target the mode classes: `ion-button.md`, `ion-button.ios`.
+
+<h5 id="version-10x-button-round-padding">Round padding</h5>
+
+In 9.x, `round` buttons had `0` vertical and `26px` horizontal padding: at every size in `ios`, and at the default size in `md`. Buttons now keep the padding of their size. To revert, set the padding on the `shape` attribute, since `md` buttons now render `.button-shape-round` by default:
+
+```css
+/* ios */
+ion-button[shape="round"]:not(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 26px;
+  --padding-end: 26px;
+}
+
+/* md */
+ion-button[shape="round"]:not([size]):not(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 26px;
+  --padding-end: 26px;
+}
+```
+
+<h5 id="version-10x-button-deprecated-default-fill">Deprecated <code>default</code> fill</h5>
+
+The `default` value of the `fill` property is deprecated. It logs a warning and renders the same as `solid`, including inside an `ion-buttons`, where a button without a `fill` renders `clear`. Use `fill="solid"` instead, or remove the `fill` property to keep the `clear` default inside an `ion-buttons`.
+
+<h5 id="version-10x-button-toolbar-classes">Toolbar classes</h5>
+
+`ion-button` no longer adds the `in-toolbar` and `in-toolbar-color` classes. Target the toolbar instead: replace `ion-button.in-toolbar` with `ion-toolbar ion-button`, and `ion-button.in-toolbar-color` with `ion-toolbar[color] ion-button`.
 
 <h4 id="version-10x-card">Card</h4>
 
@@ -483,10 +517,11 @@ Remove any instances that target the mode classes: `ion-col.md`, `ion-col.ios`.
 
 The following breaking changes apply to `ion-content`:
 
-1. `--background` and `--color` CSS variables have been replaced.
-2. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional).
-3. `--keyboard-offset`, `--offset-top`, and `--offset-bottom` have been renamed to the `--internal-*` namespace with no replacement.
-4. Mode classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
+1. The `--background` CSS variable has been replaced, and `--color` has been removed.
+2. Content inherits its text color from its parent in every theme.
+3. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional).
+4. `--keyboard-offset`, `--offset-top`, and `--offset-bottom` have been renamed to the `--internal-*` namespace with no replacement.
+5. Mode classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
 
 <h5>Removed CSS variables</h5>
 
@@ -495,7 +530,12 @@ The following breaking changes apply to `ion-content`:
 | Old (9.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
 | `--background` | `IonContent.background` | `--ion-content-default-background` |
-| `--color` | `IonContent.color` | `--ion-content-default-color` |
+
+`--color` has no replacement. Set `color` on `ion-content` or one of its ancestors instead.
+
+<h5>Inherited text color</h5>
+
+In the `ios` and `md` themes, content set its text color to `--ion-text-color`, which overrode any `color` set on an ancestor such as `ion-modal`. Content now inherits its text color in every theme, so it follows the closest ancestor that sets one.
 
 <h5>Padding variables</h5>
 
@@ -598,6 +638,62 @@ The following breaking changes apply to `ion-menu-toggle`:
 
 Remove any instances that target the mode classes: `ion-menu-toggle.md`, `ion-menu-toggle.ios`.
 
+<h4 id="version-10x-note">Note</h4>
+
+The following breaking changes apply to `ion-note`:
+
+1. `--color` has been replaced. <sup>[1](#version-10x-note-replaced-css-variables)</sup>
+2. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[2](#version-10x-note-hue)</sup>
+3. Mode classes (`ion-note.md`, `ion-note.ios`) are no longer supported. <sup>[3](#version-10x-note-mode-classes)</sup>
+4. The `ios` note is larger and has a set line height and letter spacing. <sup>[4](#version-10x-note-ios-typography)</sup>
+5. The `md` note is smaller and has a set line height and letter spacing. <sup>[5](#version-10x-note-md-typography)</sup>
+
+<h5 id="version-10x-note-replaced-css-variables">Replaced CSS variables</h5>
+
+Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--color` | `IonNote.hue.bold.default.color` | `--ion-note-hue-bold-default-color` |
+
+> [!NOTE]
+> A note with `hue="subtle"` reads `IonNote.hue.subtle.default.color` for global styles, or `--ion-note-hue-subtle-default-color` for component-specific styles.
+
+<h5 id="version-10x-note-hue">New <code>hue</code> property and color tokens</h5>
+
+A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`.
+
+When `color` is set, a bold note now uses the color's `foreground` variant instead of `base`, which is darker so the text stays readable on the page. To revert to the previous appearance, set `IonNote.hue.bold.semantic.default.color` to `var(--ion-color-base)` for global styles, or `--ion-note-hue-bold-semantic-default-color` for component-specific styles.
+
+When `color` is set, the note color now reads from a token instead of `--ion-color-base` directly. Global overrides should use the theme tokens; component-specific overrides use the corresponding CSS variables:
+
+| Hue | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| `bold` | `IonNote.hue.bold.semantic.default.color` | `--ion-note-hue-bold-semantic-default-color` |
+| `subtle` | `IonNote.hue.subtle.semantic.default.color` | `--ion-note-hue-subtle-semantic-default-color` |
+
+<h5 id="version-10x-note-mode-classes">Mode classes</h5>
+
+Remove any instances that target the mode classes: `ion-note.md`, `ion-note.ios`.
+
+<h5 id="version-10x-note-ios-typography">iOS typography</h5>
+
+In the `ios` theme, the note now matches the detail text of an iOS list row, in accordance with the iOS guidelines:
+
+- The font size is now `17px` instead of `16px`. To revert to the previous appearance, set `IonNote.font.size` to `max(14px, 1rem)` for global styles, or `--ion-note-font-size` for component-specific styles.
+- The line height is now `1.294` (`22px` at `17px`) instead of inherited. To revert to the previous appearance, set `IonNote.line.height` to `inherit` for global styles, or `--ion-note-line-height` for component-specific styles.
+- The letter spacing is now `-0.0235em` (`-0.4px` at `17px`) instead of inherited. To revert to the previous appearance, set `IonNote.letterSpacing` to `inherit` for global styles, or `--ion-note-letter-spacing` for component-specific styles.
+
+<h5 id="version-10x-note-md-typography">Material Design typography</h5>
+
+In the `md` theme, the note now uses the caption style of a Material Design list's metadata, in accordance with the Material Design guidelines:
+
+- The font size is now `12px` instead of `14px`. To revert to the previous appearance, set `IonNote.font.size` for global styles, or `--ion-note-font-size` for component-specific styles.
+- In items and item dividers, the font size is now `12px` instead of `11px`, the same as anywhere else. To revert to the previous appearance, set `--ion-note-font-size` on those notes, such as `ion-item ion-note`.
+- The line height is now `1rem` (`16px`) instead of inherited. To revert to the previous appearance, set `IonNote.line.height` to `inherit` for global styles, or `--ion-note-line-height` for component-specific styles.
+- The letter spacing is now `0.0333em` (`0.4px` at `12px`) instead of inherited. To revert to the previous appearance, set `IonNote.letterSpacing` to `inherit` for global styles, or `--ion-note-letter-spacing` for component-specific styles.
+- In items and item dividers, the note no longer has `10px` of space below it.
+
 <h4 id="version-10x-radio-group">Radio Group</h4>
 
 Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
@@ -624,6 +720,70 @@ The ripple fade opacity is now part of the centralized Ionic Theming system. Use
 <h5 id="version-10x-ripple-effect-mode-classes">Mode classes</h5>
 
 Remove any instances that target the mode classes: `ion-ripple-effect.md`, `ion-ripple-effect.ios`.
+
+<h4 id="version-10x-router-link">Router Link</h4>
+
+The following breaking changes apply to `ion-router-link`:
+
+1. `--color` has been replaced. <sup>[1](#version-10x-router-link-replaced-css-variables)</sup>
+2. `--background` has been removed. <sup>[2](#version-10x-router-link-removed-css-variables)</sup>
+3. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property. <sup>[3](#version-10x-router-link-hue)</sup>
+4. The text color now uses the color's `foreground` variant instead of `base`. <sup>[4](#version-10x-router-link-foreground)</sup>
+5. In the `md` and `ios` themes, a focused router link now shows a tinted background instead of the browser's focus ring. In the `ionic` theme, it shows a 2px ring. <sup>[5](#version-10x-router-link-focus)</sup>
+6. Mode classes (`ion-router-link.md`, `ion-router-link.ios`) are no longer supported. <sup>[6](#version-10x-router-link-mode-classes)</sup>
+
+<h5 id="version-10x-router-link-replaced-css-variables">Replaced CSS variables</h5>
+
+Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (9.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--color` | `IonRouterLink.hue.bold.default.color` | `--ion-router-link-hue-bold-default-color` |
+
+> [!NOTE]
+> `--color` only applied when `color` was not set. A router link with `hue="subtle"` reads `--ion-router-link-hue-subtle-default-color` instead.
+
+<h5 id="version-10x-router-link-removed-css-variables">Removed CSS variables</h5>
+
+`--background` has been removed, since a router link has no background of its own. To give a link a background, set `background` on `ion-router-link` directly.
+
+<h5 id="version-10x-router-link-hue">New <code>hue</code> property and color tokens</h5>
+
+A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`.
+
+When `color` is set, the text color now reads from a token instead of `--ion-color-base` directly:
+
+| Hue | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| `bold` | `IonRouterLink.hue.bold.semantic.default.color` | `--ion-router-link-hue-bold-semantic-default-color` |
+| `subtle` | `IonRouterLink.hue.subtle.semantic.default.color` | `--ion-router-link-hue-subtle-semantic-default-color` |
+
+<h5 id="version-10x-router-link-foreground">Text color</h5>
+
+A bold router link now uses the `foreground` variant of its color instead of `base`, in every theme. In the light palette, `foreground` is a darker shade of the color, so the text stays readable on the page. This applies to the default link, which uses `primary`, and to a link with `color` set. To revert to the previous appearance, set the tokens for global styles or the CSS variables for component-specific styles:
+
+| Link | Token (global) | Value | CSS variable (component-specific) |
+|---|---|---|---|
+| Default | `IonRouterLink.hue.bold.default.color` | `var(--ion-color-primary)` | `--ion-router-link-hue-bold-default-color` |
+| `color` set | `IonRouterLink.hue.bold.semantic.default.color` | `var(--ion-color-base)` | `--ion-router-link-hue-bold-semantic-default-color` |
+
+<h5 id="version-10x-router-link-focus">Focus style</h5>
+
+When a router link is focused with the keyboard in the `md` and `ios` themes, it now shows a background tinted with its color instead of the browser's default focus ring, the same as a clear button: 12% opacity in `md` and 10% in `ios`. The background reaches 2px above and below the text and 4px to each side, without moving it. In the `ionic` theme, it shows a 2px ring with no background. Customize it with the tokens for global styles, or the CSS variables for component-specific styles:
+
+| Property | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| Background | `IonRouterLink.hue.bold.focus.background` | `--ion-router-link-hue-bold-focus-background` |
+| Background, `color` set | `IonRouterLink.hue.bold.semantic.focus.background` | `--ion-router-link-hue-bold-semantic-focus-background` |
+| Corner radius | `IonRouterLink.state.focus.border.radius` | `--ion-router-link-state-focus-border-radius` |
+| Padding | `IonRouterLink.state.focus.padding` | `--ion-router-link-state-focus-padding-top`, `-end`, `-bottom`, `-start` |
+
+> [!NOTE]
+> A router link with `hue="subtle"` reads the `subtle` tokens instead. To show a ring, set `IonRouterLink.state.focus.ring.color`, `.style` and `.width`.
+
+<h5 id="version-10x-router-link-mode-classes">Mode classes</h5>
+
+Remove any instances that target the mode classes: `ion-router-link.md`, `ion-router-link.ios`.
 
 <h4 id="version-10x-row">Row</h4>
 
