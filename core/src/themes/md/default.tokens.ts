@@ -1,4 +1,4 @@
-import { rgba, currentColor, mix, dynamicFont, ionColor, overlay } from '../../utils/theme';
+import { rgba, currentColor, mix, dynamicFont, dynamicFontClamp, ionColor, overlay } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -46,8 +46,16 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonNote: {
+        hue: 'bold',
+      },
+
       IonProgressBar: {
         shape: 'rectangular',
+      },
+
+      IonRouterLink: {
+        hue: 'bold',
       },
 
       IonSpinner: {
@@ -470,8 +478,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               border: {
                 color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
               },
@@ -504,8 +510,6 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: 'transparent',
-
                 border: {
                   color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 },
@@ -546,8 +550,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
             },
 
@@ -572,8 +574,6 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: 'transparent',
-
                 color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
               },
 
@@ -721,8 +721,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               border: {
                 color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
               },
@@ -755,8 +753,6 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: 'transparent',
-
                 border: {
                   color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 },
@@ -797,8 +793,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              background: 'transparent',
-
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
             },
 
@@ -823,8 +817,6 @@ export const defaultTheme: DefaultTheme = {
               },
 
               disabled: {
-                background: 'transparent',
-
                 color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
               },
 
@@ -848,6 +840,22 @@ export const defaultTheme: DefaultTheme = {
             end: '0.9em',
             bottom: 'var(--ion-spacing-xxs)',
             start: '0.9em',
+          },
+
+          // MD2 text buttons have half the padding of contained buttons
+          clear: {
+            padding: {
+              end: '0.45em',
+              start: '0.45em',
+            },
+          },
+
+          // MD2 outlined buttons count the border as part of the padding
+          outline: {
+            padding: {
+              end: 'calc(0.9em - var(--ion-border-width-xxxs))',
+              start: 'calc(0.9em - var(--ion-border-width-xxxs))',
+            },
           },
 
           font: {
@@ -890,7 +898,7 @@ export const defaultTheme: DefaultTheme = {
 
             icon: {
               font: {
-                size: 'clamp(13.002px, 1.23125em, 40.385px)',
+                size: dynamicFontClamp(global.root, 0.66, 19.7, 2.05, 'em'),
               },
             },
           },
@@ -926,9 +934,22 @@ export const defaultTheme: DefaultTheme = {
           },
 
           badge: {
-            margin: {
-              end: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-sm)',
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-sm)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-sm)',
+              },
             },
           },
         },
@@ -944,6 +965,22 @@ export const defaultTheme: DefaultTheme = {
             end: '1.1429em',
             bottom: 'var(--ion-spacing-sm)',
             start: '1.1429em',
+          },
+
+          // MD2 text buttons have half the padding of contained buttons
+          clear: {
+            padding: {
+              end: '0.5714em',
+              start: '0.5714em',
+            },
+          },
+
+          // MD2 outlined buttons count the border as part of the padding
+          outline: {
+            padding: {
+              end: 'calc(1.1429em - var(--ion-border-width-xxxs))',
+              start: 'calc(1.1429em - var(--ion-border-width-xxxs))',
+            },
           },
 
           font: {
@@ -989,7 +1026,7 @@ export const defaultTheme: DefaultTheme = {
                  * The values were provided through MD design.
                  * min font size: 15px, default font size: 22.4px, max font size: 43px
                  */
-                size: 'clamp(15.104px, 1.6em, 43.008px)',
+                size: dynamicFontClamp(global.root, 0.59, 25.6, 1.68, 'em'),
               },
             },
           },
@@ -1025,9 +1062,22 @@ export const defaultTheme: DefaultTheme = {
           },
 
           badge: {
-            margin: {
-              end: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-sm)',
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-sm)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-sm)',
+              },
             },
           },
         },
@@ -1042,6 +1092,22 @@ export const defaultTheme: DefaultTheme = {
             end: '1em',
             bottom: 'var(--ion-spacing-350)',
             start: '1em',
+          },
+
+          // MD2 text buttons have half the padding of contained buttons
+          clear: {
+            padding: {
+              end: '0.5em',
+              start: '0.5em',
+            },
+          },
+
+          // MD2 outlined buttons count the border as part of the padding
+          outline: {
+            padding: {
+              end: 'calc(1em - var(--ion-border-width-xxxs))',
+              start: 'calc(1em - var(--ion-border-width-xxxs))',
+            },
           },
 
           font: {
@@ -1084,7 +1150,7 @@ export const defaultTheme: DefaultTheme = {
 
             icon: {
               font: {
-                size: 'clamp(15.008px, 1.4em, 43.008px)',
+                size: dynamicFontClamp(global.root, 0.67, 22.4, 1.92, 'em'),
               },
             },
           },
@@ -1120,9 +1186,22 @@ export const defaultTheme: DefaultTheme = {
           },
 
           badge: {
-            margin: {
-              end: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-md)',
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-md)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-md)',
+              },
             },
           },
         },
@@ -1157,6 +1236,19 @@ export const defaultTheme: DefaultTheme = {
     },
 
     // Parents that theme the buttons they contain
+    IonButtons: {
+      IonButton: {
+        size: {
+          medium: {
+            // Buttons in `ion-buttons` fit their content, so an icon without `slot="icon-only"` doesn't widen them
+            min: {
+              width: 'auto',
+            },
+          },
+        },
+      },
+    },
+
     IonDatetime: {
       IonButton: {
         margin: {
@@ -1172,11 +1264,14 @@ export const defaultTheme: DefaultTheme = {
               height: 'var(--ion-scaling-md)',
             },
 
-            padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-sm)',
-              bottom: 'var(--ion-spacing-75)',
-              start: 'var(--ion-spacing-sm)',
+            // Datetime's buttons are `clear` in md, so this replaces the `clear` padding
+            clear: {
+              padding: {
+                top: 'var(--ion-spacing-75)',
+                end: 'var(--ion-spacing-sm)',
+                bottom: 'var(--ion-spacing-75)',
+                start: 'var(--ion-spacing-sm)',
+              },
             },
           },
         },
@@ -1252,8 +1347,6 @@ export const defaultTheme: DefaultTheme = {
 
             outline: {
               disabled: {
-                background: 'var(--ion-button-hue-bold-outline-default-background)',
-
                 border: {
                   color: 'var(--ion-button-hue-bold-outline-default-border-color)',
                 },
@@ -1265,8 +1358,6 @@ export const defaultTheme: DefaultTheme = {
 
               semantic: {
                 disabled: {
-                  background: 'var(--ion-button-hue-bold-outline-semantic-default-background)',
-
                   border: {
                     color: 'var(--ion-button-hue-bold-outline-semantic-default-border-color)',
                   },
@@ -1278,7 +1369,6 @@ export const defaultTheme: DefaultTheme = {
 
             clear: {
               disabled: {
-                background: 'var(--ion-button-hue-bold-clear-default-background)',
                 color: 'var(--ion-button-hue-bold-clear-default-color)',
 
                 opacity: '0.5',
@@ -1286,7 +1376,6 @@ export const defaultTheme: DefaultTheme = {
 
               semantic: {
                 disabled: {
-                  background: 'var(--ion-button-hue-bold-clear-semantic-default-background)',
                   color: 'var(--ion-button-hue-bold-clear-semantic-default-color)',
                 },
               },
@@ -1379,8 +1468,9 @@ export const defaultTheme: DefaultTheme = {
                 default: {
                   color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
 
+                  // MD2's border is the text color at 12%, like the focus tint
                   border: {
-                    color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                    color: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
                   },
                 },
 
@@ -1457,8 +1547,18 @@ export const defaultTheme: DefaultTheme = {
                     background: 'transparent',
                     color: 'var(--ion-toolbar-color, currentColor)',
 
+                    // MD2's border is the text color at 12%, like the focus tint
                     border: {
-                      color: 'var(--ion-toolbar-color, currentColor)',
+                      color: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
+                    },
+                  },
+
+                  // A button with a `color` gets the same border as the others in the toolbar
+                  semantic: {
+                    default: {
+                      border: {
+                        color: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
+                      },
                     },
                   },
 
@@ -1534,13 +1634,17 @@ export const defaultTheme: DefaultTheme = {
                   },
                 },
 
+                /**
+                 * MD2's border is the text color at 12%. A button with its own `color` keeps the
+                 * standalone border, since its color class replaces `--ion-color-contrast-rgb`.
+                 */
                 outline: {
                   default: {
                     background: 'transparent',
                     color: 'currentColor',
 
                     border: {
-                      color: currentColor('contrast'),
+                      color: currentColor('contrast', { alpha: 0.12 }),
                     },
                   },
 
@@ -1591,7 +1695,7 @@ export const defaultTheme: DefaultTheme = {
                     color: 'currentColor',
 
                     border: {
-                      color: currentColor('contrast'),
+                      color: currentColor('contrast', { alpha: 0.12 }),
                     },
                   },
 
@@ -2005,7 +2109,6 @@ export const defaultTheme: DefaultTheme = {
     IonContent: {
       default: {
         background: baseColors.backgroundColor,
-        color: baseColors.textColor,
       },
 
       semantic: {
@@ -2210,22 +2313,11 @@ export const defaultTheme: DefaultTheme = {
           self: 'flex-start',
         },
 
-        font: {
-          size: dynamicFont(global.root, components.item.note.slot.font.size),
-        },
-
-        margin: {
-          top: 'var(--ion-spacing-0)',
+        padding: {
+          top: components.item.note.slot.padding.top,
           end: 'var(--ion-spacing-0)',
           bottom: 'var(--ion-spacing-0)',
           start: 'var(--ion-spacing-0)',
-        },
-
-        padding: {
-          top: components.item.note.slot.padding.top,
-          end: components.item.note.slot.padding.end,
-          bottom: components.item.note.slot.padding.bottom,
-          start: components.item.note.slot.padding.start,
         },
       },
 
@@ -2299,6 +2391,45 @@ export const defaultTheme: DefaultTheme = {
         text: {
           overflow: 'initial',
         },
+      },
+    },
+
+    IonNote: {
+      font: {
+        family: 'var(--ion-font-family)',
+        size: dynamicFont(global.root, 12),
+      },
+
+      hue: {
+        bold: {
+          default: {
+            color: `var(--ion-text-color-step-400, ${mix(baseColors.white, baseColors.black, '60%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: `var(--ion-text-color-step-400, ${mix(baseColors.white, baseColors.black, '60%')})`,
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      letterSpacing: '0.0333em',
+
+      line: {
+        height: dynamicFont(global.root, 16),
       },
     },
 
@@ -2390,6 +2521,65 @@ export const defaultTheme: DefaultTheme = {
 
     IonRippleEffect: {
       opacity: '0.16',
+    },
+
+    IonRouterLink: {
+      hue: {
+        bold: {
+          default: {
+            color: ionColor('primary', 'foreground'),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.12 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.12 }),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            color: ionColor('primary', 'foreground', { subtle: true }),
+          },
+
+          focus: {
+            background: ionColor('primary', 'base', { alpha: 0.12 }),
+          },
+
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+
+            focus: {
+              background: currentColor('base', { alpha: 0.12 }),
+            },
+          },
+        },
+      },
+
+      state: {
+        focus: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-xxs)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-xxs)',
+          },
+        },
+      },
     },
 
     IonRow: {

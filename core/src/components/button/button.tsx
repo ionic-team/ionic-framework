@@ -36,6 +36,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inDatetime = false;
   private inItem = false;
   private hasWarnedSizeDefault = false;
+  private hasWarnedFillDefault = false;
   private inListHeader = false;
   private inButtons = false;
   private formButtonEl: HTMLButtonElement | null = null;
@@ -93,6 +94,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    *
    * Defaults to `"solid"` if both the fill property and theme config are unset,
    * or `"clear"` inside of buttons, datetime, or list header.
+   *
+   * `"default"` is deprecated and renders the same as `"solid"`.
    */
   @Prop({ reflect: true, mutable: true }) fill?: IonButtonFill | 'default';
 
@@ -291,8 +294,20 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * Gets the button fill. Uses the `fill` property if set, otherwise `clear` inside of
    * buttons, datetime or list header, then the theme config. Defaults to `solid` if none apply.
    */
-  get fillValue(): IonButtonFill | 'default' {
+  get fillValue(): IonButtonFill {
     const { fill } = this;
+
+    if (fill === 'default') {
+      if (!this.hasWarnedFillDefault) {
+        this.hasWarnedFillDefault = true;
+        printIonWarning(
+          '[ion-button] - The "default" fill is deprecated. Use "solid" instead.\nExample: <ion-button fill="solid">',
+          this.el
+        );
+      }
+
+      return 'solid';
+    }
 
     if (fill !== undefined) {
       return fill;
@@ -474,6 +489,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       shapeValue,
       sizeValue,
       strong,
+      rippleType,
+      inButtons,
     } = this;
     const mode = getIonMode(this);
     // TODO(FW-7893): remove the mode fallback once the base theme's config always applies
@@ -516,10 +533,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [`${buttonType}-fill-${fillValue}`]: true,
           [`${buttonType}-hue-${hueValue}`]: true,
           [`${buttonType}-strong`]: strong,
-          'in-datetime': this.inDatetime,
-          'in-toolbar': hostContext('ion-toolbar', this.el),
-          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
-          'in-buttons': this.inButtons,
+          'in-buttons': inButtons,
           'button-has-icon-only': hasIconOnly,
           'button-has-badge': hasBadge,
           'button-disabled': disabled,
@@ -543,7 +557,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             <slot onSlotchange={this.onSlotChanged}></slot>
             {!hasIconOnly && <slot name="end"></slot>}
           </span>
-          {showRipple && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          {showRipple && <ion-ripple-effect type={rippleType}></ion-ripple-effect>}
         </TagType>
       </Host>
     );

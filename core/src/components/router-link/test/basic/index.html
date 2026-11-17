@@ -44,32 +44,8 @@
         <p>
           <ion-router-link href="#" download="yes" class="custom">Custom Router Link</ion-router-link>
         </p>
-
-        <p>
-          <ion-router-link color="dark" href="#">Dark Router Link</ion-router-link>
-        </p>
-
-        <p>
-          <ion-router-link color="danger" href="#">Danger Router Link</ion-router-link>
-        </p>
-
-        <p>
-          <ion-router-link id="toggleColor" color="tertiary" href="#">Dynamic Color</ion-router-link>
-        </p>
-
-        <button onclick="toggleColor()">Toggle Color</button>
       </ion-content>
     </ion-app>
-
-    <script>
-      const el = document.querySelector('#toggleColor');
-
-      function toggleColor() {
-        const prev = el.getAttribute('color');
-        el.setAttribute('color', prev === 'secondary' ? 'tertiary' : 'secondary');
-        el.innerHTML = prev === 'secondary' ? 'Tertiary Router Link' : 'Secondary Router Link';
-      }
-    </script>
 
     <style>
       .custom {

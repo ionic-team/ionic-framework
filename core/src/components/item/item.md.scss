@@ -147,8 +147,6 @@
   @include margin(0);
 
   align-self: flex-start;
-
-  font-size: $item-md-note-slot-font-size;
 }
 
 ::slotted(ion-note[slot]) {

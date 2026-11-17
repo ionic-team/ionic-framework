@@ -47,12 +47,16 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
           }
         </style>
 
-        <div class="shapes-container">${grids}</div>
+        <ion-content>
+          <div id="container">${grids}</div>
+        </ion-content>
       `,
         config
       );
 
-      const container = page.locator('.shapes-container');
+      await page.setIonViewport();
+
+      const container = page.locator('#container');
 
       await expect(container).toHaveScreenshot(screenshot(`button-shape`));
     });
