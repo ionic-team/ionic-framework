@@ -107,15 +107,19 @@ export class Toggle implements ComponentInterface {
 
   /**
    * The built-in named SVG icon name or the exact `src` of an SVG file
-   * to use when the toggle is checked.
+   * to use when the toggle is checked. Only shown when
+   * `enableOnOffLabels` is `true`. Defaults to `checkmark-outline` in
+   * `md` mode and a vertical line in `ios` mode.
    */
-  @Prop() checkedIcon?: string | null;
+  @Prop() checkedIcon?: string;
 
   /**
    * The built-in named SVG icon name or the exact `src` of an SVG file
-   * to use when the toggle is unchecked.
+   * to use when the toggle is unchecked. Only shown when
+   * `enableOnOffLabels` is `true`. Defaults to `remove-outline` in
+   * `md` mode and `ellipse-outline` in `ios` mode.
    */
-  @Prop() uncheckedIcon?: string | null;
+  @Prop() uncheckedIcon?: string;
 
   /**
    * Where to place the label relative to the input.
@@ -370,14 +374,22 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  /**
+   * Returns the icon set through the prop or global config, if any.
+   */
+  private getCustomSwitchLabelIcon(checked: boolean): string | undefined {
+    return checked
+      ? this.checkedIcon ?? config.get('toggleCheckedIcon')
+      : this.uncheckedIcon ?? config.get('toggleUncheckedIcon');
+  }
+
   private getSwitchLabelIcon = (mode: Mode, checked: boolean) => {
-    const checkedIcon = this.checkedIcon ?? config.get('toggleCheckedIcon');
-    const uncheckedIcon = this.uncheckedIcon ?? config.get('toggleUncheckedIcon');
+    const customIcon = this.getCustomSwitchLabelIcon(checked);
 
     if (mode === 'md') {
-      return checked ? checkedIcon ?? checkmarkOutline : uncheckedIcon ?? removeOutline;
+      return customIcon ?? (checked ? checkmarkOutline : removeOutline);
     }
-    return checked ? checkedIcon ?? removeOutline : uncheckedIcon ?? ellipseOutline;
+    return customIcon ?? (checked ? removeOutline : ellipseOutline);
   };
 
   private renderOnOffSwitchLabels(mode: Mode, checked: boolean) {
@@ -388,6 +400,7 @@ export class Toggle implements ComponentInterface {
         class={{
           'toggle-switch-icon': true,
           'toggle-switch-icon-checked': checked,
+          'toggle-switch-icon-custom': this.getCustomSwitchLabelIcon(checked) != null,
         }}
         icon={icon}
         aria-hidden="true"

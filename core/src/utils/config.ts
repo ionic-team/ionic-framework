@@ -74,11 +74,13 @@ export interface IonicConfig {
 
   /**
    * Overrides the default checked icon in all `<ion-toggle>` components.
+   * Only shown when on/off labels are enabled.
    */
   toggleCheckedIcon?: string;
 
   /**
    * Overrides the default unchecked icon in all `<ion-toggle>` components.
+   * Only shown when on/off labels are enabled.
    */
   toggleUncheckedIcon?: string;
 

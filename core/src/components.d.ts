@@ -3624,9 +3624,9 @@ export namespace Components {
          */
         "checked": boolean;
         /**
-          * The built-in named SVG icon name or the exact `src` of an SVG file to use when the toggle is checked.
+          * The built-in named SVG icon name or the exact `src` of an SVG file to use when the toggle is checked. Only shown when `enableOnOffLabels` is `true`. Defaults to `checkmark-outline` in `md` mode and a vertical line in `ios` mode.
          */
-        "checkedIcon"?: string | null;
+        "checkedIcon"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -3673,9 +3673,9 @@ export namespace Components {
          */
         "required": boolean;
         /**
-          * The built-in named SVG icon name or the exact `src` of an SVG file to use when the toggle is unchecked.
+          * The built-in named SVG icon name or the exact `src` of an SVG file to use when the toggle is unchecked. Only shown when `enableOnOffLabels` is `true`. Defaults to `remove-outline` in `md` mode and `ellipse-outline` in `ios` mode.
          */
-        "uncheckedIcon"?: string | null;
+        "uncheckedIcon"?: string;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
           * @default 'on'
@@ -8899,9 +8899,9 @@ declare namespace LocalJSX {
          */
         "checked"?: boolean;
         /**
-          * The built-in named SVG icon name or the exact `src` of an SVG file to use when the toggle is checked.
+          * The built-in named SVG icon name or the exact `src` of an SVG file to use when the toggle is checked. Only shown when `enableOnOffLabels` is `true`. Defaults to `checkmark-outline` in `md` mode and a vertical line in `ios` mode.
          */
-        "checkedIcon"?: string | null;
+        "checkedIcon"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -8960,9 +8960,9 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * The built-in named SVG icon name or the exact `src` of an SVG file to use when the toggle is unchecked.
+          * The built-in named SVG icon name or the exact `src` of an SVG file to use when the toggle is unchecked. Only shown when `enableOnOffLabels` is `true`. Defaults to `remove-outline` in `md` mode and `ellipse-outline` in `ios` mode.
          */
-        "uncheckedIcon"?: string | null;
+        "uncheckedIcon"?: string;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
           * @default 'on'
@@ -9714,8 +9714,8 @@ declare namespace LocalJSX {
         "helperText": string;
         "value": string | null;
         "enableOnOffLabels": boolean | undefined;
-        "checkedIcon": string | null;
-        "uncheckedIcon": string | null;
+        "checkedIcon": string;
+        "uncheckedIcon": string;
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         "justify": 'start' | 'end' | 'space-between';
         "alignment": 'start' | 'center';

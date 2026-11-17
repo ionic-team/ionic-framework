@@ -124,6 +124,25 @@
   right: 4px;
 }
 
+// The checked icon geometry above fits the default rotated dash.
+// A custom checked icon matches the unchecked icon instead.
+.toggle-switch-icon-checked.toggle-switch-icon-custom {
+  width: 11px;
+  height: 11px;
+
+  transform: translateY(-50%);
+}
+
+:host(.toggle-ltr) .toggle-switch-icon-checked.toggle-switch-icon-custom {
+  /* stylelint-disable-next-line property-disallowed-list */
+  left: 6px;
+}
+
+:host(.toggle-rtl) .toggle-switch-icon-checked.toggle-switch-icon-custom {
+  /* stylelint-disable-next-line property-disallowed-list */
+  right: 6px;
+}
+
 // iOS Toggle Background Oval: Activated or Checked
 // ----------------------------------------------------------
 

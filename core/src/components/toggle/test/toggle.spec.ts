@@ -2,6 +2,8 @@ import { newSpecPage } from '@stencil/core/testing';
 import { checkmarkOutline, ellipseOutline, removeOutline } from 'ionicons/icons';
 
 import { config } from '../../../global/config';
+import { initialize } from '../../../global/ionic-global';
+import type { IonicConfig } from '../../../interface';
 import { Toggle } from '../toggle';
 
 describe('toggle', () => {
@@ -43,54 +45,75 @@ describe('toggle', () => {
   });
 
   describe('checkedIcon and uncheckedIcon', () => {
-    it('should set custom checked icon on the instance, overriding config', async () => {
-      const t = await newToggle();
-      t.checkedIcon = 'custom-checked-icon-instance';
-      config.reset({
-        toggleCheckedIcon: 'custom-checked-icon-config',
+    /**
+     * Renders a toggle with on/off labels enabled and returns the
+     * icons drawn in its shadow root.
+     */
+    const renderIcons = async (attrs: string, mode: 'ios' | 'md', userConfig: IonicConfig = {}) => {
+      // Lets getIonMode read the mode attribute; this also resets the config.
+      initialize(userConfig);
+      const page = await newSpecPage({
+        components: [Toggle],
+        html: `<ion-toggle mode="${mode}" enable-on-off-labels="true" ${attrs}>Label</ion-toggle>`,
+      });
+      const toggle = page.body.querySelector('ion-toggle')!;
+      return Array.from(toggle.shadowRoot!.querySelectorAll('ion-icon'));
+    };
+
+    const iconNames = (icons: Element[]) => icons.map((icon) => icon.getAttribute('icon'));
+
+    it('should render the checkedIcon prop over the config value', async () => {
+      const icons = await renderIcons('checked checked-icon="prop-icon"', 'md', { toggleCheckedIcon: 'config-icon' });
+
+      expect(iconNames(icons)).toEqual(['prop-icon']);
+    });
+
+    it('should render the uncheckedIcon prop over the config value', async () => {
+      const icons = await renderIcons('unchecked-icon="prop-icon"', 'md', { toggleUncheckedIcon: 'config-icon' });
+
+      expect(iconNames(icons)).toEqual(['prop-icon']);
+    });
+
+    it('should render the config icons when no prop is set', async () => {
+      const icons = await renderIcons('', 'ios', {
+        toggleCheckedIcon: 'config-checked',
+        toggleUncheckedIcon: 'config-unchecked',
       });
 
-      expect((t as any).getSwitchLabelIcon('md', true)).toBe('custom-checked-icon-instance');
+      expect(iconNames(icons)).toEqual(['config-checked', 'config-unchecked']);
     });
 
-    it('should set custom unchecked icon on the instance, overriding config', async () => {
-      const t = await newToggle();
-      t.uncheckedIcon = 'custom-unchecked-icon-instance';
-      config.reset({
-        toggleUncheckedIcon: 'custom-unchecked-icon-config',
+    it('should render the default md icons', async () => {
+      expect(iconNames(await renderIcons('checked', 'md'))).toEqual([checkmarkOutline]);
+      expect(iconNames(await renderIcons('', 'md'))).toEqual([removeOutline]);
+    });
+
+    it('should render the default ios icons', async () => {
+      expect(iconNames(await renderIcons('', 'ios'))).toEqual([removeOutline, ellipseOutline]);
+    });
+
+    it('should mark only custom icons with the custom class', async () => {
+      const icons = await renderIcons('checked-icon="prop-icon"', 'ios');
+
+      expect(icons[0]).toHaveClass('toggle-switch-icon-custom');
+      expect(icons[1]).not.toHaveClass('toggle-switch-icon-custom');
+    });
+
+    it('should mark config icons with the custom class', async () => {
+      const icons = await renderIcons('', 'ios', { toggleCheckedIcon: 'config-icon' });
+
+      expect(icons[0]).toHaveClass('toggle-switch-icon-custom');
+      expect(icons[1]).not.toHaveClass('toggle-switch-icon-custom');
+    });
+
+    it('should not render custom icons when on/off labels are disabled', async () => {
+      const page = await newSpecPage({
+        components: [Toggle],
+        html: `<ion-toggle checked checked-icon="moon" unchecked-icon="sunny">Label</ion-toggle>`,
       });
+      const toggle = page.body.querySelector('ion-toggle')!;
 
-      expect((t as any).getSwitchLabelIcon('md', false)).toBe('custom-unchecked-icon-instance');
-    });
-
-    it('should set custom checked icon in the config', async () => {
-      const t = await newToggle();
-      config.reset({
-        toggleCheckedIcon: 'custom-checked-icon-config',
-      });
-
-      expect((t as any).getSwitchLabelIcon('md', true)).toBe('custom-checked-icon-config');
-    });
-
-    it('should set custom unchecked icon in the config', async () => {
-      const t = await newToggle();
-      config.reset({
-        toggleUncheckedIcon: 'custom-unchecked-icon-config',
-      });
-
-      expect((t as any).getSwitchLabelIcon('md', false)).toBe('custom-unchecked-icon-config');
-    });
-
-    it('should use default icons in md mode', async () => {
-      const t = await newToggle();
-      expect((t as any).getSwitchLabelIcon('md', true)).toBe(checkmarkOutline);
-      expect((t as any).getSwitchLabelIcon('md', false)).toBe(removeOutline);
-    });
-
-    it('should use default icons in ios mode', async () => {
-      const t = await newToggle();
-      expect((t as any).getSwitchLabelIcon('ios', true)).toBe(removeOutline);
-      expect((t as any).getSwitchLabelIcon('ios', false)).toBe(ellipseOutline);
+      expect(toggle.shadowRoot!.querySelectorAll('ion-icon').length).toBe(0);
     });
   });
 
