@@ -656,9 +656,22 @@ export const defaultTheme: DefaultTheme = {
           },
 
           badge: {
-            margin: {
-              end: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-xxs)',
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-xxs)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-xxs)',
+              },
             },
           },
         },
@@ -753,9 +766,22 @@ export const defaultTheme: DefaultTheme = {
           },
 
           badge: {
-            margin: {
-              end: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-xxs)',
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-xxs)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-xxs)',
+              },
             },
           },
         },
@@ -850,9 +876,22 @@ export const defaultTheme: DefaultTheme = {
           },
 
           badge: {
-            margin: {
-              end: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-xxs)',
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-xxs)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-xxs)',
+              },
             },
           },
         },

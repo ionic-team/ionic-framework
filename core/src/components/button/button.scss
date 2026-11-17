@@ -486,29 +486,17 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 
 @each $size in $sizes {
   // The badge overlaps the vertical padding, so a badge taller than the label doesn't make the button taller than its min height.
-  // The block margins fall back to 0px because no theme sets them, and calc() needs a unit.
-  :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(ion-badge:not([vertical])) {
-    @include mixins.margin(
-      calc(
-        var(--ion-button-size-#{$size}-badge-margin-top, 0px) -
-          var(--padding-top, var(--ion-button-size-#{$size}-padding-top, 0px))
-      ),
-      var(--ion-button-size-#{$size}-badge-margin-end),
-      calc(
-        var(--ion-button-size-#{$size}-badge-margin-bottom, 0px) -
-          var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom, 0px))
-      ),
-      var(--ion-button-size-#{$size}-badge-margin-start)
-    );
-  }
+  // The block margins fall back to 0px because calc() needs a unit.
+  @each $position, $selector in (trailing: "ion-badge:not([vertical])", leading: 'ion-badge[slot="start"]:not([vertical])') {
+    $margin: --ion-button-size-#{$size}-badge-#{$position}-margin;
 
-  // A badge before the label keeps the gap on the label's side
-  :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(ion-badge[slot="start"]:not([vertical])) {
-    @include mixins.margin(
-      null,
-      var(--ion-button-size-#{$size}-badge-margin-start),
-      null,
-      var(--ion-button-size-#{$size}-badge-margin-end)
-    );
+    :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(#{$selector}) {
+      @include mixins.margin(
+        calc(var(#{$margin}-top, 0px) - var(--padding-top, var(--ion-button-size-#{$size}-padding-top, 0px))),
+        var(#{$margin}-end),
+        calc(var(#{$margin}-bottom, 0px) - var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom, 0px))),
+        var(#{$margin}-start)
+      );
+    }
   }
 }
