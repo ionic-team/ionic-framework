@@ -35,7 +35,7 @@ export const defaultTheme: DefaultTheme = {
       IonButton: {
         fill: 'solid',
         hue: 'bold',
-        shape: 'round',
+        shape: 'soft',
         size: 'medium',
       },
 
