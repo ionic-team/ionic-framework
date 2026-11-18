@@ -858,13 +858,13 @@ const calculatePopoverAlignedCoordinates = (
     case 'start':
     case 'end':
     case 'left':
-    case 'right':{
+    case 'right': {
       /**
        * If side is on the x-axis
        * then the align values refer to the top
        * and bottom margins of the content.
        */
-      switch(align) {
+      switch (align) {
         case 'start':
           return { top: 0, left: 0 };
         case 'end':
@@ -876,16 +876,16 @@ const calculatePopoverAlignedCoordinates = (
     case 'top':
     case 'bottom':
     default: {
-      /** 
+      /**
        * If side is on the y-axis then the
        * align values refer to the left and right
        * margins of the content.
        */
-      switch(align) {
+      switch (align) {
         case 'start':
-          return { top: 0, left: isRTL? -(contentWidth - triggerBoundingBox.width) : 0 };
+          return { top: 0, left: isRTL ? -(contentWidth - triggerBoundingBox.width) : 0 };
         case 'end':
-          return { top: 0, left: isRTL? 0 : -(contentWidth - triggerBoundingBox.width) };
+          return { top: 0, left: isRTL ? 0 : -(contentWidth - triggerBoundingBox.width) };
         case 'center':
           return { top: 0, left: -(contentWidth / 2 - triggerBoundingBox.width / 2) };
       }
