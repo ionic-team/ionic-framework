@@ -1109,7 +1109,7 @@ export const defaultTheme: DefaultTheme = {
           font: {
             size: clamp(
               'var(--ion-font-size-xs)',
-              `${((components.chip.font.size - 2) / global.root).toFixed(2)}rem`,
+              `${(components.chip.font.size - 2) / global.root}rem`,
               'var(--ion-font-size-xl)'
             ),
           },
@@ -1128,7 +1128,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           font: {
-            size: clamp('13px', `${(components.chip.font.size / global.root).toFixed(2)}rem`, '22px'),
+            size: clamp('13px', `${components.chip.font.size / global.root}rem`, '22px'),
           },
         },
       },
@@ -1356,7 +1356,7 @@ export const defaultTheme: DefaultTheme = {
         color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
 
         font: {
-          size: `${(20 / components.chip.font.size).toFixed(2)}em`,
+          size: `${20 / components.chip.font.size}em`,
         },
 
         leading: {
@@ -1379,8 +1379,8 @@ export const defaultTheme: DefaultTheme = {
       },
 
       avatar: {
-        height: `${(24 / components.chip.font.size).toFixed(2)}em`,
-        width: `${(24 / components.chip.font.size).toFixed(2)}em`,
+        height: `${24 / components.chip.font.size}em`,
+        width: `${24 / components.chip.font.size}em`,
 
         leading: {
           margin: {
