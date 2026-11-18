@@ -617,6 +617,26 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          badge: {
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-sm)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-sm)',
+              },
+            },
+          },
         },
 
         medium: {
@@ -704,6 +724,26 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          badge: {
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-250)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-250)',
+              },
+            },
+          },
         },
 
         large: {
@@ -788,6 +828,26 @@ export const defaultTheme: DefaultTheme = {
               xlarge: {
                 height: 'var(--ion-scaling-lg)',
                 width: 'var(--ion-scaling-lg)',
+              },
+            },
+          },
+
+          badge: {
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-md)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-md)',
               },
             },
           },

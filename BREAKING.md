@@ -118,14 +118,15 @@ The following breaking changes apply to `ion-button`:
 8. Spinners in the `start` and `end` slots of `ios` and `md` buttons are now spaced from the label like icons. To remove the space, set `IonButton.size.<size>.spinner.leading.margin` and `IonButton.size.<size>.spinner.trailing.margin` for global styles, or `--ion-button-size-<size>-spinner-leading-margin-*` and `--ion-button-size-<size>-spinner-trailing-margin-*` for component-specific styles, to `0`.
 9. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[9](#version-10x-button-md-material-design-2)</sup>
 10. The `ios` button follows iOS 17 for its font, icons and disabled state. <sup>[10](#version-10x-button-ios-17)</sup>
-11. CSS variables have been replaced. <sup>[11](#version-10x-button-replaced-css-variables)</sup>
-12. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[12](#version-10x-button-padding-variables)</sup>
-13. The fill, size, shape and expand classes have been renamed. <sup>[13](#version-10x-button-renamed-classes)</sup>
-14. The `default` size has been deprecated. <sup>[14](#version-10x-button-deprecated-default-size)</sup>
-15. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[15](#version-10x-button-mode-classes)</sup>
-16. `round` buttons no longer have extra horizontal padding. <sup>[16](#version-10x-button-round-padding)</sup>
-17. The `default` fill has been deprecated. <sup>[17](#version-10x-button-deprecated-default-fill)</sup>
-18. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[18](#version-10x-button-toolbar-classes)</sup>
+11. A badge without a `vertical` position now has a gap between it and the label, and no longer makes the button taller than its `min.height`. To remove the gap, set `IonButton.size.<size>.badge.trailing.margin.start` for global styles or `--ion-button-size-<size>-badge-trailing-margin-start` for component-specific styles to `0`. For a badge in the `start` slot, use `badge.leading.margin.end` instead. A button with a badge also now has `position: relative` and `z-index: 1`, so a badge that overflows the button stays above the elements next to it. This can change how the button layers with nearby positioned elements, such as one without a `z-index`. To restore the previous layering, set `position: static` and `z-index: auto` on the button.
+12. CSS variables have been replaced. <sup>[12](#version-10x-button-replaced-css-variables)</sup>
+13. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[13](#version-10x-button-padding-variables)</sup>
+14. The fill, size, shape and expand classes have been renamed. <sup>[14](#version-10x-button-renamed-classes)</sup>
+15. The `default` size has been deprecated. <sup>[15](#version-10x-button-deprecated-default-size)</sup>
+16. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[16](#version-10x-button-mode-classes)</sup>
+17. `round` buttons no longer have extra horizontal padding. <sup>[17](#version-10x-button-round-padding)</sup>
+18. The `default` fill has been deprecated. <sup>[18](#version-10x-button-deprecated-default-fill)</sup>
+19. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[19](#version-10x-button-toolbar-classes)</sup>
 
 <h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
 
