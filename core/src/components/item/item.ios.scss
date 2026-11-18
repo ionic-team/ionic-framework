@@ -138,7 +138,8 @@
 // iOS Item Button
 // --------------------------------------------------
 
-::slotted(.button-small) {
+// TODO(FW-6847): Move these button padding hooks to IonItem.IonButton tokens
+::slotted(.button-size-small) {
   --padding-top: 1px;
   --padding-bottom: 1px;
   --padding-start: 0.5em;

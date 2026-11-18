@@ -289,6 +289,10 @@ a {
   font-size: 1.6em;
 }
 
+/**
+ * TODO(FW-6847): remove the `--margin-*` overrides, since
+ * `ion-button` no longer reads them.
+ */
 ::slotted(ion-button) {
   --margin-top: 0;
   --margin-bottom: 0;

@@ -1,16 +1,16 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-const STATES = ['activated', 'focused'];
+import { ION_BUTTON_FILLS } from '../../button.interface';
 
-// `solid` is the default fill, so it renders without a `fill` attribute
-const FILLS = ['solid', 'outline', 'clear'];
+const STATES = ['activated', 'focused'];
 
 configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: states'), () => {
     STATES.forEach((state) => {
       test(`should render ${state} buttons`, async ({ page }) => {
-        const buttons = FILLS.map((fill) => {
+        const buttons = ION_BUTTON_FILLS.map((fill) => {
+          // `solid` is the default fill, so it renders without a `fill` attribute
           const fillAttr = fill === 'solid' ? '' : ` fill="${fill}"`;
 
           return `

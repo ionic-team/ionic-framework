@@ -514,17 +514,54 @@ export const generateBreakpointCSS = (): string => {
  * @returns string containing the component's themed CSS variables
  */
 export const generateComponentsThemeCSS = (components: any): string => {
-  let css = '';
+  const componentBlocks: string[] = [];
+  const childBlocks: ChildBlock[] = [];
 
   for (const [component, componentTokens] of Object.entries(components)) {
     const componentTag = convertToKebabCase(component);
+    const { ownTokens, children } = splitChildComponents(componentTokens, componentTag);
 
-    // Also set on hosts that render this component in their shadow root (see `INTERNAL_CHILD_COMPONENTS`).
-    const selectors = [componentTag, ...getInternalRenderHosts(component)];
-    css += generateBlock(selectors, componentTokens as Record<string, unknown>, componentTag);
+    /**
+     * The component's own tokens, set on its tag and on any parent that renders
+     * it inside a shadow root (refer to `INTERNAL_CHILD_COMPONENTS`):
+     * `ion-button, ion-datetime, ion-input-password-toggle { --ion-button-*: … }`.
+     *
+     * An entry that only nests children has no tokens of its own, so it gets no
+     * empty block.
+     */
+    if (Object.keys(ownTokens).length > 0 || children.length === 0) {
+      const selectors = [componentTag, ...getInternalRenderHosts(component)];
+      componentBlocks.push(generateBlock(selectors, ownTokens, componentTag));
+    }
+
+    /**
+     * A nested child's tokens, scoped to the parent:
+     * `IonToolbar: { IonButtons: { IonButton } }` sets the button's own
+     * `--ion-button-*` properties in `:where(ion-toolbar ion-buttons) ion-button { … }`.
+     */
+    for (const [child, childTokens, parentSelector] of children) {
+      childBlocks.push(...generateChildBlocks(component, child, childTokens, parentSelector));
+    }
   }
 
-  return css;
+  /**
+   * Child blocks come last, so a parent's overrides always win over the child's own tokens.
+   * Every child selector has the same specificity as the child's own tag (refer to
+   * `lowerSpecificity`), so only the order decides:
+   * `ion-button, ion-datetime { --ion-button-*: … }` then
+   * `ion-datetime, :where(ion-datetime) ion-button { --ion-button-*: … }`.
+   *
+   * Among the child blocks, the order follows the specificity each selector would
+   * have without `:where()`, so a more specific parent still wins:
+   * `:where(ion-toolbar:not(.ion-color)) ion-button` comes after
+   * `:where(ion-toolbar ion-buttons) ion-button`. The sort is stable, so blocks
+   * with the same specificity keep their order.
+   */
+  const sortedChildBlocks = childBlocks
+    .sort((a, b) => compareSpecificity(a.specificity, b.specificity))
+    .map(({ css }) => css);
+
+  return [...componentBlocks, ...sortedChildBlocks].join('');
 };
 
 /**
@@ -555,7 +592,8 @@ export const generateComponentsThemeCSS = (components: any): string => {
  * no tokens. A spec test checks this.
  */
 export const INTERNAL_CHILD_COMPONENTS: Record<string, string[]> = {
-  IonDatetime: ['IonPopover'],
+  IonDatetime: ['IonButton', 'IonPopover'],
+  IonInputPasswordToggle: ['IonButton'],
   IonMenu: ['IonBackdrop'],
   IonModal: ['IonBackdrop'],
   IonPopover: ['IonBackdrop'],
@@ -571,6 +609,154 @@ const getInternalRenderHosts = (component: string): string[] => {
     .map(([host]) => host);
 
   return hosts.flatMap((host) => [convertToKebabCase(host), ...getInternalRenderHosts(host)]);
+};
+
+/**
+ * A key such as `IonButton` inside a component's tokens is a child component.
+ */
+const isChildComponentKey = (key: string) => /^Ion[A-Z]/.test(key);
+
+/**
+ * Keys that group a parent's tokens by whether the parent has a color, and the
+ * selector each one adds to the parent of its nested children.
+ */
+export const COLOR_KEY_SELECTORS = new Map([
+  ['default', ':not(.ion-color)'],
+  ['semantic', '.ion-color'],
+]);
+
+/**
+ * Separates a component's own tokens from the child components nested in them.
+ * Each child comes with the selector of the parent it is nested in.
+ *
+ * Children nested under `semantic` only apply when the parent has a color, and
+ * those under `default` only when it has none, so their parent selector gets
+ * `.ion-color` or `:not(.ion-color)`:
+ *
+ * ```ts
+ * IonToolbar: {
+ *   default: {
+ *     IonButton: { … },
+ *   },
+ *   semantic: {
+ *     IonButtons: { IonButton: { … } },
+ *   },
+ * }
+ * ```
+ *
+ * Becomes `ion-toolbar:not(.ion-color) ion-button { … }` and
+ * `ion-toolbar.ion-color ion-buttons ion-button { … }`. Any other key under
+ * `default` or `semantic` stays one of the parent's own tokens.
+ */
+const splitChildComponents = (componentTokens: any, selector: string) => {
+  const ownTokens: Record<string, unknown> = {};
+  const children: [string, unknown, string][] = [];
+
+  for (const [key, value] of Object.entries(componentTokens ?? {})) {
+    const colorSelector = COLOR_KEY_SELECTORS.get(key);
+
+    if (isChildComponentKey(key)) {
+      children.push([key, value, selector]);
+    } else if (colorSelector !== undefined && value !== null && typeof value === 'object') {
+      const colorTokens: Record<string, unknown> = {};
+
+      for (const [colorKey, colorValue] of Object.entries(value)) {
+        if (isChildComponentKey(colorKey)) {
+          children.push([colorKey, colorValue, `${selector}${colorSelector}`]);
+        } else {
+          colorTokens[colorKey] = colorValue;
+        }
+      }
+
+      if (Object.keys(colorTokens).length > 0) {
+        ownTokens[key] = colorTokens;
+      }
+    } else {
+      ownTokens[key] = value;
+    }
+  }
+
+  return { ownTokens, children };
+};
+
+/**
+ * Generates the blocks for a child component nested in a parent's tokens, so the
+ * parent can theme the children it contains without new token names:
+ *
+ * ```ts
+ * IonDatetime: {
+ *   IonButton: { margin: { top: '0px' } },
+ * }
+ * ```
+ *
+ * Becomes:
+ *
+ * ```css
+ * ion-datetime,
+ * :where(ion-datetime) ion-button {
+ *   --ion-button-margin-top: 0px;
+ * }
+ * ```
+ *
+ * The descendant selector reaches buttons in the light DOM, and the parent's
+ * own selector is added when it renders the child in its shadow root (refer to
+ * `INTERNAL_CHILD_COMPONENTS`).
+ */
+const generateChildBlocks = (parent: string, child: string, childTokens: any, parentSelector: string): ChildBlock[] => {
+  const childTag = convertToKebabCase(child);
+  const selector = `${parentSelector} ${childTag}`;
+  const { ownTokens, children } = splitChildComponents(childTokens, selector);
+
+  const blocks: ChildBlock[] = [];
+
+  if (Object.keys(ownTokens).length > 0) {
+    const rendersInternally = INTERNAL_CHILD_COMPONENTS[parent]?.includes(child) ?? false;
+    const selectors = rendersInternally ? [parentSelector, selector] : [selector];
+    blocks.push({
+      css: generateBlock(selectors.map(lowerSpecificity), ownTokens, childTag),
+      specificity: selectors.map(getSpecificity).reduce((a, b) => (compareSpecificity(a, b) >= 0 ? a : b)),
+    });
+  }
+
+  for (const [grandchild, grandchildTokens, grandchildParentSelector] of children) {
+    blocks.push(...generateChildBlocks(child, grandchild, grandchildTokens, grandchildParentSelector));
+  }
+
+  return blocks;
+};
+
+type Specificity = [classes: number, types: number];
+
+type ChildBlock = { css: string; specificity: Specificity };
+
+/**
+ * The specificity of a generated child selector, which is made only of
+ * component tags and the `.ion-color` class (inside `:not()` or not).
+ */
+const getSpecificity = (selector: string): Specificity => [
+  (selector.match(/\.[\w-]+/g) ?? []).length,
+  selector.split(' ').length,
+];
+
+const compareSpecificity = (a: Specificity, b: Specificity) => a[0] - b[0] || a[1] - b[1];
+
+/**
+ * Gives a child selector the specificity of the child's tag alone, so an app's
+ * override on the child, such as `.my-button` or `ion-button.my-button`, wins
+ * over the parent's tokens:
+ *
+ * - `ion-toolbar:not(.ion-color) ion-buttons ion-button` becomes
+ *   `:where(ion-toolbar:not(.ion-color) ion-buttons) ion-button`
+ * - a parent that renders the child in its shadow root, such as
+ *   `ion-toolbar.ion-color`, becomes `ion-toolbar:where(.ion-color)`
+ */
+const lowerSpecificity = (selector: string): string => {
+  const compounds = selector.split(' ');
+  const last = compounds.pop()!;
+  const [, tag, qualifiers] = last.match(/^([\w-]+)(.*)$/)!;
+  const subject = qualifiers ? `${tag}:where(${qualifiers})` : tag;
+
+  return compounds.length > 0 ? `:where(${compounds.join(' ')}) ${subject}` : subject;
 };
 
 /**
@@ -667,6 +853,19 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
 
   const toHex = (n: number) => n.toString(16).padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
+/**
+ * Lays a translucent color over a base color, for a `background` value.
+ * Renders the same as `color-mix()`, which is above Ionic's browser floor.
+ *
+ * @param base Opaque color underneath (e.g. `ionColor('primary', 'base')`)
+ * @param color Translucent color on top (e.g. `'rgba(255, 255, 255, 0.24)'`)
+ *
+ * @returns A `background` value (e.g. `'linear-gradient(rgba(...), rgba(...)) var(...)'`)
+ */
+export const overlay = (base: string, color: string): string => {
+  return `linear-gradient(${color}, ${color}) ${base}`;
 };
 
 /**
@@ -913,4 +1112,34 @@ export const dynamicFontMax = (
   const maxSize = roundScaledSize(size * maxScale);
 
   return `min(${baseScale}, ${maxSize}px)`;
+};
+
+/**
+ * Converts a pixel value to a dynamic unit (defaulting to rem)
+ * but imposes minimum and maximum font sizes using CSS clamp().
+ *
+ * Examples based on a root font size of 16px:
+ * - `dynamicFontClamp('16px', 1, 17, 1.24)` returns `'clamp(17px, 1.0625rem, 21.08px)'`
+ * - The rem value scales with root font size, from 100% up to 124% of 17px
+ *
+ * @internal
+ * @param configRootFontSize - The root font size from the theme config.
+ * @param minScale - The minimum scale of the font (e.g. 0.8 for 80%).
+ * @param size - The numeric pixel value.
+ * @param maxScale - The maximum scale of the font (e.g. 1.2 for 120%).
+ * @param unit - The CSS unit string.
+ * @returns A string containing the CSS clamp() function with the minimum pixel value, the dynamic font value and the maximum pixel value (e.g., 'clamp(17px, 1.0625rem, 21.08px)').
+ */
+export const dynamicFontClamp = (
+  configRootFontSize: string | number,
+  minScale: number,
+  size: number,
+  maxScale: number,
+  unit: string | undefined = baselineUnit
+): string => {
+  const baseScale = dynamicFont(configRootFontSize, size, unit);
+  const minSize = roundScaledSize(size * minScale);
+  const maxSize = roundScaledSize(size * maxScale);
+
+  return clamp(`${minSize}px`, baseScale, `${maxSize}px`);
 };
