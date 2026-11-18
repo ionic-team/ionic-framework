@@ -253,6 +253,46 @@ test.describe('Back navigation browser history: skipLocationChange', () => {
   });
 });
 
+test.describe('Back navigation browser history: double tap', () => {
+  test('should not go back past the root of the stack', async ({ page }, testInfo) => {
+    annotateIssue(testInfo);
+
+    await page.goto('/standalone/back-history?ionic:_testing=true');
+    await ionPageVisible(page, 'app-back-history-a');
+
+    await page.locator('#go-to-b').click();
+    await ionPageVisible(page, 'app-back-history-b');
+
+    // B is no longer in the stack, but it's still the entry behind C.
+    await page.locator('#root-to-c').click();
+    await ionPageVisible(page, 'app-back-history-c');
+
+    await page.locator('#go-to-d').click();
+    await ionPageVisible(page, 'app-back-history-d');
+
+    await page.locator('app-back-history-d ion-back-button').dblclick();
+    await ionPageVisible(page, 'app-back-history-c');
+    await expect(page.locator('app-back-history-d')).toHaveCount(0);
+    await expect(page).toHaveURL(/\/standalone\/back-history\/c$/);
+  });
+
+  test('should not leave the app', async ({ page }, testInfo) => {
+    annotateIssue(testInfo);
+
+    await page.goto('about:blank');
+    await page.goto('/standalone/back-history/c?ionic:_testing=true');
+    await ionPageVisible(page, 'app-back-history-c');
+
+    await page.locator('#go-to-d').click();
+    await ionPageVisible(page, 'app-back-history-d');
+
+    await page.locator('app-back-history-d ion-back-button').dblclick();
+    await ionPageVisible(page, 'app-back-history-c');
+    await expect(page.locator('app-back-history-d')).toHaveCount(0);
+    await expect(page).toHaveURL(/\/standalone\/back-history\/c(\?|$)/);
+  });
+});
+
 test.describe('Back navigation browser history: NavController.pop() and hardware back button', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/standalone/back-history?ionic:_testing=true&ionic:hardwareBackButton=true');

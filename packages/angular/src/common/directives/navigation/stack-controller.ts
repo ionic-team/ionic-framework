@@ -23,6 +23,7 @@ import {
 export class StackController {
   private views: RouteView[] = [];
   private runningTask?: Promise<any>;
+  private historyPop?: Promise<boolean>;
   private skipTransition = false;
   private tabsPrefix: string[] | undefined;
   private activeView: RouteView | undefined;
@@ -170,6 +171,15 @@ export class StackController {
 
   pop(deep: number, stackId = this.getActiveStackId()): Promise<boolean> {
     return this.zone.run(() => {
+      /**
+       * A second pop before the router handles `location.back()` would go
+       * back another entry, so reuse the pop in progress. This runs before
+       * `consumeTransition()` so the pending pop keeps its animation.
+       */
+      if (deep === 1 && this.historyPop) {
+        return this.historyPop;
+      }
+
       const views = this.getStack(stackId);
       if (views.length <= deep) {
         return Promise.resolve(false);
@@ -220,7 +230,7 @@ export class StackController {
       }
     });
 
-    return new Promise<boolean>((resolve) => {
+    this.historyPop = new Promise<boolean>((resolve) => {
       setTimeout(() => {
         sub.unsubscribe();
         this.zone.run(() => {
@@ -230,7 +240,10 @@ export class StackController {
           resolve(navigation);
         });
       });
+    }).finally(() => {
+      this.historyPop = undefined;
     });
+    return this.historyPop;
   }
 
   startBackTransition(): Promise<boolean> | Promise<void> {
