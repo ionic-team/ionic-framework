@@ -1077,12 +1077,14 @@ export const defaultTheme: DefaultTheme = {
 
       // Sizes
       size: {
+        // MD2 has no small chip, so this scales the `large` chip down
+        // to 24px on the 4dp grid
         small: {
           padding: {
-            top: 'var(--ion-spacing-xs)',
-            end: 'var(--ion-spacing-md)',
-            bottom: 'var(--ion-spacing-xs)',
-            start: 'var(--ion-spacing-md)',
+            top: 'var(--ion-spacing-xxs)',
+            end: 'var(--ion-spacing-sm)',
+            bottom: 'var(--ion-spacing-xxs)',
+            start: 'var(--ion-spacing-sm)',
           },
 
           letterSpacing: '0.0179em',
@@ -1096,7 +1098,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           line: {
-            height: '1',
+            height: `${16 / (components.chip.font.size - 2)}`,
           },
         },
         large: {
