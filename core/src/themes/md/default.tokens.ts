@@ -1192,7 +1192,7 @@ export const defaultTheme: DefaultTheme = {
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
 
               border: {
-                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.32),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 style: 'solid',
                 width: 'var(--ion-border-width-xxxs)',
               },
