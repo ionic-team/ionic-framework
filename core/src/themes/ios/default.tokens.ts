@@ -1377,7 +1377,7 @@ export const defaultTheme: DefaultTheme = {
         leading: {
           margin: {
             top: '-4px',
-            end: 'var(--ion-spacing-sm)',
+            end: 'var(--ion-spacing-xxs)',
             bottom: '-4px',
             start: '-4px',
           },
@@ -1388,7 +1388,7 @@ export const defaultTheme: DefaultTheme = {
             top: '-4px',
             end: '-4px',
             bottom: '-4px',
-            start: 'var(--ion-spacing-sm)',
+            start: 'var(--ion-spacing-xxs)',
           },
         },
       },
