@@ -20,6 +20,18 @@
  * @prop --ion-button-size-small-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `small` button size
  * @prop --ion-button-size-small-padding-bottom: Bottom padding of the `small` button size
  * @prop --ion-button-size-small-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `small` button size
+ * @prop --ion-button-size-small-solid-padding-top: Top padding of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-solid-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-solid-padding-bottom: Bottom padding of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-solid-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `solid` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-top: Top padding of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-bottom: Bottom padding of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-outline-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `outline` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-top: Top padding of a `clear` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `clear` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-bottom: Bottom padding of a `clear` button of the `small` size, instead of the size's padding
+ * @prop --ion-button-size-small-clear-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `clear` button of the `small` size, instead of the size's padding
  * @prop --ion-button-size-small-icon-font-size: Font size of the icons of the `small` button size
  * @prop --ion-button-size-small-icon-leading-margin-top: Top margin of an icon in the `start` slot of the `small` button size
  * @prop --ion-button-size-small-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of an icon in the `start` slot of the `small` button size
@@ -59,6 +71,18 @@
  * @prop --ion-button-size-medium-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `medium` button size
  * @prop --ion-button-size-medium-padding-bottom: Bottom padding of the `medium` button size
  * @prop --ion-button-size-medium-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `medium` button size
+ * @prop --ion-button-size-medium-solid-padding-top: Top padding of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-solid-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-solid-padding-bottom: Bottom padding of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-solid-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `solid` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-top: Top padding of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-bottom: Bottom padding of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-outline-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `outline` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-top: Top padding of a `clear` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `clear` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-bottom: Bottom padding of a `clear` button of the `medium` size, instead of the size's padding
+ * @prop --ion-button-size-medium-clear-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `clear` button of the `medium` size, instead of the size's padding
  * @prop --ion-button-size-medium-icon-font-size: Font size of the icons of the `medium` button size
  * @prop --ion-button-size-medium-icon-leading-margin-top: Top margin of an icon in the `start` slot of the `medium` button size
  * @prop --ion-button-size-medium-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of an icon in the `start` slot of the `medium` button size
@@ -98,6 +122,18 @@
  * @prop --ion-button-size-large-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `large` button size
  * @prop --ion-button-size-large-padding-bottom: Bottom padding of the `large` button size
  * @prop --ion-button-size-large-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `large` button size
+ * @prop --ion-button-size-large-solid-padding-top: Top padding of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-solid-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-solid-padding-bottom: Bottom padding of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-solid-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `solid` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-top: Top padding of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-bottom: Bottom padding of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-outline-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `outline` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-top: Top padding of a `clear` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of a `clear` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-bottom: Bottom padding of a `clear` button of the `large` size, instead of the size's padding
+ * @prop --ion-button-size-large-clear-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of a `clear` button of the `large` size, instead of the size's padding
  * @prop --ion-button-size-large-icon-font-size: Font size of the icons of the `large` button size
  * @prop --ion-button-size-large-icon-leading-margin-top: Top margin of an icon in the `start` slot of the `large` button size
  * @prop --ion-button-size-large-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of an icon in the `start` slot of the `large` button size
@@ -156,11 +192,13 @@
  * @prop --ion-button-hue-bold-solid-semantic-ripple-effect-opacity: Ripple opacity of the `bold` hue and `solid` fill combination when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-focus-color: Text color of the `bold` hue and `solid` fill combination in the focus state
  * @prop --ion-button-hue-bold-solid-focus-background: Background of the `bold` hue and `solid` fill combination in the focus state
+ * @prop --ion-button-hue-bold-solid-focus-box-shadow: Box shadow of the `bold` hue and `solid` fill combination in the focus state
  * @prop --ion-button-hue-bold-solid-semantic-focus-background: Background of the `bold` hue and `solid` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-semantic-focus-color: Text color of the `bold` hue and `solid` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-hover-color: Text color of the `bold` hue and `solid` fill combination in the hover state
  * @prop --ion-button-hue-bold-solid-hover-opacity: Opacity of the whole button of the `bold` hue and `solid` fill combination in the hover state
  * @prop --ion-button-hue-bold-solid-hover-background: Background of the `bold` hue and `solid` fill combination in the hover state
+ * @prop --ion-button-hue-bold-solid-hover-box-shadow: Box shadow of the `bold` hue and `solid` fill combination in the hover state
  * @prop --ion-button-hue-bold-solid-semantic-hover-background: Background of the `bold` hue and `solid` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-semantic-hover-color: Text color of the `bold` hue and `solid` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-activated-color: Text color of the `bold` hue and `solid` fill combination in the activated state
@@ -171,7 +209,12 @@
  * @prop --ion-button-hue-bold-solid-semantic-activated-color: Text color of the `bold` hue and `solid` fill combination in the activated state when a semantic color is applied
  * @prop --ion-button-hue-bold-solid-disabled-background: Background of the `bold` hue and `solid` fill combination in the disabled state
  * @prop --ion-button-hue-bold-solid-disabled-opacity: Opacity of the whole button of the `bold` hue and `solid` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-solid-disabled-color: Text color of the `bold` hue and `solid` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-solid-disabled-border-color: Border color of the `bold` hue and `solid` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-solid-disabled-box-shadow: Box shadow of the `bold` hue and `solid` fill combination in the disabled state
  * @prop --ion-button-hue-bold-solid-semantic-disabled-background: Background of the `bold` hue and `solid` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-solid-semantic-disabled-color: Text color of the `bold` hue and `solid` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-solid-semantic-disabled-border-color: Border color of the `bold` hue and `solid` fill combination in the disabled state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-default-border-width: Border width of the `bold` hue and `outline` fill combination in the default state
  * @prop --ion-button-hue-bold-outline-default-border-style: Border style of the `bold` hue and `outline` fill combination in the default state
  * @prop --ion-button-hue-bold-outline-default-background: Background of the `bold` hue and `outline` fill combination in the default state
@@ -185,11 +228,13 @@
  * @prop --ion-button-hue-bold-outline-semantic-ripple-effect-opacity: Ripple opacity of the `bold` hue and `outline` fill combination when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-focus-color: Text color of the `bold` hue and `outline` fill combination in the focus state
  * @prop --ion-button-hue-bold-outline-focus-background: Background of the `bold` hue and `outline` fill combination in the focus state
+ * @prop --ion-button-hue-bold-outline-focus-box-shadow: Box shadow of the `bold` hue and `outline` fill combination in the focus state
  * @prop --ion-button-hue-bold-outline-semantic-focus-background: Background of the `bold` hue and `outline` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-semantic-focus-color: Text color of the `bold` hue and `outline` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-hover-color: Text color of the `bold` hue and `outline` fill combination in the hover state
  * @prop --ion-button-hue-bold-outline-hover-opacity: Opacity of the whole button of the `bold` hue and `outline` fill combination in the hover state
  * @prop --ion-button-hue-bold-outline-hover-background: Background of the `bold` hue and `outline` fill combination in the hover state
+ * @prop --ion-button-hue-bold-outline-hover-box-shadow: Box shadow of the `bold` hue and `outline` fill combination in the hover state
  * @prop --ion-button-hue-bold-outline-semantic-hover-background: Background of the `bold` hue and `outline` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-semantic-hover-color: Text color of the `bold` hue and `outline` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-activated-color: Text color of the `bold` hue and `outline` fill combination in the activated state
@@ -200,7 +245,12 @@
  * @prop --ion-button-hue-bold-outline-semantic-activated-color: Text color of the `bold` hue and `outline` fill combination in the activated state when a semantic color is applied
  * @prop --ion-button-hue-bold-outline-disabled-background: Background of the `bold` hue and `outline` fill combination in the disabled state
  * @prop --ion-button-hue-bold-outline-disabled-opacity: Opacity of the whole button of the `bold` hue and `outline` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-outline-disabled-color: Text color of the `bold` hue and `outline` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-outline-disabled-border-color: Border color of the `bold` hue and `outline` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-outline-disabled-box-shadow: Box shadow of the `bold` hue and `outline` fill combination in the disabled state
  * @prop --ion-button-hue-bold-outline-semantic-disabled-background: Background of the `bold` hue and `outline` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-outline-semantic-disabled-color: Text color of the `bold` hue and `outline` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-outline-semantic-disabled-border-color: Border color of the `bold` hue and `outline` fill combination in the disabled state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-default-border-width: Border width of the `bold` hue and `clear` fill combination in the default state
  * @prop --ion-button-hue-bold-clear-default-border-style: Border style of the `bold` hue and `clear` fill combination in the default state
  * @prop --ion-button-hue-bold-clear-default-border-color: Border color of the `bold` hue and `clear` fill combination in the default state
@@ -215,11 +265,13 @@
  * @prop --ion-button-hue-bold-clear-semantic-ripple-effect-opacity: Ripple opacity of the `bold` hue and `clear` fill combination when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-focus-color: Text color of the `bold` hue and `clear` fill combination in the focus state
  * @prop --ion-button-hue-bold-clear-focus-background: Background of the `bold` hue and `clear` fill combination in the focus state
+ * @prop --ion-button-hue-bold-clear-focus-box-shadow: Box shadow of the `bold` hue and `clear` fill combination in the focus state
  * @prop --ion-button-hue-bold-clear-semantic-focus-background: Background of the `bold` hue and `clear` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-semantic-focus-color: Text color of the `bold` hue and `clear` fill combination in the focus state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-hover-color: Text color of the `bold` hue and `clear` fill combination in the hover state
  * @prop --ion-button-hue-bold-clear-hover-opacity: Opacity of the whole button of the `bold` hue and `clear` fill combination in the hover state
  * @prop --ion-button-hue-bold-clear-hover-background: Background of the `bold` hue and `clear` fill combination in the hover state
+ * @prop --ion-button-hue-bold-clear-hover-box-shadow: Box shadow of the `bold` hue and `clear` fill combination in the hover state
  * @prop --ion-button-hue-bold-clear-semantic-hover-background: Background of the `bold` hue and `clear` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-semantic-hover-color: Text color of the `bold` hue and `clear` fill combination in the hover state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-activated-color: Text color of the `bold` hue and `clear` fill combination in the activated state
@@ -230,5 +282,10 @@
  * @prop --ion-button-hue-bold-clear-semantic-activated-color: Text color of the `bold` hue and `clear` fill combination in the activated state when a semantic color is applied
  * @prop --ion-button-hue-bold-clear-disabled-background: Background of the `bold` hue and `clear` fill combination in the disabled state
  * @prop --ion-button-hue-bold-clear-disabled-opacity: Opacity of the whole button of the `bold` hue and `clear` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-clear-disabled-color: Text color of the `bold` hue and `clear` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-clear-disabled-border-color: Border color of the `bold` hue and `clear` fill combination in the disabled state
+ * @prop --ion-button-hue-bold-clear-disabled-box-shadow: Box shadow of the `bold` hue and `clear` fill combination in the disabled state
  * @prop --ion-button-hue-bold-clear-semantic-disabled-background: Background of the `bold` hue and `clear` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-clear-semantic-disabled-color: Text color of the `bold` hue and `clear` fill combination in the disabled state when a semantic color is applied
+ * @prop --ion-button-hue-bold-clear-semantic-disabled-border-color: Border color of the `bold` hue and `clear` fill combination in the disabled state when a semantic color is applied
  */

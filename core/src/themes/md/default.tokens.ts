@@ -35,7 +35,7 @@ export const defaultTheme: DefaultTheme = {
       IonButton: {
         fill: 'solid',
         hue: 'bold',
-        shape: 'round',
+        shape: 'soft',
         size: 'medium',
       },
 
@@ -344,7 +344,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       letter: {
-        spacing: '0.06em',
+        spacing: '0.0893em',
       },
 
       text: {
@@ -378,11 +378,21 @@ export const defaultTheme: DefaultTheme = {
             focus: {
               background: overlay(ionColor('primary', 'base'), ionColor('primary', 'contrast', { alpha: 0.24 })),
               color: ionColor('primary', 'contrast'),
+
+              box: {
+                shadow:
+                  '0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)',
+              },
             },
 
             hover: {
               background: overlay(ionColor('primary', 'base'), ionColor('primary', 'contrast', { alpha: 0.08 })),
               color: ionColor('primary', 'contrast'),
+
+              box: {
+                shadow:
+                  '0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)',
+              },
             },
 
             // The ripple shows the press, and the button lifts
@@ -394,7 +404,17 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              opacity: '0.5',
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+
+              box: {
+                shadow: 'none',
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+            },
+
+            rippleEffect: {
+              opacity: '0.24',
             },
 
             // Any of the semantic colors like primary, secondary, etc.
@@ -413,6 +433,15 @@ export const defaultTheme: DefaultTheme = {
                 background: overlay(currentColor('base'), currentColor('contrast', { alpha: 0.08 })),
                 color: currentColor('contrast'),
               },
+
+              disabled: {
+                background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+              },
+
+              rippleEffect: {
+                opacity: '0.24',
+              },
             },
           },
 
@@ -428,9 +457,9 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'base'),
 
               border: {
-                color: ionColor('primary', 'base'),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 style: 'solid',
-                width: 'var(--ion-border-width-xxs)',
+                width: 'var(--ion-border-width-xxxs)',
               },
 
               font: {
@@ -449,7 +478,15 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              opacity: '0.5',
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+            },
+
+            rippleEffect: {
+              opacity: '0.12',
             },
 
             semantic: {
@@ -458,7 +495,7 @@ export const defaultTheme: DefaultTheme = {
                 color: currentColor('base'),
 
                 border: {
-                  color: currentColor('base'),
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 },
               },
 
@@ -470,6 +507,18 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
                 color: currentColor('base'),
+              },
+
+              disabled: {
+                border: {
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+                },
+
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+              },
+
+              rippleEffect: {
+                opacity: '0.12',
               },
             },
           },
@@ -501,7 +550,11 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              opacity: '0.5',
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+            },
+
+            rippleEffect: {
+              opacity: '0.12',
             },
 
             semantic: {
@@ -518,6 +571,14 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 background: currentColor('base', { alpha: 0.04 }),
                 color: currentColor('foreground'),
+              },
+
+              disabled: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.38),
+              },
+
+              rippleEffect: {
+                opacity: '0.12',
               },
             },
           },
@@ -538,30 +599,47 @@ export const defaultTheme: DefaultTheme = {
             start: '0.9em',
           },
 
+          // MD2 text buttons have half the padding of contained buttons
+          clear: {
+            padding: {
+              end: '0.45em',
+              start: '0.45em',
+            },
+          },
+
+          // MD2 outlined buttons count the border as part of the padding
+          outline: {
+            padding: {
+              end: 'calc(0.9em - var(--ion-border-width-xxxs))',
+              start: 'calc(0.9em - var(--ion-border-width-xxxs))',
+            },
+          },
+
           font: {
             size: dynamicFont(global.root, 13),
           },
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2857em',
             },
 
+            // The negative margin moves the icon closer to the edge than a label would be
             leading: {
               margin: {
                 top: '0',
-                end: '0.3em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.3em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.3em',
+                start: '0.4444em',
               },
             },
           },
@@ -581,18 +659,65 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.7347em',
+                width: '0.7347em',
+              },
+
+              small: {
+                height: '0.9184em',
+                width: '0.9184em',
+              },
+
+              medium: {
+                height: '1.2857em',
+                width: '1.2857em',
+              },
+
+              large: {
+                height: '1.6531em',
+                width: '1.6531em',
+              },
+
+              xlarge: {
+                height: '2.2041em',
+                width: '2.2041em',
+              },
+            },
+          },
         },
 
         medium: {
           min: {
             height: 'var(--ion-scaling-900)',
+            width: 'var(--ion-scaling-xxxxl)',
           },
 
           padding: {
             top: 'var(--ion-spacing-sm)',
-            end: '1.1em',
+            end: '1.1429em',
             bottom: 'var(--ion-spacing-sm)',
-            start: '1.1em',
+            start: '1.1429em',
+          },
+
+          // MD2 text buttons have half the padding of contained buttons
+          clear: {
+            padding: {
+              end: '0.5714em',
+              start: '0.5714em',
+            },
+          },
+
+          // MD2 outlined buttons count the border as part of the padding
+          outline: {
+            padding: {
+              end: 'calc(1.1429em - var(--ion-border-width-xxxs))',
+              start: 'calc(1.1429em - var(--ion-border-width-xxxs))',
+            },
           },
 
           font: {
@@ -601,24 +726,25 @@ export const defaultTheme: DefaultTheme = {
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2857em',
             },
 
+            // The negative margin moves the icon closer to the edge than a label would be
             leading: {
               margin: {
                 top: '0',
-                end: '0.3em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.3em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.3em',
+                start: '0.4444em',
               },
             },
           },
@@ -641,6 +767,36 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.7347em',
+                width: '0.7347em',
+              },
+
+              small: {
+                height: '0.9184em',
+                width: '0.9184em',
+              },
+
+              medium: {
+                height: '1.2857em',
+                width: '1.2857em',
+              },
+
+              large: {
+                height: '1.6531em',
+                width: '1.6531em',
+              },
+
+              xlarge: {
+                height: '2.2041em',
+                width: '2.2041em',
+              },
+            },
+          },
         },
 
         large: {
@@ -655,30 +811,47 @@ export const defaultTheme: DefaultTheme = {
             start: '1em',
           },
 
+          // MD2 text buttons have half the padding of contained buttons
+          clear: {
+            padding: {
+              end: '0.5em',
+              start: '0.5em',
+            },
+          },
+
+          // MD2 outlined buttons count the border as part of the padding
+          outline: {
+            padding: {
+              end: 'calc(1em - var(--ion-border-width-xxxs))',
+              start: 'calc(1em - var(--ion-border-width-xxxs))',
+            },
+          },
+
           font: {
             size: dynamicFont(global.root, 20),
           },
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2857em',
             },
 
+            // The negative margin moves the icon closer to the edge than a label would be
             leading: {
               margin: {
                 top: '0',
-                end: '0.3em',
+                end: '0.4444em',
                 bottom: '0',
-                start: '-0.3em',
+                start: '-0.2222em',
               },
             },
 
             trailing: {
               margin: {
                 top: '0',
-                end: '-0.2em',
+                end: '-0.2222em',
                 bottom: '0',
-                start: '0.3em',
+                start: '0.4444em',
               },
             },
           },
@@ -695,6 +868,36 @@ export const defaultTheme: DefaultTheme = {
             icon: {
               font: {
                 size: dynamicFontClamp(global.root, 0.67, 22.4, 1.92, 'em'),
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.7347em',
+                width: '0.7347em',
+              },
+
+              small: {
+                height: '0.9184em',
+                width: '0.9184em',
+              },
+
+              medium: {
+                height: '1.2857em',
+                width: '1.2857em',
+              },
+
+              large: {
+                height: '1.6531em',
+                width: '1.6531em',
+              },
+
+              xlarge: {
+                height: '2.2041em',
+                width: '2.2041em',
               },
             },
           },
@@ -730,6 +933,19 @@ export const defaultTheme: DefaultTheme = {
     },
 
     // Parents that theme the buttons they contain
+    IonButtons: {
+      IonButton: {
+        size: {
+          medium: {
+            // Buttons in `ion-buttons` fit their content, so an icon without `slot="icon-only"` doesn't widen them
+            min: {
+              width: 'auto',
+            },
+          },
+        },
+      },
+    },
+
     IonDatetime: {
       IonButton: {
         margin: {
@@ -745,11 +961,14 @@ export const defaultTheme: DefaultTheme = {
               height: 'var(--ion-scaling-md)',
             },
 
-            padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-sm)',
-              bottom: 'var(--ion-spacing-75)',
-              start: 'var(--ion-spacing-sm)',
+            // Datetime's buttons are `clear` in md, so this replaces the `clear` padding
+            clear: {
+              padding: {
+                top: 'var(--ion-spacing-75)',
+                end: 'var(--ion-spacing-sm)',
+                bottom: 'var(--ion-spacing-75)',
+                start: 'var(--ion-spacing-sm)',
+              },
             },
           },
         },
@@ -758,6 +977,18 @@ export const defaultTheme: DefaultTheme = {
           bold: {
             solid: {
               default: {
+                box: {
+                  shadow: 'none',
+                },
+              },
+
+              focus: {
+                box: {
+                  shadow: 'none',
+                },
+              },
+
+              hover: {
                 box: {
                   shadow: 'none',
                 },
@@ -786,6 +1017,70 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonToolbar: {
+      // In a toolbar, a disabled button keeps its colors and fades
+      IonButton: {
+        hue: {
+          bold: {
+            solid: {
+              disabled: {
+                background: 'var(--ion-button-hue-bold-solid-default-background)',
+
+                box: {
+                  shadow: 'var(--ion-button-hue-bold-solid-default-box-shadow)',
+                },
+
+                color: 'var(--ion-button-hue-bold-solid-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  background: 'var(--ion-button-hue-bold-solid-semantic-default-background)',
+                  color: 'var(--ion-button-hue-bold-solid-semantic-default-color)',
+                },
+              },
+            },
+
+            outline: {
+              disabled: {
+                border: {
+                  color: 'var(--ion-button-hue-bold-outline-default-border-color)',
+                },
+
+                color: 'var(--ion-button-hue-bold-outline-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  border: {
+                    color: 'var(--ion-button-hue-bold-outline-semantic-default-border-color)',
+                  },
+
+                  color: 'var(--ion-button-hue-bold-outline-semantic-default-color)',
+                },
+              },
+            },
+
+            clear: {
+              disabled: {
+                color: 'var(--ion-button-hue-bold-clear-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  color: 'var(--ion-button-hue-bold-clear-semantic-default-color)',
+                },
+              },
+            },
+          },
+        },
+      },
+
       IonButtons: {
         IonButton: {
           shape: {
@@ -806,6 +1101,18 @@ export const defaultTheme: DefaultTheme = {
             bold: {
               solid: {
                 default: {
+                  box: {
+                    shadow: 'none',
+                  },
+                },
+
+                focus: {
+                  box: {
+                    shadow: 'none',
+                  },
+                },
+
+                hover: {
                   box: {
                     shadow: 'none',
                   },
@@ -858,8 +1165,9 @@ export const defaultTheme: DefaultTheme = {
                 default: {
                   color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
 
+                  // MD2's border is the text color at 12%, like the focus tint
                   border: {
-                    color: `var(--ion-toolbar-color, ${ionColor('primary', 'base')})`,
+                    color: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
                   },
                 },
 
@@ -936,8 +1244,18 @@ export const defaultTheme: DefaultTheme = {
                     background: 'transparent',
                     color: 'var(--ion-toolbar-color, currentColor)',
 
+                    // MD2's border is the text color at 12%, like the focus tint
                     border: {
-                      color: 'var(--ion-toolbar-color, currentColor)',
+                      color: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
+                    },
+                  },
+
+                  // A button with a `color` gets the same border as the others in the toolbar
+                  semantic: {
+                    default: {
+                      border: {
+                        color: 'rgba(var(--ion-text-color-rgb, 66, 66, 66), 0.12)',
+                      },
                     },
                   },
 
@@ -1013,13 +1331,17 @@ export const defaultTheme: DefaultTheme = {
                   },
                 },
 
+                /**
+                 * MD2's border is the text color at 12%. A button with its own `color` keeps the
+                 * standalone border, since its color class replaces `--ion-color-contrast-rgb`.
+                 */
                 outline: {
                   default: {
                     background: 'transparent',
                     color: 'currentColor',
 
                     border: {
-                      color: currentColor('contrast'),
+                      color: currentColor('contrast', { alpha: 0.12 }),
                     },
                   },
 
