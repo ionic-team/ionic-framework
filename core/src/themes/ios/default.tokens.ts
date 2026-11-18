@@ -1094,8 +1094,6 @@ export const defaultTheme: DefaultTheme = {
 
       // Sizes
       size: {
-        // iOS has no capsule smaller than 28px, so this scales the
-        // `large` chip down to Footnote text
         small: {
           padding: {
             top: 'var(--ion-spacing-75)',
@@ -1123,7 +1121,6 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
-        // Matches the iOS small bezeled button, one size below the default button
         large: {
           padding: {
             top: 'var(--ion-spacing-xxs)',
@@ -1199,8 +1196,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             // Any of the semantic colors like primary, secondary, etc.
-            // Tinted like the iOS bezeled button. Hover, focus and pressed stay
-            // 4% and 8% above it
             semantic: {
               default: {
                 background: currentColor('base', { alpha: 0.15 }),
