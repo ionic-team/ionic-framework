@@ -1639,19 +1639,19 @@ export class Datetime implements ComponentInterface {
           endParts = temp;
         }
 
-        // Clamp range bounds to min/max so out-of-range dates are not highlighted.
-        // If the entire range falls outside min/max, clear the selection.
-        const clampedStart = clampDate(startParts, minParts, maxParts);
-        const clampedEnd = endParts ? clampDate(endParts, minParts, maxParts) : undefined;
+        /**
+         * Clamp the range to min/max so out-of-bounds dates are not highlighted.
+         * Clear the selection when no day of the range falls within min/max.
+         */
+        const lastParts = endParts ?? startParts;
+        const rangeOutOfBounds =
+          (maxParts && isAfter(startParts, maxParts)) || (minParts && isBefore(lastParts, minParts));
 
-        const rangeFullyOutOfBounds =
-          clampedEnd && endParts && isSameDay(clampedStart, clampedEnd) && !isSameDay(startParts, endParts);
-
-        if (rangeFullyOutOfBounds) {
+        if (rangeOutOfBounds) {
           this.activeParts = [];
         } else {
-          startParts = clampedStart;
-          endParts = clampedEnd;
+          startParts = clampDate(startParts, minParts, maxParts);
+          endParts = endParts ? clampDate(endParts, minParts, maxParts) : undefined;
           this.activeParts = endParts ? { start: startParts, end: endParts } : { start: startParts };
         }
         /**
