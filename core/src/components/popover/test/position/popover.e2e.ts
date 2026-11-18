@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { configs, test, Viewports } from '@utils/test/playwright';
+import type { E2EPage } from '@utils/test/playwright';
 
 import { openPopover } from '../test.utils';
 
@@ -35,6 +36,61 @@ configs().forEach(({ title, screenshot, config }) => {
 
 configs({ directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
   test.describe(title('popover: position'), async () => {
+    /**
+     * Opens the popover for the given trigger and returns the
+     * horizontal edges of both the trigger and the popover content.
+     */
+    const openAndMeasure = async (page: E2EPage, id: string) => {
+      await page.goto('/src/components/popover/test/position', config);
+      await page.setViewportSize(Viewports.tablet.portrait);
+      await openPopover(page, id);
+
+      const buttonBox = (await page.locator(`#${id}`).boundingBox())!;
+      const popoverBox = (await page.locator(`.${id}-popover`).locator('.popover-content').boundingBox())!;
+
+      return {
+        trigger: { left: buttonBox.x, right: buttonBox.x + buttonBox.width, center: buttonBox.x + buttonBox.width / 2 },
+        popover: {
+          left: popoverBox.x,
+          right: popoverBox.x + popoverBox.width,
+          center: popoverBox.x + popoverBox.width / 2,
+        },
+      };
+    };
+
+    /**
+     * Allow up to 1px of difference to account for sub-pixel rounding.
+     */
+    const expectWithinOnePx = (actual: number, expected: number) => {
+      expect(Math.abs(actual - expected)).toBeLessThanOrEqual(1);
+    };
+
+    for (const side of ['top', 'bottom']) {
+      test(`should align to the start edge of the trigger when side is ${side} and alignment is start`, async ({
+        page,
+      }) => {
+        const { trigger, popover } = await openAndMeasure(page, `${side}-start`);
+
+        if (config.direction === 'rtl') {
+          expectWithinOnePx(popover.right, trigger.right);
+        } else {
+          expectWithinOnePx(popover.left, trigger.left);
+        }
+      });
+
+      test(`should align to the end edge of the trigger when side is ${side} and alignment is end`, async ({
+        page,
+      }) => {
+        const { trigger, popover } = await openAndMeasure(page, `${side}-end`);
+
+        if (config.direction === 'rtl') {
+          expectWithinOnePx(popover.left, trigger.left);
+        } else {
+          expectWithinOnePx(popover.right, trigger.right);
+        }
+      });
+    }
+
     test('should be on the left when side is start and an ancestor declares ltr', async ({ page }) => {
       await page.goto('/src/components/popover/test/position', config);
       await page.setViewportSize(Viewports.tablet.portrait);
