@@ -286,6 +286,7 @@ The `default` value of the `fill` property is deprecated. It logs a warning and 
 - The `outline` property has been deprecated. To achieve an outlined chip, set the `fill` property to `"outline"`. The class `.chip-outline` has also been updated to `.chip-fill-outline` for clarity.
 - Specific mode classes (e.g., `ion-chip.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 - The `border-radius` of the `ios` chip now defaults to `10px` instead of `16px` in accordance with the iOS guidelines. The `md` chip keeps its pill shape, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `IonChip.shape.round.border.radius` to specify a different value for global styles and `--ion-chip-shape-round-border-radius` for component-specific styles.
+- In the `md` theme, the chip now has a letter spacing of `0.0179em` (`0.25px` at `14px`), and the `large` chip a line height of `20px`, instead of inherited, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set `IonChip.letterSpacing` and `IonChip.size.large.line.height` to `inherit` for global styles, or `--ion-chip-letter-spacing` and `--ion-chip-size-large-line-height` for component-specific styles.
 
 <h4 id="version-10x-col">Col</h4>
 

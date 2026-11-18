@@ -1068,6 +1068,8 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonChip: {
+      letterSpacing: '0.0179em',
+
       margin: {
         top: 'var(--ion-spacing-xxs)',
         end: 'var(--ion-spacing-xxs)',
@@ -1092,6 +1094,10 @@ export const defaultTheme: DefaultTheme = {
           font: {
             size: `${(components.chip.font.size - 2) / global.root}rem`,
           },
+
+          line: {
+            height: '1',
+          },
         },
         large: {
           min: {
@@ -1100,6 +1106,10 @@ export const defaultTheme: DefaultTheme = {
 
           font: {
             size: `${components.chip.font.size / global.root}rem`,
+          },
+
+          line: {
+            height: `${20 / components.chip.font.size}`,
           },
         },
       },

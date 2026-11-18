@@ -888,7 +888,6 @@ ion-chip,css-prop,--ion-chip-icon-trailing-margin-end
 ion-chip,css-prop,--ion-chip-icon-trailing-margin-start
 ion-chip,css-prop,--ion-chip-icon-trailing-margin-top
 ion-chip,css-prop,--ion-chip-letter-spacing
-ion-chip,css-prop,--ion-chip-line-height
 ion-chip,css-prop,--ion-chip-margin-bottom
 ion-chip,css-prop,--ion-chip-margin-end
 ion-chip,css-prop,--ion-chip-margin-start
@@ -901,8 +900,10 @@ ion-chip,css-prop,--ion-chip-shape-rectangular-border-radius
 ion-chip,css-prop,--ion-chip-shape-round-border-radius
 ion-chip,css-prop,--ion-chip-shape-soft-border-radius
 ion-chip,css-prop,--ion-chip-size-large-font-size
+ion-chip,css-prop,--ion-chip-size-large-line-height
 ion-chip,css-prop,--ion-chip-size-large-min-height
 ion-chip,css-prop,--ion-chip-size-small-font-size
+ion-chip,css-prop,--ion-chip-size-small-line-height
 ion-chip,css-prop,--ion-chip-size-small-min-height
 ion-chip,css-prop,--ion-chip-state-disabled-opacity
 ion-chip,css-prop,--ion-chip-state-focus-ring-color

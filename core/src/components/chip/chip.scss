@@ -17,14 +17,15 @@
    *
    * @prop --ion-chip-font-weight: Font weight of the chip
    * @prop --ion-chip-letter-spacing: Letter spacing of the chip
-   * @prop --ion-chip-line-height: Line height of the chip
    * @prop --ion-chip-gap: Gap between slotted elements in the chip
    *
    * Sizes
    * @prop --ion-chip-size-small-min-height: Minimum height of the `small` chip size
    * @prop --ion-chip-size-small-font-size: Font size of the `small` chip size
+   * @prop --ion-chip-size-small-line-height: Line height of the `small` chip size
    * @prop --ion-chip-size-large-min-height: Minimum height of the `large` chip size
    * @prop --ion-chip-size-large-font-size: Font size of the `large` chip size
+   * @prop --ion-chip-size-large-line-height: Line height of the `large` chip size
    *
    * Shapes
    * @prop --ion-chip-shape-soft-border-radius: Border radius of the `soft` chip shape
@@ -146,8 +147,6 @@
 
   letter-spacing: var(--ion-chip-letter-spacing);
 
-  line-height: var(--ion-chip-line-height);
-
   cursor: pointer;
   gap: var(--ion-chip-gap);
 
@@ -163,12 +162,16 @@
   min-height: var(--ion-chip-size-small-min-height);
 
   font-size: var(--ion-chip-size-small-font-size);
+
+  line-height: var(--ion-chip-size-small-line-height);
 }
 
 :host(.chip-size-large) {
   min-height: var(--ion-chip-size-large-min-height);
 
   font-size: var(--ion-chip-size-large-font-size);
+
+  line-height: var(--ion-chip-size-large-line-height);
 }
 
 // Chip Shapes

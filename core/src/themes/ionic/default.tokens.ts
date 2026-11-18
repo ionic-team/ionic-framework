@@ -1066,9 +1066,6 @@ export const defaultTheme: DefaultTheme = {
         start: 'var(--ion-spacing-sm)',
       },
 
-      line: {
-        height: '100%',
-      },
       letterSpacing: '0%',
       gap: 'var(--ion-spacing-xxs)',
 
@@ -1085,6 +1082,9 @@ export const defaultTheme: DefaultTheme = {
           font: {
             size: 'var(--ion-font-size-xs)',
           },
+          line: {
+            height: '100%',
+          },
         },
         large: {
           min: {
@@ -1092,6 +1092,9 @@ export const defaultTheme: DefaultTheme = {
           },
           font: {
             size: 'var(--ion-font-size-sm)',
+          },
+          line: {
+            height: '100%',
           },
         },
       },
