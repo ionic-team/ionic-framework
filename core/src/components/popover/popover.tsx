@@ -5,6 +5,7 @@ import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
+import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -795,12 +796,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
       >
         {!parentPopover && <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop} part="backdrop" />}
 
+        <OverlayFocusBoundary overlay={this.el} edge="start" />
+
         <div class="popover-wrapper ion-overlay-wrapper" onClick={dismissOnSelect ? () => this.dismiss() : undefined}>
           {enableArrow && <div class="popover-arrow" part="arrow"></div>}
           <div class="popover-content" part="content">
             <slot></slot>
           </div>
         </div>
+
+        <OverlayFocusBoundary overlay={this.el} edge="end" />
       </Host>
     );
   }

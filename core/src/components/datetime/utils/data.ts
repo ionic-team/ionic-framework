@@ -359,10 +359,15 @@ export const getMonthColumnData = (
 
   if (monthValues !== undefined) {
     let processedMonths = monthValues;
-    if (maxParts?.month !== undefined) {
+    /**
+     * The max and min months only apply to the
+     * max and min years. For example, with a max of
+     * 2025-03, every month of 2024 is still allowed.
+     */
+    if (maxParts?.month !== undefined && maxParts.year === year) {
       processedMonths = processedMonths.filter((month) => month <= maxParts.month!);
     }
-    if (minParts?.month !== undefined) {
+    if (minParts?.month !== undefined && minParts.year === year) {
       processedMonths = processedMonths.filter((month) => month >= minParts.month!);
     }
 
