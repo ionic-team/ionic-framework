@@ -1094,13 +1094,17 @@ export const defaultTheme: DefaultTheme = {
 
       // Sizes
       size: {
+        // iOS has no capsule smaller than 28px, so this scales the
+        // `large` chip down to Footnote text
         small: {
           padding: {
-            top: 'var(--ion-spacing-xs)',
-            end: 'var(--ion-spacing-md)',
-            bottom: 'var(--ion-spacing-xs)',
-            start: 'var(--ion-spacing-md)',
+            top: 'var(--ion-spacing-75)',
+            end: 'var(--ion-spacing-sm)',
+            bottom: 'var(--ion-spacing-75)',
+            start: 'var(--ion-spacing-sm)',
           },
+
+          letterSpacing: '-0.006em',
 
           min: {
             height: 'var(--ion-scaling-xs)',
@@ -1113,22 +1117,33 @@ export const defaultTheme: DefaultTheme = {
               'var(--ion-font-size-xl)'
             ),
           },
+
+          line: {
+            height: `${18 / (components.chip.font.size - 2)}`,
+          },
         },
 
+        // Matches the iOS small bezeled button, one size below the default button
         large: {
           padding: {
-            top: 'var(--ion-spacing-xs)',
-            end: 'var(--ion-spacing-md)',
-            bottom: 'var(--ion-spacing-xs)',
-            start: 'var(--ion-spacing-md)',
+            top: 'var(--ion-spacing-xxs)',
+            end: 'var(--ion-spacing-250)',
+            bottom: 'var(--ion-spacing-xxs)',
+            start: 'var(--ion-spacing-250)',
           },
 
+          letterSpacing: '-0.016em',
+
           min: {
-            height: 'var(--ion-scaling-md)',
+            height: 'var(--ion-scaling-sm)',
           },
 
           font: {
             size: clamp('13px', `${components.chip.font.size / global.root}rem`, '22px'),
+          },
+
+          line: {
+            height: `${20 / components.chip.font.size}`,
           },
         },
       },
