@@ -87,6 +87,7 @@ stale:
     - "type: bug"
     - "type: feature request"
     - "needs: investigation"
+    - "community feedback wanted"
   exemptAssigned: true
   exemptProjects: true
   exemptMilestones: true

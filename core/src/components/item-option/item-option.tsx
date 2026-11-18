@@ -1,5 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { createColorClasses } from '@utils/theme';
 
@@ -29,6 +31,8 @@ import type { Color } from '../../interface';
   shadow: true,
 })
 export class ItemOption implements ComponentInterface, AnchorInterface, ButtonInterface {
+  private tabindexController?: AttributeController;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -80,6 +84,18 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  componentWillLoad() {
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
+  }
+
+  connectedCallback() {
+    this.tabindexController?.init();
+  }
+
+  disconnectedCallback() {
+    this.tabindexController?.destroy();
+  }
+
   private onClick = (ev: Event) => {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
     if (el) {
@@ -89,6 +105,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
 
   render() {
     const { disabled, expandable, href } = this;
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
     const TagType = href === undefined ? 'button' : ('a' as any);
     const mode = getIonMode(this);
     const attrs =
@@ -110,7 +127,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
           'ion-activatable': true,
         })}
       >
-        <TagType {...attrs} class="button-native" part="native" disabled={disabled}>
+        <TagType {...attrs} {...tabindexAttributes} class="button-native" part="native" disabled={disabled}>
           <span class="button-inner" part="inner">
             <slot name="top"></slot>
             <div class="horizontal-wrapper" part="container">

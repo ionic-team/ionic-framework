@@ -3,6 +3,7 @@ import type {
   NotificationType as CapacitorNotificationType,
   ImpactStyle as CapacitorImpactStyle,
 } from '@capacitor/haptics';
+import { config } from '@global/config';
 
 import { getCapacitor } from './capacitor';
 
@@ -132,10 +133,14 @@ const HapticEngine = {
 };
 
 /**
- * Check to see if the Haptic Plugin is available
- * @return Returns `true` or false if the plugin is available
+ * Check to see if haptics are enabled and the Haptic Plugin is available
+ * @return Returns `true` if haptics can be triggered
  */
 export const hapticAvailable = (): boolean => {
+  if (!config.getBoolean('haptics', true)) {
+    return false;
+  }
+
   return HapticEngine.available();
 };
 

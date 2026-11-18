@@ -321,3 +321,36 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * Tab order does not vary across modes or directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('button: tabindex'), () => {
+    test('should be a single tab stop when tabindex is set on the host', async ({ page, pageUtils }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31623',
+      });
+
+      await page.setContent(
+        `
+        <input id="before" />
+        <ion-button tabindex="0">Button</ion-button>
+        <input id="after" />
+      `,
+        config
+      );
+
+      const nativeButton = page.locator('ion-button button');
+
+      await page.locator('#before').focus();
+
+      await pageUtils.pressKeys('Tab');
+      await expect(nativeButton).toBeFocused();
+
+      await pageUtils.pressKeys('Tab');
+      await expect(page.locator('#after')).toBeFocused();
+    });
+  });
+});
