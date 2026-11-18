@@ -1261,7 +1261,7 @@ export const defaultTheme: DefaultTheme = {
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),
 
               border: {
-                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 style: 'solid',
                 width: 'var(--ion-border-width-xxxs)',
               },
