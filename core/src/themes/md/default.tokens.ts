@@ -1068,8 +1068,6 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonChip: {
-      letterSpacing: '0.0179em',
-
       margin: {
         top: 'var(--ion-spacing-xxs)',
         end: 'var(--ion-spacing-xxs)',
@@ -1077,16 +1075,18 @@ export const defaultTheme: DefaultTheme = {
         start: 'var(--ion-spacing-xxs)',
       },
 
-      padding: {
-        top: 'var(--ion-spacing-xs)',
-        end: 'var(--ion-spacing-md)',
-        bottom: 'var(--ion-spacing-xs)',
-        start: 'var(--ion-spacing-md)',
-      },
-
       // Sizes
       size: {
         small: {
+          padding: {
+            top: 'var(--ion-spacing-xs)',
+            end: 'var(--ion-spacing-md)',
+            bottom: 'var(--ion-spacing-xs)',
+            start: 'var(--ion-spacing-md)',
+          },
+
+          letterSpacing: '0.0179em',
+
           min: {
             height: 'var(--ion-scaling-xs)',
           },
@@ -1100,6 +1100,15 @@ export const defaultTheme: DefaultTheme = {
           },
         },
         large: {
+          padding: {
+            top: 'var(--ion-spacing-xs)',
+            end: 'var(--ion-spacing-md)',
+            bottom: 'var(--ion-spacing-xs)',
+            start: 'var(--ion-spacing-md)',
+          },
+
+          letterSpacing: '0.0179em',
+
           min: {
             height: 'var(--ion-scaling-md)',
           },

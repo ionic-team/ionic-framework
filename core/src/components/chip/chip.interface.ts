@@ -1,9 +1,7 @@
 import type { IonPadding, IonMargin, Hue } from '../../themes/themes.interfaces';
 
 export type IonChipRecipe = {
-  letterSpacing?: string | number;
   margin?: IonMargin;
-  padding?: IonPadding;
   gap?: string | number;
 
   font?: {
@@ -70,6 +68,9 @@ type IonChipColorDefinition = {
 };
 
 type IonChipSizeDefinition = {
+  padding?: IonPadding;
+  letterSpacing?: string | number;
+
   min?: {
     height?: string | number;
   };
