@@ -42,7 +42,7 @@ comment:
         If the requested feature is something you would find useful for your applications, please react to the original post with 👍 (`+1`). If you would like to provide an additional use case for the feature, please post a comment.
 
 
-        The team will review this feedback and make a final decision. Any decision will be posted on this thread, but please note that we may ultimately decide not to pursue this feature.
+        Feedback is open for 90 days. After that, the team will review the feedback and make a final decision. Any decision will be posted on this thread, but please note that we may ultimately decide not to pursue this feature.
 
 
         Thank you!
@@ -101,6 +101,14 @@ stale:
     Thank you for using Ionic!
   close: true
   lock: true
+  dryRun: false
+
+labelTimeout:
+  labels:
+    - label: "community feedback wanted"
+      days: 90
+      replaceWith: triage
+  maxIssuesPerRun: 100
   dryRun: false
 
 noReply:
