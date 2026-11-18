@@ -342,7 +342,7 @@ export const validateParts = (
   maxParts?: DatetimeParts
 ): DatetimeParts => {
   const { month, day, year } = parts;
-  const partsCopy = clampDate({ ...parts }, minParts, maxParts);
+  const dayInMonth = { ...parts };
 
   const numDays = getNumDaysInMonth(month, year);
 
@@ -351,10 +351,20 @@ export const validateParts = (
    * is greater than the day we want
    * to set, update the DatetimeParts
    * day field to be the max days.
+   * This is done before clamping so that
+   * the fixed day is also checked against
+   * the min/max bounds.
    */
   if (day !== null && numDays < day) {
-    partsCopy.day = numDays;
+    dayInMonth.day = numDays;
   }
+
+  /**
+   * clampDate can return the minParts or maxParts
+   * object itself, so copy the result to avoid
+   * changing the bounds when updating the time below.
+   */
+  const partsCopy = { ...clampDate(dayInMonth, minParts, maxParts) };
 
   /**
    * If value is same day as min day,
@@ -391,7 +401,7 @@ export const validateParts = (
    * If value is same day as max day,
    * make sure the time value is in bounds.
    */
-  if (maxParts !== undefined && isSameDay(parts, maxParts)) {
+  if (maxParts !== undefined && isSameDay(partsCopy, maxParts)) {
     /**
      * If the hour is out of bounds,
      * update both the hour and minute.
