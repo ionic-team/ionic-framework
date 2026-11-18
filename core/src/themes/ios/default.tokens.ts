@@ -1199,22 +1199,24 @@ export const defaultTheme: DefaultTheme = {
             },
 
             // Any of the semantic colors like primary, secondary, etc.
+            // Tinted like the iOS bezeled button. Hover, focus and pressed stay
+            // 4% and 8% above it
             semantic: {
               default: {
-                background: currentColor('base', { alpha: 0.08 }),
+                background: currentColor('base', { alpha: 0.15 }),
                 color: currentColor('shade'),
               },
 
               hover: {
-                background: currentColor('base', { alpha: 0.12 }),
+                background: currentColor('base', { alpha: 0.19 }),
               },
 
               focus: {
-                background: currentColor('base', { alpha: 0.12 }),
+                background: currentColor('base', { alpha: 0.19 }),
               },
 
               activated: {
-                background: currentColor('base', { alpha: 0.16 }),
+                background: currentColor('base', { alpha: 0.23 }),
               },
             },
           },
