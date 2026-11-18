@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "9.0.11",
+  "version": "9.0.12",
   "description": "Base components for Ionic",
   "engines": {
     "node": ">= 16"
@@ -66,7 +66,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^4.44.2",
+    "@stencil/core": "^4.45.4",
     "ionicons": "^8.1.0",
     "tslib": "^2.1.0"
   },
@@ -80,7 +80,7 @@
     "@eslint/js": "^9.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@playwright/test": "^1.64.1",
+    "@playwright/test": "^1.65.1",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^1.5.3",
@@ -103,7 +103,7 @@
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
     "outsystems-design-tokens": "^2.6.0",
-    "playwright-core": "^1.64.1",
+    "playwright-core": "^1.65.1",
     "prettier": "^2.8.8",
     "rollup": "^2.26.4",
     "sass": "^1.33.0",
