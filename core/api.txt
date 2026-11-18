@@ -667,6 +667,7 @@ ion-fab-button,part,native
 
 ion-fab-list,shadow
 ion-fab-list,prop,activated,boolean,false,false,false
+ion-fab-list,prop,animated,boolean,true,false,false
 ion-fab-list,prop,side,"bottom" | "end" | "start" | "top",'bottom',false,false
 
 ion-footer,none

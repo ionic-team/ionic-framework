@@ -1208,6 +1208,11 @@ export namespace Components {
          */
         "activated": boolean;
         /**
+          * If `true`, the fab buttons in the list will show one at a time when the list opens. Inside an `ion-fab`, this is ignored and the main fab button's `animated` is used instead.
+          * @default true
+         */
+        "animated": boolean;
+        /**
           * The side the fab list will show on relative to the main fab button.
           * @default 'bottom'
          */
@@ -6365,6 +6370,11 @@ declare namespace LocalJSX {
          */
         "activated"?: boolean;
         /**
+          * If `true`, the fab buttons in the list will show one at a time when the list opens. Inside an `ion-fab`, this is ignored and the main fab button's `animated` is used instead.
+          * @default true
+         */
+        "animated"?: boolean;
+        /**
           * The side the fab list will show on relative to the main fab button.
           * @default 'bottom'
          */
@@ -9207,6 +9217,7 @@ declare namespace LocalJSX {
     interface IonFabListAttributes {
         "activated": boolean;
         "side": 'start' | 'end' | 'top' | 'bottom';
+        "animated": boolean;
     }
     interface IonFooterAttributes {
         "collapse": 'fade';
