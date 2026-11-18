@@ -373,6 +373,7 @@ export const IonFab: StencilVueComponent<JSX.IonFab> = /*@__PURE__*/ defineConta
 export const IonFabButton: StencilVueComponent<JSX.IonFabButton> = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion-fab-button', defineIonFabButton, [
   'color',
   'activated',
+  'animated',
   'disabled',
   'download',
   'href',

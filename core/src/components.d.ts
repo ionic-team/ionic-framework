@@ -1130,6 +1130,11 @@ export namespace Components {
          */
         "activated": boolean;
         /**
+          * If `true`, the fab button will animate between states, such as swapping its content for the close icon.
+          * @default true
+         */
+        "animated": boolean;
+        /**
           * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
           * @default close
          */
@@ -6282,6 +6287,11 @@ declare namespace LocalJSX {
          */
         "activated"?: boolean;
         /**
+          * If `true`, the fab button will animate between states, such as swapping its content for the close icon.
+          * @default true
+         */
+        "animated"?: boolean;
+        /**
           * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
           * @default close
          */
@@ -9196,6 +9206,7 @@ declare namespace LocalJSX {
     interface IonFabButtonAttributes {
         "color": Color;
         "activated": boolean;
+        "animated": boolean;
         "disabled": boolean;
         "download": string | undefined;
         "href": string | undefined;
