@@ -103,7 +103,9 @@
   opacity: 0;
 }
 
-.toggle-switch-icon-checked {
+// The default checked icon is a dash rotated into a vertical line.
+// Custom checked icons skip this and match the unchecked icon size.
+.toggle-switch-icon-checked:not(.toggle-switch-icon-custom) {
   position: absolute;
 
   width: 15px;
@@ -122,15 +124,6 @@
 :host(.toggle-rtl) .toggle-switch-icon-checked {
   /* stylelint-disable-next-line property-disallowed-list */
   right: 4px;
-}
-
-// The checked icon geometry above fits the default rotated dash.
-// A custom checked icon matches the unchecked icon instead.
-.toggle-switch-icon-checked.toggle-switch-icon-custom {
-  width: 11px;
-  height: 11px;
-
-  transform: translateY(-50%);
 }
 
 :host(.toggle-ltr) .toggle-switch-icon-checked.toggle-switch-icon-custom {

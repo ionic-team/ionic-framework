@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonContent, IonToggle } from '@ionic/angular';
 
 /**
- * Binds the toggle icon inputs as Angular properties so a missing
- * input on the standalone IonToggle fails the template compile.
+ * The property bindings fail the template compile if the standalone
+ * `IonToggle` is missing either input.
  */
 @Component({
   selector: 'app-toggle-icons',

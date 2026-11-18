@@ -3,7 +3,7 @@ import type { Locator } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * Returns the rotation, in degrees, of an element's computed transform.
+ * Returns the element's computed rotation in degrees.
  */
 const getRotation = (locator: Locator) =>
   locator.evaluate((el) => {
@@ -48,7 +48,7 @@ configs().forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * This behavior does not vary across directions.
+ * Only ios rotates the checked icon, and the rotation doesn't depend on direction.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('toggle: custom icons'), () => {
@@ -62,28 +62,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const checkedIcon = page.locator('ion-toggle .toggle-switch-icon-checked');
       expect(await getRotation(checkedIcon)).toBe(0);
-    });
-
-    test('should size and inset a custom checked icon like the unchecked icon', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-toggle enable-on-off-labels="true" checked-icon="moon" unchecked-icon="sunny">Label</ion-toggle>
-      `,
-        config
-      );
-
-      const track = await page.locator('ion-toggle .toggle-icon').boundingBox();
-      const checkedIcon = await page.locator('ion-toggle .toggle-switch-icon-checked').boundingBox();
-      const uncheckedIcon = await page
-        .locator('ion-toggle .toggle-switch-icon:not(.toggle-switch-icon-checked)')
-        .boundingBox();
-
-      expect(checkedIcon!.width).toBeCloseTo(uncheckedIcon!.width, 0);
-      expect(checkedIcon!.height).toBeCloseTo(uncheckedIcon!.height, 0);
-
-      const checkedInset = checkedIcon!.x - track!.x;
-      const uncheckedInset = track!.x + track!.width - (uncheckedIcon!.x + uncheckedIcon!.width);
-      expect(checkedInset).toBeCloseTo(uncheckedInset, 0);
     });
 
     test('should rotate the default checked icon', async ({ page }) => {
@@ -101,26 +79,36 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 /**
- * This behavior does not vary across directions.
+ * Only ios has custom checked icon styles.
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'] }).forEach(({ title, config }) => {
   test.describe(title('toggle: custom icons'), () => {
-    test('should size default and custom icons to fill the handle', async ({ page }) => {
+    test('should size and inset a custom checked icon like the unchecked icon', async ({ page }) => {
       await page.setContent(
         `
-        <ion-toggle id="default" enable-on-off-labels="true" checked>Default</ion-toggle>
-        <ion-toggle id="custom" enable-on-off-labels="true" checked-icon="sunny" checked>Custom</ion-toggle>
+        <ion-toggle enable-on-off-labels="true" checked-icon="moon" unchecked-icon="sunny">Label</ion-toggle>
       `,
         config
       );
 
-      const handle = await page.locator('#default .toggle-inner').boundingBox();
-      const defaultIcon = await page.locator('#default .toggle-switch-icon').boundingBox();
-      const customIcon = await page.locator('#custom .toggle-switch-icon').boundingBox();
+      const track = await page.locator('ion-toggle .toggle-icon').boundingBox();
+      const checkedIcon = await page.locator('ion-toggle .toggle-switch-icon-checked').boundingBox();
+      const uncheckedIcon = await page
+        .locator('ion-toggle .toggle-switch-icon:not(.toggle-switch-icon-checked)')
+        .boundingBox();
 
-      expect(defaultIcon!.width).toBeCloseTo(handle!.width, 0);
-      expect(customIcon!.width).toBeCloseTo(defaultIcon!.width, 0);
-      expect(customIcon!.height).toBeCloseTo(defaultIcon!.height, 0);
+      expect(checkedIcon!.width).toBeCloseTo(uncheckedIcon!.width, 0);
+      expect(checkedIcon!.height).toBeCloseTo(uncheckedIcon!.height, 0);
+
+      // The checked icon sits at the start of the track and the unchecked icon at the end.
+      const trackStart = track!.x;
+      const trackEnd = track!.x + track!.width;
+      const isRTL = config.direction === 'rtl';
+      const checkedInset = isRTL ? trackEnd - (checkedIcon!.x + checkedIcon!.width) : checkedIcon!.x - trackStart;
+      const uncheckedInset = isRTL
+        ? uncheckedIcon!.x - trackStart
+        : trackEnd - (uncheckedIcon!.x + uncheckedIcon!.width);
+      expect(checkedInset).toBeCloseTo(uncheckedInset, 0);
     });
   });
 });

@@ -374,33 +374,31 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   };
 
-  /**
-   * Returns the icon set through the prop or global config, if any.
-   */
-  private getCustomSwitchLabelIcon(checked: boolean): string | undefined {
+  private getCustomSwitchLabelIcon = (checked: boolean): string | undefined => {
+    const { checkedIcon, uncheckedIcon } = this;
+
     return checked
-      ? this.checkedIcon ?? config.get('toggleCheckedIcon')
-      : this.uncheckedIcon ?? config.get('toggleUncheckedIcon');
-  }
+      ? checkedIcon ?? config.get('toggleCheckedIcon')
+      : uncheckedIcon ?? config.get('toggleUncheckedIcon');
+  };
 
-  private getSwitchLabelIcon = (mode: Mode, checked: boolean) => {
-    const customIcon = this.getCustomSwitchLabelIcon(checked);
-
+  private getDefaultSwitchLabelIcon = (mode: Mode, checked: boolean) => {
     if (mode === 'md') {
-      return customIcon ?? (checked ? checkmarkOutline : removeOutline);
+      return checked ? checkmarkOutline : removeOutline;
     }
-    return customIcon ?? (checked ? removeOutline : ellipseOutline);
+    return checked ? removeOutline : ellipseOutline;
   };
 
   private renderOnOffSwitchLabels(mode: Mode, checked: boolean) {
-    const icon = this.getSwitchLabelIcon(mode, checked);
+    const customIcon = this.getCustomSwitchLabelIcon(checked);
+    const icon = customIcon ?? this.getDefaultSwitchLabelIcon(mode, checked);
 
     return (
       <ion-icon
         class={{
           'toggle-switch-icon': true,
           'toggle-switch-icon-checked': checked,
-          'toggle-switch-icon-custom': this.getCustomSwitchLabelIcon(checked) != null,
+          'toggle-switch-icon-custom': customIcon != null,
         }}
         icon={icon}
         aria-hidden="true"

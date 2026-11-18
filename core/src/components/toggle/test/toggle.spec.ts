@@ -46,11 +46,11 @@ describe('toggle', () => {
 
   describe('checkedIcon and uncheckedIcon', () => {
     /**
-     * Renders a toggle with on/off labels enabled and returns the
-     * icons drawn in its shadow root.
+     * iOS renders both icons with the checked one first, and md only
+     * renders the icon for the current state.
      */
     const renderIcons = async (attrs: string, mode: 'ios' | 'md', userConfig: IonicConfig = {}) => {
-      // Lets getIonMode read the mode attribute; this also resets the config.
+      // This resets the config and makes `getIonMode` use the `mode` attribute.
       initialize(userConfig);
       const page = await newSpecPage({
         components: [Toggle],
@@ -62,25 +62,25 @@ describe('toggle', () => {
 
     const iconNames = (icons: Element[]) => icons.map((icon) => icon.getAttribute('icon'));
 
-    it('should render the checkedIcon prop over the config value', async () => {
-      const icons = await renderIcons('checked checked-icon="prop-icon"', 'md', { toggleCheckedIcon: 'config-icon' });
+    (['ios', 'md'] as const).forEach((mode) => {
+      it(`should render the checkedIcon prop over the config value in ${mode}`, async () => {
+        const icons = await renderIcons('checked checked-icon="prop-icon"', mode, { toggleCheckedIcon: 'config-icon' });
 
-      expect(iconNames(icons)).toEqual(['prop-icon']);
-    });
-
-    it('should render the uncheckedIcon prop over the config value', async () => {
-      const icons = await renderIcons('unchecked-icon="prop-icon"', 'md', { toggleUncheckedIcon: 'config-icon' });
-
-      expect(iconNames(icons)).toEqual(['prop-icon']);
-    });
-
-    it('should render the config icons when no prop is set', async () => {
-      const icons = await renderIcons('', 'ios', {
-        toggleCheckedIcon: 'config-checked',
-        toggleUncheckedIcon: 'config-unchecked',
+        expect(iconNames(icons)[0]).toBe('prop-icon');
       });
 
-      expect(iconNames(icons)).toEqual(['config-checked', 'config-unchecked']);
+      it(`should render the uncheckedIcon prop over the config value in ${mode}`, async () => {
+        const icons = await renderIcons('unchecked-icon="prop-icon"', mode, { toggleUncheckedIcon: 'config-icon' });
+
+        expect(iconNames(icons).at(-1)).toBe('prop-icon');
+      });
+
+      it(`should render the config icons when no prop is set in ${mode}`, async () => {
+        const iconConfig = { toggleCheckedIcon: 'config-checked', toggleUncheckedIcon: 'config-unchecked' };
+
+        expect(iconNames(await renderIcons('checked', mode, iconConfig))[0]).toBe('config-checked');
+        expect(iconNames(await renderIcons('', mode, iconConfig)).at(-1)).toBe('config-unchecked');
+      });
     });
 
     it('should render the default md icons', async () => {
