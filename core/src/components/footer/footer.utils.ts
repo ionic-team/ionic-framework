@@ -3,7 +3,13 @@ import { clamp } from '@utils/helpers';
 
 export const handleFooterFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => {
   readTask(() => {
-    const scrollTop = scrollEl.scrollTop;
+    /**
+     * scrollTop can be fractional while scrollHeight and
+     * clientHeight are whole pixels. Rounding up lets a
+     * scroll at the very bottom reach maxScroll, so the
+     * toolbar background fades out completely.
+     */
+    const scrollTop = Math.ceil(scrollEl.scrollTop);
     const maxScroll = scrollEl.scrollHeight - scrollEl.clientHeight;
 
     /**
