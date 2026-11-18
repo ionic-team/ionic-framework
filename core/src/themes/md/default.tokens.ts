@@ -1157,11 +1157,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             focus: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
-            },
-
-            activated: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.2),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.21),
             },
 
             // Any of the semantic colors like primary, secondary, etc.
@@ -1177,10 +1173,6 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.12 }),
-              },
-
-              activated: {
-                background: currentColor('base', { alpha: 0.16 }),
               },
             },
           },
@@ -1203,11 +1195,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             focus: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
-            },
-
-            activated: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
             },
 
             semantic: {
@@ -1229,10 +1217,6 @@ export const defaultTheme: DefaultTheme = {
               focus: {
                 background: currentColor('base', { alpha: 0.12 }),
               },
-
-              activated: {
-                background: currentColor('base', { alpha: 0.16 }),
-              },
             },
           },
         },
@@ -1253,10 +1237,6 @@ export const defaultTheme: DefaultTheme = {
               background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
             },
 
-            activated: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.14),
-            },
-
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
@@ -1270,10 +1250,6 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.6, subtle: true }),
-              },
-
-              activated: {
-                background: currentColor('base', { alpha: 0.8, subtle: true }),
               },
             },
           },
@@ -1299,10 +1275,6 @@ export const defaultTheme: DefaultTheme = {
               background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
             },
 
-            activated: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
-            },
-
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
@@ -1322,10 +1294,6 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.6, subtle: true }),
-              },
-
-              activated: {
-                background: currentColor('base', { alpha: 0.8, subtle: true }),
               },
             },
           },
