@@ -115,18 +115,19 @@ The following breaking changes apply to `ion-button`:
      --ion-button-hue-bold-clear-focus-background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
    }
    ~~~
-8. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[8](#version-10x-button-md-material-design-2)</sup>
-9. The `ios` button follows iOS 17 for its font, icons and disabled state. <sup>[9](#version-10x-button-ios-17)</sup>
-10. A badge without a `vertical` position now has a gap between it and the label, and no longer makes the button taller than its `min.height`. To remove the gap, set `IonButton.size.<size>.badge.trailing.margin.start` for global styles or `--ion-button-size-<size>-badge-trailing-margin-start` for component-specific styles to `0`. For a badge in the `start` slot, use `badge.leading.margin.end` instead. A button with a badge also now has `position: relative` and `z-index: 1`, so a badge that overflows the button stays above the elements next to it. This can change how the button layers with nearby positioned elements, such as one without a `z-index`. To restore the previous layering, set `position: static` and `z-index: auto` on the button.
-11. A button with an icon in the `icon-only` slot now shows only that icon and any badge with a `vertical` position. Text, elements in the `start` and `end` slots, and other content are hidden. Text and elements without a slot are only visually hidden, so they still name the button for assistive technology. To keep a badge visible, set its `vertical` property to `"top"` or `"bottom"`. To show other content, remove the `icon-only` slot and use the `start` or `end` slot for the icon.
-12. CSS variables have been replaced. <sup>[12](#version-10x-button-replaced-css-variables)</sup>
-13. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[13](#version-10x-button-padding-variables)</sup>
-14. The fill, size, shape and expand classes have been renamed. <sup>[14](#version-10x-button-renamed-classes)</sup>
-15. The `default` size has been deprecated. <sup>[15](#version-10x-button-deprecated-default-size)</sup>
-16. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[16](#version-10x-button-mode-classes)</sup>
-17. `round` buttons no longer have extra horizontal padding. <sup>[17](#version-10x-button-round-padding)</sup>
-18. The `default` fill has been deprecated. <sup>[18](#version-10x-button-deprecated-default-fill)</sup>
-19. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[19](#version-10x-button-toolbar-classes)</sup>
+8. Spinners in the `start` and `end` slots of `ios` and `md` buttons are now spaced from the label like icons. To remove the space, set `IonButton.size.<size>.spinner.leading.margin` and `IonButton.size.<size>.spinner.trailing.margin` for global styles, or `--ion-button-size-<size>-spinner-leading-margin-*` and `--ion-button-size-<size>-spinner-trailing-margin-*` for component-specific styles, to `0`.
+9. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[9](#version-10x-button-md-material-design-2)</sup>
+10. The `ios` button follows iOS 17 for its font, icons and disabled state. <sup>[10](#version-10x-button-ios-17)</sup>
+11. A badge without a `vertical` position now has a gap between it and the label, and no longer makes the button taller than its `min.height`. To remove the gap, set `IonButton.size.<size>.badge.trailing.margin.start` for global styles or `--ion-button-size-<size>-badge-trailing-margin-start` for component-specific styles to `0`. For a badge in the `start` slot, use `badge.leading.margin.end` instead. A button with a badge also now has `position: relative` and `z-index: 1`, so a badge that overflows the button stays above the elements next to it. This can change how the button layers with nearby positioned elements, such as one without a `z-index`. To restore the previous layering, set `position: static` and `z-index: auto` on the button.
+12. A button with an icon in the `icon-only` slot now shows only that icon and any badge with a `vertical` position. Text, elements in the `start` and `end` slots, and other content are hidden. Text and elements without a slot are only visually hidden, so they still name the button for assistive technology. To keep a badge visible, set its `vertical` property to `"top"` or `"bottom"`. To show other content, remove the `icon-only` slot and use the `start` or `end` slot for the icon.
+13. CSS variables have been replaced. <sup>[13](#version-10x-button-replaced-css-variables)</sup>
+14. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[14](#version-10x-button-padding-variables)</sup>
+15. The fill, size, shape and expand classes have been renamed. <sup>[15](#version-10x-button-renamed-classes)</sup>
+16. The `default` size has been deprecated. <sup>[16](#version-10x-button-deprecated-default-size)</sup>
+17. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[17](#version-10x-button-mode-classes)</sup>
+18. `round` buttons no longer have extra horizontal padding. <sup>[18](#version-10x-button-round-padding)</sup>
+19. The `default` fill has been deprecated. <sup>[19](#version-10x-button-deprecated-default-fill)</sup>
+20. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[20](#version-10x-button-toolbar-classes)</sup>
 
 <h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
 
