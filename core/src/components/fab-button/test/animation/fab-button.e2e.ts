@@ -81,11 +81,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
 
       const fabButton = page.locator('ion-fab-button');
-      expect(await getStyles(fabButton, 'transitionDuration')).toEqual({
-        native: '0s',
-        inner: '0.3s',
-        closeIcon: '0.3s',
-      });
+      const { native, inner, closeIcon } = await getStyles(fabButton, 'transitionDuration');
+      expect(native).not.toBe('0s');
+      expect(inner).toBe('0.3s');
+      expect(closeIcon).toBe('0.3s');
+      expect(await getStyles(fabButton, 'transform')).toMatchObject({ native: 'none' });
       expect(await getStyles(fabButton, 'transitionProperty')).toMatchObject({
         inner: 'opacity',
         closeIcon: 'opacity',

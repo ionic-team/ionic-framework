@@ -261,8 +261,6 @@ ion-ripple-effect {
 @media (prefers-reduced-motion: reduce) {
   :host(.fab-button-animated) .button-native {
     transform: none;
-
-    transition: none;
   }
 
   /**
