@@ -50,7 +50,7 @@ export const defaultTheme: DefaultTheme = {
       IonChip: {
         fill: 'solid',
         hue: 'bold',
-        shape: 'soft',
+        shape: 'round',
         size: 'large',
       },
 
