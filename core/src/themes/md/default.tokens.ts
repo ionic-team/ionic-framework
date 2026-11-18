@@ -1117,7 +1117,7 @@ export const defaultTheme: DefaultTheme = {
       // States
       state: {
         disabled: {
-          opacity: '0.4',
+          opacity: '0.38',
         },
       },
 
