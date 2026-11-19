@@ -1152,11 +1152,19 @@ export const defaultTheme: DefaultTheme = {
               color: '#ffffff',
             },
 
+            hover: {
+              background: '#31373d',
+            },
+
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
                 background: currentColor('base'),
                 color: currentColor('contrast'),
+              },
+
+              hover: {
+                background: currentColor('shade'),
               },
             },
           },
@@ -1174,6 +1182,10 @@ export const defaultTheme: DefaultTheme = {
               },
             },
 
+            hover: {
+              background: '#f6f7fa',
+            },
+
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
@@ -1185,6 +1197,10 @@ export const defaultTheme: DefaultTheme = {
                   style: 'solid',
                   width: '1px',
                 },
+              },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
               },
             },
           },
@@ -1198,11 +1214,19 @@ export const defaultTheme: DefaultTheme = {
               color: '#6c727a',
             },
 
+            hover: {
+              background: '#e6eaee',
+            },
+
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
                 background: currentColor('base', { subtle: true }),
                 color: currentColor('contrast', { subtle: true }),
+              },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
               },
             },
           },
@@ -1220,6 +1244,10 @@ export const defaultTheme: DefaultTheme = {
               },
             },
 
+            hover: {
+              background: '#f6f7fa',
+            },
+
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
@@ -1231,6 +1259,10 @@ export const defaultTheme: DefaultTheme = {
                   style: 'solid',
                   width: '1px',
                 },
+              },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
               },
             },
           },
