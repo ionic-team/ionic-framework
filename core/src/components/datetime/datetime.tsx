@@ -2684,6 +2684,62 @@ export class Datetime implements ComponentInterface {
 
     const activePart = this.getActivePartsWithFallback();
 
+    const days = getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showAdjacentDays).map((dateObject) => {
+      const { day, isAdjacentDay } = dateObject;
+      let _month = month;
+      let _year = year;
+      if (this.showAdjacentDays && isAdjacentDay && day !== null) {
+        if (day > 20) {
+          // Leading with the adjacent day from the previous month
+          // if its a adjacent day and is higher than '20' (last week even in feb)
+          if (month === 1) {
+            _year = year - 1;
+            _month = 12;
+          } else {
+            _month = month - 1;
+          }
+        } else if (day < 15) {
+          // Leading with the adjacent day from the next month
+          // if its a adjacent day and is lower than '15' (first two weeks)
+          if (month === 12) {
+            _year = year + 1;
+            _month = 1;
+          } else {
+            _month = month + 1;
+          }
+        }
+      }
+
+      const referenceParts = { month: _month, day, year: _year, isAdjacentDay };
+      const state = getCalendarDayState(
+        this.locale,
+        referenceParts,
+        this.isRangeParts(this.activeParts) ? [] : this.activeParts,
+        this.todayParts,
+        this.minParts,
+        this.maxParts,
+        this.parsedDayValues,
+        this.rangeParts
+      );
+
+      return { dateObject, referenceParts, state };
+    });
+
+    const hasCompleteRange = this.rangeParts?.end !== undefined;
+
+    /**
+     * A day paints the range track when it is part of a complete range.
+     * A single day that is both the start and end has nothing to connect.
+     */
+    const isTrackDay = (index: number) => {
+      const entry = days[index];
+      if (entry === undefined || entry.dateObject.day === null || !hasCompleteRange) {
+        return false;
+      }
+      const { isRangeStart, isRangeEnd, isInRange } = entry.state;
+      return (isRangeStart && !isRangeEnd) || (isRangeEnd && !isRangeStart) || isInRange;
+    };
+
     return (
       <div
         // Non-visible months should be hidden from screen readers
@@ -2695,34 +2751,10 @@ export class Datetime implements ComponentInterface {
         }}
       >
         <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showAdjacentDays).map((dateObject, index) => {
+          {days.map(({ dateObject, referenceParts, state }, index) => {
             const { day, dayOfWeek, isAdjacentDay } = dateObject;
-            const { el, highlightedDates, isDateEnabled, showAdjacentDays } = this;
-            let _month = month;
-            let _year = year;
-            if (showAdjacentDays && isAdjacentDay && day !== null) {
-              if (day > 20) {
-                // Leading with the adjacent day from the previous month
-                // if its a adjacent day and is higher than '20' (last week even in feb)
-                if (month === 1) {
-                  _year = year - 1;
-                  _month = 12;
-                } else {
-                  _month = month - 1;
-                }
-              } else if (day < 15) {
-                // Leading with the adjacent day from the next month
-                // if its a adjacent day and is lower than '15' (first two weeks)
-                if (month === 12) {
-                  _year = year + 1;
-                  _month = 1;
-                } else {
-                  _month = month + 1;
-                }
-              }
-            }
-
-            const referenceParts = { month: _month, day, year: _year, isAdjacentDay };
+            const { el, highlightedDates, isDateEnabled } = this;
+            const { month: _month, year: _year } = referenceParts;
             const isCalendarPadding = day === null;
             const {
               isActive,
@@ -2734,16 +2766,25 @@ export class Datetime implements ComponentInterface {
               isRangeEnd,
               isInRange,
               text,
-            } = getCalendarDayState(
-              this.locale,
-              referenceParts,
-              this.isRangeParts(this.activeParts) ? [] : this.activeParts,
-              this.todayParts,
-              this.minParts,
-              this.maxParts,
-              this.parsedDayValues,
-              this.rangeParts
-            );
+            } = state;
+
+            /**
+             * The first track day of each run within a week draws the track
+             * for the whole run, so the track has no seams between days.
+             */
+            const startsTrack = isTrackDay(index) && (index % 7 === 0 || !isTrackDay(index - 1));
+            let trackSpan = 0;
+            if (startsTrack) {
+              while (index + trackSpan < days.length && isTrackDay(index + trackSpan)) {
+                trackSpan++;
+                if ((index + trackSpan) % 7 === 0) {
+                  break;
+                }
+              }
+            }
+            const trackLastIndex = index + trackSpan - 1;
+            const trackEndsAtRangeEnd = startsTrack && days[trackLastIndex].state.isRangeEnd;
+            const trackWrapsToNextWeek = startsTrack && trackLastIndex % 7 === 6 && !trackEndsAtRangeEnd;
 
             const dateIsoString = convertDataToISO(referenceParts);
 
@@ -2815,7 +2856,6 @@ export class Datetime implements ComponentInterface {
             /**
              * Build the wrapper's shadow part attribute for range track styling.
              */
-            const hasCompleteRange = this.rangeParts?.end !== undefined;
             const wrapperParts = isPartOfRange && hasCompleteRange && !isCalendarPadding ? 'range-track' : undefined;
 
             /**
@@ -2836,10 +2876,12 @@ export class Datetime implements ComponentInterface {
                 class={{
                   'calendar-day-wrapper': true,
                   // A start without an end is only the circle until the range is complete
-                  'calendar-day-wrapper-range-start': isRangeStart && this.rangeParts?.end !== undefined,
-                  'calendar-day-wrapper-in-range': isInRange,
-                  'calendar-day-wrapper-range-end': isRangeEnd,
+                  'calendar-day-wrapper-range-start': isRangeStart && hasCompleteRange,
+                  'calendar-day-wrapper-range-track': startsTrack,
+                  'calendar-day-wrapper-range-track-end': trackEndsAtRangeEnd,
+                  'calendar-day-wrapper-range-track-wrap': trackWrapsToNextWeek,
                 }}
+                style={startsTrack ? { '--range-track-span': `${trackSpan}` } : undefined}
                 part={wrapperParts}
               >
                 <button
