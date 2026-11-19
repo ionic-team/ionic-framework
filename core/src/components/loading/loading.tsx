@@ -356,7 +356,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
         tabindex="-1"
         {...(htmlAttributes as any)}
         style={{
-          zIndex: `${40000 + this.overlayIndex}`,
+          zIndex: `${20000 + this.overlayIndex}`,
         }}
         onIonBackdropTap={this.onBackdropTap}
         class={{
