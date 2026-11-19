@@ -1626,14 +1626,14 @@ export const defaultTheme: DefaultTheme = {
                 top: '-4px',
                 end: 'var(--ion-spacing-sm)',
                 bottom: '-4px',
-                start: '-8px',
+                start: '-6px',
               },
             },
 
             trailing: {
               margin: {
                 top: '-4px',
-                end: '-8px',
+                end: '-6px',
                 bottom: '-4px',
                 start: 'var(--ion-spacing-sm)',
               },
