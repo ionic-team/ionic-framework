@@ -149,7 +149,7 @@ needsReproduction:
     Thank you for using Ionic!
   close: true
   lock: true
-  dryRun: true
+  dryRun: false
 
 screenshot:
   appId: 18001
