@@ -141,6 +141,38 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
 
             await expect(chip).toHaveCSS('background-color', 'rgb(0, 0, 255)');
           });
+
+          test(`should keep the hover background when pressing a hovered ${hue} ${fill} chip${
+            color ? ` with a color` : ''
+          } without an activated background`, async ({ page, skip }) => {
+            skip.browser('firefox', 'Headless Firefox reports no hover capability');
+
+            const prefix = `--ion-chip-hue-${hue}-${fill}${color ? '-semantic' : ''}`;
+
+            await page.setContent(
+              `
+                <style>
+                  ion-chip {
+                    ${prefix}-hover-background: rgb(255, 0, 0);
+                    ${prefix}-activated-background: initial;
+                  }
+                </style>
+
+                <ion-chip hue="${hue}" fill="${fill}"${color ? ` color="${color}"` : ''}>
+                  <ion-label>Chip</ion-label>
+                </ion-chip>
+              `,
+              config
+            );
+
+            const chip = page.locator('ion-chip');
+
+            await chip.hover();
+            await chip.evaluate((el) => el.classList.add('ion-activated'));
+            await page.waitForChanges();
+
+            await expect(chip).toHaveCSS('background-color', 'rgb(255, 0, 0)');
+          });
         });
       });
     });

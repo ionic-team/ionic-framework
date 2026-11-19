@@ -466,6 +466,35 @@
   );
 }
 
+// Chip: Activated While Hovered
+// ---------------------------------------------
+
+/**
+ * A theme without an activated background keeps the hover background,
+ * so a hovered chip doesn't get lighter when it's pressed.
+ */
+@media (any-hover: hover) {
+  @each $hue in (bold, subtle) {
+    @each $fill in (solid, outline) {
+      $prefix: --ion-chip-hue-#{$hue}-#{$fill};
+
+      :host(.chip-hue-#{$hue}.chip-fill-#{$fill}.ion-activated:hover) {
+        background: var(
+          #{$prefix}-activated-background,
+          var(#{$prefix}-hover-background, var(#{$prefix}-default-background))
+        );
+      }
+
+      :host(.chip-hue-#{$hue}.chip-fill-#{$fill}.ion-color.ion-activated:hover) {
+        background: var(
+          #{$prefix}-semantic-activated-background,
+          var(#{$prefix}-semantic-hover-background, var(#{$prefix}-semantic-default-background))
+        );
+      }
+    }
+  }
+}
+
 // Chip States
 // ---------------------------------------------
 
