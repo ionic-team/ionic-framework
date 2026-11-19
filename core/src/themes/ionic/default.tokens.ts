@@ -1274,6 +1274,26 @@ export const defaultTheme: DefaultTheme = {
           size: 'var(--ion-scaling-xxxs)',
         },
       },
+
+      avatar: {
+        leading: {
+          margin: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-0)',
+            bottom: 'var(--ion-spacing-0)',
+            start: '-4px',
+          },
+        },
+
+        trailing: {
+          margin: {
+            top: 'var(--ion-spacing-0)',
+            end: '-4px',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-0)',
+          },
+        },
+      },
     },
 
     IonCol: {
