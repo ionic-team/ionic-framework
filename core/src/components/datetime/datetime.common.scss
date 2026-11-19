@@ -348,9 +348,8 @@
 /**
  * The first range day of each run within a week draws the track for
  * the whole run with a ::before that spans `--range-track-span` cells.
- * Drawing each day separately leaves hairline seams between days on
- * screens with a fractional pixel ratio, and a translucent
- * `--range-background` darkens wherever two pieces overlap.
+ * Drawing each day separately left hairline seams between days on
+ * screens with a fractional pixel ratio.
  *
  * The span is measured in cells of the wrapper's width, which holds
  * because the grid columns are equal.
