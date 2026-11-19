@@ -129,6 +129,14 @@ export class Datetime implements ComponentInterface {
 
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
+  private destroyOverlayPresentListener?: () => void;
+  /**
+   * Set when the user selects a value, cleared when it's confirmed
+   * or `processValue` runs (`reset()`, or `value` being set to a
+   * non-empty value). The overlay present listener only discards a
+   * selection while this is set.
+   */
+  private hasUnconfirmedSelection = false;
 
   // TODO(FW-2832): types (DatetimeParts causes some errors that need untangling)
   private minParts?: any;
@@ -136,16 +144,6 @@ export class Datetime implements ComponentInterface {
   private todayParts!: DatetimeParts;
   private defaultParts!: DatetimeParts;
   private loadTimeout: ReturnType<typeof setTimeout> | undefined;
-  /**
-   * Set true only by `visibleCallback`. Lets `hiddenCallback` ignore the
-   * synthetic "not intersecting" entry IntersectionObserver fires on
-   * `observe()` when the host mounts offscreen.
-   *
-   * Don't reset this in `disconnectedCallback`. Overlays disconnect and
-   * reconnect the host without re-creating the observers, so a reset there
-   * makes `hiddenCallback` miss the dismissal.
-   */
-  private hasBeenIntersecting = false;
 
   private prevPresentation: string | null = null;
 
@@ -575,6 +573,8 @@ export class Datetime implements ComponentInterface {
       }
     }
 
+    this.hasUnconfirmedSelection = false;
+
     if (closeOverlay) {
       this.closeParentOverlay(CONFIRM_ROLE);
     }
@@ -593,9 +593,10 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Emits the ionCancel event and
-   * optionally closes the popover
-   * or modal that the datetime was
+   * Emits the ionCancel event, discards
+   * any unconfirmed selection, and
+   * optionally closes the popover or
+   * modal that the datetime was
    * presented in.
    *
    * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
@@ -604,8 +605,12 @@ export class Datetime implements ComponentInterface {
   async cancel(closeOverlay = false) {
     this.ionCancel.emit();
 
-    if (closeOverlay) {
-      this.closeParentOverlay(CANCEL_ROLE);
+    /**
+     * When a parent overlay closes, the present listener discards
+     * the selection on the next open. Otherwise discard it now.
+     */
+    if (!closeOverlay || !this.closeParentOverlay(CANCEL_ROLE)) {
+      this.processValue(this.value);
     }
   }
 
@@ -675,6 +680,8 @@ export class Datetime implements ComponentInterface {
     if (popoverOrModal) {
       popoverOrModal.dismiss(undefined, role);
     }
+
+    return popoverOrModal !== null;
   };
 
   private setWorkingParts = (parts: DatetimeParts) => {
@@ -691,6 +698,8 @@ export class Datetime implements ComponentInterface {
     if (this.readonly) {
       return;
     }
+
+    this.hasUnconfirmedSelection = true;
 
     const { multiple, minParts, maxParts, activeParts } = this;
 
@@ -1112,6 +1121,7 @@ export class Datetime implements ComponentInterface {
     this.loadTimeout = setTimeout(() => {
       this.ensureReadyIfVisible();
     }, 100);
+    this.initializeOverlayPresentListener();
   }
 
   disconnectedCallback() {
@@ -1120,6 +1130,39 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible = undefined;
     }
     this.loadTimeoutCleanup();
+
+    if (this.destroyOverlayPresentListener) {
+      this.destroyOverlayPresentListener();
+      this.destroyOverlayPresentListener = undefined;
+    }
+  }
+
+  /**
+   * A datetime in a modal or popover stays mounted between
+   * presentations, so an unconfirmed selection would still show when
+   * it reopens. Discarding on present rather than dismiss lets app
+   * code that runs on dismiss still confirm or reset the selection,
+   * whatever order its listeners were added in.
+   */
+  private initializeOverlayPresentListener() {
+    const overlay = this.el.closest('ion-modal, ion-popover');
+    if (!overlay) {
+      return;
+    }
+
+    const eventName = overlay.tagName === 'ION-MODAL' ? 'ionModalWillPresent' : 'ionPopoverWillPresent';
+    const onPresent = (ev: Event) => {
+      // Ignore nested overlays and skip when there's nothing to discard.
+      if (ev.target !== overlay || !this.hasUnconfirmedSelection) {
+        return;
+      }
+
+      // The overlay is still hidden, so skip the month animation.
+      this.processValue(this.value, false);
+    };
+
+    overlay.addEventListener(eventName, onPresent);
+    this.destroyOverlayPresentListener = () => overlay.removeEventListener(eventName, onPresent);
   }
 
   /**
@@ -1158,12 +1201,21 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const rect = this.el.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) {
+    if (!this.hasLayoutBox()) {
       return;
     }
 
     this.markReady();
+  };
+
+  /**
+   * Whether the datetime is on screen. A modal or popover hides its contents
+   * with `display: none`, which leaves the host without a layout box.
+   */
+  private hasLayoutBox = () => {
+    const { width, height } = this.el.getBoundingClientRect();
+
+    return width > 0 && height > 0;
   };
 
   private markReady = () => {
@@ -1203,12 +1255,15 @@ export class Datetime implements ComponentInterface {
      * areas will not have the correct values snapped into place.
      */
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
+      /**
+       * The browser can batch several observations into one callback, so
+       * only the last entry describes the datetime now.
+       */
+      const ev = entries[entries.length - 1];
       if (!ev.isIntersecting) {
         return;
       }
 
-      this.hasBeenIntersecting = true;
       this.markReady();
     };
     const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01, root: el });
@@ -1244,16 +1299,23 @@ export class Datetime implements ComponentInterface {
      * we did originally has been lost.
      */
     const hiddenCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
+      const ev = entries[entries.length - 1];
       if (ev.isIntersecting) {
         return;
       }
 
-      // Ignore the initial "not intersecting" entry IntersectionObserver fires on observe().
-      if (!this.hasBeenIntersecting) {
+      /**
+       * WebKit reports a datetime that is still on screen as not
+       * intersecting, and it doesn't deliver that entry to every observer on
+       * the same root and target, so `visibleCallback` may never hear about
+       * it and add `datetime-ready` back. That is what left the calendar
+       * blank in #30933. Checking the host instead of trusting the entry
+       * also covers the synthetic "not intersecting" entry `observe()` fires
+       * when the datetime mounts offscreen.
+       */
+      if (this.hasLayoutBox()) {
         return;
       }
-      this.hasBeenIntersecting = false;
 
       this.destroyInteractionListeners();
 
@@ -1354,7 +1416,9 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private processValue = (value?: string | string[] | null) => {
+  private processValue = (value?: string | string[] | null, animated = true) => {
+    this.hasUnconfirmedSelection = false;
+
     const hasValue =
       value !== null && value !== undefined && value !== '' && (!Array.isArray(value) || value.length > 0);
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
@@ -1426,13 +1490,14 @@ export class Datetime implements ComponentInterface {
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
 
-    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear && animated) {
       /**
        * Only animate if:
        * 1. We're using grid style (wheel style pickers should just jump to new value)
        * 2. The month and/or year actually changed, and both are defined (otherwise there's nothing to animate to)
        * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
        * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
+       * 5. The caller did not opt out (e.g. the parent overlay is still hidden)
        */
       this.animateToDate(targetValue);
     } else {
@@ -2250,8 +2315,7 @@ export class Datetime implements ComponentInterface {
     const prevMonthDisabled = disabled || isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = disabled || isNextMonthDisabled(this.workingParts, this.maxParts);
 
-    // don't use the inheritAttributes util because it removes dir from the host, and we still need that
-    const hostDir = this.el.getAttribute('dir') || undefined;
+    const hostDir = isRTL(this.el) ? 'rtl' : 'ltr';
 
     return (
       <div class="calendar-header" part="calendar-header">
@@ -2271,6 +2335,7 @@ export class Datetime implements ComponentInterface {
               <span id="toggle-wrapper">
                 {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
+                  dir={hostDir}
                   aria-hidden="true"
                   icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
                   lazy={false}

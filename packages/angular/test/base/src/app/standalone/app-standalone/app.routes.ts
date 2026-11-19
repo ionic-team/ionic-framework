@@ -8,6 +8,15 @@ export const routes: Routes = [
     children: [
       { path: '', loadComponent: () => import('../home-page/home-page.component').then(c => c.HomePageComponent) },
       { path: 'inputs', loadComponent: () => import('../inputs/inputs.component').then(c => c.InputsComponent) },
+      { path: 'async-change-detection', loadComponent: () => import('../async-change-detection/async-change-detection.component').then(c => c.AsyncChangeDetectionComponent) },
+      { path: 'async-change-detection-tabs', redirectTo: '/standalone/async-change-detection-tabs/tab-one', pathMatch: 'full' },
+      {
+        path: 'async-change-detection-tabs',
+        loadComponent: () => import('../async-change-detection/async-change-detection-tabs.component').then(c => c.AsyncChangeDetectionTabsComponent),
+        children: [
+          { path: 'tab-one', loadComponent: () => import('../async-change-detection/async-change-detection.component').then(c => c.AsyncChangeDetectionComponent) }
+        ]
+      },
       { path: 'menu-controller', loadComponent: () => import('../menu-controller/menu-controller.component').then(c => c.MenuControllerComponent) },
       { path: 'action-sheet-controller', loadComponent: () => import('../action-sheet-controller/action-sheet-controller.component').then(c => c.ActionSheetControllerComponent) },
       { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },
@@ -27,6 +36,14 @@ export const routes: Routes = [
       { path: 'modal-options-generic', loadComponent: () => import('../modal-options-generic/modal-options-generic.component').then(c => c.ModalOptionsGenericComponent) },
       { path: 'popover-custom-injector', loadComponent: () => import('../popover-custom-injector/popover-custom-injector.component').then(c => c.PopoverCustomInjectorComponent) },
       { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(c => c.RouterOutletComponent) },
+      {
+        path: 'router-outlet-query-params',
+        loadComponent: () => import('../router-outlet-query-params/router-outlet-query-params-parent.component').then(c => c.RouterOutletQueryParamsParentComponent),
+        children: [
+          { path: '', loadComponent: () => import('../router-outlet-query-params/router-outlet-query-params.component').then(c => c.RouterOutletQueryParamsComponent) },
+          { path: 'details', loadComponent: () => import('../router-outlet-query-params/router-outlet-query-params-details.component').then(c => c.RouterOutletQueryParamsDetailsComponent) },
+        ]
+      },
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(c => c.NavComponent) },
@@ -67,12 +84,37 @@ export const routes: Routes = [
           { path: 'tab4', loadComponent: () => import('../tabs-search-params/tab4.component').then(c => c.TabsSearchParamsTab4Component) }
         ]
       },
+      { path: 'tab-lifecycle', redirectTo: '/standalone/tab-lifecycle/home', pathMatch: 'full' },
+      {
+        path: 'tab-lifecycle',
+        loadComponent: () => import('../tab-lifecycle/tab-lifecycle.component').then(c => c.TabLifecycleComponent),
+        children: [
+          { path: 'home', loadComponent: () => import('../tab-lifecycle/tab-lifecycle-home.component').then(c => c.TabLifecycleHomeComponent) },
+          { path: 'settings', loadComponent: () => import('../tab-lifecycle/tab-lifecycle-settings.component').then(c => c.TabLifecycleSettingsComponent) },
+          {
+            path: 'nested',
+            loadComponent: () => import('../tab-lifecycle/tab-lifecycle-nested.component').then(c => c.TabLifecycleNestedComponent),
+            children: [
+              { path: '', loadComponent: () => import('../tab-lifecycle/tab-lifecycle-inner.component').then(c => c.TabLifecycleInnerComponent) }
+            ]
+          }
+        ]
+      },
+      { path: 'tab-lifecycle-outside', loadComponent: () => import('../tab-lifecycle/tab-lifecycle-outside.component').then(c => c.TabLifecycleOutsideComponent) },
       {
         path: 'swipe-gesture-disabled',
         loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled.component').then(c => c.SwipeGestureDisabledComponent),
         children: [
           { path: '', loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled-main.component').then(c => c.SwipeGestureDisabledMainComponent) },
           { path: 'details', loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled-details.component').then(c => c.SwipeGestureDisabledDetailsComponent) }
+        ]
+      },
+      {
+        path: 'swipe-animated-disabled',
+        loadComponent: () => import('../swipe-animated-disabled/swipe-animated-disabled.component').then(c => c.SwipeAnimatedDisabledComponent),
+        children: [
+          { path: '', loadComponent: () => import('../swipe-animated-disabled/swipe-animated-disabled-main.component').then(c => c.SwipeAnimatedDisabledMainComponent) },
+          { path: 'details', loadComponent: () => import('../swipe-animated-disabled/swipe-animated-disabled-details.component').then(c => c.SwipeAnimatedDisabledDetailsComponent) }
         ]
       },
       {

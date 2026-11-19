@@ -3,6 +3,7 @@ import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stenci
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
+import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -12,6 +13,7 @@ import {
   eventMethod,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   setOverlayId,
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
@@ -208,6 +210,11 @@ export class Loading implements ComponentInterface, OverlayInterface {
   connectedCallback() {
     prepareOverlay(this.el);
     this.triggerChanged();
+
+    // Re-apply the root lock if moved without dismiss() being called
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(this.el);
+    }
   }
 
   componentWillLoad() {
@@ -361,7 +368,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="start" />
 
         <div class="loading-wrapper ion-overlay-wrapper">
           {spinner && (
@@ -373,7 +380,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
           {message !== undefined && this.renderLoadingMessage(msgId)}
         </div>
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="end" />
       </Host>
     );
   }

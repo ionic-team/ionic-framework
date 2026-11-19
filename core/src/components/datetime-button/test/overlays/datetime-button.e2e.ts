@@ -24,6 +24,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await dateButton.click();
       await ionModalDidPresent.next();
 
+      /**
+       * The calendar body is hidden until the datetime adds the
+       * `datetime-ready` class, which happens a frame after the
+       * IntersectionObserver reports the datetime as visible. Without
+       * this wait the screenshot can capture an empty calendar grid.
+       */
+      await page.locator('ion-datetime.datetime-ready').waitFor();
+
       await expect(page).toHaveScreenshot(screenshot(`datetime-overlay-modal`));
     });
 
@@ -43,6 +51,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const dateButton = page.locator('ion-datetime-button #date-button');
       await dateButton.click();
       await ionPopoverDidPresent.next();
+
+      /**
+       * The calendar body is hidden until the datetime adds the
+       * `datetime-ready` class, which happens a frame after the
+       * IntersectionObserver reports the datetime as visible. Without
+       * this wait the screenshot can capture an empty calendar grid.
+       */
+      await page.locator('ion-datetime.datetime-ready').waitFor();
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-overlay-popover`));
     });
@@ -265,6 +281,24 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await openModal(page);
 
       await expect(selectedDay).toBeInViewport();
+    });
+
+    test('should keep the calendar visible across repeated open and dismiss cycles', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30933',
+      });
+
+      const calendarBody = datetime.locator('.calendar-body');
+
+      for (let cycle = 0; cycle < 10; cycle++) {
+        await openModal(page);
+
+        await expect(calendarBody).toHaveCSS('opacity', '1');
+        await expect(monthYear).toHaveText('March 2022');
+
+        await dismissModal();
+      }
     });
 
     test('should navigate to the previous month when reopened', async ({ page }, testInfo) => {

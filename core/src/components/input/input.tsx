@@ -13,8 +13,14 @@ import {
   forceUpdate,
   h,
 } from '@stencil/core';
-import type { NotchController, StartContainerController } from '@utils/forms';
-import { createNotchController, createStartContainerController, checkInvalidState } from '@utils/forms';
+import type { ClickController, NotchController, StartEndContainerController } from '@utils/forms';
+import {
+  createClickController,
+  createNotchController,
+  createStartEndContainerController,
+  checkInvalidState,
+  syncValueOnPageRestore,
+} from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
@@ -54,8 +60,10 @@ export class Input implements ComponentInterface {
   private slotMutationController?: SlotMutationController;
   private notchController?: NotchController;
   private notchSpacerEl: HTMLElement | undefined;
-  private startContainerController?: StartContainerController;
+  private startEndContainerController?: StartEndContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private endContainerEl: HTMLElement | undefined;
+  private clickController?: ClickController;
 
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
@@ -392,11 +400,23 @@ export class Input implements ComponentInterface {
    */
   @Listen('click', { capture: true })
   onClickCapture(ev: Event) {
-    const nativeInput = this.nativeInput;
-    if (nativeInput && ev.target === nativeInput) {
-      ev.stopPropagation();
-      this.el.click();
-    }
+    this.clickController?.handleClickCapture(ev);
+  }
+
+  /**
+   * Safari clears the field when it restores the page from the back/forward cache.
+   */
+  @Listen('pageshow', { target: 'window' })
+  onPageShow(ev: PageTransitionEvent) {
+    syncValueOnPageRestore(
+      ev,
+      this.nativeInput,
+      () => this.getValue(),
+      (value) => {
+        this.value = value;
+        this.emitInputChange();
+      }
+    );
   }
 
   componentWillLoad() {
@@ -419,7 +439,7 @@ export class Input implements ComponentInterface {
       el as unknown as HTMLElement,
       ['label', 'start', 'end'],
       () => {
-        this.startContainerController?.calculateStartContainerWidth();
+        this.startEndContainerController?.calculateContainerWidths();
 
         this.setSlottedLabelId();
         forceUpdate(this);
@@ -433,15 +453,18 @@ export class Input implements ComponentInterface {
       () => this.labelSlot
     );
 
-    this.startContainerController = createStartContainerController(
+    this.startEndContainerController = createStartEndContainerController(
       el,
       () => this.startContainerEl,
+      () => this.endContainerEl,
       () => {
         return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
       }
     );
 
-    this.startContainerController.calculateStartContainerWidth();
+    this.startEndContainerController.calculateContainerWidths();
+
+    this.clickController = createClickController(el, () => this.nativeInput);
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
@@ -488,7 +511,7 @@ export class Input implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
-    this.startContainerController?.calculateStartContainerWidth();
+    this.startEndContainerController?.calculateContainerWidths();
   }
 
   disconnectedCallback() {
@@ -510,9 +533,9 @@ export class Input implements ComponentInterface {
       this.notchController = undefined;
     }
 
-    if (this.startContainerController) {
-      this.startContainerController.destroy();
-      this.startContainerController = undefined;
+    if (this.startEndContainerController) {
+      this.startEndContainerController.destroy();
+      this.startEndContainerController = undefined;
     }
 
     // Clean up validation observer to prevent memory leaks
@@ -952,7 +975,7 @@ export class Input implements ComponentInterface {
               />
             </div>
           </div>
-          <div class="input-end">
+          <div class="input-end" ref={(el) => (this.endContainerEl = el)}>
             {this.clearInput && !readonly && !disabled && (
               <button
                 aria-label="reset"

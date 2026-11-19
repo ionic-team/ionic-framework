@@ -190,11 +190,17 @@
               type: 'date',
               min: '2017-03-01',
               max: '2018-01-12',
+              // WebKit renders today's date in empty date inputs, so set
+              // a value to keep the screenshot from changing every day.
+              value: '2017-06-15',
             },
             // input date without min nor max
             {
               name: 'name5',
               type: 'date',
+              // WebKit renders today's date in empty date inputs, so set
+              // a value to keep the screenshot from changing every day.
+              value: '2020-09-24',
             },
             {
               name: 'name6',

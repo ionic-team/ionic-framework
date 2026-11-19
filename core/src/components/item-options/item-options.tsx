@@ -36,7 +36,7 @@ export class ItemOptions implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
-    const isEnd = isEndSide(this.side);
+    const isEnd = isEndSide(this.side, this.el);
     return (
       <Host
         class={{

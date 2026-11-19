@@ -264,3 +264,30 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
+
+configs({ directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
+  test.describe(title('item-sliding: basic'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(`/src/components/item-sliding/test/basic`, config);
+    });
+    test.describe('direction', () => {
+      test('should be ltr when ancestor defines dir="ltr"', async ({ page }) => {
+        const item = page.locator('#item-ltr-start');
+        await item.scrollIntoViewIfNeeded();
+        await dragElementBy(item, page, 150);
+        await page.waitForChanges();
+
+        await expect(item).toHaveClass(/item-sliding-active-options-start/);
+      });
+
+      test('should be rtl when ancestor defines dir="rtl"', async ({ page }) => {
+        const item = page.locator('#item-rtl-start');
+        await item.scrollIntoViewIfNeeded();
+        await dragElementBy(item, page, -150);
+        await page.waitForChanges();
+
+        await expect(item).toHaveClass(/item-sliding-active-options-end/);
+      });
+    });
+  });
+});

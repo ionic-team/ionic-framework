@@ -8,11 +8,16 @@ import {
   IonRouterOutlet,
   IonBackButton,
   IonButtons,
+  useIonViewDidEnter,
+  useIonViewDidLeave,
+  useIonViewWillEnter,
+  useIonViewWillLeave,
 } from '@ionic/react';
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
 
 import TestDescription from '../../components/TestDescription';
+import { pushLifecycleEvent } from '../../utils';
 
 /**
  * Tests that IonBackButton works correctly after navigating with
@@ -20,6 +25,11 @@ import TestDescription from '../../components/TestDescription';
  * determine the previous page, not fall back to defaultHref.
  */
 const PageA: React.FC = () => {
+  useIonViewWillEnter(() => pushLifecycleEvent('a:ionViewWillEnter'));
+  useIonViewDidEnter(() => pushLifecycleEvent('a:ionViewDidEnter'));
+  useIonViewWillLeave(() => pushLifecycleEvent('a:ionViewWillLeave'));
+  useIonViewDidLeave(() => pushLifecycleEvent('a:ionViewDidLeave'));
+
   return (
     <IonPage data-pageid="direction-none-page-a">
       <IonHeader>
@@ -41,6 +51,11 @@ const PageA: React.FC = () => {
 };
 
 const PageB: React.FC = () => {
+  useIonViewWillEnter(() => pushLifecycleEvent('b:ionViewWillEnter'));
+  useIonViewDidEnter(() => pushLifecycleEvent('b:ionViewDidEnter'));
+  useIonViewWillLeave(() => pushLifecycleEvent('b:ionViewWillLeave'));
+  useIonViewDidLeave(() => pushLifecycleEvent('b:ionViewDidLeave'));
+
   return (
     <IonPage data-pageid="direction-none-page-b">
       <IonHeader>

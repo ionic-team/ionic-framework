@@ -1,0 +1,26 @@
+name: 'Test Ionic Angular Package'
+description: 'Test Ionic Angular Package'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version: 24.x
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-angular
+        path: ./packages/angular
+        filename: AngularBuild.zip
+    - name: 🕸️ Install Angular Dependencies
+      run: npm ci
+      shell: bash
+      working-directory: ./packages/angular
+    - name: 📐 Run Angular Package Tests
+      run: npm run test
+      shell: bash
+      working-directory: ./packages/angular

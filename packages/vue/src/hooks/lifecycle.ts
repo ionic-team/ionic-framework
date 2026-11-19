@@ -1,3 +1,4 @@
+import { printIonWarning } from "@ionic/core/components";
 import type { ComponentInternalInstance } from "vue";
 import { getCurrentInstance } from "vue";
 
@@ -35,8 +36,8 @@ const injectHook = (
 
     return wrappedHook;
   } else {
-    console.warn(
-      "[@ionic/vue]: Ionic Lifecycle Hooks can only be used during execution of setup()."
+    printIonWarning(
+      "Ionic Lifecycle Hooks can only be used during execution of setup()."
     );
   }
 };

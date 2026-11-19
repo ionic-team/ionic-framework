@@ -28,6 +28,8 @@ import { AlertComponent } from '../alert/alert.component';
 import { AccordionComponent } from '../accordion/accordion.component';
 import { AccordionModalComponent } from '../accordion/accordion-modal/accordion-modal.component';
 import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
+import { AsyncChangeDetectionComponent } from '../async-change-detection/async-change-detection.component';
+import { AsyncChangeDetectionTabsComponent } from '../async-change-detection/async-change-detection-tabs.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
     AlertComponent,
     AccordionComponent,
     AccordionModalComponent,
-    TabsBasicComponent
+    TabsBasicComponent,
+    AsyncChangeDetectionComponent,
+    AsyncChangeDetectionTabsComponent
   ],
   imports: [
     CommonModule,

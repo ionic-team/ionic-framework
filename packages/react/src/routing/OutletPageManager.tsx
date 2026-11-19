@@ -46,7 +46,13 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
        * when React unmounts + remounts components.
        */
       if (!this.outletIsReady) {
-        componentOnReady(this.ionRouterOutlet, () => {
+        const el = this.ionRouterOutlet;
+        componentOnReady(el, () => {
+          /**
+           * The outlet can unmount before this fires, which clears the ref.
+           */
+          if (this.ionRouterOutlet !== el) return;
+
           /**
            * Guard against duplicate callbacks from React strict mode double-mount.
            * Both componentDidMount calls pass the outer !outletIsReady check before
@@ -65,7 +71,6 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
            * outlet's forward animation removes ion-page-invisible, preventing
            * a flash where the outlet is briefly visible at full opacity.
            */
-          const el = this.ionRouterOutlet!;
           if (!el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden')) {
             el.classList.add('ion-page');
             el.classList.add('ion-page-invisible');

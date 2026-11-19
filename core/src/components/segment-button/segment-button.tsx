@@ -1,5 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, Method, State, Watch, forceUpdate, h } from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import type { ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { addEventListener, removeEventListener, inheritAttributes } from '@utils/helpers';
@@ -32,6 +34,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   private segmentEl: HTMLIonSegmentElement | null = null;
   private nativeEl: HTMLButtonElement | undefined;
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
 
   @Element() el!: HTMLElement;
 
@@ -67,6 +70,8 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   }
 
   connectedCallback() {
+    this.tabindexController?.init();
+
     const segmentEl = (this.segmentEl = this.el.closest('ion-segment'));
     if (segmentEl) {
       this.updateState();
@@ -76,6 +81,8 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   }
 
   disconnectedCallback() {
+    this.tabindexController?.destroy();
+
     const segmentEl = this.segmentEl;
     if (segmentEl) {
       removeEventListener(segmentEl, 'ionSelect', this.updateState);
@@ -88,6 +95,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     this.inheritedAttributes = {
       ...inheritAttributes(this.el, ['aria-label']),
     };
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
 
     // Return if there is no contentId defined
     if (!this.contentId) return;
@@ -163,6 +171,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   render() {
     const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
     const mode = getIonMode(this);
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
     const hasSegmentColor = () => segmentEl?.color !== undefined;
     return (
       <Host
@@ -193,6 +202,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           part="native"
           disabled={disabled}
           {...this.inheritedAttributes}
+          {...tabindexAttributes}
         >
           <span class="button-inner">
             <slot></slot>

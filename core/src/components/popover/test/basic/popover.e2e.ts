@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, detachAndReattach, test } from '@utils/test/playwright';
 
 import { PopoverFixture } from '../fixture';
 
@@ -222,12 +222,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.keyboard.press(tabKey);
 
-      // for Firefox, ion-textarea is focused first
-      // need to tab again to get to native input
-      if (browserName === 'firefox') {
-        await page.keyboard.press(tabKey);
-      }
-
       await expect(innerNativeTextarea).toBeFocused();
 
       await page.keyboard.press('ArrowDown');
@@ -258,6 +252,32 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.keyboard.press('End');
 
       await expect(vanillaTextarea).toBeFocused();
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('popover: moved while presented'), () => {
+    test('should keep the app root locked', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31389',
+      });
+
+      await page.goto('/src/components/popover/test/basic', config);
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.click('#basic-popover');
+      await ionPopoverDidPresent.next();
+
+      await expect(page.locator('body')).toHaveClass(/backdrop-no-scroll/);
+
+      await detachAndReattach(page.locator('ion-popover'));
+
+      await expect(page.locator('body')).toHaveClass(/backdrop-no-scroll/);
     });
   });
 });

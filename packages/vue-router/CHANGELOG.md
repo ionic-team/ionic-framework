@@ -3,6 +3,100 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.12](https://github.com/ionic-team/ionic-framework/compare/v9.0.11...v9.0.12) (2026-11-17)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [9.0.11](https://github.com/ionic-team/ionic-framework/compare/v9.0.10...v9.0.11) (2026-11-11)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [9.0.10](https://github.com/ionic-team/ionic-framework/compare/v9.0.9...v9.0.10) (2026-10-28)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [9.0.9](https://github.com/ionic-team/ionic-framework/compare/v9.0.8...v9.0.9) (2026-10-21)
+
+### Bug Fixes
+
+* **vue-router:** keep back working after replacing a page in tabs ([#31583](https://github.com/ionic-team/ionic-framework/issues/31583)) ([86390f6](https://github.com/ionic-team/ionic-framework/commit/86390f6deab23b58498c3b9ae782f9e0fc5a4e29)), closes [#30617](https://github.com/ionic-team/ionic-framework/issues/30617) [#31142](https://github.com/ionic-team/ionic-framework/issues/31142)
+
+
+## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
+
+### Bug Fixes
+
+* **vue-router:** render the redirect target when a guard redirects ([#31510](https://github.com/ionic-team/ionic-framework/issues/31510)) ([643584b](https://github.com/ionic-team/ionic-framework/commit/643584b3ac2ba1ca263cbf53960ccde3be2a96fc))
+* **vue-router:** reset tab with memory history ([#31511](https://github.com/ionic-team/ionic-framework/issues/31511)) ([edbc304](https://github.com/ionic-team/ionic-framework/commit/edbc304fbc4179a668d0e170241abd78311fdb62)), closes [#29785](https://github.com/ionic-team/ionic-framework/issues/29785)
+
+
+## [9.0.6](https://github.com/ionic-team/ionic-framework/compare/v9.0.5...v9.0.6) (2026-09-30)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [9.0.5](https://github.com/ionic-team/ionic-framework/compare/v9.0.4...v9.0.5) (2026-09-23)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [9.0.4](https://github.com/ionic-team/ionic-framework/compare/v9.0.3...v9.0.4) (2026-09-16)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [9.0.3](https://github.com/ionic-team/ionic-framework/compare/v9.0.2...v9.0.3) (2026-09-09)
+
+### Bug Fixes
+
+* **vue-router:** clear navigation info when a guard aborts navigation ([#31364](https://github.com/ionic-team/ionic-framework/issues/31364)) ([8d41b5f](https://github.com/ionic-team/ionic-framework/commit/8d41b5fff1f36b33ba3ccbd1bbf93a728ace3de6)), closes [#29721](https://github.com/ionic-team/ionic-framework/issues/29721)
+
+
+## [9.0.2](https://github.com/ionic-team/ionic-framework/compare/v9.0.1...v9.0.2) (2026-09-02)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [9.0.1](https://github.com/ionic-team/ionic-framework/compare/v9.0.0...v9.0.1) (2026-08-26)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
 # [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
 
 **Full Changelog**: https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0

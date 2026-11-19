@@ -14,8 +14,13 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { NotchController, StartContainerController } from '@utils/forms';
-import { createNotchController, createStartContainerController, checkInvalidState } from '@utils/forms';
+import type { ClickController, NotchController, StartEndContainerController } from '@utils/forms';
+import {
+  createClickController,
+  createNotchController,
+  createStartEndContainerController,
+  checkInvalidState,
+} from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
@@ -63,8 +68,10 @@ export class Textarea implements ComponentInterface {
 
   private notchController?: NotchController;
   private notchSpacerEl: HTMLElement | undefined;
-  private startContainerController?: StartContainerController;
+  private startEndContainerController?: StartEndContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private endContainerEl: HTMLElement | undefined;
+  private clickController?: ClickController;
 
   /**
    * The value of the textarea when the textarea is focused.
@@ -330,18 +337,14 @@ export class Textarea implements ComponentInterface {
    */
   @Listen('click', { capture: true })
   onClickCapture(ev: Event) {
-    const nativeInput = this.nativeInput;
-    if (nativeInput && ev.target === nativeInput) {
-      ev.stopPropagation();
-      this.el.click();
-    }
+    this.clickController?.handleClickCapture(ev);
   }
 
   connectedCallback() {
     const { el } = this;
 
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
-      this.startContainerController?.calculateStartContainerWidth();
+      this.startEndContainerController?.calculateContainerWidths();
 
       forceUpdate(this);
     });
@@ -352,15 +355,18 @@ export class Textarea implements ComponentInterface {
       () => this.labelSlot
     );
 
-    this.startContainerController = createStartContainerController(
+    this.startEndContainerController = createStartEndContainerController(
       el,
       () => this.startContainerEl,
+      () => this.endContainerEl,
       () => {
         return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
       }
     );
 
-    this.startContainerController.calculateStartContainerWidth();
+    this.startEndContainerController.calculateContainerWidths();
+
+    this.clickController = createClickController(el, () => this.nativeInput);
 
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
@@ -411,9 +417,9 @@ export class Textarea implements ComponentInterface {
       this.notchController = undefined;
     }
 
-    if (this.startContainerController) {
-      this.startContainerController.destroy();
-      this.startContainerController = undefined;
+    if (this.startEndContainerController) {
+      this.startEndContainerController.destroy();
+      this.startEndContainerController = undefined;
     }
 
     // Clean up validation observer to prevent memory leaks
@@ -437,7 +443,7 @@ export class Textarea implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
-    this.startContainerController?.calculateStartContainerWidth();
+    this.startEndContainerController?.calculateContainerWidths();
   }
 
   /**
@@ -811,7 +817,7 @@ export class Textarea implements ComponentInterface {
               </textarea>
             </div>
           </div>
-          <div class="textarea-end">
+          <div class="textarea-end" ref={(el) => (this.endContainerEl = el)}>
             <slot name="end"></slot>
           </div>
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}

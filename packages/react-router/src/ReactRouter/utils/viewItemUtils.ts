@@ -1,4 +1,4 @@
-import type { ViewItem } from '@ionic/react';
+import type { RouteInfo, ViewItem } from '@ionic/react';
 
 /**
  * Compares two routes by specificity for sorting (most specific first).
@@ -36,6 +36,48 @@ export const compareRouteSpecificity = (
 
   return 0;
 };
+
+/**
+ * True when a route matches more pathnames than its own path, so a splat, an index route,
+ * or a route with an empty or absent path. A lookup can return one of these for a pathname
+ * a more specific sibling owns, so callers must confirm ownership against React Router's
+ * ranking before reusing the view item.
+ *
+ * This is deliberately wider than the catch-all checks in ReactRouterViewStack, which each
+ * gate on a narrower shape for a different reason. Don't unify them with this helper.
+ */
+export const isOverMatchingRoute = (route: { path?: string; index?: boolean }): boolean => {
+  const { path, index } = route;
+  return !path || path.includes('*') || !!index;
+};
+
+/** True when the navigation pushed a new page forward on top of the current one. */
+export const isForwardPush = (routeInfo: Pick<RouteInfo, 'routeAction' | 'routeDirection'>): boolean =>
+  routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward';
+
+const swipeRevealed = new WeakSet<ViewItem>();
+
+/**
+ * Marks the page a swipe-back gesture has revealed. For the length of the drag that page
+ * is on screen while a more specific sibling still matches the current pathname, and the
+ * deactivation scan in `renderViewItem` would otherwise re-hide it on the next render and
+ * leave the user dragging a blank page.
+ */
+export const markSwipeRevealed = (viewItem: ViewItem | undefined): void => {
+  if (viewItem) {
+    swipeRevealed.add(viewItem);
+  }
+};
+
+/** Drops the mark once the gesture ends, so the view is hidden normally again. */
+export const clearSwipeRevealed = (viewItem: ViewItem | undefined): void => {
+  if (viewItem) {
+    swipeRevealed.delete(viewItem);
+  }
+};
+
+/** True while a swipe-back gesture is showing this view. */
+export const isSwipeRevealed = (viewItem: ViewItem): boolean => swipeRevealed.has(viewItem);
 
 /**
  * Sorts view items by route specificity (most specific first).

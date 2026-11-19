@@ -7,6 +7,7 @@ import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
+import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -17,6 +18,7 @@ import {
   isCancel,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   safeCall,
   setOverlayId,
 } from '@utils/overlays';
@@ -238,15 +240,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const inputTypes = new Set(this.processedInputs.map((i) => i.type));
 
     /**
-     * Based on keyboard navigation requirements, the
-     * checkbox should not respond to the enter keydown event.
-     */
-    if (inputTypes.has('checkbox') && ev.key === 'Enter') {
-      ev.preventDefault();
-      return;
-    }
-
-    /**
      * Ensure when alert container is being focused, and the user presses the tab + shift keys, the focus will be set to the last alert button.
      */
     if (ev.target.classList.contains('alert-wrapper')) {
@@ -363,10 +356,16 @@ export class Alert implements ComponentInterface, OverlayInterface {
     this.triggerChanged();
     /**
      * If the alert was previously connected and is being reattached, the
-     * ResizeObserver was disconnected. componentDidLoad only fires once per
-     * instance, so re-establish the observer here on reconnect.
+     * `ResizeObserver` and the button gesture were torn down. `componentDidLoad`
+     * only fires once per instance, so re-establish both here on reconnect.
      */
     this.setupButtonGroupResizeObserver();
+    this.setupButtonActiveGesture();
+
+    // Re-apply the root lock if moved without dismiss() being called
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(this.el);
+    }
   }
 
   componentWillLoad() {
@@ -394,20 +393,23 @@ export class Alert implements ComponentInterface, OverlayInterface {
     this.buttonGroupResizeObserver = undefined;
   }
 
-  componentDidLoad() {
-    /**
-     * Only create gesture if:
-     * 1. A gesture does not already exist
-     * 2. App is running in iOS mode
-     * 3. A wrapper ref exists
-     */
+  /**
+   * Only create gesture if:
+   * 1. A gesture does not already exist
+   * 2. App is running in iOS mode
+   * 3. A wrapper ref exists
+   */
+  private setupButtonActiveGesture() {
     if (!this.gesture && getIonMode(this) === 'ios' && this.wrapperEl) {
       this.gesture = createButtonActiveGesture(this.wrapperEl, (refEl: HTMLElement) =>
         refEl.classList.contains('alert-button')
       );
       this.gesture.enable(true);
     }
+  }
 
+  componentDidLoad() {
+    this.setupButtonActiveGesture();
     this.setupButtonGroupResizeObserver();
 
     /**
@@ -515,6 +517,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
     forceUpdate(this);
   }
 
+  /**
+   * Prevent Enter from toggling the checkbox, which only Space should do.
+   */
+  private onCheckboxKeydown = (ev: KeyboardEvent) => {
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+    }
+  };
+
   private async buttonClick(button: AlertButton) {
     const role = button.role;
     const values = this.getValues();
@@ -615,6 +626,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             <button
               type="button"
               onClick={() => this.cbClick(i)}
+              onKeyDown={this.onCheckboxKeydown}
               aria-checked={`${i.checked}`}
               id={i.id}
               disabled={i.disabled}
@@ -902,7 +914,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop tappable={this.backdropDismiss} />
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="start" />
 
         <div
           class="alert-wrapper ion-overlay-wrapper"
@@ -940,7 +952,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           {this.renderAlertButtons()}
         </div>
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="end" />
       </Host>
     );
   }

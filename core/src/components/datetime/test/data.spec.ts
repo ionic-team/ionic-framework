@@ -6,6 +6,7 @@ import {
   getToday,
   getCombinedDateColumnData,
   getTimeColumnsData,
+  getMonthColumnData,
 } from '../utils/data';
 
 // The minutes are the same across all hour cycles, so we don't check those
@@ -514,5 +515,35 @@ describe('getCombinedDateColumnData', () => {
       { text: 'Today', value: '2021-1-1' },
       { text: 'Sat, Jan 2', value: '2021-1-2' },
     ]);
+  });
+});
+
+describe('getMonthColumnData()', () => {
+  const monthValues = [1, 3, 5, 7, 9, 11];
+  const getValues = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) =>
+    getMonthColumnData('en-US', refParts, minParts, maxParts, monthValues).map((option) => option.value);
+
+  it('should apply the min month only in the min year when monthValues is set', () => {
+    const minParts = { month: 6, day: 1, year: 2020 };
+
+    expect(getValues({ month: 5, day: 1, year: 2020 }, minParts)).toEqual([7, 9, 11]);
+    expect(getValues({ month: 3, day: 1, year: 2024 }, minParts)).toEqual([1, 3, 5, 7, 9, 11]);
+  });
+
+  it('should apply the max month only in the max year when monthValues is set', () => {
+    const maxParts = { month: 4, day: 30, year: 2025 };
+
+    expect(getValues({ month: 3, day: 1, year: 2025 }, undefined, maxParts)).toEqual([1, 3]);
+    expect(getValues({ month: 9, day: 1, year: 2024 }, undefined, maxParts)).toEqual([1, 3, 5, 7, 9, 11]);
+  });
+
+  it('should match the months shown when monthValues is not set', () => {
+    const minParts = { month: 6, day: 1, year: 2020 };
+    const maxParts = { month: 4, day: 30, year: 2025 };
+    const refParts = { month: 3, day: 1, year: 2024 };
+
+    const allMonths = getMonthColumnData('en-US', refParts, minParts, maxParts).map((option) => option.value);
+    expect(allMonths).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    expect(getValues(refParts, minParts, maxParts)).toEqual([1, 3, 5, 7, 9, 11]);
   });
 });

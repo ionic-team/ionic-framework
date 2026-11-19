@@ -1,7 +1,7 @@
 import { doc } from '@utils/browser';
 import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
-import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
+import { addCloseWatcherCondition, shouldUseCloseWatcher, updateCloseWatcher } from '@utils/hardware-back-button';
 import { printIonError, printIonWarning } from '@utils/logging';
 
 import { config } from '../global/config';
@@ -35,6 +35,12 @@ import {
 let lastOverlayIndex = 0;
 let lastId = 0;
 
+/**
+ * Every overlay except toast, which doesn't trap
+ * focus or close on back.
+ */
+const NON_TOAST_OVERLAYS = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-popover';
+
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
 type OverlayWithFocusTrapProps = HTMLIonOverlayElement & {
@@ -49,6 +55,16 @@ type OverlayWithFocusTrapProps = HTMLIonOverlayElement & {
  */
 const isBackdropAlwaysBlocking = (el: OverlayWithFocusTrapProps): boolean => {
   return el.showBackdrop !== false && !((el.backdropBreakpoint ?? 0) > 0);
+};
+
+/**
+ * Whether the overlay takes the app root out of the accessibility tree and
+ * blocks body scroll while presented. Toasts never do, modal and popover can
+ * opt out with `focusTrap={false}`, and a backdrop that does not block
+ * (`showBackdrop={false}`, or a `backdropBreakpoint` above 0) is excluded.
+ */
+const locksAppRoot = (el: OverlayWithFocusTrapProps): boolean => {
+  return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && isBackdropAlwaysBlocking(el);
 };
 
 const createController = <Opts extends object, HTMLElm>(tagName: string) => {
@@ -176,7 +192,7 @@ const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, over
  * Should NOT include: Toast
  */
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
-  const lastOverlay = getPresentedOverlay(doc, 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-popover');
+  const lastOverlay = getPresentedOverlay(doc, NON_TOAST_OVERLAYS);
   const target = ev.target as HTMLElement | null;
 
   /**
@@ -232,18 +248,9 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
 
       /**
        * Otherwise, we must be focusing an element
-       * inside of the overlay. The two possible options
-       * here are an input/button/etc or the ion-focus-trap
-       * element. The focus trap element is used to prevent
-       * the keyboard focus from leaving the overlay when
-       * using Tab or screen assistants.
+       * inside of the overlay.
        */
     } else {
-      /**
-       * We do not want to focus the traps, so get the overlay
-       * wrapper element as the traps live outside of the wrapper.
-       */
-
       const overlayRoot = getElementRoot(lastOverlay);
       if (!overlayRoot.contains(target)) {
         return;
@@ -260,41 +267,12 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * Additionally, if the backdrop was tapped we should not
        * move focus back inside the wrapper as that could cause
        * an interactive elements focus state to activate.
+       *
+       * The focus boundaries outside of the wrapper move
+       * focus back inside on their own.
        */
       if (overlayWrapper.contains(target) || target === overlayRoot.querySelector('ion-backdrop')) {
         lastOverlay.lastFocus = target;
-      } else {
-        /**
-         * Otherwise, we must have focused one of the focus traps.
-         * We need to wrap the focus to either the first element
-         * or the last element.
-         */
-
-        /**
-         * Once we call `focusFirstDescendant` and focus the first
-         * descendant, another focus event will fire which will
-         * cause `lastOverlay.lastFocus` to be updated before
-         * we can run the code after that. We will cache the value
-         * here to avoid that.
-         */
-        const lastFocus = lastOverlay.lastFocus;
-
-        // Focus the first element in the overlay wrapper
-        focusFirstDescendant(overlayWrapper, lastOverlay);
-
-        /**
-         * If the cached last focused element is the
-         * same as the active element, then we need
-         * to wrap focus to the last descendant. This happens
-         * when the first descendant is focused, and the user
-         * presses Shift + Tab. The previous line will focus
-         * the same descendant again (the first one), causing
-         * last focus to equal the active element.
-         */
-        if (lastFocus === doc.activeElement) {
-          focusLastDescendant(overlayWrapper, lastOverlay);
-        }
-        lastOverlay.lastFocus = doc.activeElement as HTMLElement;
       }
     }
   };
@@ -372,6 +350,12 @@ const connectListeners = (doc: Document) => {
       },
       true
     );
+
+    /**
+     * Whether the overlay actually dismisses is checked at press time,
+     * since `backdropDismiss` can change while it's open.
+     */
+    addCloseWatcherCondition(() => getPresentedOverlay(doc, NON_TOAST_OVERLAYS) !== undefined);
 
     // handle back-button click
     doc.addEventListener('ionBackButton', (ev) => {
@@ -468,6 +452,14 @@ export const getPresentedOverlay = (
 };
 
 /**
+ * The element an app nests its views under. Overlays hide this rather than the
+ * whole root, so the overlay itself (a sibling) stays reachable.
+ */
+const getViewContainer = () => {
+  return getAppRoot(document).querySelector('ion-router-outlet, #ion-view-container-root');
+};
+
+/**
  * When an overlay is presented, the main
  * focus is the overlay not the page content.
  * We need to remove the page content from the
@@ -490,8 +482,7 @@ export const getPresentedOverlay = (
  * for main content.
  */
 export const setRootAriaHidden = (hidden = false) => {
-  const root = getAppRoot(document);
-  const viewContainer = root.querySelector('ion-router-outlet, #ion-view-container-root');
+  const viewContainer = getViewContainer();
 
   if (!viewContainer) {
     return;
@@ -508,7 +499,8 @@ export const setRootAriaHidden = (hidden = false) => {
  * Cleans up root `aria-hidden` and `backdrop-no-scroll` when
  * an overlay is removed from the DOM without going through
  * the `dismiss()` flow (e.g., when a framework unmounts the
- * overlay during a route change).
+ * overlay during a route change). Also releases the
+ * CloseWatcher if nothing is left to close.
  *
  * Should be called from an overlay's `disconnectedCallback`
  * when the overlay was still presented at the time of removal.
@@ -518,16 +510,53 @@ export const cleanupRootFocusTrapAccessibility = () => {
     return;
   }
 
+  updateCloseWatcher();
+
   const remainingOverlays = getPresentedOverlays(document);
-  const hasRemainingLocking = remainingOverlays.some((o) => {
-    const el = o as OverlayWithFocusTrapProps;
-    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && isBackdropAlwaysBlocking(el);
-  });
+  const hasRemainingLocking = remainingOverlays.some((o) => locksAppRoot(o as OverlayWithFocusTrapProps));
 
   if (!hasRemainingLocking) {
     setRootAriaHidden(false);
     document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
+};
+
+/**
+ * Applies the root lock itself: `aria-hidden` on the view container, and
+ * `backdrop-no-scroll` on the body. Shared by `present()` and the restore
+ * below, which have to stay in lockstep.
+ */
+const applyRootLock = (el: OverlayWithFocusTrapProps) => {
+  // Hiding the container the overlay now sits in would hide the overlay too.
+  if (!getViewContainer()?.contains(el)) {
+    setRootAriaHidden(true);
+  }
+  document.body.classList.add(BACKDROP_NO_SCROLL);
+};
+
+/**
+ * Re-applies the root lock that `cleanupRootFocusTrapAccessibility()` released.
+ * Call from `connectedCallback` when the overlay is still presented. Also
+ * re-arms the CloseWatcher, which every overlay needs, so that happens
+ * before the `locksAppRoot` check.
+ *
+ * A synchronous move keeps the overlay connected, so the lock survives. A
+ * detach with a re-insert in a later task releases it, which is the shape a
+ * framework produces when it takes a subtree out and puts it back.
+ */
+export const restoreRootFocusTrapAccessibility = (overlayEl: HTMLIonOverlayElement) => {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  updateCloseWatcher();
+
+  const el = overlayEl as OverlayWithFocusTrapProps;
+  if (!locksAppRoot(el)) {
+    return;
+  }
+
+  applyRootLock(el);
 };
 
 export const present = async <OverlayPresentOptions>(
@@ -554,15 +583,7 @@ export const present = async <OverlayPresentOptions>(
   }
 
   /**
-   * Due to accessibility guidelines, toasts do not have
-   * focus traps.
-   *
-   * All other overlays should have focus traps to prevent
-   * the keyboard focus from leaving the overlay unless
-   * developers explicitly opt out (for example, sheet
-   * modals that should permit background interaction).
-   *
-   * Note: Some apps move inline overlays to a specific container
+   * Some apps move inline overlays to a specific container
    * during the willPresent lifecycle (e.g., React portals via
    * onWillPresent). Defer applying aria-hidden/inert to the app
    * root until after willPresent so we can detect where the
@@ -571,21 +592,13 @@ export const present = async <OverlayPresentOptions>(
    * to avoid disabling the overlay.
    */
   const overlayEl = overlay.el as OverlayWithFocusTrapProps;
-  const shouldTrapFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
-  const shouldLockRoot = shouldTrapFocus && isBackdropAlwaysBlocking(overlayEl);
+  const shouldLockRoot = locksAppRoot(overlayEl);
 
   overlay.presented = true;
   overlay.willPresent.emit();
 
   if (shouldLockRoot) {
-    const root = getAppRoot(document);
-    const viewContainer = root.querySelector('ion-router-outlet, #ion-view-container-root');
-    const overlayInsideViewContainer = viewContainer ? viewContainer.contains(overlayEl) : false;
-
-    if (!overlayInsideViewContainer) {
-      setRootAriaHidden(true);
-    }
-    document.body.classList.add(BACKDROP_NO_SCROLL);
+    applyRootLock(overlayEl);
   }
   overlay.willPresentShorthand?.emit();
 
@@ -730,13 +743,9 @@ export const dismiss = async <OverlayDismissOptions>(
    * from the root element when the last focus-trapping overlay
    * is dismissed.
    */
-  const overlaysLockingRoot = presentedOverlays.filter((o) => {
-    const el = o as OverlayWithFocusTrapProps;
-    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && isBackdropAlwaysBlocking(el);
-  });
+  const overlaysLockingRoot = presentedOverlays.filter((o) => locksAppRoot(o as OverlayWithFocusTrapProps));
   const overlayEl = overlay.el as OverlayWithFocusTrapProps;
-  const locksRoot =
-    overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && isBackdropAlwaysBlocking(overlayEl);
+  const locksRoot = locksAppRoot(overlayEl);
 
   /**
    * If this is the last visible overlay that is trapping focus
@@ -800,6 +809,12 @@ export const dismiss = async <OverlayDismissOptions>(
 
   overlay.el.remove();
 
+  /**
+   * Release the back button if nothing
+   * else is left to close.
+   */
+  updateCloseWatcher();
+
   return true;
 };
 
@@ -815,6 +830,13 @@ const overlayAnimation = async (
 ): Promise<boolean> => {
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
+
+  /**
+   * Removing `overlay-hidden` makes the overlay count
+   * as presented, so back can dismiss it while it
+   * animates in.
+   */
+  updateCloseWatcher();
 
   const aniRoot = overlay.el;
   const animation = animationBuilder(aniRoot, opts);
@@ -882,6 +904,48 @@ export const safeCall = (handler: any, arg?: any) => {
     });
   }
   return undefined;
+};
+
+/**
+ * `--width` and `--height` values that leave an overlay spanning the viewport
+ * on that axis, so it reaches both edges. An empty value means the property
+ * was never overridden.
+ */
+const FULLSCREEN_SIZES = ['', '100%', '100vw', '100vh', '100dvw', '100dvh', '100svw', '100svh'];
+
+/**
+ * `--width` and `--height` values that size an overlay to its content, leaving
+ * the rendered size dependent on the content and on `--max-width` or
+ * `--max-height`.
+ */
+const CONTENT_SIZES = ['auto', 'fit-content', 'min-content', 'max-content'];
+
+type OverlaySizeType = 'fullscreen' | 'content' | 'definite';
+
+/**
+ * How an overlay's `--width` or `--height` determines its used size:
+ *
+ * `fullscreen` spans the viewport on that axis. `content` depends on the
+ * overlay's content, so its used size is not known until layout. `definite`
+ * resolves independently of the overlay's content size.
+ *
+ * Values are lowercased because CSS keywords are case-insensitive, while a
+ * custom property preserves the case in which it was authored. Content values
+ * are matched as a suffix so vendor-prefixed values such as `-moz-fit-content`
+ * are recognized.
+ */
+export const getOverlaySizeType = (size: string): OverlaySizeType => {
+  const value = size.trim().toLowerCase();
+
+  if (FULLSCREEN_SIZES.includes(value)) {
+    return 'fullscreen';
+  }
+
+  if (CONTENT_SIZES.some((keyword) => value.endsWith(keyword))) {
+    return 'content';
+  }
+
+  return 'definite';
 };
 
 export const BACKDROP = 'backdrop';

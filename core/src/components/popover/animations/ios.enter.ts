@@ -1,10 +1,12 @@
 import { createAnimation } from '@utils/animation/animation';
 import { getElementRoot } from '@utils/helpers';
+import { isRTL } from '@utils/rtl';
 
 import type { Animation } from '../../../interface';
 import {
   calculateWindowAdjustment,
   getArrowDimensions,
+  getElementCSSZoom,
   getPopoverDimensions,
   getPopoverPosition,
   getSafeAreaInsets,
@@ -30,27 +32,42 @@ const POPOVER_IOS_MIN_EDGE_MARGIN = 25;
 export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
   const { event: ev, size, trigger, reference, side, align } = opts;
   const doc = baseEl.ownerDocument as any;
-  const isRTL = doc.dir === 'rtl';
-  const bodyWidth = doc.defaultView.innerWidth;
-  const bodyHeight = doc.defaultView.innerHeight;
-
+  const rtl = isRTL(baseEl);
   const root = getElementRoot(baseEl);
   const contentEl = root.querySelector('.popover-content') as HTMLElement;
   const arrowEl = root.querySelector('.popover-arrow') as HTMLElement | null;
 
+  /**
+   * A CSS `zoom` other than 1 on an ancestor (e.g. the `html` element) causes
+   * geometry APIs like `getBoundingClientRect()` to report zoomed values while
+   * inline `top`/`left`/`--width` styles are interpreted in the unzoomed layout
+   * space. Normalize all rect-derived measurements by this factor so the
+   * popover is positioned and sized correctly.
+   */
+  const zoom = getElementCSSZoom(contentEl);
+
+  /**
+   * `innerWidth`/`innerHeight` are not affected by CSS `zoom`, so they must be
+   * scaled down to the same layout space as the normalized measurements above.
+   * Otherwise the popover would be clamped against a viewport that is larger
+   * than the space actually available to it.
+   */
+  const bodyWidth = doc.defaultView.innerWidth / zoom;
+  const bodyHeight = doc.defaultView.innerHeight / zoom;
+
   const referenceSizeEl = trigger || ev?.detail?.ionShadowTarget || ev?.target;
-  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, referenceSizeEl);
-  const { arrowWidth, arrowHeight } = getArrowDimensions(arrowEl);
+  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, referenceSizeEl, zoom);
+  const { arrowWidth, arrowHeight } = getArrowDimensions(arrowEl, zoom);
 
   const defaultPosition = {
     top: bodyHeight / 2 - contentHeight / 2,
     left: bodyWidth / 2 - contentWidth / 2,
-    originX: isRTL ? 'right' : 'left',
+    originX: rtl ? 'right' : 'left',
     originY: 'top',
   };
 
   const results = getPopoverPosition(
-    isRTL,
+    rtl,
     contentWidth,
     contentHeight,
     arrowWidth,
@@ -60,7 +77,8 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     align,
     defaultPosition,
     trigger,
-    ev
+    ev,
+    zoom
   );
 
   const padding = size === 'cover' ? 0 : POPOVER_IOS_BODY_PADDING;

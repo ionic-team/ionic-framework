@@ -3,6 +3,98 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.12](https://github.com/ionic-team/ionic-framework/compare/v9.0.11...v9.0.12) (2026-11-17)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [9.0.11](https://github.com/ionic-team/ionic-framework/compare/v9.0.10...v9.0.11) (2026-11-11)
+
+### Bug Fixes
+
+* **react-router:** show page that mounts during a navigation ([#31718](https://github.com/ionic-team/ionic-framework/issues/31718)) ([c6680bb](https://github.com/ionic-team/ionic-framework/commit/c6680bb8d22faae7a27c93ba0b73f6a44096ca4e)), closes [#31696](https://github.com/ionic-team/ionic-framework/issues/31696) [#28878](https://github.com/ionic-team/ionic-framework/issues/28878)
+
+
+## [9.0.10](https://github.com/ionic-team/ionic-framework/compare/v9.0.9...v9.0.10) (2026-10-28)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [9.0.9](https://github.com/ionic-team/ionic-framework/compare/v9.0.8...v9.0.9) (2026-10-21)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [9.0.8](https://github.com/ionic-team/ionic-framework/compare/v9.0.7...v9.0.8) (2026-10-14)
+
+### Bug Fixes
+
+* **react-router:** stop hidden views from re-rendering on every navigation ([#31541](https://github.com/ionic-team/ionic-framework/issues/31541)) ([4ae0196](https://github.com/ionic-team/ionic-framework/commit/4ae01961e8ed65e26369e09d478fabeffba5ed6d)), closes [#31528](https://github.com/ionic-team/ionic-framework/issues/31528)
+
+
+## [9.0.7](https://github.com/ionic-team/ionic-framework/compare/v9.0.6...v9.0.7) (2026-10-07)
+
+### Bug Fixes
+
+* **react:** prevent error when an outlet unmounts before it's ready ([#31517](https://github.com/ionic-team/ionic-framework/issues/31517)) ([d5bab2e](https://github.com/ionic-team/ionic-framework/commit/d5bab2e89548311b2e3f62b5fe2be477685cb06d)), closes [#31513](https://github.com/ionic-team/ionic-framework/issues/31513)
+
+
+## [9.0.6](https://github.com/ionic-team/ionic-framework/compare/v9.0.5...v9.0.6) (2026-09-30)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [9.0.5](https://github.com/ionic-team/ionic-framework/compare/v9.0.4...v9.0.5) (2026-09-23)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [9.0.4](https://github.com/ionic-team/ionic-framework/compare/v9.0.3...v9.0.4) (2026-09-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [9.0.3](https://github.com/ionic-team/ionic-framework/compare/v9.0.2...v9.0.3) (2026-09-09)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [9.0.2](https://github.com/ionic-team/ionic-framework/compare/v9.0.1...v9.0.2) (2026-09-02)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [9.0.1](https://github.com/ionic-team/ionic-framework/compare/v9.0.0...v9.0.1) (2026-08-26)
+
+### Bug Fixes
+
+* **overlays:** restore presented state after a DOM move ([#31400](https://github.com/ionic-team/ionic-framework/issues/31400)) ([bfff8e1](https://github.com/ionic-team/ionic-framework/commit/bfff8e1377a8faff3581e61026733ce29b671513)), closes [#31389](https://github.com/ionic-team/ionic-framework/issues/31389) [#31390](https://github.com/ionic-team/ionic-framework/issues/31390) [#31389](https://github.com/ionic-team/ionic-framework/issues/31389)
+
+
 # [9.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0) (2026-08-19)
 
 **Full Changelog**: https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v9.0.0

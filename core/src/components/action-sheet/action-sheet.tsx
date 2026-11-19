@@ -4,6 +4,7 @@ import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
+import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -14,6 +15,7 @@ import {
   isCancel,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   safeCall,
   setOverlayId,
 } from '@utils/overlays';
@@ -455,6 +457,15 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   connectedCallback() {
     prepareOverlay(this.el);
     this.triggerChanged();
+
+    // `componentDidLoad` only fires once per instance, so a reconnect has to
+    // rebuild the gesture its disconnect destroyed.
+    this.setupButtonActiveGesture();
+
+    // Re-apply the root lock if moved without dismiss() being called
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(this.el);
+    }
   }
 
   disconnectedCallback() {
@@ -478,26 +489,36 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     this.buttonsChanged();
   }
 
-  componentDidLoad() {
-    /**
-     * Only create gesture if:
-     * 1. A gesture does not already exist
-     * 2. App is running in iOS mode
-     * 3. A wrapper ref exists
-     * 4. A group ref exists
-     */
+  /**
+   * Only create gesture if:
+   * 1. A gesture does not already exist
+   * 2. App is running in iOS mode
+   * 3. A wrapper ref exists
+   * 4. A group ref exists
+   * 5. The host is still connected, since a reconnect can schedule this and
+   *    disconnect again before the task runs
+   */
+  private setupButtonActiveGesture() {
     const { groupEl, wrapperEl } = this;
-    if (!this.gesture && getIonMode(this) === 'ios' && wrapperEl && groupEl) {
-      readTask(() => {
-        const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
-        if (!isScrollable) {
-          this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
-            refEl.classList.contains('action-sheet-button')
-          );
-          this.gesture.enable(true);
-        }
-      });
+    if (getIonMode(this) !== 'ios' || !wrapperEl || !groupEl) {
+      return;
     }
+    readTask(() => {
+      // Bail if a call queued ahead of this one already built the gesture
+      // (a second would orphan the first with its listeners still bound), if
+      // the host disconnected while this task waited, or if the group scrolls.
+      if (this.gesture || !this.el.isConnected || groupEl.scrollHeight > groupEl.clientHeight) {
+        return;
+      }
+      this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
+        refEl.classList.contains('action-sheet-button')
+      );
+      this.gesture.enable(true);
+    });
+  }
+
+  componentDidLoad() {
+    this.setupButtonActiveGesture();
 
     /**
      * If action sheet was rendered with isOpen="true"
@@ -637,7 +658,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop tappable={this.backdropDismiss} />
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="start" />
 
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
           <div class="action-sheet-container">
@@ -687,7 +708,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           </div>
         </div>
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <OverlayFocusBoundary overlay={this.el} edge="end" />
       </Host>
     );
   }

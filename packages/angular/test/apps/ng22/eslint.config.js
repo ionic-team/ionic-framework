@@ -1,7 +1,7 @@
 // @ts-check
 // Angular 22 requires ESLint 9 + angular-eslint 22, which are flat-config only.
-// The other test apps (ng18-ng21) still use the shared base/.eslintrc.json;
-// ESLint 9 ignores that file once this flat config is present in the build dir.
+// Apps on Angular 21 and below still use the shared base/.eslintrc.json, which
+// ESLint 9 ignores once this flat config is present in the build dir.
 const angular = require('angular-eslint');
 
 module.exports = [
@@ -18,6 +18,9 @@ module.exports = [
     rules: {
       '@angular-eslint/prefer-standalone': 'off',
       '@angular-eslint/prefer-inject': 'off',
+      // Test pages declare eager change detection on purpose: they exist to
+      // prove a tick still reaches a routed page.
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
       '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'app', style: 'kebab-case' }],
       '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: 'app', style: 'camelCase' }],
     },

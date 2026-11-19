@@ -1,11 +1,28 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Host,
+  Listen,
+  Method,
+  Prop,
+  State,
+  Watch,
+  h,
+  forceUpdate,
+} from '@stencil/core';
+import type { AttributeController } from '@utils/attribute-controller';
+import { createTabindexController } from '@utils/attribute-controller';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
-import type { NotchController, StartContainerController } from '@utils/forms';
+import type { ClickController, NotchController, StartEndContainerController } from '@utils/forms';
 import {
   compareOptions,
+  createClickController,
   createNotchController,
-  createStartContainerController,
+  createStartEndContainerController,
+  getSlottedClickContent,
   isOptionSelected,
   checkInvalidState,
 } from '@utils/forms';
@@ -82,14 +99,18 @@ export class Select implements ComponentInterface {
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
   private inheritedAttributes: Attributes = {};
+  private tabindexController?: AttributeController;
   private slotMutationController?: SlotMutationController;
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
   private validationObserver?: MutationObserver;
   private notchController?: NotchController;
-  private startContainerController?: StartContainerController;
+  private startEndContainerController?: StartEndContainerController;
   private startContainerEl: HTMLElement | undefined;
+  private endContainerEl: HTMLElement | undefined;
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
+
+  private clickController?: ClickController;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -342,8 +363,10 @@ export class Select implements ComponentInterface {
   async connectedCallback() {
     const { el } = this;
 
+    this.tabindexController?.init();
+
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
-      this.startContainerController?.calculateStartContainerWidth();
+      this.startEndContainerController?.calculateContainerWidths();
 
       forceUpdate(this);
     });
@@ -354,15 +377,18 @@ export class Select implements ComponentInterface {
       () => this.labelSlot
     );
 
-    this.startContainerController = createStartContainerController(
+    this.startEndContainerController = createStartEndContainerController(
       el,
       () => this.startContainerEl,
+      () => this.endContainerEl,
       () => {
         return Build.isBrowser && getIonMode(this) === 'md' && this.fill === 'outline';
       }
     );
 
-    this.startContainerController.calculateStartContainerWidth();
+    this.startEndContainerController.calculateContainerWidths();
+
+    this.clickController = createClickController(el);
 
     this.updateOverlayOptions();
     this.emitStyle();
@@ -421,6 +447,7 @@ export class Select implements ComponentInterface {
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
 
     this.hintTextId = this.getHintTextId();
   }
@@ -440,6 +467,8 @@ export class Select implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    this.tabindexController?.destroy();
+
     if (this.mutationO) {
       this.mutationO.disconnect();
       this.mutationO = undefined;
@@ -455,9 +484,9 @@ export class Select implements ComponentInterface {
       this.notchController = undefined;
     }
 
-    if (this.startContainerController) {
-      this.startContainerController.destroy();
-      this.startContainerController = undefined;
+    if (this.startEndContainerController) {
+      this.startEndContainerController.destroy();
+      this.startEndContainerController = undefined;
     }
 
     // Clean up validation observer to prevent memory leaks.
@@ -993,42 +1022,39 @@ export class Select implements ComponentInterface {
     this.ionStyle.emit(style);
   }
 
-  private onClick = (ev: UIEvent) => {
-    const target = ev.target as HTMLElement;
-    const closestSlot = target.closest('[slot="start"], [slot="end"]');
+  /**
+   * The label wrapping the slots has no `for` attribute, so the browser
+   * forwards a click on slotted content to the label's first labelable
+   * descendant, the internal button. That forwarded click bubbles back out of
+   * the shadow root targeting the host, where it would be emitted a second
+   * time and open the select. The controller swallows it during the capture
+   * phase, leaving the click on the slotted content itself alone so slotted
+   * links, checkboxes and buttons keep their default behavior.
+   */
+  @Listen('click', { capture: true })
+  onClickCapture(ev: Event) {
+    this.clickController?.handleClickCapture(ev);
+  }
 
-    if (target === this.el || closestSlot === null) {
-      this.setFocus();
-      this.open(ev);
-    } else {
-      /**
-       * Prevent clicks to the start/end slots from opening the select.
-       * We ensure the target isn't this element in case the select is slotted
-       * in, for example, an item. This would prevent the select from ever
-       * being opened since the element itself has slot="start"/"end".
-       *
-       * Clicking a slotted element also causes a click
-       * on the <label> element (since it wraps the slots).
-       * Clicking <label> dispatches another click event on
-       * the native form control that then bubbles up to this
-       * listener. This additional event targets the host
-       * element, so the select overlay is opened.
-       *
-       * When the slotted elements are clicked (and therefore
-       * the ancestor <label> element) we want to prevent the label
-       * from dispatching another click event.
-       *
-       * Do not call stopPropagation() because this will cause
-       * click handlers on the slotted elements to never fire in React.
-       * When developers do onClick in React a native "click" listener
-       * is added on the root element, not the slotted element. When that
-       * native click listener fires, React then dispatches the synthetic
-       * click event on the slotted element. However, if stopPropagation
-       * is called then the native click event will never bubble up
-       * to the root element.
-       */
-      ev.preventDefault();
+  private onClick = (ev: UIEvent) => {
+    const slotted = getSlottedClickContent(ev, this.el);
+
+    /**
+     * Interactive slotted content, such as a button or a checkbox, handles its
+     * own click, so it should not open the select as well. Any other slotted
+     * content is decorative and behaves the same as clicking the select
+     * itself.
+     */
+    if (slotted !== null) {
+      const interactive = (ev.target as HTMLElement).closest(INTERACTIVE_SLOTTED_CONTENT);
+
+      if (interactive !== null && slotted.contains(interactive)) {
+        return;
+      }
     }
+
+    this.setFocus();
+    this.open(ev);
   };
 
   private onFocus = () => {
@@ -1061,7 +1087,7 @@ export class Select implements ComponentInterface {
 
   componentDidRender() {
     this.notchController?.calculateNotchWidth();
-    this.startContainerController?.calculateStartContainerWidth();
+    this.startEndContainerController?.calculateContainerWidths();
   }
 
   /**
@@ -1255,6 +1281,7 @@ export class Select implements ComponentInterface {
 
   private renderListbox() {
     const { disabled, inputId, isExpanded, required } = this;
+    const tabindexAttributes = this.tabindexController?.attributes ?? {};
 
     return (
       <button
@@ -1269,6 +1296,7 @@ export class Select implements ComponentInterface {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(focusEl) => (this.focusEl = focusEl)}
+        {...tabindexAttributes}
       ></button>
     );
   }
@@ -1398,7 +1426,7 @@ export class Select implements ComponentInterface {
               {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
             </div>
           </div>
-          <div class="select-end" part="end">
+          <div class="select-end" part="end" ref={(el) => (this.endContainerEl = el)}>
             {/**
              * The icon is rendered in the end container when the
              * select has a floating or stacked label so it is
@@ -1692,3 +1720,31 @@ const extractOptionContent = (option: HTMLIonSelectOptionElement, customHTMLEnab
 let selectIds = 0;
 
 const OPTION_CLASS = 'select-interface-option';
+
+/**
+ * Slotted content that handles its own click, so clicking it should not also
+ * open the select.
+ *
+ * This deliberately does not reuse `focusableQueryString`. That selector
+ * answers whether an element can take focus right now, which is a different
+ * question: an ion-radio outside a radio group carries tabindex="-1" from the
+ * group's roving tabindex, and disabled controls are excluded, yet both still
+ * handle their own clicks.
+ */
+const INTERACTIVE_SLOTTED_CONTENT = [
+  'a[href]',
+  'button',
+  'input[type="checkbox"]',
+  'input[type="radio"]',
+  'ion-button',
+  'ion-checkbox',
+  'ion-radio',
+  'ion-toggle',
+  '[tabindex]:not([tabindex^="-"])',
+  /**
+   * Covers the remaining Ionic controls. The tags above are still listed
+   * because ion-checkbox and ion-radio only carry this class when they are
+   * outside an item, so a select inside an item would lose the match.
+   */
+  '.ion-focusable',
+].join(', ');

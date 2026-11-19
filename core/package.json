@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "9.0.0",
+  "version": "9.0.12",
   "description": "Base components for Ionic",
   "engines": {
     "node": ">= 16"
@@ -67,7 +67,7 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
+    "@axe-core/playwright": "^4.14.0",
     "@capacitor/core": "^8.0.0",
     "@capacitor/haptics": "^8.0.0",
     "@capacitor/keyboard": "^8.0.0",
@@ -76,7 +76,7 @@
     "@eslint/js": "^9.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@playwright/test": "^1.62.1",
+    "@playwright/test": "^1.65.1",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^1.4.1",
@@ -97,7 +97,7 @@
     "eslint-plugin-import": "^2.31.0",
     "execa": "^8.0.1",
     "fs-extra": "^9.0.1",
-    "playwright-core": "^1.62.1",
+    "playwright-core": "^1.65.1",
     "prettier": "^2.6.1",
     "rollup": "^2.26.4",
     "sass": "^1.33.0",
@@ -113,6 +113,9 @@
       "@typescript-eslint/parser": "$@typescript-eslint/parser",
       "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
       "eslint-plugin-import": "$eslint-plugin-import"
+    },
+    "serve": {
+      "compression": "^1.8.2"
     }
   },
   "scripts": {

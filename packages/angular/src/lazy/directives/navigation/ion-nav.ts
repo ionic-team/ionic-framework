@@ -13,6 +13,8 @@ import { IonNav as IonNavBase, AngularDelegate } from '@ionic/angular/common';
   standalone: false,
   selector: 'ion-nav',
   template: '<ng-content></ng-content>',
+  // Unlike ion-router-outlet, the delegate attaches pages here as root views and
+  // IonNavBase detaches this one, so a tick never descends through it.
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IonNav extends IonNavBase {

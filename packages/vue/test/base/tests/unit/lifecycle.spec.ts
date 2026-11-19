@@ -167,10 +167,8 @@ describe('Lifecycle Events', () => {
     expect(TabsPage.ionViewWillLeave).toHaveBeenCalled();
     expect(TabsPage.ionViewDidLeave).toHaveBeenCalled();
 
-    // Tab1Page currently does not call leaving hooks
-    // when navigating out of tabs
-    //expect(Tab1Page.ionViewWillLeave).toHaveBeenCalled();
-    //expect(Tab1Page.ionViewDidLeave).toHaveBeenCalled();
+    expect(Tab1Page.ionViewWillLeave).toHaveBeenCalled();
+    expect(Tab1Page.ionViewDidLeave).toHaveBeenCalled();
 
     expect(NonTabPage.ionViewWillEnter).toHaveBeenCalled();
     expect(NonTabPage.ionViewDidEnter).toHaveBeenCalled();
@@ -196,6 +194,9 @@ describe('Lifecycle Events', () => {
 
     expect(TabsPage.ionViewWillLeave).toHaveBeenCalled();
     expect(TabsPage.ionViewDidLeave).toHaveBeenCalled();
+
+    expect(Tab1Page.ionViewWillLeave).toHaveBeenCalled();
+    expect(Tab1Page.ionViewDidLeave).toHaveBeenCalled();
 
     expect(NonTabPage.ionViewWillEnter).toHaveBeenCalled();
     expect(NonTabPage.ionViewDidEnter).toHaveBeenCalled();

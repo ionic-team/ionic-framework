@@ -7,6 +7,7 @@ import type { Attributes } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
+import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -17,6 +18,7 @@ import {
   GESTURE,
   prepareOverlay,
   present,
+  restoreRootFocusTrapAccessibility,
   setOverlayId,
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
@@ -52,10 +54,10 @@ import {
   clearSafeAreaOverrides,
   getRootSafeAreaTop,
   onRootSafeAreaTopChange,
-  hasCustomModalDimensions,
+  getModalCoveredAxes,
   type ModalSafeAreaContext,
 } from './safe-area-utils';
-import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
+import { onModalHeightChange, setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 // TODO(FW-2832): types
 
@@ -113,6 +115,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private viewTransitionAnimation?: Animation;
   private resizeTimeout?: any;
   private unsubscribeRootSafeAreaTop?: () => void;
+  private unsubscribeHeightChange?: () => void;
+  // True from the first safe-area write in `present()` until the enter
+  // animation settles. A position-based read in that window is not the rest position.
+  private isPresenting = false;
 
   // Mutation observer to watch for parent removal
   private parentRemovalObserver?: MutationObserver;
@@ -460,6 +466,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { el } = this;
     prepareOverlay(el);
     this.triggerChanged();
+
+    // A disconnect tears down state this presentation still needs and cannot
+    // tell a re-insert from a removal, so put it back.
+    if (this.presented || this.isPresenting) {
+      this.restoreSafeAreaOverrides();
+    }
+    // A relocation from `willPresent` reaches these before `present()` has
+    // applied the lock, so they apply it instead. Both are idempotent.
+    if (this.presented) {
+      restoreRootFocusTrapAccessibility(el);
+      this.initParentRemovalObserver();
+    }
   }
 
   disconnectedCallback() {
@@ -666,28 +684,36 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // bindings (e.g., Angular) may not have been applied when componentWillLoad ran.
     this.isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
 
-    // Set initial safe-area overrides before animation
-    this.setInitialSafeAreaOverrides();
+    this.isPresenting = true;
 
     const hasCardModal = presentingElement !== undefined;
 
-    /**
-     * We need to change the status bar at the
-     * start of the animation so that it completes
-     * by the time the card animation is done.
-     */
-    if (hasCardModal && getIonMode(this) === 'ios') {
-      // Cache the original status bar color before the modal is presented
-      this.statusBarStyle = await StatusBar.getStyle();
-      setCardStatusBarDark();
-    }
+    // Wrapped so a throw cannot strand `isPresenting`, which would suppress
+    // the position-based correction for the life of this instance.
+    try {
+      // Set initial safe-area overrides before animation
+      this.setInitialSafeAreaOverrides();
 
-    await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
-      presentingEl: presentingElement,
-      currentBreakpoint: this.initialBreakpoint,
-      backdropBreakpoint: this.backdropBreakpoint,
-      expandToScroll: this.expandToScroll,
-    });
+      /**
+       * We need to change the status bar at the
+       * start of the animation so that it completes
+       * by the time the card animation is done.
+       */
+      if (hasCardModal && getIonMode(this) === 'ios') {
+        // Cache the original status bar color before the modal is presented
+        this.statusBarStyle = await StatusBar.getStyle();
+        setCardStatusBarDark();
+      }
+
+      await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
+        presentingEl: presentingElement,
+        currentBreakpoint: this.initialBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+        expandToScroll: this.expandToScroll,
+      });
+    } finally {
+      this.isPresenting = false;
+    }
 
     // Update safe-area based on actual position after animation
     this.updateSafeAreaOverrides();
@@ -1407,6 +1433,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
+    // Both `present()` and a reconnect call this, so drop any existing
+    // observer. Below the guards, so a call that bails cannot leave none.
+    this.cleanupParentRemovalObserver();
+
     this.parentRemovalObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
@@ -1459,7 +1489,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Creates the context object for safe-area utilities.
    *
-   * `hasCustomDimensions` is only set by `setInitialSafeAreaOverrides()`
+   * `coveredAxes` is only set by `setInitialSafeAreaOverrides()`
    * because it is only read by `getInitialSafeAreaConfig()`. Other callers
    * (resize handler, post-animation update, fullscreen-padding apply) would
    * pay a `getComputedStyle()` cost for a value they never consult.
@@ -1475,6 +1505,28 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * Keeps the content's sizing in sync with `--height`. The content reads the
+   * property to determine whether it should size itself to its content, and
+   * changes to `--height` on an ancestor or the root can change that behavior
+   * without changing the modal itself.
+   */
+  private watchHeightForContent(): void {
+    /**
+     * A sheet's height comes from its breakpoints, so its content never sizes
+     * itself to `--height`. Watching it would cause the drag to recalculate on
+     * every frame.
+     */
+    if (this.isSheetModal) {
+      return;
+    }
+
+    this.unsubscribeHeightChange?.();
+    this.unsubscribeHeightChange = onModalHeightChange(this.el, () => {
+      this.el.querySelectorAll('ion-content').forEach((contentEl) => contentEl.recalculateDimensions());
+    });
+  }
+
+  /**
    * Sets initial safe-area overrides before modal animation.
    * Called in present() before animation starts.
    *
@@ -1487,14 +1539,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private setInitialSafeAreaOverrides(): void {
     const context: ModalSafeAreaContext = {
       ...this.getSafeAreaContext(),
-      hasCustomDimensions: hasCustomModalDimensions(this.el),
+      coveredAxes: getModalCoveredAxes(this.el),
     };
     const safeAreaConfig = getInitialSafeAreaConfig(context);
     applySafeAreaOverrides(this.el, safeAreaConfig);
 
+    this.watchHeightForContent();
+
     // Set the internal offset property with the resolved root safe-area-top value
     if (context.isSheetModal) {
       this.updateSheetOffsetTop();
+      // A restore after a DOM move runs this a second time for the same
+      // modal, so drop the previous subscription rather than stacking one.
+      this.unsubscribeRootSafeAreaTop?.();
       this.unsubscribeRootSafeAreaTop = onRootSafeAreaTopChange((safeAreaTop) =>
         this.updateSheetOffsetTop(safeAreaTop)
       );
@@ -1615,11 +1672,41 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.unsubscribeRootSafeAreaTop?.();
     this.unsubscribeRootSafeAreaTop = undefined;
 
+    this.unsubscribeHeightChange?.();
+    this.unsubscribeHeightChange = undefined;
+
     // Remove internal sheet offset property
     this.el.style.removeProperty('--ion-modal-offset-top');
 
     const { contentEl } = this.findContentAndFooter();
     this.clearContentSafeAreaPadding(contentEl);
+  }
+
+  /**
+   * Re-applies what `cleanupSafeAreaOverrides()` removed for a modal moved
+   * while presented. Anything needing no measurement goes on synchronously so
+   * the modal is never painted without safe-area. The position-based
+   * correction waits a frame for the layout pass it reads.
+   */
+  private restoreSafeAreaOverrides(): void {
+    this.setInitialSafeAreaOverrides();
+    this.applyFullscreenSafeArea();
+
+    raf(() => {
+      // A dismiss or another move can land first, and a read before the enter
+      // animation settles is not the rest position. `present()` redoes it.
+      if (!this.presented || !this.el.isConnected || this.isPresenting) {
+        return;
+      }
+      // A hidden subtree carries `display: none`, so there is no box and the
+      // read would write the safe-area for a modal touching no edge. The
+      // prediction applied above holds until the modal is shown again.
+      const { width, height } = this.el.getBoundingClientRect();
+      if (width === 0 && height === 0) {
+        return;
+      }
+      this.updateSafeAreaOverrides();
+    });
   }
 
   render() {
@@ -1674,6 +1761,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
+        <OverlayFocusBoundary overlay={this.el} edge="start" />
+
         <div
           /*
             role and aria-modal must be used on the
@@ -1708,6 +1797,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
           )}
           <slot onSlotchange={this.onSlotChange}></slot>
         </div>
+
+        <OverlayFocusBoundary overlay={this.el} edge="end" />
       </Host>
     );
   }

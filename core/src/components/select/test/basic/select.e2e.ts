@@ -1339,3 +1339,200 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across directions/modes
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: slotted click'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select label="Fruit" interface="alert">
+          <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+          <ion-button slot="end" aria-label="Clear selection">
+            <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+          </ion-button>
+          <input slot="end" type="checkbox" aria-label="Favorite" />
+          <ion-checkbox slot="end" aria-label="Favorite"></ion-checkbox>
+          <ion-radio slot="end" aria-label="Preferred"></ion-radio>
+          <ion-toggle slot="end" aria-label="Notify"></ion-toggle>
+          <a slot="end" href="#navigated">Details</a>
+          <div slot="end">
+            <button type="button">Nested</button>
+            <span>Nested</span>
+          </div>
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+    });
+
+    /**
+     * Decorative slotted content behaves the same as clicking the select
+     * itself, so it opens the overlay.
+     */
+    test('should emit one click and open the select when a slotted icon is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-icon[slot="start"]').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      const event = clickEvent.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-icon');
+
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should emit one click without opening the select when a slotted button is clicked', async ({ page }) => {
+      const clickEvent = await page.spyOnEvent('click');
+
+      await page.locator('ion-button[slot="end"]').click();
+
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      /**
+       * Opening is asynchronous, so an assertion that the select stayed closed
+       * passes on its first poll while the select is still on its way open.
+       * Pending renders are flushed first so the expanded class is applied by
+       * the time it is checked.
+       *
+       * Focus is not asserted here. WebKit forwards focus from the wrapping
+       * label to the select's own control even when the click lands on
+       * interactive slotted content, so the select reports focus there while
+       * Chromium and Firefox leave it on the slotted button.
+       */
+      await page.waitForChanges();
+
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    test('should activate slotted form controls without opening the select', async ({ page }) => {
+      const checkbox = page.locator('input[slot="end"][type="checkbox"]');
+
+      await checkbox.click();
+      await page.waitForChanges();
+
+      await expect(checkbox).toBeChecked();
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    /**
+     * A radio outside a radio group keeps the tabindex of -1 that the group
+     * would otherwise raise, so it is the control that regressed while the
+     * interactive check relied on a focusability selector.
+     */
+    ['ion-checkbox', 'ion-radio', 'ion-toggle'].forEach((tag) => {
+      test(`should activate a slotted ${tag} without opening the select`, async ({ page }) => {
+        const control = page.locator(tag);
+
+        await control.click();
+        await page.waitForChanges();
+
+        await expect(control).toHaveAttribute('aria-checked', 'true');
+        await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+      });
+    });
+
+    test('should follow a slotted link without opening the select', async ({ page }) => {
+      await page.locator('a[slot="end"]').click();
+      await page.waitForChanges();
+
+      expect(new URL(page.url()).hash).toBe('#navigated');
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    /**
+     * Whether the select opens follows the content that was clicked, not the
+     * slotted wrapper around it, so the same wrapper produces both results.
+     */
+    test('should not open the select when interactive content inside a slotted wrapper is clicked', async ({
+      page,
+    }) => {
+      await page.locator('div[slot="end"] button').click();
+      await page.waitForChanges();
+
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+
+    test('should open the select when decorative content inside a slotted wrapper is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('div[slot="end"] span').click();
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should open when the select is clicked after slotted content', async ({ page }) => {
+      /**
+       * Clicking a slotted button does not produce a forwarded click for the
+       * select to ignore, so the following click on the select itself must
+       * still open it.
+       */
+      await page.locator('ion-button[slot="end"]').click();
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-select').click({ position: { x: 5, y: 5 } });
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+  });
+
+  /**
+   * A select slotted into an item carries slot="end" on its own host, so the
+   * host is excluded when looking for the slotted content a click started on.
+   * Without that the select would read every click on itself as a slotted
+   * click and would never open.
+   */
+  test.describe(title('select: slotted click in item'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-select slot="end" label="Fruit" interface="alert">
+            <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+            <ion-button slot="end" aria-label="Clear selection">
+              <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-select-option value="apple">Apple</ion-select-option>
+          </ion-select>
+        </ion-item>
+      `,
+        config
+      );
+    });
+
+    test('should open when the select itself is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-select').click({ position: { x: 5, y: 5 } });
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should open when a slotted icon is clicked', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('ion-icon[slot="start"]').click();
+      await ionAlertDidPresent.next();
+
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
+
+    test('should not open when a slotted button is clicked', async ({ page }) => {
+      await page.locator('ion-button[slot="end"]').click();
+      await page.waitForChanges();
+
+      await expect(page.locator('ion-select')).not.toHaveClass(/select-expanded/);
+    });
+  });
+});

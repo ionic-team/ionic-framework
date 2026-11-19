@@ -14,6 +14,7 @@ This guide details best practices that should be followed when writing E2E tests
 - [Break up large or slow-running tests across multiple files](#practice-slow-tests)
 - [Use standard viewport sizes](#practice-viewport)
 - [Avoid using screenshots as a way of verifying functionality](#practice-screenshot-functionality)
+- [Use one screenshot assertion per test](#practice-one-screenshot)
 - [Avoid tests that compare computed values](#practice-test-computed)
 - [Test for positive and negative cases](#practice-positive-negative)
 - [Start your test with the configuration or layout in place if possible](#practice-test-config)
@@ -242,6 +243,51 @@ configs().forEach(({ config, title }) => {
 
       const modal = page.locator('ion-modal');
       await expect(modal).toBeVisible();
+    });
+  });
+});
+```
+
+<h2 id="practice-one-screenshot">Use one screenshot assertion per test</h2>
+
+A failed `toHaveScreenshot()` assertion ends the test, so anything after it never runs. When a test takes several screenshots, only the first mismatch is reported and the remaining screenshots are never compared. An intentional visual change then takes several runs of the suite to fully verify.
+
+Give each screenshot its own `test()`. If the screenshots must share setup, take them all and assert at the end of the test.
+
+❌ Incorrect
+
+A mismatch on `button-solid` means `button-outline` is never compared.
+
+```typescript
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('button: fill'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto('/src/components/button/test/fill', config);
+
+      await expect(page.locator('#solid')).toHaveScreenshot(screenshot('button-solid'));
+      await expect(page.locator('#outline')).toHaveScreenshot(screenshot('button-outline'));
+    });
+  });
+});
+```
+
+✅ Correct
+
+Each screenshot is compared independently, and a failure names the state that changed.
+
+```typescript
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('button: fill'), () => {
+    test('should not have visual regressions for solid buttons', async ({ page }) => {
+      await page.goto('/src/components/button/test/fill', config);
+
+      await expect(page.locator('#solid')).toHaveScreenshot(screenshot('button-solid'));
+    });
+
+    test('should not have visual regressions for outline buttons', async ({ page }) => {
+      await page.goto('/src/components/button/test/fill', config);
+
+      await expect(page.locator('#outline')).toHaveScreenshot(screenshot('button-outline'));
     });
   });
 });

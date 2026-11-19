@@ -299,6 +299,132 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           screenshot(`textarea-slot-overflow-label-floating-value-${slotName}-slot`)
         );
       });
+
+      /**
+       * The label and the textarea compete for whatever space the slot leaves
+       * behind. The textarea has to keep some of it so that the user can still
+       * see the value they are entering.
+       */
+      test(`should not have visual regressions with a start-positioned label, a value and a wide ${slotName} slot`, async ({
+        page,
+      }) => {
+        await setContent(page, 'label-placement="start" value="100"', slot);
+
+        const container = page.locator('.container');
+        await expect(container).toHaveScreenshot(
+          screenshot(`textarea-slot-overflow-label-start-value-${slotName}-slot`)
+        );
+      });
+
+      test(`should keep two characters of the value visible with a start-positioned label and a wide ${slotName} slot`, async ({
+        page,
+      }) => {
+        await setContent(page, 'label-placement="start" value="100"', slot);
+
+        const nativeTextarea = page.locator('ion-textarea textarea');
+
+        /**
+         * The width of two characters in the textarea's own font, which is
+         * what `$form-control-min-width` reserves for the value.
+         */
+        const twoCharacterWidth = await nativeTextarea.evaluate((el) => {
+          const probe = document.createElement('span');
+          probe.style.cssText = `position: absolute; visibility: hidden; white-space: pre; font: ${
+            getComputedStyle(el).font
+          }`;
+          probe.textContent = '00';
+          document.body.append(probe);
+          const { width } = probe.getBoundingClientRect();
+          probe.remove();
+          return width;
+        });
+        const box = await nativeTextarea.boundingBox();
+
+        expect(box!.width).toBeGreaterThanOrEqual(twoCharacterWidth);
+      });
+    });
+
+    /**
+     * The label truncates beside the wide slot and has room for its full
+     * text once it floats into the notch. It must not reveal that full text
+     * while it is still at its resting size, or it overflows the textarea
+     * partway through the transition.
+     */
+    test('should keep the label inside the textarea while it floats above a wide end slot', async ({ page }) => {
+      /**
+       * The label is longer than the textarea, so revealing all of it at its
+       * resting size pushes it past the border, not only over the slot.
+       */
+      await page.setContent(
+        `
+          <ion-textarea
+            fill="outline"
+            label="Enter the email address associated with your account"
+            label-placement="floating"
+            style="width: 260px"
+          >
+            ${endSlot}
+          </ion-textarea>
+        `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+
+      /**
+       * The first measurement of the start container disables the label
+       * transition for a frame. Wait for it to finish so the label is not
+       * floated while its transitions are turned off.
+       */
+      await expect(textarea).toHaveAttribute('style', /--internal-start-container-adjustment/);
+      await expect(textarea).not.toHaveClass(/skip-label-transition/);
+
+      /**
+       * Pauses the label's transitions and steps through them so every
+       * point of the animation is checked regardless of frame timing.
+       */
+      const overflow = await textarea.evaluate(async (el: HTMLIonTextareaElement) => {
+        const label = el.querySelector('.label-text-wrapper')!;
+        const wrapper = el.querySelector('.textarea-wrapper')!;
+        const maxRight = wrapper.getBoundingClientRect().right - parseFloat(getComputedStyle(wrapper).paddingRight);
+
+        /**
+         * The class that starts the transitions is added on the next render.
+         * A mutation observer runs right after that render, before the next
+         * frame, so the transitions are caught at their start. Waiting for a
+         * frame or using `page.waitForChanges()` can let the 150ms transitions
+         * finish on a slow machine, at which point the browser discards them
+         * and there is nothing to step through.
+         */
+        await new Promise<void>((resolve) => {
+          const observer = new MutationObserver(() => {
+            if (el.classList.contains('label-floating')) {
+              observer.disconnect();
+              resolve();
+            }
+          });
+          observer.observe(el, { attributeFilter: ['class'] });
+
+          el.value = '100';
+        });
+
+        // Without this a label that already finished floating would pass
+        const transitions = label.getAnimations();
+        if (transitions.length === 0) {
+          throw new Error('The label did not transition');
+        }
+        transitions.forEach((transition) => transition.pause());
+
+        // Step through the 150ms label transition in 15ms increments
+        const overflows = Array.from({ length: 11 }, (_, step) => {
+          transitions.forEach((transition) => (transition.currentTime = step * 15));
+          return label.getBoundingClientRect().right - maxRight;
+        });
+
+        return Math.max(...overflows);
+      });
+
+      expect(overflow).toBeLessThanOrEqual(1);
     });
   });
 });

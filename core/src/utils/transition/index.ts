@@ -282,6 +282,19 @@ export const setPageHidden = (el: HTMLElement, hidden: boolean) => {
   }
 };
 
+/**
+ * Blocks clicks on `el` during a swipe to go back without animations,
+ * so releasing the pointer doesn't click whatever is under it. Returns
+ * a function that unblocks it after the release click.
+ */
+export const blockSwipeClicks = (el: HTMLElement) => {
+  el.style.setProperty('pointer-events', 'none');
+
+  return () => {
+    setTimeout(() => el.style.removeProperty('pointer-events'));
+  };
+};
+
 const setZIndex = (
   enteringEl: HTMLElement | undefined,
   leavingEl: HTMLElement | undefined,
