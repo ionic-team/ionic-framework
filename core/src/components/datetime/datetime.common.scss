@@ -297,26 +297,14 @@
 }
 
 /**
- * Range start and end wrappers use z-index: 1 below. Matching them
- * would let DOM order decide, so a later range edge would paint over
- * this day's focus ring. Stay one level above them.
+ * The focus ring can extend past the cell, so lift the focused day
+ * above the following days, whose buttons would otherwise cover it.
  *
- * Exclude range-track wrappers: their ::before spans multiple cells,
- * so elevating them would cover adjacent day numbers.
+ * Wrappers that draw the range track are left out: lifting one would
+ * bring its ::before, which spans the rest of the run, above the
+ * following days' numbers.
  */
 :host .calendar-day-wrapper:focus-within:not(.calendar-day-wrapper-range-track) {
-  z-index: 2;
-}
-
-/**
- * Range start and end circles can overflow their grid row.
- * Lift them above adjacent in-range wrappers so the next
- * row's range track does not paint over the circle.
- *
- * Exclude range-track wrappers for the same reason as above.
- */
-:host .calendar-day-wrapper-range-start:not(.calendar-day-wrapper-range-track),
-:host .calendar-day-wrapper-range-end:not(.calendar-day-wrapper-range-track) {
   z-index: 1;
 }
 
