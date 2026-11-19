@@ -140,9 +140,13 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
 
       await page.keyboard.press('ArrowDown');
       await page.waitForChanges();
+      await page.keyboard.press('ArrowRight');
+      await page.waitForChanges();
+      await page.keyboard.press('ArrowRight');
+      await page.waitForChanges();
 
-      const day15 = datetime.locator('[data-month="6"][data-day="15"]');
-      await expect(day15).toBeFocused();
+      const day17 = datetime.locator('[data-month="6"][data-day="17"]');
+      await expect(day17).toBeFocused();
 
       await fixture.expectRangeDatePicker('in-range-focus', screenshot);
     });
@@ -247,8 +251,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(day18).not.toHaveClass(/calendar-day-range-end/);
     });
 
-    test('tapping an earlier date second should normalize start and end', async ({ page }) => {
-      const datetime = await fixture.goto(config);
+    test('tapping an earlier date second should start a new range', async ({ page }) => {
+      await fixture.goto(config);
       const ionChangeSpy = await page.spyOnEvent('ionChange');
 
       const day20 = fixture.getVisibleDay(20);
@@ -258,17 +262,14 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await day20.click();
       await page.waitForChanges();
 
-      // Second tap: set end to day 10 (before start)
+      // Second tap: day 10 is before the start, so it becomes the new start
       await day10.click();
-      await ionChangeSpy.next();
+      await page.waitForChanges();
 
-      // Should normalize so start=10, end=20
       await expect(day10).toHaveClass(/calendar-day-range-start/);
-      await expect(day20).toHaveClass(/calendar-day-range-end/);
-
-      const startISO = await fixture.getISOFromDay(day10);
-      const endISO = await fixture.getISOFromDay(day20);
-      await expect(datetime).toHaveJSProperty('value', [startISO, endISO]);
+      await expect(day20).not.toHaveClass(/calendar-day-range-start/);
+      await expect(day20).not.toHaveClass(/calendar-day-range-end/);
+      await expect(ionChangeSpy).not.toHaveReceivedEvent();
     });
 
     // ---------------------------------------------------------------
