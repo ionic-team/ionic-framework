@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import type { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
@@ -12,6 +12,7 @@ import {
   computeStackId,
   destroyView,
   getUrl,
+  hasNavigationGuards,
   insertView,
   isTabSwitch,
   toSegments,
@@ -22,6 +23,7 @@ import {
 export class StackController {
   private views: RouteView[] = [];
   private runningTask?: Promise<any>;
+  private historyPop?: Promise<boolean>;
   private skipTransition = false;
   private tabsPrefix: string[] | undefined;
   private activeView: RouteView | undefined;
@@ -49,6 +51,7 @@ export class StackController {
       element,
       ref,
       url,
+      activatedRoute,
     };
   }
 
@@ -87,17 +90,27 @@ export class StackController {
     }
 
     /**
-     * If the navigation action
-     * sets `replaceUrl: true`
-     * then we need to make sure
-     * we remove the last item
-     * from our views stack
+     * If the navigation sets `replaceUrl: true`, remove the last view
+     * from the stack. The router also sets it on browser back and
+     * forward, which don't replace anything.
      */
-    if (currentNavigation?.extras?.replaceUrl) {
+    if (currentNavigation?.extras?.replaceUrl && currentNavigation.trigger !== 'popstate') {
       if (this.views.length > 0) {
         this.views.splice(-1, 1);
       }
     }
+
+    /**
+     * Child outlets can add entries while this view stays shown, so
+     * record the entry it's leaving from. Skip it when the view has no
+     * entry of its own or its URL changed in place.
+     */
+    if (leavingView) {
+      const showsOwnEntry =
+        leavingView.historyEntryId !== undefined && getUrl(this.router, leavingView.activatedRoute) === leavingView.url;
+      leavingView.historyEntryId = showsOwnEntry ? this.navCtrl.getCurrentHistoryEntryId() : undefined;
+    }
+    enteringView.historyEntryId = this.navCtrl.getPendingHistoryEntryId();
 
     const reused = this.views.includes(enteringView);
     const views = this.insertView(enteringView, direction);
@@ -158,6 +171,15 @@ export class StackController {
 
   pop(deep: number, stackId = this.getActiveStackId()): Promise<boolean> {
     return this.zone.run(() => {
+      /**
+       * A second pop before the router handles `location.back()` would go
+       * back another entry, so reuse the pop in progress. This runs before
+       * `consumeTransition()` so the pending pop keeps its animation.
+       */
+      if (deep === 1 && this.historyPop) {
+        return this.historyPop;
+      }
+
       const views = this.getStack(stackId);
       if (views.length <= deep) {
         return Promise.resolve(false);
@@ -173,8 +195,55 @@ export class StackController {
         }
       }
       const { animationBuilder } = this.navCtrl.consumeTransition();
-      return this.navCtrl.navigateBack(url, { ...view.savedExtras, animation: animationBuilder }).then(() => true);
+
+      /**
+       * Go back in history when the previous view is the entry behind this one,
+       * so browser back doesn't return here. Routes with guards navigate by URL
+       * because a canceled history navigation leaves the browser on the wrong entry.
+       */
+      const leavingView = views[views.length - 1];
+      const navigateBack = () =>
+        this.navCtrl.navigateBack(url, { ...view.savedExtras, animation: animationBuilder }).then(() => true);
+
+      if (
+        deep === 1 &&
+        this.navCtrl.isPreviousHistoryEntry(view.historyEntryId) &&
+        !hasNavigationGuards(leavingView.activatedRoute, view.activatedRoute)
+      ) {
+        return this.popInHistory(animationBuilder, navigateBack);
+      }
+
+      return navigateBack();
     });
+  }
+
+  /**
+   * The router handles `location.back()` only after the current task ends, so
+   * a navigation in progress or started in the same task, like a `routerLink`
+   * on the same button, would win over it. Navigate by URL in that case.
+   */
+  private popInHistory(animationBuilder: AnimationBuilder | undefined, navigateBack: () => Promise<boolean>) {
+    let otherNavigationStarted = this.router.getCurrentNavigation() !== null;
+    const sub = this.router.events.subscribe((ev) => {
+      if (ev instanceof NavigationStart) {
+        otherNavigationStarted = true;
+      }
+    });
+
+    this.historyPop = new Promise<boolean>((resolve) => {
+      setTimeout(() => {
+        sub.unsubscribe();
+        this.zone.run(() => {
+          const navigation = otherNavigationStarted
+            ? navigateBack()
+            : this.navCtrl.backInHistory(animationBuilder).then(() => true);
+          resolve(navigation);
+        });
+      });
+    }).finally(() => {
+      this.historyPop = undefined;
+    });
+    return this.historyPop;
   }
 
   startBackTransition(): Promise<boolean> | Promise<void> {
