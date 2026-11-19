@@ -169,7 +169,7 @@
   ],
   "dependencies": {
     "@ionic/core": "^9.0.12",
-    "ionicons": "^8.0.13",
+    "ionicons": "^8.1.1",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"
   },

@@ -43,7 +43,7 @@
   "dependencies": {
     "@ionic/core": "^9.0.12",
     "@stencil/react-output-target": "^1.7.0",
-    "ionicons": "^8.0.13",
+    "ionicons": "^8.1.1",
     "tslib": "*"
   },
   "peerDependencies": {
