@@ -1,7 +1,10 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('divider: rendering'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
@@ -20,9 +23,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, s
       await expect(container).toHaveScreenshot(screenshot(`divider-basic-default`));
     });
   });
-});
 
-configs({ modes: ['md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('divider: inset'), () => {
     test('should not have visual regressions when inset is enabled', async ({ page }) => {
       await page.setContent(
