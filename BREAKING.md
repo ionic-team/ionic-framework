@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 10.x
 
+- [Browser and Platform Support](#version-10x-browser-platform-support)
 - [Global Styles](#version-10x-global-styles)
 - [Components](#version-10x-components)
   - [Backdrop](#version-10x-backdrop)
@@ -29,10 +30,13 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Image](#version-10x-image)
   - [Input Otp](#version-10x-input-otp)
   - [Item Divider](#version-10x-item-divider)
+  - [Label](#version-10x-label)
   - [Menu Toggle](#version-10x-menu-toggle)
   - [Note](#version-10x-note)
   - [Radio Group](#version-10x-radio-group)
   - [Ripple Effect](#version-10x-ripple-effect)
+  - [Route](#version-10x-route)
+  - [Route Redirect](#version-10x-route-redirect)
   - [Router Link](#version-10x-router-link)
   - [Row](#version-10x-row)
   - [Skeleton Text](#version-10x-skeleton-text)
@@ -45,6 +49,24 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Toolbar](#version-10x-toolbar)
 - [Framework Specific](#version-10x-framework-specific)
   - [Angular](#version-10x-angular)
+
+<h2 id="version-10x-browser-platform-support">Browser and Platform Support</h2>
+
+This section details the desktop browser and mobile platform versions that are supported by Ionic 10.
+
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ------------------ |
+| Chrome          | 89+                |
+| Safari          | 17+                |
+| Edge            | 89+                |
+| Firefox         | 89+                |
+
+**Minimum Mobile Platform Versions**
+| Platform | Supported Version      |
+| -------- | ---------------------- |
+| iOS      | 17+                    |
+| Android  | 5.1+ with Chromium 89+ |
 
 <h2 id="version-10x-global-styles">Global Styles</h2>
 
@@ -80,10 +102,10 @@ Remove any instances that target the mode classes: `ion-backdrop.md`, `ion-backd
 
 The following breaking changes apply to `ion-button`:
 
-1. The `border-radius` of the `ios` button is now `6px` at every size, instead of `6px`, `14px` and `16px` for the small, default and large sizes. The `md` button now defaults to `999px` instead of `4px`. Both follow the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"` for `md`. For `ios`, set `IonButton.shape.soft.border.radius` for global styles or `--ion-button-shape-soft-border-radius` for component-specific styles to `14px`. The token has no size, so scope the CSS variable by size class for small and large buttons, for example `ion-button.button-size-small { --ion-button-shape-soft-border-radius: 6px; }` and `16px` for `.button-size-large`. The size class also covers buttons without a `size` that render small, such as buttons inside an `ion-item`.
-2. Icon-only buttons in the `start` and `end` slots of `ion-input`, `ion-select` and `ion-textarea` now follow the button's `shape` instead of always being circles. For `ios`, set the `shape` to `"round"` to keep them circular.
+1. The `border-radius` of the `ios` button is now `6px` at every size, instead of `6px`, `14px` and `16px` for the small, default and large sizes, following the iOS guidelines. To revert to the previous appearance, set `IonButton.shape.soft.border.radius` for global styles or `--ion-button-shape-soft-border-radius` for component-specific styles to `14px`. The token has no size, so scope the CSS variable by size class for small and large buttons, for example `ion-button.button-size-small { --ion-button-shape-soft-border-radius: 6px; }` and `16px` for `.button-size-large`. The size class also covers buttons without a `size` that render small, such as buttons inside an `ion-item`.
+2. Icon-only buttons in the `start` and `end` slots of `ion-input`, `ion-select` and `ion-textarea` now follow the button's `shape` instead of always being circles. Set the `shape` to `"round"` to keep them circular.
 3. The font size of `clear` buttons in the `ios` theme now matches the other fills at each size, instead of `17px` at the default size. To keep the previous size, set `--ion-button-size-medium-font-size` to `17px` on those buttons.
-4. The `ios` button is now `28px`, `34px` and `50px` tall at the small, default and large sizes, with less padding, following the iOS guidelines. To revert to the previous appearance, set `IonButton.size.<size>.min.height` for global styles or `--ion-button-size-<size>-min-height` for component-specific styles to `2.1em`, `3.1em` and `3.1em`, and the padding (`IonButton.size.<size>.padding` or `--ion-button-size-<size>-padding-*`) to `4px 0.9em`, `13px 1em` and `17px 1em`.
+4. The `ios` button is now `28px`, `34px` and `50px` tall at the small, default and large sizes, with less padding, following the iOS guidelines. To revert to the previous appearance, set `IonButton.size.<size>.min.height` for global styles or `--ion-button-size-<size>-min-height` for component-specific styles to `2.1em`, `3.1em` and `3.1em`, and the padding (`IonButton.size.<size>.padding` or `--ion-button-size-<size>-padding-*`) to `4px 0.9em`, `13px 1em` and `17px 1em`, along with the previous font sizes from [item 9](#version-10x-button-ios-17).
 5. Icon-only buttons are now squares as tall as a text button of the same size. In `md`, this makes them a few pixels smaller at the small and default sizes and larger at the large size. To change their size, set the size's `min.height` as described above.
 6. In `md`, the focus and hover tint of `outline` and `clear` buttons in an `ion-buttons` inside a toolbar uses the text color (`--ion-text-color`), so it no longer follows a custom toolbar color such as `--ion-toolbar-color` or the toolbar's `--color`. To match a custom toolbar color, set `IonToolbar.default.IonButtons.IonButton.hue.bold.<fill>.focus.background` and `.hover.background` for global styles, or `--ion-button-hue-bold-<fill>-focus-background` and `--ion-button-hue-bold-<fill>-hover-background` for component-specific styles, using the color at `0.12` for focus and `0.04` for hover. For example, `ion-toolbar.my-toolbar ion-buttons ion-button { --ion-button-hue-bold-clear-focus-background: rgba(255, 105, 180, 0.12); }`.
 7. In `md`, buttons in an `ion-buttons` outside a toolbar now match standalone buttons. `solid` buttons use the primary color and a box shadow instead of the toolbar's dark colors with no shadow, and `outline` and `clear` buttons use the primary color instead of the text color. To keep the previous appearance, set the following on those buttons:
@@ -94,6 +116,8 @@ The following breaking changes apply to `ion-button`:
      --ion-button-hue-bold-solid-default-color: var(--ion-toolbar-background, var(--ion-background-color, #fff));
      --ion-button-hue-bold-solid-default-box-shadow: none;
      --ion-button-hue-bold-solid-activated-box-shadow: none;
+     --ion-button-hue-bold-solid-hover-box-shadow: none;
+     --ion-button-hue-bold-solid-focus-box-shadow: none;
      --ion-button-hue-bold-solid-hover-background: linear-gradient(rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.08), rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.08)) var(--ion-button-hue-bold-solid-default-background);
      --ion-button-hue-bold-solid-focus-background: linear-gradient(rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24), rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.24)) var(--ion-button-hue-bold-solid-default-background);
      --ion-button-hue-bold-solid-hover-color: var(--ion-button-hue-bold-solid-default-color);
@@ -114,14 +138,56 @@ The following breaking changes apply to `ion-button`:
    }
    ~~~
 8. Spinners in the `start` and `end` slots of `ios` and `md` buttons are now spaced from the label like icons. To remove the space, set `IonButton.size.<size>.spinner.leading.margin` and `IonButton.size.<size>.spinner.trailing.margin` for global styles, or `--ion-button-size-<size>-spinner-leading-margin-*` and `--ion-button-size-<size>-spinner-trailing-margin-*` for component-specific styles, to `0`.
-9. CSS variables have been replaced. <sup>[9](#version-10x-button-replaced-css-variables)</sup>
-10. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[10](#version-10x-button-padding-variables)</sup>
-11. The fill, size, shape and expand classes have been renamed. <sup>[11](#version-10x-button-renamed-classes)</sup>
-12. The `default` size has been deprecated. <sup>[12](#version-10x-button-deprecated-default-size)</sup>
-13. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[13](#version-10x-button-mode-classes)</sup>
-14. `round` buttons no longer have extra horizontal padding. <sup>[14](#version-10x-button-round-padding)</sup>
-15. The `default` fill has been deprecated. <sup>[15](#version-10x-button-deprecated-default-fill)</sup>
-16. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[16](#version-10x-button-toolbar-classes)</sup>
+9. The `md` button follows Material Design 2 for its spacing, outline, elevation and disabled state. <sup>[9](#version-10x-button-md-material-design-2)</sup>
+10. The `ios` button follows iOS 17 for its font, icons and disabled state. <sup>[10](#version-10x-button-ios-17)</sup>
+11. A badge without a `vertical` position now has a gap between it and the label, and no longer makes the button taller than its `min.height`. To remove the gap, set `IonButton.size.<size>.badge.trailing.margin.start` for global styles or `--ion-button-size-<size>-badge-trailing-margin-start` for component-specific styles to `0`. For a badge in the `start` slot, use `badge.leading.margin.end` instead. A button with a badge also now has `position: relative` and `z-index: 1`, so a badge that overflows the button stays above the elements next to it. This can change how the button layers with nearby positioned elements, such as one without a `z-index`. To restore the previous layering, set `position: static` and `z-index: auto` on the button.
+12. A button with an icon in the `icon-only` slot now shows only that icon and any badge with a `vertical` position. Text, elements in the `start` and `end` slots, and other content are hidden. Text and elements without a slot are only visually hidden, so they still name the button for assistive technology. To keep a badge visible, set its `vertical` property to `"top"` or `"bottom"`. To show other content, remove the `icon-only` slot and use the `start` or `end` slot for the icon.
+13. The text of `outline` buttons in `md` and `ios` now uses the color's darker `foreground` variant instead of `base`, matching `clear` buttons, since it sits on the page rather than on a fill of the color. In `ios`, `clear` buttons with a `color` also keep `foreground` on hover and focus. To revert, set `IonButton.hue.bold.outline.<state>.color` (`.semantic.<state>.color` with a `color`) for global styles or `--ion-button-hue-bold-outline-<state>-color` (`--ion-button-hue-bold-outline-semantic-<state>-color`) for component-specific styles to the color's `base`. For `ios` `clear` buttons with a `color`, set `IonButton.hue.bold.clear.semantic.<state>.color` or `--ion-button-hue-bold-clear-semantic-<state>-color` for `hover` and `focus` to the color's `base` as well.
+14. CSS variables have been replaced. <sup>[14](#version-10x-button-replaced-css-variables)</sup>
+15. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional). <sup>[15](#version-10x-button-padding-variables)</sup>
+16. The fill, size, shape and expand classes have been renamed. <sup>[16](#version-10x-button-renamed-classes)</sup>
+17. The `default` size has been deprecated. <sup>[17](#version-10x-button-deprecated-default-size)</sup>
+18. Mode classes (`ion-button.md`, `ion-button.ios`) are no longer supported. <sup>[18](#version-10x-button-mode-classes)</sup>
+19. `round` buttons no longer have extra horizontal padding. <sup>[19](#version-10x-button-round-padding)</sup>
+20. The `default` fill has been deprecated. <sup>[20](#version-10x-button-deprecated-default-fill)</sup>
+21. The `in-toolbar` and `in-toolbar-color` classes have been removed. <sup>[21](#version-10x-button-toolbar-classes)</sup>
+
+<h5 id="version-10x-button-md-material-design-2">Material Design 2 in <code>md</code></h5>
+
+The `md` button now uses the Material Design 2 values below. To keep a previous value, set the token for global styles, or the matching `--ion-button-*` CSS variable for component-specific styles. Replace `<fill>` with `solid`, `outline` or `clear`, and `<size>` with `small`, `medium` or `large`.
+
+| Property | Previous | New | Token |
+|---|---|---|---|
+| Horizontal padding | `1.1em` at the default size, the same for every fill | `1.1429em` (`16px`) at the default size. At every size, `outline` is `1px` less to count its border, and `clear` is half | `IonButton.size.<size>.padding.start` and `.end`, or `IonButton.size.<size>.<fill>.padding` for one fill |
+| Min width at the default size | none | `64px` | `IonButton.size.medium.min.width` |
+| Letter spacing | `0.06em` | `0.0893em` | `IonButton.letter.spacing` |
+| Icon size | `1.35em` | `1.2857em` (`18px` at the default size) | `IonButton.size.<size>.icon.font.size` |
+| Gap between icon and label | `0.3em` | `0.4444em` (`8px` at the default size) | `IonButton.size.<size>.icon.leading.margin.end` and `.trailing.margin.start` |
+| Spinner in a button | the spinner's own size (`28px` by default) | `1.2857em` by default (`18px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
+| Outline border | `2px`, the button's color, or the toolbar's color in a toolbar | `1px`, the text color at `12%`, in toolbars too | `IonButton.hue.bold.outline.default.border.width` and `.color` (`.semantic.default.border.color` with a `color`) |
+| Solid elevation on hover and focus | the resting elevation | elevation 4 | `IonButton.hue.bold.solid.hover.box.shadow` and `.focus.box.shadow` |
+| Disabled | the whole button at `0.5` opacity | `38%` text color, a `12%` container and no elevation | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.box.shadow` (`.semantic.disabled.color` and `.background` with a `color`) |
+| Pressed ripple | `16%` | `24%` on solid, `12%` on outline and clear | `IonButton.hue.bold.<fill>.rippleEffect.opacity` (`.semantic.rippleEffect.opacity` with a `color`) |
+
+Buttons in toolbars keep their previous colors when disabled. Buttons in `ion-buttons` also have no min width, and inside a toolbar no elevation on hover or focus. In a toolbar with a `color`, an outline button with its own `color` keeps the standalone border, the page's text color at `12%`, since its color replaces the toolbar's.
+
+<h5 id="version-10x-button-ios-17">iOS 17 in <code>ios</code></h5>
+
+The `ios` button now uses the iOS 17 values below. To keep a previous value, set the token for global styles, or the matching `--ion-button-*` CSS variable for component-specific styles. Replace `<fill>` with `solid`, `outline` or `clear`, and `<size>` with `small`, `medium` or `large`. Values in `em` are relative to the font size, so reverting the font size also needs the previous `em` values.
+
+| Property | Previous | New | Token |
+|---|---|---|---|
+| Font size | `13px`, `16px` and `20px` | `15px`, `17px` and `17px` | `IonButton.size.<size>.font.size` |
+| Font weight of solid and outline | `500` | `400` | `IonButton.hue.bold.<fill>.default.font.weight` |
+| Horizontal padding | `0.77em`, `0.875em` and `1em` | `0.6667em`, `0.7059em` and `1.1765em` (`10px`, `12px` and `20px`, where medium was `14px`) | `IonButton.size.<size>.padding.start` and `.end` |
+| Min height | `2.16em`, `2.125em` and `2.5em` | `1.8667em`, `2em` and `2.9412em` (same pixels at the new font size) | `IonButton.size.<size>.min.height` |
+| Icon size next to a label | `1.35em` | `1.2em` | `IonButton.size.<size>.icon.font.size` |
+| Icon spacing | `0.3em` into the padding and a `0.3em` gap | at the padding edge and a `4px` gap (`0.2222em` at small, `0.1961em` at medium and large) | `IonButton.size.<size>.icon.leading.margin` and `.trailing.margin` |
+| Icon-only icon size | `1.308125em`, `1.125em` and `0.9em` | `1.1333em`, `1.0588em` and `1.0588em` (same pixels at the new font size) | `IonButton.size.<size>.iconOnly.icon.font.size` |
+| Spinner in a button | the spinner's own size (`28px` by default) | `1.2em` by default (`20.4px` at the default size), with the other spinner sizes in their usual ratio to it | `IonButton.size.<size>.spinner.size.<spinner size>.width` and `.height` |
+| Disabled | the whole button at `0.5` opacity | the text color at `25%`, which outline also uses for its border, and on solid, an `8%` container | `IonButton.hue.bold.<fill>.disabled.opacity`, `.color`, `.background` and `.border.color` (`.semantic.disabled.color`, `.background` and `.border.color` with a `color`) |
+
+Buttons in toolbars keep their previous colors when disabled.
 
 <h5 id="version-10x-button-replaced-css-variables">Replaced CSS variables</h5>
 
@@ -288,9 +354,13 @@ The `default` value of the `fill` property is deprecated. It logs a warning and 
 - In the `md` theme, the chip now has a letter spacing of `0.0179em` (`0.25px` at `14px`), and the `large` chip a line height of `20px`, instead of inherited, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set `IonChip.size.large.letterSpacing` and `IonChip.size.large.line.height` to `inherit` for global styles, or `--ion-chip-size-large-letter-spacing` and `--ion-chip-size-large-line-height` for component-specific styles.
 - In the `md` theme, a slotted `ion-icon` now has `4px` of space between it and the label instead of `8px`, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set `IonChip.icon.leading.margin.end` and `IonChip.icon.trailing.margin.start` to `8px` for global styles, or `--ion-chip-icon-leading-margin-end` and `--ion-chip-icon-trailing-margin-start` for component-specific styles.
 - In the `md` theme, the border of an outline chip without a `color` is now `12%` of the text color instead of `32%`, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set `IonChip.hue.bold.outline.default.border.color` to `rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.32)` for global styles, or `--ion-chip-hue-bold-outline-default-border-color` for component-specific styles.
-- In the `md` theme, a focused chip without a `color` now has a background of `21%` of the text color instead of `16%`, or `10%` instead of `4%` with an outline fill. A pressed chip now keeps its resting background under the ripple instead of darkening. Both follow the Material Design 2 guidelines. To revert to the previous appearance, set `IonChip.hue.bold.solid.focus.background`, `IonChip.hue.bold.outline.focus.background` and the `activated.background` of each hue and fill for global styles, or the matching `--ion-chip-hue-*-focus-background` and `--ion-chip-hue-*-activated-background` variables for component-specific styles.
+- In the `md` theme, a focused chip without a `color` now has a background of `21%` of the text color instead of `16%`, or `10%` instead of `4%` with an outline fill, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set `IonChip.hue.bold.solid.focus.background` to `rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.16)` and `IonChip.hue.bold.outline.focus.background` to `rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.04)` for global styles, or `--ion-chip-hue-bold-solid-focus-background` and `--ion-chip-hue-bold-outline-focus-background` for component-specific styles.
+- In the `md` theme, a pressed chip, with or without a `color`, now keeps its resting background under the ripple instead of darkening, or its hover background while hovered, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set these tokens for global styles, or the matching `--ion-chip-hue-*-activated-background` variables for component-specific styles:
+  - `IonChip.hue.bold.solid.activated.background` to `rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.2)`
+  - `IonChip.hue.bold.outline.activated.background` to `rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.08)`
+  - `IonChip.hue.bold.solid.semantic.activated.background` and `IonChip.hue.bold.outline.semantic.activated.background` to `rgba(var(--ion-color-base-rgb), 0.16)`
 - In the `md` theme, a disabled chip now has an opacity of `0.38` instead of `0.4`, in accordance with the Material Design 2 guidelines. To revert to the previous appearance, set `IonChip.state.disabled.opacity` to `0.4` for global styles, or `--ion-chip-state-disabled-opacity` for component-specific styles.
-- In the `ios` theme, the chip is now `28px` tall instead of `32px`, with `4px` `10px` padding instead of `6px` `12px`, and its label is `15px` with a `20px` line height and `-0.016em` letter spacing instead of `14px` with inherited line height and letter spacing, in accordance with the iOS guidelines for small bezeled buttons. To revert to the previous appearance, set `IonChip.size.large.min.height` to `32px`, `IonChip.size.large.padding` to `6px` on the top and bottom and `12px` on the start and end, `IonChip.size.large.font.size` to `clamp(13px, 0.875rem, 22px)`, and `IonChip.size.large.line.height` and `IonChip.size.large.letterSpacing` to `inherit` for global styles, or the matching `--ion-chip-size-large-*` variables for component-specific styles.
+- In the `ios` theme, the chip is now `28px` tall instead of `32px`, with `4px` `10px` padding instead of `6px` `12px`, and its label is `15px` with a `20px` line height and `-0.016em` letter spacing instead of `14px` with inherited line height and letter spacing, in accordance with the iOS guidelines for small bezeled buttons. To revert to the previous appearance, set `IonChip.size.large.min.height` to `32px`, `IonChip.size.large.padding` to `6px` on the top and bottom and `12px` on the start and end, `IonChip.size.large.font.size` to `clamp(13px, 0.875rem, 22px)`, `IonChip.size.large.line.height` and `IonChip.size.large.letterSpacing` to `inherit`, `IonChip.icon.font.size` to `1.43em`, and `IonChip.avatar.width` and `IonChip.avatar.height` to `1.71em` for global styles, or the matching `--ion-chip-size-large-*`, `--ion-chip-icon-font-size` and `--ion-chip-avatar-*` variables for component-specific styles.
 - In the `ios` theme, a slotted `ion-icon` now has `4px` of space between it and the label instead of `8px`, in accordance with the iOS guidelines for buttons with an icon and a label. To revert to the previous appearance, set `IonChip.icon.leading.margin.end` and `IonChip.icon.trailing.margin.start` to `8px` for global styles, or `--ion-chip-icon-leading-margin-end` and `--ion-chip-icon-trailing-margin-start` for component-specific styles.
 - In the `ios` theme, a chip with a `color` now has a background of `15%` of the color instead of `8%`, in accordance with the iOS guidelines for bezeled buttons. Its hover and focus backgrounds are now `19%` instead of `12%`, and its pressed background `23%` instead of `16%`. To revert to the previous appearance, set `IonChip.hue.bold.solid.semantic.default.background`, `IonChip.hue.bold.solid.semantic.hover.background`, `IonChip.hue.bold.solid.semantic.focus.background` and `IonChip.hue.bold.solid.semantic.activated.background` for global styles, or the matching `--ion-chip-hue-bold-solid-semantic-*-background` variables for component-specific styles.
 - In the `ios` theme, a disabled chip now has an opacity of `0.5` instead of `0.4`, to match the disabled `ios` button. To revert to the previous appearance, set `IonChip.state.disabled.opacity` to `0.4` for global styles, or `--ion-chip-state-disabled-opacity` for component-specific styles.
@@ -596,6 +666,69 @@ If you were targeting the internals of `ion-input-otp` in your CSS, you will nee
    - `--inner-padding-start` is replaced by `IonItemDivider.inner.padding.start` for global styles and `--ion-item-divider-inner-padding-start` for component-specific overrides.
 - Specific mode classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
+<h4 id="version-10x-label">Label</h4>
+
+Converted `ion-label` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+`ion-label` does not render any internal elements, so there are no Shadow Parts to target. However, the following changes may affect existing styles:
+
+- The default heading (`h1` - `h6`) and paragraph (`p`) styles now only apply to elements that are direct children of `ion-label`. Headings and paragraphs nested inside another element, such as `ion-text`, no longer receive the label styles, and nested headings receive the global typography styles instead. To color the label text and headings, set the `color` property on `ion-label`. To color a paragraph or only part of the label, move `ion-text` inside the heading or paragraph:
+
+  ```diff
+  <ion-label>
+  - <ion-text color="primary">
+  -   <h3>Title</h3>
+  - </ion-text>
+  + <h3><ion-text color="primary">Title</ion-text></h3>
+    <p>Description</p>
+  </ion-label>
+  ```
+- Global element styles for headings and paragraphs, such as `h2 { font-size: 20px; }`, now take precedence over the default label styles for those elements. Previously, the label styles took precedence. To keep the label styles, scope the global styles so they do not match elements inside `ion-label`.
+
+  ```diff
+  - h2 {
+  + h2:not(ion-label > h2) {
+      font-size: 20px;
+    }
+  ```
+
+  The `:not()` selector increases the specificity of the global style. To keep the original specificity, wrap the exclusion in `:where()`:
+
+  ```css
+  h2:where(:not(ion-label > h2)) {
+    font-size: 20px;
+  }
+  ```
+
+  Complex selectors inside `:not()` require Chrome 88+, Firefox 84+ and Safari 9+, and `:where()` requires Chrome 88+, Firefox 78+ and Safari 14+.
+
+  This includes CSS resets such as Tailwind's Preflight and Bootstrap's Reboot. In v9, these resets did not change the headings and paragraphs inside `ion-label`, because the label styles took precedence. In v10, the reset takes precedence, so label headings and paragraphs lose their margins and use the reset's font size and weight. For example, with Tailwind's Preflight, `md` label headings render at `16px` with no margins instead of `24px`, `16px` and `14px`, and with Bootstrap's Reboot they render at `40px`, `32px` and `28px`.
+
+  A reset from a third-party stylesheet cannot be scoped, so restore the label styles with app styles that target the headings and paragraphs inside `ion-label`. These take precedence over the reset:
+
+  ```css
+  ion-label > h2 {
+    margin: 2px 0;
+
+    font-size: 1rem;
+    font-weight: normal;
+
+    line-height: 1.2;
+  }
+  ```
+
+  The default values for each heading, paragraph and mode are in [`label.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.scss), [`label.ios.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.ios.scss) and [`label.md.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.md.scss).
+- The global typography styles in `typography.css` no longer apply to headings that are direct children of `ion-label`. These headings are styled by `ion-label` instead.
+- App styles that target `ion-label` directly now take precedence over the default `ion-label` styles. For example, a class that sets `color` on an `ion-label` inside of an `ion-item` previously had no effect because the label applied `var(--color)`, and it now changes the label color. Remove these styles if they are no longer wanted, or use the `--color` CSS variable to set the color of a label inside of an item.
+- Stacked and floating labels in an item with the `ion-invalid` and `ion-touched` classes no longer use the `--highlight-color-invalid` CSS variable in `md` mode. This only changes apps that set `--highlight-color-invalid` on `ion-item` or one of its ancestors. To keep the invalid color, add the following styles:
+
+  ```css
+  ion-item.md.ion-invalid.ion-touched ion-label.label-stacked:not(.ion-color),
+  ion-item.md.ion-invalid.ion-touched ion-label.label-floating:not(.ion-color) {
+    color: var(--highlight-color-invalid);
+  }
+  ```
+
 <h4 id="version-10x-menu-toggle">Menu Toggle</h4>
 
 The following breaking changes apply to `ion-menu-toggle`:
@@ -688,6 +821,18 @@ The ripple fade opacity is now part of the centralized Ionic Theming system. Use
 <h5 id="version-10x-ripple-effect-mode-classes">Mode classes</h5>
 
 Remove any instances that target the mode classes: `ion-ripple-effect.md`, `ion-ripple-effect.ios`.
+
+<h4 id="version-10x-route">Route</h4>
+
+Converted `ion-route` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+`ion-route` does not render any internal elements, so there are no Shadow Parts to target. Nested `ion-route` elements are still read by `ion-router` from the light DOM, so route definitions do not need to change. Any other content placed inside of `ion-route` is no longer part of the rendered tree.
+
+<h4 id="version-10x-route-redirect">Route Redirect</h4>
+
+Converted `ion-route-redirect` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+`ion-route-redirect` does not render any internal elements, so there are no Shadow Parts to target. Redirect definitions do not need to change. Any content placed inside of `ion-route-redirect` is no longer part of the rendered tree.
 
 <h4 id="version-10x-router-link">Router Link</h4>
 

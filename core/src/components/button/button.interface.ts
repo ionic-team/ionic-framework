@@ -95,11 +95,19 @@ type IonButtonStateDefinition = {
   };
 
   hover?: IonButtonColorDefinition & {
+    box?: {
+      shadow?: string;
+    };
+
     /** The whole button, for fills that fade instead of changing color */
     opacity?: string | number;
   };
 
-  focus?: IonButtonColorDefinition;
+  focus?: IonButtonColorDefinition & {
+    box?: {
+      shadow?: string;
+    };
+  };
 
   activated?: IonButtonColorDefinition & {
     /** The whole button, for fills that fade instead of changing color */
@@ -110,8 +118,19 @@ type IonButtonStateDefinition = {
     };
   };
 
+  /** An unset `color` or `border.color` keeps the default one */
   disabled?: {
     background?: string;
+
+    border?: {
+      color?: string;
+    };
+
+    box?: {
+      shadow?: string;
+    };
+
+    color?: string;
 
     /** The whole button */
     opacity?: string | number;
@@ -132,8 +151,15 @@ type IonButtonSemanticDefinition = {
 
   activated?: IonButtonColorDefinition;
 
+  /** An unset `color` or `border.color` keeps the default one */
   disabled?: {
     background?: string;
+
+    border?: {
+      color?: string;
+    };
+
+    color?: string;
   };
 };
 
@@ -196,6 +222,10 @@ type IonButtonIconOnlyDefinition = {
   };
 };
 
+type IonButtonSizeFillDefinition = {
+  padding?: IonPadding;
+};
+
 type IonButtonSizeDefinition = {
   font?: {
     size?: string | number;
@@ -211,7 +241,27 @@ type IonButtonSizeDefinition = {
 
   icon?: IonButtonIconDefinition;
   iconOnly?: IonButtonIconOnlyDefinition;
+
+  /** A fill's own padding at this size, used instead of the size's `padding` */
+  solid?: IonButtonSizeFillDefinition;
+  outline?: IonButtonSizeFillDefinition;
+  clear?: IonButtonSizeFillDefinition;
   spinner?: IonButtonSpinnerDefinition;
+
+  /** A badge without a `vertical` position, next to the label of a text button */
+  badge?: {
+    /** A badge in the `start` slot */
+    leading?: {
+      /** `top` and `bottom` add to the negative margins that cancel the button's vertical padding */
+      margin?: IonMargin;
+    };
+
+    /** A badge after the label */
+    trailing?: {
+      /** `top` and `bottom` add to the negative margins that cancel the button's vertical padding */
+      margin?: IonMargin;
+    };
+  };
 };
 
 type IonButtonShapeDefinition = {
