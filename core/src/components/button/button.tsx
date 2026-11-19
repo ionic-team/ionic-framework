@@ -20,7 +20,7 @@ import type { IonButtonExpand, IonButtonFill, IonButtonShape, IonButtonSize } fr
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
- * @slot icon-only - Should be used on an icon in a button that has no text.
+ * @slot icon-only - An icon shown on its own, with any badge that has a `vertical` position. Text and elements without a slot are visually hidden, so they can still name the button for assistive technology. Content in the `start` and `end` slots isn't rendered.
  * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
  *
@@ -98,6 +98,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * `"default"` is deprecated and renders the same as `"solid"`.
    */
   @Prop({ reflect: true, mutable: true }) fill?: IonButtonFill | 'default';
+
+  /**
+   * Set to `"bold"` for a button with vibrant, bold colors or to `"subtle"` for
+   * a button with muted, subtle colors.
+   *
+   * Defaults to `"bold"` if both the hue property and theme config are unset.
+   */
+  @Prop() hue?: Hue;
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -232,11 +240,9 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
      * The ARIA state has to stay live, since `ion-input-password-toggle` rewrites
      * `aria-label` and `aria-pressed` on its `ion-button` on every toggle. We keep
      * `aria-disabled` out of the watch because the `<Host>` below renders it from the
-     * `disabled` prop and those writes would clobber a developer's value, and `role` out
-     * because a post-load write stays on the host too, which would put the same role on
-     * two elements in the accessibility tree.
+     * `disabled` prop and those writes would clobber a developer's value.
      */
-    this.ariaController = createAriaAttributeController(this.el, () => forceUpdate(this), ['aria-disabled', 'role']);
+    this.ariaController = createAriaAttributeController(this.el, () => forceUpdate(this), ['aria-disabled']);
     this.tabindexController = createTabindexController(this.el, () => forceUpdate(this));
   }
 
@@ -313,10 +319,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   /**
-   * Gets the button hue from the theme config. Defaults to `bold` if it is unset.
+   * Gets the button hue. Uses the `hue` property if set, otherwise
+   * checks the theme config. Defaults to `bold` if neither is set.
    */
   get hueValue(): Hue {
-    return config.getObjectValue('IonButton.hue', 'bold') as Hue;
+    const hueConfig = config.getObjectValue('IonButton.hue', 'bold') as Hue;
+
+    return this.hue ?? hueConfig;
   }
 
   /**
@@ -520,7 +529,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [`${buttonType}-size-${sizeValue}`]: true,
           [`${buttonType}-shape-${shapeValue}`]: true,
           [`${buttonType}-fill-${fillValue}`]: true,
-          // TODO(FW-6838): read the hue prop first in the hue PR
           [`${buttonType}-hue-${hueValue}`]: true,
           [`${buttonType}-strong`]: strong,
           'in-buttons': inButtons,
@@ -542,9 +550,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         >
           <span class="button-inner">
             <slot name="icon-only" onSlotchange={this.iconOnlySlotChanged}></slot>
-            <slot name="start"></slot>
+            {/* An icon-only button skips these slots, so outside styles can't show their content */}
+            {!hasIconOnly && <slot name="start"></slot>}
             <slot onSlotchange={this.onSlotChanged}></slot>
-            <slot name="end"></slot>
+            {!hasIconOnly && <slot name="end"></slot>}
           </span>
           {showRipple && <ion-ripple-effect type={rippleType}></ion-ripple-effect>}
         </TagType>

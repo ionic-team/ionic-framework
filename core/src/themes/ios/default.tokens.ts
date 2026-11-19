@@ -364,7 +364,7 @@ export const defaultTheme: DefaultTheme = {
               color: ionColor('primary', 'contrast'),
 
               font: {
-                weight: 'var(--ion-font-weight-medium)',
+                weight: 'var(--ion-font-weight-normal)',
               },
             },
 
@@ -384,7 +384,8 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              opacity: '0.5',
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
             },
 
             // Any of the semantic colors like primary, secondary, etc.
@@ -408,6 +409,11 @@ export const defaultTheme: DefaultTheme = {
                 background: currentColor('shade'),
                 color: currentColor('contrast'),
               },
+
+              disabled: {
+                background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
             },
           },
 
@@ -420,7 +426,7 @@ export const defaultTheme: DefaultTheme = {
 
             default: {
               background: 'transparent',
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
 
               border: {
                 color: ionColor('primary', 'base'),
@@ -429,19 +435,19 @@ export const defaultTheme: DefaultTheme = {
               },
 
               font: {
-                weight: 'var(--ion-font-weight-medium)',
+                weight: 'var(--ion-font-weight-normal)',
               },
             },
 
             focus: {
               background: ionColor('primary', 'base', { alpha: 0.1 }),
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
             },
 
             // Fades the whole button instead of changing its color
             hover: {
               background: 'transparent',
-              color: ionColor('primary', 'base'),
+              color: ionColor('primary', 'foreground'),
               opacity: '0.6',
             },
 
@@ -451,13 +457,17 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              opacity: '0.5',
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
             },
 
             semantic: {
               default: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
 
                 border: {
                   color: currentColor('base'),
@@ -466,17 +476,25 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.1 }),
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               hover: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               activated: {
                 background: currentColor('base'),
                 color: currentColor('contrast'),
+              },
+
+              disabled: {
+                border: {
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+                },
+
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
               },
             },
           },
@@ -517,7 +535,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             disabled: {
-              opacity: '0.5',
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
             },
 
             semantic: {
@@ -528,17 +546,236 @@ export const defaultTheme: DefaultTheme = {
 
               focus: {
                 background: currentColor('base', { alpha: 0.1 }),
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               hover: {
                 background: 'transparent',
-                color: currentColor('base'),
+                color: currentColor('foreground'),
               },
 
               activated: {
                 background: 'transparent',
                 color: currentColor('foreground'),
+              },
+
+              disabled: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+            },
+          },
+        },
+
+        subtle: {
+          solid: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-semi-bold)',
+              },
+            },
+
+            default: {
+              background: ionColor('primary', 'base', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+
+              font: {
+                weight: 'var(--ion-font-weight-normal)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            hover: {
+              background: ionColor('primary', 'tint', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            activated: {
+              background: ionColor('primary', 'shade', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            disabled: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              focus: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              hover: {
+                background: currentColor('tint', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              activated: {
+                background: currentColor('shade', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              disabled: {
+                background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+            },
+          },
+
+          outline: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-semi-bold)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+
+              border: {
+                color: ionColor('primary', 'shade', { subtle: true }),
+                style: 'solid',
+                width: 'var(--ion-border-width-25)',
+              },
+
+              font: {
+                weight: 'var(--ion-font-weight-normal)',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base', { alpha: 0.1 }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            // Fades the whole button instead of changing its color
+            hover: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+              opacity: '0.6',
+            },
+
+            activated: {
+              background: ionColor('primary', 'base', { subtle: true }),
+              color: ionColor('primary', 'contrast', { subtle: true }),
+            },
+
+            disabled: {
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+
+                border: {
+                  color: currentColor('shade', { subtle: true }),
+                },
+              },
+
+              focus: {
+                background: currentColor('base', { alpha: 0.1 }),
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              hover: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              activated: {
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
+              },
+
+              disabled: {
+                border: {
+                  color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+                },
+
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+              },
+            },
+          },
+
+          clear: {
+            strong: {
+              font: {
+                weight: 'var(--ion-font-weight-semi-bold)',
+              },
+            },
+
+            default: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+
+              // The clear fill uses a regular weight font
+              font: {
+                weight: 'normal',
+              },
+            },
+
+            focus: {
+              background: ionColor('primary', 'base', { alpha: 0.1 }),
+              color: ionColor('primary', 'foreground', { subtle: true }),
+            },
+
+            // Fades the whole button instead of changing its color
+            hover: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+              opacity: '0.6',
+            },
+
+            activated: {
+              background: 'transparent',
+              color: ionColor('primary', 'foreground', { subtle: true }),
+              opacity: '0.4',
+            },
+
+            disabled: {
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              focus: {
+                background: currentColor('base', { alpha: 0.1 }),
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              hover: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              activated: {
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
+              },
+
+              disabled: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.25),
               },
             },
           },
@@ -549,40 +786,40 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           min: {
-            height: clamp('23px', '2.16em', '54px'),
+            height: clamp('23px', '1.8667em', '54px'),
           },
 
           padding: {
             top: 'var(--ion-spacing-xxs)',
-            end: '0.77em',
+            end: '0.6667em',
             bottom: 'var(--ion-spacing-xxs)',
-            start: '0.77em',
+            start: '0.6667em',
           },
 
           font: {
-            size: dynamicFontMax(global.root, 3, 13),
+            size: dynamicFontMax(global.root, 3, 15),
           },
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2em',
             },
 
             leading: {
               margin: {
-                top: '0',
-                end: '0.3em',
-                bottom: '0',
-                start: '-0.3em',
+                top: 'var(--ion-spacing-0)',
+                end: '0.2222em',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
-                end: '-0.2em',
-                bottom: '0',
-                start: '0.3em',
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: '0.2222em',
               },
             },
           },
@@ -600,8 +837,59 @@ export const defaultTheme: DefaultTheme = {
                 /**
                  * The values were provided through a native iOS app.
                  * min font size: 12px, default font size: 17px, max font size: 40px
+                 * The `em` is relative to the button's font size, not the root, so it can't use `dynamicFontClamp`
                  */
-                size: dynamicFontClamp(global.root, 0.58, 20.93, 1.92, 'em'),
+                size: clamp('12.1394px', '1.1333em', '40.1856px'),
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.6857em',
+                width: '0.6857em',
+              },
+
+              small: {
+                height: '0.8571em',
+                width: '0.8571em',
+              },
+
+              medium: {
+                height: '1.2em',
+                width: '1.2em',
+              },
+
+              large: {
+                height: '1.5429em',
+                width: '1.5429em',
+              },
+
+              xlarge: {
+                height: '2.0571em',
+                width: '2.0571em',
+              },
+            },
+          },
+
+          badge: {
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-xxs)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-xxs)',
               },
             },
           },
@@ -609,40 +897,40 @@ export const defaultTheme: DefaultTheme = {
 
         medium: {
           min: {
-            height: clamp('30px', '2.125em', '60px'),
+            height: clamp('30px', '2em', '60px'),
           },
 
           padding: {
             top: '7px',
-            end: '0.875em',
+            end: '0.7059em',
             bottom: '7px',
-            start: '0.875em',
+            start: '0.7059em',
           },
 
           font: {
-            size: dynamicFontMax(global.root, 3, 16),
+            size: dynamicFontMax(global.root, 3, 17),
           },
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2em',
             },
 
             leading: {
               margin: {
-                top: '0',
-                end: '0.3em',
-                bottom: '0',
-                start: '-0.3em',
+                top: 'var(--ion-spacing-0)',
+                end: '0.1961em',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
-                end: '-0.2em',
-                bottom: '0',
-                start: '0.3em',
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: '0.1961em',
               },
             },
           },
@@ -660,8 +948,59 @@ export const defaultTheme: DefaultTheme = {
                 /**
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
+                 * The `em` is relative to the button's font size, not the root, so it can't use `dynamicFontClamp`
                  */
-                size: dynamicFontClamp(global.root, 0.84, 18, 2.39, 'em'),
+                size: clamp('15.12px', '1.0588em', '43.056px'),
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.6857em',
+                width: '0.6857em',
+              },
+
+              small: {
+                height: '0.8571em',
+                width: '0.8571em',
+              },
+
+              medium: {
+                height: '1.2em',
+                width: '1.2em',
+              },
+
+              large: {
+                height: '1.5429em',
+                width: '1.5429em',
+              },
+
+              xlarge: {
+                height: '2.0571em',
+                width: '2.0571em',
+              },
+            },
+          },
+
+          badge: {
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-xxs)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-xxs)',
               },
             },
           },
@@ -669,40 +1008,40 @@ export const defaultTheme: DefaultTheme = {
 
         large: {
           min: {
-            height: clamp('46px', '2.5em', '78px'),
+            height: clamp('46px', '2.9412em', '78px'),
           },
 
           padding: {
             top: '14px',
-            end: '1em',
+            end: '1.1765em',
             bottom: '14px',
-            start: '1em',
+            start: '1.1765em',
           },
 
           font: {
-            size: dynamicFontMax(global.root, 3, 20),
+            size: dynamicFontMax(global.root, 3, 17),
           },
 
           icon: {
             font: {
-              size: '1.35em',
+              size: '1.2em',
             },
 
             leading: {
               margin: {
-                top: '0',
-                end: '0.3em',
-                bottom: '0',
-                start: '-0.3em',
+                top: 'var(--ion-spacing-0)',
+                end: '0.1961em',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
               },
             },
 
             trailing: {
               margin: {
-                top: '0',
-                end: '-0.2em',
-                bottom: '0',
-                start: '0.3em',
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: '0.1961em',
               },
             },
           },
@@ -720,8 +1059,59 @@ export const defaultTheme: DefaultTheme = {
                 /**
                  * The values were provided through a native iOS app.
                  * min font size: 15px, default font size: 18px, max font size: 43px
+                 * The `em` is relative to the button's font size, not the root, so it can't use `dynamicFontClamp`
                  */
-                size: dynamicFontClamp(global.root, 1.05, 14.4, 2.99, 'em'),
+                size: clamp('15.12px', '1.0588em', '43.056px'),
+              },
+            },
+          },
+
+          spinner: {
+            // `medium`, the default, matches the icon; the other sizes keep their standalone ratio to it
+            size: {
+              xsmall: {
+                height: '0.6857em',
+                width: '0.6857em',
+              },
+
+              small: {
+                height: '0.8571em',
+                width: '0.8571em',
+              },
+
+              medium: {
+                height: '1.2em',
+                width: '1.2em',
+              },
+
+              large: {
+                height: '1.5429em',
+                width: '1.5429em',
+              },
+
+              xlarge: {
+                height: '2.0571em',
+                width: '2.0571em',
+              },
+            },
+          },
+
+          badge: {
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-xxs)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-xxs)',
               },
             },
           },
@@ -816,6 +1206,65 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonToolbar: {
+      // In a toolbar, a disabled button keeps its colors and fades
+      IonButton: {
+        hue: {
+          bold: {
+            solid: {
+              disabled: {
+                background: 'var(--ion-button-hue-bold-solid-default-background)',
+                color: 'var(--ion-button-hue-bold-solid-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  background: 'var(--ion-button-hue-bold-solid-semantic-default-background)',
+                  color: 'var(--ion-button-hue-bold-solid-semantic-default-color)',
+                },
+              },
+            },
+
+            outline: {
+              disabled: {
+                border: {
+                  color: 'var(--ion-button-hue-bold-outline-default-border-color)',
+                },
+
+                color: 'var(--ion-button-hue-bold-outline-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  border: {
+                    color: 'var(--ion-button-hue-bold-outline-semantic-default-border-color)',
+                  },
+
+                  color: 'var(--ion-button-hue-bold-outline-semantic-default-color)',
+                },
+              },
+            },
+
+            clear: {
+              disabled: {
+                color: 'var(--ion-button-hue-bold-clear-default-color)',
+
+                opacity: '0.5',
+              },
+
+              semantic: {
+                disabled: {
+                  color: 'var(--ion-button-hue-bold-clear-semantic-default-color)',
+                },
+              },
+            },
+          },
+        },
+      },
+
       IonButtons: {
         IonButton: {
           // Buttons in a toolbar use a larger font and a regular weight
@@ -973,10 +1422,6 @@ export const defaultTheme: DefaultTheme = {
                   hover: {
                     background: 'transparent',
                   },
-
-                  activated: {
-                    background: 'transparent',
-                  },
                 },
 
                 clear: {
@@ -1026,6 +1471,61 @@ export const defaultTheme: DefaultTheme = {
                   },
                 },
 
+                outline: {
+                  default: {
+                    background: 'transparent',
+                    color: 'currentColor',
+
+                    border: {
+                      color: 'currentColor',
+                    },
+                  },
+
+                  focus: {
+                    background: currentColor('contrast', { alpha: 0.1 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+
+                  activated: {
+                    background: currentColor('contrast'),
+                    color: currentColor('base'),
+                  },
+                },
+
+                clear: {
+                  default: {
+                    background: 'transparent',
+                    color: 'currentColor',
+
+                    border: {
+                      color: 'currentColor',
+                    },
+                  },
+
+                  focus: {
+                    background: currentColor('contrast', { alpha: 0.1 }),
+                    color: currentColor('contrast'),
+                  },
+
+                  hover: {
+                    background: 'transparent',
+                    color: 'currentColor',
+                  },
+
+                  activated: {
+                    background: 'transparent',
+                    color: currentColor('contrast'),
+                  },
+                },
+              },
+
+              // Subtle text uses `foreground`, which can't be read on the toolbar's color, so outline and clear match bold
+              subtle: {
                 outline: {
                   default: {
                     background: 'transparent',

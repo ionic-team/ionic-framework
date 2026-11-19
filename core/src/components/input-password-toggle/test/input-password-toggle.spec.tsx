@@ -1,12 +1,17 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
+import { config } from '../../../global/config';
 import { initialize } from '../../../global/ionic-global';
 import { Button } from '../../button/button';
 import { Input } from '../../input/input';
 import { InputPasswordToggle } from '../input-password-toggle';
 
 describe('input password toggle', () => {
+  afterEach(() => {
+    config.reset({});
+  });
+
   it('should toggle input type when clicked', async () => {
     const page = await newSpecPage({
       components: [Input, InputPasswordToggle, Button],
@@ -111,5 +116,23 @@ describe('input password toggle', () => {
 
     // color is an actual prop so we can access the element property
     expect(button.color).toBe('danger');
+  });
+
+  it('should keep the bold hue when the theme config sets another hue', async () => {
+    config.reset({ customTheme: { config: { components: { IonButton: { hue: 'subtle' } } } } });
+
+    const page = await newSpecPage({
+      components: [Input, InputPasswordToggle, Button],
+      template: () => (
+        <ion-input type="password">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+      ),
+    });
+
+    const inputPasswordToggle = page.body.querySelector('ion-input-password-toggle')!;
+    const button = inputPasswordToggle.shadowRoot!.querySelector('ion-button')!;
+
+    expect(button.classList.contains('button-hue-bold')).toBe(true);
   });
 });

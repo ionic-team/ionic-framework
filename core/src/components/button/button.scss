@@ -4,10 +4,17 @@
 // Button
 // --------------------------------------------------
 
+$hues: bold, subtle;
 $fills: solid, outline, clear;
 $sizes: small, medium, large;
 $shapes: crisp, soft, round, rectangular;
 $spinner-sizes: xsmall, small, medium, large, xlarge;
+
+// A badge in the `start` slot takes the leading margins, and any other badge the trailing ones
+$badge-positions: (
+  trailing: "ion-badge:not([vertical])",
+  leading: 'ion-badge[slot="start"]:not([vertical])',
+);
 
 :host {
   /**
@@ -113,35 +120,43 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 // --------------------------------------------------
 
 @each $size in $sizes {
+  // A fill can set its own padding, such as a narrower `clear` button, or use the size's
+  @each $fill in $fills {
+    $padding: --ion-button-size-#{$size}-padding;
+    $fill-padding: --ion-button-size-#{$size}-#{$fill}-padding;
+
+    :host(.button-size-#{$size}.button-fill-#{$fill}) .button-native {
+      @include mixins.padding(
+        var(--padding-top, var(#{$fill-padding}-top, var(#{$padding}-top))),
+        var(--padding-end, var(#{$fill-padding}-end, var(#{$padding}-end))),
+        var(--padding-bottom, var(#{$fill-padding}-bottom, var(#{$padding}-bottom))),
+        var(--padding-start, var(#{$fill-padding}-start, var(#{$padding}-start)))
+      );
+    }
+  }
+
   :host(.button-size-#{$size}) {
     min-width: var(--ion-button-size-#{$size}-min-width);
     min-height: var(--ion-button-size-#{$size}-min-height);
 
     font-size: var(--ion-button-size-#{$size}-font-size);
   }
-
-  :host(.button-size-#{$size}) .button-native {
-    @include mixins.padding(
-      var(--padding-top, var(--ion-button-size-#{$size}-padding-top)),
-      var(--padding-end, var(--ion-button-size-#{$size}-padding-end)),
-      var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom)),
-      var(--padding-start, var(--ion-button-size-#{$size}-padding-start))
-    );
-  }
 }
 
 // Button: Fill Typography
 // --------------------------------------------------
 
-@each $fill in $fills {
-  :host(.button-hue-bold.button-fill-#{$fill}) {
-    font-weight: var(--ion-button-hue-bold-#{$fill}-default-font-weight);
+@each $hue in $hues {
+  @each $fill in $fills {
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}) {
+      font-weight: var(--ion-button-hue-#{$hue}-#{$fill}-default-font-weight);
+    }
   }
-}
 
-@each $fill in $fills {
-  :host(.button-hue-bold.button-fill-#{$fill}.button-strong) {
-    font-weight: var(--ion-button-hue-bold-#{$fill}-strong-font-weight);
+  @each $fill in $fills {
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.button-strong) {
+      font-weight: var(--ion-button-hue-#{$hue}-#{$fill}-strong-font-weight);
+    }
   }
 }
 
@@ -177,6 +192,22 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
       var(--padding-start, var(--ion-button-size-#{$size}-icon-only-padding-start))
     );
   }
+}
+
+// An icon-only button shows only its icon and badges with a `vertical` position.
+// Other content stays in the accessibility tree, so wrapped text still names the button.
+:host(.button-has-icon-only) ::slotted(:not([slot]):not(ion-badge[vertical])) {
+  @include mixins.visually-hidden();
+}
+
+/**
+ * `::slotted()` can't target bare text, so the default slot gives it a zero font size.
+ * Letter spacing is inherited in px, so it's reset too.
+ */
+:host(.button-has-icon-only) slot:not([name]) {
+  font-size: 0;
+
+  letter-spacing: 0;
 }
 
 // Button: Slotted Elements
@@ -273,139 +304,159 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 // Button: Hues and Fills
 // --------------------------------------------------
 
-/**
- * Each fill has a resting look and one for each state. Without a color,
- * the button reads the plain tokens. With a color, it reads the `semantic`
- * tokens, which use the color's base, contrast and so on.
- */
-@each $fill in $fills {
-  $token: --ion-button-hue-bold-#{$fill};
-
-  :host(.button-hue-bold.button-fill-#{$fill}) {
-    color: var(#{$token}-default-color);
-  }
-
-  :host(.button-hue-bold.button-fill-#{$fill}) .button-native {
-    border-width: var(#{$token}-default-border-width);
-    border-style: var(#{$token}-default-border-style);
-    border-color: var(#{$token}-default-border-color);
-
-    background: var(#{$token}-default-background);
-
-    box-shadow: var(#{$token}-default-box-shadow);
-  }
-
-  // The ripple sits in this shadow root, out of reach of the global token CSS
-  :host(.button-hue-bold.button-fill-#{$fill}) ion-ripple-effect {
-    // A variable, because the ripple animates its opacity in a keyframe
-    --ion-ripple-effect-opacity: var(#{$token}-ripple-effect-opacity);
-
-    color: var(#{$token}-ripple-effect-color);
-  }
-
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-color) .button-native {
-    border-color: var(#{$token}-semantic-default-border-color);
-
-    background: var(#{$token}-semantic-default-background);
-    color: var(#{$token}-semantic-default-color);
-  }
-
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-color) ion-ripple-effect {
-    --ion-ripple-effect-opacity: var(#{$token}-semantic-ripple-effect-opacity);
-
-    color: var(#{$token}-semantic-ripple-effect-color);
-  }
-}
-
-/**
- * The states are written in this order: focus -> hover -> activated -> disabled.
- * Their rules share a specificity, so a later state overrides an earlier
- * one: disabled overrides all, and activated overrides hover and focus.
- */
-
-// Focused
-@each $fill in $fills {
-  $token: --ion-button-hue-bold-#{$fill};
-
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-focused) {
-    color: var(#{$token}-focus-color);
-  }
-
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-focused) .button-native {
-    background: var(#{$token}-focus-background);
-  }
-
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-color.ion-focused) .button-native {
-    background: var(#{$token}-semantic-focus-background);
-    color: var(#{$token}-semantic-focus-color);
-  }
-}
-
-// Hover
-@media (any-hover: hover) {
+@each $hue in $hues {
+  /**
+   * Each fill has a resting look and one for each state. Without a color,
+   * the button reads the plain tokens. With a color, it reads the `semantic`
+   * tokens, which use the color's base, contrast and so on.
+   */
   @each $fill in $fills {
-    $token: --ion-button-hue-bold-#{$fill};
+    $token: --ion-button-hue-#{$hue}-#{$fill};
 
-    :host(.button-hue-bold.button-fill-#{$fill}:hover) {
-      color: var(#{$token}-hover-color);
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}) {
+      color: var(#{$token}-default-color);
+    }
+
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}) .button-native {
+      border-width: var(#{$token}-default-border-width);
+      border-style: var(#{$token}-default-border-style);
+      border-color: var(#{$token}-default-border-color);
+
+      background: var(#{$token}-default-background);
+
+      box-shadow: var(#{$token}-default-box-shadow);
+    }
+
+    // The ripple sits in this shadow root, out of reach of the global token CSS
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}) ion-ripple-effect {
+      // A variable, because the ripple animates its opacity in a keyframe
+      --ion-ripple-effect-opacity: var(#{$token}-ripple-effect-opacity);
+
+      color: var(#{$token}-ripple-effect-color);
+    }
+
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-color) .button-native {
+      border-color: var(#{$token}-semantic-default-border-color);
+
+      background: var(#{$token}-semantic-default-background);
+      color: var(#{$token}-semantic-default-color);
+    }
+
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-color) ion-ripple-effect {
+      --ion-ripple-effect-opacity: var(#{$token}-semantic-ripple-effect-opacity);
+
+      color: var(#{$token}-semantic-ripple-effect-color);
+    }
+  }
+
+  /**
+   * The states are written in this order: focus -> hover -> activated -> disabled.
+   * Their rules share a specificity, so a later state overrides an earlier
+   * one: disabled overrides all, and activated overrides hover and focus.
+   */
+
+  // Focused
+  @each $fill in $fills {
+    $token: --ion-button-hue-#{$hue}-#{$fill};
+
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-focused) {
+      color: var(#{$token}-focus-color);
+    }
+
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-focused) .button-native {
+      background: var(#{$token}-focus-background);
+
+      box-shadow: var(#{$token}-focus-box-shadow);
+    }
+
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-color.ion-focused) .button-native {
+      background: var(#{$token}-semantic-focus-background);
+      color: var(#{$token}-semantic-focus-color);
+    }
+  }
+
+  // Hover
+  @media (any-hover: hover) {
+    @each $fill in $fills {
+      $token: --ion-button-hue-#{$hue}-#{$fill};
+
+      :host(.button-hue-#{$hue}.button-fill-#{$fill}:hover) {
+        color: var(#{$token}-hover-color);
+      }
+
+      // Disabled keeps its own opacity
+      :host(.button-hue-#{$hue}.button-fill-#{$fill}:not(.button-disabled):hover) {
+        opacity: var(#{$token}-hover-opacity);
+      }
+
+      :host(.button-hue-#{$hue}.button-fill-#{$fill}:hover) .button-native {
+        background: var(#{$token}-hover-background);
+
+        box-shadow: var(#{$token}-hover-box-shadow);
+      }
+
+      :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-color:hover) .button-native {
+        background: var(#{$token}-semantic-hover-background);
+        color: var(#{$token}-semantic-hover-color);
+      }
+    }
+  }
+
+  // Activated
+  @each $fill in $fills {
+    $token: --ion-button-hue-#{$hue}-#{$fill};
+
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-activated) {
+      color: var(#{$token}-activated-color, var(#{$token}-default-color));
     }
 
     // Disabled keeps its own opacity
-    :host(.button-hue-bold.button-fill-#{$fill}:not(.button-disabled):hover) {
-      opacity: var(#{$token}-hover-opacity);
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-activated:not(.button-disabled)) {
+      opacity: var(#{$token}-activated-opacity);
     }
 
-    :host(.button-hue-bold.button-fill-#{$fill}:hover) .button-native {
-      background: var(#{$token}-hover-background);
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-activated) .button-native {
+      background: var(#{$token}-activated-background, var(#{$token}-default-background));
+
+      box-shadow: var(#{$token}-activated-box-shadow);
     }
 
-    :host(.button-hue-bold.button-fill-#{$fill}.ion-color:hover) .button-native {
-      background: var(#{$token}-semantic-hover-background);
-      color: var(#{$token}-semantic-hover-color);
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-color.ion-activated) .button-native {
+      background: var(#{$token}-semantic-activated-background, var(#{$token}-semantic-default-background));
+      color: var(#{$token}-semantic-activated-color, var(#{$token}-semantic-default-color));
     }
   }
-}
 
-// Activated
-@each $fill in $fills {
-  $token: --ion-button-hue-bold-#{$fill};
+  // Disabled
+  @each $fill in $fills {
+    $token: --ion-button-hue-#{$hue}-#{$fill};
 
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-activated) {
-    color: var(#{$token}-activated-color, var(#{$token}-default-color));
-  }
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.button-disabled) {
+      // Keeps the default color when the theme doesn't set one
+      color: var(#{$token}-disabled-color, var(#{$token}-default-color));
 
-  // Disabled keeps its own opacity
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-activated:not(.button-disabled)) {
-    opacity: var(#{$token}-activated-opacity);
-  }
+      opacity: var(#{$token}-disabled-opacity);
+    }
 
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-activated) .button-native {
-    background: var(#{$token}-activated-background, var(#{$token}-default-background));
+    // Disabled keeps the resting background unless a theme sets its own
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.button-disabled) .button-native {
+      // Keeps the default border color when the theme doesn't set one
+      border-color: var(#{$token}-disabled-border-color, var(#{$token}-default-border-color));
 
-    box-shadow: var(#{$token}-activated-box-shadow);
-  }
+      background: var(#{$token}-disabled-background, var(#{$token}-default-background));
 
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-color.ion-activated) .button-native {
-    background: var(#{$token}-semantic-activated-background, var(#{$token}-semantic-default-background));
-    color: var(#{$token}-semantic-activated-color, var(#{$token}-semantic-default-color));
-  }
-}
+      box-shadow: var(#{$token}-disabled-box-shadow);
+    }
 
-// Disabled
-@each $fill in $fills {
-  $token: --ion-button-hue-bold-#{$fill};
+    :host(.button-hue-#{$hue}.button-fill-#{$fill}.ion-color.button-disabled) .button-native {
+      // Keeps the default border color when the theme doesn't set one
+      border-color: var(#{$token}-semantic-disabled-border-color, var(#{$token}-semantic-default-border-color));
 
-  :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) {
-    opacity: var(#{$token}-disabled-opacity);
-  }
+      background: var(#{$token}-semantic-disabled-background, var(#{$token}-semantic-default-background));
 
-  // Disabled keeps the resting background unless a theme sets its own
-  :host(.button-hue-bold.button-fill-#{$fill}.button-disabled) .button-native {
-    background: var(#{$token}-disabled-background, var(#{$token}-default-background));
-  }
-
-  :host(.button-hue-bold.button-fill-#{$fill}.ion-color.button-disabled) .button-native {
-    background: var(#{$token}-semantic-disabled-background, var(#{$token}-semantic-default-background));
+      // Keeps the default color when the theme doesn't set one
+      color: var(#{$token}-semantic-disabled-color, var(#{$token}-semantic-default-color));
+    }
   }
 }
 
@@ -459,6 +510,30 @@ $spinner-sizes: xsmall, small, medium, large, xlarge;
 // Button: With a Badge
 // --------------------------------------------------
 
+// A badge can overflow its button, so the button sits above its siblings to keep the badge visible
+:host(.button-has-badge) {
+  position: relative;
+
+  z-index: 1;
+}
+
 :host(.button-has-badge) .button-native {
   overflow: visible;
+}
+
+@each $size in $sizes {
+  // The badge overlaps the vertical padding, so a badge taller than the label doesn't make the button taller than its min height.
+  // The block margins fall back to 0px because calc() needs a unit.
+  @each $position, $selector in $badge-positions {
+    $margin: --ion-button-size-#{$size}-badge-#{$position}-margin;
+
+    :host(.button-size-#{$size}:not(.button-has-icon-only)) ::slotted(#{$selector}) {
+      @include mixins.margin(
+        calc(var(#{$margin}-top, 0px) - var(--padding-top, var(--ion-button-size-#{$size}-padding-top, 0px))),
+        var(#{$margin}-end),
+        calc(var(#{$margin}-bottom, 0px) - var(--padding-bottom, var(--ion-button-size-#{$size}-padding-bottom, 0px))),
+        var(#{$margin}-start)
+      );
+    }
+  }
 }
