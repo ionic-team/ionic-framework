@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.12](https://github.com/ionic-team/ionic-framework/compare/v9.0.11...v9.0.12) (2026-11-17)
+
+### Bug Fixes
+
+* **core:** clear reflected ARIA attrs from host after sync ([#31660](https://github.com/ionic-team/ionic-framework/issues/31660)) ([850f8c7](https://github.com/ionic-team/ionic-framework/commit/850f8c7c83c3cfe3342953ac8718dda34f93e7af)), closes [#31659](https://github.com/ionic-team/ionic-framework/issues/31659)
+* **input, searchbar:** sync value after Safari back navigation ([#31753](https://github.com/ionic-team/ionic-framework/issues/31753)) ([f8f25bc](https://github.com/ionic-team/ionic-framework/commit/f8f25bc93c0908c212fdc7b92a152ecb0948e0e3)), closes [#30017](https://github.com/ionic-team/ionic-framework/issues/30017)
+* **label:** render content set with innerHTML ([#31739](https://github.com/ionic-team/ionic-framework/issues/31739)) ([67cbaeb](https://github.com/ionic-team/ionic-framework/commit/67cbaebb4e9043d37d39713d6eec72f32a9176f9)), closes [#31433](https://github.com/ionic-team/ionic-framework/issues/31433)
+* **overlays:** keep focus inside modal and popover when tabbing in Chrome 157+ ([#31755](https://github.com/ionic-team/ionic-framework/issues/31755)) ([c0eb79e](https://github.com/ionic-team/ionic-framework/commit/c0eb79ef92195bc5b8ff8faeb00e8045d820d886)), closes [#31714](https://github.com/ionic-team/ionic-framework/issues/31714)
+
+
 ## [9.0.11](https://github.com/ionic-team/ionic-framework/compare/v9.0.10...v9.0.11) (2026-11-11)
 
 ### Bug Fixes

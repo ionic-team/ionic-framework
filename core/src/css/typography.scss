@@ -50,12 +50,22 @@ a {
   color: ion-color(primary, base);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/**
+ * TODO(FW-7085): Move these heading rules into a stylesheet shared by all
+ * themes so the `ion-label` exclusion is defined once.
+ *
+ * Headings slotted directly into `ion-label` are styled by the label's
+ * shadow stylesheet. Document styles always win over `::slotted()` styles,
+ * so these rules skip those headings to let the label styles apply.
+ * The exclusion is wrapped in `:where()` to keep the specificity of a
+ * plain element selector so app styles can still override these rules.
+ */
+h1:where(:not(ion-label > h1)),
+h2:where(:not(ion-label > h2)),
+h3:where(:not(ion-label > h3)),
+h4:where(:not(ion-label > h4)),
+h5:where(:not(ion-label > h5)),
+h6:where(:not(ion-label > h6)) {
   @include margin(16px, null, 10px, null);
 
   font-weight: $headings-font-weight;
@@ -63,31 +73,31 @@ h6 {
   line-height: $headings-line-height;
 }
 
-h1 {
+h1:where(:not(ion-label > h1)) {
   @include margin(20px, null, null, null);
 
   font-size: $h1-font-size;
 }
 
-h2 {
+h2:where(:not(ion-label > h2)) {
   @include margin(18px, null, null, null);
 
   font-size: $h2-font-size;
 }
 
-h3 {
+h3:where(:not(ion-label > h3)) {
   font-size: $h3-font-size;
 }
 
-h4 {
+h4:where(:not(ion-label > h4)) {
   font-size: $h4-font-size;
 }
 
-h5 {
+h5:where(:not(ion-label > h5)) {
   font-size: $h5-font-size;
 }
 
-h6 {
+h6:where(:not(ion-label > h6)) {
   font-size: $h6-font-size;
 }
 

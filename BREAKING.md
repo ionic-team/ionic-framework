@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 10.x
 
+- [Browser and Platform Support](#version-10x-browser-platform-support)
 - [Global Styles](#version-10x-global-styles)
 - [Components](#version-10x-components)
   - [Backdrop](#version-10x-backdrop)
@@ -29,10 +30,13 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Image](#version-10x-image)
   - [Input Otp](#version-10x-input-otp)
   - [Item Divider](#version-10x-item-divider)
+  - [Label](#version-10x-label)
   - [Menu Toggle](#version-10x-menu-toggle)
   - [Note](#version-10x-note)
   - [Radio Group](#version-10x-radio-group)
   - [Ripple Effect](#version-10x-ripple-effect)
+  - [Route](#version-10x-route)
+  - [Route Redirect](#version-10x-route-redirect)
   - [Router Link](#version-10x-router-link)
   - [Row](#version-10x-row)
   - [Skeleton Text](#version-10x-skeleton-text)
@@ -45,6 +49,24 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Toolbar](#version-10x-toolbar)
 - [Framework Specific](#version-10x-framework-specific)
   - [Angular](#version-10x-angular)
+
+<h2 id="version-10x-browser-platform-support">Browser and Platform Support</h2>
+
+This section details the desktop browser and mobile platform versions that are supported by Ionic 10.
+
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ------------------ |
+| Chrome          | 89+                |
+| Safari          | 17+                |
+| Edge            | 89+                |
+| Firefox         | 89+                |
+
+**Minimum Mobile Platform Versions**
+| Platform | Supported Version      |
+| -------- | ---------------------- |
+| iOS      | 17+                    |
+| Android  | 5.1+ with Chromium 89+ |
 
 <h2 id="version-10x-global-styles">Global Styles</h2>
 
@@ -632,6 +654,69 @@ If you were targeting the internals of `ion-input-otp` in your CSS, you will nee
    - `--inner-padding-start` is replaced by `IonItemDivider.inner.padding.start` for global styles and `--ion-item-divider-inner-padding-start` for component-specific overrides.
 - Specific mode classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
+<h4 id="version-10x-label">Label</h4>
+
+Converted `ion-label` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+`ion-label` does not render any internal elements, so there are no Shadow Parts to target. However, the following changes may affect existing styles:
+
+- The default heading (`h1` - `h6`) and paragraph (`p`) styles now only apply to elements that are direct children of `ion-label`. Headings and paragraphs nested inside another element, such as `ion-text`, no longer receive the label styles, and nested headings receive the global typography styles instead. To color the label text and headings, set the `color` property on `ion-label`. To color a paragraph or only part of the label, move `ion-text` inside the heading or paragraph:
+
+  ```diff
+  <ion-label>
+  - <ion-text color="primary">
+  -   <h3>Title</h3>
+  - </ion-text>
+  + <h3><ion-text color="primary">Title</ion-text></h3>
+    <p>Description</p>
+  </ion-label>
+  ```
+- Global element styles for headings and paragraphs, such as `h2 { font-size: 20px; }`, now take precedence over the default label styles for those elements. Previously, the label styles took precedence. To keep the label styles, scope the global styles so they do not match elements inside `ion-label`.
+
+  ```diff
+  - h2 {
+  + h2:not(ion-label > h2) {
+      font-size: 20px;
+    }
+  ```
+
+  The `:not()` selector increases the specificity of the global style. To keep the original specificity, wrap the exclusion in `:where()`:
+
+  ```css
+  h2:where(:not(ion-label > h2)) {
+    font-size: 20px;
+  }
+  ```
+
+  Complex selectors inside `:not()` require Chrome 88+, Firefox 84+ and Safari 9+, and `:where()` requires Chrome 88+, Firefox 78+ and Safari 14+.
+
+  This includes CSS resets such as Tailwind's Preflight and Bootstrap's Reboot. In v9, these resets did not change the headings and paragraphs inside `ion-label`, because the label styles took precedence. In v10, the reset takes precedence, so label headings and paragraphs lose their margins and use the reset's font size and weight. For example, with Tailwind's Preflight, `md` label headings render at `16px` with no margins instead of `24px`, `16px` and `14px`, and with Bootstrap's Reboot they render at `40px`, `32px` and `28px`.
+
+  A reset from a third-party stylesheet cannot be scoped, so restore the label styles with app styles that target the headings and paragraphs inside `ion-label`. These take precedence over the reset:
+
+  ```css
+  ion-label > h2 {
+    margin: 2px 0;
+
+    font-size: 1rem;
+    font-weight: normal;
+
+    line-height: 1.2;
+  }
+  ```
+
+  The default values for each heading, paragraph and mode are in [`label.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.scss), [`label.ios.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.ios.scss) and [`label.md.scss`](https://github.com/ionic-team/ionic-framework/blob/main/core/src/components/label/label.md.scss).
+- The global typography styles in `typography.css` no longer apply to headings that are direct children of `ion-label`. These headings are styled by `ion-label` instead.
+- App styles that target `ion-label` directly now take precedence over the default `ion-label` styles. For example, a class that sets `color` on an `ion-label` inside of an `ion-item` previously had no effect because the label applied `var(--color)`, and it now changes the label color. Remove these styles if they are no longer wanted, or use the `--color` CSS variable to set the color of a label inside of an item.
+- Stacked and floating labels in an item with the `ion-invalid` and `ion-touched` classes no longer use the `--highlight-color-invalid` CSS variable in `md` mode. This only changes apps that set `--highlight-color-invalid` on `ion-item` or one of its ancestors. To keep the invalid color, add the following styles:
+
+  ```css
+  ion-item.md.ion-invalid.ion-touched ion-label.label-stacked:not(.ion-color),
+  ion-item.md.ion-invalid.ion-touched ion-label.label-floating:not(.ion-color) {
+    color: var(--highlight-color-invalid);
+  }
+  ```
+
 <h4 id="version-10x-menu-toggle">Menu Toggle</h4>
 
 The following breaking changes apply to `ion-menu-toggle`:
@@ -724,6 +809,18 @@ The ripple fade opacity is now part of the centralized Ionic Theming system. Use
 <h5 id="version-10x-ripple-effect-mode-classes">Mode classes</h5>
 
 Remove any instances that target the mode classes: `ion-ripple-effect.md`, `ion-ripple-effect.ios`.
+
+<h4 id="version-10x-route">Route</h4>
+
+Converted `ion-route` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+`ion-route` does not render any internal elements, so there are no Shadow Parts to target. Nested `ion-route` elements are still read by `ion-router` from the light DOM, so route definitions do not need to change. Any other content placed inside of `ion-route` is no longer part of the rendered tree.
+
+<h4 id="version-10x-route-redirect">Route Redirect</h4>
+
+Converted `ion-route-redirect` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+`ion-route-redirect` does not render any internal elements, so there are no Shadow Parts to target. Redirect definitions do not need to change. Any content placed inside of `ion-route-redirect` is no longer part of the rendered tree.
 
 <h4 id="version-10x-router-link">Router Link</h4>
 
