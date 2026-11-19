@@ -3,6 +3,7 @@ import { Component, Event, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-route-redirect',
+  shadow: true,
 })
 export class RouteRedirect implements ComponentInterface {
   /**

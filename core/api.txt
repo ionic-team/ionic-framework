@@ -1944,7 +1944,7 @@ ion-item-sliding,method,getSlidingRatio,getSlidingRatio() => Promise<number>
 ion-item-sliding,method,open,open(side: Side | undefined) => Promise<void>
 ion-item-sliding,event,ionDrag,any,true
 
-ion-label,scoped
+ion-label,shadow
 ion-label,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-label,prop,mode,"ios" | "md",undefined,false,false
 ion-label,prop,position,"fixed" | "floating" | "stacked" | undefined,undefined,false,false
@@ -2571,7 +2571,7 @@ ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
 ion-ripple-effect,method,addRipple,addRipple(x: number, y: number) => Promise<() => void>
 ion-ripple-effect,css-prop,--ion-ripple-effect-opacity
 
-ion-route,none
+ion-route,shadow
 ion-route,prop,beforeEnter,(() => NavigationHookResult | Promise<NavigationHookResult>) | undefined,undefined,false,false
 ion-route,prop,beforeLeave,(() => NavigationHookResult | Promise<NavigationHookResult>) | undefined,undefined,false,false
 ion-route,prop,component,string,undefined,true,false
@@ -2581,7 +2581,7 @@ ion-route,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-route,prop,url,string,'',false,false
 ion-route,event,ionRouteDataChanged,any,true
 
-ion-route-redirect,none
+ion-route-redirect,shadow
 ion-route-redirect,prop,from,string,undefined,true,false
 ion-route-redirect,prop,to,null | string | undefined,undefined,true,false
 ion-route-redirect,event,ionRouteRedirectChanged,any,true
