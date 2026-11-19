@@ -1164,11 +1164,11 @@ export const defaultTheme: DefaultTheme = {
           outline: {
             // Default non-semantic states
             default: {
-              background: '#3b3b3b',
-              color: '#ffffff',
+              background: 'transparent',
+              color: '#383e45',
 
               border: {
-                color: '#242424',
+                color: '#383e45',
                 style: 'solid',
                 width: '1px',
               },
@@ -1177,11 +1177,11 @@ export const defaultTheme: DefaultTheme = {
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base'),
-                color: currentColor('contrast'),
+                background: 'transparent',
+                color: currentColor('foreground'),
 
                 border: {
-                  color: currentColor('shade'),
+                  color: currentColor('base'),
                   style: 'solid',
                   width: '1px',
                 },
@@ -1210,8 +1210,8 @@ export const defaultTheme: DefaultTheme = {
           outline: {
             // Default non-semantic states
             default: {
-              background: '#f3f3f3',
-              color: '#626262',
+              background: 'transparent',
+              color: '#6c727a',
 
               border: {
                 color: '#e0e0e0',
@@ -1223,7 +1223,7 @@ export const defaultTheme: DefaultTheme = {
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base', { subtle: true }),
+                background: 'transparent',
                 color: currentColor('contrast', { subtle: true }),
 
                 border: {
