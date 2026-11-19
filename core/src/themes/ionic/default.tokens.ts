@@ -1086,6 +1086,12 @@ export const defaultTheme: DefaultTheme = {
           line: {
             height: dynamicFont(global.root, 20),
           },
+
+          icon: {
+            font: {
+              size: 'var(--ion-scaling-xxxs)',
+            },
+          },
         },
         large: {
           padding: {
@@ -1105,6 +1111,12 @@ export const defaultTheme: DefaultTheme = {
           },
           line: {
             height: dynamicFont(global.root, 20),
+          },
+
+          icon: {
+            font: {
+              size: 'var(--ion-scaling-xxxs)',
+            },
           },
         },
       },
@@ -1266,12 +1278,6 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
-        },
-      },
-
-      icon: {
-        font: {
-          size: 'var(--ion-scaling-xxxs)',
         },
       },
 

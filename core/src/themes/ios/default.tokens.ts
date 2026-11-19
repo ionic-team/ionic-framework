@@ -1119,6 +1119,12 @@ export const defaultTheme: DefaultTheme = {
           line: {
             height: `${18 / (components.chip.font.size - 2)}`,
           },
+
+          icon: {
+            font: {
+              size: `${20 / components.chip.font.size}em`,
+            },
+          },
         },
 
         large: {
@@ -1141,6 +1147,12 @@ export const defaultTheme: DefaultTheme = {
 
           line: {
             height: `${20 / components.chip.font.size}`,
+          },
+
+          icon: {
+            font: {
+              size: `${20 / components.chip.font.size}em`,
+            },
           },
         },
       },
@@ -1366,10 +1378,6 @@ export const defaultTheme: DefaultTheme = {
 
       icon: {
         color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
-
-        font: {
-          size: `${20 / components.chip.font.size}em`,
-        },
 
         leading: {
           margin: {

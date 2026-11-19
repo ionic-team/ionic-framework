@@ -82,6 +82,12 @@ type IonChipSizeDefinition = {
   line?: {
     height?: string | number;
   };
+
+  icon?: {
+    font?: {
+      size?: string | number;
+    };
+  };
 };
 
 type IonChipShapeDefinition = {
@@ -104,10 +110,6 @@ type IonChipMediaDefinition = {
 
 type IonChipIconDefinition = IonChipMediaDefinition & {
   color?: string;
-
-  font?: {
-    size?: string | number;
-  };
 };
 
 type IonChipAvatarDefinition = IonChipMediaDefinition & {
