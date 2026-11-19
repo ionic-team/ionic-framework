@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PACKAGE_ROOT = path.resolve(__dirname, '..', '..');
-const OUTPUT_DIRS = ['dist/esm', 'dist/cjs'];
+const OUTPUT_DIRS = ['dist/loader-bundle/esm', 'dist/loader-bundle/cjs'];
 
 function main() {
   const failures = OUTPUT_DIRS.map(verify).filter((message) => message !== null);

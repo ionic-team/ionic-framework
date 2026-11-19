@@ -25,9 +25,9 @@
   "exports": {
     ".": {
       "types": "./dist/types/interface.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs.js",
-      "default": "./dist/index.js"
+      "import": "./dist/loader-bundle/index.js",
+      "require": "./dist/loader-bundle/index.cjs",
+      "default": "./dist/loader-bundle/index.js"
     },
     "./components": {
       "types": "./components/custom-elements.d.ts",
@@ -38,14 +38,14 @@
     "./loader": {
       "types": "./loader/index.d.ts",
       "import": "./loader/index.js",
-      "require": "./loader/index.cjs.js",
+      "require": "./loader/index.cjs",
       "default": "./loader/index.js"
     },
     "./loader/*": "./loader/*",
     "./hydrate": {
       "types": "./hydrate/index.d.ts",
-      "import": "./hydrate/index.mjs",
-      "require": "./hydrate/index.js",
+      "import": "./hydrate/index.js",
+      "require": "./hydrate/index.cjs",
       "default": "./hydrate/index.js"
     },
     "./hydrate/*": "./hydrate/*",
@@ -133,7 +133,7 @@
     "lint.sass.fix": "npm run lint.sass -- --fix",
     "lint.ts": "npm run eslint",
     "lint.ts.fix": "npm run eslint -- --fix",
-    "prerender.e2e": "node scripts/testing/prerender.js",
+    "prerender.e2e": "node scripts/testing/prerender.cjs",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "start": "npm run build.css && stencil build --dev --watch --serve",
     "test": "npm run test.spec && npm run test.e2e",
@@ -141,8 +141,8 @@
     "test.e2e": "npx playwright test",
     "test.e2e.update-snapshots": "npm run test.e2e -- --update-snapshots='changed'",
     "test.watch": "vitest",
-    "test.treeshake": "node scripts/treeshaking.js dist/index.js",
-    "test.lazy-imports": "node scripts/verify/lazy-imports.js",
+    "test.treeshake": "node scripts/treeshaking.cjs dist/loader-bundle/index.js",
+    "test.lazy-imports": "node scripts/verify/lazy-imports.cjs",
     "validate": "npm run lint && npm run test && npm run build && npm run test.lazy-imports && npm run test.treeshake",
     "docker.build": "docker build -t ionic-playwright .",
     "test.e2e.docker": "npm run docker.build && node ./scripts/docker.mjs",

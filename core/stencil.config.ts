@@ -5,7 +5,7 @@ import { sass } from '@stencil/sass';
 import { vueOutputTarget } from '@stencil/vue-output-target';
 
 // @ts-ignore
-import { apiSpecGenerator } from './scripts/api-spec-generator';
+import { apiSpecGenerator } from './scripts/api-spec-generator.cjs';
 
 const componentCorePackage = '@ionic/core';
 
@@ -207,6 +207,7 @@ export const config: Config = {
     {
       type: 'loader-bundle',
       loaderPath: '../../loader',
+      cjs: true,
     },
     {
       type: 'standalone',
@@ -223,7 +224,9 @@ export const config: Config = {
       file: '../packages/docs/core.json'
     },
     {
-      type: 'ssr'
+      type: 'ssr',
+      dir: 'hydrate',
+      cjs: true,
     },
     apiSpecGenerator({
       file: 'api.txt'
