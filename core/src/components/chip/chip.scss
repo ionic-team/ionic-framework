@@ -188,6 +188,31 @@
   line-height: var(--ion-chip-size-large-line-height);
 }
 
+// Outline Sizes
+// ---------------------------------------------
+
+/**
+ * The border is part of the chip's size, so an outline chip
+ * is as tall as a solid one.
+ */
+@each $size in (small, large) {
+  @each $hue in (bold, subtle) {
+    :host(.chip-size-#{$size}.chip-hue-#{$hue}.chip-fill-outline) {
+      $border-width: var(--ion-chip-hue-#{$hue}-outline-default-border-width, 0px);
+
+      padding-top: calc(var(--ion-chip-size-#{$size}-padding-top) - #{$border-width});
+      padding-bottom: calc(var(--ion-chip-size-#{$size}-padding-bottom) - #{$border-width});
+    }
+
+    :host(.chip-size-#{$size}.chip-hue-#{$hue}.chip-fill-outline.ion-color) {
+      $border-width: var(--ion-chip-hue-#{$hue}-outline-semantic-default-border-width, 0px);
+
+      padding-top: calc(var(--ion-chip-size-#{$size}-padding-top) - #{$border-width});
+      padding-bottom: calc(var(--ion-chip-size-#{$size}-padding-bottom) - #{$border-width});
+    }
+  }
+}
+
 // Chip Shapes
 // ---------------------------------------------
 
