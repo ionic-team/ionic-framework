@@ -11,6 +11,7 @@ import type { NavigationHookCallback } from './route-interface';
  */
 @Component({
   tag: 'ion-route',
+  shadow: true,
 })
 export class Route implements ComponentInterface {
   /**

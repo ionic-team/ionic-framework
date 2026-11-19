@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 10.x
 
+- [Browser and Platform Support](#version-10x-browser-platform-support)
 - [Components](#version-10x-components)
   - [Button](#version-10x-button)
   - [Card](#version-10x-card)
@@ -25,9 +26,29 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input Otp](#version-10x-input-otp)
   - [Label](#version-10x-label)
   - [Radio Group](#version-10x-radio-group)
+  - [Route](#version-10x-route)
+  - [Route Redirect](#version-10x-route-redirect)
   - [Textarea](#version-10x-textarea)
 - [Framework Specific](#version-10x-framework-specific)
   - [Angular](#version-10x-angular)
+
+<h2 id="version-10x-browser-platform-support">Browser and Platform Support</h2>
+
+This section details the desktop browser and mobile platform versions that are supported by Ionic 10.
+
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ------------------ |
+| Chrome          | 89+                |
+| Safari          | 17+                |
+| Edge            | 89+                |
+| Firefox         | 89+                |
+
+**Minimum Mobile Platform Versions**
+| Platform | Supported Version      |
+| -------- | ---------------------- |
+| iOS      | 17+                    |
+| Android  | 5.1+ with Chromium 89+ |
 
 <h2 id="version-10x-components">Components</h2>
 
@@ -294,6 +315,18 @@ Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en
 If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
 Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
+
+<h4 id="version-10x-route">Route</h4>
+
+Converted `ion-route` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+`ion-route` does not render any internal elements, so there are no Shadow Parts to target. Nested `ion-route` elements are still read by `ion-router` from the light DOM, so route definitions do not need to change. Any other content placed inside of `ion-route` is no longer part of the rendered tree.
+
+<h4 id="version-10x-route-redirect">Route Redirect</h4>
+
+Converted `ion-route-redirect` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+`ion-route-redirect` does not render any internal elements, so there are no Shadow Parts to target. Redirect definitions do not need to change. Any content placed inside of `ion-route-redirect` is no longer part of the rendered tree.
 
 <h4 id="version-10x-textarea">Textarea</h4>
 
