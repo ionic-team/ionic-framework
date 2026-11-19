@@ -233,10 +233,9 @@
           const galleryItemEl = document.createElement('ion-gallery-item');
 
           if (isImageGallery) {
-            const photoId = 100 + ((nextItemNumber - 1) % 100);
             const labelText = numberToWords(nextItemNumber);
             const imageItemEl = createImageItem(
-              `https://picsum.photos/id/${photoId}/164/${alternatingImgHeight}`,
+              `/src/components/gallery/test/assets/placeholder-164x${alternatingImgHeight}.png`,
               labelText
             );
             galleryItemEl.append(imageItemEl);

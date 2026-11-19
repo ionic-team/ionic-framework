@@ -463,6 +463,21 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(initial.bottom).toBe('0px');
     });
 
+    test('modal with fullscreen dimensions clamped by max-width/max-height should predict zeroed safe-area', async ({
+      page,
+    }) => {
+      // --width and --height are both 100%, but --max-width: 90% and
+      // --max-height: 50% keep the modal off every screen edge, so the
+      // initial prediction should zero all insets instead of inheriting
+      // them and flashing the safe-area padding.
+      expect(await getPredictedSafeArea(page, '#max-constrained-dialog')).toEqual({
+        top: '0px',
+        bottom: '0px',
+        left: '0px',
+        right: '0px',
+      });
+    });
+
     test('safe-area overrides should be cleared on dismiss', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',

@@ -474,10 +474,12 @@ In the following example the `aria-label` is copied from the Host using `createA
 > [!NOTE]
 > Use `createAttributeController` to specify which attributes should be copied or `createAriaAttributeController` to copy all of the possible `aria` attributes.
 
-The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load.
+The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load. An `aria-label`, `aria-description` or `role` written after load is replaced on the host with an empty string, so the host doesn't show up as a second node in the accessibility tree and a later removal still reaches the native element. Anything else written after load stays on the host as written.
 
 > [!IMPORTANT]
-> Pass `hostOwnedAttributes`, the last argument of either function, for any attribute that should be copied at load but not watched afterwards. There are two cases. One is an attribute the component renders on its own `<Host>`, like the `aria-disabled` that `ion-button` renders from its `disabled` prop, where watching it would let the component's own renders overwrite a developer's value. The other is an attribute that would put a second node in the accessibility tree if the host kept a copy, like `role`, since only the initial copy removes attributes from the host and anything written after load stays there too.
+> Pass `hostOwnedAttributes` for any attribute that should be copied at load but not watched afterwards, like the `aria-disabled` that `ion-button` renders on its `<Host>` from its `disabled` prop. Watching it would let the component's own renders overwrite a developer's value.
+>
+> Pass `keepOnHost` to `createAttributeController` when the component sometimes renders no element that can carry the copy, like `ion-card` without `href` or `button`, or the generic `div` of a non-clickable `ion-item`, which ARIA doesn't allow a name on. While it returns `true`, a value written after load stays on the host as written. Call the controller's `refresh()` when something it reads changes, so the value moves to match.
 
 > [!NOTE]
 > Attributes that reference an element by ID (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-activedescendant`) cannot resolve a light DOM ID from inside the shadow root, so only copy those when the target is in the same tree.
@@ -604,10 +606,12 @@ In the following example the `aria-label` is copied from the Host using `createA
 > [!NOTE]
 > Use `createAttributeController` to specify which attributes should be copied or `createAriaAttributeController` to copy all of the possible `aria` attributes.
 
-The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load.
+The controller keeps the copy in sync when the host attribute changes after load. Both `inheritAttributes` and `inheritAriaAttributes` do the same copy but only once, so a change made after load never reaches the native element. Those are still the right choice for an attribute that is only read at load. An `aria-label`, `aria-description` or `role` written after load is replaced on the host with an empty string, so the host doesn't show up as a second node in the accessibility tree and a later removal still reaches the native element. Anything else written after load stays on the host as written.
 
 > [!IMPORTANT]
-> Pass `hostOwnedAttributes`, the last argument of either function, for any attribute that should be copied at load but not watched afterwards. There are two cases. One is an attribute the component renders on its own `<Host>`, like the `aria-disabled` that `ion-button` renders from its `disabled` prop, where watching it would let the component's own renders overwrite a developer's value. The other is an attribute that would put a second node in the accessibility tree if the host kept a copy, like `role`, since only the initial copy removes attributes from the host and anything written after load stays there too.
+> Pass `hostOwnedAttributes` for any attribute that should be copied at load but not watched afterwards, like the `aria-disabled` that `ion-button` renders on its `<Host>` from its `disabled` prop. Watching it would let the component's own renders overwrite a developer's value.
+>
+> Pass `keepOnHost` to `createAttributeController` when the component sometimes renders no element that can carry the copy, like `ion-card` without `href` or `button`, or the generic `div` of a non-clickable `ion-item`, which ARIA doesn't allow a name on. While it returns `true`, a value written after load stays on the host as written. Call the controller's `refresh()` when something it reads changes, so the value moves to match.
 
 > [!NOTE]
 > Attributes that reference an element by ID (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-activedescendant`) cannot resolve a light DOM ID from inside the shadow root, so only copy those when the target is in the same tree.
@@ -772,22 +776,71 @@ There will be some CSS issues when converting to shadow. Below are some of the d
 
 **Targeting host-context + host (with a :not)**
 
+```tsx
+'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
+```
+
 ```css
 /* IN SCOPED */
 :host-context(ion-toolbar.ion-color):not(.ion-color) {
 
 /* IN SHADOW */
-:host-context(ion-toolbar.ion-color):host(:not(.ion-color))  {
+:host(.in-toolbar-color:not(.ion-color)) {
 ```
 
 **Targeting host-context + host (with a :not) > slotted child**
+
+```tsx
+'in-toolbar': hostContext('ion-toolbar', this.el),
+'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
+```
 
 ```css
 /* IN SCOPED */
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(ion-segment-button) {
 
 /* IN SHADOW*/
-:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
+:host(.in-toolbar:not(.in-toolbar-color):not(.ion-color)) ::slotted(ion-segment-button) {
+```
+
+See [Parent Context](#parent-context) for when to set a host class with `hostContext`.
+
+### Parent Context
+
+In scoped components, Stencil rewrites `:host-context()` into descendant selectors that work in every browser. In shadow components, the browser handles `:host-context()` itself, and only Chromium supports it. Styles that depend on an ancestor need a different approach after converting.
+
+When the ancestor is known at render time, set a class on the host with the `hostContext` utility and target that class with `:host()`. Pass tag names to `hostContext` rather than classes that the ancestor adds when it renders. Tag names state exactly which components the styles apply to, and they do not depend on another component's internal classes:
+
+```tsx
+// ✅ Correct
+'in-item': hostContext('ion-item', this.el),
+
+// ❌ Incorrect: `.item` is an internal class added by several components when they render
+'in-item': hostContext('.item', this.el),
+```
+
+```css
+/* IN SCOPED */
+:host-context(ion-item) {
+
+/* IN SHADOW */
+:host(.in-item) {
+```
+
+Combine a tag name with a class or attribute only when it describes the ancestor's state, such as `hostContext('ion-toolbar[color]', this.el)` or `hostContext('ion-item.ion-color', this.el)`. This is only checked when the component renders, so adding or removing `color` on the item afterward does not update `in-item-color`. This is an accepted limitation for item color, which is rarely changed after render.
+
+`hostContext` only runs when the component renders, so it does not update when the ancestor's classes change later. When the styles depend on ancestor state that changes after render, such as a disabled state reported by a child, move the styles to the ancestor and target the child with `::slotted()`:
+
+```css
+/* IN SCOPED (label.scss) */
+:host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
+  opacity: 0.3;
+}
+
+/* IN SHADOW (item.common.scss) */
+:host(.item-interactive-disabled:not(.item-multiple-inputs)) ::slotted(ion-label) {
+  opacity: 0.3;
+}
 ```
 
 ## Sass Variables
@@ -857,41 +910,35 @@ For guidelines on exposing the icon for styling, see the [CSS Shadow Parts Guide
 
 ## RTL
 
-When you need to support both LTR and RTL modes, try to avoid using values such as `left` and `right`. For certain CSS properties, you can use the appropriate mixin to have this handled for you automatically.
+Components must follow the text direction of the nearest ancestor with a `dir` attribute, and must update when that direction changes. Handle direction in CSS or in JavaScript at the time it is needed. Do not add classes such as `my-cmp-rtl` to the host during render. A class set during render is not updated when `dir` changes on an ancestor, so the styles fall out of date.
 
-For example, if you wanted `transform-origin` to be RTL-aware, you would use the `transform-origin` mixin:
+Use the first approach that applies:
 
-```css
-@include transform-origin(start, center);
-```
+1. **Logical properties**: Avoid physical values such as `left` and `right`. When a logical property exists, use it or the mixin that outputs it. The `margin`, `padding` and `position` mixins output logical properties such as `margin-inline-start` and `inset-inline-start`:
 
-This would output `transform-origin: left center` in LTR mode and `transform-origin: right center` in RTL mode.
+    ```scss
+    @include margin(0, 8px, 0, 16px);
+    ```
 
-These mixins depend on the `:host-context` pseudo-class when used inside of shadow components, which is not supported in WebKit. As a result, these mixins will not work in Safari for macOS and iOS when applied to shadow components.
+2. **RTL mixins**: When there is no logical property, use the RTL-aware mixin. For example, to make `transform-origin` RTL-aware, use the `transform-origin` mixin:
 
-To work around this, you should set an RTL class on the host of your component and set your RTL styles by targeting that class:
+    ```scss
+    @include transform-origin(start, center);
+    ```
 
-```tsx
-import { isRTL } from '@utils/rtl';
+    This outputs `transform-origin: left center` in LTR and `transform-origin: right center` in RTL. For properties without a dedicated mixin, wrap the RTL styles in the `rtl()` mixin.
 
-<Host
-class={{
-  'my-cmp-rtl': isRTL(this.el)
-}}
->
- ...
-</Host>
-```
+    Inside shadow components, these mixins output a `:dir(rtl)` selector, which follows the nearest ancestor with a `dir` attribute and is supported by Chrome 120+, Firefox and Safari 16.4+. Browsers without `:dir()` support get a `:host-context([dir=rtl])` selector instead, which Chromium supports. It matches any ancestor with `dir="rtl"`, so in Chrome 89 - 119 an LTR section inside an RTL page still gets the RTL styles. In Safari 16.4 - 16.x, `:dir()` does not update when the direction changes after the page loads ([WebKit bug 257133](https://bugs.webkit.org/show_bug.cgi?id=257133)). Safari 17+ is not affected.
 
-```css
-:host {
-  transform-origin: left center;
-}
+3. **JavaScript**: When direction affects behavior that CSS cannot express, such as gesture math, animations or positioning, call `isRTL(this.el)` from `@utils/rtl` at the time the value is needed. Do not store the result during render.
 
-:host(.my-cmp-rtl) {
-  transform-origin: right center;
-}
-```
+    ```tsx
+    private onMove(detail: GestureDetail) {
+      const rtl = isRTL(this.el);
+      const delta = rtl ? -detail.deltaX : detail.deltaX;
+      ...
+    }
+    ```
 
 ## Themes vs. Modes
 
