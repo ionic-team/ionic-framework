@@ -41,7 +41,7 @@
   ],
   "dependencies": {
     "@ionic/core": "^8.8.20",
-    "ionicons": "^8.0.13",
+    "ionicons": "^8.1.1",
     "tslib": "*"
   },
   "peerDependencies": {
