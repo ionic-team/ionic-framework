@@ -57,7 +57,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 });
 
 /**
- * `md` mode does not differ from `ios` mode in chip rendering.
+ * The hue tests cover the `md` outline and color chips.
  */
 configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('chip: outline'), () => {

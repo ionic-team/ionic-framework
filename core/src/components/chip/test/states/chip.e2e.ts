@@ -6,10 +6,8 @@ import { ION_CHIP_FILLS } from '../../chip.interface';
 
 /**
  * This behavior does not vary across directions.
- *
- * `md` does not differ from `ios`.
  */
-configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('chip: states'), () => {
     test('should render disabled state', async ({ page }) => {
       await page.setContent(
