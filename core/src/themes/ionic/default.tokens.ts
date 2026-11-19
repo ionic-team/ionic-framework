@@ -1089,7 +1089,7 @@ export const defaultTheme: DefaultTheme = {
 
           icon: {
             font: {
-              size: 'var(--ion-scaling-xxxs)',
+              size: 'var(--ion-scaling-xxxxs)',
             },
           },
         },
