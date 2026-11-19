@@ -1113,6 +1113,26 @@ export const defaultTheme: DefaultTheme = {
               'var(--ion-font-size-xl)'
             ),
           },
+
+          avatar: {
+            leading: {
+              margin: {
+                top: '-4px',
+                end: 'var(--ion-spacing-sm)',
+                bottom: '-4px',
+                start: '-8px',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: '-4px',
+                end: '-8px',
+                bottom: '-4px',
+                start: 'var(--ion-spacing-sm)',
+              },
+            },
+          },
         },
 
         large: {
@@ -1129,6 +1149,26 @@ export const defaultTheme: DefaultTheme = {
 
           font: {
             size: clamp('13px', `${(components.chip.font.size / global.root).toFixed(2)}rem`, '22px'),
+          },
+
+          avatar: {
+            leading: {
+              margin: {
+                top: '-4px',
+                end: 'var(--ion-spacing-sm)',
+                bottom: '-4px',
+                start: '-8px',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: '-4px',
+                end: '-8px',
+                bottom: '-4px',
+                start: 'var(--ion-spacing-sm)',
+              },
+            },
           },
         },
       },
@@ -1381,24 +1421,6 @@ export const defaultTheme: DefaultTheme = {
       avatar: {
         height: `${(24 / components.chip.font.size).toFixed(2)}em`,
         width: `${(24 / components.chip.font.size).toFixed(2)}em`,
-
-        leading: {
-          margin: {
-            top: '-4px',
-            end: 'var(--ion-spacing-sm)',
-            bottom: '-4px',
-            start: '-8px',
-          },
-        },
-
-        trailing: {
-          margin: {
-            top: '-4px',
-            end: '-8px',
-            bottom: '-4px',
-            start: 'var(--ion-spacing-sm)',
-          },
-        },
       },
     },
 

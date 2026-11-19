@@ -814,14 +814,6 @@ ion-chip,prop,outline,boolean,false,false,false
 ion-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-chip,prop,size,"large" | "small" | undefined,undefined,false,false
 ion-chip,css-prop,--ion-chip-avatar-height
-ion-chip,css-prop,--ion-chip-avatar-leading-margin-bottom
-ion-chip,css-prop,--ion-chip-avatar-leading-margin-end
-ion-chip,css-prop,--ion-chip-avatar-leading-margin-start
-ion-chip,css-prop,--ion-chip-avatar-leading-margin-top
-ion-chip,css-prop,--ion-chip-avatar-trailing-margin-bottom
-ion-chip,css-prop,--ion-chip-avatar-trailing-margin-end
-ion-chip,css-prop,--ion-chip-avatar-trailing-margin-start
-ion-chip,css-prop,--ion-chip-avatar-trailing-margin-top
 ion-chip,css-prop,--ion-chip-avatar-width
 ion-chip,css-prop,--ion-chip-font-weight
 ion-chip,css-prop,--ion-chip-gap
@@ -894,6 +886,14 @@ ion-chip,css-prop,--ion-chip-margin-top
 ion-chip,css-prop,--ion-chip-shape-rectangular-border-radius
 ion-chip,css-prop,--ion-chip-shape-round-border-radius
 ion-chip,css-prop,--ion-chip-shape-soft-border-radius
+ion-chip,css-prop,--ion-chip-size-large-avatar-leading-margin-bottom
+ion-chip,css-prop,--ion-chip-size-large-avatar-leading-margin-end
+ion-chip,css-prop,--ion-chip-size-large-avatar-leading-margin-start
+ion-chip,css-prop,--ion-chip-size-large-avatar-leading-margin-top
+ion-chip,css-prop,--ion-chip-size-large-avatar-trailing-margin-bottom
+ion-chip,css-prop,--ion-chip-size-large-avatar-trailing-margin-end
+ion-chip,css-prop,--ion-chip-size-large-avatar-trailing-margin-start
+ion-chip,css-prop,--ion-chip-size-large-avatar-trailing-margin-top
 ion-chip,css-prop,--ion-chip-size-large-font-size
 ion-chip,css-prop,--ion-chip-size-large-letter-spacing
 ion-chip,css-prop,--ion-chip-size-large-line-height
@@ -902,6 +902,14 @@ ion-chip,css-prop,--ion-chip-size-large-padding-bottom
 ion-chip,css-prop,--ion-chip-size-large-padding-end
 ion-chip,css-prop,--ion-chip-size-large-padding-start
 ion-chip,css-prop,--ion-chip-size-large-padding-top
+ion-chip,css-prop,--ion-chip-size-small-avatar-leading-margin-bottom
+ion-chip,css-prop,--ion-chip-size-small-avatar-leading-margin-end
+ion-chip,css-prop,--ion-chip-size-small-avatar-leading-margin-start
+ion-chip,css-prop,--ion-chip-size-small-avatar-leading-margin-top
+ion-chip,css-prop,--ion-chip-size-small-avatar-trailing-margin-bottom
+ion-chip,css-prop,--ion-chip-size-small-avatar-trailing-margin-end
+ion-chip,css-prop,--ion-chip-size-small-avatar-trailing-margin-start
+ion-chip,css-prop,--ion-chip-size-small-avatar-trailing-margin-top
 ion-chip,css-prop,--ion-chip-size-small-font-size
 ion-chip,css-prop,--ion-chip-size-small-letter-spacing
 ion-chip,css-prop,--ion-chip-size-small-line-height
