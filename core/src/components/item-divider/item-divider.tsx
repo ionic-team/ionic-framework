@@ -21,7 +21,7 @@ import type { Color } from '../../interface';
     ios: 'item-divider.ios.scss',
     md: 'item-divider.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class ItemDivider implements ComponentInterface {
   @Element() el!: HTMLElement;

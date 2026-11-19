@@ -304,7 +304,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       const textarea = page.locator('ion-textarea');
 
-      await textarea.evaluate((el: HTMLIonInputElement) => {
+      await textarea.evaluate((el: HTMLElement) => {
         const labelEl = document.createElement('div');
         labelEl.slot = 'label';
         labelEl.innerHTML = 'Comments <span class="required" style="color: red">*</span';

@@ -1,3 +1,7 @@
+// @vitest-environment stencil
+
+import type { Mock } from 'vitest';
+
 import {
   copyVisualViewport,
   setKeyboardClose,
@@ -32,7 +36,7 @@ const mockVisualViewport = (
   (win as any).visualViewport = Object.assign(win.visualViewport!, visualViewport);
   win = Object.assign(win, layoutViewport);
 
-  const mockDispatchEvent = jest.fn();
+  const mockDispatchEvent = vi.fn();
 
   win.dispatchEvent = mockDispatchEvent;
 
@@ -93,7 +97,7 @@ describe('Keyboard Assist Tests', () => {
 
   describe('setKeyboardOpen()', () => {
     it('should dispatch the keyboard open event on the window', () => {
-      const mockDispatchEvent = jest.fn();
+      const mockDispatchEvent = vi.fn();
       window.dispatchEvent = mockDispatchEvent;
 
       setKeyboardOpen(window);
@@ -105,7 +109,7 @@ describe('Keyboard Assist Tests', () => {
 
   describe('setKeyboardClose()', () => {
     it('should dispatch the keyboard close event on the window', () => {
-      const mockDispatchEvent = jest.fn();
+      const mockDispatchEvent = vi.fn();
       window.dispatchEvent = mockDispatchEvent;
 
       setKeyboardClose(window);
@@ -230,7 +234,7 @@ describe('Keyboard Assist Tests', () => {
 });
 
 describe('Keyboard Assist Integration', () => {
-  let mockDispatchEvent: jest.Mock<any, any>;
+  let mockDispatchEvent: Mock;
 
   beforeEach(() => {
     resetKeyboardAssist();
@@ -273,7 +277,7 @@ describe('Keyboard Assist Integration', () => {
 });
 
 describe('Keyboard Assist with Capacitor', () => {
-  let mockDispatchEvent: jest.Mock<any, any>;
+  let mockDispatchEvent: Mock;
 
   beforeEach(() => {
     resetKeyboardAssist();

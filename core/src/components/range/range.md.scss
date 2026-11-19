@@ -172,11 +172,6 @@
       border-radius: 50% 50% 50% 0;
     }
 
-    @include rtl() {
-      /* stylelint-disable-next-line property-disallowed-list */
-      left: unset;
-    }
-
     position: absolute;
 
     width: 26px;
@@ -190,6 +185,14 @@
 
     content: "";
     z-index: -1;
+  }
+
+  // A pseudo-class like :dir() must come before the ::before pseudo-element it targets.
+  @include rtl() {
+    &::before {
+      /* stylelint-disable-next-line property-disallowed-list */
+      left: unset;
+    }
   }
 }
 

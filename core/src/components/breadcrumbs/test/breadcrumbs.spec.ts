@@ -17,7 +17,7 @@ it('should correctly provide the collapsed breadcrumbs in the event payload', as
     `,
   });
 
-  const onCollapsedClick = jest.fn((ev) => ev);
+  const onCollapsedClick = vi.fn((ev) => ev);
   const breadcrumbs = page.body.querySelector('ion-breadcrumbs')!;
   const breadcrumb = page.body.querySelectorAll('ion-breadcrumb')!;
 

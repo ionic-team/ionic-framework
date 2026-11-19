@@ -1,16 +1,21 @@
+// @vitest-environment stencil
+
+import type { MockInstance } from 'vitest';
+
 import { blockedTags, IonicSafeString, reflectPropertiesToAttributes, sanitizeDOMString, sanitizeDOMTree } from '..';
 
 describe('sanitizeDOMString', () => {
-  let consoleWarnSpy: jest.SpyInstance;
+  let consoleWarnSpy: MockInstance;
 
   beforeEach(() => {
-    consoleWarnSpy = jest.spyOn(console, 'warn');
+    consoleWarnSpy = vi.spyOn(console, 'warn');
     // Suppress console.warn output from polluting the test output
     consoleWarnSpy.mockImplementation(() => {});
   });
 
   afterEach(() => {
     consoleWarnSpy.mockRestore();
+    delete (window as any).Ionic;
   });
 
   it('disable sanitizer', () => {

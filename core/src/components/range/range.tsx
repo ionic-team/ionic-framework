@@ -61,7 +61,7 @@ import type {
     ios: 'range.ios.scss',
     md: 'range.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Range implements ComponentInterface {
   private rangeId = `ion-r-${rangeIds++}`;

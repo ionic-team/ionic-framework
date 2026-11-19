@@ -144,7 +144,7 @@ describe('input: back/forward cache restore', () => {
 
     const inputEl = page.body.querySelector('ion-input')!;
     const nativeEl = inputEl.querySelector('input')!;
-    const ionInputSpy = jest.fn();
+    const ionInputSpy = vi.fn();
     inputEl.addEventListener('ionInput', ionInputSpy);
 
     nativeEl.value = '';

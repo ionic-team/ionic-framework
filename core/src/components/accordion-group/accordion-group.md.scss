@@ -22,6 +22,6 @@
   @include border-radius($accordion-md-border-radius, $accordion-md-border-radius, null, null);
 }
 
-:host(.accordion-group-expand-inset) ::slotted(ion-accordion):first-of-type {
+:host(.accordion-group-expand-inset) ::slotted(ion-accordion:first-of-type) {
   @include margin(0, 0, 0, 0);
 }

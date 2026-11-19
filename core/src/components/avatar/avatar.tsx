@@ -9,7 +9,7 @@ import { getIonMode } from '../../global/ionic-global';
     ios: 'avatar.ios.scss',
     md: 'avatar.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Avatar implements ComponentInterface {
   render() {

@@ -33,7 +33,7 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Toggle implements ComponentInterface {
   private inputId = `ion-tg-${toggleIds++}`;

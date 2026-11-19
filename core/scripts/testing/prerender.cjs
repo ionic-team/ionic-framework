@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const hydrate = require('../../hydrate');
+const hydrate = require('../../hydrate/index.cjs');
 const domino = require('domino');
 
 let prerenderCount = 0;

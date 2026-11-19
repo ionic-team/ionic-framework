@@ -22,7 +22,7 @@ import type { Color } from '../../interface';
     ios: 'progress-bar.ios.scss',
     md: 'progress-bar.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class ProgressBar implements ComponentInterface {
   @Element() el!: HTMLElement;

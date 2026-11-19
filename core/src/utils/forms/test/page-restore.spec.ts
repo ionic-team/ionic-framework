@@ -1,3 +1,7 @@
+// @vitest-environment stencil
+
+import type { Mock } from 'vitest';
+
 import { PAGE_RESTORE_CHECK_DURATION, syncValueOnPageRestore } from '../page-restore';
 
 /**
@@ -23,14 +27,14 @@ const pageShow = (persisted: boolean) => ({ persisted } as PageTransitionEvent);
 
 describe('syncValueOnPageRestore', () => {
   let nativeInput: HTMLInputElement;
-  let onPasswordCleared: jest.Mock;
+  let onPasswordCleared: Mock;
   let now: number;
 
   beforeEach(() => {
     frames = [];
-    onPasswordCleared = jest.fn();
+    onPasswordCleared = vi.fn();
     now = 0;
-    jest.spyOn(Date, 'now').mockImplementation(() => now);
+    vi.spyOn(Date, 'now').mockImplementation(() => now);
 
     originalRaf = Object.getOwnPropertyDescriptor(globalThis, 'requestAnimationFrame');
     Object.defineProperty(globalThis, 'requestAnimationFrame', {
@@ -44,7 +48,7 @@ describe('syncValueOnPageRestore', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
 
     if (originalRaf) {
       Object.defineProperty(globalThis, 'requestAnimationFrame', originalRaf);

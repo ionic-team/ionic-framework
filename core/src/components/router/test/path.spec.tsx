@@ -313,8 +313,8 @@ describe('writeSegments', () => {
 
 function mockHistory(): History {
   return {
-    replaceState: jest.fn(),
-    pushState: jest.fn(),
+    replaceState: vi.fn(),
+    pushState: vi.fn(),
     length: 0,
   } as any;
 }

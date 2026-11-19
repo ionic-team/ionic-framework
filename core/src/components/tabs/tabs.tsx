@@ -13,7 +13,7 @@ import type { TabButtonClickEventDetail } from '../tab-bar/tab-bar-interface';
 @Component({
   tag: 'ion-tabs',
   styleUrl: 'tabs.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Tabs implements NavOutlet {
   private transitioning = false;

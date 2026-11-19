@@ -29,8 +29,8 @@ describe('overlay focus boundary', () => {
       const outside = page.body.querySelector<HTMLElement>('#outside')!;
       const first = page.body.querySelector<HTMLElement>('#first')!;
       const last = page.body.querySelector<HTMLElement>('#last')!;
-      const focusFirst = jest.spyOn(first, 'focus');
-      const focusLast = jest.spyOn(last, 'focus');
+      const focusFirst = vi.spyOn(first, 'focus');
+      const focusLast = vi.spyOn(last, 'focus');
 
       return { modal, start, end, outside, first, last, focusFirst, focusLast };
     };
@@ -134,10 +134,10 @@ describe('overlay focus boundary', () => {
       const { page, start, end, alertButtons } = await setup(['First', 'Last']);
       const [first, last] = alertButtons;
       const outside = page.body.querySelector<HTMLElement>('#outside')!;
-      const focusFirst = jest.spyOn(first, 'focus');
-      const focusLast = jest.spyOn(last, 'focus');
-      const focusStart = jest.spyOn(start as HTMLElement, 'focus');
-      const focusEnd = jest.spyOn(end as HTMLElement, 'focus');
+      const focusFirst = vi.spyOn(first, 'focus');
+      const focusLast = vi.spyOn(last, 'focus');
+      const focusStart = vi.spyOn(start as HTMLElement, 'focus');
+      const focusEnd = vi.spyOn(end as HTMLElement, 'focus');
 
       focusBoundary(start, outside);
       expect(focusFirst).toHaveBeenCalledTimes(1);
@@ -154,7 +154,7 @@ describe('overlay focus boundary', () => {
 
     it('should focus the overlay host when there is nothing focusable inside', async () => {
       const { alert, start } = await setup([]);
-      const focusHost = jest.spyOn(alert, 'focus');
+      const focusHost = vi.spyOn(alert, 'focus');
 
       focusBoundary(start, null);
 

@@ -312,7 +312,7 @@ describe('modal: canDismiss', () => {
   });
   describe('modal: data and role', () => {
     test('should pass data and role when calling dismiss', async () => {
-      const canDismiss = jest.fn();
+      const canDismiss = vi.fn();
       const page = await newSpecPage({
         components: [Modal],
         template: () => <ion-modal overlayIndex={1} animated={false} canDismiss={canDismiss}></ion-modal>,

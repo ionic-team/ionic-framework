@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { isRTL } from './dir';
 
 describe('rtl: dir', () => {

@@ -113,7 +113,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
     ios: 'datetime.ios.scss',
     md: 'datetime.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;

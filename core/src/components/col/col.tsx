@@ -13,7 +13,7 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 @Component({
   tag: 'ion-col',
   styleUrl: 'col.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Col implements ComponentInterface {
   @Element() el!: HTMLElement;

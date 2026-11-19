@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { getModalCoveredAxes } from './safe-area-utils';
 
 /**

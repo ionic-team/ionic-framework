@@ -14,7 +14,7 @@ import type { Color } from '../../interface';
     ios: 'note.ios.scss',
     md: 'note.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Note implements ComponentInterface {
   /**

@@ -18,7 +18,7 @@ import type { TabBarChangedEventDetail } from './tab-bar-interface';
     ios: 'tab-bar.ios.scss',
     md: 'tab-bar.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class TabBar implements ComponentInterface {
   private keyboardCtrl: KeyboardController | null = null;

@@ -1,14 +1,16 @@
 import { config } from '@global/config';
+import type { MockInstance } from 'vitest';
+
 import { LogLevel } from '../../../index';
 
 import { printIonError, printIonWarning } from '../index';
 
 describe('Logging', () => {
   describe('#printIonWarning', () => {
-    let consoleWarnSpy: jest.SpyInstance;
+    let consoleWarnSpy: MockInstance;
 
     beforeEach(() => {
-      consoleWarnSpy = jest.spyOn(console, 'warn');
+      consoleWarnSpy = vi.spyOn(console, 'warn');
       // Suppress console.warn output from polluting the test output
       consoleWarnSpy.mockImplementation(() => {});
     });
@@ -69,10 +71,10 @@ describe('Logging', () => {
   });
 
   describe('#printIonError', () => {
-    let consoleErrorSpy: jest.SpyInstance;
+    let consoleErrorSpy: MockInstance;
 
     beforeEach(() => {
-      consoleErrorSpy = jest.spyOn(console, 'error');
+      consoleErrorSpy = vi.spyOn(console, 'error');
       // Suppress console.error output from polluting the test output
       consoleErrorSpy.mockImplementation(() => {});
     });

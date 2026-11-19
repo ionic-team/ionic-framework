@@ -2,30 +2,19 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "assumeChangesOnlyAffectDirectDependencies": true,
-    // dom.iterable required for for...of iteration over DOM collections (NodeList, HTMLCollection)
-    // See: slot-mutation-controller.ts, popover.tsx, router/utils/dom.ts
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "es2022"
-    ],
-    // Must stay false. At target es2022 TypeScript defaults it to true, emitting @Prop
-    // defaults as class fields. Consumers that downlevel those hoist the initializers
-    // above Stencil's registerInstance(), so its prop setter drops every default.
-    "useDefineForClassFields": false,
     "jsx": "react",
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
-    "outDir": ".tmp",
-    "baseUrl": ".",
+    "types": ["node", "vitest/globals", "@stencil/vitest"],
     "paths": {
-      "@utils/*": ["src/utils/*"],
-      "@utils/test": ["src/utils/test/utils"],
-      "@global/*": ["src/global/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@utils/test": ["./src/utils/test/utils"],
+      "@global/*": ["./src/global/*"]
     }
   },
   "include": [
-    "src"
+    "src",
+    "vitest.setup.d.ts"
   ],
   "exclude": [
     "node_modules"

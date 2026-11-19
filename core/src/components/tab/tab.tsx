@@ -8,7 +8,7 @@ import type { ComponentRef, FrameworkDelegate } from '../../interface';
 @Component({
   tag: 'ion-tab',
   styleUrl: 'tab.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Tab implements ComponentInterface {
   private loadPromise?: Promise<HTMLElement | undefined>;

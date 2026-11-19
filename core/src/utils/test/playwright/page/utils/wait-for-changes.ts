@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test';
-import type { HostElement } from '@stencil/core/internal';
+import type { HTMLStencilElement } from '@stencil/core/runtime';
 
 /**
  * Waits for a combined threshold of a Stencil web component to be re-hydrated in the next repaint + 100ms.
@@ -31,7 +31,7 @@ export const waitForChanges = async (page: Page, timeoutMs = 100) => {
             const len = children.length;
             for (let i = 0; i < len; i++) {
               const childElm = children[i];
-              const childStencilElm = childElm as HostElement;
+              const childStencilElm = childElm as HTMLStencilElement;
               if (childElm.tagName.includes('-') && typeof childStencilElm.componentOnReady === 'function') {
                 /**
                  * We are only using the lazy loaded bundle

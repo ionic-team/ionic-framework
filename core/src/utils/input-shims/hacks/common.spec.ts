@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { relocateInput } from './common';
 
 describe('relocateInput', () => {

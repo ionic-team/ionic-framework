@@ -1,23 +1,29 @@
+// @vitest-environment stencil
+
 import { createAnimation } from '../animation';
 import type { Animation } from '../animation-interface';
 import { getTimeGivenProgression } from '../cubic-bezier';
 
 describe('Animation Class', () => {
   describe('progressEnd callbacks', () => {
-    test('coerced state should be reset before onFinish runs', (done) => {
+    test('coerced state should be reset before onFinish runs', async () => {
       const el = document.createElement('div');
       const animation = createAnimation()
         .addElement(el)
         .fromTo('transform', 'translateX(0px)', 'translateX(100px)')
         .duration(50);
 
-      animation
-        .onFinish(() => {
+      const finished = new Promise<void>((resolve) => {
+        animation.onFinish(() => {
           expect(animation.getDirection()).toBe('normal');
           expect(animation.getDuration()).toBe(50);
-          done();
-        })
-        .progressEnd(0, 0.5, 10);
+          resolve();
+        });
+      });
+
+      animation.progressEnd(0, 0.5, 10);
+
+      await finished;
     });
   });
   describe('play()', () => {

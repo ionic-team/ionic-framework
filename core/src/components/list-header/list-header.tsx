@@ -16,7 +16,7 @@ import type { Color } from '../../interface';
     ios: 'list-header.ios.scss',
     md: 'list-header.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class ListHeader implements ComponentInterface {
   /**

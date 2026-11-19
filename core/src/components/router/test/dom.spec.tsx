@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { scrollToFragment, waitUntilNavNode } from '../utils/dom';
 
 describe('scrollToFragment', () => {
@@ -101,7 +103,7 @@ describe('scrollToFragment', () => {
 describe('waitUntilNavNode', () => {
   afterEach(() => {
     document.body.innerHTML = '';
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should resolve immediately when an outlet is already present', async () => {
@@ -133,7 +135,7 @@ describe('waitUntilNavNode', () => {
     // Regression guard for the router hanging on a page that has no outlet
     // (e.g. an ion-router with only an ion-nav, which is no longer an outlet as
     // of Ionic 9). Without the timeout the returned promise would never settle.
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     document.body.innerHTML = '';
 
     let resolved = false;
@@ -144,7 +146,7 @@ describe('waitUntilNavNode', () => {
     await Promise.resolve();
     expect(resolved).toBe(false);
 
-    jest.advanceTimersByTime(500);
+    vi.advanceTimersByTime(500);
 
     await promise;
     expect(resolved).toBe(true);

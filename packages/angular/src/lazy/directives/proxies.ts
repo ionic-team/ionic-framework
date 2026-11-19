@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Even
 
 import { ProxyCmp } from './angular-component-lib/utils';
 
-import { Components } from '@ionic/core';
+import { Components } from '@ionic/core/dist/types/components';
 
 
 @ProxyCmp({
@@ -920,29 +920,6 @@ export class IonHeader {
 
 
 export declare interface IonHeader extends Components.IonHeader {}
-
-
-@ProxyCmp({
-  inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src']
-})
-@Component({
-  selector: 'ion-icon',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src'],
-  standalone: false
-})
-export class IonIcon {
-  protected el: HTMLIonIconElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface IonIcon extends Components.IonIcon {}
 
 
 @ProxyCmp({

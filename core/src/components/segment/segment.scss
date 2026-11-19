@@ -47,6 +47,6 @@
   grid-auto-columns: minmax(min-content, 1fr);
 }
 
-:host(.segment-scrollable::-webkit-scrollbar) {
+:host(.segment-scrollable)::-webkit-scrollbar {
   display: none;
 }

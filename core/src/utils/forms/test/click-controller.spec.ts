@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import type { ClickController } from '../click-controller';
 import { createClickController, getSlottedClickContent } from '../click-controller';
 
@@ -28,6 +30,7 @@ describe('Click Controller', () => {
 
   // The target of every click that was allowed to reach the document.
   let propagated: string[];
+  const recordPropagated = (ev: Event) => propagated.push((ev.target as Element).id);
 
   const click = (target: Element) => target.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
@@ -60,10 +63,11 @@ describe('Click Controller', () => {
     host.append(slotted, nativeInput);
     document.body.appendChild(host);
 
-    document.addEventListener('click', (ev) => propagated.push((ev.target as Element).id));
+    document.addEventListener('click', recordPropagated);
   });
 
   afterEach(() => {
+    document.removeEventListener('click', recordPropagated);
     host.remove();
     document.body.innerHTML = '';
 

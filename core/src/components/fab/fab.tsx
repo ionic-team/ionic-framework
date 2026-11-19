@@ -6,7 +6,7 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-fab',
   styleUrl: 'fab.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Fab implements ComponentInterface {
   @Element() el!: HTMLElement;

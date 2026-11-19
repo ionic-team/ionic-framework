@@ -13,7 +13,7 @@ import type { PickerChangeEventDetail } from './picker-interfaces';
     ios: 'picker.ios.scss',
     md: 'picker.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Picker implements ComponentInterface {
   private inputEl?: HTMLInputElement;

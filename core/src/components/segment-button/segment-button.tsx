@@ -28,7 +28,7 @@ let ids = 0;
     ios: 'segment-button.ios.scss',
     md: 'segment-button.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class SegmentButton implements ComponentInterface, ButtonInterface {
   private segmentEl: HTMLIonSegmentElement | null = null;

@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { newSpecPage } from '@stencil/core/testing';
 
 import type { BackButtonEvent } from '../../../src/interface';
@@ -7,22 +9,30 @@ import { config } from '../../global/config';
 describe('Hardware Back Button', () => {
   beforeEach(() => startHardwareBackButton());
   it('should call handler', () => {
-    const cbSpy = jest.fn();
-    document.addEventListener('ionBackButton', (ev) => {
-      (ev as BackButtonEvent).detail.register(0, cbSpy);
-    });
+    const cbSpy = vi.fn();
+    document.addEventListener(
+      'ionBackButton',
+      (ev) => {
+        (ev as BackButtonEvent).detail.register(0, cbSpy);
+      },
+      { once: true }
+    );
 
     dispatchBackButtonEvent();
     expect(cbSpy).toHaveBeenCalled();
   });
 
   it('should call handlers in order of priority', () => {
-    const cbSpy = jest.fn();
-    const cbSpyTwo = jest.fn();
-    document.addEventListener('ionBackButton', (ev) => {
-      (ev as BackButtonEvent).detail.register(100, cbSpy);
-      (ev as BackButtonEvent).detail.register(99, cbSpyTwo);
-    });
+    const cbSpy = vi.fn();
+    const cbSpyTwo = vi.fn();
+    document.addEventListener(
+      'ionBackButton',
+      (ev) => {
+        (ev as BackButtonEvent).detail.register(100, cbSpy);
+        (ev as BackButtonEvent).detail.register(99, cbSpyTwo);
+      },
+      { once: true }
+    );
 
     dispatchBackButtonEvent();
     expect(cbSpy).toHaveBeenCalled();
@@ -30,12 +40,16 @@ describe('Hardware Back Button', () => {
   });
 
   it('should only call last handler to be added for handlers with same priority', () => {
-    const cbSpy = jest.fn();
-    const cbSpyTwo = jest.fn();
-    document.addEventListener('ionBackButton', (ev) => {
-      (ev as BackButtonEvent).detail.register(100, cbSpy);
-      (ev as BackButtonEvent).detail.register(100, cbSpyTwo);
-    });
+    const cbSpy = vi.fn();
+    const cbSpyTwo = vi.fn();
+    document.addEventListener(
+      'ionBackButton',
+      (ev) => {
+        (ev as BackButtonEvent).detail.register(100, cbSpy);
+        (ev as BackButtonEvent).detail.register(100, cbSpyTwo);
+      },
+      { once: true }
+    );
 
     dispatchBackButtonEvent();
     expect(cbSpy).not.toHaveBeenCalled();
@@ -46,11 +60,15 @@ describe('Hardware Back Button', () => {
     const cbSpy = (processNextHandler: () => void) => {
       processNextHandler();
     };
-    const cbSpyTwo = jest.fn();
-    document.addEventListener('ionBackButton', (ev) => {
-      (ev as BackButtonEvent).detail.register(100, cbSpy);
-      (ev as BackButtonEvent).detail.register(99, cbSpyTwo);
-    });
+    const cbSpyTwo = vi.fn();
+    document.addEventListener(
+      'ionBackButton',
+      (ev) => {
+        (ev as BackButtonEvent).detail.register(100, cbSpy);
+        (ev as BackButtonEvent).detail.register(99, cbSpyTwo);
+      },
+      { once: true }
+    );
 
     dispatchBackButtonEvent();
     expect(cbSpyTwo).toHaveBeenCalled();
@@ -71,10 +89,14 @@ describe('Experimental Close Watcher', () => {
   test('should still handle the native back button event', async () => {
     await newCloseWatcherPage(`<ion-modal></ion-modal>`);
 
-    const cbSpy = jest.fn();
-    document.addEventListener('ionBackButton', (ev) => {
-      (ev as BackButtonEvent).detail.register(0, cbSpy);
-    });
+    const cbSpy = vi.fn();
+    document.addEventListener(
+      'ionBackButton',
+      (ev) => {
+        (ev as BackButtonEvent).detail.register(0, cbSpy);
+      },
+      { once: true }
+    );
 
     dispatchBackButtonEvent();
 
@@ -214,7 +236,7 @@ describe('Experimental Close Watcher', () => {
  * listener once per module load, and every spec page gets a new document.
  */
 const newCloseWatcherPage = async (html: string) => {
-  jest.resetModules();
+  vi.resetModules();
   const { Modal } = await import('../../components/modal/modal');
   const { Toast } = await import('../../components/toast/toast');
   const { startHardwareBackButton } = await import('../hardware-back-button');

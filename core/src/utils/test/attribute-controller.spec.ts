@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import { win } from '@utils/browser';
 
 import {
@@ -110,7 +112,7 @@ describe('createAttributeController()', () => {
   it('should copy the attributes off the host on creation', () => {
     const el = createHost({ 'aria-label': 'Save', 'aria-describedby': 'hint' });
 
-    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+    const controller = createAttributeController(el, ['aria-label'], vi.fn());
 
     expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
     expect(el.hasAttribute('aria-label')).toBe(false);
@@ -119,7 +121,7 @@ describe('createAttributeController()', () => {
   });
 
   it('should start watching on creation', () => {
-    createAttributeController(createHost(), ['aria-label'], jest.fn());
+    createAttributeController(createHost(), ['aria-label'], vi.fn());
 
     expect(MockMutationObserver.live).toHaveLength(1);
     expect(MockMutationObserver.latest.observedFilter).toEqual(['aria-label']);
@@ -127,7 +129,7 @@ describe('createAttributeController()', () => {
 
   it('should apply a later attribute change and leave an empty string on the host', () => {
     const el = createHost({ 'aria-label': 'Save' });
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
 
     el.setAttribute('aria-label', 'Submit');
@@ -140,7 +142,7 @@ describe('createAttributeController()', () => {
 
   it('should not read its own empty string on the host as a change', () => {
     const el = createHost();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
 
     el.setAttribute('aria-label', 'Save');
@@ -153,7 +155,7 @@ describe('createAttributeController()', () => {
 
   it('should clear an attribute that is removed after load', () => {
     const el = createHost();
-    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+    const controller = createAttributeController(el, ['aria-label'], vi.fn());
 
     el.setAttribute('aria-label', 'Save');
     MockMutationObserver.latest.flush();
@@ -166,7 +168,7 @@ describe('createAttributeController()', () => {
 
   it('should leave a later write on the host while keepOnHost returns true', () => {
     const el = createHost();
-    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => true);
+    const controller = createAttributeController(el, ['aria-label'], vi.fn(), [], undefined, () => true);
 
     el.setAttribute('aria-label', 'Save');
     MockMutationObserver.latest.flush();
@@ -183,7 +185,7 @@ describe('createAttributeController()', () => {
   it('should not watch host owned attributes', () => {
     const el = createHost({ 'aria-label': 'Save', 'aria-disabled': 'true' });
 
-    const controller = createAttributeController(el, ['aria-label', 'aria-disabled'], jest.fn(), ['aria-disabled']);
+    const controller = createAttributeController(el, ['aria-label', 'aria-disabled'], vi.fn(), ['aria-disabled']);
 
     // Still copied at load, just never watched afterwards.
     expect(controller.attributes).toEqual({ 'aria-label': 'Save', 'aria-disabled': 'true' });
@@ -191,13 +193,13 @@ describe('createAttributeController()', () => {
   });
 
   it('should not observe when every attribute is host owned', () => {
-    createAttributeController(createHost(), ['aria-disabled'], jest.fn(), ['aria-disabled']);
+    createAttributeController(createHost(), ['aria-disabled'], vi.fn(), ['aria-disabled']);
 
     expect(MockMutationObserver.instances).toHaveLength(0);
   });
 
   it('should stop watching on destroy', () => {
-    const controller = createAttributeController(createHost(), ['aria-label'], jest.fn());
+    const controller = createAttributeController(createHost(), ['aria-label'], vi.fn());
 
     controller.destroy();
 
@@ -205,7 +207,7 @@ describe('createAttributeController()', () => {
   });
 
   it('should not stack observers when init is called while already watching', () => {
-    const controller = createAttributeController(createHost(), ['aria-label'], jest.fn());
+    const controller = createAttributeController(createHost(), ['aria-label'], vi.fn());
 
     controller.init();
 
@@ -214,7 +216,7 @@ describe('createAttributeController()', () => {
 
   it('should resume watching after destroy', () => {
     const el = createHost();
-    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+    const controller = createAttributeController(el, ['aria-label'], vi.fn());
 
     controller.destroy();
     controller.init();
@@ -227,7 +229,7 @@ describe('createAttributeController()', () => {
 
   it('should pick up a change made while not watching and leave an empty string on the host', () => {
     const el = createHost();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
 
     controller.destroy();
@@ -241,7 +243,7 @@ describe('createAttributeController()', () => {
 
   it('should clear an attribute removed while not watching', () => {
     const el = createHost();
-    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+    const controller = createAttributeController(el, ['aria-label'], vi.fn());
 
     el.setAttribute('aria-label', 'Submit');
     MockMutationObserver.latest.flush();
@@ -255,7 +257,7 @@ describe('createAttributeController()', () => {
 
   it('should replace a detached write of an unchanged value without re-rendering', () => {
     const el = createHost({ 'aria-label': 'Save' });
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
 
     controller.destroy();
@@ -275,7 +277,7 @@ describe('createAttributeController()', () => {
 
   it('should not re-render on resume when nothing changed while not watching', () => {
     const el = createHost();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
 
     el.setAttribute('aria-label', 'Save');
@@ -292,7 +294,7 @@ describe('createAttributeController()', () => {
 
   it('should put the copied value back on the host while not watching', () => {
     const el = createHost();
-    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+    const controller = createAttributeController(el, ['aria-label'], vi.fn());
 
     el.setAttribute('aria-label', 'Save');
     MockMutationObserver.latest.flush();
@@ -303,7 +305,7 @@ describe('createAttributeController()', () => {
 
   it('should apply a write that was not delivered before destroy', () => {
     const el = createHost();
-    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+    const controller = createAttributeController(el, ['aria-label'], vi.fn());
 
     el.setAttribute('aria-label', 'Save');
     MockMutationObserver.latest.flush();
@@ -324,7 +326,7 @@ describe('createAttributeController()', () => {
 
   it('should put a value back on the host when keepOnHost turns true', () => {
     const el = createHost();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     let keep = false;
     const controller = createAttributeController(el, ['aria-label'], onChange, [], undefined, () => keep);
 
@@ -344,7 +346,7 @@ describe('createAttributeController()', () => {
 
   it('should keep the copied value through a move after refresh leaves it replaced', () => {
     const el = createHost();
-    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => false);
+    const controller = createAttributeController(el, ['aria-label'], vi.fn(), [], undefined, () => false);
 
     el.setAttribute('aria-label', 'Save');
     MockMutationObserver.latest.flush();
@@ -359,7 +361,7 @@ describe('createAttributeController()', () => {
 
   it('should leave an attribute that does not name the host on the host as written', () => {
     const el = createHost();
-    const controller = createAttributeController(el, ['aria-pressed', 'aria-labelledby'], jest.fn());
+    const controller = createAttributeController(el, ['aria-pressed', 'aria-labelledby'], vi.fn());
 
     el.setAttribute('aria-pressed', 'true');
     el.setAttribute('aria-labelledby', 'label');
@@ -372,7 +374,7 @@ describe('createAttributeController()', () => {
 
   it('should not touch the host when refresh is called while not watching', () => {
     const el = createHost();
-    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => false);
+    const controller = createAttributeController(el, ['aria-label'], vi.fn(), [], undefined, () => false);
 
     el.setAttribute('aria-label', 'Save');
     MockMutationObserver.latest.flush();
@@ -388,7 +390,7 @@ describe('createAttributeController()', () => {
   it('should replace a value kept on the host when keepOnHost turns false', () => {
     const el = createHost();
     let keep = true;
-    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => keep);
+    const controller = createAttributeController(el, ['aria-label'], vi.fn(), [], undefined, () => keep);
 
     el.setAttribute('aria-label', 'Save');
     MockMutationObserver.latest.flush();
@@ -405,7 +407,7 @@ describe('createAttributeController()', () => {
   it('should apply a write made in the same task as refresh', () => {
     const el = createHost();
     let keep = true;
-    const controller = createAttributeController(el, ['aria-label'], jest.fn(), [], undefined, () => keep);
+    const controller = createAttributeController(el, ['aria-label'], vi.fn(), [], undefined, () => keep);
 
     el.setAttribute('aria-label', 'Save');
     keep = false;
@@ -418,7 +420,7 @@ describe('createAttributeController()', () => {
 
   it('should apply every attribute in one mutation batch with a single re-render', () => {
     const el = createHost();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const controller = createAttributeController(el, ['aria-label', 'aria-description'], onChange);
 
     el.setAttribute('aria-label', 'Save');
@@ -434,7 +436,7 @@ describe('createAttributeController()', () => {
     restoreOverrides();
     const el = createHost({ 'aria-label': 'Save' });
 
-    const controller = createAttributeController(el, ['aria-label'], jest.fn());
+    const controller = createAttributeController(el, ['aria-label'], vi.fn());
 
     expect(controller.attributes).toEqual({ 'aria-label': 'Save' });
     expect(() => {
@@ -445,7 +447,7 @@ describe('createAttributeController()', () => {
 
   it('should keep the initial copy when resuming, since the copy removed it from the host', () => {
     const el = createHost({ 'aria-label': 'Save' });
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const controller = createAttributeController(el, ['aria-label'], onChange);
 
     controller.destroy();
@@ -467,7 +469,7 @@ describe('createAriaAttributeController()', () => {
     el.setAttribute('role', 'button');
     el.setAttribute('title', 'not aria');
 
-    const controller = createAriaAttributeController(el, jest.fn());
+    const controller = createAriaAttributeController(el, vi.fn());
 
     expect(controller.attributes).toEqual({ 'aria-label': 'Save', role: 'button' });
     expect(el.getAttribute('title')).toBe('not aria');
@@ -479,7 +481,7 @@ describe('createAriaAttributeController()', () => {
     const el = document.createElement('div');
     el.setAttribute('aria-disabled', 'true');
 
-    const controller = createAriaAttributeController(el, jest.fn(), ['aria-disabled']);
+    const controller = createAriaAttributeController(el, vi.fn(), ['aria-disabled']);
 
     expect(controller.attributes).toEqual({ 'aria-disabled': 'true' });
     expect(MockMutationObserver.latest.observedFilter).not.toContain('aria-disabled');
@@ -493,7 +495,7 @@ describe('createTabindexController()', () => {
 
   it('should move a tabindex written after load off the host', () => {
     const el = createHost();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const controller = createTabindexController(el, onChange);
 
     el.setAttribute('tabindex', '0');
@@ -506,7 +508,7 @@ describe('createTabindexController()', () => {
 
   it('should move a tabindex written while not watching off the host on resume', () => {
     const el = createHost({ tabindex: '0' });
-    const controller = createTabindexController(el, jest.fn());
+    const controller = createTabindexController(el, vi.fn());
 
     controller.destroy();
     el.setAttribute('tabindex', '1');
@@ -518,7 +520,7 @@ describe('createTabindexController()', () => {
 
   it('should keep the value after the removal it queued is delivered', () => {
     const el = createHost();
-    const controller = createTabindexController(el, jest.fn());
+    const controller = createTabindexController(el, vi.fn());
 
     el.setAttribute('tabindex', '0');
     MockMutationObserver.latest.emit('tabindex');
@@ -530,7 +532,7 @@ describe('createTabindexController()', () => {
   it('should leave a negative tabindex on the host', () => {
     const el = createHost({ tabindex: '-1' });
 
-    const controller = createTabindexController(el, jest.fn());
+    const controller = createTabindexController(el, vi.fn());
 
     expect(controller.attributes).toEqual({});
     expect(el.getAttribute('tabindex')).toBe('-1');
@@ -538,7 +540,7 @@ describe('createTabindexController()', () => {
 
   it('should leave a negative tabindex written after load on the host', () => {
     const el = createHost({ tabindex: '0' });
-    const controller = createTabindexController(el, jest.fn());
+    const controller = createTabindexController(el, vi.fn());
 
     el.setAttribute('tabindex', '-1');
     MockMutationObserver.latest.emit('tabindex');
@@ -549,7 +551,7 @@ describe('createTabindexController()', () => {
 
   it('should see a negative tabindex removed from the host', () => {
     const el = createHost({ tabindex: '-1' });
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const controller = createTabindexController(el, onChange);
 
     el.removeAttribute('tabindex');
@@ -562,7 +564,7 @@ describe('createTabindexController()', () => {
   it('should leave tabindex on the host when there is no native element', () => {
     const el = createHost({ tabindex: '0' });
 
-    const controller = createTabindexController(el, jest.fn(), () => false);
+    const controller = createTabindexController(el, vi.fn(), () => false);
 
     expect(controller.attributes).toEqual({});
     expect(el.getAttribute('tabindex')).toBe('0');
@@ -571,7 +573,7 @@ describe('createTabindexController()', () => {
   it('should put tabindex back on the host on refresh once there is no native element', () => {
     const el = createHost({ tabindex: '0' });
     let hasNativeElement = true;
-    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+    const controller = createTabindexController(el, vi.fn(), () => hasNativeElement);
 
     hasNativeElement = false;
     controller.refresh();
@@ -583,7 +585,7 @@ describe('createTabindexController()', () => {
   it('should move tabindex off the host on refresh once there is a native element', () => {
     const el = createHost({ tabindex: '0' });
     let hasNativeElement = false;
-    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+    const controller = createTabindexController(el, vi.fn(), () => hasNativeElement);
 
     hasNativeElement = true;
     controller.refresh();
@@ -596,7 +598,7 @@ describe('createTabindexController()', () => {
   it('should see tabindex removed from the host after refresh put it back', () => {
     const el = createHost({ tabindex: '0' });
     let hasNativeElement = true;
-    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+    const controller = createTabindexController(el, vi.fn(), () => hasNativeElement);
 
     hasNativeElement = false;
     controller.refresh();
@@ -612,7 +614,7 @@ describe('createTabindexController()', () => {
   it('should keep a tabindex written in the same tick as a refresh that moves it off the host', () => {
     const el = createHost({ tabindex: '0' });
     let hasNativeElement = false;
-    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+    const controller = createTabindexController(el, vi.fn(), () => hasNativeElement);
 
     el.setAttribute('tabindex', '5');
     hasNativeElement = true;
@@ -625,7 +627,7 @@ describe('createTabindexController()', () => {
   it('should keep a tabindex written in the same tick as a refresh that puts it back on the host', () => {
     const el = createHost({ tabindex: '0' });
     let hasNativeElement = true;
-    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+    const controller = createTabindexController(el, vi.fn(), () => hasNativeElement);
 
     el.setAttribute('tabindex', '2');
     hasNativeElement = false;
@@ -643,7 +645,7 @@ describe('createTabindexController()', () => {
   it('should keep a tabindex written while detached when a refresh moves it off the host', () => {
     const el = createHost({ tabindex: '0' });
     let hasNativeElement = false;
-    const controller = createTabindexController(el, jest.fn(), () => hasNativeElement);
+    const controller = createTabindexController(el, vi.fn(), () => hasNativeElement);
 
     controller.destroy();
     el.setAttribute('tabindex', '3');

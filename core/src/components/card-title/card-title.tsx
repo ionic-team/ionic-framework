@@ -14,7 +14,7 @@ import type { Color } from '../../interface';
     ios: 'card-title.ios.scss',
     md: 'card-title.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class CardTitle implements ComponentInterface {
   /**

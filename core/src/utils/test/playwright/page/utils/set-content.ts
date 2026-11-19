@@ -40,7 +40,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
     <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
   `;
   let ionicJSImports = `
-    <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
+    <script type="module" src="${baseUrl}/dist/loader-bundle/ionic/ionic.esm.js"></script>
   `;
 
   if (options?.importIonicFromCDN) {

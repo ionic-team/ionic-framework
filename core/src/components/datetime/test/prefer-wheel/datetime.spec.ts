@@ -4,13 +4,13 @@ import { Datetime } from '../../datetime';
 
 describe('datetime: preferWheel', () => {
   beforeEach(() => {
-    const mockIntersectionObserver = jest.fn();
-    mockIntersectionObserver.mockReturnValue({
-      observe: () => null,
-      unobserve: () => null,
-      disconnect: () => null,
-    });
-    global.IntersectionObserver = mockIntersectionObserver;
+    global.IntersectionObserver = vi.fn().mockImplementation(function () {
+      return {
+        observe: () => null,
+        unobserve: () => null,
+        disconnect: () => null,
+      };
+    }) as any;
   });
 
   it('should select the working day when clicking the confirm button', async () => {

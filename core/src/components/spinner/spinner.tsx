@@ -1,4 +1,4 @@
-import type { ComponentInterface } from '@stencil/core';
+import type { ComponentInterface, VNode } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
@@ -13,7 +13,7 @@ import type { SpinnerConfig } from './spinner-interface';
 @Component({
   tag: 'ion-spinner',
   styleUrl: 'spinner.scss',
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Spinner implements ComponentInterface {
   /**
@@ -54,7 +54,7 @@ export class Spinner implements ComponentInterface {
     const spinnerName = self.getName();
     const spinner = SPINNERS[spinnerName] ?? SPINNERS['lines'];
     const duration = typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur;
-    const svgs: SVGElement[] = [];
+    const svgs: VNode[] = [];
 
     if (spinner.circles !== undefined) {
       for (let i = 0; i < spinner.circles; i++) {

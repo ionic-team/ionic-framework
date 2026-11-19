@@ -1,4 +1,5 @@
-import 'ionicons';
+// Disable ionicons for now - there's a bug in the package
+// import 'ionicons';
 
 export { createAnimation } from './utils/animation/animation';
 export { getIonPageElement } from './utils/transition';

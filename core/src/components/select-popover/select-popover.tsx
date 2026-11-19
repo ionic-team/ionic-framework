@@ -21,7 +21,7 @@ import type { SelectPopoverOption } from './select-popover-interface';
     ios: 'select-popover.ios.scss',
     md: 'select-popover.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class SelectPopover implements ComponentInterface {
   @Element() el!: HTMLIonSelectPopoverElement;

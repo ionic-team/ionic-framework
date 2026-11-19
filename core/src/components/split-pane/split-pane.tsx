@@ -23,7 +23,7 @@ const QUERY: { [key: string]: string } = {
     ios: 'split-pane.ios.scss',
     md: 'split-pane.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class SplitPane implements ComponentInterface {
   private rmL?: () => void;

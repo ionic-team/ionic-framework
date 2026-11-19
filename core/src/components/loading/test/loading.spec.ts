@@ -1,13 +1,14 @@
 import { newSpecPage } from '@stencil/core/testing';
+import type { MockInstance } from 'vitest';
 
 import { config } from '../../../global/config';
 import { Loading } from '../loading';
 
 describe('loading: custom html', () => {
-  let consoleWarnSpy: jest.SpyInstance;
+  let consoleWarnSpy: MockInstance;
 
   beforeEach(() => {
-    consoleWarnSpy = jest.spyOn(console, 'warn');
+    consoleWarnSpy = vi.spyOn(console, 'warn');
     // Suppress console.warn output from polluting the test output
     consoleWarnSpy.mockImplementation(() => {});
   });

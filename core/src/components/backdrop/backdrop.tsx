@@ -9,7 +9,7 @@ import { getIonMode } from '../../global/ionic-global';
     ios: 'backdrop.ios.scss',
     md: 'backdrop.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Backdrop implements ComponentInterface {
   /**

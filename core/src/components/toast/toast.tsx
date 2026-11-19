@@ -62,7 +62,7 @@ import type {
     ios: 'toast.ios.scss',
     md: 'toast.md.scss',
   },
-  shadow: true,
+  encapsulation: { type: 'shadow' },
 })
 export class Toast implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);

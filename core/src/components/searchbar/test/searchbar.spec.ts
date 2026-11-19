@@ -48,7 +48,7 @@ describe('searchbar: back/forward cache restore', () => {
 
     const searchbarEl = page.body.querySelector('ion-searchbar')!;
     const nativeEl = searchbarEl.querySelector('input')!;
-    const ionInputSpy = jest.fn();
+    const ionInputSpy = vi.fn();
     searchbarEl.addEventListener('ionInput', ionInputSpy);
 
     nativeEl.value = '';

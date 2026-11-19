@@ -9,11 +9,11 @@
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
-    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
-    <script src="../../../../../scripts/testing/scripts.js"></script>
-    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <link href="/css/ionic.bundle.css" rel="stylesheet" />
+    <link href="/scripts/testing/styles.css" rel="stylesheet" />
+    <script src="/scripts/testing/scripts.js"></script>
+    <script nomodule src="/dist/loader-bundle/ionic/ionic.js"></script>
+    <script type="module" src="/dist/loader-bundle/ionic/ionic.esm.js"></script>
 
     <style>
       #modal-header {
@@ -40,7 +40,7 @@
     </style>
   </head>
   <script type="module">
-    import { modalController, createAnimation } from '../../../../../dist/ionic/index.esm.js';
+    import { modalController, createAnimation } from '/dist/loader-bundle/ionic/index.esm.js';
     window.modalController = modalController;
     window.createAnimation = createAnimation;
   </script>

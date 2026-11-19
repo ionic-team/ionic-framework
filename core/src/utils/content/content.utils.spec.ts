@@ -1,3 +1,5 @@
+// @vitest-environment stencil
+
 import {
   scrollToTop,
   scrollByPoint,
@@ -27,7 +29,7 @@ describe('Content Utils', () => {
 
   describe('findIonContent', () => {
     it('should query the ion-content element', () => {
-      const querySelectorMock = jest.fn();
+      const querySelectorMock = vi.fn();
 
       findIonContent({
         querySelector: querySelectorMock,
@@ -39,7 +41,7 @@ describe('Content Utils', () => {
 
   describe('findClosestIonContent', () => {
     it('should query the closest ion-content', () => {
-      const closestMock = jest.fn();
+      const closestMock = vi.fn();
 
       findClosestIonContent({
         closest: closestMock,
@@ -114,7 +116,7 @@ describe('Content Utils', () => {
   describe('scrollToTop', () => {
     describe('scroll duration is 0', () => {
       it('should call scrollToTop when the tag name is ion-content', () => {
-        const scrollToTopMock = jest.fn();
+        const scrollToTopMock = vi.fn();
 
         scrollToTop(
           {
@@ -128,7 +130,7 @@ describe('Content Utils', () => {
       });
 
       it('should call the element scrollTo when the tag name is not ion-content', async () => {
-        const scrollToMock = jest.fn();
+        const scrollToMock = vi.fn();
 
         await scrollToTop(
           {
@@ -148,7 +150,7 @@ describe('Content Utils', () => {
 
     describe('scroll duration is greater than 0', () => {
       it('should smooth scroll ion-content', () => {
-        const scrollToTopMock = jest.fn();
+        const scrollToTopMock = vi.fn();
 
         scrollToTop(
           {
@@ -162,7 +164,7 @@ describe('Content Utils', () => {
       });
 
       it('should smooth scroll the element', async () => {
-        const scrollToMock = jest.fn();
+        const scrollToMock = vi.fn();
 
         await scrollToTop(
           {
@@ -184,7 +186,7 @@ describe('Content Utils', () => {
   describe('scrollByPoint', () => {
     describe('scroll duration is 0', () => {
       it('should call scrollByPoint when the tag name is ion-content', async () => {
-        const scrollByPointMock = jest.fn();
+        const scrollByPointMock = vi.fn();
 
         await scrollByPoint(
           {
@@ -200,7 +202,7 @@ describe('Content Utils', () => {
       });
 
       it('should call the element scrollBy when the tag name is not ion-content', async () => {
-        const scrollByMock = jest.fn();
+        const scrollByMock = vi.fn();
 
         await scrollByPoint(
           {
@@ -222,7 +224,7 @@ describe('Content Utils', () => {
 
     describe('scroll duration is greater than 0', () => {
       it('should smooth scroll ion-content', async () => {
-        const scrollByPointMock = jest.fn();
+        const scrollByPointMock = vi.fn();
 
         await scrollByPoint(
           {
@@ -238,7 +240,7 @@ describe('Content Utils', () => {
       });
 
       it('should smooth scroll the element', async () => {
-        const scrollByMock = jest.fn();
+        const scrollByMock = vi.fn();
 
         await scrollByPoint(
           {
@@ -260,7 +262,7 @@ describe('Content Utils', () => {
   });
 
   it('printIonContentErrorMsg should display "<my-el> must be used inside ion-content."', () => {
-    const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+    const consoleErrorMock = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     printIonContentErrorMsg({
       tagName: 'MY-EL',

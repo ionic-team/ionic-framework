@@ -1,11 +1,12 @@
 import { newSpecPage } from '@stencil/core/testing';
+import type { MockInstance } from 'vitest';
 
 import type { FrameworkDelegate } from '../../../interface';
 import { Tab } from '../tab';
 
 const mockDelegate = (attachViewToDom: FrameworkDelegate['attachViewToDom']): FrameworkDelegate => ({
   attachViewToDom,
-  removeViewFromDom: jest.fn().mockResolvedValue(undefined),
+  removeViewFromDom: vi.fn().mockResolvedValue(undefined),
 });
 
 const createTab = async (html = '<ion-tab tab="home" component="ion-content"></ion-tab>') => {
@@ -20,7 +21,7 @@ const createTab = async (html = '<ion-tab tab="home" component="ion-content"></i
 describe('ion-tab: lazy loading', () => {
   it('should attach the component only once across multiple setActive calls', async () => {
     const { tabEl } = await createTab();
-    const attachViewToDom = jest.fn().mockResolvedValue(document.createElement('div'));
+    const attachViewToDom = vi.fn().mockResolvedValue(document.createElement('div'));
     tabEl.delegate = mockDelegate(attachViewToDom);
 
     await tabEl.setActive();
@@ -31,7 +32,7 @@ describe('ion-tab: lazy loading', () => {
 
   it('should share one attach attempt across concurrent setActive calls', async () => {
     const { tabEl } = await createTab();
-    const attachViewToDom = jest.fn().mockResolvedValue(document.createElement('div'));
+    const attachViewToDom = vi.fn().mockResolvedValue(document.createElement('div'));
     tabEl.delegate = mockDelegate(attachViewToDom);
 
     await Promise.all([tabEl.setActive(), tabEl.setActive()]);
@@ -42,7 +43,7 @@ describe('ion-tab: lazy loading', () => {
   it('should make a later setActive wait for the in-flight attach', async () => {
     const { tabEl } = await createTab();
     let resolveAttach!: (el: HTMLElement) => void;
-    const attachViewToDom = jest.fn(() => new Promise<HTMLElement>((resolve) => (resolveAttach = resolve)));
+    const attachViewToDom = vi.fn(() => new Promise<HTMLElement>((resolve) => (resolveAttach = resolve)));
     tabEl.delegate = mockDelegate(attachViewToDom);
 
     const first = tabEl.setActive();
@@ -63,7 +64,7 @@ describe('ion-tab: lazy loading', () => {
 
   it('should retry the attach after a failed first attempt', async () => {
     const { tabEl } = await createTab();
-    const attachViewToDom = jest
+    const attachViewToDom = vi
       .fn()
       .mockRejectedValueOnce(new Error('attach failed'))
       .mockResolvedValue(document.createElement('div'));
@@ -77,7 +78,7 @@ describe('ion-tab: lazy loading', () => {
 
   it('should not activate the tab when the attach fails', async () => {
     const { tabEl } = await createTab();
-    tabEl.delegate = mockDelegate(jest.fn().mockRejectedValue(new Error('attach failed')));
+    tabEl.delegate = mockDelegate(vi.fn().mockRejectedValue(new Error('attach failed')));
 
     await expect(tabEl.setActive()).rejects.toThrow('attach failed');
 
@@ -86,7 +87,7 @@ describe('ion-tab: lazy loading', () => {
 
   it('should activate the tab once a retried attach succeeds', async () => {
     const { page, tabEl } = await createTab();
-    const attachViewToDom = jest
+    const attachViewToDom = vi
       .fn()
       .mockRejectedValueOnce(new Error('attach failed'))
       .mockResolvedValue(document.createElement('div'));
@@ -112,7 +113,7 @@ describe('ion-tab: lazy loading', () => {
 
   it('should not attach anything when no component is provided', async () => {
     const { tabEl } = await createTab('<ion-tab tab="home"></ion-tab>');
-    const attachViewToDom = jest.fn().mockResolvedValue(document.createElement('div'));
+    const attachViewToDom = vi.fn().mockResolvedValue(document.createElement('div'));
     tabEl.delegate = mockDelegate(attachViewToDom);
 
     await expect(tabEl.setActive()).resolves.toBeUndefined();
@@ -122,10 +123,10 @@ describe('ion-tab: lazy loading', () => {
   });
 
   describe('when the attach fails on the active watcher path', () => {
-    let consoleErrorSpy: jest.SpyInstance;
+    let consoleErrorSpy: MockInstance;
 
     beforeEach(() => {
-      consoleErrorSpy = jest.spyOn(console, 'error');
+      consoleErrorSpy = vi.spyOn(console, 'error');
       // Suppress console.error output from polluting the test output
       consoleErrorSpy.mockImplementation(() => {});
     });
@@ -138,7 +139,7 @@ describe('ion-tab: lazy loading', () => {
     // rejection is covered without an explicit unhandledRejection listener.
     it('should log the error', async () => {
       const { page, tabEl } = await createTab();
-      tabEl.delegate = mockDelegate(jest.fn().mockRejectedValue(new Error('attach failed')));
+      tabEl.delegate = mockDelegate(vi.fn().mockRejectedValue(new Error('attach failed')));
 
       // ion-tabs activates a tab by setting `active`, it does not await setActive().
       tabEl.active = true;
@@ -154,7 +155,7 @@ describe('ion-tab: lazy loading', () => {
 
     it('should retry on the next activation, as ion-tabs reactivates tabs', async () => {
       const { page, tabEl } = await createTab();
-      const attachViewToDom = jest
+      const attachViewToDom = vi
         .fn()
         .mockRejectedValueOnce(new Error('attach failed'))
         .mockImplementation(() => {

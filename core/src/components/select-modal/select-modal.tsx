@@ -19,7 +19,7 @@ import type { SelectModalOption } from './select-modal-interface';
     md: 'select-modal.md.scss',
     ionic: 'select-modal.md.scss',
   },
-  scoped: true,
+  encapsulation: { type: 'scoped' },
 })
 export class SelectModal implements ComponentInterface {
   @Element() el!: HTMLIonSelectModalElement;
