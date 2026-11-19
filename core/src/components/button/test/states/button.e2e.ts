@@ -1,84 +1,80 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_BUTTON_FILLS } from '../../button.interface';
+
+const STATES = ['activated', 'focused'];
+
+/**
+ * This behavior does not vary across directions.
+ */
 configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('button: activated'), () => {
-    test('should render solid button', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
+  test.describe(title('button: states'), () => {
+    STATES.forEach((state) => {
+      test(`should render ${state} buttons`, async ({ page }) => {
+        const buttons = ION_BUTTON_FILLS.map((fill) => {
+          // `solid` is the default fill, so it renders without a `fill` attribute
+          const fillAttr = fill === 'solid' ? '' : ` fill="${fill}"`;
 
-      const button = page.locator('ion-button');
+          return `
+            <ion-button${fillAttr} class="ion-${state}">Button</ion-button>
+            <ion-button color="warning"${fillAttr} class="ion-${state}">Button</ion-button>
+          `;
+        }).join('');
 
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-solid`));
-    });
+        await page.setContent(
+          `
+          <style>
+            #container {
+              display: grid;
+              grid-template-columns: repeat(2, auto);
+              justify-content: start;
+              gap: 10px;
+              padding: 6px;
+            }
+          </style>
 
-    test('should render solid button with color', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button color="warning" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
+          <div id="container">${buttons}</div>
+        `,
+          config
+        );
 
-      const button = page.locator('ion-button');
+        /**
+         * A press shows a ripple along with `ion-activated`, so add one from
+         * the center of each button, the same way a tap does in md and ionic-md.
+         * The ripple is paused once it has faded in, while it is still growing.
+         */
+        if (state === 'activated') {
+          await page.locator('ion-button ion-ripple-effect').evaluateAll((ripples: HTMLIonRippleEffectElement[]) => {
+            ripples.forEach((ripple) => {
+              const { left, top, width, height } = ripple.getBoundingClientRect();
+              ripple.addRipple(left + width / 2, top + height / 2);
+            });
+          });
 
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-solid-color`));
-    });
+          const rippleEffects = page.locator('ion-ripple-effect .ripple-effect');
 
-    test('should render outline button', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button fill="outline" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
+          // Wait for every ripple to be added, or the ones added late are not paused
+          await expect(rippleEffects).toHaveCount(await page.locator('ion-button ion-ripple-effect').count());
 
-      const button = page.locator('ion-button');
+          await rippleEffects.evaluateAll((effects) => {
+            effects.forEach((effect) => {
+              effect.getAnimations().forEach((animation) => {
+                animation.pause();
+                animation.currentTime = 75;
+              });
+            });
+          });
+        }
 
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-outline`));
-    });
+        const container = page.locator('#container');
 
-    test('should render outline button with color', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button color="warning" fill="outline" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-outline-color`));
-    });
-
-    test('should render clear button', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button fill="clear" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-clear`));
-    });
-
-    test('should render clear button with color', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-button color="warning" fill="clear" class="ion-activated">Button</ion-button>
-      `,
-        config
-      );
-
-      const button = page.locator('ion-button');
-
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-clear-color`));
+        /**
+         * Animations are allowed so the paused ripple is not fast-forwarded
+         * to its end.
+         */
+        await expect(container).toHaveScreenshot(screenshot(`button-${state}`), { animations: 'allow' });
+      });
     });
   });
 });

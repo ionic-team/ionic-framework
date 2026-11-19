@@ -28,12 +28,12 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, title }) => {
       );
 
       const button = page.locator('ion-button');
-      await expect(button).toHaveClass(/button-outline/);
+      await expect(button).toHaveClass(/button-fill-outline/);
 
       await button.evaluate((el: HTMLIonButtonElement) => (el.fill = undefined));
       await page.waitForChanges();
 
-      await expect(button).toHaveClass(/button-solid/);
+      await expect(button).toHaveClass(/button-fill-solid/);
     });
   });
 });

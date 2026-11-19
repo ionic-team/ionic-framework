@@ -39,6 +39,7 @@
   @include margin(29px, null, 6px);
 }
 
+// TODO(FW-6852): Move these button padding hooks to IonListHeader.IonButton tokens
 ::slotted(ion-button) {
   --padding-top: 0;
   --padding-bottom: 0;

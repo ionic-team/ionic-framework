@@ -150,8 +150,10 @@ export class InputPasswordToggle implements ComponentInterface {
           [mode]: true,
         })}
       >
+        {/* Themes color the toggle through its `bold` hue tokens, so a hue from the config can't restyle it */}
         <ion-button
           mode={mode}
+          hue="bold"
           color={color}
           fill="clear"
           shape="round"
