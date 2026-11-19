@@ -1069,9 +1069,9 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           padding: {
-            top: 'var(--ion-spacing-xs)',
+            top: 'var(--ion-spacing-0)',
             end: 'var(--ion-spacing-sm)',
-            bottom: 'var(--ion-spacing-xs)',
+            bottom: 'var(--ion-spacing-0)',
             start: 'var(--ion-spacing-sm)',
           },
 
@@ -1084,14 +1084,14 @@ export const defaultTheme: DefaultTheme = {
             size: 'var(--ion-font-size-xs)',
           },
           line: {
-            height: '100%',
+            height: dynamicFont(global.root, 20),
           },
         },
         large: {
           padding: {
-            top: 'var(--ion-spacing-xs)',
+            top: 'var(--ion-spacing-0)',
             end: 'var(--ion-spacing-sm)',
-            bottom: 'var(--ion-spacing-xs)',
+            bottom: 'var(--ion-spacing-0)',
             start: 'var(--ion-spacing-sm)',
           },
 
@@ -1101,10 +1101,10 @@ export const defaultTheme: DefaultTheme = {
             height: 'var(--ion-scaling-md)',
           },
           font: {
-            size: 'var(--ion-font-size-sm)',
+            size: 'var(--ion-font-size-xs)',
           },
           line: {
-            height: '100%',
+            height: dynamicFont(global.root, 20),
           },
         },
       },
