@@ -1148,7 +1148,7 @@ export const defaultTheme: DefaultTheme = {
           solid: {
             // Default non-semantic states
             default: {
-              background: '#3b3b3b',
+              background: '#383e45',
               color: '#ffffff',
             },
 
@@ -1194,8 +1194,8 @@ export const defaultTheme: DefaultTheme = {
           solid: {
             // Default non-semantic states
             default: {
-              background: '#f3f3f3',
-              color: '#626262',
+              background: '#f6f7fa',
+              color: '#6c727a',
             },
 
             // Any of the semantic colors like primary, secondary, etc.
