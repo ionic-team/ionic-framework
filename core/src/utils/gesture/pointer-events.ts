@@ -21,6 +21,7 @@ export const createPointerEvents = (
   let rmMouseMove: (() => void) | undefined;
   let rmMouseUp: (() => void) | undefined;
   let lastTouchEvent = 0;
+  let destroyed = false;
 
   const handleTouchStart = (ev: any) => {
     lastTouchEvent = Date.now() + MOUSE_WAIT;
@@ -116,6 +117,13 @@ export const createPointerEvents = (
       rmTouchStart = rmMouseStart = undefined;
       stop();
     } else {
+      /**
+       * The pointer callbacks are cleared on destroy, so a
+       * destroyed gesture must not start listening again.
+       */
+      if (destroyed) {
+        return;
+      }
       if (!rmTouchStart) {
         rmTouchStart = addEventListener(el, 'touchstart', handleTouchStart, options);
       }
@@ -127,6 +135,7 @@ export const createPointerEvents = (
 
   const destroy = () => {
     enable(false);
+    destroyed = true;
     pointerUp = pointerMove = pointerDown = undefined;
   };
 
