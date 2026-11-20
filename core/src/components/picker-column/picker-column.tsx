@@ -31,7 +31,6 @@ export class PickerColumn implements ComponentInterface {
   private isColumnVisible = false;
   private parentEl?: HTMLIonPickerElement | null;
   private canExitInputMode = true;
-  private assistiveFocusable?: HTMLElement;
   private updateValueTextOnScroll = false;
   private scrollEndTimeout?: ReturnType<typeof setTimeout>;
   private centeredOption?: HTMLIonPickerColumnOptionElement;
@@ -232,8 +231,8 @@ export class PickerColumn implements ComponentInterface {
    */
   @Method()
   async setFocus() {
-    if (this.assistiveFocusable) {
-      this.assistiveFocusable.focus();
+    if (this.scrollEl) {
+      this.scrollEl.focus();
     }
   }
 
@@ -633,7 +632,7 @@ export class PickerColumn implements ComponentInterface {
          * again before announcing the new value. The correct valuetext will be set on render.
          */
         if (this.updateValueTextOnScroll) {
-          this.assistiveFocusable?.setAttribute('aria-valuetext', this.getOptionValueText(newActiveElement));
+          scrollEl.setAttribute('aria-valuetext', this.getOptionValueText(newActiveElement));
         }
 
         this.centeredOption = newActiveElement;
