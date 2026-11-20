@@ -422,6 +422,30 @@ export class PickerColumn implements ComponentInterface {
         this.setValue(centeredOption.value);
       }
     }
+
+    /**
+     * Safari can end a trackpad overscroll in the empty rows past the first or
+     * last option without snapping back (https://bugs.webkit.org/show_bug.cgi?id=253078).
+     * The value has not changed, so nothing else would re-center the column.
+     * This waits a frame so a scroll the user starts right now is not undone.
+     */
+    const { scrollEl } = this;
+    if (scrollEl) {
+      const { scrollTop } = scrollEl;
+
+      raf(() => {
+        const { activeItem } = this;
+        if (!activeItem || this.isScrolling || scrollEl.scrollTop !== scrollTop) return;
+
+        const columnBox = scrollEl.getBoundingClientRect();
+        const optionBox = activeItem.getBoundingClientRect();
+        const offCenter = optionBox.y + optionBox.height / 2 - (columnBox.y + columnBox.height / 2);
+
+        if (Math.abs(offCenter) > HALT_TOLERANCE) {
+          this.centerPickerItemInView(activeItem, true, false);
+        }
+      });
+    }
   };
 
   /**
