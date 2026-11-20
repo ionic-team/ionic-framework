@@ -323,7 +323,7 @@ export class Select implements ComponentInterface {
   }
 
   private setValue(value?: any | null) {
-    if (this.isValueEqual(this.value, value)) {
+    if (this.disabled || this.isValueEqual(this.value, value)) {
       return;
     }
     this.value = value;
