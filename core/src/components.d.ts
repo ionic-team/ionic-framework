@@ -2960,6 +2960,10 @@ export namespace Components {
          */
         "swipeGesture": boolean;
         /**
+          * Update the tab stop when a segment button changes.
+         */
+        "updateTabindex": () => Promise<void>;
+        /**
           * the value of the segment.
          */
         "value"?: SegmentValue;
@@ -2983,6 +2987,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "setButtonTabindex": (value: number) => Promise<void>;
         "setFocus": () => Promise<void>;
         /**
           * The type of the button.
