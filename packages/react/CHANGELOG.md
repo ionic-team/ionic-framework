@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.21](https://github.com/ionic-team/ionic-framework/compare/v8.8.20...v8.8.21) (2026-11-20)
+
+
+### Bug Fixes
+
+* **deps:** update ionicons to v8.1.1 for svg sanitization fix ([#31789](https://github.com/ionic-team/ionic-framework/issues/31789)) ([e4d1850](https://github.com/ionic-team/ionic-framework/commit/e4d1850cf0f976355a596f725e9beffa1b6d6657))
+
+
+
+
+
 ## [8.8.20](https://github.com/ionic-team/ionic-framework/compare/v8.8.19...v8.8.20) (2026-11-17)
 
 **Note:** Version bump only for package @ionic/react
