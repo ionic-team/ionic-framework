@@ -18,11 +18,13 @@ $spacings: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
   display: block;
 
   width: 100%;
+  height: var(--ion-divider-thickness);
 
   border: none;
-  border-top-width: var(--ion-divider-thickness);
-  border-top-style: solid;
-  border-top-color: var(--ion-divider-color);
+
+  // A filled box instead of a border: WebKit skips a border thinner than one
+  // CSS pixel at some positions on the page.
+  background: var(--ion-divider-color);
 }
 
 // Divider Spacing
