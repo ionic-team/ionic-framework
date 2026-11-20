@@ -43,3 +43,39 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('modal: animations'), () => {
+    test('should not keep the enter animation applied to the wrapper', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31603',
+      });
+
+      await page.setContent(
+        `
+        <ion-modal></ion-modal>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const modal = page.locator('ion-modal');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+
+      const wrapper = page.locator('ion-modal .modal-wrapper');
+
+      /**
+       * An applied opacity animation makes the wrapper a backdrop root,
+       * which breaks `backdrop-filter` on content inside the modal.
+       */
+      const wrapperAnimations = await wrapper.evaluate((el: HTMLElement) => el.getAnimations().length);
+      expect(wrapperAnimations).toBe(0);
+
+      await expect(wrapper).toHaveCSS('opacity', '1');
+      await expect(wrapper).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
+    });
+  });
+});
