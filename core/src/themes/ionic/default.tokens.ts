@@ -1554,7 +1554,7 @@ export const defaultTheme: DefaultTheme = {
             semantic: {
               default: {
                 background: 'transparent',
-                color: currentColor('contrast', { subtle: true }),
+                color: currentColor('foreground', { subtle: true }),
 
                 border: {
                   color: currentColor('shade', { subtle: true }),
