@@ -7,6 +7,16 @@
 $spacings: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
 
 :host {
+  /**
+   * Ancestors such as `ion-item` or `.ion-padding` containers set `--padding-*`
+   * for themselves, and the divider would inherit them. The reset limits them
+   * to values set on the divider, such as its own `ion-padding` classes.
+   */
+  --margin-top: initial;
+  --margin-bottom: initial;
+  --padding-start: initial;
+  --padding-end: initial;
+
   @include mixins.padding-horizontal(var(--padding-start, 0px), var(--padding-end, 0px));
 
   display: block;
