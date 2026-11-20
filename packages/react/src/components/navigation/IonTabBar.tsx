@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
 import type { RouteInfo } from '../../models';
+import { getConfig } from '../../utils/config';
 import type { IonicReactProps } from '../IonicReactProps';
 import { IonTabBarInner } from '../inner-proxies';
 import { createForwardRef } from '../utils';
@@ -225,6 +226,8 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     if (prevActiveTab === e.detail.tab) {
       if (originalHref !== currentHref) {
         this.context.resetTab(e.detail.tab, originalHref, tappedTab.originalRouteOptions);
+      } else if (hasRouterOutlet) {
+        this.scrollActiveTabToTop(e.detail.tab);
       }
     } else {
       let onWillChange = this.props.onIonTabsWillChange;
@@ -246,6 +249,17 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         this.context.changeTab(e.detail.tab, currentHref, e.detail.routeOptions);
       }
     }
+  }
+
+  private scrollActiveTabToTop(tab: string) {
+    if (!getConfig()?.getBoolean('tabTap', false)) {
+      return;
+    }
+
+    const tabButton = document.querySelector(`ion-tab-button[tab="${CSS.escape(tab)}"]`);
+    const page = tabButton?.closest('ion-tabs')?.querySelector('ion-router-outlet > .ion-page:not(.ion-page-hidden)');
+
+    page?.querySelector('ion-content')?.scrollToTop(300);
   }
 
   private renderTabButton(activeTab: string | null | undefined) {

@@ -36,6 +36,13 @@ export interface IonicConfig {
   statusTap?: boolean;
 
   /**
+   * Whether pressing the already selected tab button should scroll the content
+   * of the tab to the top. The content only scrolls when the tab is at its root page.
+   * Defaults to `false`.
+   */
+  tabTap?: boolean;
+
+  /**
    * Overrides the default icon in all `<ion-back-button>` components.
    */
   backButtonIcon?: string;
