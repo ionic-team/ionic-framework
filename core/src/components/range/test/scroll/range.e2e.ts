@@ -42,5 +42,34 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
     });
+
+    test('should not enable scrolling on the content after the bar is tapped', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30952',
+      });
+
+      await page.setContent(
+        `
+        <ion-content scroll-y="false">
+          <div style="padding: 0 20px">
+            <ion-range aria-label="Range" value="20"></ion-range>
+          </div>
+        </ion-content>
+      `,
+        config
+      );
+
+      const content = page.locator('ion-content');
+      const range = page.locator('ion-range');
+      const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
+
+      const box = (await range.locator('.range-slider').boundingBox())!;
+      await page.mouse.click(box.x + box.width * 0.8, box.y + box.height / 2);
+
+      await rangeEnd.next();
+
+      expect(await content.evaluate((el: HTMLIonContentElement) => el.scrollY)).toBe(false);
+    });
   });
 });
