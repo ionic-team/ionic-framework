@@ -84,13 +84,9 @@ export const getCustomTheme = (customTheme: any, mode: string): any => {
     const { ios, md, ...baseCustomTheme } = customTheme;
 
     // Flatten the mode-specific overrides based on current mode
-    if (mode === 'ios' && ios) {
-      return deepMerge(baseCustomTheme, ios);
-    } else if (mode === 'md' && md) {
-      return deepMerge(baseCustomTheme, md);
-    }
+    const modeTheme = mode === 'ios' ? ios : mode === 'md' ? md : undefined;
 
-    return baseCustomTheme;
+    return modeTheme ? mergeTheme(baseCustomTheme, modeTheme) : baseCustomTheme;
   }
 
   return customTheme;
@@ -430,7 +426,7 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
   }
 
   // Merge themes and apply
-  const mergedTheme = deepMerge(baseTheme, userTheme);
+  const mergedTheme = mergeTheme(baseTheme, userTheme);
   injectCSS(generateGlobalThemeCSS(mergedTheme));
   return mergedTheme;
 };
@@ -760,13 +756,181 @@ const lowerSpecificity = (selector: string): string => {
 };
 
 /**
- * Generates one block of `--<tag>-` custom properties for a list of selectors.
+ * Generates one block of `--<tag>-` custom properties for a list of selectors,
+ * followed by a block inside each of its media queries (refer to `MEDIA_QUERY_KEY`).
  */
-const generateBlock = (selectors: string[], tokens: Record<string, unknown>, tag: string): string => `
+const generateBlock = (selectors: string[], tokens: Record<string, unknown>, tag: string): string => {
+  const { [MEDIA_QUERY_KEY]: mediaQuery, ...ownTokens } = tokens;
+
+  const block = (blockTokens: Record<string, unknown>) => `
       ${selectors.join(',\n      ')} {
-        ${generateCSSVars(tokens, `--${tag}-`)}
+        ${generateCSSVars(blockTokens, `--${tag}-`) ?? ''}
       }
     `;
+
+  /**
+   * Each block names the recipe path it comes from, so it can be traced back
+   * to the tokens from the browser's developer tools.
+   */
+  const mediaQueryBlocks = getMediaQueries(mediaQuery).map(
+    ({ path, query, tokens: queryTokens }) => `
+      /* ${tag}: ${path} */
+      @media ${query} {${block(queryTokens)}}`
+  );
+
+  /**
+   * A component with only media query tokens gets no base block, but an
+   * empty component still gets an empty one (refer to
+   * `generateComponentsThemeCSS`).
+   */
+  const ownBlock = Object.keys(ownTokens).length > 0 || mediaQueryBlocks.length === 0 ? [block(ownTokens)] : [];
+
+  return [...ownBlock, ...mediaQueryBlocks].join('');
+};
+
+/**
+ * The recipe key that holds the values a component uses inside media queries.
+ * Its path builds the query: `min.resolution['2dppx']` becomes
+ * `(min-resolution: 2dppx)`. The values set the same variables as the
+ * component's own, so unlike a state, the key is left out of the variable names:
+ *
+ * ```ts
+ * IonDivider: {
+ *   thickness: '1px',
+ *   mediaQuery: {
+ *     min: { resolution: { '2dppx': { thickness: '0.5px' } } },
+ *   },
+ * }
+ * ```
+ *
+ * Becomes:
+ *
+ * ```css
+ * ion-divider {
+ *   --ion-divider-thickness: 1px;
+ * }
+ * @media (min-resolution: 2dppx), (-webkit-min-device-pixel-ratio: 2) {
+ *   ion-divider {
+ *     --ion-divider-thickness: 0.5px;
+ *   }
+ * }
+ * ```
+ *
+ * The blocks follow the order of the keys, so when several queries match, the
+ * last one wins. List `min` values from smallest to largest.
+ */
+export const MEDIA_QUERY_KEY = 'mediaQuery';
+
+type MediaQueryBlock = { path: string; query: string; tokens: Record<string, unknown> };
+
+/**
+ * Flattens a `mediaQuery` object (`<min|max>.<feature>.<value>`) into one
+ * query and its tokens per value. Values with no tokens left are skipped
+ * (refer to `mergeTheme`).
+ */
+const getMediaQueries = (mediaQuery: unknown): MediaQueryBlock[] =>
+  Object.entries(isObject(mediaQuery) ? mediaQuery : {}).flatMap(([range, features]) =>
+    Object.entries(isObject(features) ? features : {}).flatMap(([feature, values]) =>
+      Object.entries(isObject(values) ? values : {})
+        .filter(([, tokens]) => isObject(tokens) && Object.keys(tokens).length > 0)
+        .map(([value, tokens]) => ({
+          path: `${MEDIA_QUERY_KEY}.${range}.${feature}['${value}']`,
+          query: getMediaQuery(range, convertToKebabCase(feature), value),
+          tokens: tokens as Record<string, unknown>,
+        }))
+    )
+  );
+
+/**
+ * Builds a media query such as `(min-resolution: 2dppx)`.
+ */
+const getMediaQuery = (range: string, feature: string, value: string): string => {
+  const query = `(${range}-${feature}: ${value})`;
+  const dppx = feature === 'resolution' ? value.match(/^([\d.]+)dppx$/) : null;
+
+  /**
+   * Safari 15 and older do not support `resolution`, so the query also
+   * matches the prefixed device pixel ratio.
+   */
+  return dppx ? `${query}, (-webkit-${range}-device-pixel-ratio: ${dppx[1]})` : query;
+};
+
+const isObject = (value: unknown): value is Record<string, unknown> =>
+  value !== null && typeof value === 'object' && !Array.isArray(value);
+
+/**
+ * Merges a custom theme into the theme it overrides.
+ *
+ * A value the custom theme sets also replaces the base theme's media query
+ * values for that key, so it applies on every screen. Otherwise the base
+ * theme's media query would still win where it matches: setting
+ * `IonDivider: { thickness: '3px' }` over the ios theme would only reach 1x
+ * screens. Media query values that the custom theme sets itself are merged
+ * as usual.
+ *
+ * @param base The theme the custom theme is merged into.
+ * @param custom The custom theme.
+ * @returns The merged theme.
+ */
+export const mergeTheme = (base: any, custom: any): any =>
+  deepMerge(removeOverriddenMediaQueries(base, custom), custom);
+
+/**
+ * Returns `base` without the media query values for each token that `custom`
+ * sets (refer to `mergeTheme`).
+ */
+const removeOverriddenMediaQueries = (base: any, custom: any): any => {
+  if (!isObject(base) || !isObject(custom)) {
+    return base;
+  }
+
+  const result: Record<string, unknown> = { ...base };
+
+  for (const [key, value] of Object.entries(custom)) {
+    if (key !== MEDIA_QUERY_KEY && isObject(base[key])) {
+      result[key] = removeOverriddenMediaQueries(base[key], value);
+    }
+  }
+
+  const mediaQuery = base[MEDIA_QUERY_KEY];
+
+  if (isObject(mediaQuery)) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { [MEDIA_QUERY_KEY]: customMediaQuery, ...overrides } = custom;
+
+    result[MEDIA_QUERY_KEY] = mapValues(mediaQuery, (features) =>
+      mapValues(features, (values) => mapValues(values, (tokens) => omitTokens(tokens, overrides)))
+    );
+  }
+
+  return result;
+};
+
+const mapValues = (obj: unknown, fn: (value: unknown) => unknown): unknown =>
+  isObject(obj) ? Object.fromEntries(Object.entries(obj).map(([key, value]) => [key, fn(value)])) : obj;
+
+/**
+ * Returns `tokens` without the values that `overrides` sets.
+ */
+const omitTokens = (tokens: unknown, overrides: Record<string, unknown>): unknown => {
+  if (!isObject(tokens)) {
+    return tokens;
+  }
+
+  const result: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(tokens)) {
+    const override = overrides[key];
+
+    if (override === undefined) {
+      result[key] = value;
+    } else if (isObject(value) && isObject(override)) {
+      result[key] = omitTokens(value, override);
+    }
+  }
+
+  return result;
+};
 
 /**
  * Applies a component theme to an element if it exists in the custom theme
