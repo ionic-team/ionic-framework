@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 
 import { config } from '../../../global/config';
+import { Alert } from '../../alert/alert';
 import { Loading } from '../loading';
 
 describe('loading: custom html', () => {
@@ -60,5 +61,26 @@ describe('loading: custom html', () => {
     const content = page.body.querySelector('.loading-content')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).toBe(null);
+  });
+});
+
+describe('loading: stacking', () => {
+  it('should stack an alert presented after a loading above it', async () => {
+    const page = await newSpecPage({
+      components: [Loading, Alert],
+      html: `<ion-loading is-open="true"></ion-loading>`,
+    });
+
+    const alert = document.createElement('ion-alert');
+    alert.isOpen = true;
+    page.body.appendChild(alert);
+    await page.waitForChanges();
+
+    const loading = page.body.querySelector('ion-loading')!;
+
+    const loadingZIndex = parseInt(loading.style.zIndex, 10);
+    const alertZIndex = parseInt(alert.style.zIndex, 10);
+
+    expect(alertZIndex).toBeGreaterThan(loadingZIndex);
   });
 });
