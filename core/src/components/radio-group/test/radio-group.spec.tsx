@@ -108,4 +108,43 @@ describe('ion-radio-group', () => {
     expect(radios[2].getAttribute('aria-checked')).toBe('true');
     expect(radioGroup.value).toEqual(3);
   });
+
+  it('should allow deselection with compareWith when allowEmptySelection is true', async () => {
+    const page = await newSpecPage({
+      components: [Radio, RadioGroup],
+      template: () => (
+        <ion-radio-group value={{ id: 1 }} compareWith="id" allowEmptySelection={true}>
+          <ion-radio value={{ id: 1 }}>Option #1</ion-radio>
+          <ion-radio value={{ id: 2 }}>Option #2</ion-radio>
+        </ion-radio-group>
+      ),
+    });
+
+    const radioGroup = page.body.querySelector('ion-radio-group')!;
+    const radios = document.querySelectorAll('ion-radio')!;
+
+    expect(radios[0].getAttribute('aria-checked')).toBe('true');
+
+    await radios[0].click();
+    await page.waitForChanges();
+
+    expect(radioGroup.value).toBeUndefined();
+    expect(radios[0].getAttribute('aria-checked')).toBe('false');
+  });
+
+  it('should handle null values safely when compareWith is a property name', async () => {
+    const page = await newSpecPage({
+      components: [Radio, RadioGroup],
+      template: () => (
+        <ion-radio-group value={null} compareWith="id">
+          <ion-radio value={{ id: 1 }}>Option #1</ion-radio>
+          <ion-radio value={{ id: 2 }}>Option #2</ion-radio>
+        </ion-radio-group>
+      ),
+    });
+
+    const radios = document.querySelectorAll('ion-radio')!;
+    expect(radios[0].getAttribute('aria-checked')).toBe('false');
+    expect(radios[1].getAttribute('aria-checked')).toBe('false');
+  });
 });
