@@ -62,7 +62,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "5.0.0-alpha.35",
+    "@stencil/core": "5.0.0-rc.8",
     "ionicons": "^8.1.0",
     "tslib": "^2.1.0"
   },
@@ -82,7 +82,7 @@
     "@stencil/angular-output-target": "^1.4.1",
     "@stencil/react-output-target": "^1.6.2",
     "@stencil/sass": "^3.3.3",
-    "@stencil/unplugin": "5.0.0-alpha.35",
+    "@stencil/unplugin": "5.0.0-rc.8",
     "@stencil/vitest": "^1.15.0",
     "@stencil/vue-output-target": "0.14.1",
     "@types/node": "^24.13.3",

@@ -1,7 +1,7 @@
 import { win } from '@utils/browser';
 import { printIonWarning } from '@utils/logging';
-import type { Mode } from '../../../interface';
 
+import type { Mode } from '../../../interface';
 import type { ToastAnimationPosition, ToastPosition } from '../toast-interface';
 
 /**

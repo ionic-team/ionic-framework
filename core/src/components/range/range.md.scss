@@ -140,6 +140,14 @@
   @include border-radius(50%);
   @include transform(translate3d(0, 0, 0), scale(.01));
 
+  // A pseudo-class like :dir() must come before the ::before pseudo-element it targets.
+  @include rtl() {
+    &::before {
+      /* stylelint-disable-next-line property-disallowed-list */
+      left: unset;
+    }
+  }
+
   display: flex;
 
   align-items: center;
@@ -185,14 +193,6 @@
 
     content: "";
     z-index: -1;
-  }
-
-  // A pseudo-class like :dir() must come before the ::before pseudo-element it targets.
-  @include rtl() {
-    &::before {
-      /* stylelint-disable-next-line property-disallowed-list */
-      left: unset;
-    }
   }
 }
 
