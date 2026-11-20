@@ -52,7 +52,9 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
   /**
    * If `true`, the fab button will animate between states, such as
-   * swapping its content for the close icon.
+   * swapping its content for the close icon. As the main button of an
+   * `ion-fab`, it also sets whether the `ion-fab-list` buttons show one
+   * at a time, unless the list sets its own `animated`.
    */
   @Prop() animated = true;
 

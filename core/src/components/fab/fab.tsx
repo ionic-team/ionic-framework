@@ -41,10 +41,6 @@ export class Fab implements ComponentInterface {
       fab.activated = activated;
     }
     Array.from(this.el.querySelectorAll('ion-fab-list')).forEach((list) => {
-      if (fab) {
-        // set before activated so the list reads it when it opens
-        list.animated = fab.animated;
-      }
       list.activated = activated;
     });
   }

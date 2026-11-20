@@ -39,10 +39,10 @@ export class FabList implements ComponentInterface {
 
   /**
    * If `true`, the fab buttons in the list will show one at a time
-   * when the list opens. Inside an `ion-fab`, this is ignored and the
-   * main fab button's `animated` is used instead.
+   * when the list opens. If not set, it follows the main fab button's
+   * `animated`.
    */
-  @Prop() animated = true;
+  @Prop() animated?: boolean;
 
   disconnectedCallback() {
     this.activateTimeouts.forEach(clearTimeout);
@@ -50,7 +50,10 @@ export class FabList implements ComponentInterface {
   }
 
   private shouldAnimate() {
-    if (!this.animated || !config.getBoolean('animated', true)) {
+    const fabButton = this.el.closest('ion-fab')?.querySelector<HTMLIonFabButtonElement>(':scope > ion-fab-button');
+    const animated = this.animated ?? fabButton?.animated ?? true;
+
+    if (!animated || !config.getBoolean('animated', true)) {
       return false;
     }
 

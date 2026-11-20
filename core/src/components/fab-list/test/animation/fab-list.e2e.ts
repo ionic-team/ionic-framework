@@ -3,8 +3,8 @@ import type { Page } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * Returns each list button's `show` right after the first reveal. A
- * staggered list has only shown its first button by then.
+ * Returns each list button's `show` right after opening, when a
+ * staggered list has only shown its first button.
  */
 const activateAndGetShownButtons = (page: Page, selector: 'ion-fab' | 'ion-fab-list' = 'ion-fab') =>
   page.locator(selector).evaluate(async (el: HTMLIonFabElement | HTMLIonFabListElement) => {
@@ -42,8 +42,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('ion-fab-list ion-fab-button').last()).toHaveClass(/fab-button-show/);
     });
 
-    test('should show all list buttons at once when animated is false', async ({ page }) => {
-      // Inside an `ion-fab` the list follows the main button, so this tests the list on its own.
+    test('should show the list buttons one at a time by default outside of a fab', async ({ page }) => {
+      await page.setContent(`<ion-fab-list>${listButtons}</ion-fab-list>`, config);
+
+      expect(await activateAndGetShownButtons(page, 'ion-fab-list')).toEqual([true, false, false]);
+    });
+
+    test('should show all list buttons at once when animated is false outside of a fab', async ({ page }) => {
       await page.setContent(`<ion-fab-list animated="false">${listButtons}</ion-fab-list>`, config);
 
       expect(await activateAndGetShownButtons(page, 'ion-fab-list')).toEqual([true, true, true]);
@@ -68,8 +73,18 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(await activateAndGetShownButtons(page)).toEqual([true, true, true]);
     });
 
-    test('should follow the main fab button over the animated property of the list', async ({ page }) => {
+    test('should show all list buttons at once when the list is not animated under an animated main fab button', async ({
+      page,
+    }) => {
       await page.setContent(fabMarkup({ fabListAttrs: 'animated="false"' }), config);
+
+      expect(await activateAndGetShownButtons(page)).toEqual([true, true, true]);
+    });
+
+    test('should show the list buttons one at a time when the list is animated under a main fab button that is not', async ({
+      page,
+    }) => {
+      await page.setContent(fabMarkup({ fabButtonAttrs: 'animated="false"', fabListAttrs: 'animated="true"' }), config);
 
       expect(await activateAndGetShownButtons(page)).toEqual([true, false, false]);
     });
