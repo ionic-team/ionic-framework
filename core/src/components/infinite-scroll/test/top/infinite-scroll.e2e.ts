@@ -12,8 +12,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(await items.count()).toBe(30);
 
       /**
-       * Wait for the page to settle at its initial scroll
-       * position so scrolling to the top triggers the load.
+       * Wait for infinite scroll to move the content to the bottom
+       * on load. The scroll must start outside the trigger zone
+       * (infinite scroll height + 100px threshold), otherwise the
+       * load fires from that initial scroll instead of from
+       * scrolling to the top.
        */
       await expect
         .poll(() =>
