@@ -500,7 +500,21 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       if (!enteringViewItem.mount) {
         enteringViewItem.mount = true;
         enteringViewItem.registerCallback = () => {
-          handlePageTransition();
+          const currentViewItem = viewStacks.findViewItemByRouteInfo(
+            ionRouter.getCurrentRouteInfo(),
+            id
+          );
+
+          /**
+           * If the route moved on while this page was mounting,
+           * the newer page runs the transition once it registers.
+           */
+          if (
+            currentViewItem === enteringViewItem ||
+            !currentViewItem?.registerCallback
+          ) {
+            handlePageTransition();
+          }
           enteringViewItem.registerCallback = undefined;
         };
       } else {
