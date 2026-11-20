@@ -140,9 +140,13 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
 
       await page.keyboard.press('ArrowDown');
       await page.waitForChanges();
+      await page.keyboard.press('ArrowRight');
+      await page.waitForChanges();
+      await page.keyboard.press('ArrowRight');
+      await page.waitForChanges();
 
-      const day15 = datetime.locator('[data-month="6"][data-day="15"]');
-      await expect(day15).toBeFocused();
+      const day17 = datetime.locator('[data-month="6"][data-day="17"]');
+      await expect(day17).toBeFocused();
 
       await fixture.expectRangeDatePicker('in-range-focus', screenshot);
     });
@@ -185,38 +189,87 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(ionChangeSpy).toHaveReceivedEventDetail({ value: [startISO, endISO] });
     });
 
-    test('clicking a day before the start should set a new start', async ({ page }) => {
+    test('clicking a day before the start should start a new range', async ({ page }) => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
 
       const day3 = datetime.locator('[data-month="6"][data-day="3"]');
       await day3.click();
       await page.waitForChanges();
 
-      // Clicking before the start resets to a new start, so the range is now partial
+      // Once a full range is selected, the next tap starts a new range
       await expect(day3).toHaveClass(/calendar-day-range-start/);
       await expect(datetime.locator('[data-month="6"][data-day="18"]')).not.toHaveClass(/calendar-day-range-end/);
     });
 
-    test('clicking a day within an existing range should set a new end', async ({ page }) => {
+    test('clicking a day within an existing range should start a new range', async ({ page }) => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
-      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
       const day12 = datetime.locator('[data-month="6"][data-day="12"]');
       await day12.click();
-      await ionChangeSpy.next();
+      await page.waitForChanges();
 
-      await expect(datetime).toHaveJSProperty('value', ['2022-06-08', '2022-06-12']);
+      // Once a full range is selected, the next tap starts a new range
+      await expect(day12).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="8"]')).not.toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="18"]')).not.toHaveClass(/calendar-day-range-end/);
     });
 
-    test('clicking a day after the end should set a new end', async ({ page }) => {
+    test('clicking a day after the end should start a new range', async ({ page }) => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
-      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
       const day22 = datetime.locator('[data-month="6"][data-day="22"]');
       await day22.click();
-      await ionChangeSpy.next();
+      await page.waitForChanges();
 
-      await expect(datetime).toHaveJSProperty('value', ['2022-06-08', '2022-06-22']);
+      // Once a full range is selected, the next tap starts a new range
+      await expect(day22).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="8"]')).not.toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="18"]')).not.toHaveClass(/calendar-day-range-end/);
+    });
+
+    test('third tap after a full range should start a new range', async ({ page }) => {
+      await fixture.goto(config);
+
+      const day8 = fixture.getVisibleDay(8);
+      const day18 = fixture.getVisibleDay(18);
+      const day12 = fixture.getVisibleDay(12);
+
+      // First tap: set start
+      await day8.click();
+      await page.waitForChanges();
+
+      // Second tap: set end (full range)
+      await day18.click();
+      await page.waitForChanges();
+
+      // Third tap: should restart range
+      await day12.click();
+      await page.waitForChanges();
+
+      await expect(day12).toHaveClass(/calendar-day-range-start/);
+      await expect(day8).not.toHaveClass(/calendar-day-range-start/);
+      await expect(day18).not.toHaveClass(/calendar-day-range-end/);
+    });
+
+    test('tapping an earlier date second should start a new range', async ({ page }) => {
+      await fixture.goto(config);
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+      const day20 = fixture.getVisibleDay(20);
+      const day10 = fixture.getVisibleDay(10);
+
+      // First tap: set start to day 20
+      await day20.click();
+      await page.waitForChanges();
+
+      // Second tap: day 10 is before the start, so it becomes the new start
+      await day10.click();
+      await page.waitForChanges();
+
+      await expect(day10).toHaveClass(/calendar-day-range-start/);
+      await expect(day20).not.toHaveClass(/calendar-day-range-start/);
+      await expect(day20).not.toHaveClass(/calendar-day-range-end/);
+      await expect(ionChangeSpy).not.toHaveReceivedEvent();
     });
 
     // ---------------------------------------------------------------
@@ -612,6 +665,152 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Range should not span the excluded month — Mar 5 starts a new range
       await expect(mar5).toHaveClass(/calendar-day-range-start/);
       await expect(mar5).not.toHaveClass(/calendar-day-range-end/);
+    });
+
+    // ---------------------------------------------------------------
+    // Min/max clamping
+    // ---------------------------------------------------------------
+
+    test('range dates outside min/max should not be highlighted', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-05"
+          max="2022-06-25"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-01', '2022-06-30'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      // Out-of-range dates should not be highlighted
+      const day1 = datetime.locator('[data-month="6"][data-day="1"]');
+      const day30 = datetime.locator('[data-month="6"][data-day="30"]');
+      await expect(day1).not.toHaveClass(/calendar-day-range-start/);
+      await expect(day30).not.toHaveClass(/calendar-day-range-end/);
+
+      // Range should be clamped to min/max
+      const day5 = datetime.locator('[data-month="6"][data-day="5"]');
+      const day25 = datetime.locator('[data-month="6"][data-day="25"]');
+      await expect(day5).toHaveClass(/calendar-day-range-start/);
+      await expect(day25).toHaveClass(/calendar-day-range-end/);
+
+      // Days in between should still be in range
+      const day15 = datetime.locator('[data-month="6"][data-day="15"]');
+      await expect(day15).toHaveClass(/calendar-day-in-range/);
+    });
+
+    test('range with only start outside min should clamp start to min', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-05"
+          max="2022-06-25"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-01', '2022-06-20'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      await expect(datetime.locator('[data-month="6"][data-day="1"]')).not.toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="5"]')).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="20"]')).toHaveClass(/calendar-day-range-end/);
+    });
+
+    test('range with only end outside max should clamp end to max', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-05"
+          max="2022-06-25"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-10', '2022-06-30'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      await expect(datetime.locator('[data-month="6"][data-day="10"]')).toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="30"]')).not.toHaveClass(/calendar-day-range-end/);
+      await expect(datetime.locator('[data-month="6"][data-day="25"]')).toHaveClass(/calendar-day-range-end/);
+    });
+
+    test('range entirely outside min/max should clear the selection', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-10"
+          max="2022-06-25"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-01', '2022-06-05'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const datetime = page.locator('ion-datetime');
+
+      // Entire range is outside bounds — no day should be highlighted
+      await expect(datetime.locator('[data-month="6"][data-day="1"]')).not.toHaveClass(/calendar-day-range-start/);
+      await expect(datetime.locator('[data-month="6"][data-day="5"]')).not.toHaveClass(/calendar-day-range-end/);
+      await expect(datetime.locator('[data-month="6"][data-day="10"]')).not.toHaveClass(/calendar-day-range-start/);
+    });
+
+    test('range ending on min should keep that day selected', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime
+          locale="en-US"
+          presentation="date"
+          selection-mode="range"
+          min="2022-06-05"
+          max="2022-06-25"
+        ></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2022-06-01', '2022-06-05'];
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+      const day5 = page.locator('ion-datetime [data-month="6"][data-day="5"]');
+
+      await expect(day5).toHaveClass(/calendar-day-range-start/);
+      await expect(day5).toHaveClass(/calendar-day-range-end/);
     });
 
     // ---------------------------------------------------------------
