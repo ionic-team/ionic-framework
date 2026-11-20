@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.13](https://github.com/ionic-team/ionic-framework/compare/v9.0.12...v9.0.13) (2026-11-20)
+
+### Bug Fixes
+
+* **angular:** go back in browser history when popping to the previous view ([#31752](https://github.com/ionic-team/ionic-framework/issues/31752)) ([fd0ac5e](https://github.com/ionic-team/ionic-framework/commit/fd0ac5e9f340766e19f093852e596d67cd9b567a)), closes [#23448](https://github.com/ionic-team/ionic-framework/issues/23448) [#17752](https://github.com/ionic-team/ionic-framework/issues/17752) [#28307](https://github.com/ionic-team/ionic-framework/issues/28307)
+* **deps:** update ionicons to v8.1.1 for svg sanitization fix ([#31790](https://github.com/ionic-team/ionic-framework/issues/31790)) ([2040b22](https://github.com/ionic-team/ionic-framework/commit/2040b22afd8a8236ebe6444ef52db88ffcff2118)), closes [#31789](https://github.com/ionic-team/ionic-framework/issues/31789)
+
+
 ## [9.0.12](https://github.com/ionic-team/ionic-framework/compare/v9.0.11...v9.0.12) (2026-11-17)
 
 **Note:** Version bump only for package @ionic/angular
