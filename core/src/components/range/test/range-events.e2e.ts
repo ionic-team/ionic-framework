@@ -98,8 +98,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
 
           const knobB = page.locator('ion-range .range-knob-handle-b');
+          const knobBox = (await knobB.boundingBox())!;
+          const sliderBox = (await page.locator('ion-range .range-slider').boundingBox())!;
 
-          await dragElementBy(knobB, page, -50);
+          // Drag knob B just past the end of the slider so it lands on the max value.
+          const dragByX = sliderBox.x + sliderBox.width + 10 - (knobBox.x + knobBox.width / 2);
+          await dragElementBy(knobB, page, dragByX);
 
           await rangeStart.next();
           await rangeEnd.next();
@@ -109,7 +113,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
             knob: 'B',
             position: 'upper',
           });
-          expect(rangeEnd.lastEvent?.detail).toMatchObject({ knob: 'B', position: 'upper' });
+          expect(rangeEnd).toHaveReceivedEventDetail({
+            value: { lower: 20, upper: 100 },
+            knob: 'B',
+            position: 'upper',
+          });
         });
 
         test('should report the position before and after a knob is dragged past the other', async ({ page }) => {
@@ -414,7 +422,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
 /**
  * This behavior does not vary across modes. LTR is
- * covered by the dual knobs tests above.
+ * covered by the dual knobs tests.
  */
 configs({ modes: ['ios'], directions: ['rtl'] }).forEach(({ title, config }) => {
   test.describe(title('range: events:'), () => {

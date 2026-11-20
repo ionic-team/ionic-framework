@@ -505,7 +505,7 @@ export class Range implements ComponentInterface {
    * or taps the bar. The view doesn't scroll during a drag
    * so the user doesn't get disoriented.
    *
-   * @param startX The x coordinate where the interaction started.
+   * @param startX The x coordinate when the drag started, or where the bar was tapped.
    */
   private onStart(startX: number) {
     const { contentEl } = this;
@@ -514,10 +514,6 @@ export class Range implements ComponentInterface {
       this.initialContentScrollY = disableContentScrollY(contentEl);
     }
 
-    /**
-     * Pick the knob before emitting so the start event can
-     * report it. It stays the same for the rest of the drag.
-     */
     const knob = this.setPressedKnob(startX);
 
     this.ionKnobMoveStart.emit(this.getKnobMoveDetail(knob));

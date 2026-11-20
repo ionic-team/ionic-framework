@@ -104,6 +104,8 @@ export type {
   RangeKnobMoveEndEventDetail,
   RangeKnobMoveStartCustomEvent,
   RangeKnobMoveEndCustomEvent,
+  RangeKnobName,
+  RangeKnobPosition,
   RefresherCustomEvent,
   RefresherEventDetail,
   RefresherPullEndCustomEvent,

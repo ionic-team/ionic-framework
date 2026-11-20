@@ -13,8 +13,8 @@ export interface RangeChangeEventDetail {
 export interface RangeKnobMoveStartEventDetail {
   value: RangeValue;
   /**
-   * The knob being moved. Knobs `A` and `B` keep their identity even if
-   * they cross. A single knob range always reports `A`.
+   * The knob being moved. Each knob keeps its name even if the knobs
+   * cross. A single knob range always reports `A`.
    */
   knob: RangeKnobName;
   /**
@@ -27,8 +27,8 @@ export interface RangeKnobMoveStartEventDetail {
 export interface RangeKnobMoveEndEventDetail {
   value: RangeValue;
   /**
-   * The knob that was moved. Knobs `A` and `B` keep their identity even if
-   * they cross. A single knob range always reports `A`.
+   * The knob that was moved. Each knob keeps its name even if the knobs
+   * cross. A single knob range always reports `A`.
    */
   knob: RangeKnobName;
   /**
