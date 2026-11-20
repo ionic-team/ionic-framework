@@ -9,6 +9,7 @@ import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { close } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -18,6 +19,7 @@ import type { RouterDirection } from '../router/utils/interface';
  *
  * @part native - The native HTML button or anchor element that wraps all child elements.
  * @part close-icon - The close icon that is displayed when a fab list opens (uses ion-icon).
+ * @part inner - The wrapper around the button's content, hidden when a fab list opens.
  */
 @Component({
   tag: 'ion-fab-button',
@@ -47,6 +49,12 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    * If `true`, the fab button will be show a close icon.
    */
   @Prop() activated = false;
+
+  /**
+   * If `true`, the fab button will animate between states, such as
+   * swapping its content for the close icon.
+   */
+  @Prop() animated = true;
 
   /**
    * If `true`, the user cannot interact with the fab button.
@@ -244,9 +252,10 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   }
 
   render() {
-    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes, type } = this;
+    const { el, disabled, color, href, activated, animated, show, translucent, size, inheritedAttributes, type } = this;
     const inList = hostContext('ion-fab-list', el);
     const mode = getIonMode(this);
+    const shouldAnimate = animated && config.getBoolean('animated', true);
     const tabindexAttributes = this.tabindexController?.attributes ?? {};
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
@@ -276,6 +285,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           'fab-button-in-list': inList,
           'fab-button-translucent-in-list': inList && translucent,
           'fab-button-close-active': activated,
+          'fab-button-animated': shouldAnimate,
           'fab-button-show': show,
           'fab-button-disabled': disabled,
           'fab-button-translucent': translucent,
@@ -302,7 +312,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
             class="close-icon"
             lazy={false}
           ></ion-icon>
-          <span class="button-inner">
+          <span class="button-inner" part="inner">
             <slot></slot>
           </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

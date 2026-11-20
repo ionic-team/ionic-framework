@@ -105,3 +105,49 @@ describe('ion-toggle: required', () => {
     expect(nativeInput.hasAttribute('required')).toBeFalsy();
   });
 });
+
+describe('ion-toggle: haptics', () => {
+  let impact: jest.Mock;
+
+  beforeEach(() => {
+    impact = jest.fn();
+    config.reset({});
+  });
+
+  afterEach(() => {
+    delete (window as any).Capacitor;
+    config.reset({});
+  });
+
+  const clickToggleOnIOS = async () => {
+    const page = await newSpecPage({
+      components: [Toggle],
+      html: `<ion-toggle>Toggle</ion-toggle>`,
+    });
+    const win = page.win as any;
+    win.Ionic = { ...win.Ionic, platforms: ['ios'] };
+    // newSpecPage resets the window, so stub Capacitor after it
+    win.Capacitor = {
+      isPluginAvailable: (name: string) => name === 'Haptics',
+      getPlatform: () => 'ios',
+      Plugins: { Haptics: { impact } },
+    };
+
+    page.body.querySelector('ion-toggle')!.click();
+    await page.waitForChanges();
+  };
+
+  it('should trigger haptics when clicked', async () => {
+    await clickToggleOnIOS();
+
+    expect(impact).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not trigger haptics when clicked and the haptics config is false', async () => {
+    config.reset({ haptics: false });
+
+    await clickToggleOnIOS();
+
+    expect(impact).not.toHaveBeenCalled();
+  });
+});
