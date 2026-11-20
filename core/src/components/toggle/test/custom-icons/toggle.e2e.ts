@@ -19,7 +19,7 @@ configs().forEach(({ title, screenshot, config }) => {
         <style>
           #container {
             display: grid;
-            grid-template-columns: repeat(2, auto);
+            grid-template-columns: auto;
             justify-content: space-evenly;
             gap: 8px;
             padding: 16px 0;
