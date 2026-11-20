@@ -202,6 +202,23 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
       await alertCheckbox.press('Enter');
       await expect(alertCheckbox).toHaveAttribute('aria-checked', ariaChecked!);
     });
+
+    // The focused wrapper must not show a focus ring when opened via keyboard.
+    test('should not render a focus ring on the wrapper when presented via keyboard', async ({ page }) => {
+      const didPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      // An alert with inputs focuses the wrapper on present.
+      const button = page.locator('#checkbox');
+      const wrapper = page.locator('ion-alert .alert-wrapper');
+
+      // Open with the keyboard so :focus-visible applies to the wrapper.
+      await button.focus();
+      await page.keyboard.press('Enter');
+      await didPresent.next();
+
+      await expect(wrapper).toBeFocused();
+      await expect(wrapper).toHaveCSS('outline-style', 'none');
+    });
   });
 });
 
