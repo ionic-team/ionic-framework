@@ -103,7 +103,9 @@
   opacity: 0;
 }
 
-.toggle-switch-icon-checked {
+// The default checked icon is a dash rotated into a vertical line.
+// Custom checked icons skip this and match the unchecked icon size.
+.toggle-switch-icon-checked:not(.toggle-switch-icon-custom) {
   position: absolute;
 
   width: 15px;
@@ -122,6 +124,16 @@
 :host(.toggle-rtl) .toggle-switch-icon-checked {
   /* stylelint-disable-next-line property-disallowed-list */
   right: 4px;
+}
+
+:host(.toggle-ltr) .toggle-switch-icon-checked.toggle-switch-icon-custom {
+  /* stylelint-disable-next-line property-disallowed-list */
+  left: 6px;
+}
+
+:host(.toggle-rtl) .toggle-switch-icon-checked.toggle-switch-icon-custom {
+  /* stylelint-disable-next-line property-disallowed-list */
+  right: 6px;
 }
 
 // iOS Toggle Background Oval: Activated or Checked
