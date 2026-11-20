@@ -558,6 +558,38 @@ describe('validateParts()', () => {
       })
     ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
   });
+  it('should not mutate the max parts when the day does not exist in the new month', () => {
+    // Selecting March 31 and then April on the month wheel produces April 31.
+    const maxParts = { month: 4, day: 20, year: 2024, hour: 23, minute: 59 };
+
+    expect(validateParts({ month: 4, day: 31, year: 2024, hour: 23, minute: 59 }, undefined, maxParts)).toEqual({
+      month: 4,
+      day: 20,
+      year: 2024,
+      hour: 23,
+      minute: 59,
+    });
+    expect(maxParts).toEqual({ month: 4, day: 20, year: 2024, hour: 23, minute: 59 });
+  });
+  it('should not mutate the min parts when the day does not exist in the new month', () => {
+    const minParts = { month: 3, day: 1, year: 2024, hour: 0, minute: 0 };
+
+    const result = validateParts({ month: 2, day: 31, year: 2024, hour: 0, minute: 0 }, minParts);
+    expect(result).toEqual({ month: 3, day: 1, year: 2024, hour: 0, minute: 0 });
+    expect(minParts).toEqual({ month: 3, day: 1, year: 2024, hour: 0, minute: 0 });
+  });
+  it('should move the time back in bounds when the fixed day lands on the max day', () => {
+    // February 31 becomes February 29, which is the max day, so the max time applies.
+    expect(
+      validateParts({ month: 2, day: 31, year: 2024, hour: 23, minute: 0 }, undefined, {
+        month: 2,
+        day: 29,
+        year: 2024,
+        hour: 20,
+        minute: 0,
+      })
+    ).toEqual({ month: 2, day: 29, year: 2024, hour: 20, minute: 0 });
+  });
 });
 
 describe('getClosestValidDate()', () => {

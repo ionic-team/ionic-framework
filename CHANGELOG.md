@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.13](https://github.com/ionic-team/ionic-framework/compare/v9.0.12...v9.0.13) (2026-11-20)
+
+### Bug Fixes
+
+* **angular:** go back in browser history when popping to the previous view ([#31752](https://github.com/ionic-team/ionic-framework/issues/31752)) ([fd0ac5e](https://github.com/ionic-team/ionic-framework/commit/fd0ac5e9f340766e19f093852e596d67cd9b567a)), closes [#23448](https://github.com/ionic-team/ionic-framework/issues/23448) [#17752](https://github.com/ionic-team/ionic-framework/issues/17752) [#28307](https://github.com/ionic-team/ionic-framework/issues/28307)
+* **breadcrumb, item-option:** pass rel to the link ([#31726](https://github.com/ionic-team/ionic-framework/issues/31726)) ([f07b030](https://github.com/ionic-team/ionic-framework/commit/f07b030521d76fea9a7099e42170ddcd62e11c61)), closes [#31725](https://github.com/ionic-team/ionic-framework/issues/31725)
+* **datetime:** do not change max when the selected day does not exist in the new month ([#31489](https://github.com/ionic-team/ionic-framework/issues/31489)) ([17326e1](https://github.com/ionic-team/ionic-framework/commit/17326e1edce57938e416834a0dda96ca74890acb)), closes [#29124](https://github.com/ionic-team/ionic-framework/issues/29124) [#29124](https://github.com/ionic-team/ionic-framework/issues/29124)
+* **datetime:** show all month values between the min and max years ([#31490](https://github.com/ionic-team/ionic-framework/issues/31490)) ([97420a3](https://github.com/ionic-team/ionic-framework/commit/97420a3692ee49839a5ac0302327304b564f0435))
+* **deps:** update @stencil/core to v4.45.5 for ssr escaping ([#31791](https://github.com/ionic-team/ionic-framework/issues/31791)) ([6e16101](https://github.com/ionic-team/ionic-framework/commit/6e1610174f86cf3fa82bae9ae8781c24b98b3fed)), closes [#31792](https://github.com/ionic-team/ionic-framework/issues/31792)
+* **deps:** update ionicons to v8.1.1 for svg sanitization fix ([#31790](https://github.com/ionic-team/ionic-framework/issues/31790)) ([2040b22](https://github.com/ionic-team/ionic-framework/commit/2040b22afd8a8236ebe6444ef52db88ffcff2118)), closes [#31789](https://github.com/ionic-team/ionic-framework/issues/31789)
+* **footer:** fade the toolbar background out fully at the bottom ([#31771](https://github.com/ionic-team/ionic-framework/issues/31771)) ([ca4f2e6](https://github.com/ionic-team/ionic-framework/commit/ca4f2e67f9d388469e5e1f13787def6dbe65fa63)), closes [#31768](https://github.com/ionic-team/ionic-framework/issues/31768)
+* **rtl:** use :dir() for rtl styles when the browser supports it ([#31744](https://github.com/ionic-team/ionic-framework/issues/31744)) ([7ecca28](https://github.com/ionic-team/ionic-framework/commit/7ecca28c17913ac5bf062e8937954516f005c0eb))
+
+
+## [9.0.12](https://github.com/ionic-team/ionic-framework/compare/v9.0.11...v9.0.12) (2026-11-17)
+
+### Bug Fixes
+
+* **core:** clear reflected ARIA attrs from host after sync ([#31660](https://github.com/ionic-team/ionic-framework/issues/31660)) ([850f8c7](https://github.com/ionic-team/ionic-framework/commit/850f8c7c83c3cfe3342953ac8718dda34f93e7af)), closes [#31659](https://github.com/ionic-team/ionic-framework/issues/31659)
+* **input, searchbar:** sync value after Safari back navigation ([#31753](https://github.com/ionic-team/ionic-framework/issues/31753)) ([f8f25bc](https://github.com/ionic-team/ionic-framework/commit/f8f25bc93c0908c212fdc7b92a152ecb0948e0e3)), closes [#30017](https://github.com/ionic-team/ionic-framework/issues/30017)
+* **label:** render content set with innerHTML ([#31739](https://github.com/ionic-team/ionic-framework/issues/31739)) ([67cbaeb](https://github.com/ionic-team/ionic-framework/commit/67cbaebb4e9043d37d39713d6eec72f32a9176f9)), closes [#31433](https://github.com/ionic-team/ionic-framework/issues/31433)
+* **overlays:** keep focus inside modal and popover when tabbing in Chrome 157+ ([#31755](https://github.com/ionic-team/ionic-framework/issues/31755)) ([c0eb79e](https://github.com/ionic-team/ionic-framework/commit/c0eb79ef92195bc5b8ff8faeb00e8045d820d886)), closes [#31714](https://github.com/ionic-team/ionic-framework/issues/31714)
+
+
 ## [9.0.11](https://github.com/ionic-team/ionic-framework/compare/v9.0.10...v9.0.11) (2026-11-11)
 
 ### Bug Fixes
