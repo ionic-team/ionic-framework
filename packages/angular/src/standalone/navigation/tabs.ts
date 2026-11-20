@@ -20,7 +20,7 @@ import { IonRouterOutlet } from './router-outlet';
         *ngIf="tabs.length === 0"
         #outlet
         tabs="true"
-        (stackWillChange)="onStackWillChange($event)"
+        (stackWillChange)="onStackWillChange($event, outlet)"
         (stackDidChange)="onStackDidChange($event)"
       ></ion-router-outlet>
       <ng-content *ngIf="tabs.length > 0" select="ion-tab"></ng-content>
