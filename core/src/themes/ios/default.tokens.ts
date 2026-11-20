@@ -1987,13 +1987,6 @@ export const defaultTheme: DefaultTheme = {
       color: '#e0e0e0',
 
       spacing: {
-        xxsmall: {
-          margin: {
-            bottom: 'var(--ion-spacing-0)',
-            top: 'var(--ion-spacing-0)',
-          },
-        },
-
         xsmall: {
           margin: {
             bottom: 'var(--ion-spacing-sm)',

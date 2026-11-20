@@ -4,7 +4,7 @@
 // Divider
 // --------------------------------------------------
 
-$spacings: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
+$spacings: xsmall, small, medium, large, xlarge, xxlarge;
 
 :host {
   @include mixins.padding-horizontal(var(--padding-start, 0px), var(--padding-end, 0px));
@@ -27,6 +27,12 @@ $spacings: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
 
 // Divider Spacing
 // --------------------------------------------------
+
+// No theme token: `none` is always 0. The app's `--margin-*` still applies.
+:host(.divider-spacing-none) hr {
+  margin-top: var(--margin-top, 0);
+  margin-bottom: var(--margin-bottom, 0);
+}
 
 @each $spacing in $spacings {
   :host(.divider-spacing-#{$spacing}) hr {

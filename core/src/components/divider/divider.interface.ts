@@ -4,9 +4,9 @@ export type IonDividerRecipe = {
   /** Color of the divider line. */
   color?: string;
 
-  /** Applies for each value of the `spacing` property. */
+  /** Applies for each value of the `spacing` property, except `"none"`, which is always 0. */
   spacing?: {
-    [K in IonDividerSpacing]?: {
+    [K in Exclude<IonDividerSpacing, 'none'>]?: {
       /** Space above and below the line. Collapses with the margins of adjacent elements. */
       margin?: Pick<IonMargin, 'top' | 'bottom'>;
     };
@@ -21,5 +21,5 @@ export type IonDividerConfig = {
   spacing?: IonDividerSpacing;
 };
 
-export const ION_DIVIDER_SPACINGS = ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'] as const;
+export const ION_DIVIDER_SPACINGS = ['none', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'] as const;
 export type IonDividerSpacing = (typeof ION_DIVIDER_SPACINGS)[number];

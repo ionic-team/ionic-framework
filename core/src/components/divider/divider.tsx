@@ -14,7 +14,7 @@ export class Divider implements ComponentInterface {
   /**
    * Controls the space above and below the line.
    *
-   * Set to `"xxsmall"` for the smallest spacing.
+   * Set to `"none"` for no spacing.
    * Set to `"xsmall"` for very small spacing.
    * Set to `"small"` for small spacing.
    * Set to `"medium"` for medium spacing.
