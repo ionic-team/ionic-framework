@@ -6,8 +6,10 @@ import {
   UrlSerializer,
   UrlTree,
   NavigationStart,
+  NavigationEnd,
   NavigationCancel,
   NavigationError,
+  NavigationSkipped,
 } from '@angular/router';
 import type { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core/components';
 
@@ -35,6 +37,23 @@ export class NavController {
   private guessAnimation?: NavDirection;
   private lastNavId = -1;
 
+  /**
+   * Navigation ids of the history entries seen so far. `pop()` uses them to
+   * tell whether the previous view is the entry directly behind.
+   */
+  private historyEntries: number[] = [];
+  /** Index of the current entry in `historyEntries`, or `-1` when unknown. */
+  private historyIndex = -1;
+  /** How the navigation in progress changes history, applied on `NavigationEnd`. */
+  private pendingEntry?: {
+    id: number | undefined;
+    kind: 'push' | 'replace' | 'restore' | 'none' | 'unknown';
+    fromPath: string;
+    restoredId?: number;
+    /** Whether the browser was on the tracked entry when the navigation started. */
+    fromTrackedEntry: boolean;
+  };
+
   constructor(
     platform: Platform,
     private location: Location,
@@ -49,6 +68,37 @@ export class NavController {
           const id = ev.restoredState ? ev.restoredState.navigationId : ev.id;
           this.guessDirection = this.guessAnimation = id < this.lastNavId ? 'back' : 'forward';
           this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
+
+          const fromPath = this.location.path();
+          const fromTrackedEntry = this.isOnCurrentHistoryEntry();
+          if (ev.navigationTrigger === 'popstate') {
+            this.pendingEntry = {
+              id: ev.id,
+              kind: 'restore',
+              fromPath,
+              fromTrackedEntry,
+              restoredId: ev.restoredState?.navigationId,
+            };
+          } else if (ev.navigationTrigger === 'hashchange') {
+            // The browser added or changed the entry itself.
+            this.pendingEntry = { id: undefined, kind: 'unknown', fromPath, fromTrackedEntry };
+          } else {
+            const extras = router.getCurrentNavigation()?.extras ?? {};
+            if (extras.skipLocationChange) {
+              this.pendingEntry = { id: undefined, kind: 'none', fromPath, fromTrackedEntry };
+            } else {
+              this.pendingEntry = {
+                id: ev.id,
+                kind: extras.replaceUrl ? 'replace' : 'push',
+                fromPath,
+                fromTrackedEntry,
+              };
+            }
+          }
+        }
+
+        if (ev instanceof NavigationEnd) {
+          this.commitHistoryEntry(ev.id);
         }
 
         // Reset explicit direction when navigation is canceled (e.g., guard rejection)
@@ -57,6 +107,22 @@ export class NavController {
           this.direction = DEFAULT_DIRECTION;
           this.animated = DEFAULT_ANIMATED;
           this.animationBuilder = undefined;
+
+          /**
+           * Drop the tracked history if the browser might not be on the tracked
+           * entry anymore. An error can come after the URL was written, and the
+           * router may have rewritten an untracked entry to look tracked.
+           */
+          const pending = this.pendingEntry;
+          if (
+            ev instanceof NavigationError ||
+            pending?.kind === 'restore' ||
+            !pending?.fromTrackedEntry ||
+            !this.isOnCurrentHistoryEntry()
+          ) {
+            this.resetHistoryEntries();
+          }
+          this.pendingEntry = undefined;
         }
       });
     }
@@ -180,6 +246,118 @@ export class NavController {
     this.direction = direction;
     this.animated = getAnimation(direction, animated, animationDirection);
     this.animationBuilder = animationBuilder;
+  }
+
+  /**
+   * @internal
+   * Goes back one history entry with a `back` transition and resolves
+   * once the router has handled it.
+   */
+  backInHistory(animationBuilder?: AnimationBuilder): Promise<void> {
+    const settled = new Promise<void>((resolve) => {
+      const sub = this.router!.events.subscribe((ev) => {
+        if (ev instanceof NavigationSkipped) {
+          // Nothing transitions, so clear the direction here.
+          this.consumeTransition();
+        }
+        if (
+          ev instanceof NavigationEnd ||
+          ev instanceof NavigationCancel ||
+          ev instanceof NavigationError ||
+          ev instanceof NavigationSkipped
+        ) {
+          sub.unsubscribe();
+          resolve();
+        }
+      });
+    });
+    this.back({ animation: animationBuilder });
+    return settled;
+  }
+
+  /**
+   * @internal
+   * The id of the history entry the navigation in progress shows,
+   * recorded on the view it activates.
+   */
+  getPendingHistoryEntryId(): number | undefined {
+    return this.pendingEntry ? this.pendingEntry.id : this.router?.getCurrentNavigation()?.id;
+  }
+
+  /**
+   * @internal
+   * The id of the history entry currently shown, if known.
+   */
+  getCurrentHistoryEntryId(): number | undefined {
+    return this.historyIndex >= 0 ? this.historyEntries[this.historyIndex] : undefined;
+  }
+
+  /**
+   * @internal
+   * Whether the given history entry is the one directly behind
+   * the current entry, so going back in history lands on it.
+   */
+  isPreviousHistoryEntry(entryId: number | undefined): boolean {
+    return (
+      entryId !== undefined &&
+      this.historyIndex > 0 &&
+      this.isOnCurrentHistoryEntry() &&
+      this.historyEntries[this.historyIndex - 1] === entryId
+    );
+  }
+
+  /**
+   * Entries added outside the router, like with `Location.go()`, aren't
+   * tracked, so check the browser is on the tracked entry.
+   */
+  private isOnCurrentHistoryEntry(): boolean {
+    const currentId = (this.location.getState() as { navigationId?: number } | null)?.navigationId;
+    return this.historyIndex >= 0 && currentId === this.historyEntries[this.historyIndex];
+  }
+
+  private commitHistoryEntry(navigationId: number) {
+    const pending = this.pendingEntry;
+    this.pendingEntry = undefined;
+
+    if (pending?.kind === 'none') {
+      return;
+    }
+
+    let index = -1;
+    if (pending?.kind === 'restore' && pending.restoredId !== undefined) {
+      index = this.historyEntries.indexOf(pending.restoredId);
+    } else if ((pending?.kind === 'push' || pending?.kind === 'replace') && pending.fromTrackedEntry) {
+      index = this.historyIndex;
+    }
+
+    /**
+     * There's no known entry to anchor to, so start over from this one. The
+     * first navigation can start before this service is created.
+     */
+    if (pending === undefined || pending.kind === 'unknown' || index < 0) {
+      this.historyEntries = [navigationId];
+      this.historyIndex = 0;
+      return;
+    }
+
+    /**
+     * The router replaces the current entry instead of pushing when asked
+     * to, or when the URL doesn't change. Like the router, compare the old
+     * path without its hash to the new one with it.
+     */
+    const replaced = pending.kind !== 'push' || this.location.path(true) === pending.fromPath;
+    if (!replaced) {
+      index++;
+      this.historyEntries.length = index;
+    }
+    // The router writes this navigation's id into the entry, replacing any old one.
+    this.historyEntries[index] = navigationId;
+    this.historyIndex = index;
+  }
+
+  private resetHistoryEntries() {
+    this.historyEntries = [];
+    this.historyIndex = -1;
   }
 
   /**
