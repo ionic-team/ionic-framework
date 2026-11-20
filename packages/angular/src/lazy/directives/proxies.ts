@@ -774,14 +774,14 @@ export declare interface IonDatetimeButton extends Components.IonDatetimeButton 
 
 
 @ProxyCmp({
-  inputs: ['inset', 'spacing']
+  inputs: ['spacing']
 })
 @Component({
   selector: 'ion-divider',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [{ name: 'inset', transform: nullableBooleanAttribute }, 'spacing'],
+  inputs: ['spacing'],
   standalone: false
 })
 export class IonDivider {

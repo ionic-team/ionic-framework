@@ -21,6 +21,7 @@ import { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.i
 import { IonColValue } from "./components/col/col.interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { IonDividerSpacing } from "./components/divider/divider.interface";
 import { FooterScrollEffect } from "./components/footer/footer-interface";
 import { IonGalleryColumns, IonGalleryGap } from "./components/gallery/gallery.interface";
 import { HeaderScrollEffect } from "./components/header/header-interface";
@@ -70,6 +71,7 @@ export { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.i
 export { IonColValue } from "./components/col/col.interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { IonDividerSpacing } from "./components/divider/divider.interface";
 export { FooterScrollEffect } from "./components/footer/footer-interface";
 export { IonGalleryColumns, IonGalleryGap } from "./components/gallery/gallery.interface";
 export { HeaderScrollEffect } from "./components/header/header-interface";
@@ -1350,15 +1352,9 @@ export namespace Components {
     }
     interface IonDivider {
         /**
-          * If `true`, the divider will have horizontal margins By default, it's `false`
-          * @default false
+          * Controls the space above and below the line.  Set to `"none"` for no spacing. Set to `"xxsmall"` for the smallest spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
          */
-        "inset": boolean;
-        /**
-          * Set to `"xxsmall"` for the smallest spacing. Set to "xsmall" for very small spacing. Set to `"small"` for small spacing. Set to "medium" for medium spacing. Set to "large" for large spacing. Set to `"xlarge"` for the largest spacing.  Defaults to `"medium"`.
-          * @default 'medium'
-         */
-        "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
+        "spacing"?: IonDividerSpacing;
     }
     interface IonFab {
         /**
@@ -7228,15 +7224,9 @@ declare namespace LocalJSX {
     }
     interface IonDivider {
         /**
-          * If `true`, the divider will have horizontal margins By default, it's `false`
-          * @default false
+          * Controls the space above and below the line.  Set to `"none"` for no spacing. Set to `"xxsmall"` for the smallest spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
          */
-        "inset"?: boolean;
-        /**
-          * Set to `"xxsmall"` for the smallest spacing. Set to "xsmall" for very small spacing. Set to `"small"` for small spacing. Set to "medium" for medium spacing. Set to "large" for large spacing. Set to `"xlarge"` for the largest spacing.  Defaults to `"medium"`.
-          * @default 'medium'
-         */
-        "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
+        "spacing"?: IonDividerSpacing;
     }
     interface IonFab {
         /**
@@ -10664,8 +10654,7 @@ declare namespace LocalJSX {
         "datetime": string;
     }
     interface IonDividerAttributes {
-        "spacing": 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
-        "inset": boolean;
+        "spacing": IonDividerSpacing;
     }
     interface IonFabAttributes {
         "horizontal": 'start' | 'end' | 'center';

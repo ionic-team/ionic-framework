@@ -392,8 +392,7 @@ export const IonDatetimeButton: StencilVueComponent<JSX.IonDatetimeButton> = /*@
 
 
 export const IonDivider: StencilVueComponent<JSX.IonDivider> = /*@__PURE__*/ defineContainer<JSX.IonDivider>('ion-divider', defineIonDivider, [
-  'spacing',
-  'inset'
+  'spacing'
 ]);
 
 
