@@ -49,11 +49,10 @@ configs({ directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
       const popoverBox = (await page.locator(`.${id}-popover`).locator('.popover-content').boundingBox())!;
 
       return {
-        trigger: { left: buttonBox.x, right: buttonBox.x + buttonBox.width, center: buttonBox.x + buttonBox.width / 2 },
+        trigger: { left: buttonBox.x, right: buttonBox.x + buttonBox.width },
         popover: {
           left: popoverBox.x,
           right: popoverBox.x + popoverBox.width,
-          center: popoverBox.x + popoverBox.width / 2,
         },
       };
     };

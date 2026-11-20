@@ -865,12 +865,13 @@ const calculatePopoverAlignedCoordinates = (
        * and bottom margins of the content.
        */
       switch (align) {
-        case 'start':
-          return { top: 0, left: 0 };
         case 'end':
           return { top: -(contentHeight - triggerBoundingBox.height), left: 0 };
         case 'center':
           return { top: -(contentHeight / 2 - triggerBoundingBox.height / 2), left: 0 };
+        case 'start':
+        default:
+          return { top: 0, left: 0 };
       }
     }
     case 'top':
@@ -882,12 +883,13 @@ const calculatePopoverAlignedCoordinates = (
        * margins of the content.
        */
       switch (align) {
-        case 'start':
-          return { top: 0, left: isRTL ? -(contentWidth - triggerBoundingBox.width) : 0 };
         case 'end':
           return { top: 0, left: isRTL ? 0 : -(contentWidth - triggerBoundingBox.width) };
         case 'center':
           return { top: 0, left: -(contentWidth / 2 - triggerBoundingBox.width / 2) };
+        case 'start':
+        default:
+          return { top: 0, left: isRTL ? -(contentWidth - triggerBoundingBox.width) : 0 };
       }
     }
   }
