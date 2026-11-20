@@ -54,6 +54,10 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonDivider: {
+        spacing: 'medium',
+      },
+
       IonNote: {
         hue: 'bold',
       },
@@ -1977,6 +1981,70 @@ export const defaultTheme: DefaultTheme = {
         start: 'var(--ion-spacing-0)',
         top: 'var(--ion-spacing-0)',
       },
+    },
+
+    IonDivider: {
+      color: '#e0e0e0',
+
+      inset: {
+        padding: {
+          end: 'var(--ion-spacing-lg)',
+          start: 'var(--ion-spacing-lg)',
+        },
+      },
+
+      spacing: {
+        xxsmall: {
+          margin: {
+            bottom: 'var(--ion-spacing-0)',
+            top: 'var(--ion-spacing-0)',
+          },
+        },
+
+        xsmall: {
+          margin: {
+            bottom: 'var(--ion-spacing-sm)',
+            top: 'var(--ion-spacing-sm)',
+          },
+        },
+
+        small: {
+          margin: {
+            bottom: 'var(--ion-spacing-md)',
+            top: 'var(--ion-spacing-md)',
+          },
+        },
+
+        medium: {
+          margin: {
+            bottom: 'var(--ion-spacing-lg)',
+            top: 'var(--ion-spacing-lg)',
+          },
+        },
+
+        large: {
+          margin: {
+            bottom: 'var(--ion-spacing-xxl)',
+            top: 'var(--ion-spacing-xxl)',
+          },
+        },
+
+        xlarge: {
+          margin: {
+            bottom: 'var(--ion-spacing-xxxxl)',
+            top: 'var(--ion-spacing-xxxxl)',
+          },
+        },
+
+        xxlarge: {
+          margin: {
+            bottom: 'var(--ion-spacing-1000)',
+            top: 'var(--ion-spacing-1000)',
+          },
+        },
+      },
+
+      thickness: 'var(--ion-border-width-xxs)',
     },
 
     IonGallery: {

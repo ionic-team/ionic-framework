@@ -1,0 +1,46 @@
+@use "../../themes/mixins" as mixins;
+@use "./divider.docs";
+
+// Divider
+// --------------------------------------------------
+
+$spacings: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
+
+:host {
+  @include mixins.padding-horizontal(var(--padding-start, 0px), var(--padding-end, 0px));
+
+  display: block;
+
+  width: 100%;
+}
+
+:host hr {
+  display: block;
+
+  width: 100%;
+
+  border: none;
+  border-top-width: var(--ion-divider-thickness);
+  border-top-style: solid;
+  border-top-color: var(--ion-divider-color);
+}
+
+// Divider Inset
+// --------------------------------------------------
+
+:host(.divider-inset) {
+  @include mixins.padding-horizontal(
+    var(--padding-start, var(--ion-divider-inset-padding-start)),
+    var(--padding-end, var(--ion-divider-inset-padding-end))
+  );
+}
+
+// Divider Spacing
+// --------------------------------------------------
+
+@each $spacing in $spacings {
+  :host(.divider-spacing-#{$spacing}) hr {
+    margin-top: var(--margin-top, var(--ion-divider-spacing-#{$spacing}-margin-top));
+    margin-bottom: var(--margin-bottom, var(--ion-divider-spacing-#{$spacing}-margin-bottom));
+  }
+}
