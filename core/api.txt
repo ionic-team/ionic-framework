@@ -1072,7 +1072,6 @@ ion-chip,css-prop,--ion-chip-hue-subtle-solid-semantic-default-color
 ion-chip,css-prop,--ion-chip-hue-subtle-solid-semantic-focus-background
 ion-chip,css-prop,--ion-chip-hue-subtle-solid-semantic-hover-background
 ion-chip,css-prop,--ion-chip-icon-color
-ion-chip,css-prop,--ion-chip-icon-font-size
 ion-chip,css-prop,--ion-chip-icon-leading-margin-bottom
 ion-chip,css-prop,--ion-chip-icon-leading-margin-end
 ion-chip,css-prop,--ion-chip-icon-leading-margin-start
@@ -1097,6 +1096,7 @@ ion-chip,css-prop,--ion-chip-size-large-avatar-trailing-margin-end
 ion-chip,css-prop,--ion-chip-size-large-avatar-trailing-margin-start
 ion-chip,css-prop,--ion-chip-size-large-avatar-trailing-margin-top
 ion-chip,css-prop,--ion-chip-size-large-font-size
+ion-chip,css-prop,--ion-chip-size-large-icon-font-size
 ion-chip,css-prop,--ion-chip-size-large-letter-spacing
 ion-chip,css-prop,--ion-chip-size-large-line-height
 ion-chip,css-prop,--ion-chip-size-large-min-height
@@ -1113,6 +1113,7 @@ ion-chip,css-prop,--ion-chip-size-small-avatar-trailing-margin-end
 ion-chip,css-prop,--ion-chip-size-small-avatar-trailing-margin-start
 ion-chip,css-prop,--ion-chip-size-small-avatar-trailing-margin-top
 ion-chip,css-prop,--ion-chip-size-small-font-size
+ion-chip,css-prop,--ion-chip-size-small-icon-font-size
 ion-chip,css-prop,--ion-chip-size-small-letter-spacing
 ion-chip,css-prop,--ion-chip-size-small-line-height
 ion-chip,css-prop,--ion-chip-size-small-min-height

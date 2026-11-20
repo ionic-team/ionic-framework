@@ -22,6 +22,7 @@
    * @prop --ion-chip-size-small-min-height: Minimum height of the `small` chip size
    * @prop --ion-chip-size-small-font-size: Font size of the `small` chip size
    * @prop --ion-chip-size-small-line-height: Line height of the `small` chip size
+   * @prop --ion-chip-size-small-icon-font-size: Font size of the slotted `ion-icon` of the `small` chip size
    * @prop --ion-chip-size-small-avatar-leading-margin-top: Top margin of the slotted `ion-avatar` when it is the first child of the `small` chip size
    * @prop --ion-chip-size-small-avatar-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child of the `small` chip size
    * @prop --ion-chip-size-small-avatar-leading-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the first child of the `small` chip size
@@ -38,6 +39,7 @@
    * @prop --ion-chip-size-large-min-height: Minimum height of the `large` chip size
    * @prop --ion-chip-size-large-font-size: Font size of the `large` chip size
    * @prop --ion-chip-size-large-line-height: Line height of the `large` chip size
+   * @prop --ion-chip-size-large-icon-font-size: Font size of the slotted `ion-icon` of the `large` chip size
    * @prop --ion-chip-size-large-avatar-leading-margin-top: Top margin of the slotted `ion-avatar` when it is the first child of the `large` chip size
    * @prop --ion-chip-size-large-avatar-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child of the `large` chip size
    * @prop --ion-chip-size-large-avatar-leading-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the first child of the `large` chip size
@@ -120,7 +122,6 @@
    *
    * Slotted Icon
    * @prop --ion-chip-icon-color: Color of the slotted `ion-icon`
-   * @prop --ion-chip-icon-font-size: Font size of the slotted `ion-icon`
    * @prop --ion-chip-icon-leading-margin-top: Top margin of the slotted `ion-icon` when it is the first child
    * @prop --ion-chip-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-icon` when it is the first child
    * @prop --ion-chip-icon-leading-margin-bottom: Bottom margin of the slotted `ion-icon` when it is the first child
@@ -551,8 +552,10 @@
 // ---------------------------------------------
 
 // Icon
-::slotted(ion-icon) {
-  font-size: var(--ion-chip-icon-font-size);
+@each $size in (small, large) {
+  :host(.chip-size-#{$size}) ::slotted(ion-icon) {
+    font-size: var(--ion-chip-size-#{$size}-icon-font-size);
+  }
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
