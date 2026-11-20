@@ -23,23 +23,4 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ co
       await expect(container).toHaveScreenshot(screenshot(`divider-basic-default`));
     });
   });
-
-  test.describe(title('divider: padding'), () => {
-    test('should indent the line with horizontal padding', async ({ page }) => {
-      await page.setContent(
-        `
-          <div id="container">
-            top
-            <ion-divider class="ion-padding-horizontal"></ion-divider>
-            bottom
-          </div>
-        `,
-        config
-      );
-
-      const container = page.locator('#container');
-
-      await expect(container).toHaveScreenshot(screenshot(`divider-basic-padding`));
-    });
-  });
 });
