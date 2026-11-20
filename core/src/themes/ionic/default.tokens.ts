@@ -1573,6 +1573,13 @@ export const defaultTheme: DefaultTheme = {
       color: '#d0d7df',
 
       spacing: {
+        xxsmall: {
+          margin: {
+            bottom: 'var(--ion-spacing-xxs)',
+            top: 'var(--ion-spacing-xxs)',
+          },
+        },
+
         xsmall: {
           margin: {
             bottom: 'var(--ion-spacing-sm)',

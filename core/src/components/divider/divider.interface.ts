@@ -21,5 +21,14 @@ export type IonDividerConfig = {
   spacing?: IonDividerSpacing;
 };
 
-export const ION_DIVIDER_SPACINGS = ['none', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'] as const;
+export const ION_DIVIDER_SPACINGS = [
+  'none',
+  'xxsmall',
+  'xsmall',
+  'small',
+  'medium',
+  'large',
+  'xlarge',
+  'xxlarge',
+] as const;
 export type IonDividerSpacing = (typeof ION_DIVIDER_SPACINGS)[number];

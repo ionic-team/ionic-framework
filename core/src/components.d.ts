@@ -1352,7 +1352,7 @@ export namespace Components {
     }
     interface IonDivider {
         /**
-          * Controls the space above and below the line.  Set to `"none"` for no spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
+          * Controls the space above and below the line.  Set to `"none"` for no spacing. Set to `"xxsmall"` for the smallest spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
          */
         "spacing"?: IonDividerSpacing;
     }
@@ -7224,7 +7224,7 @@ declare namespace LocalJSX {
     }
     interface IonDivider {
         /**
-          * Controls the space above and below the line.  Set to `"none"` for no spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
+          * Controls the space above and below the line.  Set to `"none"` for no spacing. Set to `"xxsmall"` for the smallest spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
          */
         "spacing"?: IonDividerSpacing;
     }

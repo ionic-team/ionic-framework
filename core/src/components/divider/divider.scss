@@ -4,7 +4,7 @@
 // Divider
 // --------------------------------------------------
 
-$spacings: xsmall, small, medium, large, xlarge, xxlarge;
+$spacings: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
 
 :host {
   @include mixins.padding-horizontal(var(--padding-start, 0px), var(--padding-end, 0px));
