@@ -248,18 +248,9 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
 
       /**
        * Otherwise, we must be focusing an element
-       * inside of the overlay. The two possible options
-       * here are an input/button/etc or the ion-focus-trap
-       * element. The focus trap element is used to prevent
-       * the keyboard focus from leaving the overlay when
-       * using Tab or screen assistants.
+       * inside of the overlay.
        */
     } else {
-      /**
-       * We do not want to focus the traps, so get the overlay
-       * wrapper element as the traps live outside of the wrapper.
-       */
-
       const overlayRoot = getElementRoot(lastOverlay);
       if (!overlayRoot.contains(target)) {
         return;
@@ -276,41 +267,12 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * Additionally, if the backdrop was tapped we should not
        * move focus back inside the wrapper as that could cause
        * an interactive elements focus state to activate.
+       *
+       * The focus boundaries outside of the wrapper move
+       * focus back inside on their own.
        */
       if (overlayWrapper.contains(target) || target === overlayRoot.querySelector('ion-backdrop')) {
         lastOverlay.lastFocus = target;
-      } else {
-        /**
-         * Otherwise, we must have focused one of the focus traps.
-         * We need to wrap the focus to either the first element
-         * or the last element.
-         */
-
-        /**
-         * Once we call `focusFirstDescendant` and focus the first
-         * descendant, another focus event will fire which will
-         * cause `lastOverlay.lastFocus` to be updated before
-         * we can run the code after that. We will cache the value
-         * here to avoid that.
-         */
-        const lastFocus = lastOverlay.lastFocus;
-
-        // Focus the first element in the overlay wrapper
-        focusFirstDescendant(overlayWrapper, lastOverlay);
-
-        /**
-         * If the cached last focused element is the
-         * same as the active element, then we need
-         * to wrap focus to the last descendant. This happens
-         * when the first descendant is focused, and the user
-         * presses Shift + Tab. The previous line will focus
-         * the same descendant again (the first one), causing
-         * last focus to equal the active element.
-         */
-        if (lastFocus === doc.activeElement) {
-          focusLastDescendant(overlayWrapper, lastOverlay);
-        }
-        lastOverlay.lastFocus = doc.activeElement as HTMLElement;
       }
     }
   };

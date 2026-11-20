@@ -21,7 +21,14 @@ export { ModalOptions, ModalCustomEvent, ModalDragEventDetail } from './componen
 export { NavDirection, NavCustomEvent } from './components/nav/nav-interface';
 export { PopoverOptions } from './components/popover/popover-interface';
 export { RadioGroupCustomEvent } from './components/radio-group/radio-group-interface';
-export { RangeCustomEvent, PinFormatter } from './components/range/range-interface';
+export {
+  RangeCustomEvent,
+  RangeKnobMoveStartCustomEvent,
+  RangeKnobMoveEndCustomEvent,
+  PinFormatter,
+  RangeKnobName,
+  RangeKnobPosition,
+} from './components/range/range-interface';
 export { RouterCustomEvent } from './components/router/utils/interface';
 export { RefresherCustomEvent, RefresherPullEndCustomEvent } from './components/refresher/refresher-interface';
 export {
