@@ -24,6 +24,7 @@ import {
   getCustomTheme,
   hexToRgb,
   injectCSS,
+  mergeTheme,
   mix,
   overlay,
 } from '../theme';
@@ -1092,6 +1093,192 @@ describe('generateComponentsThemeCSS', () => {
     `.replace(/\s/g, '');
 
     expect(css).toBe(expectedCSS);
+  });
+});
+
+describe('media queries', () => {
+  /**
+   * Removes whitespace and the recipe path comments, so the expected CSS
+   * only lists the rules.
+   */
+  const minify = (css: string) => css.replace(/\/\*.*?\*\//g, '').replace(/\s/g, '');
+
+  const resolution = (dppx: string, tokens: Record<string, unknown>) => ({
+    min: { resolution: { [dppx]: tokens } },
+  });
+
+  it('should set the same variables inside each media query', () => {
+    const css = generateComponentsThemeCSS({
+      IonDivider: {
+        thickness: '1px',
+        mediaQuery: {
+          min: {
+            resolution: {
+              '2dppx': { thickness: '0.5px' },
+              '3dppx': { thickness: '0.3334px' },
+            },
+          },
+        },
+      },
+    });
+
+    const expectedCSS = `
+      ion-divider {
+        --ion-divider-thickness: 1px;
+      }
+      @media (min-resolution: 2dppx), (-webkit-min-device-pixel-ratio: 2) {
+        ion-divider {
+          --ion-divider-thickness: 0.5px;
+        }
+      }
+      @media (min-resolution: 3dppx), (-webkit-min-device-pixel-ratio: 3) {
+        ion-divider {
+          --ion-divider-thickness: 0.3334px;
+        }
+      }
+    `;
+
+    expect(minify(css)).toBe(minify(expectedCSS));
+  });
+
+  it('should name the recipe path above each media query', () => {
+    const css = generateComponentsThemeCSS({
+      IonDivider: { mediaQuery: resolution('2dppx', { thickness: '0.5px' }) },
+    });
+
+    expect(css).toContain(`/* ion-divider: mediaQuery.min.resolution['2dppx'] */`);
+  });
+
+  it('should only add the prefixed query for dppx resolutions', () => {
+    const css = generateComponentsThemeCSS({
+      IonDivider: {
+        mediaQuery: { min: { width: { '768px': { thickness: '2px' } } } },
+      },
+    });
+
+    expect(minify(css)).toBe('@media(min-width:768px){ion-divider{--ion-divider-thickness:2px;}}');
+  });
+
+  it('should use the same selectors as the base block', () => {
+    const css = generateComponentsThemeCSS({
+      IonBackdrop: { mediaQuery: resolution('2dppx', { opacity: '0.5' }) },
+    });
+
+    expect(minify(css)).toContain(
+      'ion-backdrop,ion-menu,ion-modal,ion-popover,ion-datetime{--ion-backdrop-opacity:0.5;}'
+    );
+  });
+
+  it('should let a parent value win over the child media queries', () => {
+    const css = generateComponentsThemeCSS({
+      IonDivider: {
+        thickness: '1px',
+        mediaQuery: resolution('2dppx', { thickness: '0.5px' }),
+      },
+      IonItem: {
+        IonDivider: { thickness: '2px' },
+      },
+    });
+
+    const expectedCSS = `
+      ion-divider {
+        --ion-divider-thickness: 1px;
+      }
+      @media (min-resolution: 2dppx), (-webkit-min-device-pixel-ratio: 2) {
+        ion-divider {
+          --ion-divider-thickness: 0.5px;
+        }
+      }
+      :where(ion-item) ion-divider {
+        --ion-divider-thickness: 2px;
+      }
+    `;
+
+    expect(minify(css)).toBe(minify(expectedCSS));
+  });
+
+  it('should generate the media queries a parent nests for a child', () => {
+    const css = generateComponentsThemeCSS({
+      IonItem: {
+        IonDivider: { mediaQuery: resolution('2dppx', { thickness: '0.5px' }) },
+      },
+    });
+
+    expect(minify(css)).toBe(
+      '@media(min-resolution:2dppx),(-webkit-min-device-pixel-ratio:2){:where(ion-item)ion-divider{--ion-divider-thickness:0.5px;}}'
+    );
+  });
+
+  it('should drop the base theme values a custom theme overrides', () => {
+    const base = {
+      components: {
+        IonDivider: {
+          color: 'gray',
+          thickness: '1px',
+          mediaQuery: resolution('2dppx', { color: 'black', thickness: '0.5px' }),
+        },
+      },
+    };
+
+    const theme = mergeTheme(base, {
+      components: { IonDivider: { thickness: '3px' } },
+    });
+
+    expect(theme.components.IonDivider).toEqual({
+      color: 'gray',
+      thickness: '3px',
+      mediaQuery: resolution('2dppx', { color: 'black' }),
+    });
+    expect(base.components.IonDivider.mediaQuery.min.resolution['2dppx'].thickness).toBe('0.5px');
+  });
+
+  it('should skip a media query with no values left', () => {
+    const base = {
+      IonDivider: {
+        thickness: '1px',
+        mediaQuery: resolution('2dppx', { thickness: '0.5px' }),
+      },
+    };
+
+    const theme = mergeTheme(base, { IonDivider: { thickness: '3px' } });
+
+    expect(minify(generateComponentsThemeCSS(theme))).toBe('ion-divider{--ion-divider-thickness:3px;}');
+  });
+
+  it('should drop the values a mode override replaces', () => {
+    const theme = getCustomTheme(
+      {
+        components: {
+          IonDivider: {
+            thickness: '1px',
+            mediaQuery: resolution('2dppx', { thickness: '0.5px' }),
+          },
+        },
+        ios: { components: { IonDivider: { thickness: '3px' } } },
+      },
+      'ios'
+    );
+
+    expect(theme.components.IonDivider).toEqual({
+      thickness: '3px',
+      mediaQuery: resolution('2dppx', {}),
+    });
+  });
+
+  it('should keep the media query values a custom theme sets', () => {
+    const base = {
+      IonDivider: { mediaQuery: resolution('2dppx', { thickness: '0.5px' }) },
+    };
+    const custom = {
+      IonDivider: {
+        thickness: '3px',
+        mediaQuery: resolution('2dppx', { thickness: '2px' }),
+      },
+    };
+
+    const theme = mergeTheme(base, custom);
+
+    expect(theme.IonDivider.mediaQuery).toEqual(resolution('2dppx', { thickness: '2px' }));
   });
 });
 

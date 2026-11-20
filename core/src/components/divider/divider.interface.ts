@@ -1,8 +1,15 @@
-import type { IonMargin } from '../../themes/themes.interfaces';
+import type { IonMargin, IonMediaQuery } from '../../themes/themes.interfaces';
 
 export type IonDividerRecipe = {
   /** Color of the divider line. */
   color?: string;
+
+  /**
+   * Thickness used inside media queries, such as a thinner line on denser screens.
+   * A `thickness` that a custom theme sets outside this key replaces the base
+   * theme's values here, so it applies on every screen.
+   */
+  mediaQuery?: IonMediaQuery<Pick<IonDividerRecipe, 'thickness'>>;
 
   /** Applies for each value of the `spacing` property, except `"none"`, which is always 0. */
   spacing?: {

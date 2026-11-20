@@ -2035,6 +2035,21 @@ export const defaultTheme: DefaultTheme = {
     IonDivider: {
       color: '#e0e0e0',
 
+      // One screen pixel at each density, like native iOS separators.
+      mediaQuery: {
+        min: {
+          resolution: {
+            '2dppx': {
+              thickness: '0.5px',
+            },
+
+            '3dppx': {
+              thickness: '0.3334px',
+            },
+          },
+        },
+      },
+
       spacing: {
         xxsmall: {
           margin: {
