@@ -1291,11 +1291,8 @@ ion-datetime-button,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-datetime-button,part,native
 
 ion-divider,shadow
-ion-divider,prop,inset,boolean,false,false,false
 ion-divider,prop,spacing,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxlarge" | "xxsmall" | undefined,undefined,false,true
 ion-divider,css-prop,--ion-divider-color
-ion-divider,css-prop,--ion-divider-inset-padding-end
-ion-divider,css-prop,--ion-divider-inset-padding-start
 ion-divider,css-prop,--ion-divider-spacing-large-margin-bottom
 ion-divider,css-prop,--ion-divider-spacing-large-margin-top
 ion-divider,css-prop,--ion-divider-spacing-medium-margin-bottom

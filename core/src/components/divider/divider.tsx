@@ -12,6 +12,8 @@ import type { IonDividerSpacing } from './divider.interface';
 })
 export class Divider implements ComponentInterface {
   /**
+   * Controls the space above and below the line.
+   *
    * Set to `"xxsmall"` for the smallest spacing.
    * Set to `"xsmall"` for very small spacing.
    * Set to `"small"` for small spacing.
@@ -25,12 +27,6 @@ export class Divider implements ComponentInterface {
   @Prop({ reflect: true }) spacing?: IonDividerSpacing;
 
   /**
-   * If `true`, the divider will have horizontal margins
-   * By default, it's `false`
-   */
-  @Prop() inset: boolean = false;
-
-  /**
    * Gets the divider spacing. Uses the `spacing` property if set, otherwise
    * checks the theme config. Defaults to `medium` if neither is set.
    */
@@ -41,13 +37,12 @@ export class Divider implements ComponentInterface {
   }
 
   render() {
-    const { inset, spacingValue } = this;
+    const { spacingValue } = this;
 
     return (
       <Host
         class={{
           [`divider-spacing-${spacingValue}`]: true,
-          [`divider-inset`]: inset,
         }}
       >
         <hr />

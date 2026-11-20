@@ -1,14 +1,8 @@
-import type { IonMargin, IonPadding } from '../../themes/themes.interfaces';
+import type { IonMargin } from '../../themes/themes.interfaces';
 
 export type IonDividerRecipe = {
   /** Color of the divider line. */
   color?: string;
-
-  /** Applies when the `inset` property is `true`. */
-  inset?: {
-    /** Indent of the line from the start and end edges of the divider. */
-    padding?: Pick<IonPadding, 'start' | 'end'>;
-  };
 
   /** Applies for each value of the `spacing` property. */
   spacing?: {

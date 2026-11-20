@@ -1986,13 +1986,6 @@ export const defaultTheme: DefaultTheme = {
     IonDivider: {
       color: '#e0e0e0',
 
-      inset: {
-        padding: {
-          end: 'var(--ion-spacing-lg)',
-          start: 'var(--ion-spacing-lg)',
-        },
-      },
-
       spacing: {
         xxsmall: {
           margin: {

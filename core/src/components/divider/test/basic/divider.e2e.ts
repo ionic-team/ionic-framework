@@ -24,13 +24,13 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ co
     });
   });
 
-  test.describe(title('divider: inset'), () => {
-    test('should not have visual regressions when inset is enabled', async ({ page }) => {
+  test.describe(title('divider: padding'), () => {
+    test('should indent the line with horizontal padding', async ({ page }) => {
       await page.setContent(
         `
           <div id="container">
             top
-            <ion-divider inset="true"></ion-divider>
+            <ion-divider class="ion-padding-horizontal"></ion-divider>
             bottom
           </div>
         `,
@@ -39,7 +39,7 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ co
 
       const container = page.locator('#container');
 
-      await expect(container).toHaveScreenshot(screenshot(`divider-basic-inset`));
+      await expect(container).toHaveScreenshot(screenshot(`divider-basic-padding`));
     });
   });
 });

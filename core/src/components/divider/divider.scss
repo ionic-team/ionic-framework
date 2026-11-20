@@ -25,16 +25,6 @@ $spacings: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
   border-top-color: var(--ion-divider-color);
 }
 
-// Divider Inset
-// --------------------------------------------------
-
-:host(.divider-inset) {
-  @include mixins.padding-horizontal(
-    var(--padding-start, var(--ion-divider-inset-padding-start)),
-    var(--padding-end, var(--ion-divider-inset-padding-end))
-  );
-}
-
 // Divider Spacing
 // --------------------------------------------------
 

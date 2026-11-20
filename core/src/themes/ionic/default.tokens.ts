@@ -1572,13 +1572,6 @@ export const defaultTheme: DefaultTheme = {
     IonDivider: {
       color: '#d0d7df',
 
-      inset: {
-        padding: {
-          end: 'var(--ion-spacing-lg)',
-          start: 'var(--ion-spacing-lg)',
-        },
-      },
-
       spacing: {
         xxsmall: {
           margin: {

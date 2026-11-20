@@ -1352,12 +1352,7 @@ export namespace Components {
     }
     interface IonDivider {
         /**
-          * If `true`, the divider will have horizontal margins By default, it's `false`
-          * @default false
-         */
-        "inset": boolean;
-        /**
-          * Set to `"xxsmall"` for the smallest spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
+          * Controls the space above and below the line.  Set to `"xxsmall"` for the smallest spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
          */
         "spacing"?: IonDividerSpacing;
     }
@@ -7229,12 +7224,7 @@ declare namespace LocalJSX {
     }
     interface IonDivider {
         /**
-          * If `true`, the divider will have horizontal margins By default, it's `false`
-          * @default false
-         */
-        "inset"?: boolean;
-        /**
-          * Set to `"xxsmall"` for the smallest spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
+          * Controls the space above and below the line.  Set to `"xxsmall"` for the smallest spacing. Set to `"xsmall"` for very small spacing. Set to `"small"` for small spacing. Set to `"medium"` for medium spacing. Set to `"large"` for large spacing. Set to `"xlarge"` for very large spacing. Set to `"xxlarge"` for the largest spacing.  Defaults to `"medium"` if both the spacing property and theme config are unset.
          */
         "spacing"?: IonDividerSpacing;
     }
@@ -10665,7 +10655,6 @@ declare namespace LocalJSX {
     }
     interface IonDividerAttributes {
         "spacing": IonDividerSpacing;
-        "inset": boolean;
     }
     interface IonFabAttributes {
         "horizontal": 'start' | 'end' | 'center';
