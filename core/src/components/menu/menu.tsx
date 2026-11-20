@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
-import { focusFirstDescendant, focusLastDescendant } from '@utils/focus-trap';
+import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
 import { GESTURE_CONTROLLER } from '@utils/gesture';
 import { shouldUseCloseWatcher, updateCloseWatcher } from '@utils/hardware-back-button';
 import type { Attributes } from '@utils/helpers';
@@ -58,6 +58,12 @@ export class Menu implements ComponentInterface, MenuI {
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
   lastFocus?: HTMLElement;
+
+  /**
+   * The element that had focus before the menu opened.
+   * Focus is moved back to it when the menu closes.
+   */
+  private focusBeforeOpen?: HTMLElement;
 
   private inheritedAttributes: Attributes = {};
 
@@ -417,10 +423,51 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Method()
   setOpen(shouldOpen: boolean, animated = true, role?: string): Promise<boolean> {
+    /**
+     * Remember the element that opened the menu before it is
+     * blurred below, so focus can return to it when the menu closes.
+     */
+    if (shouldOpen && !this._isOpen) {
+      this.saveFocusBeforeOpen();
+    }
+
     // Blur the active element to prevent it from being kept focused inside an element that will be set with aria-hidden="true"
     (document.activeElement as HTMLElement)?.blur();
 
     return menuController._setOpen(this, shouldOpen, animated, role);
+  }
+
+  private saveFocusBeforeOpen() {
+    const activeElement = document.activeElement as HTMLElement | null;
+    this.focusBeforeOpen =
+      activeElement && activeElement !== document.body && !this.el.contains(activeElement) ? activeElement : undefined;
+  }
+
+  /**
+   * Moves focus back to the element that had focus before the menu
+   * opened, the way overlays do when they are dismissed. Focus is
+   * left alone if something else has been focused in the meantime.
+   */
+  private restoreFocusBeforeOpen() {
+    const previousElement = this.focusBeforeOpen;
+    this.focusBeforeOpen = undefined;
+
+    if (!previousElement || !previousElement.isConnected) {
+      return;
+    }
+
+    const activeElement = document.activeElement;
+    if (activeElement !== null && activeElement !== document.body && !this.el.contains(activeElement)) {
+      return;
+    }
+
+    /**
+     * Components such as ion-menu-button render their native
+     * button in the shadow root, so focus that instead of the host.
+     */
+    const elementToFocus =
+      previousElement.shadowRoot?.querySelector<HTMLElement>(focusableQueryString) ?? previousElement;
+    elementToFocus.focus();
   }
 
   private trapKeyboardFocus(ev: Event, doc: Document) {
@@ -482,6 +529,9 @@ export class Menu implements ComponentInterface, MenuI {
      */
     if (this.operationCancelled) {
       this.operationCancelled = false;
+      if (shouldOpen) {
+        this.focusBeforeOpen = undefined;
+      }
       return false;
     }
 
@@ -708,6 +758,15 @@ export class Menu implements ComponentInterface, MenuI {
      * is open.
      */
     this.el.setAttribute('tabindex', '0');
+
+    /**
+     * Opening with a swipe gesture does not go through setOpen,
+     * so remember the focused element here as well.
+     */
+    if (shouldOpen && !this.focusBeforeOpen) {
+      this.saveFocusBeforeOpen();
+    }
+
     if (this.backdropEl) {
       this.backdropEl.classList.add(SHOW_BACKDROP);
     }
@@ -813,6 +872,8 @@ export class Menu implements ComponentInterface, MenuI {
 
       // undo focus trapping so multiple menus don't collide
       document.removeEventListener('focus', this.handleFocus, true);
+
+      this.restoreFocusBeforeOpen();
     }
   }
 
