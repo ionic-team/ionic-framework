@@ -129,11 +129,15 @@ noReply:
   lock: true
   dryRun: false
 
-noReproduction:
+needsReproduction:
   days: 14
   maxIssuesPerRun: 100
   label: "ionitron: needs reproduction"
   responseLabel: triage
+  # a link to a repo outside ionic-team, like StackBlitz or CodeSandbox
+  # an attached file (not an image or video),
+  # or an Ionic component tag (<ion-badge> or <IonBadge>)
+  responsePattern: 'https?://(github\.com/(?!ionic-team/|user-attachments/assets/)[^/\s]+/[^/\s]+|gitlab\.com/|bitbucket\.org/|stackblitz\.com/|codesandbox\.io/)|<ion-?[a-z][a-z-]*'
   exemptProjects: true
   exemptMilestones: true
   message: >
