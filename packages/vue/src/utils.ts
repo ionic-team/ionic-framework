@@ -6,6 +6,7 @@ import {
   LIFECYCLE_WILL_LEAVE,
 } from "@ionic/core/components";
 import type { Ref, ComponentPublicInstance } from "vue";
+import { callWithAsyncErrorHandling, ErrorCodes } from "vue";
 
 type LIFECYCLE_EVENTS =
   | typeof LIFECYCLE_WILL_ENTER
@@ -42,12 +43,20 @@ export const fireLifecycle = (
   lifecycle: LIFECYCLE_EVENTS
 ) => {
   if (vueComponent?.[lifecycle]) {
-    vueComponent[lifecycle].bind(vueInstance?.value)();
+    callWithAsyncErrorHandling(
+      vueComponent[lifecycle].bind(vueInstance?.value),
+      vueInstance?.value?.$ ?? null,
+      ErrorCodes.TRANSITION_HOOK
+    );
   }
 
   const instance = vueInstance?.value as any;
   if (instance?.[lifecycle]) {
-    instance[lifecycle]();
+    callWithAsyncErrorHandling(
+      instance[lifecycle].bind(instance),
+      vueInstance.value.$,
+      ErrorCodes.TRANSITION_HOOK
+    );
   }
 
   /**
