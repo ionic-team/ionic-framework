@@ -42,7 +42,7 @@ export const defaultTheme: DefaultTheme = {
       IonChip: {
         fill: 'solid',
         hue: 'bold',
-        shape: 'soft',
+        shape: 'round',
         size: 'large',
       },
 
@@ -1751,31 +1751,93 @@ export const defaultTheme: DefaultTheme = {
         start: 'var(--ion-spacing-xxs)',
       },
 
-      padding: {
-        top: 'var(--ion-spacing-xs)',
-        end: 'var(--ion-spacing-md)',
-        bottom: 'var(--ion-spacing-xs)',
-        start: 'var(--ion-spacing-md)',
-      },
-
       // Sizes
       size: {
+        // MD2 has no small chip, so this scales the `large` chip down
+        // to 24px on the 4dp grid
         small: {
+          padding: {
+            top: 'var(--ion-spacing-xxs)',
+            end: 'var(--ion-spacing-sm)',
+            bottom: 'var(--ion-spacing-xxs)',
+            start: 'var(--ion-spacing-sm)',
+          },
+
+          letterSpacing: '0.0179em',
+
           min: {
             height: 'var(--ion-scaling-xs)',
           },
 
           font: {
-            size: `${((components.chip.font.size - 2) / global.root).toFixed(2)}rem`,
+            size: `${(components.chip.font.size - 2) / global.root}rem`,
+          },
+
+          line: {
+            height: `${16 / (components.chip.font.size - 2)}`,
+          },
+
+          avatar: {
+            leading: {
+              margin: {
+                top: '-4px',
+                end: 'var(--ion-spacing-sm)',
+                bottom: '-4px',
+                start: '-6px',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: '-4px',
+                end: '-6px',
+                bottom: '-4px',
+                start: 'var(--ion-spacing-sm)',
+              },
+            },
           },
         },
+
         large: {
+          padding: {
+            top: 'var(--ion-spacing-xs)',
+            end: 'var(--ion-spacing-md)',
+            bottom: 'var(--ion-spacing-xs)',
+            start: 'var(--ion-spacing-md)',
+          },
+
+          letterSpacing: '0.0179em',
+
           min: {
             height: 'var(--ion-scaling-md)',
           },
 
           font: {
-            size: `${(components.chip.font.size / global.root).toFixed(2)}rem`,
+            size: `${components.chip.font.size / global.root}rem`,
+          },
+
+          line: {
+            height: `${20 / components.chip.font.size}`,
+          },
+
+          avatar: {
+            leading: {
+              margin: {
+                top: '-4px',
+                end: 'var(--ion-spacing-sm)',
+                bottom: '-4px',
+                start: '-8px',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: '-4px',
+                end: '-8px',
+                bottom: '-4px',
+                start: 'var(--ion-spacing-sm)',
+              },
+            },
           },
         },
       },
@@ -1783,7 +1845,7 @@ export const defaultTheme: DefaultTheme = {
       // States
       state: {
         disabled: {
-          opacity: '0.4',
+          opacity: '0.38',
         },
       },
 
@@ -1823,11 +1885,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             focus: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
-            },
-
-            activated: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.2),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.21),
             },
 
             // Any of the semantic colors like primary, secondary, etc.
@@ -1844,10 +1902,6 @@ export const defaultTheme: DefaultTheme = {
               focus: {
                 background: currentColor('base', { alpha: 0.12 }),
               },
-
-              activated: {
-                background: currentColor('base', { alpha: 0.16 }),
-              },
             },
           },
 
@@ -1858,7 +1912,7 @@ export const defaultTheme: DefaultTheme = {
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
 
               border: {
-                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.32),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 style: 'solid',
                 width: 'var(--ion-border-width-xxxs)',
               },
@@ -1869,11 +1923,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             focus: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
-            },
-
-            activated: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
             },
 
             semantic: {
@@ -1895,10 +1945,6 @@ export const defaultTheme: DefaultTheme = {
               focus: {
                 background: currentColor('base', { alpha: 0.12 }),
               },
-
-              activated: {
-                background: currentColor('base', { alpha: 0.16 }),
-              },
             },
           },
         },
@@ -1919,10 +1965,6 @@ export const defaultTheme: DefaultTheme = {
               background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
             },
 
-            activated: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.14),
-            },
-
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
@@ -1937,10 +1979,6 @@ export const defaultTheme: DefaultTheme = {
               focus: {
                 background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
-
-              activated: {
-                background: currentColor('base', { alpha: 0.8, subtle: true }),
-              },
             },
           },
 
@@ -1951,7 +1989,7 @@ export const defaultTheme: DefaultTheme = {
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),
 
               border: {
-                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
                 style: 'solid',
                 width: 'var(--ion-border-width-xxxs)',
               },
@@ -1962,10 +2000,6 @@ export const defaultTheme: DefaultTheme = {
             },
 
             focus: {
-              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
-            },
-
-            activated: {
               background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
             },
 
@@ -1989,10 +2023,6 @@ export const defaultTheme: DefaultTheme = {
               focus: {
                 background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
-
-              activated: {
-                background: currentColor('base', { alpha: 0.8, subtle: true }),
-              },
             },
           },
         },
@@ -2002,13 +2032,13 @@ export const defaultTheme: DefaultTheme = {
         color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
 
         font: {
-          size: `${(20 / components.chip.font.size).toFixed(2)}em`,
+          size: `${20 / components.chip.font.size}em`,
         },
 
         leading: {
           margin: {
             top: '-4px',
-            end: 'var(--ion-spacing-sm)',
+            end: 'var(--ion-spacing-xxs)',
             bottom: '-4px',
             start: '-4px',
           },
@@ -2019,32 +2049,14 @@ export const defaultTheme: DefaultTheme = {
             top: '-4px',
             end: '-4px',
             bottom: '-4px',
-            start: 'var(--ion-spacing-sm)',
+            start: 'var(--ion-spacing-xxs)',
           },
         },
       },
 
       avatar: {
-        height: `${(24 / components.chip.font.size).toFixed(2)}em`,
-        width: `${(24 / components.chip.font.size).toFixed(2)}em`,
-
-        leading: {
-          margin: {
-            top: '-4px',
-            end: 'var(--ion-spacing-sm)',
-            bottom: '-4px',
-            start: '-8px',
-          },
-        },
-
-        trailing: {
-          margin: {
-            top: '-4px',
-            end: '-8px',
-            bottom: '-4px',
-            start: 'var(--ion-spacing-sm)',
-          },
-        },
+        height: `${24 / components.chip.font.size}em`,
+        width: `${24 / components.chip.font.size}em`,
       },
     },
 
