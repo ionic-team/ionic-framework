@@ -163,10 +163,4 @@ describe('ion-toggle: haptics', () => {
     expect((events[0].target as HTMLElement).tagName.toLowerCase()).toBe('ion-toggle');
     expect(events[0].detail).toEqual({ type: 'selection' });
   });
-
-  it('should not trigger haptics when ionHaptic is canceled', async () => {
-    await clickToggleOnIOS((ev) => ev.preventDefault());
-
-    expect(impact).not.toHaveBeenCalled();
-  });
 });

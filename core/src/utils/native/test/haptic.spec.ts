@@ -134,6 +134,33 @@ describe('haptics', () => {
       expect(haptics.impact).not.toHaveBeenCalled();
     });
 
+    it('should skip only selectionStart when only selectionStart is canceled', () => {
+      const types: string[] = [];
+      el.addEventListener('ionHaptic', (ev) => {
+        const { type } = (ev as CustomEvent).detail;
+        types.push(type);
+        if (type === 'selectionStart') {
+          ev.preventDefault();
+        }
+      });
+
+      hapticSelectionStart(el);
+      hapticSelectionChanged(el);
+      hapticSelectionEnd(el);
+
+      expect(types).toEqual(['selectionStart', 'selectionChanged', 'selectionEnd']);
+      expect(haptics.selectionStart).not.toHaveBeenCalled();
+      expect(haptics.selectionChanged).toHaveBeenCalledTimes(1);
+    });
+
+    it('should still release the haptic engine when selectionEnd is canceled', () => {
+      el.addEventListener('ionHaptic', (ev) => ev.preventDefault());
+
+      hapticSelectionEnd(el);
+
+      expect(haptics.selectionEnd).toHaveBeenCalledTimes(1);
+    });
+
     it('should dispatch a bubbling ionHaptic event from the source element', () => {
       const listener = jest.fn();
       document.addEventListener('ionHaptic', listener);

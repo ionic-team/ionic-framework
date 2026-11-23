@@ -149,7 +149,8 @@ export const hapticAvailable = (): boolean => {
  * method Ionic would call, except `selection`, which Ionic plays as a
  * light impact. The haptic engine only plays `selectionChanged` after a
  * `selectionStart`, so canceling `selectionStart` also silences the rest
- * of that gesture.
+ * of that gesture. `selectionEnd` plays nothing and only releases the
+ * engine, so canceling it has no effect.
  */
 export type HapticEventDetail =
   | { type: 'selection' | 'selectionStart' | 'selectionChanged' | 'selectionEnd' }
@@ -159,11 +160,7 @@ export type HapticEventDetail =
 export type HapticEvent = CustomEvent<HapticEventDetail>;
 
 /**
- * Dispatch `ionHaptic` from the component that triggered the haptic.
- * The event fires even when haptics are disabled or no haptic engine is
- * available, so apps can play their own haptics. Calling `preventDefault()`
- * on the event skips Ionic's built-in haptic.
- *
+ * Dispatch `ionHaptic` from `el`.
  * @returns `true` if the built-in haptic should play.
  */
 const emitHaptic = (el: HTMLElement, detail: HapticEventDetail): boolean => {
@@ -208,7 +205,8 @@ export const hapticSelectionChanged = (el: HTMLElement) => {
  * called lest resources are not properly recycled.
  */
 export const hapticSelectionEnd = (el: HTMLElement) => {
-  emitHaptic(el, { type: 'selectionEnd' }) && HapticEngine.selectionEnd();
+  emitHaptic(el, { type: 'selectionEnd' });
+  hapticAvailable() && HapticEngine.selectionEnd();
 };
 
 /**

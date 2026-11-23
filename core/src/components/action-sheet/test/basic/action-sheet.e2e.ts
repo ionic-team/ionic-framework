@@ -218,12 +218,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
       await page.mouse.up();
     });
   });
-});
 
-/**
- * The button press haptic only runs in iOS mode
- */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('action sheet: haptics'), () => {
     test('should emit ionHaptic from the action sheet when a button is pressed', async ({ page }) => {
       await page.goto('/src/components/action-sheet/test/basic', config);

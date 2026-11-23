@@ -318,7 +318,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const types = ionHaptic.events.map((ev) => ev.detail.type);
 
         expect(targets.length).toBeGreaterThan(0);
-        expect(targets.every((target) => target === 'ion-reorder-group')).toBe(true);
+        expect(new Set(targets)).toEqual(new Set(['ion-reorder-group']));
         expect(types[0]).toBe('selectionStart');
         expect(types).toContain('selectionChanged');
         expect(types[types.length - 1]).toBe('selectionEnd');
