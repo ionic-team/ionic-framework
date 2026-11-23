@@ -791,6 +791,51 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2022-01-01'));
       await expect(ionChange).not.toHaveReceivedEvent();
     });
+
+    test('should emit a date-only value when confirming a selection without an initial value', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date"></ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const targetDay = page.locator('.calendar-day[data-day="10"]:not(.calendar-day-adjacent-day)').first();
+
+      const expectedValue = await targetDay.evaluate(
+        (el: HTMLElement) =>
+          `${el.dataset.year}-${String(el.dataset.month).padStart(2, '0')}-${String(el.dataset.day).padStart(2, '0')}`
+      );
+
+      await targetDay.click();
+
+      const ev = await ionChange.next();
+      expect(ev.detail.value).toBe(expectedValue);
+    });
+
+    test('should emit a value with time when confirming a selection without an initial value on date-time', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <ion-datetime presentation="date-time"></ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const targetDay = page.locator('.calendar-day[data-day="10"]:not(.calendar-day-adjacent-day)').first();
+
+      await targetDay.click();
+
+      const ev = await ionChange.next();
+      expect(ev.detail.value).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00$/);
+    });
   });
 });
 
