@@ -39,8 +39,9 @@ export class FabList implements ComponentInterface {
 
   /**
    * If `true`, the fab buttons in the list will show one at a time
-   * when the list opens. If not set, it follows the main fab button's
-   * `animated`.
+   * when the list opens. If not set, it follows the `animated`
+   * property of the main fab button in its `ion-fab`, or `true`
+   * when the list is not in an `ion-fab`.
    */
   @Prop() animated?: boolean;
 

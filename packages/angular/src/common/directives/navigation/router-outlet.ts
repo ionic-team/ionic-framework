@@ -393,6 +393,8 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
       }
       // Updated activated route proxy for this component
       this.updateActivatedRouteProxy(cmpRef.instance, activatedRoute);
+      // Angular creates a new `ActivatedRoute` each time the view is shown.
+      enteringView.activatedRoute = activatedRoute;
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
 
