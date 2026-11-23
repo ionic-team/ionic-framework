@@ -6,6 +6,7 @@ import type {
 import { config } from '@global/config';
 
 import { getCapacitor } from './capacitor';
+import type { HapticEvent, HapticEventDetail } from './haptic-interface';
 
 export enum ImpactStyle {
   /**
@@ -143,21 +144,6 @@ export const hapticAvailable = (): boolean => {
 
   return HapticEngine.available();
 };
-
-/**
- * Detail of the `ionHaptic` event. `type` matches the Capacitor Haptics
- * method Ionic would call, except `selection`, which Ionic plays as a
- * light impact. The haptic engine only plays `selectionChanged` after a
- * `selectionStart`, so canceling `selectionStart` also silences the rest
- * of that gesture. `selectionEnd` plays nothing and only releases the
- * engine, so canceling it has no effect.
- */
-export type HapticEventDetail =
-  | { type: 'selection' | 'selectionStart' | 'selectionChanged' | 'selectionEnd' }
-  | { type: 'impact'; style: 'HEAVY' | 'MEDIUM' | 'LIGHT' }
-  | { type: 'notification'; notificationType: 'SUCCESS' | 'WARNING' | 'ERROR' };
-
-export type HapticEvent = CustomEvent<HapticEventDetail>;
 
 /**
  * Dispatch `ionHaptic` from `el`.
