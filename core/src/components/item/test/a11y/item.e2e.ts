@@ -55,6 +55,36 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
       expect(await item1.getAttribute('aria-label')).toEqual('test');
       expect(await item2.getAttribute('aria-label')).toEqual('test');
     });
+
+    test('should reflect aria-expanded', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item id="item-1" aria-expanded="false"></ion-item>
+        <ion-item id="item-2" aria-expanded="true" button="true"></ion-item>
+      `,
+        config
+      );
+
+      const item1 = page.locator('#item-1 .item-native');
+      const item2 = page.locator('#item-2 .item-native');
+
+      expect(await item1.getAttribute('aria-expanded')).toEqual('false');
+      expect(await item2.getAttribute('aria-expanded')).toEqual('true');
+    });
+
+    test('should reflect aria-expanded written after load', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item id="item-1"></ion-item>
+      `,
+        config
+      );
+
+      await page.locator('#item-1').evaluate((el) => el.setAttribute('aria-expanded', 'true'));
+
+      const item1 = page.locator('#item-1 .item-native');
+      expect(await item1.getAttribute('aria-expanded')).toEqual('true');
+    });
   });
 
   test.describe(title('item: font scaling'), () => {
