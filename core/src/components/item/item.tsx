@@ -130,15 +130,17 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   buttonChanged() {
     // Update the focusable option when the button option is changed
     this.focusable = this.isFocusable();
+    this.ariaController?.refresh();
     this.tabindexController?.refresh();
   }
 
   /**
-   * Adding or removing `href` adds or removes the native element, so `tabindex` has to move
-   * with it. The same goes for `button` in `buttonChanged`.
+   * Adding or removing `href` adds or removes the native element, so `tabindex` and a label
+   * written after load have to move with it. The same goes for `button` in `buttonChanged`.
    */
   @Watch('href')
   hrefChanged() {
+    this.ariaController?.refresh();
     this.tabindexController?.refresh();
   }
 
@@ -200,12 +202,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentWillLoad() {
     /**
-     * Only the initial copy takes the attribute off the host, so an `aria-label` written
-     * after load names both the native element and the Host, which is a `listitem` when
-     * the item is in an `ion-list`. The two names always agree, so a screen reader just
-     * reads it twice.
+     * A non-clickable item renders a `div`, which ARIA doesn't allow a name on, so an
+     * `aria-label` written after load also stays on the Host, which is a `listitem`
+     * when the item is in an `ion-list`.
      */
-    this.ariaController = createAttributeController(this.el, ['aria-label'], () => forceUpdate(this));
+    this.ariaController = createAttributeController(
+      this.el,
+      ['aria-label'],
+      () => forceUpdate(this),
+      [],
+      undefined,
+      () => !this.isClickable()
+    );
 
     // An item that isn't clickable has no native button or link, so `tabindex` stays on the host.
     this.tabindexController = createTabindexController(
