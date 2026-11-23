@@ -206,6 +206,7 @@ export class Breadcrumb implements ComponentInterface {
       el,
       inheritedAttributes,
       last,
+      rel,
       routerAnimation,
       routerDirection,
       separator,
@@ -226,6 +227,7 @@ export class Breadcrumb implements ComponentInterface {
         : {
             download,
             href,
+            rel,
             target,
           };
 
