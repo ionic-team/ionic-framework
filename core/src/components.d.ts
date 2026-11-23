@@ -2283,7 +2283,7 @@ export namespace Components {
     }
     interface IonPopover {
         /**
-          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
+          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode. The `"start"` and `"end"` values are RTL-aware.
          */
         "alignment"?: PositionAlign;
         /**
@@ -7393,7 +7393,7 @@ declare namespace LocalJSX {
     }
     interface IonPopover {
         /**
-          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
+          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode. The `"start"` and `"end"` values are RTL-aware.
          */
         "alignment"?: PositionAlign;
         /**
