@@ -21,6 +21,11 @@ export { IonTabBar } from "./components/IonTabBar";
 export { IonNav } from "./components/IonNav";
 export { IonIcon } from "./components/IonIcon";
 export { IonApp } from "./components/IonApp";
+export { IonInput } from "./components/IonInput";
+export { IonInputOtp } from "./components/IonInputOtp";
+export { IonRange } from "./components/IonRange";
+export { IonSearchbar } from "./components/IonSearchbar";
+export { IonTextarea } from "./components/IonTextarea";
 
 export * from "./components/Overlays";
 
