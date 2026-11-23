@@ -13,7 +13,7 @@
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
-      /* Stays above the tab bar while the list scrolls */
+      /* Stays in the corner while the list scrolls */
       #shift-button {
         bottom: 8px;
         inset-inline-end: 16px;
@@ -23,42 +23,30 @@
 
   <body>
     <ion-app>
-      <ion-tabs>
-        <ion-tab tab="hairlines">
-          <div class="ion-page">
-            <ion-header>
-              <ion-toolbar>
-                <ion-title>Item - Hairlines</ion-title>
-              </ion-toolbar>
-            </ion-header>
-            <ion-content fullscreen id="content">
-              <button id="shift-button" slot="fixed">Shift: 0px</button>
-              <ion-header collapse="condense">
-                <ion-toolbar>
-                  <ion-title size="large">Item - Hairlines</ion-title>
-                </ion-toolbar>
-              </ion-header>
-              <div class="ion-padding">
-                <p>
-                  Check in Safari on an iPhone or the iOS simulator. With the bug, the line between two items is missing
-                  at some scroll positions, so the items run together.
-                </p>
-                <p>
-                  Each tap on the <strong>Shift</strong> button moves the list down by a tenth of a pixel, so every line
-                  lands on a new position.
-                </p>
-              </div>
-              <ion-list id="items"></ion-list>
-            </ion-content>
-          </div>
-        </ion-tab>
-
-        <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="hairlines">
-            <ion-label>Hairlines</ion-label>
-          </ion-tab-button>
-        </ion-tab-bar>
-      </ion-tabs>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Item - Hairlines</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content fullscreen id="content">
+        <button id="shift-button" slot="fixed">Shift: 0px</button>
+        <ion-header collapse="condense">
+          <ion-toolbar>
+            <ion-title size="large">Item - Hairlines</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <div class="ion-padding">
+          <p>
+            Check in Safari on an iPhone or the iOS simulator. With the bug, the line between two items is missing at
+            some scroll positions, so the items run together.
+          </p>
+          <p>
+            Each tap on the <strong>Shift</strong> button moves the list down by a tenth of a pixel, so every line lands
+            on a new position.
+          </p>
+        </div>
+        <ion-list id="items"></ion-list>
+      </ion-content>
     </ion-app>
 
     <script>
