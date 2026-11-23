@@ -1,4 +1,13 @@
-import { AfterViewInit, ElementRef, Injector, OnDestroy, Directive, HostListener } from '@angular/core';
+import {
+  AfterViewInit,
+  ElementRef,
+  EffectRef,
+  Injector,
+  OnDestroy,
+  Directive,
+  HostListener,
+  effect,
+} from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -15,13 +24,19 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     /**/
   };
   protected lastValue: any;
+  /**
+   * The signal forms control bound to this element, if any. Pass it to
+   * `setIonicClasses` so the classes come from its state.
+   */
+  protected signalControl?: NgControl;
   private statusChanges?: Subscription;
+  private signalControlEffect?: EffectRef;
 
   constructor(protected injector: Injector, protected elementRef: ElementRef) {}
 
   writeValue(value: any): void {
     this.elementRef.nativeElement.value = this.lastValue = value;
-    setIonicClasses(this.elementRef);
+    setIonicClasses(this.elementRef, this.signalControl);
   }
 
   /**
@@ -43,7 +58,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
         this.lastValue = value;
         this.onChange(value);
       }
-      setIonicClasses(this.elementRef);
+      setIonicClasses(this.elementRef, this.signalControl);
     }
   }
 
@@ -51,7 +66,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   _handleBlurEvent(el: any): void {
     if (el === this.elementRef.nativeElement) {
       this.onTouched();
-      setIonicClasses(this.elementRef);
+      setIonicClasses(this.elementRef, this.signalControl);
 
       // When ion-radio is blurred, el and this.elementRef.nativeElement are
       // different so we need to check if the closest ion-radio-group is the same
@@ -78,6 +93,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     if (this.statusChanges) {
       this.statusChanges.unsubscribe();
     }
+    this.signalControlEffect?.destroy();
   }
 
   ngAfterViewInit(): void {
@@ -92,10 +108,20 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
       return;
     }
 
-    // Listen for changes in validity, disabled, or pending states
-    if (ngControl.statusChanges) {
-      this.statusChanges = ngControl.statusChanges.subscribe(() => setIonicClasses(this.elementRef));
+    /**
+     * Signal forms (`[formField]`) provide an NgControl without
+     * `statusChanges` or `markAs*` methods, so there is nothing to
+     * subscribe to or patch. Its state getters read signals instead,
+     * so an effect re-runs whenever that state changes.
+     */
+    if (!ngControl.statusChanges) {
+      const control = (this.signalControl = ngControl);
+      this.signalControlEffect = effect(() => setIonicClasses(this.elementRef, control), { injector: this.injector });
+      return;
     }
+
+    // Listen for changes in validity, disabled, or pending states
+    this.statusChanges = ngControl.statusChanges.subscribe(() => setIonicClasses(this.elementRef));
 
     /**
      * TODO FW-2787: Remove this in favor of https://github.com/angular/angular/issues/10887
@@ -117,11 +143,24 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   }
 }
 
-export const setIonicClasses = (element: ElementRef): void => {
+/**
+ * Sets the Ionic form status classes (`ion-touched`, `ion-invalid`, etc.)
+ * on the element and its parent item.
+ *
+ * @param element The component element.
+ * @param control A signal forms control. When passed, the classes are built
+ * from its state instead of copied from the `ng-*` classes on the element.
+ */
+export const setIonicClasses = (element: ElementRef, control?: NgControl): void => {
+  /**
+   * Read the control state before the raf so an effect calling this
+   * tracks the signals behind these getters.
+   */
+  const stateClasses = control ? getStateClasses(control) : undefined;
   raf(() => {
     const input = element.nativeElement as HTMLInputElement;
     const hasValue = input.value != null && input.value.toString().length > 0;
-    const classes = getClasses(input);
+    const classes = stateClasses ?? getClasses(input);
     setClasses(input, classes);
     const item = input.closest('ion-item');
     if (item) {
@@ -132,6 +171,17 @@ export const setIonicClasses = (element: ElementRef): void => {
       }
     }
   });
+};
+
+const getStateClasses = (control: NgControl): string[] => {
+  const classes = [control.touched ? 'ion-touched' : 'ion-untouched', control.dirty ? 'ion-dirty' : 'ion-pristine'];
+  // A pending control is neither valid nor invalid.
+  if (control.valid) {
+    classes.push('ion-valid');
+  } else if (control.invalid) {
+    classes.push('ion-invalid');
+  }
+  return classes;
 };
 
 const getClasses = (element: HTMLElement) => {

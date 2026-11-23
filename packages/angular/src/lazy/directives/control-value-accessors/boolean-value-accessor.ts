@@ -20,7 +20,7 @@ export class BooleanValueAccessorDirective extends ValueAccessor {
 
   writeValue(value: boolean): void {
     this.elementRef.nativeElement.checked = this.lastValue = value;
-    setIonicClasses(this.elementRef);
+    setIonicClasses(this.elementRef, this.signalControl);
   }
 
   // Bind `$event` and cast `.target` in the body rather than `['$event.target']`:

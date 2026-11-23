@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+import { routes } from "./version-test.routes";
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { RouterModule } from "@angular/router";
           name: () => 'resolve:bindToComponentInputs'
         },
         loadComponent: () => import('./bind-component-inputs/bind-component-inputs.component').then(c => c.BindComponentInputsComponent)
-      }
+      },
+      ...routes
     ])
   ],
   exports: [RouterModule]

@@ -82,6 +82,8 @@ If you want to add a version-specific change, add the change inside of the appro
 
 If you need to add E2E tests that are only run on a specific version of the JS Framework, replicate the `VersionTest` component on each partial application. This ensures that tests for framework version X do not get run for framework version Y.
 
+For pages that only compile on some versions, `base/` ships an empty `version-test.routes.ts` under both `src/app/lazy/version-test/` and `src/app/standalone/version-test/`, mounted at `/lazy/version-test` and `/standalone/version-test`. Override that file in the apps that need the page, and put the page and its spec in those apps. Each app is built from `base/` plus only its own directory, so a variant app such as `ng22-zone` does not inherit from `ng22`. Add the files to both.
+
 ### Testing Lazy Loaded Ionic Components
 
 Tests for lazy loaded Ionic UI components should only be added under the `/lazy` route. This ensures the `IonicModule` is added.
