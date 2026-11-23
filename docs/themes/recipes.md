@@ -36,7 +36,7 @@ icon: { leading: { margin? }, trailing: { margin? } }   // not leading: { icon: 
 ```
 
 - `leading` is the part at the inline start (a `start` slot or `:first-child`), and `trailing` is the part at the inline end.
-- A position only qualifies its part. Put a value under `leading` or `trailing` only when the part's two positions need different values, and keep shared values on the part itself, like `IonChip.icon.font.size`.
+- A position only qualifies its part. Put a value under `leading` or `trailing` only when the part's two positions need different values, and keep shared values on the part itself, like `IonChip.icon.color`.
 
 ### Use the shared spacing types
 

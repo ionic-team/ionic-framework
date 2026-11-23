@@ -12,7 +12,7 @@ export const global = {
 export const components = {
   chip: {
     font: {
-      size: 14,
+      size: 15,
     },
   },
 

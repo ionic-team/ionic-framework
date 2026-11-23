@@ -50,7 +50,7 @@ export const defaultTheme: DefaultTheme = {
       IonChip: {
         fill: 'solid',
         hue: 'bold',
-        shape: 'soft',
+        shape: 'round',
         size: 'large',
       },
 
@@ -1596,16 +1596,18 @@ export const defaultTheme: DefaultTheme = {
         start: 'var(--ion-spacing-xxs)',
       },
 
-      padding: {
-        top: 'var(--ion-spacing-xs)',
-        end: 'var(--ion-spacing-md)',
-        bottom: 'var(--ion-spacing-xs)',
-        start: 'var(--ion-spacing-md)',
-      },
-
       // Sizes
       size: {
         small: {
+          padding: {
+            top: 'var(--ion-spacing-75)',
+            end: 'var(--ion-spacing-sm)',
+            bottom: 'var(--ion-spacing-75)',
+            start: 'var(--ion-spacing-sm)',
+          },
+
+          letterSpacing: '-0.006em',
+
           min: {
             height: 'var(--ion-scaling-xs)',
           },
@@ -1613,19 +1615,88 @@ export const defaultTheme: DefaultTheme = {
           font: {
             size: clamp(
               'var(--ion-font-size-xs)',
-              `${((components.chip.font.size - 2) / global.root).toFixed(2)}rem`,
+              `${(components.chip.font.size - 2) / global.root}rem`,
               'var(--ion-font-size-xl)'
             ),
+          },
+
+          line: {
+            height: `${18 / (components.chip.font.size - 2)}`,
+          },
+
+          icon: {
+            font: {
+              size: `${20 / components.chip.font.size}em`,
+            },
+          },
+
+          avatar: {
+            leading: {
+              margin: {
+                top: '-4px',
+                end: 'var(--ion-spacing-sm)',
+                bottom: '-4px',
+                start: '-6px',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: '-4px',
+                end: '-6px',
+                bottom: '-4px',
+                start: 'var(--ion-spacing-sm)',
+              },
+            },
           },
         },
 
         large: {
+          padding: {
+            top: 'var(--ion-spacing-xxs)',
+            end: 'var(--ion-spacing-250)',
+            bottom: 'var(--ion-spacing-xxs)',
+            start: 'var(--ion-spacing-250)',
+          },
+
+          letterSpacing: '-0.016em',
+
           min: {
-            height: 'var(--ion-scaling-md)',
+            height: 'var(--ion-scaling-sm)',
           },
 
           font: {
-            size: clamp('13px', `${(components.chip.font.size / global.root).toFixed(2)}rem`, '22px'),
+            size: clamp('13px', `${components.chip.font.size / global.root}rem`, '22px'),
+          },
+
+          line: {
+            height: `${20 / components.chip.font.size}`,
+          },
+
+          icon: {
+            font: {
+              size: `${20 / components.chip.font.size}em`,
+            },
+          },
+
+          avatar: {
+            leading: {
+              margin: {
+                top: '-4px',
+                end: 'var(--ion-spacing-sm)',
+                bottom: '-4px',
+                start: '-8px',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: '-4px',
+                end: '-8px',
+                bottom: '-4px',
+                start: 'var(--ion-spacing-sm)',
+              },
+            },
           },
         },
       },
@@ -1633,7 +1704,7 @@ export const defaultTheme: DefaultTheme = {
       // States
       state: {
         disabled: {
-          opacity: '0.4',
+          opacity: '0.5',
         },
       },
 
@@ -1683,20 +1754,20 @@ export const defaultTheme: DefaultTheme = {
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base', { alpha: 0.08 }),
+                background: currentColor('base', { alpha: 0.15 }),
                 color: currentColor('shade'),
               },
 
               hover: {
-                background: currentColor('base', { alpha: 0.12 }),
+                background: currentColor('base', { alpha: 0.19 }),
               },
 
               focus: {
-                background: currentColor('base', { alpha: 0.12 }),
+                background: currentColor('base', { alpha: 0.19 }),
               },
 
               activated: {
-                background: currentColor('base', { alpha: 0.16 }),
+                background: currentColor('base', { alpha: 0.23 }),
               },
             },
           },
@@ -1852,14 +1923,10 @@ export const defaultTheme: DefaultTheme = {
       icon: {
         color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
 
-        font: {
-          size: `${(20 / components.chip.font.size).toFixed(2)}em`,
-        },
-
         leading: {
           margin: {
             top: '-4px',
-            end: 'var(--ion-spacing-sm)',
+            end: 'var(--ion-spacing-xxs)',
             bottom: '-4px',
             start: '-4px',
           },
@@ -1870,32 +1937,14 @@ export const defaultTheme: DefaultTheme = {
             top: '-4px',
             end: '-4px',
             bottom: '-4px',
-            start: 'var(--ion-spacing-sm)',
+            start: 'var(--ion-spacing-xxs)',
           },
         },
       },
 
       avatar: {
-        height: `${(24 / components.chip.font.size).toFixed(2)}em`,
-        width: `${(24 / components.chip.font.size).toFixed(2)}em`,
-
-        leading: {
-          margin: {
-            top: '-4px',
-            end: 'var(--ion-spacing-sm)',
-            bottom: '-4px',
-            start: '-8px',
-          },
-        },
-
-        trailing: {
-          margin: {
-            top: '-4px',
-            end: '-8px',
-            bottom: '-4px',
-            start: 'var(--ion-spacing-sm)',
-          },
-        },
+        height: `${24 / components.chip.font.size}em`,
+        width: `${24 / components.chip.font.size}em`,
       },
     },
 
