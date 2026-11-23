@@ -1309,17 +1309,6 @@ export const defaultTheme: DefaultTheme = {
         start: 'var(--ion-spacing-0)',
       },
 
-      padding: {
-        top: 'var(--ion-spacing-xs)',
-        end: 'var(--ion-spacing-sm)',
-        bottom: 'var(--ion-spacing-xs)',
-        start: 'var(--ion-spacing-sm)',
-      },
-
-      line: {
-        height: '100%',
-      },
-      letterSpacing: '0%',
       gap: 'var(--ion-spacing-xxs)',
 
       font: {
@@ -1329,19 +1318,95 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-sm)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-sm)',
+          },
+
+          letterSpacing: '0%',
+
           min: {
             height: 'var(--ion-scaling-xs)',
           },
           font: {
             size: 'var(--ion-font-size-xs)',
           },
+          line: {
+            height: dynamicFont(global.root, 20),
+          },
+
+          icon: {
+            font: {
+              size: 'var(--ion-scaling-xxxxs)',
+            },
+          },
+
+          avatar: {
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: '-4px',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: '-4px',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
+          },
         },
         large: {
+          padding: {
+            top: 'var(--ion-spacing-0)',
+            end: 'var(--ion-spacing-sm)',
+            bottom: 'var(--ion-spacing-0)',
+            start: 'var(--ion-spacing-sm)',
+          },
+
+          letterSpacing: '0%',
+
           min: {
             height: 'var(--ion-scaling-md)',
           },
           font: {
-            size: 'var(--ion-font-size-sm)',
+            size: 'var(--ion-font-size-xs)',
+          },
+          line: {
+            height: dynamicFont(global.root, 20),
+          },
+
+          icon: {
+            font: {
+              size: 'var(--ion-scaling-xxxs)',
+            },
+          },
+
+          avatar: {
+            leading: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: 'var(--ion-spacing-0)',
+                bottom: 'var(--ion-spacing-0)',
+                start: '-4px',
+              },
+            },
+
+            trailing: {
+              margin: {
+                top: 'var(--ion-spacing-0)',
+                end: '-4px',
+                bottom: 'var(--ion-spacing-0)',
+                start: 'var(--ion-spacing-0)',
+              },
+            },
           },
         },
       },
@@ -1385,8 +1450,12 @@ export const defaultTheme: DefaultTheme = {
           solid: {
             // Default non-semantic states
             default: {
-              background: '#3b3b3b',
+              background: '#383e45',
               color: '#ffffff',
+            },
+
+            hover: {
+              background: '#31373d',
             },
 
             // Any of the semantic colors like primary, secondary, etc.
@@ -1394,6 +1463,10 @@ export const defaultTheme: DefaultTheme = {
               default: {
                 background: currentColor('base'),
                 color: currentColor('contrast'),
+              },
+
+              hover: {
+                background: currentColor('shade'),
               },
             },
           },
@@ -1401,27 +1474,35 @@ export const defaultTheme: DefaultTheme = {
           outline: {
             // Default non-semantic states
             default: {
-              background: '#3b3b3b',
-              color: '#ffffff',
+              background: 'transparent',
+              color: '#383e45',
 
               border: {
-                color: '#242424',
+                color: '#383e45',
                 style: 'solid',
                 width: '1px',
               },
             },
 
+            hover: {
+              background: '#f6f7fa',
+            },
+
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base'),
-                color: currentColor('contrast'),
+                background: 'transparent',
+                color: currentColor('foreground'),
 
                 border: {
-                  color: currentColor('shade'),
+                  color: currentColor('base'),
                   style: 'solid',
                   width: '1px',
                 },
+              },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
               },
             },
           },
@@ -1431,8 +1512,12 @@ export const defaultTheme: DefaultTheme = {
           solid: {
             // Default non-semantic states
             default: {
-              background: '#f3f3f3',
-              color: '#626262',
+              background: '#f6f7fa',
+              color: '#6c727a',
+            },
+
+            hover: {
+              background: '#e6eaee',
             },
 
             // Any of the semantic colors like primary, secondary, etc.
@@ -1441,14 +1526,18 @@ export const defaultTheme: DefaultTheme = {
                 background: currentColor('base', { subtle: true }),
                 color: currentColor('contrast', { subtle: true }),
               },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
+              },
             },
           },
 
           outline: {
             // Default non-semantic states
             default: {
-              background: '#f3f3f3',
-              color: '#626262',
+              background: 'transparent',
+              color: '#6c727a',
 
               border: {
                 color: '#e0e0e0',
@@ -1457,11 +1546,15 @@ export const defaultTheme: DefaultTheme = {
               },
             },
 
+            hover: {
+              background: '#f6f7fa',
+            },
+
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base', { subtle: true }),
-                color: currentColor('contrast', { subtle: true }),
+                background: 'transparent',
+                color: currentColor('foreground', { subtle: true }),
 
                 border: {
                   color: currentColor('shade', { subtle: true }),
@@ -1469,14 +1562,12 @@ export const defaultTheme: DefaultTheme = {
                   width: '1px',
                 },
               },
+
+              hover: {
+                background: currentColor('shade', { subtle: true }),
+              },
             },
           },
-        },
-      },
-
-      icon: {
-        font: {
-          size: 'var(--ion-scaling-xxxs)',
         },
       },
     },
