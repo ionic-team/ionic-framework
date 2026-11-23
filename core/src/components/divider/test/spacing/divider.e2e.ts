@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_DIVIDER_SPACINGS } from '../../divider.interface';
+
 /**
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('divider: spacing'), () => {
-    ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'].forEach((spacing) => {
+    ION_DIVIDER_SPACINGS.forEach((spacing) => {
       test(`should render divider with ${spacing} spacing`, async ({ page }) => {
         await page.setContent(
           `

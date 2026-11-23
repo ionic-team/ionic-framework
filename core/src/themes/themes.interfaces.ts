@@ -4,6 +4,7 @@ import type { IonButtonConfig, IonButtonRecipe } from '../components/button/butt
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interface';
 import type { IonColRecipe } from '../components/col/col.interface';
 import type { IonContentRecipe } from '../components/content/content.interface';
+import type { IonDividerConfig, IonDividerRecipe } from '../components/divider/divider.interface';
 import type { IonGalleryRecipe } from '../components/gallery/gallery.interface';
 import type { IonGridRecipe } from '../components/grid/grid.interface';
 import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interface';
@@ -261,6 +262,7 @@ export type IonicConfig = IonicGlobalConfig & {
     IonBadge?: IonBadgeConfig;
     IonButton?: IonButtonConfig;
     IonChip?: IonChipConfig;
+    IonDivider?: IonDividerConfig;
     IonNote?: IonNoteConfig;
     IonProgressBar?: IonProgressBarConfig;
     IonRouterLink?: IonRouterLinkConfig;
@@ -310,6 +312,7 @@ type Components = {
   IonChip?: IonChipRecipe;
   IonCol?: IonColRecipe;
   IonContent?: IonContentRecipe;
+  IonDivider?: IonDividerRecipe;
   IonGallery?: IonGalleryRecipe;
   IonGrid?: IonGridRecipe;
   IonItemDivider?: IonItemDividerRecipe;
