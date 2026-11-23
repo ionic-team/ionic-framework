@@ -285,5 +285,44 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await expect(ionItemReorder).toHaveReceivedEventDetail({ from: 0, to: 2, complete: undefined });
       });
     });
+
+    test.describe('ionHaptic', () => {
+      test('should emit from the reorder group for each haptic during a reorder', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-reorder-group disabled="false">
+            <ion-item>
+              <ion-label>Item 1</ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item 2</ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item 3</ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+          </ion-reorder-group>
+        `,
+          config
+        );
+
+        const reorderGroup = page.locator('ion-reorder-group');
+        const ionHaptic = await page.spyOnEvent('ionHaptic');
+
+        await dragElementBy(reorderGroup.locator('ion-reorder').first(), page, 0, 300);
+        await page.waitForChanges();
+
+        const targets = ionHaptic.events.map((ev) => (ev.target as HTMLElement).tagName.toLowerCase());
+        const types = ionHaptic.events.map((ev) => ev.detail.type);
+
+        expect(targets.length).toBeGreaterThan(0);
+        expect(targets.every((target) => target === 'ion-reorder-group')).toBe(true);
+        expect(types[0]).toBe('selectionStart');
+        expect(types).toContain('selectionChanged');
+        expect(types[types.length - 1]).toBe('selectionEnd');
+      });
+    });
   });
 });

@@ -294,7 +294,7 @@ export class Toggle implements ComponentInterface {
   private onMove(detail: GestureDetail) {
     if (shouldToggle(isRTL(this.el), this.checked, detail.deltaX, -10)) {
       this.toggleChecked();
-      hapticSelection();
+      hapticSelection(this.el);
     }
   }
 
@@ -338,7 +338,7 @@ export class Toggle implements ComponentInterface {
 
     if (this.lastDrag + 300 < Date.now()) {
       this.toggleChecked();
-      enableHaptics && hapticSelection();
+      enableHaptics && hapticSelection(this.el);
     }
   };
 

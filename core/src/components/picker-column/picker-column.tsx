@@ -392,7 +392,7 @@ export class PickerColumn implements ComponentInterface {
     this.isScrolling = false;
     this.updateValueTextOnScroll = true;
 
-    this.enableHaptics && hapticSelectionEnd();
+    this.enableHaptics && hapticSelectionEnd(this.el);
 
     /**
      * Certain tasks (such as those that
@@ -503,7 +503,7 @@ export class PickerColumn implements ComponentInterface {
         this.resetScrollEndTimeout();
 
         if (!this.isScrolling) {
-          this.enableHaptics && hapticSelectionStart();
+          this.enableHaptics && hapticSelectionStart(this.el);
           this.isScrolling = true;
         }
 
@@ -600,7 +600,7 @@ export class PickerColumn implements ComponentInterface {
          * we need to run haptics again.
          */
         if (newActiveElement !== activeEl) {
-          this.enableHaptics && hapticSelectionChanged();
+          this.enableHaptics && hapticSelectionChanged(this.el);
 
           if (this.canExitInputMode) {
             /**

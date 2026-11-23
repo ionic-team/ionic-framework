@@ -76,6 +76,8 @@ export {
   CheckboxChangeEventDetail,
   DatetimeCustomEvent,
   DatetimeChangeEventDetail,
+  HapticEvent,
+  HapticEventDetail,
   InfiniteScrollCustomEvent,
   InputCustomEvent,
   InputChangeEventDetail,

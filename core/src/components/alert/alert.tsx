@@ -401,7 +401,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
    */
   private setupButtonActiveGesture() {
     if (!this.gesture && getIonMode(this) === 'ios' && this.wrapperEl) {
-      this.gesture = createButtonActiveGesture(this.wrapperEl, (refEl: HTMLElement) =>
+      this.gesture = createButtonActiveGesture(this.el, this.wrapperEl, (refEl: HTMLElement) =>
         refEl.classList.contains('alert-button')
       );
       this.gesture.enable(true);

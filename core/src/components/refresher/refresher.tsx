@@ -272,7 +272,7 @@ export class Refresher implements ComponentInterface {
           if (!this.didRefresh) {
             this.beginRefresh();
             this.didRefresh = true;
-            hapticImpact({ style: ImpactStyle.Light });
+            hapticImpact(this.el, { style: ImpactStyle.Light });
 
             /**
              * Clear focus from any active element to prevent scroll jumps

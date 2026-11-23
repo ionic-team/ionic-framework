@@ -194,6 +194,7 @@ export interface IonicConfig {
    * Relevant Components: ion-action-sheet, ion-alert, ion-picker-column, ion-refresher, ion-reorder-group, ion-toggle
    * Haptics are the small vibrations a device plays as touch feedback, such as when a toggle is switched.
    * If `false`, Ionic components won't trigger haptics. Defaults to `true`.
+   * Components still dispatch `ionHaptic`, so apps can play their own.
    */
   haptics?: boolean;
 

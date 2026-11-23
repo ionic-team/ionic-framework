@@ -187,7 +187,7 @@ export class ReorderGroup implements ComponentInterface {
 
     item.classList.add(ITEM_REORDER_SELECTED);
 
-    hapticSelectionStart();
+    hapticSelectionStart(this.el);
 
     this.ionReorderStart.emit();
   }
@@ -212,7 +212,7 @@ export class ReorderGroup implements ComponentInterface {
       const fromIndex = indexForItem(selectedItem);
       this.lastToIndex = toIndex;
 
-      hapticSelectionChanged();
+      hapticSelectionChanged(this.el);
       this.reorderMove(fromIndex, toIndex);
     }
 
@@ -247,7 +247,7 @@ export class ReorderGroup implements ComponentInterface {
       });
     }
 
-    hapticSelectionEnd();
+    hapticSelectionEnd(this.el);
 
     this.ionReorderEnd.emit({
       from: fromIndex,

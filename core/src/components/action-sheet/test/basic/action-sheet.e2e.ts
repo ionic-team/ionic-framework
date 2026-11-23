@@ -219,3 +219,32 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
     });
   });
 });
+
+/**
+ * The button press haptic only runs in iOS mode
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('action sheet: haptics'), () => {
+    test('should emit ionHaptic from the action sheet when a button is pressed', async ({ page }) => {
+      await page.goto('/src/components/action-sheet/test/basic', config);
+
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const ionHaptic = await page.spyOnEvent('ionHaptic');
+
+      await page.click('#basic');
+      await ionActionSheetDidPresent.next();
+
+      const button = page.locator('ion-action-sheet .action-sheet-button').first();
+      const box = (await button.boundingBox())!;
+
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await ionHaptic.next();
+
+      await expect(ionHaptic).toHaveReceivedEventDetail({ type: 'selectionStart' });
+      expect((ionHaptic.events[0].target as HTMLElement).tagName.toLowerCase()).toBe('ion-action-sheet');
+
+      await page.mouse.up();
+    });
+  });
+});
