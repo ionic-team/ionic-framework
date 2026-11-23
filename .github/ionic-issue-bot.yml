@@ -42,7 +42,7 @@ comment:
         If the requested feature is something you would find useful for your applications, please react to the original post with 👍 (`+1`). If you would like to provide an additional use case for the feature, please post a comment.
 
 
-        The team will review this feedback and make a final decision. Any decision will be posted on this thread, but please note that we may ultimately decide not to pursue this feature.
+        Feedback is open for 90 days. After that, the team will review the feedback and make a final decision. Any decision will be posted on this thread, but please note that we may ultimately decide not to pursue this feature.
 
 
         Thank you!
@@ -103,6 +103,14 @@ stale:
   lock: true
   dryRun: false
 
+labelTimeout:
+  labels:
+    - label: "community feedback wanted"
+      days: 90
+      replaceWith: triage
+  maxIssuesPerRun: 100
+  dryRun: false
+
 noReply:
   days: 14
   maxIssuesPerRun: 100
@@ -121,11 +129,15 @@ noReply:
   lock: true
   dryRun: false
 
-noReproduction:
+needsReproduction:
   days: 14
   maxIssuesPerRun: 100
   label: "ionitron: needs reproduction"
   responseLabel: triage
+  # a link to a repo outside ionic-team, like StackBlitz or CodeSandbox
+  # an attached file (not an image or video),
+  # or an Ionic component tag (<ion-badge> or <IonBadge>)
+  responsePattern: 'https?://(github\.com/(?!ionic-team/|user-attachments/assets/)[^/\s]+/[^/\s]+|gitlab\.com/|bitbucket\.org/|stackblitz\.com/|codesandbox\.io/)|<ion-?[a-z][a-z-]*'
   exemptProjects: true
   exemptMilestones: true
   message: >

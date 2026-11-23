@@ -1,4 +1,7 @@
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, Routes } from '@angular/router';
+import { EMPTY, of } from 'rxjs';
+import { BackHistoryBlockService } from '../back-history/back-history-block.service';
 import { AppComponent } from './app.component';
 
 export const routes: Routes = [
@@ -45,6 +48,43 @@ export const routes: Routes = [
         ]
       },
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
+      {
+        path: 'back-history',
+        loadComponent: () => import('../back-history/back-history.component').then(c => c.BackHistoryComponent),
+        // A guard on a parent the pages share, which doesn't run when going back.
+        canActivate: [() => true],
+        children: [
+          { path: '', loadComponent: () => import('../back-history/back-history-a.component').then(c => c.BackHistoryAComponent) },
+          { path: 'b', loadComponent: () => import('../back-history/back-history-b.component').then(c => c.BackHistoryBComponent) },
+          { path: 'c', loadComponent: () => import('../back-history/back-history-c.component').then(c => c.BackHistoryCComponent) },
+          { path: 'd', loadComponent: () => import('../back-history/back-history-d.component').then(c => c.BackHistoryDComponent) },
+          {
+            path: 'guarded',
+            loadComponent: () => import('../back-history/back-history-guarded.component').then(c => c.BackHistoryGuardedComponent),
+            canDeactivate: [(component: { blockLeave: boolean }) => !component.blockLeave]
+          },
+          {
+            // A guard on a componentless parent of the page.
+            path: 'wrapped',
+            canActivate: [() => !inject(BackHistoryBlockService).block],
+            children: [
+              { path: '', loadComponent: () => import('../back-history/back-history-wrapped.component').then(c => c.BackHistoryWrappedComponent) },
+            ]
+          },
+          {
+            // A guard that redirects cancels the navigation without changing history.
+            path: 'redirected',
+            canActivate: [() => inject(Router).parseUrl('/standalone/back-history/d')],
+            children: []
+          },
+          {
+            // A resolver that emits nothing cancels the navigation.
+            path: 'resolved',
+            resolve: { item: () => (inject(BackHistoryBlockService).block ? EMPTY : of(true)) },
+            loadComponent: () => import('../back-history/back-history-wrapped.component').then(c => c.BackHistoryWrappedComponent)
+          },
+        ]
+      },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(c => c.NavComponent) },
       { path: 'nav-modal-root', loadComponent: () => import('../nav-modal-root/nav-modal-root.component').then(c => c.NavModalRootComponent) },
