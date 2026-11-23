@@ -445,6 +445,54 @@ $rtl-use-host-context: true !default;
   @include property(border, $top, $end, $bottom, $start);
 }
 
+// Draw a line along the top or bottom edge of the positioned parent,
+// in place of a border. WebKit skips a border thinner than one CSS pixel
+// at some positions on the page, so the line is a filled box instead. The
+// box is at least 1px tall, so a screen that rounds sub-pixel boxes, such
+// as Chrome's device emulation, can't round it away. Only `$thickness` on
+// the edge's side is colored, and the rest of the box reaches into the parent.
+// Without `$thickness`, the line is one screen pixel thick at 1x, 2x and 3x.
+// @param {string} $edge - top or bottom
+// @param {string} $color
+// @param {string} $thickness
+// ----------------------------------------------------------
+@mixin hairline($edge, $color: currentColor, $thickness: null) {
+  @if $edge == top {
+    @include position(0, 0, null, 0);
+  } @else {
+    @include position(null, 0, 0, 0);
+  }
+
+  position: absolute;
+
+  pointer-events: none;
+
+  @if $thickness {
+    @include hairline-fill($edge, $color, $thickness);
+  } @else {
+    @include hairline-fill($edge, $color, 1px);
+
+    @each $density, $value in (2: 0.5px, 3: 0.3334px) {
+      @media (min-resolution: #{$density}dppx), (-webkit-min-device-pixel-ratio: $density) {
+        @include hairline-fill($edge, $color, $value);
+      }
+    }
+  }
+}
+
+// Size and color the box drawn by `hairline`
+// @param {string} $edge - top or bottom
+// @param {string} $color
+// @param {string} $thickness
+// ----------------------------------------------------------
+@mixin hairline-fill($edge, $color, $thickness) {
+  $direction: if($edge == top, to bottom, to top);
+
+  height: max(1px, $thickness);
+
+  background: linear-gradient($direction, $color $thickness, transparent $thickness);
+}
+
 // Add border radius for all directions
 // @param {string} $top-start
 // @param {string} $top-end

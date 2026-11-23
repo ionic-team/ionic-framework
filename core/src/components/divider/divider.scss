@@ -27,14 +27,22 @@ $spacings: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
 :host hr {
   display: block;
 
+  position: relative;
+
   width: 100%;
   height: var(--ion-divider-thickness);
 
   border: none;
 
-  // A filled box instead of a border: WebKit skips a border thinner than one
-  // CSS pixel at some positions on the page.
-  background: var(--ion-divider-color);
+  // Lets the pseudo-element reach above the line
+  overflow: visible;
+}
+
+// Drawn as a filled box instead of a border (refer to the `hairline` mixin)
+:host hr::after {
+  @include mixins.hairline(bottom, var(--ion-divider-color), var(--ion-divider-thickness));
+
+  content: "";
 }
 
 // Divider Spacing
