@@ -118,6 +118,7 @@ This section details the desktop browser and mobile platform versions that are s
 <h4 id="version-10x-datetime">Datetime</h4>
 
 - The `ion-buttons` component has been removed from the internal implementation of `ion-datetime` and is no longer required when passing custom buttons to the `slot="buttons"`. When providing custom buttons, use a `div` element instead of `ion-buttons`. While existing code using `ion-buttons` may continue to work visually, future updates to the `ion-buttons` component may cause any styles you rely on to break.
+- Confirming a selection without an initial `value` no longer includes the current time for presentations that do not render a time picker (`date`, `month`, `year`, and `month-year`). These presentations emitted a full timestamp (e.g. `2026-09-01T16:19:00`) where the time was the device clock when the component loaded. They now emit date-only values (e.g. `2026-09-01`), matching the behavior when a date-only `value` is passed. Applications that relied on the time portion should use the `date-time` or `time-date` presentations.
 
 <h4 id="version-10x-grid">Grid</h4>
 

@@ -49,6 +49,22 @@ export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string 
 }
 
 /**
+ * Removes the time fields (hour, minute, ampm) from
+ * the provided parts so only the date fields remain.
+ * Used by presentations that do not render a time
+ * picker, where carrying the current time into the
+ * default parts would leak a full timestamp into the
+ * emitted value instead of a date-only string.
+ */
+export const removeTimeParts = (parts: DatetimeParts): DatetimeParts => {
+  const dateParts = { ...parts };
+  delete dateParts.hour;
+  delete dateParts.minute;
+  delete dateParts.ampm;
+  return dateParts;
+};
+
+/**
  * Converts an 12 hour value to 24 hours.
  */
 export const convert12HourTo24Hour = (hour: number, ampm?: 'am' | 'pm') => {

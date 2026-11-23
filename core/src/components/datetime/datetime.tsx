@@ -53,6 +53,7 @@ import {
   getPreviousWeek,
   getPreviousYear,
   getStartOfWeek,
+  removeTimeParts,
   validateParts,
 } from './utils/manipulation';
 import {
@@ -1846,7 +1847,7 @@ export class Datetime implements ComponentInterface {
     this.processMinParts();
     this.processMaxParts();
 
-    this.defaultParts = getClosestValidDate({
+    const defaultParts = getClosestValidDate({
       refParts: todayParts,
       monthValues,
       dayValues,
@@ -1856,6 +1857,18 @@ export class Datetime implements ComponentInterface {
       minParts: this.minParts,
       maxParts: this.maxParts,
     });
+
+    /**
+     * Presentations without a time picker should not carry
+     * the current time into the default parts. Otherwise,
+     * confirming a selection without an initial value emits
+     * a full timestamp (e.g. `2026-09-01T16:19:00` for
+     * `presentation="date"`) instead of the date-only string
+     * the presentation describes.
+     */
+    this.defaultParts = ['time', 'date-time', 'time-date'].includes(this.presentation)
+      ? defaultParts
+      : removeTimeParts(defaultParts);
 
     this.processValue(this.value);
 
