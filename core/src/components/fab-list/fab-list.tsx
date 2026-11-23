@@ -1,6 +1,8 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, Watch, h } from '@stencil/core';
+import { win } from '@utils/browser';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 
 @Component({
@@ -24,8 +26,7 @@ export class FabList implements ComponentInterface {
 
     const fabs = Array.from(this.el.querySelectorAll('ion-fab-button'));
 
-    // if showing the fabs add a timeout, else show immediately
-    const timeout = activated ? 30 : 0;
+    const timeout = activated && this.shouldAnimate() ? 30 : 0;
     fabs.forEach((fab, i) => {
       this.activateTimeouts.push(setTimeout(() => (fab.show = activated), i * timeout));
     });
@@ -36,9 +37,27 @@ export class FabList implements ComponentInterface {
    */
   @Prop() side: 'start' | 'end' | 'top' | 'bottom' = 'bottom';
 
+  /**
+   * If `true`, the fab buttons in the list will show one at a time
+   * when the list opens. If not set, it follows the main fab button's
+   * `animated`.
+   */
+  @Prop() animated?: boolean;
+
   disconnectedCallback() {
     this.activateTimeouts.forEach(clearTimeout);
     this.activateTimeouts = [];
+  }
+
+  private shouldAnimate() {
+    const fabButton = this.el.closest('ion-fab')?.querySelector<HTMLIonFabButtonElement>(':scope > ion-fab-button');
+    const animated = this.animated ?? fabButton?.animated ?? true;
+
+    if (!animated || !config.getBoolean('animated', true)) {
+      return false;
+    }
+
+    return !win?.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   }
 
   render() {
