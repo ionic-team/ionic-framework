@@ -1,12 +1,7 @@
 import type { IonPadding, IonMargin, Hue } from '../../themes/themes.interfaces';
 
 export type IonChipRecipe = {
-  letterSpacing?: string | number;
-  line?: {
-    height?: string | number;
-  };
   margin?: IonMargin;
-  padding?: IonPadding;
   gap?: string | number;
 
   font?: {
@@ -73,6 +68,9 @@ type IonChipColorDefinition = {
 };
 
 type IonChipSizeDefinition = {
+  padding?: IonPadding;
+  letterSpacing?: string | number;
+
   min?: {
     height?: string | number;
   };
@@ -80,6 +78,18 @@ type IonChipSizeDefinition = {
   font?: {
     size?: string | number;
   };
+
+  line?: {
+    height?: string | number;
+  };
+
+  icon?: {
+    font?: {
+      size?: string | number;
+    };
+  };
+
+  avatar?: IonChipMediaDefinition;
 };
 
 type IonChipShapeDefinition = {
@@ -102,13 +112,9 @@ type IonChipMediaDefinition = {
 
 type IonChipIconDefinition = IonChipMediaDefinition & {
   color?: string;
-
-  font?: {
-    size?: string | number;
-  };
 };
 
-type IonChipAvatarDefinition = IonChipMediaDefinition & {
+type IonChipAvatarDefinition = {
   height?: string | number;
   width?: string | number;
 };

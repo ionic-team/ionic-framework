@@ -10,21 +10,44 @@
    * @prop --ion-chip-margin-bottom: Bottom margin of the chip
    * @prop --ion-chip-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the chip
    *
-   * @prop --ion-chip-padding-top: Top padding of the chip
-   * @prop --ion-chip-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the chip
-   * @prop --ion-chip-padding-bottom: Bottom padding of the chip
-   * @prop --ion-chip-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the chip
-   *
    * @prop --ion-chip-font-weight: Font weight of the chip
-   * @prop --ion-chip-letter-spacing: Letter spacing of the chip
-   * @prop --ion-chip-line-height: Line height of the chip
    * @prop --ion-chip-gap: Gap between slotted elements in the chip
    *
    * Sizes
+   * @prop --ion-chip-size-small-padding-top: Top padding of the `small` chip size
+   * @prop --ion-chip-size-small-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `small` chip size
+   * @prop --ion-chip-size-small-padding-bottom: Bottom padding of the `small` chip size
+   * @prop --ion-chip-size-small-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `small` chip size
+   * @prop --ion-chip-size-small-letter-spacing: Letter spacing of the `small` chip size
    * @prop --ion-chip-size-small-min-height: Minimum height of the `small` chip size
    * @prop --ion-chip-size-small-font-size: Font size of the `small` chip size
+   * @prop --ion-chip-size-small-line-height: Line height of the `small` chip size
+   * @prop --ion-chip-size-small-icon-font-size: Font size of the slotted `ion-icon` of the `small` chip size
+   * @prop --ion-chip-size-small-avatar-leading-margin-top: Top margin of the slotted `ion-avatar` when it is the first child of the `small` chip size
+   * @prop --ion-chip-size-small-avatar-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child of the `small` chip size
+   * @prop --ion-chip-size-small-avatar-leading-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the first child of the `small` chip size
+   * @prop --ion-chip-size-small-avatar-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child of the `small` chip size
+   * @prop --ion-chip-size-small-avatar-trailing-margin-top: Top margin of the slotted `ion-avatar` when it is the last child of the `small` chip size
+   * @prop --ion-chip-size-small-avatar-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child of the `small` chip size
+   * @prop --ion-chip-size-small-avatar-trailing-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the last child of the `small` chip size
+   * @prop --ion-chip-size-small-avatar-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child of the `small` chip size
+   * @prop --ion-chip-size-large-padding-top: Top padding of the `large` chip size
+   * @prop --ion-chip-size-large-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the `large` chip size
+   * @prop --ion-chip-size-large-padding-bottom: Bottom padding of the `large` chip size
+   * @prop --ion-chip-size-large-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the `large` chip size
+   * @prop --ion-chip-size-large-letter-spacing: Letter spacing of the `large` chip size
    * @prop --ion-chip-size-large-min-height: Minimum height of the `large` chip size
    * @prop --ion-chip-size-large-font-size: Font size of the `large` chip size
+   * @prop --ion-chip-size-large-line-height: Line height of the `large` chip size
+   * @prop --ion-chip-size-large-icon-font-size: Font size of the slotted `ion-icon` of the `large` chip size
+   * @prop --ion-chip-size-large-avatar-leading-margin-top: Top margin of the slotted `ion-avatar` when it is the first child of the `large` chip size
+   * @prop --ion-chip-size-large-avatar-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child of the `large` chip size
+   * @prop --ion-chip-size-large-avatar-leading-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the first child of the `large` chip size
+   * @prop --ion-chip-size-large-avatar-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child of the `large` chip size
+   * @prop --ion-chip-size-large-avatar-trailing-margin-top: Top margin of the slotted `ion-avatar` when it is the last child of the `large` chip size
+   * @prop --ion-chip-size-large-avatar-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child of the `large` chip size
+   * @prop --ion-chip-size-large-avatar-trailing-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the last child of the `large` chip size
+   * @prop --ion-chip-size-large-avatar-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child of the `large` chip size
    *
    * Shapes
    * @prop --ion-chip-shape-soft-border-radius: Border radius of the `soft` chip shape
@@ -99,7 +122,6 @@
    *
    * Slotted Icon
    * @prop --ion-chip-icon-color: Color of the slotted `ion-icon`
-   * @prop --ion-chip-icon-font-size: Font size of the slotted `ion-icon`
    * @prop --ion-chip-icon-leading-margin-top: Top margin of the slotted `ion-icon` when it is the first child
    * @prop --ion-chip-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-icon` when it is the first child
    * @prop --ion-chip-icon-leading-margin-bottom: Bottom margin of the slotted `ion-icon` when it is the first child
@@ -112,14 +134,6 @@
    * Slotted Avatar
    * @prop --ion-chip-avatar-width: Width of the slotted `ion-avatar`
    * @prop --ion-chip-avatar-height: Height of the slotted `ion-avatar`
-   * @prop --ion-chip-avatar-leading-margin-top: Top margin of the slotted `ion-avatar` when it is the first child
-   * @prop --ion-chip-avatar-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child
-   * @prop --ion-chip-avatar-leading-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the first child
-   * @prop --ion-chip-avatar-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child
-   * @prop --ion-chip-avatar-trailing-margin-top: Top margin of the slotted `ion-avatar` when it is the last child
-   * @prop --ion-chip-avatar-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child
-   * @prop --ion-chip-avatar-trailing-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the last child
-   * @prop --ion-chip-avatar-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child
    */
 
   @include mixins.font-smoothing();
@@ -129,12 +143,6 @@
     var(--ion-chip-margin-bottom),
     var(--ion-chip-margin-start)
   );
-  @include mixins.padding(
-    var(--ion-chip-padding-top),
-    var(--ion-chip-padding-end),
-    var(--ion-chip-padding-bottom),
-    var(--ion-chip-padding-start)
-  );
 
   display: inline-flex;
   position: relative;
@@ -143,10 +151,6 @@
   justify-content: center;
 
   font-weight: var(--ion-chip-font-weight);
-
-  letter-spacing: var(--ion-chip-letter-spacing);
-
-  line-height: var(--ion-chip-line-height);
 
   cursor: pointer;
   gap: var(--ion-chip-gap);
@@ -160,15 +164,62 @@
 // ---------------------------------------------
 
 :host(.chip-size-small) {
+  @include mixins.padding(
+    var(--ion-chip-size-small-padding-top),
+    var(--ion-chip-size-small-padding-end),
+    var(--ion-chip-size-small-padding-bottom),
+    var(--ion-chip-size-small-padding-start)
+  );
+
   min-height: var(--ion-chip-size-small-min-height);
 
   font-size: var(--ion-chip-size-small-font-size);
+
+  letter-spacing: var(--ion-chip-size-small-letter-spacing);
+
+  line-height: var(--ion-chip-size-small-line-height);
 }
 
 :host(.chip-size-large) {
+  @include mixins.padding(
+    var(--ion-chip-size-large-padding-top),
+    var(--ion-chip-size-large-padding-end),
+    var(--ion-chip-size-large-padding-bottom),
+    var(--ion-chip-size-large-padding-start)
+  );
+
   min-height: var(--ion-chip-size-large-min-height);
 
   font-size: var(--ion-chip-size-large-font-size);
+
+  letter-spacing: var(--ion-chip-size-large-letter-spacing);
+
+  line-height: var(--ion-chip-size-large-line-height);
+}
+
+// Outline Sizes
+// ---------------------------------------------
+
+/**
+ * The border is part of the chip's size, so an outline chip
+ * is as tall as a solid one.
+ */
+@each $size in (small, large) {
+  @each $hue in (bold, subtle) {
+    :host(.chip-size-#{$size}.chip-hue-#{$hue}.chip-fill-outline) {
+      $border-width: var(--ion-chip-hue-#{$hue}-outline-default-border-width, 0px);
+
+      padding-top: calc(var(--ion-chip-size-#{$size}-padding-top) - #{$border-width});
+      padding-bottom: calc(var(--ion-chip-size-#{$size}-padding-bottom) - #{$border-width});
+    }
+
+    :host(.chip-size-#{$size}.chip-hue-#{$hue}.chip-fill-outline.ion-color) {
+      $border-width: var(--ion-chip-hue-#{$hue}-outline-semantic-default-border-width, 0px);
+
+      padding-top: calc(var(--ion-chip-size-#{$size}-padding-top) - #{$border-width});
+      padding-bottom: calc(var(--ion-chip-size-#{$size}-padding-bottom) - #{$border-width});
+    }
+  }
 }
 
 // Chip Shapes
@@ -449,6 +500,35 @@
   );
 }
 
+// Chip: Activated While Hovered
+// ---------------------------------------------
+
+/**
+ * A theme without an activated background keeps the hover background,
+ * so a hovered chip doesn't get lighter when it's pressed.
+ */
+@media (any-hover: hover) {
+  @each $hue in (bold, subtle) {
+    @each $fill in (solid, outline) {
+      $prefix: --ion-chip-hue-#{$hue}-#{$fill};
+
+      :host(.chip-hue-#{$hue}.chip-fill-#{$fill}.ion-activated:hover) {
+        background: var(
+          #{$prefix}-activated-background,
+          var(#{$prefix}-hover-background, var(#{$prefix}-default-background))
+        );
+      }
+
+      :host(.chip-hue-#{$hue}.chip-fill-#{$fill}.ion-color.ion-activated:hover) {
+        background: var(
+          #{$prefix}-semantic-activated-background,
+          var(#{$prefix}-semantic-hover-background, var(#{$prefix}-semantic-default-background))
+        );
+      }
+    }
+  }
+}
+
 // Chip States
 // ---------------------------------------------
 
@@ -472,8 +552,10 @@
 // ---------------------------------------------
 
 // Icon
-::slotted(ion-icon) {
-  font-size: var(--ion-chip-icon-font-size);
+@each $size in (small, large) {
+  :host(.chip-size-#{$size}) ::slotted(ion-icon) {
+    font-size: var(--ion-chip-size-#{$size}-icon-font-size);
+  }
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
@@ -506,20 +588,22 @@
   height: var(--ion-chip-avatar-height, revert-layer);
 }
 
-::slotted(ion-avatar:first-child) {
-  @include mixins.margin(
-    var(--ion-chip-avatar-leading-margin-top),
-    var(--ion-chip-avatar-leading-margin-end),
-    var(--ion-chip-avatar-leading-margin-bottom),
-    var(--ion-chip-avatar-leading-margin-start)
-  );
-}
+@each $size in (small, large) {
+  :host(.chip-size-#{$size}) ::slotted(ion-avatar:first-child) {
+    @include mixins.margin(
+      var(--ion-chip-size-#{$size}-avatar-leading-margin-top),
+      var(--ion-chip-size-#{$size}-avatar-leading-margin-end),
+      var(--ion-chip-size-#{$size}-avatar-leading-margin-bottom),
+      var(--ion-chip-size-#{$size}-avatar-leading-margin-start)
+    );
+  }
 
-::slotted(ion-avatar:last-child) {
-  @include mixins.margin(
-    var(--ion-chip-avatar-trailing-margin-top),
-    var(--ion-chip-avatar-trailing-margin-end),
-    var(--ion-chip-avatar-trailing-margin-bottom),
-    var(--ion-chip-avatar-trailing-margin-start)
-  );
+  :host(.chip-size-#{$size}) ::slotted(ion-avatar:last-child) {
+    @include mixins.margin(
+      var(--ion-chip-size-#{$size}-avatar-trailing-margin-top),
+      var(--ion-chip-size-#{$size}-avatar-trailing-margin-end),
+      var(--ion-chip-size-#{$size}-avatar-trailing-margin-bottom),
+      var(--ion-chip-size-#{$size}-avatar-trailing-margin-start)
+    );
+  }
 }
