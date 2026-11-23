@@ -336,6 +336,11 @@ ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"] {
   --border-width: 0px;
 }
 
+// The ios theme draws the full line with an element instead of a border
+ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"]::part(line) {
+  display: none;
+}
+
 ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
   transition: 300ms transform cubic-bezier(0.25, 0.8, 0.5, 1);
 }

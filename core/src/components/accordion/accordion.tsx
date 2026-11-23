@@ -78,6 +78,7 @@ export class Accordion implements ComponentInterface {
   private contentEl: HTMLDivElement | undefined;
   private contentElWrapper: HTMLDivElement | undefined;
   private headerEl: HTMLDivElement | undefined;
+  private nextLineEl: HTMLDivElement | undefined;
 
   private currentRaf: number | undefined;
 
@@ -159,6 +160,8 @@ export class Accordion implements ComponentInterface {
   componentDidLoad() {
     this.setItemDefaults();
     this.slotToggleIcon();
+    this.updateHeaderLine(this.state === AccordionState.Expanded || this.state === AccordionState.Expanding);
+    this.updateNextLineColor();
 
     /**
      * We need to wait a tick because we
@@ -199,6 +202,46 @@ export class Accordion implements ComponentInterface {
     if (ionItem.lines === undefined) {
       ionItem.lines = 'full';
     }
+  };
+
+  /**
+   * Whether the accordion switched its header item's `lines` from `"full"`
+   * to `"none"` while expanded, so it knows to switch it back.
+   */
+  private headerLineHidden = false;
+
+  /**
+   * Hides the header item's full line while the accordion is expanded. Some
+   * themes draw item lines inside the item, where the accordion's styles
+   * can't reach, so the accordion switches `lines` instead.
+   */
+  private updateHeaderLine = (expanded: boolean) => {
+    const ionItem = this.getSlottedHeaderIonItem();
+    if (!ionItem) {
+      return;
+    }
+
+    if (expanded && ionItem.lines === 'full') {
+      ionItem.lines = 'none';
+      this.headerLineHidden = true;
+    } else if (!expanded && this.headerLineHidden) {
+      ionItem.lines = 'full';
+      this.headerLineHidden = false;
+    }
+  };
+
+  /**
+   * Colors the top line with the shade of the header item's color, matching
+   * the item's own lines. The accordion's styles can't read the item's color,
+   * so the shade is set here. The names follow `generateColorClasses`.
+   */
+  private updateNextLineColor = () => {
+    const color = this.getSlottedHeaderIonItem()?.color;
+    if (!this.nextLineEl || color === undefined) {
+      return;
+    }
+
+    this.nextLineEl.style.color = `var(--ion-color-${color}-shade, var(--ion-color-${color}-bold-shade))`;
   };
 
   private getSlottedHeaderIonItem = () => {
@@ -509,6 +552,7 @@ export class Accordion implements ComponentInterface {
     const contentPart = expanded ? 'content expanded' : 'content';
 
     this.setAria(expanded);
+    this.updateHeaderLine(expanded);
 
     return (
       <Host
@@ -541,6 +585,8 @@ export class Accordion implements ComponentInterface {
         >
           <slot name="header"></slot>
         </div>
+
+        <div class="accordion-next-line" ref={(nextLineEl) => (this.nextLineEl = nextLineEl)}></div>
 
         <div
           id="content"

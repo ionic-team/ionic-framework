@@ -27,6 +27,8 @@ const INDICATOR_CONTROL_SELECTOR = 'ion-checkbox, ion-radio, ion-toggle';
  * @part inner - The inner wrapper element that arranges the item content.
  * @part container - The wrapper element that contains the default slot.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
+ * @part line - The full-width line at the bottom of the item. Only applies to the ios theme.
+ * @part inner-line - The inset line at the bottom of the item content. Only applies to the ios theme.
  */
 @Component({
   tag: 'ion-item',
@@ -504,6 +506,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
 
     const showDetail = detail !== undefined ? detail : theme === 'ios' && clickable;
+    /**
+     * Without `lines`, both render so a parent list's `lines` can pick one.
+     * The theme's stylesheet decides whether they show.
+     */
+    const showLine = lines === undefined || lines === 'full';
+    const showInnerLine = lines === undefined || lines === 'inset';
     this.itemStyles.forEach((value) => {
       Object.assign(childStyles, value);
     });
@@ -572,7 +580,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                 flip-rtl={shouldFlipIcon}
               ></ion-icon>
             )}
+            {showInnerLine && <div class="item-inner-line" part="inner-line"></div>}
           </div>
+          {showLine && <div class="item-line" part="line"></div>}
           {canActivate && theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </TagType>
       </Host>

@@ -1824,6 +1824,8 @@ ion-item,css-prop,--transition,md
 ion-item,part,container
 ion-item,part,detail-icon
 ion-item,part,inner
+ion-item,part,inner-line
+ion-item,part,line
 ion-item,part,native
 
 ion-item-divider,shadow

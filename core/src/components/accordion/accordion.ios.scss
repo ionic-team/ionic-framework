@@ -4,6 +4,18 @@
 // iOS Accordion
 // --------------------------------------------------
 
-:host(.accordion-next) ::slotted(ion-item[slot="header"]) {
-  --border-width: #{$item-ios-border-bottom-width 0px $item-ios-border-bottom-width 0px};
+// Drawn as a filled box instead of a border on the header item
+// (refer to the `hairline` mixin)
+.accordion-next-line {
+  @include hairline(top);
+
+  color: $item-ios-border-bottom-color;
+
+  // Above the header item's background
+  z-index: 1;
+}
+
+// The last accordion's header has no lines (refer to core.scss), so it has no top line either
+:host(.accordion-next:not(.accordion-last)) .accordion-next-line {
+  display: block;
 }

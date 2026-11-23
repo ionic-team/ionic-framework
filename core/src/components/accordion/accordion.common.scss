@@ -21,9 +21,9 @@
   z-index: 0;
 }
 
-:host(.accordion-expanding) ::slotted(ion-item[slot="header"]),
-:host(.accordion-expanded) ::slotted(ion-item[slot="header"]) {
-  --border-width: 0px;
+// Hidden unless the theme's stylesheet shows it
+.accordion-next-line {
+  display: none;
 }
 
 #content {

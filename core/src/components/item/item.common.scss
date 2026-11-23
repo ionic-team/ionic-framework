@@ -286,6 +286,15 @@ a {
   opacity: var(--detail-icon-opacity);
 }
 
+// Item Lines
+// --------------------------------------------------
+
+// Hidden unless the theme's stylesheet shows them
+.item-line,
+.item-inner-line {
+  display: none;
+}
+
 // Item Slots
 // --------------------------------------------------
 

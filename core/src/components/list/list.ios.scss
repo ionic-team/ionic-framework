@@ -35,11 +35,13 @@
  * items in an item-sliding when the item is the last
  * element in the item-sliding container.
  */
-.list-ios.list-inset ion-item:only-child,
-.list-ios.list-inset ion-item:not(:only-of-type):last-of-type,
-.list-ios.list-inset ion-item-sliding:last-of-type ion-item {
-  --border-width: 0;
-  --inner-border-width: 0;
+.list-ios.list-inset ion-item:only-child::part(line),
+.list-ios.list-inset ion-item:only-child::part(inner-line),
+.list-ios.list-inset ion-item:not(:only-of-type):last-of-type::part(line),
+.list-ios.list-inset ion-item:not(:only-of-type):last-of-type::part(inner-line),
+.list-ios.list-inset ion-item-sliding:last-of-type ion-item::part(line),
+.list-ios.list-inset ion-item-sliding:last-of-type ion-item::part(inner-line) {
+  display: none;
 }
 
 .list-ios.list-inset + ion-list.list-inset {
@@ -49,25 +51,31 @@
 // iOS No Lines List
 // --------------------------------------------------
 
-.list-ios-lines-none .item-lines-default {
-  --inner-border-width: 0px;
-  --border-width: 0px;
+.list-ios-lines-none .item-lines-default::part(line),
+.list-ios-lines-none .item-lines-default::part(inner-line) {
+  display: none;
 }
 
 // iOS Full Lines List
 // --------------------------------------------------
 
-.list-ios-lines-full .item-lines-default {
-  --inner-border-width: 0px;
-  --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
+.list-ios-lines-full .item-lines-default::part(line) {
+  display: block;
+}
+
+.list-ios-lines-full .item-lines-default::part(inner-line) {
+  display: none;
 }
 
 // iOS Inset Lines List
 // --------------------------------------------------
 
-.list-ios-lines-inset .item-lines-default {
-  --inner-border-width: #{0 0 $list-ios-item-border-bottom-width 0};
-  --border-width: 0px;
+.list-ios-lines-inset .item-lines-default::part(line) {
+  display: none;
+}
+
+.list-ios-lines-inset .item-lines-default::part(inner-line) {
+  display: block;
 }
 
 // iOS List Inside A Card
