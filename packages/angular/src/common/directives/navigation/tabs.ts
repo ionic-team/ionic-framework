@@ -118,7 +118,10 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   /**
    * @internal
    */
-  onStackWillChange({ enteringView, tabSwitch }: StackWillChangeEvent): void {
+  onStackWillChange({ enteringView, tabSwitch }: StackWillChangeEvent, outlet?: any): void {
+    if (outlet && !this.outlet) {
+      this.outlet = outlet;
+    }
     const stackId = enteringView.stackId;
     if (tabSwitch && stackId !== undefined) {
       this.ionTabsWillChange.emit({ tab: stackId });
