@@ -1,10 +1,8 @@
 import { expect } from '@playwright/test';
-import { configs, keepSafariHairlines, test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('item: slotted inputs'), () => {
-    keepSafariHairlines(config);
-
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/item/test/slotted-inputs`, config);
 
@@ -20,8 +18,6 @@ configs().forEach(({ title, screenshot, config }) => {
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item: slotted inputs'), () => {
-    keepSafariHairlines(config);
-
     test.describe('checkbox', () => {
       test('should not expand the slotted checkbox width larger than its content', async ({ page }, testInfo) => {
         testInfo.annotations.push({

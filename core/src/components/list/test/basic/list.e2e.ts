@@ -1,10 +1,8 @@
 import { expect } from '@playwright/test';
-import { configs, keepSafariHairlines, test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('list: basic'), () => {
-    keepSafariHairlines(config);
-
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `

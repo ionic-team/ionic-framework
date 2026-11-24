@@ -1,11 +1,9 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
-import { configs, keepSafariHairlines, test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], palettes: ['dark'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('item: dark palette'), () => {
-    keepSafariHairlines(config);
-
     /**
      * This test was originally created to ensure the item border has sufficient
      * contrast. We don't use an Axe test here because Axe not warn about color
@@ -60,8 +58,6 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
   });
 
   test.describe(title('item: font scaling'), () => {
-    keepSafariHairlines(config);
-
     test('should scale text on larger font sizes', async ({ page }) => {
       await page.setContent(
         `

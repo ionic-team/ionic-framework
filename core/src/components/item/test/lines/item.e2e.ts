@@ -1,10 +1,8 @@
 import { expect } from '@playwright/test';
-import { configs, keepSafariHairlines, test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item: lines'), () => {
-    keepSafariHairlines(config);
-
     test.describe('default', () => {
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
@@ -212,14 +210,18 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
 });
 
 /**
- * Snapshots shrink the page to CSS pixels, which can drop a one-device-pixel
- * ios line in Safari when an item sits at a fractional position. This test
- * keeps every device pixel, so a missing, thicker or misplaced line fails in
- * every browser. Only the ios theme draws lines thinner than one CSS pixel.
+ * Other ios tests draw at 1x (refer to the `deviceScaleFactor` fixture in
+ * `playwright-page.ts`), so they never show a line at its real thickness.
+ * This test draws at each browser's own density and keeps every pixel,
+ * so a missing, thicker or misplaced line fails. Only the ios theme draws lines
+ * thinner than one CSS pixel.
  * This behavior does not vary across directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item: lines at device resolution'), () => {
+    // Resets the 1x that ios tests get to the browser's own density
+    test.use({ deviceScaleFactor: undefined });
+
     test('should not have visual regressions', async ({ page }) => {
       // The groups start 0, 1/3 and 2/3 of a pixel down the page
       const group = (offset: string) => `
