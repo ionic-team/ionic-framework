@@ -488,23 +488,9 @@ $rtl-use-host-context: true !default;
 @mixin hairline-fill($edge, $color, $thickness) {
   $direction: if($edge == top, to bottom, to top);
 
-  // Starts the line up to 0.4px from the edge, so a page drawn at 1x on a
-  // 2x or 3x screen, as Chrome does for screenshots, still has a pixel
-  // center on it. On the screen itself, it still covers one pixel.
-  $start: null;
-  $end: null;
-
-  @if type-of($thickness) == number {
-    $start: max(0px, min(0.4px, 1px - $thickness));
-    $end: $start + $thickness;
-  } @else {
-    $start: unquote("max(0px, min(0.4px, calc(1px - #{$thickness})))");
-    $end: unquote("calc(#{$start} + #{$thickness})");
-  }
-
   height: max(1px, $thickness);
 
-  background: linear-gradient($direction, transparent $start, $color $start, $color $end, transparent $end);
+  background: linear-gradient($direction, $color $thickness, transparent $thickness);
 }
 
 // Add border radius for all directions
