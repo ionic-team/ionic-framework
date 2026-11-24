@@ -95,6 +95,17 @@ const generateTitle = (title: string, config: TestConfig): string => {
 };
 
 /**
+ * Matches a title from `generateTitle` for the ios theme, such as
+ * `item: basic - ios/ltr` or `item: basic - ios/rtl/dark`.
+ */
+const IOS_THEME_TITLE = / - ios\/(ltr|rtl)(\/|$)/;
+
+/**
+ * Returns `true` when a title from `generateTitle` runs the ios theme.
+ */
+export const isIosThemeTitle = (title: string) => IOS_THEME_TITLE.test(title);
+
+/**
  * Generates a unique filename based on a base filename
  * and a test config.
  */
