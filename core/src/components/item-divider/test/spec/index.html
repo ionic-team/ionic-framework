@@ -107,13 +107,12 @@
       margin: 0;
     }
 
-    .ios ion-item:last-of-type {
-      --inner-border-width: 0;
+    ion-item:last-of-type::part(inner-line) {
+      display: none;
     }
 
-    .md ion-item:last-of-type {
-      --inner-border-width: 0;
-      --border-width: 0 0 1px 0;
+    .md ion-item:last-of-type::part(line) {
+      display: block;
     }
   </style>
 </html>

@@ -12,3 +12,28 @@ ion-list {
   contain: content;
   list-style-type: none;
 }
+
+// List Lines
+// --------------------------------------------------
+// The list's `lines` applies to items that don't set their own
+
+.list-lines-none .item-lines-default::part(line),
+.list-lines-none .item-lines-default::part(inner-line) {
+  display: none;
+}
+
+.list-lines-full .item-lines-default::part(line) {
+  display: block;
+}
+
+.list-lines-full .item-lines-default::part(inner-line) {
+  display: none;
+}
+
+.list-lines-inset .item-lines-default::part(line) {
+  display: none;
+}
+
+.list-lines-inset .item-lines-default::part(inner-line) {
+  display: block;
+}

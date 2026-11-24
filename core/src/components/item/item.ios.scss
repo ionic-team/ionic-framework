@@ -56,27 +56,14 @@
 // iOS Item Lines
 // --------------------------------------------------
 
-// Drawn as filled boxes instead of borders (refer to the `hairline` mixin)
+// One screen pixel thick at each density
 .item-line,
 .item-inner-line {
   @include hairline(bottom);
-
-  color: var(--border-color);
-
-  // Painted like a border: above the native element's background,
-  // below the item's content
-  z-index: -1;
 }
 
-:host(.ion-color) .item-line,
-:host(.ion-color) .item-inner-line {
-  color: current-color(shade);
-}
-
-// The inset line is the default, and `lines` picks the full line or neither.
-:host(.item-lines-default) .item-inner-line,
-:host(.item-lines-inset) .item-inner-line,
-:host(.item-lines-full) .item-line {
+// The inset line is the default
+:host(.item-lines-default) .item-inner-line {
   display: block;
 }
 

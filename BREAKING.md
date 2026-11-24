@@ -660,9 +660,9 @@ If you were targeting the internals of `ion-input-otp` in your CSS, you will nee
 
 <h4 id="version-10x-item">Item</h4>
 
-In the ios theme, the lines between items are drawn with an element instead of a border, so `--border-width` and `--inner-border-width` no longer show, hide or resize them. `--border-color` still sets their color.
+The lines between items are drawn with an element instead of a border, so `--border-width` and `--inner-border-width` no longer show, hide or resize them. `--border-color` still sets their color.
 
-The lines no longer add to the item's height, so an item with a line is slightly shorter: half a pixel on most iOS devices.
+The lines no longer add to the item's height, so an item with a line is slightly shorter: 1px in the md and ionic themes, and half a pixel on most iOS devices in the ios theme.
 
 - To hide a line, set `lines="none"` on the item or the list.
 - To style a line, target the `line` (full width) or `inner-line` (inset) [Shadow Part](https://ionicframework.com/docs/theming/css-shadow-parts):

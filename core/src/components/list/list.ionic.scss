@@ -11,14 +11,6 @@
   @include globals.margin(globals.$ion-space-100);
 }
 
-// Ionic No Lines List
-// --------------------------------------------------
-
-.list-ionic-lines-none .item-lines-default {
-  --inner-border-width: 0px;
-  --border-width: 0px;
-}
-
 // Ionic Shapes
 //
 // The border radius is applied to the list, excluding
@@ -108,28 +100,4 @@
   &.list-rectangular {
     @include globals.border-radius(globals.$ion-border-radius-0);
   }
-}
-
-// Ionic No Lines List
-// --------------------------------------------------
-
-.list-ionic-lines-none .item-lines-default {
-  --inner-border-width: #{globals.$ion-border-size-0};
-  --border-width: #{globals.$ion-border-size-0};
-}
-
-// Ionic Full Lines List
-// --------------------------------------------------
-
-.list-ionic-lines-full .item-lines-default {
-  --inner-border-width: #{globals.$ion-border-size-0};
-  --border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
-}
-
-// Ionic Inset Lines List
-// --------------------------------------------------
-
-.list-ionic-lines-inset .item-lines-default {
-  --inner-border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
-  --border-width: #{globals.$ion-border-size-0};
 }

@@ -27,8 +27,8 @@ const INDICATOR_CONTROL_SELECTOR = 'ion-checkbox, ion-radio, ion-toggle';
  * @part inner - The inner wrapper element that arranges the item content.
  * @part container - The wrapper element that contains the default slot.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
- * @part line - The full-width line at the bottom of the item. Only applies to the ios theme.
- * @part inner-line - The inset line at the bottom of the item content. Only applies to the ios theme.
+ * @part line - The full-width line at the bottom of the item.
+ * @part inner-line - The inset line at the bottom of the item content.
  */
 @Component({
   tag: 'ion-item',

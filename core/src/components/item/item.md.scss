@@ -20,7 +20,6 @@
   --transition: opacity 15ms linear, background-color 15ms linear;
   --padding-start: #{$item-md-padding-start};
   --inner-padding-end: #{$item-md-padding-end};
-  --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
 
   font-size: dynamic-font($item-md-font-size);
   font-weight: normal;
@@ -40,33 +39,15 @@
 // Material Design Item Lines
 // --------------------------------------------------
 
-// Default input items have a full border
-:host(.item-interactive) {
-  --border-width: #{0 0 $item-md-border-bottom-width 0};
-  --inner-border-width: 0;
+.item-line,
+.item-inner-line {
+  @include hairline(bottom, currentColor, $item-md-border-bottom-width);
 }
 
-// Full lines - apply the border to the item
-// Inset lines - apply the border to the item inner
-:host(.item-lines-full) {
-  --border-width: #{0 0 $item-md-border-bottom-width 0};
-}
-
-:host(.item-lines-inset) {
-  --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
-}
-
-// Full lines - remove the border from the item inner (inset list items)
-// Inset lines - remove the border on the item (full list items)
-// No lines - remove the border on both (full / inset list items)
-:host(.item-lines-inset),
-:host(.item-lines-none) {
-  --border-width: 0;
-}
-
-:host(.item-lines-full),
-:host(.item-lines-none) {
-  --inner-border-width: 0;
+// The inset line is the default, and input items default to the full line
+:host(.item-lines-default:not(.item-interactive)) .item-inner-line,
+:host(.item-lines-default.item-interactive) .item-line {
+  display: block;
 }
 
 // Material Design Multi-line Item

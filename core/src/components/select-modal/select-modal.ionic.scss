@@ -12,8 +12,11 @@
 // Item
 // ----------------------------------------------------------------
 
+ion-item::part(line) {
+  display: none;
+}
+
 ion-item {
-  --border-width: #{globals.$ion-border-size-0};
   --background-focused: transparent;
   --background-focused-opacity: 1;
   --background-hover: #{globals.$ion-bg-neutral-subtlest-press};

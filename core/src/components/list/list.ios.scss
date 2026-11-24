@@ -23,59 +23,8 @@
   @include border-radius($list-inset-ios-border-radius);
 }
 
-/**
- * These selectors ensure the last item in the list
- * has the correct border.
- * We need to consider the following scenarios:
- 1. The only item in a list.
- 2. The last item in a list as long as it is not the only item.
- 3. The item in the last item-sliding in a list.
- * Note that we do not select ion-item:last-of-type
- * because that will cause the borders to disappear on
- * items in an item-sliding when the item is the last
- * element in the item-sliding container.
- */
-.list-ios.list-inset ion-item:only-child::part(line),
-.list-ios.list-inset ion-item:only-child::part(inner-line),
-.list-ios.list-inset ion-item:not(:only-of-type):last-of-type::part(line),
-.list-ios.list-inset ion-item:not(:only-of-type):last-of-type::part(inner-line),
-.list-ios.list-inset ion-item-sliding:last-of-type ion-item::part(line),
-.list-ios.list-inset ion-item-sliding:last-of-type ion-item::part(inner-line) {
-  display: none;
-}
-
 .list-ios.list-inset + ion-list.list-inset {
   @include margin(0, null, null, null);
-}
-
-// iOS No Lines List
-// --------------------------------------------------
-
-.list-ios-lines-none .item-lines-default::part(line),
-.list-ios-lines-none .item-lines-default::part(inner-line) {
-  display: none;
-}
-
-// iOS Full Lines List
-// --------------------------------------------------
-
-.list-ios-lines-full .item-lines-default::part(line) {
-  display: block;
-}
-
-.list-ios-lines-full .item-lines-default::part(inner-line) {
-  display: none;
-}
-
-// iOS Inset Lines List
-// --------------------------------------------------
-
-.list-ios-lines-inset .item-lines-default::part(line) {
-  display: none;
-}
-
-.list-ios-lines-inset .item-lines-default::part(inner-line) {
-  display: block;
 }
 
 // iOS List Inside A Card

@@ -289,10 +289,22 @@ a {
 // Item Lines
 // --------------------------------------------------
 
-// Hidden unless the theme's stylesheet shows them
+// Drawn as filled boxes instead of borders (refer to the `hairline` mixin).
+// Each theme's stylesheet sets the thickness and shows its default line.
 .item-line,
 .item-inner-line {
   display: none;
+
+  color: var(--border-color);
+
+  // Painted like a border: above the native element's background,
+  // below the item's content
+  z-index: -1;
+}
+
+:host(.item-lines-full) .item-line,
+:host(.item-lines-inset) .item-inner-line {
+  display: block;
 }
 
 // Item Slots
