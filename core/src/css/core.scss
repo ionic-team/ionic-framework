@@ -358,8 +358,12 @@ ion-accordion.accordion-expanded > [slot="header"] .ion-accordion-toggle-icon {
   transform: rotate(180deg);
 }
 
-ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-previous ion-item[slot="header"]::part(line),
-ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-previous ion-item[slot="header"]::part(inner-line) {
+ion-accordion-group.accordion-group-expand-inset.md
+  > ion-accordion.accordion-previous
+  ion-item[slot="header"]::part(line),
+ion-accordion-group.accordion-group-expand-inset.md
+  > ion-accordion.accordion-previous
+  ion-item[slot="header"]::part(inner-line) {
   display: none;
 }
 
