@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { doc } from '@utils/browser';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { componentOnReady, isEndSide } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -117,6 +118,8 @@ export class ItemSliding implements ComponentInterface {
       openSlidingItem = undefined;
     }
 
+    this.stopWatchingForOutsidePress();
+
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
       this.mutationObserver = undefined;
@@ -202,6 +205,7 @@ export class ItemSliding implements ComponentInterface {
 
       const width = side === 'end' ? this.optsWidthRightSide : -this.optsWidthLeftSide;
       openSlidingItem = this.el;
+      this.watchForOutsidePress();
 
       this.setOpenAmount(width, false);
       this.state = side === 'end' ? SlidingState.End : SlidingState.Start;
@@ -309,6 +313,7 @@ export class ItemSliding implements ComponentInterface {
     }
 
     openSlidingItem = this.el;
+    this.watchForOutsidePress();
 
     if (this.tmr !== undefined) {
       clearTimeout(this.tmr);
@@ -387,6 +392,30 @@ export class ItemSliding implements ComponentInterface {
     }
   }
 
+  /**
+   * Native lists close an open item when the user presses anywhere else.
+   * Capture so the item still closes if an application's own pointerdown
+   * handler stops the event before it reaches the document.
+   */
+  private watchForOutsidePress() {
+    doc?.addEventListener('pointerdown', this.onPointerDownOutside, { capture: true });
+  }
+
+  private stopWatchingForOutsidePress() {
+    doc?.removeEventListener('pointerdown', this.onPointerDownOutside, { capture: true });
+  }
+
+  /**
+   * The item can live in another component's Shadow DOM, where a document
+   * listener sees the target retargeted to the outer host, so the composed
+   * path is used to tell a press on the item apart.
+   */
+  private onPointerDownOutside = (ev: Event) => {
+    if (!ev.composedPath().includes(this.el)) {
+      this.close();
+    }
+  };
+
   private calculateOptsWidth() {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
@@ -460,6 +489,7 @@ export class ItemSliding implements ComponentInterface {
       }, 600);
 
       openSlidingItem = undefined;
+      this.stopWatchingForOutsidePress();
       style.transform = '';
       return;
     }
