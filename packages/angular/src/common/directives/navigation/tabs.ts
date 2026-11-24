@@ -117,8 +117,19 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
 
   /**
    * @internal
+   *
+   * `outlet` is the `#outlet` template reference of the inner
+   * `ion-router-outlet`. When `ion-tabs` renders after the router has
+   * already activated the tab route, the outlet activates the first tab
+   * while `IonTabs` is still in its first change detection, before the
+   * `outlet` view query has resolved. Assigning it here makes sure
+   * `outlet` is set when `ionTabsWillChange` fires.
    */
-  onStackWillChange({ enteringView, tabSwitch }: StackWillChangeEvent): void {
+  onStackWillChange({ enteringView, tabSwitch }: StackWillChangeEvent, outlet?: any): void {
+    if (outlet) {
+      this.outlet = outlet;
+    }
+
     const stackId = enteringView.stackId;
     if (tabSwitch && stackId !== undefined) {
       this.ionTabsWillChange.emit({ tab: stackId });
