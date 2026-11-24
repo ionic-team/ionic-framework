@@ -9,6 +9,7 @@ import { test as base } from '@playwright/test';
 
 import { PageUtils } from '../press-keys';
 
+import { isIosThemeTitle } from './generator';
 import { initPageEvents } from './page/event-spy';
 import { goto as goToPage, setContent, setIonViewport, spyOnEvent, waitForChanges, locator } from './page/utils';
 import type { LocatorOptions } from './page/utils';
@@ -60,6 +61,26 @@ export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
 }
 
 export const test = base.extend<CustomFixtures>({
+  /**
+   * Draws ios theme tests at 1 device pixel per CSS pixel in Safari and
+   * Chrome, instead of their device's 3 (iPhone 12) or 2.75 (Pixel 5).
+   *
+   * Screenshots save 1 pixel per CSS pixel, so a page drawn at 3x is shrunk.
+   * An ios hairline is one device pixel thick, so it can be lost in the
+   * shrink, depending on where it lands on the page. At 1x there is nothing
+   * to shrink, and the line is a full pixel. md and ionic lines are already a
+   * full CSS pixel thick, and Firefox already runs at 1x.
+   *
+   * To test at the device's own density, add
+   * `test.use({ deviceScaleFactor: undefined })` to the `test.describe`.
+   * It resets the value to the project's, replacing this fixture.
+   */
+  deviceScaleFactor: async ({ deviceScaleFactor, browserName }, use, testInfo) => {
+    const isIosTheme = testInfo.titlePath.some(isIosThemeTitle);
+    const drawsAtDeviceDensity = browserName === 'webkit' || browserName === 'chromium';
+
+    await use(isIosTheme && drawsAtDeviceDensity ? 1 : deviceScaleFactor);
+  },
   page: async ({ page }: CustomTestArgs, use: (r: E2EPage) => Promise<void>, testInfo: TestInfo) => {
     page = await extendPageFixture(page, testInfo);
     await use(page);
