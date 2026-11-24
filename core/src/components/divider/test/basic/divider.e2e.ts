@@ -1,12 +1,14 @@
 import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, keepSafariHairlines, test } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('divider: rendering'), () => {
+    keepSafariHairlines(config);
+
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
@@ -82,6 +84,44 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
         paddingStart: '20px',
         paddingEnd: '20px',
       });
+    });
+  });
+});
+
+/**
+ * Snapshots shrink the page to CSS pixels, which can drop a one-device-pixel
+ * ios line in Safari when a divider sits at a fractional position. This test
+ * keeps every device pixel, so a missing, thicker or misplaced line fails in
+ * every browser. Only the ios theme draws lines thinner than one CSS pixel.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('divider: device resolution'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      // The dividers start 0, 1/3 and 2/3 of a pixel down from a whole pixel
+      await page.setContent(
+        `
+          <style>
+            #container {
+              width: 120px;
+            }
+          </style>
+          <div id="container">
+            <div style="height: 20px"></div>
+            <ion-divider></ion-divider>
+            <div style="height: 20.33px"></div>
+            <ion-divider></ion-divider>
+            <div style="height: 20.34px"></div>
+            <ion-divider></ion-divider>
+            <div style="height: 20px"></div>
+          </div>
+        `,
+        config
+      );
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`divider-device`), { scale: 'device' });
     });
   });
 });

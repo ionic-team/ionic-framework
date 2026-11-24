@@ -1,8 +1,10 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, keepSafariHairlines, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('accordion: basic'), () => {
+    keepSafariHairlines(config);
+
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/accordion/test/basic`, config);
 
@@ -92,6 +94,55 @@ configs({ modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
       const accordion = page.locator('ion-accordion-group');
 
       await expect(accordion).toHaveScreenshot(screenshot('accordion-basic-text'));
+    });
+  });
+});
+
+/**
+ * Snapshots shrink the page to CSS pixels, which can drop a one-device-pixel
+ * ios line in Safari when an accordion sits at a fractional position. This
+ * test keeps every device pixel, so a missing, thicker or misplaced line above
+ * a header fails in every browser. Only the ios theme draws that line.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('accordion: line at device resolution'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      // The groups start 0, 1/3 and 2/3 of a pixel down the page
+      const group = (offset: string, color = '') => `
+        <ion-accordion-group value="first" style="padding-top: ${offset}">
+          <ion-accordion value="first">
+            <ion-item slot="header" ${color}><ion-label>First</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+          <ion-accordion value="second">
+            <ion-item slot="header" ${color}><ion-label>Second</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+          <ion-accordion value="third">
+            <ion-item slot="header" ${color}><ion-label>Third</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+        </ion-accordion-group>
+      `;
+
+      await page.setContent(
+        `
+        <style>
+          #container {
+            width: 120px;
+          }
+        </style>
+        <div id="container">
+          ${group('0px')}${group('0.33px')}${group('0.34px')}${group('0px', 'color="warning"')}
+        </div>
+        `,
+        config
+      );
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`accordion-line-device`), { scale: 'device' });
     });
   });
 });

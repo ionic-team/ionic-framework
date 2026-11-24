@@ -1,8 +1,10 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, keepSafariHairlines, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('accordion: multiple'), () => {
+    keepSafariHairlines(config);
+
     test('should update value and visually expand items', async ({ page }) => {
       await page.goto(`/src/components/accordion/test/multiple`, config);
       const accordionGroup = page.locator('ion-accordion-group');

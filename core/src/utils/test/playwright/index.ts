@@ -9,3 +9,4 @@ export * from './viewports';
 export * from './generator';
 export * from './detach-reattach';
 export * from './field-geometry';
+export * from './hairlines';

@@ -1,8 +1,10 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, keepSafariHairlines, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('list: lines'), () => {
+    keepSafariHairlines(config);
+
     test.describe('default', () => {
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
@@ -367,6 +369,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('list: lines with children'), () => {
+    keepSafariHairlines(config);
+
     test('only item in inset list should not have line', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',

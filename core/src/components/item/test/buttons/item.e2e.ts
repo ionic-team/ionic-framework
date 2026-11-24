@@ -1,8 +1,10 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, keepSafariHairlines, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item: buttons'), () => {
+    keepSafariHairlines(config);
+
     test('should not have visual regressions', async ({ page }) => {
       /**
        * This test validates that in iOS mode the arrow indicators are
@@ -21,6 +23,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
 
 configs({ directions: ['ltr'], palettes: ['dark'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item: buttons dark'), () => {
+    keepSafariHairlines(config);
+
     test('should not have visual regressions in dark', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
