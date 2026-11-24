@@ -4,8 +4,12 @@ import { configs, test } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across directions.
+ * The ionic theme has no dark palette color for the line.
  */
-configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
+[
+  ...configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }),
+  ...configs({ directions: ['ltr'], modes: ['ios', 'md'], palettes: ['dark'] }),
+].forEach(({ config, screenshot, title }) => {
   test.describe(title('divider: rendering'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(

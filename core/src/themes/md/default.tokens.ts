@@ -2157,7 +2157,7 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonDivider: {
-      color: '#e0e0e0',
+      color: 'var(--ion-background-color-step-150, #e0e0e0)',
 
       spacing: {
         xxsmall: {
