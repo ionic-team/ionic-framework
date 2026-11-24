@@ -69,12 +69,23 @@ for (const { title, path } of pages) {
       await expect(notifications).toHaveClass(/\bion-touched\b/);
     });
 
-    test('should not mark a field as valid or invalid while async validation is pending', async ({ page }) => {
+    test('should mark a field as pending, not valid or invalid, while async validation is running', async ({ page }) => {
       const username = page.locator('ion-input#username');
 
-      await expect(username).toHaveClass(/\bion-untouched\b/);
+      await expect(username).toHaveClass(/\bion-pending\b/);
       await expect(username).not.toHaveClass(/\bion-valid\b/);
       await expect(username).not.toHaveClass(/\bion-invalid\b/);
+    });
+
+    test('should remove the pending class after async validation finishes', async ({ page }) => {
+      const username = page.locator('ion-input#username');
+
+      await expect(username).toHaveClass(/\bion-pending\b/);
+
+      await page.locator('ion-button#settle-username').click();
+
+      await expect(username).toHaveClass(/\bion-valid\b/);
+      await expect(username).not.toHaveClass(/\bion-pending\b/);
     });
   });
 }

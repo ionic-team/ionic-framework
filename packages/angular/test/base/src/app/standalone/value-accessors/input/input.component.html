@@ -8,4 +8,7 @@
     <ion-input label="String" formControlName="inputString"></ion-input>
     <ion-input label="Number" type="number" formControlName="inputNumber"></ion-input>
   </app-value-accessor-test>
+
+  <ion-input id="async-input" label="Async" [formControl]="asyncControl"></ion-input>
+  <button id="settle-async" (click)="settleAsync?.()">Settle async check</button>
 </div>

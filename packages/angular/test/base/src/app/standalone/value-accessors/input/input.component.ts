@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { IonInput } from "@ionic/angular";
 import { ValueAccessorTestComponent } from "../value-accessor-test/value-accessor-test.component";
 
@@ -19,6 +19,13 @@ export class InputComponent {
   form = this.fb.group({
     inputString: ['', Validators.required],
     inputNumber: ['', Validators.required],
+  });
+
+  settleAsync?: () => void;
+
+  // Stays pending until the settle button is clicked.
+  asyncControl = new FormControl('', {
+    asyncValidators: () => new Promise((resolve) => (this.settleAsync = () => resolve(null))),
   });
 
   constructor(private fb: FormBuilder) { }

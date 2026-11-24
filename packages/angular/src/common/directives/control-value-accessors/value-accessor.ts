@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  DoCheck,
   ElementRef,
   EffectRef,
   Injector,
@@ -16,7 +17,7 @@ import { raf } from '../../utils/util';
 // TODO(FW-2827): types
 
 @Directive()
-export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDestroy {
+export class ValueAccessor implements ControlValueAccessor, AfterViewInit, DoCheck, OnDestroy {
   private onChange: (value: any) => void = () => {
     /**/
   };
@@ -31,6 +32,9 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   protected signalControl?: NgControl;
   private statusChanges?: Subscription;
   private signalControlEffect?: EffectRef;
+  /** The reactive or template-driven control bound to this element, if any. */
+  private reactiveControl?: NgControl;
+  private lastReactiveState?: string;
 
   constructor(protected injector: Injector, protected elementRef: ElementRef) {}
 
@@ -89,6 +93,24 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     this.elementRef.nativeElement.disabled = isDisabled;
   }
 
+  /**
+   * Angular re-runs validation with `emitEvent: false` in places such as
+   * directive setup, so an async validator can settle without emitting
+   * `statusChanges`. Checking the control state on every change detection
+   * run catches those updates, the same way Angular updates its `ng-*`
+   * classes.
+   */
+  ngDoCheck(): void {
+    if (!this.reactiveControl) {
+      return;
+    }
+    const state = getStateClasses(this.reactiveControl).join(' ');
+    if (state !== this.lastReactiveState) {
+      this.lastReactiveState = state;
+      setIonicClasses(this.elementRef, this.reactiveControl);
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.statusChanges) {
       this.statusChanges.unsubscribe();
@@ -120,6 +142,9 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
       return;
     }
 
+    this.reactiveControl = ngControl;
+    this.lastReactiveState = getStateClasses(ngControl).join(' ');
+
     // Listen for changes in validity, disabled, or pending states
     this.statusChanges = ngControl.statusChanges.subscribe(() => setIonicClasses(this.elementRef));
 
@@ -148,7 +173,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
  * on the element and its parent item.
  *
  * @param element The component element.
- * @param control A signal forms control. When passed, the classes are built
+ * @param control The bound form control. When passed, the classes are built
  * from its state instead of copied from the `ng-*` classes on the element.
  */
 export const setIonicClasses = (element: ElementRef, control?: NgControl): void => {
@@ -180,6 +205,8 @@ const getStateClasses = (control: NgControl): string[] => {
     classes.push('ion-valid');
   } else if (control.invalid) {
     classes.push('ion-invalid');
+  } else if (control.pending) {
+    classes.push('ion-pending');
   }
   return classes;
 };
@@ -198,7 +225,15 @@ const getClasses = (element: HTMLElement) => {
 
 const setClasses = (element: HTMLElement, classes: string[]) => {
   const classList = element.classList;
-  classList.remove('ion-valid', 'ion-invalid', 'ion-touched', 'ion-untouched', 'ion-dirty', 'ion-pristine');
+  classList.remove(
+    'ion-valid',
+    'ion-invalid',
+    'ion-pending',
+    'ion-touched',
+    'ion-untouched',
+    'ion-dirty',
+    'ion-pristine'
+  );
   classList.add(...classes);
 };
 

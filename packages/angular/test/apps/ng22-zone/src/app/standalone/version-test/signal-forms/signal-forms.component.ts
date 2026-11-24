@@ -27,10 +27,13 @@ import { IonButton, IonCheckbox, IonContent, IonHeader, IonInput, IonTitle, IonT
       <ion-toggle id="notifications" [formField]="signupForm.notifications">Notifications</ion-toggle>
       <ion-button id="submit" (click)="signupForm().markAsTouched()">Submit</ion-button>
       <ion-button id="check-all" (click)="checkAll()">Check all</ion-button>
+      <ion-button id="settle-username" (click)="settleUsername?.()">Settle username check</ion-button>
     </ion-content>
   `,
 })
 export class SignalFormsComponent {
+  settleUsername?: () => void;
+
   model = signal({ name: '', password: '', confirm: '', username: '', terms: false, notifications: false });
 
   signupForm = form(this.model, (path) => {
@@ -38,10 +41,11 @@ export class SignalFormsComponent {
     validate(path.confirm, ({ value, valueOf }) =>
       value() === valueOf(path.password) ? undefined : { kind: 'mismatch', message: 'Passwords must match' }
     );
-    // Never settles, so the field stays pending.
+    // Stays pending until the settle button is clicked.
     validateAsync(path.username, {
       params: ({ value }) => value(),
-      factory: (params) => resource({ params, loader: () => new Promise<boolean>(() => {}) }),
+      factory: (params) =>
+        resource({ params, loader: () => new Promise<void>((resolve) => (this.settleUsername = resolve)) }),
       onSuccess: () => undefined,
       onError: () => undefined,
     });
