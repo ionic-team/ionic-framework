@@ -1,0 +1,57 @@
+import { Component, resource, signal } from '@angular/core';
+import { FormField, form, required, validate, validateAsync } from '@angular/forms/signals';
+import { IonButton, IonCheckbox, IonContent, IonHeader, IonInput, IonTitle, IonToggle, IonToolbar } from '@ionic/angular';
+
+@Component({
+  selector: 'app-signal-forms',
+  standalone: true,
+  imports: [FormField, IonButton, IonCheckbox, IonContent, IonHeader, IonInput, IonTitle, IonToggle, IonToolbar],
+  template: `
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Signal Forms</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-input id="name" label="Name" errorText="Name is required" [formField]="signupForm.name"></ion-input>
+      <ion-input id="password" label="Password" type="password" [formField]="signupForm.password"></ion-input>
+      <ion-input
+        id="confirm"
+        label="Confirm"
+        type="password"
+        errorText="Passwords must match"
+        [formField]="signupForm.confirm"
+      ></ion-input>
+      <ion-input id="username" label="Username" [formField]="signupForm.username"></ion-input>
+      <ion-checkbox id="terms" [formField]="signupForm.terms">Accept terms</ion-checkbox>
+      <ion-toggle id="notifications" [formField]="signupForm.notifications">Notifications</ion-toggle>
+      <ion-button id="submit" (click)="signupForm().markAsTouched()">Submit</ion-button>
+      <ion-button id="check-all" (click)="checkAll()">Check all</ion-button>
+      <ion-button id="settle-username" (click)="settleUsername?.()">Settle username check</ion-button>
+    </ion-content>
+  `,
+})
+export class SignalFormsComponent {
+  settleUsername?: () => void;
+
+  model = signal({ name: '', password: '', confirm: '', username: '', terms: false, notifications: false });
+
+  signupForm = form(this.model, (path) => {
+    required(path.name);
+    validate(path.confirm, ({ value, valueOf }) =>
+      value() === valueOf(path.password) ? undefined : { kind: 'mismatch', message: 'Passwords must match' }
+    );
+    // Stays pending until the settle button is clicked.
+    validateAsync(path.username, {
+      params: ({ value }) => value(),
+      factory: (params) =>
+        resource({ params, loader: () => new Promise<void>((resolve) => (this.settleUsername = resolve)) }),
+      onSuccess: () => undefined,
+      onError: () => undefined,
+    });
+  });
+
+  checkAll() {
+    this.model.update((model) => ({ ...model, terms: true, notifications: true }));
+  }
+}

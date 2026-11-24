@@ -60,7 +60,7 @@ export class IonCheckbox extends ValueAccessor {
 
   writeValue(value: boolean): void {
     this.elementRef.nativeElement.checked = this.lastValue = value;
-    setIonicClasses(this.elementRef);
+    setIonicClasses(this.elementRef, this.signalControl);
   }
 
   @HostListener('ionChange', ['$event.target'])

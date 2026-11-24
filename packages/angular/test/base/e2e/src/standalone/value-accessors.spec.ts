@@ -57,6 +57,17 @@ test.describe('Value Accessors', () => {
       await expect(page.locator('ion-input[formControlName="inputString"]')).toHaveClass(/ion-valid/);
       await expect(page.locator('ion-input[formControlName="inputNumber"]')).toHaveClass(/ion-valid/);
     });
+
+    test('should remove the pending class after async validation finishes', async ({ page }) => {
+      const asyncInput = page.locator('ion-input#async-input');
+
+      await expect(asyncInput).toHaveClass(/\bion-pending\b/);
+
+      await page.locator('#settle-async').click();
+
+      await expect(asyncInput).toHaveClass(/\bion-valid\b/);
+      await expect(asyncInput).not.toHaveClass(/\bion-pending\b/);
+    });
   });
 
   test.describe('Radio Group', () => {

@@ -170,6 +170,7 @@ export const routes: Routes = [
           { path: '**', redirectTo: 'input-validation' }
         ]
       },
+      { path: 'version-test', loadChildren: () => import('../version-test/version-test.routes').then(m => m.routes) },
       {
         path: 'value-accessors',
         children: [
