@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "9.0.12",
+  "version": "9.0.13",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
@@ -78,9 +78,9 @@
     }
   },
   "dependencies": {
-    "@ionic/core": "^9.0.12",
+    "@ionic/core": "^9.0.13",
     "@stencil/vue-output-target": "0.14.7",
-    "ionicons": "^8.0.13"
+    "ionicons": "^8.1.1"
   },
   "vetur": {
     "tags": "dist/vetur/tags.json",

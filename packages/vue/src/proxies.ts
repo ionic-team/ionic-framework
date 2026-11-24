@@ -397,7 +397,8 @@ export const IonFabButton: StencilVueComponent<JSX.IonFabButton> = /*@__PURE__*/
 
 export const IonFabList: StencilVueComponent<JSX.IonFabList> = /*@__PURE__*/ defineContainer<JSX.IonFabList>('ion-fab-list', defineIonFabList, [
   'activated',
-  'side'
+  'side',
+  'animated'
 ]);
 
 

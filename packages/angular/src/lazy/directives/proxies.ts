@@ -831,14 +831,14 @@ export declare interface IonFabButton extends Components.IonFabButton {
 
 
 @ProxyCmp({
-  inputs: ['activated', 'side']
+  inputs: ['activated', 'animated', 'side']
 })
 @Component({
   selector: 'ion-fab-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activated', 'side'],
+  inputs: ['activated', 'animated', 'side'],
   standalone: false
 })
 export class IonFabList {
