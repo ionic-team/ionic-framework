@@ -256,3 +256,55 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('alert: cancel buttons'), () => {
+    test.beforeEach(async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/23037',
+      });
+
+      await page.setContent(
+        `
+          <ion-alert header="Discard changes?"></ion-alert>
+
+          <script>
+            window.handlerCalls = [];
+            const alert = document.querySelector('ion-alert');
+            alert.buttons = [
+              { text: 'Keep editing', role: 'cancel', handler: () => window.handlerCalls.push('first') },
+              { text: 'Close', role: 'cancel', handler: () => window.handlerCalls.push('second') },
+            ];
+          </script>
+        `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      await page.locator('ion-alert').evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+    });
+
+    test('should run the handler of the pressed cancel button', async ({ page }) => {
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+
+      await page.locator('ion-alert .alert-button').nth(1).click();
+      await ionAlertDidDismiss.next();
+
+      expect(await page.evaluate(() => (window as any).handlerCalls)).toEqual(['second']);
+    });
+
+    test('should run the first cancel handler when the backdrop is tapped', async ({ page }) => {
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+
+      await page.mouse.click(5, 5);
+      await ionAlertDidDismiss.next();
+
+      expect(await page.evaluate(() => (window as any).handlerCalls)).toEqual(['first']);
+    });
+  });
+});

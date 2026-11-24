@@ -61,6 +61,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private inputType?: string;
   private processedInputs: AlertInput[] = [];
   private processedButtons: AlertButton[] = [];
+  /**
+   * An alert can have more than one cancel button, so the pressed one
+   * is tracked to run its handler instead of the first cancel button's.
+   */
+  private pressedCancelButton?: AlertButton;
   private wrapperEl?: HTMLElement;
   private buttonGroupEl?: HTMLElement;
   private buttonGroupResizeObserver?: ResizeObserver;
@@ -530,6 +535,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const role = button.role;
     const values = this.getValues();
     if (isCancel(role)) {
+      // The handler runs from dispatchCancelHandler, so it must know which cancel button was pressed.
+      this.pressedCancelButton = button;
       return this.dismiss({ values }, role);
     }
     const returnData = await this.callButtonHandler(button, values);
@@ -792,7 +799,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private dispatchCancelHandler = (ev: CustomEvent) => {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.processedButtons.find((b) => b.role === 'cancel');
+      /**
+       * Run the handler of the cancel button that was pressed. A backdrop tap,
+       * Escape or the hardware back button has no pressed button, so it runs
+       * the first cancel button's handler.
+       */
+      const cancelButton = this.pressedCancelButton ?? this.processedButtons.find((b) => b.role === 'cancel');
+      this.pressedCancelButton = undefined;
       this.callButtonHandler(cancelButton);
     }
   };
