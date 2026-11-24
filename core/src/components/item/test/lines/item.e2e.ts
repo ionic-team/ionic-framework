@@ -223,12 +223,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     test.use({ deviceScaleFactor: undefined });
 
     test('should not have visual regressions', async ({ page }) => {
-      // The groups start 0, 1/3 and 2/3 of a pixel down the page
+      // The groups start 0, 1/3 and 2/3 of a pixel down the page, with an 8px
+      // gap so a group's last line doesn't touch the next group's colored item
       const group = (offset: string) => `
         <div style="padding-top: ${offset}">
+          <ion-item lines="full" color="danger"><ion-label>Color</ion-label></ion-item>
           <ion-item><ion-label>Inset</ion-label></ion-item>
           <ion-item lines="full"><ion-label>Full</ion-label></ion-item>
-          <ion-item lines="full" color="danger"><ion-label>Color</ion-label></ion-item>
         </div>
       `;
 
@@ -239,7 +240,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
             width: 120px;
           }
         </style>
-        <div id="container">${group('0px')}${group('0.33px')}${group('0.34px')}</div>
+        <div id="container">${group('0px')}${group('8.33px')}${group('8.34px')}</div>
         `,
         config
       );
