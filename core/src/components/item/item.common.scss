@@ -212,7 +212,8 @@
 
   transition: var(--transition);
 
-  z-index: -1;
+  // Below the lines, which paint like a border
+  z-index: -2;
 }
 
 button,
@@ -297,8 +298,8 @@ a {
 
   color: var(--border-color);
 
-  // Painted like a border: above the native element's background,
-  // below the item's content
+  // Painted like a border: above the native element's background and the
+  // state overlay, below the item's content
   z-index: -1;
 }
 
