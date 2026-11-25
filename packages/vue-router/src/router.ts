@@ -848,8 +848,21 @@ export const createIonRouter = (
         }
         return;
       }
-      if (delta !== 0) {
+      if (delta < 0) {
         router.go(delta);
+        return;
+      }
+      /**
+       * The first history entry for this tab is ahead of the current
+       * entry, so the browser dropped it when another route was pushed
+       * after going back, and router.go() has nothing to reach. Happens
+       * after resetting another tab with router.go() and then switching
+       * to this tab. Replace with `originalHref` instead.
+       */
+      if (delta > 0) {
+        if (originalHref) {
+          handleNavigate(originalHref, "pop", "back", undefined, tab);
+        }
         return;
       }
       /**
