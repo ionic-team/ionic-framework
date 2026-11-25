@@ -390,7 +390,10 @@ type Components = {
  * merged straight into the theme's tokens keeps them.
  */
 export type IonMediaQuery<T> = {
-  /** Applies when the screen is at least the given value. When several match, the largest wins. */
+  /**
+   * Applies when the screen is at least the given value. When several match,
+   * the last key wins, so list values from smallest to largest.
+   */
   min?: {
     /** Screen density, in screen pixels per CSS pixel. */
     resolution?: { [K in IonMediaQueryResolution]?: T };
