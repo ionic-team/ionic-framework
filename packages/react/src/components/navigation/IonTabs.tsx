@@ -62,6 +62,7 @@ export class IonTabs extends React.Component<Props> {
   routerOutletRef: React.Ref<Components.IonRouterOutlet> = React.createRef();
   selectTabHandler?: (tag: string) => boolean;
   tabBarRef = React.createRef<any>();
+  tabsElRef = React.createRef<HTMLIonTabsElement>();
 
   ionTabContextState: IonTabsContextState = {
     activeTab: undefined,
@@ -81,7 +82,12 @@ export class IonTabs extends React.Component<Props> {
   }
 
   componentDidMount() {
-    if (this.tabBarRef.current) {
+    /**
+     * Without a router outlet, the tab bar does not switch tabs,
+     * so its `selectTab` and active tab must not replace the ones
+     * set for `ion-tabs` in `render`.
+     */
+    if (this.ionTabContextState.hasRouterOutlet && this.tabBarRef.current) {
       // Grab initial value
       this.ionTabContextState.activeTab = this.tabBarRef.current.state.activeTab;
       // Override method
@@ -91,6 +97,30 @@ export class IonTabs extends React.Component<Props> {
       this.ionTabContextState.selectTab = this.tabBarRef.current.selectTab;
     }
   }
+
+  /**
+   * Selects a tab on `ion-tabs` when it is used without a router outlet.
+   * Returns `false` when no `ion-tab` has the given `tab`.
+   */
+  selectTabWithoutRouter = (tab: string) => {
+    const tabsEl = this.tabsElRef.current;
+    if (!tabsEl) {
+      return false;
+    }
+
+    const hasTab = Array.from(tabsEl.querySelectorAll('ion-tab')).some((tabEl) => tabEl.tab === tab);
+    if (!hasTab) {
+      return false;
+    }
+
+    tabsEl.select(tab);
+    return true;
+  };
+
+  onTabsDidChangeWithoutRouter = (event: CustomEvent<{ tab: string }>) => {
+    this.ionTabContextState.activeTab = event.detail.tab;
+    this.props.onIonTabsDidChange?.(event);
+  };
 
   renderTabsInner(children: React.ReactNode, outlet: React.ReactElement<{}> | undefined) {
     return (
@@ -182,7 +212,23 @@ export class IonTabs extends React.Component<Props> {
     }
 
     if (hasTab) {
-      return <IonTabsInner {...this.props}></IonTabsInner>;
+      /**
+       * Core `ion-tabs` switches tabs and emits the tab change events
+       * itself, so the tab bar gets no change handlers. Otherwise they
+       * would run a second time from the tab bar's click handler.
+       */
+      this.ionTabContextState.tabBarProps = { ref: this.tabBarRef };
+      this.ionTabContextState.selectTab = this.selectTabWithoutRouter;
+
+      return (
+        <IonTabsContext.Provider value={this.ionTabContextState}>
+          <IonTabsInner
+            {...this.props}
+            ref={this.tabsElRef}
+            onIonTabsDidChange={this.onTabsDidChangeWithoutRouter}
+          ></IonTabsInner>
+        </IonTabsContext.Provider>
+      );
     }
 
     /**
