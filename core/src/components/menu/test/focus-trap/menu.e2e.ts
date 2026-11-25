@@ -89,5 +89,66 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(menu).toHaveClass(/show-menu/);
     });
+    test('should return focus to the element that opened the menu when it closes', async ({ page }) => {
+      const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+      const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+      const openMenuButton = page.locator('#open-menu-button');
+      await openMenuButton.focus();
+      await page.keyboard.press('Enter');
+      await ionDidOpen.next();
+
+      await expect(page.locator('#menu')).toBeFocused();
+
+      await page.locator('#close-menu-button').click();
+      await ionDidClose.next();
+
+      await expect(openMenuButton).toBeFocused();
+    });
+
+    test('should return focus to ion-menu-button when the menu closes', async ({ page }) => {
+      const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+      const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+      const menuButton = page.locator('#menu-button button');
+      await menuButton.focus();
+      await page.keyboard.press('Enter');
+      await ionDidOpen.next();
+
+      const menu = page.locator('#menu');
+      await expect(menu).toBeFocused();
+
+      await menu.evaluate((el: HTMLIonMenuElement) => el.close());
+      await ionDidClose.next();
+
+      await expect(menuButton).toBeFocused();
+    });
+
+    test('should not move focus if the app focused another element when the menu closed', async ({ page }) => {
+      const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+      const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+      const openMenuButton = page.locator('#open-menu-button');
+      await openMenuButton.focus();
+      await page.keyboard.press('Enter');
+      await ionDidOpen.next();
+
+      await page.evaluate(() => {
+        const menu = document.querySelector('ion-menu')!;
+        menu.addEventListener(
+          'ionDidClose',
+          () => {
+            const menuButton = document.querySelector('#menu-button')!;
+            menuButton.shadowRoot!.querySelector('button')!.focus();
+          },
+          { once: true }
+        );
+      });
+
+      await page.locator('#close-menu-button').click();
+      await ionDidClose.next();
+
+      await expect(page.locator('#menu-button button')).toBeFocused();
+    });
   });
 });
