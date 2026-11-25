@@ -191,6 +191,14 @@ export class LocationHistory {
     return this.locationHistory.length > 1;
   }
 
+  /**
+   * Returns the pathname of every entry in global history, oldest first.
+   * The current entry is last.
+   */
+  getPathnames(): string[] {
+    return this.locationHistory.map((ri) => ri.pathname);
+  }
+
   findTabForPathname(pathname: string): string | undefined {
     for (const tab of Object.keys(this.tabHistory)) {
       const routeInfos = this.tabHistory[tab];

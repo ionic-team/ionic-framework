@@ -63,6 +63,16 @@ import DisabledButton from './pages/disabled-button/DisabledButton';
 import SplatSibling from './pages/splat-sibling/SplatSibling';
 import StaleRegister from './pages/stale-register/StaleRegister';
 import { EmptyPathSibling, IndexSibling } from './pages/index-sibling/IndexSibling';
+import {
+  ReplaceSiblingDetail,
+  ReplaceSiblingGateTarget,
+  ReplaceSiblingHome,
+  ReplaceSiblingHop,
+  ReplaceSiblingLessonContent,
+  ReplaceSiblingLessonQuiz,
+  ReplaceSiblingList,
+  ReplaceSiblingNew,
+} from './pages/replace-sibling/ReplaceSibling';
 
 const App: React.FC = () => {
   return (
@@ -141,6 +151,17 @@ const App: React.FC = () => {
           />
           <Route path="/index-sibling/*" element={<IndexSibling />} />
           <Route path="/empty-path-sibling/*" element={<EmptyPathSibling />} />
+          <Route path="/replace-sibling/home" element={<ReplaceSiblingHome />} />
+          <Route path="/replace-sibling/detail" element={<ReplaceSiblingDetail />} />
+          <Route path="/replace-sibling/new" element={<ReplaceSiblingNew />} />
+          <Route path="/replace-sibling/list" element={<ReplaceSiblingList />} />
+          <Route path="/replace-sibling-redirect" element={<Navigate to="/replace-sibling/list" replace />} />
+          <Route path="/replace-sibling/hop1" element={<ReplaceSiblingHop to="/replace-sibling/hop2" />} />
+          <Route path="/replace-sibling/hop2" element={<ReplaceSiblingHop to="/replace-sibling/list" />} />
+          <Route path="/replace-sibling-gate" element={<ReplaceSiblingHop to="/replace-sibling-gate/target" />} />
+          <Route path="/replace-sibling-gate/target" element={<ReplaceSiblingGateTarget />} />
+          <Route path="/replace-sibling/lesson/:lessonId/content" element={<ReplaceSiblingLessonContent />} />
+          <Route path="/replace-sibling/lesson/:lessonId/quiz/:questionId" element={<ReplaceSiblingLessonQuiz />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

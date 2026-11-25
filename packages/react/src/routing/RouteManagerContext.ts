@@ -29,6 +29,11 @@ export interface RouteManagerContextState {
    * Used by StackManager for out-of-scope cleanup.
    */
   getViewItemsForOutlet: (outletId: string) => ViewItem[];
+  /**
+   * Returns the pathname of every entry in the location history, current last.
+   * Used by StackManager so cleanup never unmounts a view that back still needs.
+   */
+  getLocationHistoryPathnames: () => string[];
   goBack: () => void;
   unMountViewItem: (viewItem: ViewItem) => void;
 }
@@ -44,6 +49,7 @@ export const RouteManagerContext = /*@__PURE__*/ React.createContext<RouteManage
   findViewItemByRouteInfo: () => undefined,
   getChildrenToRender: () => undefined as any,
   getViewItemsForOutlet: () => [] as any,
+  getLocationHistoryPathnames: () => [],
   goBack: () => undefined,
   unMountViewItem: () => undefined,
 });

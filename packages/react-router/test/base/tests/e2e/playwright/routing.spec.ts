@@ -300,7 +300,7 @@ test.describe('Routing Tests', () => {
     await ionPageVisible(page, 'home-details-page-2');
   });
 
-  test('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be destroyed', async ({ page }) => {
+  test('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be hidden', async ({ page }) => {
     await page.goto(withTestingMode('/routing/tabs/home'));
     await ionPageVisible(page, 'home-page');
     await ionMenuClick(page);
@@ -309,10 +309,10 @@ test.describe('Routing Tests', () => {
     await ionMenuClick(page);
     await ionMenuNav(page, 'Home with redirect');
     await ionPageVisible(page, 'home-page');
-    await ionPageDoesNotExist(page, 'favorites-page');
+    await ionPageHidden(page, 'favorites-page');
   });
 
-  test('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be destroyed', async ({ page }) => {
+  test('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be hidden', async ({ page }) => {
     await page.goto(withTestingMode('/routing/tabs/home'));
     await ionPageVisible(page, 'home-page');
     await ionMenuClick(page);
@@ -321,7 +321,7 @@ test.describe('Routing Tests', () => {
     await ionMenuClick(page);
     await ionMenuNav(page, 'Home with router');
     await ionPageVisible(page, 'home-page');
-    await ionPageDoesNotExist(page, 'favorites-page');
+    await ionPageHidden(page, 'favorites-page');
   });
 
   test('should show back button when going back to a pushed page', async ({ page }) => {
