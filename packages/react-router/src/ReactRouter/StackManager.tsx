@@ -631,6 +631,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
     const shouldSkipAnimation = this.applySkipAnimationIfNeeded(enteringViewItem, leavingViewItem);
 
+    // When the transition has no leaving page to hide (the leaving view
+    // lookup missed), hide any other visible view in this outlet so a
+    // preserved or stale page does not stay on screen. See
+    // hideOtherVisibleViews.
+    this.hideOtherVisibleViews(enteringViewItem, leavingViewItem);
+
     this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, undefined, false, shouldSkipAnimation);
 
     if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
@@ -865,6 +871,46 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           this.forceUpdate();
         }, VIEW_UNMOUNT_DELAY_MS);
       }
+    }
+  }
+
+  /**
+   * Hides every other visible view in this outlet when the transition has no
+   * leaving page to hide.
+   *
+   * This covers the cases where the leaving view lookup misses: re-entering
+   * an outlet whose preserved page is still visible after the swipe-back
+   * preservation in handleOutOfScopeOutlet (#31708), and a redirect that
+   * lands before the intermediate route's page registers (#31709 path B).
+   * In both cases the entering view is ready and the transition hides
+   * nothing, so any other visible view would stay on screen.
+   *
+   * Mirrors the hide-all-others fallback in handleWaitingForIonPage (the
+   * Navigate branch and the ionPageWaitTimeout path), except the leaving
+   * view is excluded here: transitionPage hides it once the entering view
+   * is visible, and hiding it early would break the transition animation.
+   */
+  private hideOtherVisibleViews(enteringViewItem: ViewItem, leavingViewItem: ViewItem | undefined): void {
+    if (leavingViewItem?.ionPageElement) {
+      return;
+    }
+
+    const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
+    const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
+    for (const viewItem of allViewsInOutlet) {
+      if (viewItem === enteringViewItem || viewItem === leavingViewItem) {
+        continue;
+      }
+      if (!viewItem.mount || !viewItem.ionPageElement || !isViewVisible(viewItem.ionPageElement)) {
+        continue;
+      }
+      // Don't hide container routes when entering a container route
+      // (e.g., /tabs/* and /settings/* coexist for tab switching).
+      const viewRoutePath = viewItem.reactElement?.props?.path as string | undefined;
+      if (viewRoutePath?.endsWith('/*') && enteringRoutePath?.endsWith('/*')) {
+        continue;
+      }
+      hideIonPageElement(viewItem.ionPageElement);
     }
   }
 
@@ -1672,6 +1718,18 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
        */
       if (myGeneration !== this.transitionGeneration && leavingEl && leavingEl === this.transitionEnteringElement) {
         showIonPageElement(leavingEl);
+      }
+
+      /**
+       * Mirror of the repair above: a newer transitionPage call ran while this
+       * commit was in flight and showed a different page, but the core commit
+       * has just made this transition's entering page visible again. Hide it
+       * so the newer transition's DOM state wins. Without this, a redirect
+       * that lands mid-transition leaves the redirecting route's page visible
+       * on top (#31709 path A).
+       */
+      if (myGeneration !== this.transitionGeneration && enteringEl !== this.transitionEnteringElement) {
+        hideIonPageElement(enteringEl);
       }
 
       if (!progressAnimation) {
