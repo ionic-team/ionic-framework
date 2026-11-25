@@ -160,7 +160,6 @@ export class Accordion implements ComponentInterface {
   componentDidLoad() {
     this.setItemDefaults();
     this.slotToggleIcon();
-    this.updateHeaderLine(this.state === AccordionState.Expanded || this.state === AccordionState.Expanding);
     this.updateNextLineColor();
 
     /**
@@ -201,32 +200,6 @@ export class Accordion implements ComponentInterface {
      */
     if (ionItem.lines === undefined) {
       ionItem.lines = 'full';
-    }
-  };
-
-  /**
-   * Whether the accordion switched its header item's `lines` from `"full"`
-   * to `"none"` while expanded, so it knows to switch it back.
-   */
-  private headerLineHidden = false;
-
-  /**
-   * Hides the header item's full line while the accordion is expanded. Some
-   * themes draw item lines inside the item, where the accordion's styles
-   * can't reach, so the accordion switches `lines` instead.
-   */
-  private updateHeaderLine = (expanded: boolean) => {
-    const ionItem = this.getSlottedHeaderIonItem();
-    if (!ionItem) {
-      return;
-    }
-
-    if (expanded && ionItem.lines === 'full') {
-      ionItem.lines = 'none';
-      this.headerLineHidden = true;
-    } else if (!expanded && this.headerLineHidden) {
-      ionItem.lines = 'full';
-      this.headerLineHidden = false;
     }
   };
 
@@ -552,7 +525,6 @@ export class Accordion implements ComponentInterface {
     const contentPart = expanded ? 'content expanded' : 'content';
 
     this.setAria(expanded);
-    this.updateHeaderLine(expanded);
 
     return (
       <Host

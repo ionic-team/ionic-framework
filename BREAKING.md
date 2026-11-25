@@ -81,7 +81,6 @@ This section details the desktop browser and mobile platform versions that are s
 <h4 id="version-10x-accordion">Accordion</h4>
 
 - In the ios theme, the line above the header of an accordion that follows an expanded one is drawn by the accordion instead of a border on the header item. It uses `--ion-item-border-color`, or `--ion-border-color` when that isn't set, and the shade of the header item's `color` when it has one. `--border-color` on the header item no longer changes its color.
-- While an accordion is expanded, a header item with `lines="full"` has `lines` set to `"none"`, and back to `"full"` when the accordion collapses.
 
 <h4 id="version-10x-backdrop">Backdrop</h4>
 
