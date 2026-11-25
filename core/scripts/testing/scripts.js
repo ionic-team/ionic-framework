@@ -139,8 +139,11 @@ const DEFAULT_PALETTE = 'light';
     // Store existing theme set from the app initialization
     const customTheme = window.Ionic?.config?.customTheme;
     // Load the default tokens for the theme
-    const themeLoaded = import(`/themes/${themeName}/default.tokens.js`).then((defaultTokens) =>
-      buildTheme(defaultTokens.defaultTheme, customTheme, paletteName)
+    const themeLoaded = Promise.all([
+      import(`/themes/${themeName}/default.tokens.js`),
+      import('/themes/utils/theme.js'),
+    ]).then(([defaultTokens, themeUtils]) =>
+      buildTheme(defaultTokens.defaultTheme, customTheme, paletteName, themeUtils)
     );
 
     /*
@@ -224,11 +227,13 @@ const DEFAULT_PALETTE = 'light';
   }
 
   // TODO(FW-6750): Determine if this function can be removed once the theme tokens can be imported directly into the test pages
-  function buildTheme(tokensTheme, customTheme, paletteName) {
+  function buildTheme(tokensTheme, customTheme, paletteName, themeUtils) {
     let theme = tokensTheme;
-    // Merge with existing theme to preserve any customizations
+    // Merge with existing theme to preserve any customizations. A custom
+    // value replaces the theme's media query values for the same key, as
+    // it does in the app (refer to `mergeTheme`).
     if (customTheme) {
-      theme = deepMerge(theme, customTheme);
+      theme = themeUtils.mergeTheme(theme, customTheme);
     }
 
     // If a specific palette is requested, modify the palette structure

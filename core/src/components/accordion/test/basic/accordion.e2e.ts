@@ -95,3 +95,106 @@ configs({ modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
     });
   });
 });
+
+/**
+ * Other ios tests draw at 1x (refer to the `deviceScaleFactor` fixture in
+ * `playwright-page.ts`), so they never show a line at its real thickness.
+ * This test draws at each browser's own density and keeps every pixel,
+ * so a missing, thicker or misplaced line above a header fails. Only the ios
+ * theme draws that line.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('accordion: line at device resolution'), () => {
+    // Resets the 1x that ios tests get to the browser's own density
+    test.use({ deviceScaleFactor: undefined });
+
+    test('should not have visual regressions', async ({ page }) => {
+      // The groups start 0, 1/3 and 2/3 of a pixel down the page
+      const group = (offset: string, color = '') => `
+        <ion-accordion-group value="first" style="padding-top: ${offset}">
+          <ion-accordion value="first">
+            <ion-item slot="header" ${color}><ion-label>First</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+          <ion-accordion value="second">
+            <ion-item slot="header" ${color}><ion-label>Second</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+          <ion-accordion value="third">
+            <ion-item slot="header" ${color}><ion-label>Third</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+        </ion-accordion-group>
+      `;
+
+      await page.setContent(
+        `
+        <style>
+          #container {
+            width: 120px;
+          }
+        </style>
+        <div id="container">
+          ${group('0px')}${group('0.33px')}${group('0.34px')}${group('0px', 'color="warning"')}
+        </div>
+        `,
+        config
+      );
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`accordion-line-device`), { scale: 'device' });
+    });
+  });
+});
+
+/**
+ * Only the ios theme draws the line above a header.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('accordion: line color'), () => {
+    test('should follow the header item color when it changes', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-accordion-group value="first">
+          <ion-accordion value="first">
+            <ion-item slot="header"><ion-label>First</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+          <ion-accordion value="second">
+            <ion-item slot="header"><ion-label>Second</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+          <ion-accordion value="third">
+            <ion-item slot="header"><ion-label>Third</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+        </ion-accordion-group>
+      `,
+        config
+      );
+
+      // The second accordion follows the expanded one, so it draws the line
+      const line = page.locator('ion-accordion[value="second"] .accordion-next-line');
+      const headerItem = page.locator('ion-accordion[value="second"] ion-item[slot="header"]');
+
+      const defaultColor = await line.evaluate((el) => getComputedStyle(el).color);
+      const dangerShade = await page.evaluate(() => {
+        const probe = document.createElement('div');
+        probe.style.color = 'var(--ion-color-danger-shade, var(--ion-color-danger-bold-shade))';
+        document.body.appendChild(probe);
+        const color = getComputedStyle(probe).color;
+        probe.remove();
+        return color;
+      });
+
+      await headerItem.evaluate((el: HTMLIonItemElement) => (el.color = 'danger'));
+      await expect(line).toHaveCSS('color', dangerShade);
+
+      await headerItem.evaluate((el: HTMLIonItemElement) => (el.color = undefined));
+      await expect(line).toHaveCSS('color', defaultColor);
+    });
+  });
+});

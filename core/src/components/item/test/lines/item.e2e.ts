@@ -208,3 +208,46 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
     });
   });
 });
+
+/**
+ * Other ios tests draw at 1x (refer to the `deviceScaleFactor` fixture in
+ * `playwright-page.ts`), so they never show a line at its real thickness.
+ * This test draws at each browser's own density and keeps every pixel,
+ * so a missing, thicker or misplaced line fails. Only the ios theme draws lines
+ * thinner than one CSS pixel.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('item: lines at device resolution'), () => {
+    // Resets the 1x that ios tests get to the browser's own density
+    test.use({ deviceScaleFactor: undefined });
+
+    test('should not have visual regressions', async ({ page }) => {
+      // The groups start 0, 1/3 and 2/3 of a pixel down the page, with an 8px
+      // gap so a group's last line doesn't touch the next group's colored item
+      const group = (offset: string) => `
+        <div style="padding-top: ${offset}">
+          <ion-item lines="full" color="danger"><ion-label>Color</ion-label></ion-item>
+          <ion-item><ion-label>Inset</ion-label></ion-item>
+          <ion-item lines="full"><ion-label>Full</ion-label></ion-item>
+        </div>
+      `;
+
+      await page.setContent(
+        `
+        <style>
+          #container {
+            width: 120px;
+          }
+        </style>
+        <div id="container">${group('0px')}${group('8.33px')}${group('8.34px')}</div>
+        `,
+        config
+      );
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`item-lines-device`), { scale: 'device' });
+    });
+  });
+});

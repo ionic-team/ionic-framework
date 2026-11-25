@@ -44,13 +44,11 @@
 // Accordion Header
 // --------------------------------------------------
 
-// The border is removed from the item in the header because
-// we are adding a border to the ::after element of the accordion.
+// The header item's lines are hidden in core.ionic.scss because the
+// accordion draws its own line with the ::after element.
 ::slotted(ion-item[slot="header"]) {
   --border-radius: inherit;
   --color: #{globals.$ion-text-default};
-  --border-width: #{globals.$ion-border-size-0};
-  --inner-border-width: #{globals.$ion-scale-0};
   --min-height: #{globals.$ion-scale-700};
   --padding-top: #{globals.$ion-space-300};
   --padding-end: #{globals.$ion-space-400};

@@ -15,8 +15,8 @@
    *
    * @prop --border-color: Color of the item border
    * @prop --border-radius: Radius of the item border
-   * @prop --border-style: Style of the item border
-   * @prop --border-width: Width of the item border
+   * @prop --border-style: Style of the item border. Doesn't apply to the lines between items.
+   * @prop --border-width: Width of the item border. Doesn't apply to the lines between items, which are styled with the `line` part.
    *
    * @prop --color: Color of the item
    * @prop --color-activated: Color of the item when pressed
@@ -27,7 +27,7 @@
    * @prop --detail-icon-opacity: Opacity of the item detail icon
    * @prop --detail-icon-font-size: Font size of the item detail icon
    *
-   * @prop --inner-border-width: Width of the item inner border
+   * @prop --inner-border-width: Width of the item inner border. Doesn't apply to the inset line, which is styled with the `inner-line` part.
    * @prop --inner-box-shadow: Box shadow of the item inner
    * @prop --inner-padding-top: Top padding of the item inner
    * @prop --inner-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item inner
@@ -212,7 +212,8 @@
 
   transition: var(--transition);
 
-  z-index: -1;
+  // Below the lines, which paint like a border
+  z-index: -2;
 }
 
 button,
@@ -284,6 +285,27 @@ a {
   font-size: var(--detail-icon-font-size);
 
   opacity: var(--detail-icon-opacity);
+}
+
+// Item Lines
+// --------------------------------------------------
+
+// Drawn as filled boxes instead of borders (refer to the `hairline` mixin).
+// Each theme's stylesheet sets the thickness and shows its default line.
+.item-line,
+.item-inner-line {
+  display: none;
+
+  color: var(--border-color);
+
+  // Painted like a border: above the native element's background and the
+  // state overlay, below the item's content
+  z-index: -1;
+}
+
+:host(.item-lines-full) .item-line,
+:host(.item-lines-inset) .item-inner-line {
+  display: block;
 }
 
 // Item Slots

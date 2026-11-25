@@ -304,6 +304,13 @@ ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
   transition: globals.$ion-transition-time-300 transform globals.$ion-transition-curve-quick;
 }
 
+// The accordion draws the line between accordions with its ::after element,
+// so the header item's own lines are hidden
+ion-accordion > ion-item[slot="header"]::part(line),
+ion-accordion > ion-item[slot="header"]::part(inner-line) {
+  display: none;
+}
+
 // A disabled accordion keeps its background and switches its text and
 // icons to the disabled colors. Descendant selectors cover nested
 // accordions, which are disabled with their parent.

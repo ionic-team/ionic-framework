@@ -14,5 +14,5 @@
  * @prop --ion-divider-spacing-xlarge-margin-bottom: Bottom margin of the `xlarge` divider spacing
  * @prop --ion-divider-spacing-xxlarge-margin-top: Top margin of the `xxlarge` divider spacing
  * @prop --ion-divider-spacing-xxlarge-margin-bottom: Bottom margin of the `xxlarge` divider spacing
- * @prop --ion-divider-thickness: Thickness of the divider line
+ * @prop --ion-divider-thickness: Thickness of the divider line. The ios theme changes it with screen density, so the line stays one screen pixel thick.
  */

@@ -27,12 +27,22 @@ $spacings: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
 :host hr {
   display: block;
 
+  position: relative;
+
   width: 100%;
+  height: var(--ion-divider-thickness);
 
   border: none;
-  border-top-width: var(--ion-divider-thickness);
-  border-top-style: solid;
-  border-top-color: var(--ion-divider-color);
+
+  // Lets the pseudo-element reach above the line
+  overflow: visible;
+}
+
+// Drawn as a filled box instead of a border (refer to the `hairline` mixin)
+:host hr::after {
+  @include mixins.hairline(bottom, var(--ion-divider-color), var(--ion-divider-thickness));
+
+  content: "";
 }
 
 // Divider Spacing

@@ -9,7 +9,6 @@
   --transition: background-color 200ms linear, opacity 200ms linear;
   --padding-start: #{$item-ios-padding-start};
   --inner-padding-end: #{$item-ios-padding-end};
-  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
   /**
    * The active/focus states need
@@ -57,27 +56,15 @@
 // iOS Item Lines
 // --------------------------------------------------
 
-// Full lines - apply the border to the item
-// Inset lines - apply the border to the item inner
-:host(.item-lines-full) {
-  --border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+// One screen pixel thick at each density
+.item-line,
+.item-inner-line {
+  @include hairline(bottom);
 }
 
-:host(.item-lines-inset) {
-  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
-}
-
-// Full lines - remove the border from the item inner (inset list items)
-// Inset lines - remove the border on the item (full list items)
-// No lines - remove the border on both (full / inset list items)
-:host(.item-lines-inset),
-:host(.item-lines-none) {
-  --border-width: 0px;
-}
-
-:host(.item-lines-full),
-:host(.item-lines-none) {
-  --inner-border-width: 0px;
+// The inset line is the default
+:host(.item-lines-default) .item-inner-line {
+  display: block;
 }
 
 // iOS Item Slots

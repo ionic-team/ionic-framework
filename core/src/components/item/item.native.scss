@@ -33,6 +33,11 @@
   border-color: current-color(shade);
 }
 
+:host(.ion-color) .item-line,
+:host(.ion-color) .item-inner-line {
+  color: current-color(shade);
+}
+
 // Item: Activated
 // --------------------------------------------------
 

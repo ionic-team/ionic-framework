@@ -380,6 +380,32 @@ type Components = {
   IonModal?: any;
 };
 
+/**
+ * Values a component uses inside media queries. The path builds the query:
+ * `min.resolution['2dppx']` applies inside `@media (min-resolution: 2dppx)`.
+ * The values set the same CSS variables as the component's own.
+ *
+ * A value set under a custom theme's per-mode `ios` or `md` key replaces the base
+ * theme's media query values for that key, so it applies on every screen. A value
+ * merged straight into the theme's tokens keeps them.
+ */
+export type IonMediaQuery<T> = {
+  /**
+   * Applies when the screen is at least the given value. When several match,
+   * the last key wins, so list values from smallest to largest.
+   */
+  min?: {
+    /** Screen density, in screen pixels per CSS pixel. */
+    resolution?: { [K in IonMediaQueryResolution]?: T };
+  };
+};
+
+/**
+ * The screen densities a recipe can target. iPhones are 2x or 3x. Add a
+ * density when a component needs it.
+ */
+export type IonMediaQueryResolution = '2dppx' | '3dppx';
+
 export type IonMargin = {
   top?: string | number;
   end?: string | number;

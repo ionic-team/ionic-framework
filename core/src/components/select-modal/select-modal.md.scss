@@ -11,8 +11,8 @@ ion-list ion-radio::part(label) {
   @include margin(0);
 }
 
-ion-item {
-  --inner-border-width: 0;
+ion-item::part(inner-line) {
+  display: none;
 }
 
 .item-radio-checked {

@@ -85,3 +85,45 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
     });
   });
 });
+
+/**
+ * Other ios tests draw at 1x (refer to the `deviceScaleFactor` fixture in
+ * `playwright-page.ts`), so they never show a line at its real thickness.
+ * This test draws at each browser's own density and keeps every pixel,
+ * so a missing, thicker or misplaced line fails. Only the ios theme draws lines
+ * thinner than one CSS pixel.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('divider: device resolution'), () => {
+    // Resets the 1x that ios tests get to the browser's own density
+    test.use({ deviceScaleFactor: undefined });
+
+    test('should not have visual regressions', async ({ page }) => {
+      // The dividers start 0, 1/3 and 2/3 of a pixel down from a whole pixel
+      await page.setContent(
+        `
+          <style>
+            #container {
+              width: 120px;
+            }
+          </style>
+          <div id="container">
+            <div style="height: 20px"></div>
+            <ion-divider></ion-divider>
+            <div style="height: 20.33px"></div>
+            <ion-divider></ion-divider>
+            <div style="height: 20.34px"></div>
+            <ion-divider></ion-divider>
+            <div style="height: 20px"></div>
+          </div>
+        `,
+        config
+      );
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`divider-device`), { scale: 'device' });
+    });
+  });
+});

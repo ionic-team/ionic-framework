@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 import { chevronDown } from 'ionicons/icons';
@@ -78,6 +78,8 @@ export class Accordion implements ComponentInterface {
   private contentEl: HTMLDivElement | undefined;
   private contentElWrapper: HTMLDivElement | undefined;
   private headerEl: HTMLDivElement | undefined;
+  private nextLineEl: HTMLDivElement | undefined;
+  private headerItemColorObserver?: MutationObserver;
 
   private currentRaf: number | undefined;
 
@@ -147,6 +149,10 @@ export class Accordion implements ComponentInterface {
       this.updateState();
       addEventListener(accordionGroupEl, 'ionValueChange', this.accordionGroupUpdateHandler);
     }
+
+    // The header only exists after the first render, so this only runs here
+    // when the accordion is moved
+    this.watchHeaderItemColor();
   }
 
   disconnectedCallback() {
@@ -154,11 +160,16 @@ export class Accordion implements ComponentInterface {
     if (accordionGroupEl) {
       removeEventListener(accordionGroupEl, 'ionValueChange', this.accordionGroupUpdateHandler);
     }
+
+    this.headerItemColorObserver?.disconnect();
+    this.headerItemColorObserver = undefined;
   }
 
   componentDidLoad() {
     this.setItemDefaults();
     this.slotToggleIcon();
+    this.updateNextLineColor();
+    this.watchHeaderItemColor();
 
     /**
      * We need to wait a tick because we
@@ -199,6 +210,43 @@ export class Accordion implements ComponentInterface {
     if (ionItem.lines === undefined) {
       ionItem.lines = 'full';
     }
+  };
+
+  /**
+   * Colors the top line with the shade of the header item's color, matching
+   * the item's own lines. The accordion's styles can't read the item's color,
+   * so the shade is set here. The names follow `generateColorClasses`.
+   */
+  private updateNextLineColor = () => {
+    const { nextLineEl } = this;
+    if (!nextLineEl) {
+      return;
+    }
+
+    const color = this.getSlottedHeaderIonItem()?.color;
+    if (color === undefined) {
+      nextLineEl.style.removeProperty('color');
+      return;
+    }
+
+    // TODO(FW-6865): read only `--ion-color-${color}-bold-shade` once the
+    // old color token is gone, along with the same fallback in `generateColorClasses`
+    nextLineEl.style.color = `var(--ion-color-${color}-shade, var(--ion-color-${color}-bold-shade))`;
+  };
+
+  /**
+   * Recolors the top line when the header item's `color` changes. The line is
+   * drawn by the accordion, so it doesn't follow the item's color on its own.
+   */
+  private watchHeaderItemColor = () => {
+    const ionItem = this.getSlottedHeaderIonItem();
+    if (!ionItem || !Build.isBrowser || typeof MutationObserver === 'undefined') {
+      return;
+    }
+
+    this.headerItemColorObserver?.disconnect();
+    this.headerItemColorObserver = new MutationObserver(() => this.updateNextLineColor());
+    this.headerItemColorObserver.observe(ionItem, { attributes: true, attributeFilter: ['color'] });
   };
 
   private getSlottedHeaderIonItem = () => {
@@ -541,6 +589,8 @@ export class Accordion implements ComponentInterface {
         >
           <slot name="header"></slot>
         </div>
+
+        <div class="accordion-next-line" ref={(nextLineEl) => (this.nextLineEl = nextLineEl)}></div>
 
         <div
           id="content"

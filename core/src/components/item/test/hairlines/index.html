@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item - Hairlines</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      /* Stays in the corner while the list scrolls */
+      #shift-button {
+        bottom: 8px;
+        inset-inline-end: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Item - Hairlines</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content fullscreen id="content">
+        <button id="shift-button" slot="fixed">Shift: 0px</button>
+        <ion-header collapse="condense">
+          <ion-toolbar>
+            <ion-title size="large">Item - Hairlines</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <div class="ion-padding">
+          <p>
+            Check in Safari on an iPhone or the iOS simulator. With the bug, the line between two items is missing at
+            some scroll positions, so the items run together.
+          </p>
+          <p>
+            Each tap on the <strong>Shift</strong> button moves the list down by a tenth of a pixel, so every line lands
+            on a new position.
+          </p>
+        </div>
+        <ion-list id="items"></ion-list>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const items = document.getElementById('items');
+      for (let i = 1; i <= 50; i++) {
+        const item = document.createElement('ion-item');
+        item.innerHTML = `
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-label>Item ${i}</ion-label>
+                <ion-note>${(i * 397) % 1000}</ion-note>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        `;
+        items.appendChild(item);
+      }
+
+      /**
+       * `shift` and `scroll` set the starting shift and scroll offset, in pixels,
+       * so a link can open the page with the lines at exact positions.
+       */
+      const params = new URLSearchParams(location.search);
+      const scroll = parseFloat(params.get('scroll') || '0');
+      let shift = parseFloat(params.get('shift') || '0');
+
+      const spacer = document.createElement('div');
+      items.before(spacer);
+
+      const shiftButton = document.getElementById('shift-button');
+      const applyShift = () => {
+        spacer.style.height = `${shift}px`;
+        shiftButton.textContent = `Shift: ${shift}px`;
+      };
+      applyShift();
+
+      // Steps through 0 to 0.9px, then starts over.
+      shiftButton.addEventListener('click', () => {
+        shift = ((Math.round(shift * 10) + 1) % 10) / 10;
+        applyShift();
+      });
+
+      window.addEventListener('appload', async () => {
+        const el = await document.getElementById('content').getScrollElement();
+        el.scrollTop = scroll;
+      });
+    </script>
+  </body>
+</html>

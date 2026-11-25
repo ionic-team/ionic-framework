@@ -94,6 +94,53 @@ state: {
 
 If resting values moved into `state.default`, adding the first state to a property would rename its variable.
 
+### Media queries
+
+Use a top-level `mediaQuery` object only when no single value works on every screen. For example, an ios line that stays one screen pixel thick needs a different value at each density. The path builds the query:
+
+```ts
+IonDivider: {
+  thickness: 'var(--ion-border-width-xxs)',
+  mediaQuery: {
+    min: {
+      resolution: {
+        '2dppx': { thickness: '0.5px' },
+        '3dppx': { thickness: '0.3334px' },
+      },
+    },
+  },
+},
+```
+
+Becomes:
+
+```css
+ion-divider {
+  --ion-divider-thickness: var(--ion-border-width-xxs);
+}
+
+/* ion-divider: mediaQuery.min.resolution['2dppx'] */
+@media (min-resolution: 2dppx), (-webkit-min-device-pixel-ratio: 2) {
+  ion-divider {
+    --ion-divider-thickness: 0.5px;
+  }
+}
+
+/* ion-divider: mediaQuery.min.resolution['3dppx'] */
+@media (min-resolution: 3dppx), (-webkit-min-device-pixel-ratio: 3) {
+  ion-divider {
+    --ion-divider-thickness: 0.3334px;
+  }
+}
+```
+
+- **The key isn't part of the variable name**, unlike a state. The stylesheet reads one variable, `--ion-divider-thickness`, on every screen.
+- **List values from smallest to largest.** When several queries match, the last one wins.
+- **A value under the custom theme's per-mode `ios` or `md` key applies on every screen.** Setting `IonDivider.thickness` there drops the theme's `mediaQuery` values for `thickness`. A value merged straight into the theme's tokens, like `deepMerge(iosTheme, { components: { IonDivider: { thickness: '2px' } } })`, keeps them, so it only applies on 1x screens. To change the value on every screen or per screen, set `mediaQuery` alongside it.
+- **A parent's value also applies on every screen.** `IonItem.IonDivider.thickness` comes after the divider's media queries, so it wins. A parent can nest its own `mediaQuery` under the child.
+- **To debug**, check the computed value of the variable. Each generated `@media` block has a comment naming the recipe path it came from.
+- **Type the key** with `IonMediaQuery<T>` from `themes.interfaces.ts`, and `Pick` only the keys that change per screen. Only `min.resolution` is typed so far, at `2dppx` and `3dppx` (`IonMediaQueryResolution`). Add a feature or a density to the type when a component needs it.
+
 ## Values
 
 ### Set a value in every theme
