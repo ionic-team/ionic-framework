@@ -5,6 +5,10 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * This behavior does not vary across directions.
  * The ionic theme has no dark palette color for the line.
+ *
+ * TODO: The `IonDivider` colors in the ios and md dark palette files
+ * don't reach the component yet, so the dark screenshots record the
+ * light line color. Update them once palette component values apply.
  */
 [
   ...configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }),
