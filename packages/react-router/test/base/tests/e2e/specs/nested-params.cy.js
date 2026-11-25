@@ -134,11 +134,11 @@ describe('Nested Params', () => {
 
     // Go back
     cy.go('back');
+    cy.location('pathname').should('eq', '/nested-params');
     cy.ionPageVisible('nested-params-landing');
 
     // Go forward — wait for async POP event processing and transition to settle
-    cy.go('forward');
-    cy.wait(500);
+    cy.ionGoForward('/nested-params/user/99/details');
     cy.get('[data-testid="user-layout-param"]').should('contain', 'Layout sees user: 99');
 
     // Go back again
@@ -190,11 +190,11 @@ describe('Nested Params', () => {
 
     // Browser back repeatedly to root
     // Back 1: details -> settings
-    cy.go('back');
+    cy.ionGoBack('/nested-params/user/99/settings');
     cy.get('[data-testid="user-settings-param"]').should('contain', 'Settings view user: 99');
 
     // Back 2: settings -> details
-    cy.go('back');
+    cy.ionGoBack('/nested-params/user/99/details');
     cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 99');
 
     // Back 3: details -> nested-params landing
@@ -323,11 +323,11 @@ describe('Nested Params', () => {
     cy.get('[data-testid="profile-view-param"]').should('contain', 'Profile view user: 42');
 
     // Browser back: view -> edit
-    cy.go('back');
+    cy.ionGoBack('/nested-params/user/42/profile/edit');
     cy.get('[data-testid="profile-edit-param"]').should('contain', 'Profile edit user: 42');
 
     // Browser back: edit -> details
-    cy.go('back');
+    cy.ionGoBack('/nested-params/user/42/details');
     cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 42');
 
     // Browser back: details -> landing
