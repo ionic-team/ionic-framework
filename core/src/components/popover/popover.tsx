@@ -773,6 +773,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     return (
       <Host
         aria-modal="true"
+        role="dialog"
         no-router
         tabindex="-1"
         {...(htmlAttributes as any)}
