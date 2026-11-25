@@ -205,10 +205,16 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
      * A non-clickable item renders a `div`, which ARIA doesn't allow a name on, so an
      * `aria-label` written after load also stays on the Host, which is a `listitem`
      * when the item is in an `ion-list`.
+     *
+     * `aria-expanded` is copied to the native element for the same reason `aria-label`
+     * is: it is a state the assistive technology reads off the element that takes the
+     * action, and the Host's `role="listitem"` doesn't carry it. A `listitem` has no
+     * expanded state, so the attribute was ignored where it was written and the item
+     * read as neither expanded nor collapsed.
      */
     this.ariaController = createAttributeController(
       this.el,
-      ['aria-label'],
+      ['aria-label', 'aria-expanded'],
       () => forceUpdate(this),
       [],
       undefined,
