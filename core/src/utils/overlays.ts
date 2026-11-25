@@ -1100,4 +1100,37 @@ export const createTriggerController = () => {
   };
 };
 
+/**
+ * Tracks which cancel button was pressed. Alert and toast render every
+ * cancel button they are given, and the cancel handler runs after the
+ * dismiss starts, so the pressed button must be stored to run its handler
+ * instead of the first cancel button's.
+ */
+export const createCancelButtonController = <T extends { role?: string }>() => {
+  let pressedButton: T | undefined;
+
+  /**
+   * Stores the pressed cancel button. Call it before dismissing the overlay.
+   */
+  const setPressedButton = (button: T): void => {
+    pressedButton = button;
+  };
+
+  /**
+   * Returns the pressed cancel button and clears it. When no button was
+   * pressed, such as on a backdrop tap or a dismiss() call with the cancel
+   * role, it returns the first cancel button.
+   */
+  const getCancelButton = (buttons: T[]): T | undefined => {
+    const button = pressedButton ?? buttons.find((b) => b.role === 'cancel');
+    pressedButton = undefined;
+    return button;
+  };
+
+  return {
+    setPressedButton,
+    getCancelButton,
+  };
+};
+
 export const FOCUS_TRAP_DISABLE_CLASS = 'ion-disable-focus-trap';
