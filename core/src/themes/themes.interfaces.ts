@@ -385,11 +385,15 @@ type Components = {
  * `min.resolution['2dppx']` applies inside `@media (min-resolution: 2dppx)`.
  * The values set the same CSS variables as the component's own.
  *
- * A value set by a custom theme replaces the base theme's media query values
- * for that key, so it applies on every screen.
+ * A value set under a custom theme's per-mode `ios` or `md` key replaces the base
+ * theme's media query values for that key, so it applies on every screen. A value
+ * merged straight into the theme's tokens keeps them.
  */
 export type IonMediaQuery<T> = {
-  /** Applies when the screen is at least the given value. When several match, the largest wins. */
+  /**
+   * Applies when the screen is at least the given value. When several match,
+   * the last key wins, so list values from smallest to largest.
+   */
   min?: {
     /** Screen density, in screen pixels per CSS pixel. */
     resolution?: { [K in IonMediaQueryResolution]?: T };

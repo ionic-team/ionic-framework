@@ -332,7 +332,9 @@ ion-accordion-group.accordion-group-expand-inset > ion-accordion:last-of-type {
   border-bottom-right-radius: 8px;
 }
 
-ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"]::part(line) {
+ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"]::part(line),
+ion-accordion.accordion-expanding > ion-item[slot="header"]::part(line),
+ion-accordion.accordion-expanded > ion-item[slot="header"]::part(line) {
   display: none;
 }
 

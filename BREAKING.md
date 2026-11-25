@@ -81,7 +81,6 @@ This section details the desktop browser and mobile platform versions that are s
 <h4 id="version-10x-accordion">Accordion</h4>
 
 - In the ios theme, the line above the header of an accordion that follows an expanded one is drawn by the accordion instead of a border on the header item. It uses `--ion-item-border-color`, or `--ion-border-color` when that isn't set, and the shade of the header item's `color` when it has one. `--border-color` on the header item no longer changes its color.
-- While an accordion is expanded, a header item with `lines="full"` has `lines` set to `"none"`, and back to `"full"` when the accordion collapses.
 
 <h4 id="version-10x-backdrop">Backdrop</h4>
 
@@ -660,7 +659,9 @@ If you were targeting the internals of `ion-input-otp` in your CSS, you will nee
 
 <h4 id="version-10x-item">Item</h4>
 
-The lines between items are drawn with an element instead of a border, so `--border-width` and `--inner-border-width` no longer show, hide or resize them. `--border-color` still sets their color.
+The lines between items are drawn with an element instead of a border, so `--border-width` and `--inner-border-width` no longer show, hide or resize them, and `--border-style` no longer changes their style. `--border-color` still sets their color.
+
+`--border-width` and `--inner-border-width` still draw a border on the item, so an app that set them to thicken a line now gets that border on top of the line. Remove those overrides and style the `line` or `inner-line` part instead.
 
 The lines no longer add to the item's height, so an item with a line is slightly shorter: 1px in the md and ionic themes, and half a pixel on most iOS devices in the ios theme.
 

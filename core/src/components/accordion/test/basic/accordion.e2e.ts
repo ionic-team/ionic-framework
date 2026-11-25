@@ -148,3 +148,53 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, screenshot, 
     });
   });
 });
+
+/**
+ * Only the ios theme draws the line above a header.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('accordion: line color'), () => {
+    test('should follow the header item color when it changes', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-accordion-group value="first">
+          <ion-accordion value="first">
+            <ion-item slot="header"><ion-label>First</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+          <ion-accordion value="second">
+            <ion-item slot="header"><ion-label>Second</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+          <ion-accordion value="third">
+            <ion-item slot="header"><ion-label>Third</ion-label></ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+        </ion-accordion-group>
+      `,
+        config
+      );
+
+      // The second accordion follows the expanded one, so it draws the line
+      const line = page.locator('ion-accordion[value="second"] .accordion-next-line');
+      const headerItem = page.locator('ion-accordion[value="second"] ion-item[slot="header"]');
+
+      const defaultColor = await line.evaluate((el) => getComputedStyle(el).color);
+      const dangerShade = await page.evaluate(() => {
+        const probe = document.createElement('div');
+        probe.style.color = 'var(--ion-color-danger-shade, var(--ion-color-danger-bold-shade))';
+        document.body.appendChild(probe);
+        const color = getComputedStyle(probe).color;
+        probe.remove();
+        return color;
+      });
+
+      await headerItem.evaluate((el: HTMLIonItemElement) => (el.color = 'danger'));
+      await expect(line).toHaveCSS('color', dangerShade);
+
+      await headerItem.evaluate((el: HTMLIonItemElement) => (el.color = undefined));
+      await expect(line).toHaveCSS('color', defaultColor);
+    });
+  });
+});

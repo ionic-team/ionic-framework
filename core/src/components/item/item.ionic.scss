@@ -75,6 +75,9 @@ slot[name="end"]::slotted(*) {
   outline-offset: calc(globals.$ion-border-size-050 * -1);
 
   content: "";
+
+  // Above the lines, so the focus ring keeps its bottom edge
+  z-index: -1;
 }
 
 // Ionic Stacked & Floating Labels
