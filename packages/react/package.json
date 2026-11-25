@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "9.0.13",
+  "version": "9.0.14",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -41,7 +41,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^9.0.13",
+    "@ionic/core": "^9.0.14",
     "@stencil/react-output-target": "^1.7.0",
     "ionicons": "^8.1.1",
     "tslib": "*"
