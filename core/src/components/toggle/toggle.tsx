@@ -106,6 +106,22 @@ export class Toggle implements ComponentInterface {
   @Prop() enableOnOffLabels: boolean | undefined = config.get('toggleOnOffLabels');
 
   /**
+   * The built-in named SVG icon name or the exact `src` of an SVG file
+   * to use when the toggle is checked. Only shown when
+   * `enableOnOffLabels` is `true`. Defaults to `checkmark-outline` in
+   * `md` mode and a vertical line in `ios` mode.
+   */
+  @Prop() checkedIcon?: string;
+
+  /**
+   * The built-in named SVG icon name or the exact `src` of an SVG file
+   * to use when the toggle is unchecked. Only shown when
+   * `enableOnOffLabels` is `true`. Defaults to `remove-outline` in
+   * `md` mode and `ellipse-outline` in `ios` mode.
+   */
+  @Prop() uncheckedIcon?: string;
+
+  /**
    * Where to place the label relative to the input.
    * `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL.
    * `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL.
@@ -358,7 +374,15 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   };
 
-  private getSwitchLabelIcon = (mode: Mode, checked: boolean) => {
+  private getCustomSwitchLabelIcon = (checked: boolean): string | undefined => {
+    const { checkedIcon, uncheckedIcon } = this;
+
+    return checked
+      ? checkedIcon ?? config.get('toggleCheckedIcon')
+      : uncheckedIcon ?? config.get('toggleUncheckedIcon');
+  };
+
+  private getDefaultSwitchLabelIcon = (mode: Mode, checked: boolean) => {
     if (mode === 'md') {
       return checked ? checkmarkOutline : removeOutline;
     }
@@ -366,13 +390,15 @@ export class Toggle implements ComponentInterface {
   };
 
   private renderOnOffSwitchLabels(mode: Mode, checked: boolean) {
-    const icon = this.getSwitchLabelIcon(mode, checked);
+    const customIcon = this.getCustomSwitchLabelIcon(checked);
+    const icon = customIcon ?? this.getDefaultSwitchLabelIcon(mode, checked);
 
     return (
       <ion-icon
         class={{
           'toggle-switch-icon': true,
           'toggle-switch-icon-checked': checked,
+          'toggle-switch-icon-custom': customIcon != null,
         }}
         icon={icon}
         aria-hidden="true"

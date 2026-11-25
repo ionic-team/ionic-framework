@@ -73,6 +73,18 @@ export interface IonicConfig {
   toggleOnOffLabels?: boolean;
 
   /**
+   * Overrides the default checked icon in all `<ion-toggle>` components.
+   * Only shown when on/off labels are enabled.
+   */
+  toggleCheckedIcon?: string;
+
+  /**
+   * Overrides the default unchecked icon in all `<ion-toggle>` components.
+   * Only shown when on/off labels are enabled.
+   */
+  toggleUncheckedIcon?: string;
+
+  /**
    * Overrides the default spinner for all `ion-loading` overlays, ie. the ones
    * created with `ion-loading-controller`.
    */

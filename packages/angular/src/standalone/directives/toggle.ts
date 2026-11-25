@@ -18,6 +18,7 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const TOGGLE_INPUTS = [
   'checked',
+  'checkedIcon',
   'color',
   'disabled',
   'enableOnOffLabels',
@@ -27,6 +28,7 @@ const TOGGLE_INPUTS = [
   'labelPlacement',
   'mode',
   'name',
+  'uncheckedIcon',
   'value',
 ];
 

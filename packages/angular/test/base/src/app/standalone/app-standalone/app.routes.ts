@@ -11,6 +11,7 @@ export const routes: Routes = [
     children: [
       { path: '', loadComponent: () => import('../home-page/home-page.component').then(c => c.HomePageComponent) },
       { path: 'inputs', loadComponent: () => import('../inputs/inputs.component').then(c => c.InputsComponent) },
+      { path: 'toggle-icons', loadComponent: () => import('../toggle-icons/toggle-icons.component').then(c => c.ToggleIconsComponent) },
       { path: 'async-change-detection', loadComponent: () => import('../async-change-detection/async-change-detection.component').then(c => c.AsyncChangeDetectionComponent) },
       { path: 'async-change-detection-tabs', redirectTo: '/standalone/async-change-detection-tabs/tab-one', pathMatch: 'full' },
       {
