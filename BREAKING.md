@@ -659,7 +659,9 @@ If you were targeting the internals of `ion-input-otp` in your CSS, you will nee
 
 <h4 id="version-10x-item">Item</h4>
 
-The lines between items are drawn with an element instead of a border, so `--border-width` and `--inner-border-width` no longer show, hide or resize them. `--border-color` still sets their color.
+The lines between items are drawn with an element instead of a border, so `--border-width` and `--inner-border-width` no longer show, hide or resize them, and `--border-style` no longer changes their style. `--border-color` still sets their color.
+
+`--border-width` and `--inner-border-width` still draw a border on the item, so an app that set them to thicken a line now gets that border on top of the line. Remove those overrides and style the `line` or `inner-line` part instead.
 
 The lines no longer add to the item's height, so an item with a line is slightly shorter: 1px in the md and ionic themes, and half a pixel on most iOS devices in the ios theme.
 
