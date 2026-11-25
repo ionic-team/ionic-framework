@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.14](https://github.com/ionic-team/ionic-framework/compare/v9.0.13...v9.0.14) (2026-11-25)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
 ## [9.0.13](https://github.com/ionic-team/ionic-framework/compare/v9.0.12...v9.0.13) (2026-11-20)
 
 **Note:** Version bump only for package @ionic/vue-router

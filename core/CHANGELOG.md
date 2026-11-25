@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.14](https://github.com/ionic-team/ionic-framework/compare/v9.0.13...v9.0.14) (2026-11-25)
+
+### Bug Fixes
+
+* **popover:** respect rtl for start and end alignment ([#31775](https://github.com/ionic-team/ionic-framework/issues/31775)) ([8f46fea](https://github.com/ionic-team/ionic-framework/commit/8f46feadd4fb93f1bf0442d83389f33dde3caab3))
+
+
 ## [9.0.13](https://github.com/ionic-team/ionic-framework/compare/v9.0.12...v9.0.13) (2026-11-20)
 
 ### Bug Fixes
