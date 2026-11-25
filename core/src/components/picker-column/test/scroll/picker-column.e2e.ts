@@ -560,3 +560,52 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('picker-column: haptics'), () => {
+    test('should emit ionHaptic for each stage of a scroll in order', async ({ page }) => {
+      /**
+       * Haptics only play on iOS. Since `setContent` replaces `window.Ionic`
+       * in the head, we set the platform here, before Ionic loads.
+       */
+      await page.setContent(
+        `
+        <script>window.Ionic.platforms = ['ios'];</script>
+        <ion-picker>
+          <ion-picker-column value="5">
+            ${Array.from(
+              { length: 50 },
+              (_, i) => `<ion-picker-column-option value="${i}">${i}</ion-picker-column-option>`
+            ).join('')}
+          </ion-picker-column>
+        </ion-picker>
+      `,
+        config
+      );
+
+      await page.locator('ion-picker-column-option.option-active').waitFor();
+
+      const ionHaptic = await page.spyOnEvent('ionHaptic');
+
+      await page.evaluate(() => {
+        const scrollEl = document.querySelector('ion-picker-column')!.shadowRoot!.querySelector('.picker-opts')!;
+        scrollEl.scrollTo({ top: scrollEl.scrollTop + 200, behavior: 'smooth' });
+      });
+
+      await expect.poll(() => ionHaptic.events.at(-1)?.detail.type).toBe('selectionEnd');
+      // Gives a late duplicate `selectionEnd` time to show up.
+      await page.waitForTimeout(COMMIT_WINDOW);
+
+      const types = ionHaptic.events.map((ev) => ev.detail.type);
+      const changedCount = types.length - 2;
+      const targets = ionHaptic.events.map((ev) => (ev.target as HTMLElement).tagName.toLowerCase());
+
+      expect(changedCount).toBeGreaterThan(0);
+      expect(types).toEqual(['selectionStart', ...Array(changedCount).fill('selectionChanged'), 'selectionEnd']);
+      expect(new Set(targets)).toEqual(new Set(['ion-picker-column']));
+    });
+  });
+});

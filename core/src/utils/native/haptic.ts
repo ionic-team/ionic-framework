@@ -187,8 +187,8 @@ export const hapticSelectionChanged = (el: HTMLElement) => {
 };
 
 /**
- * Tell the haptic engine we are done with a gesture. This needs to be
- * called lest resources are not properly recycled.
+ * Tell the haptic engine we're done with a gesture. This releases the
+ * engine, so it runs even when `ionHaptic` is canceled.
  */
 export const hapticSelectionEnd = (el: HTMLElement) => {
   emitHaptic(el, { type: 'selectionEnd' });
