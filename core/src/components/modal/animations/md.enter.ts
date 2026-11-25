@@ -14,10 +14,19 @@ const createEnterAnimation = () => {
     })
     .afterClearStyles(['pointer-events']);
 
-  const wrapperAnimation = createAnimation().keyframes([
-    { offset: 0, opacity: 0.01, transform: 'translateY(40px)' },
-    { offset: 1, opacity: 1, transform: `translateY(0px)` },
-  ]);
+  /**
+   * The finished animation must not stay applied to the wrapper.
+   * An element with an applied opacity animation is a backdrop root,
+   * so `backdrop-filter` inside the modal could not see the page
+   * behind it. The end state is set as inline styles instead.
+   */
+  const wrapperAnimation = createAnimation()
+    .fill('backwards')
+    .afterStyles({ opacity: '1', transform: 'translateY(0px)' })
+    .keyframes([
+      { offset: 0, opacity: 0.01, transform: 'translateY(40px)' },
+      { offset: 1, opacity: 1, transform: `translateY(0px)` },
+    ]);
 
   return { backdropAnimation, wrapperAnimation, contentAnimation: undefined };
 };
