@@ -112,6 +112,14 @@ export const routes: Routes = [
           { path: 'tab-three', loadComponent: () => import('../tabs/tab3.component').then(c => c.TabThreeComponent) }
         ]
       },
+      { path: 'tabs-outlet-ready', redirectTo: '/standalone/tabs-outlet-ready/tab-one', pathMatch: 'full' },
+      {
+        path: 'tabs-outlet-ready',
+        loadComponent: () => import('../tabs-outlet-ready/tabs-outlet-ready.component').then(c => c.TabsOutletReadyComponent),
+        children: [
+          { path: 'tab-one', loadComponent: () => import('../tabs/tab1.component').then(c => c.TabOneComponent) }
+        ]
+      },
       { path: 'tabs-basic', loadComponent: () => import('../tabs-basic/tabs-basic.component').then(c => c.TabsBasicComponent) },
       { path: 'tabs-search-params', redirectTo: '/standalone/tabs-search-params/tab1?foo=bar', pathMatch: 'full' },
       {

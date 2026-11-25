@@ -23,6 +23,16 @@ test.describe('Tabs', () => {
     });
   });
 
+  // Issue: https://github.com/ionic-team/ionic-framework/issues/31674
+  test.describe('Rendered after the tab route activates', () => {
+    test('should have the outlet defined on the first ionTabsWillChange', async ({ page }) => {
+      await page.goto('/standalone/tabs-outlet-ready');
+
+      await expect(page.locator('app-tab-one')).toBeVisible();
+      await expect(page.locator('#outlet-defined span')).toHaveText('true');
+    });
+  });
+
   test.describe('Without IonRouterOutlet', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/standalone/tabs-basic');
