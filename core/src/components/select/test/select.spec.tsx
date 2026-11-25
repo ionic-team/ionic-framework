@@ -307,6 +307,30 @@ describe('ion-select: overlay option labels', () => {
     jest.restoreAllMocks();
   });
 
+  it('should ignore a selection when disabled after opening', async () => {
+    const createAlert = stubAlertController();
+    const page = await newSpecPage({
+      components: [Select, SelectOption],
+      html: `<ion-select value="apple">
+        <ion-select-option value="apple">Apple</ion-select-option>
+        <ion-select-option value="orange">Orange</ion-select-option>
+      </ion-select>`,
+    });
+    const select = page.body.querySelector('ion-select')!;
+    const onChange = jest.fn();
+    select.addEventListener('ionChange', onChange);
+    await select.open();
+    const { buttons } = createAlert.mock.calls[0][0];
+
+    select.disabled = true;
+    await page.waitForChanges();
+    (buttons![1] as any).handler('orange');
+    await page.waitForChanges();
+
+    expect(select.value).toBe('apple');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it('should label alert inputs with the text the option renders', async () => {
     const createAlert = stubAlertController();
 
