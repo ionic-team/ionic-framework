@@ -1311,6 +1311,11 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
+          * The accessible label for the clear button. Only applies when `clearInput` is set to `true`.
+          * @default 'reset'
+         */
+        "clearButtonText": string;
+        /**
           * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input.
           * @default false
          */
@@ -6463,6 +6468,11 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
+          * The accessible label for the clear button. Only applies when `clearInput` is set to `true`.
+          * @default 'reset'
+         */
+        "clearButtonText"?: string;
+        /**
           * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input.
           * @default false
          */
@@ -9205,6 +9215,7 @@ declare namespace LocalJSX {
         "autofocus": boolean;
         "clearInput": boolean;
         "clearInputIcon": string;
+        "clearButtonText": string;
         "clearOnEdit": boolean;
         "counter": boolean;
         "debounce": number;
