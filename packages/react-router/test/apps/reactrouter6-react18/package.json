@@ -61,7 +61,7 @@
     "@playwright/test": "^1.64.1",
     "@vitejs/plugin-react": "^4.0.0",
     "concurrently": "^6.3.0",
-    "cypress": "^13.2.0",
+    "cypress": "^15.21.2",
     "cypress-terminal-report": "^5.3.0",
     "serve": "^14.0.1",
     "vite": "^5.0.0",
