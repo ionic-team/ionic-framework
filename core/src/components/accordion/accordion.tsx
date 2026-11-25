@@ -229,6 +229,8 @@ export class Accordion implements ComponentInterface {
       return;
     }
 
+    // TODO(FW-6865): read only `--ion-color-${color}-bold-shade` once the
+    // old color token is gone, along with the same fallback in `generateColorClasses`
     nextLineEl.style.color = `var(--ion-color-${color}-shade, var(--ion-color-${color}-bold-shade))`;
   };
 
