@@ -7,6 +7,7 @@ import {
   IonButton,
   IonButtons,
   IonBackButton,
+  useIonRouter,
 } from '@ionic/react';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -104,7 +105,7 @@ const Step3: React.FC = () => {
 };
 
 const Step4: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useIonRouter();
   const { id } = useParams<{ id: string }>();
 
   return (
@@ -121,7 +122,8 @@ const Step4: React.FC = () => {
         <p data-testid="step4-param">{id}</p>
         <IonButton
           id="go-to-step1"
-          onClick={() => navigate('/replace-params/step1')}
+          // Pop back to step1, as the header's flow describes
+          onClick={() => router.push('/replace-params/step1', 'back', 'pop')}
         >
           Go to Step 1
         </IonButton>

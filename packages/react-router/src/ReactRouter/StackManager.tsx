@@ -629,9 +629,18 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
     this.lastTransition = currentTransition;
 
-    const shouldSkipAnimation = this.applySkipAnimationIfNeeded(enteringViewItem, leavingViewItem);
+    // A page-less leaving view (e.g. a redirect) has nothing to animate out,
+    // so transition the page shown before it instead.
+    // Resolved once: the skip-animation path below hides it, which would make a
+    // second visible-page lookup miss it.
+    const pageBehindPagelessView = this.findPageBehindPagelessView(routeInfo, enteringViewItem, leavingViewItem);
+    const pageBehindIsVisible =
+      pageBehindPagelessView?.ionPageElement && isViewVisible(pageBehindPagelessView.ionPageElement);
+    const transitionLeavingViewItem = pageBehindIsVisible ? pageBehindPagelessView : leavingViewItem;
 
-    this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, undefined, false, shouldSkipAnimation);
+    const shouldSkipAnimation = this.applySkipAnimationIfNeeded(enteringViewItem, transitionLeavingViewItem);
+
+    this.transitionPage(routeInfo, enteringViewItem, transitionLeavingViewItem, undefined, false, shouldSkipAnimation);
 
     if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
       // For replace actions, skip setting mount=false here. handleLeavingViewUnmount
@@ -654,7 +663,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       this.handleLeavingViewUnmount(routeInfo, enteringViewItem, leavingViewItem);
     }
 
-    // Clean up orphaned sibling views after replace actions (redirects)
+    // A redirect replaces the page shown before it, not just the page-less redirect view
+    this.cleanupPageBehindRedirect(routeInfo, pageBehindPagelessView);
+
+    // Clean up orphaned sibling views after replace actions
     this.cleanupOrphanedSiblingViews(routeInfo, enteringViewItem, leavingViewItem);
 
     // On a fresh push, browser forward history is invalidated. Any views we
@@ -758,42 +770,137 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   /**
-   * Cleans up orphaned sibling views after replace actions or push-to-container navigations.
+   * Marks a view unmounted and removes it after VIEW_UNMOUNT_DELAY_MS, unless a
+   * follow-up transition re-enters it first (mount flips back to true).
+   */
+  private scheduleViewUnmount(viewItem: ViewItem): void {
+    viewItem.mount = false;
+    setTimeout(() => {
+      if (viewItem.mount) {
+        return;
+      }
+      this.context.unMountViewItem(viewItem);
+      this.forceUpdate();
+    }, VIEW_UNMOUNT_DELAY_MS);
+  }
+
+  /**
+   * Returns the ids of this outlet's views that a location history entry still
+   * resolves to. Those views are reachable with back.
+   */
+  private getViewIdsInHistory(): Set<string> {
+    const viewIds = new Set<string>();
+    for (const pathname of this.context.getLocationHistoryPathnames()) {
+      const viewItem = this.context.findViewItemByPathname(pathname, this.id);
+      if (viewItem) {
+        viewIds.add(viewItem.id);
+      }
+    }
+    return viewIds;
+  }
+
+  /**
+   * When the leaving view renders no IonPage (a redirect, or a component that
+   * navigates on mount), returns the page shown before it.
+   */
+  private findPageBehindPagelessView(
+    routeInfo: RouteInfo,
+    enteringViewItem: ViewItem,
+    leavingViewItem: ViewItem | undefined
+  ): ViewItem | undefined {
+    if (
+      !leavingViewItem ||
+      leavingViewItem.ionPageElement ||
+      !routeInfo.prevRouteLastPathname ||
+      (routeInfo.routeAction !== 'push' && routeInfo.routeAction !== 'replace')
+    ) {
+      return undefined;
+    }
+
+    const isCandidate = (viewItem: ViewItem | undefined): viewItem is ViewItem =>
+      !!viewItem &&
+      viewItem !== enteringViewItem &&
+      viewItem !== leavingViewItem &&
+      viewItem.mount &&
+      !!viewItem.ionPageElement;
+
+    const pageBehind = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
+    if (isCandidate(pageBehind)) {
+      return pageBehind;
+    }
+
+    // In a chain of page-less redirects the previous pathname is another hop,
+    // often already unmounted. The page the user was on is the one still
+    // showing in this outlet.
+    return this.context
+      .getViewItemsForOutlet(this.id)
+      .find(
+        (viewItem) =>
+          isCandidate(viewItem) &&
+          isViewVisible(viewItem.ionPageElement!) &&
+          !(viewItem.reactElement?.props?.path as string | undefined)?.endsWith('/*')
+      );
+  }
+
+  /**
+   * Unmounts the page a redirect replaced, unless back can still reach it. A
+   * redirect renders no IonPage, so the replace's leaving view is the
+   * page-less redirect, not the page the user was on.
+   */
+  private cleanupPageBehindRedirect(routeInfo: RouteInfo, pageBehindRedirect: ViewItem | undefined): void {
+    if (routeInfo.routeAction !== 'replace') {
+      return;
+    }
+
+    if (!pageBehindRedirect || this.getViewIdsInHistory().has(pageBehindRedirect.id)) {
+      return;
+    }
+
+    // Container views (e.g. /tabs/*) host their own nested outlets; leave them alone.
+    const pageBehindRedirectPath = pageBehindRedirect.reactElement?.props?.path as string | undefined;
+    if (pageBehindRedirectPath?.endsWith('/*')) {
+      return;
+    }
+
+    // No explicit hide: the transition already animates this page out, and
+    // hiding it now would cut that animation short.
+    this.scheduleViewUnmount(pageBehindRedirect);
+  }
+
+  /**
+   * Cleans up orphaned sibling views after replace actions. A view that the
+   * location history still resolves to is reachable with back, so it is kept.
    */
   private cleanupOrphanedSiblingViews(
     routeInfo: RouteInfo,
     enteringViewItem: ViewItem,
     leavingViewItem: ViewItem | undefined
   ): void {
+    if (routeInfo.routeAction !== 'replace') {
+      return;
+    }
+
     const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
     if (!enteringRoutePath) {
       return;
     }
 
     const leavingRoutePath = leavingViewItem?.reactElement?.props?.path as string | undefined;
-    const isContainerRoute = (path: string | undefined) => path?.endsWith('/*');
-
-    const isReplaceAction = routeInfo.routeAction === 'replace';
-    const isPushToContainer =
-      routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'none' && isContainerRoute(enteringRoutePath);
-
-    if (!isReplaceAction && !isPushToContainer) {
-      return;
-    }
 
     // Skip cleanup for tab switches
     const isSameView = enteringViewItem === leavingViewItem;
-    const isSameContainerRoute = isContainerRoute(enteringRoutePath) && leavingRoutePath === enteringRoutePath;
-    const isNavigatingWithinContainer =
-      isPushToContainer &&
-      !leavingViewItem &&
-      routeInfo.prevRouteLastPathname?.startsWith(enteringRoutePath.replace(/\/\*$/, ''));
+    const isSameContainerRoute = enteringRoutePath.endsWith('/*') && leavingRoutePath === enteringRoutePath;
 
-    if (isSameView || isSameContainerRoute || isNavigatingWithinContainer) {
+    if (isSameView || isSameContainerRoute) {
       return;
     }
 
     const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
+
+    // Views still in history are reachable with back, so they are not orphaned
+    // even when they are siblings of the entering route.
+    const viewIdsInHistory = this.getViewIdsInHistory();
+
     const areSiblingRoutes = (path1: string, path2: string): boolean => {
       const path1IsRelative = !path1.startsWith('/');
       const path2IsRelative = !path2.startsWith('/');
@@ -835,6 +942,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         (leavingViewItem && viewItem.id === leavingViewItem.id) ||
         !viewItem.mount ||
         !viewRoutePath ||
+        viewIdsInHistory.has(viewItem.id) ||
         // Don't clean up container routes when entering a container route
         // (e.g., /tabs/* and /settings/* coexist for tab switching)
         (viewRoutePath.endsWith('/*') && enteringRoutePath.endsWith('/*'));
@@ -843,27 +951,11 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         continue;
       }
 
-      const isOrphanedSpecificRoute = !viewRoutePath.endsWith('/*');
-
       // Clean up sibling non-container routes that are no longer reachable.
-      let shouldCleanup = false;
-      if ((isReplaceAction || isPushToContainer) && isOrphanedSpecificRoute) {
-        shouldCleanup = areSiblingRoutes(enteringRoutePath, viewRoutePath);
-      }
-
-      if (shouldCleanup) {
+      const isSpecificRoute = !viewRoutePath.endsWith('/*');
+      if (isSpecificRoute && areSiblingRoutes(enteringRoutePath, viewRoutePath)) {
         hideIonPageElement(viewItem.ionPageElement);
-        viewItem.mount = false;
-
-        const viewToRemove = viewItem;
-        setTimeout(() => {
-          // Skip if a follow-up transition re-entered the view (mount flipped back to true).
-          if (viewToRemove.mount) {
-            return;
-          }
-          this.context.unMountViewItem(viewToRemove);
-          this.forceUpdate();
-        }, VIEW_UNMOUNT_DELAY_MS);
+        this.scheduleViewUnmount(viewItem);
       }
     }
   }

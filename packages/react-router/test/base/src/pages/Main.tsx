@@ -175,6 +175,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/empty-path-sibling">
             <IonLabel>Empty Path Sibling</IonLabel>
           </IonItem>
+          <IonItem routerLink="/replace-sibling/home">
+            <IonLabel>Replace Sibling</IonLabel>
+          </IonItem>
           {/* A separate React root, so a plain href rather than a routerLink. */}
           <IonItem href={`${ROOT_SPLAT_SIBLING_BASENAME}/feed`}>
             <IonLabel>Root Splat Sibling</IonLabel>
