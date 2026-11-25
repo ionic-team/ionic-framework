@@ -7,6 +7,7 @@ import { createLockController } from '@utils/lock-controller';
 import { printIonError, printIonWarning } from '@utils/logging';
 import {
   GESTURE,
+  createCancelButtonController,
   createDelegateController,
   createTriggerController,
   dismiss,
@@ -68,6 +69,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
   private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
+  private readonly cancelButtonController = createCancelButtonController<ToastButton>();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
   private gesture?: Gesture;
@@ -533,6 +535,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private async buttonClick(button: ToastButton) {
     const role = button.role;
     if (isCancel(role)) {
+      this.cancelButtonController.setPressedButton(button);
       return this.dismiss(undefined, role);
     }
     const shouldDismiss = await this.callButtonHandler(button);
@@ -562,7 +565,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private dispatchCancelHandler = (ev: CustomEvent) => {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.getButtons().find((b) => b.role === 'cancel');
+      const cancelButton = this.cancelButtonController.getCancelButton(this.getButtons());
       this.callButtonHandler(cancelButton);
     }
   };
