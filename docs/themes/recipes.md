@@ -136,7 +136,7 @@ ion-divider {
 
 - **The key isn't part of the variable name**, unlike a state. The stylesheet reads one variable, `--ion-divider-thickness`, on every screen.
 - **List values from smallest to largest.** When several queries match, the last one wins.
-- **An app's value applies on every screen.** A custom theme that sets `IonDivider.thickness` drops the theme's `mediaQuery` values for `thickness`. To change the value per screen, the custom theme sets its own `mediaQuery`.
+- **A value under the custom theme's per-mode `ios` or `md` key applies on every screen.** Setting `IonDivider.thickness` there drops the theme's `mediaQuery` values for `thickness`. A value merged straight into the theme's tokens, like `deepMerge(iosTheme, { components: { IonDivider: { thickness: '2px' } } })`, keeps them, so it only applies on 1x screens. To change the value on every screen or per screen, set `mediaQuery` alongside it.
 - **A parent's value also applies on every screen.** `IonItem.IonDivider.thickness` comes after the divider's media queries, so it wins. A parent can nest its own `mediaQuery` under the child.
 - **To debug**, check the computed value of the variable. Each generated `@media` block has a comment naming the recipe path it came from.
 - **Type the key** with `IonMediaQuery<T>` from `themes.interfaces.ts`, and `Pick` only the keys that change per screen. Only `min.resolution` is typed so far, at `2dppx` and `3dppx` (`IonMediaQueryResolution`). Add a feature or a density to the type when a component needs it.

@@ -6,8 +6,9 @@ export type IonDividerRecipe = {
 
   /**
    * Thickness used inside media queries, such as a thinner line on denser screens.
-   * A `thickness` that a custom theme sets outside this key replaces the base
-   * theme's values here, so it applies on every screen.
+   * A `thickness` set under a custom theme's per-mode `ios` or `md` key, but not
+   * inside `mediaQuery`, replaces the base theme's values here, so it applies on
+   * every screen.
    */
   mediaQuery?: IonMediaQuery<Pick<IonDividerRecipe, 'thickness'>>;
 
