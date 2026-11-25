@@ -2033,7 +2033,7 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonDivider: {
-      color: '#e0e0e0',
+      color: '#c6c6c8',
 
       // One screen pixel at each density, like native iOS separators.
       mediaQuery: {

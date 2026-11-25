@@ -20,6 +20,9 @@ export const darkTheme: DarkTheme = {
     IonCard: {
       background: '#1e1e1e',
     },
+    IonDivider: {
+      color: '#2e2e2e',
+    },
     IonItem: {
       background: '#1e1e1e',
     },
