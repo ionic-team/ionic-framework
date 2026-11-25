@@ -78,7 +78,7 @@ alert_box() {
 
 # Computes the previous release tag and the customer-facing (feat/fix/perf)
 # commits since it. Sets globals: PREV_TAG, PREV_TAG_FOUND, CHANGELOG_COMMITS,
-# COMMIT_COUNT. Safe to call from any step (used by step 2 and step 8).
+# COMMIT_COUNT. Safe to call from any step (used by check_customer_changes and step 8).
 compute_changelog() {
   local patch
   patch=$(echo "$VERSION" | cut -d. -f3)
@@ -115,6 +115,37 @@ print_changelog_list() {
   echo "$CHANGELOG_COMMITS" | while IFS= read -r msg; do
     echo -e "    ${GREEN}•${RESET} $msg"
   done
+}
+
+# Runs compute_changelog and shows what would ship, stopping the release when
+# nothing customer-facing landed since the previous tag (unless told to go
+# ahead anyway). Runs before the version prompt, so nobody confirms a version
+# for a release that has nothing in it. Step 2 reuses the result.
+CHANGES_CHECKED=false
+check_customer_changes() {
+  compute_changelog
+  CHANGES_CHECKED=true
+
+  if [[ -z "$PREV_TAG" ]]; then
+    warn "Could not determine previous release tag"
+    confirm "Press Enter to continue without change verification..."
+  elif [[ "$PREV_TAG_FOUND" != true ]]; then
+    warn "Previous tag '$PREV_TAG' not found on remote"
+    confirm "Press Enter to continue without change verification..."
+  else
+    info "Comparing ${PREV_TAG}...${BASE_BRANCH}..."
+    if [[ -n "$CHANGELOG_COMMITS" ]]; then
+      ok "Found $COMMIT_COUNT changelog commit(s) since $PREV_TAG:"
+      print_changelog_list
+    else
+      warn "No feat/fix/perf commits found between $PREV_TAG and $BASE_BRANCH"
+      if ! confirm_yn "No customer-facing changes — release anyway?"; then
+        echo ""
+        echo -e "${RED}Release aborted.${RESET} Nothing to release."
+        exit 1
+      fi
+    fi
+  fi
 }
 
 # Percent-encodes a string for use in a URL query value. Pure bash so the
@@ -455,6 +486,15 @@ if $TICKETS_ONLY; then
   exit 0
 fi
 
+# ── Customer-facing change check (auto version) ──────────────────────────────
+# With no version passed, check there's anything to ship before the banner or
+# the version prompt shows a number at all.
+if $VERSION_AUTO && [[ $START_STEP -le 2 ]]; then
+  echo ""
+  echo -e "${BOLD}Checking for customer-facing changes on ${BASE_BRANCH}${RESET}"
+  check_customer_changes
+fi
+
 # ── Banner ────────────────────────────────────────────────────────────────────
 echo ""
 echo -e "${BOLD}╔══════════════════════════════════════════════════╗${RESET}"
@@ -473,6 +513,14 @@ if $DRY_RUN; then
   alert_box "$YELLOW" \
     "DRY RUN — nothing will be created, triggered, or merged." \
     "Read-only lookups run for real; mutations are printed only."
+fi
+
+# A manually passed version was already chosen, so check here, after the
+# banner. Resuming past step 2 means that call was already made.
+if ! $CHANGES_CHECKED && [[ $START_STEP -le 2 ]]; then
+  echo ""
+  echo -e "${BOLD}Checking for customer-facing changes on ${BASE_BRANCH}${RESET}"
+  check_customer_changes
 fi
 
 if $VERSION_AUTO; then
@@ -694,27 +742,14 @@ if [[ $START_STEP -le 2 ]]; then
 
 step 2 $TOTAL_STEPS "Check for customer-facing changes"
 
-compute_changelog
-
-if [[ -z "$PREV_TAG" ]]; then
-  warn "Could not determine previous release tag"
-  confirm "Press Enter to continue without change verification..."
-elif [[ "$PREV_TAG_FOUND" != true ]]; then
-  warn "Previous tag '$PREV_TAG' not found on remote"
-  confirm "Press Enter to continue without change verification..."
-else
-  info "Comparing ${PREV_TAG}...${BASE_BRANCH}..."
-  if [[ -n "$CHANGELOG_COMMITS" ]]; then
-    ok "Found $COMMIT_COUNT changelog commit(s) since $PREV_TAG:"
-    print_changelog_list
+if $CHANGES_CHECKED; then
+  if [[ "$COMMIT_COUNT" -gt 0 ]]; then
+    ok "Already checked before confirming the version: $COMMIT_COUNT changelog commit(s) since $PREV_TAG"
   else
-    warn "No feat/fix/perf commits found between $PREV_TAG and $BASE_BRANCH"
-    if ! confirm_yn "No customer-facing changes — release anyway?"; then
-      echo ""
-      echo -e "${RED}Release aborted.${RESET} Nothing to release."
-      exit 1
-    fi
+    ok "Already checked before confirming the version"
   fi
+else
+  check_customer_changes
 fi
 
 fi # end step 2
