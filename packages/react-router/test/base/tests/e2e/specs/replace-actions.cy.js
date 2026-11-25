@@ -31,9 +31,9 @@ describe('Replace Action', () => {
     cy.ionPageVisible('page2');
     cy.ionNav('ion-button', 'Goto Page3');
     cy.ionPageVisible('page3');
-    cy.go('back');
+    cy.ionGoBack('/replace-action/page1');
     cy.ionPageVisible('page1');
-    cy.go('forward');
+    cy.ionGoForward('/replace-action/page3');
     cy.ionPageVisible('page3');
   });
 });

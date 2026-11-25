@@ -278,10 +278,9 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-details-page-2');
     cy.ionNav('ion-button', 'Go to Details 3');
     cy.ionPageVisible('home-details-page-3');
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home/details/2');
     cy.ionPageVisible('home-details-page-2');
-    cy.go('forward');
-    cy.wait(500);
+    cy.ionGoForward('/routing/tabs/home/details/3');
     cy.ionPageVisible('home-details-page-3');
   });
 
@@ -292,10 +291,9 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-details-page-1');
     cy.ionNav('ion-button', 'Go to Settings Details 1');
     cy.ionPageVisible('settings-details-page-1');
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home/details/1');
     cy.ionPageVisible('home-details-page-1');
-    cy.go('forward');
-    cy.wait(500);
+    cy.ionGoForward('/routing/tabs/settings/details/1');
     cy.ionPageVisible('settings-details-page-1');
   });
 
@@ -484,7 +482,7 @@ describe('Routing Tests', () => {
     cy.ionNav('ion-button', 'Go to Settings Details 1');
     cy.ionPageVisible('settings-details-page-1');
 
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home/details/1');
     cy.ionPageVisible('home-details-page-1');
 
     cy.ionTabClick('Settings');
