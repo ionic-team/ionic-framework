@@ -63,6 +63,7 @@ import DisabledButton from './pages/disabled-button/DisabledButton';
 import SplatSibling from './pages/splat-sibling/SplatSibling';
 import StaleRegister from './pages/stale-register/StaleRegister';
 import { EmptyPathSibling, IndexSibling } from './pages/index-sibling/IndexSibling';
+import SwipePreservedPage from './pages/swipe-preserved-page/SwipePreservedPage';
 
 const App: React.FC = () => {
   return (
@@ -141,6 +142,7 @@ const App: React.FC = () => {
           />
           <Route path="/index-sibling/*" element={<IndexSibling />} />
           <Route path="/empty-path-sibling/*" element={<EmptyPathSibling />} />
+          <Route path="/swipe-preserved-page/*" element={<SwipePreservedPage />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
