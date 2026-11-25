@@ -479,6 +479,55 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(ionChange).toHaveReceivedEventDetail({ value: '150' });
       await expect(page.locator('ion-picker-column')).toHaveJSProperty('value', '150');
     });
+
+    /**
+     * Safari can end a trackpad overscroll in the empty rows past either end of
+     * the column without snapping back to an option. Turning snapping off stands
+     * in for that missed snap, since snapping would otherwise pull it straight back.
+     */
+    [
+      { edge: 'first', value: '0' },
+      { edge: 'last', value: '199' },
+    ].forEach(({ edge, value }) => {
+      test(`should re-center the ${edge} option when a scroll ends past it`, async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/31633',
+        });
+
+        const column = page.locator('ion-picker-column');
+
+        await column.evaluate((column: HTMLIonPickerColumnElement, value) => {
+          column.value = value;
+        }, value);
+        await expect(page.locator('ion-picker-column-option.option-active')).toHaveJSProperty('value', value);
+        await waitForColumnIdle(page);
+
+        await page.evaluate((edge) => {
+          const scrollEl = document
+            .querySelector('ion-picker-column')!
+            .shadowRoot!.querySelector<HTMLElement>('.picker-opts')!;
+          scrollEl.style.scrollSnapType = 'none';
+          scrollEl.dispatchEvent(new WheelEvent('wheel'));
+          scrollEl.scrollTo({ top: edge === 'first' ? 0 : scrollEl.scrollHeight });
+        }, edge);
+
+        // The commit waits for the column to go idle, and any correction runs after it.
+        await page.waitForTimeout(COMMIT_WINDOW);
+        await waitForColumnIdle(page);
+
+        const offCenter = await page.evaluate(() => {
+          const scrollEl = document.querySelector('ion-picker-column')!.shadowRoot!.querySelector('.picker-opts')!;
+          const option = document.querySelector('ion-picker-column-option.option-active')!;
+          const columnBox = scrollEl.getBoundingClientRect();
+          const optionBox = option.getBoundingClientRect();
+          return Math.abs(optionBox.y + optionBox.height / 2 - (columnBox.y + columnBox.height / 2));
+        });
+
+        await expect(column).toHaveJSProperty('value', value);
+        expect(offCenter).toBeLessThan(4);
+      });
+    });
   });
 });
 
