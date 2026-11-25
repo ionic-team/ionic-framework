@@ -671,7 +671,14 @@ export const getPopoverPosition = (
    * would allow the popover content
    * to have the correct alignment.
    */
-  const alignedCoordinates = calculatePopoverAlign(align, side, referenceCoordinates, contentWidth, contentHeight);
+  const alignedCoordinates = calculatePopoverAlignedCoordinates(
+    align,
+    side,
+    referenceCoordinates,
+    contentWidth,
+    contentHeight,
+    isRTL
+  );
 
   const top = coordinates.top + alignedCoordinates.top;
   const left = coordinates.left + alignedCoordinates.left;
@@ -702,9 +709,9 @@ export const getPopoverPosition = (
 const calculatePopoverOrigin = (side: PositionSide, align: PositionAlign, isRTL: boolean) => {
   switch (side) {
     case 'top':
-      return { originX: getOriginXAlignment(align), originY: 'bottom' };
+      return { originX: getOriginXAlignment(align, isRTL), originY: 'bottom' };
     case 'bottom':
-      return { originX: getOriginXAlignment(align), originY: 'top' };
+      return { originX: getOriginXAlignment(align, isRTL), originY: 'top' };
     case 'left':
       return { originX: 'right', originY: getOriginYAlignment(align) };
     case 'right':
@@ -716,14 +723,14 @@ const calculatePopoverOrigin = (side: PositionSide, align: PositionAlign, isRTL:
   }
 };
 
-const getOriginXAlignment = (align: PositionAlign) => {
+const getOriginXAlignment = (align: PositionAlign, isRTL: boolean) => {
   switch (align) {
     case 'start':
-      return 'left';
+      return isRTL ? 'right' : 'left';
     case 'center':
       return 'center';
     case 'end':
-      return 'right';
+      return isRTL ? 'left' : 'right';
   }
 };
 
@@ -839,89 +846,52 @@ const calculatePopoverSide = (
  * correct alignment regardless while taking
  * into account the side the popover is on.
  */
-const calculatePopoverAlign = (
+const calculatePopoverAlignedCoordinates = (
   align: PositionAlign,
   side: PositionSide,
   triggerBoundingBox: ReferenceCoordinates,
   contentWidth: number,
-  contentHeight: number
-) => {
-  switch (align) {
-    case 'center':
-      return calculatePopoverCenterAlign(side, triggerBoundingBox, contentWidth, contentHeight);
-    case 'end':
-      return calculatePopoverEndAlign(side, triggerBoundingBox, contentWidth, contentHeight);
-    case 'start':
-    default:
-      return { top: 0, left: 0 };
-  }
-};
-
-/**
- * Calculate the end alignment for
- * the popover. If side is on the x-axis
- * then the align values refer to the top
- * and bottom margins of the content.
- * If side is on the y-axis then the
- * align values refer to the left and right
- * margins of the content.
- */
-const calculatePopoverEndAlign = (
-  side: PositionSide,
-  triggerBoundingBox: ReferenceCoordinates,
-  contentWidth: number,
-  contentHeight: number
+  contentHeight: number,
+  isRTL: boolean
 ) => {
   switch (side) {
     case 'start':
     case 'end':
     case 'left':
-    case 'right':
-      return {
-        top: -(contentHeight - triggerBoundingBox.height),
-        left: 0,
-      };
+    case 'right': {
+      /**
+       * If side is on the x-axis
+       * then the align values refer to the top
+       * and bottom margins of the content.
+       */
+      switch (align) {
+        case 'end':
+          return { top: -(contentHeight - triggerBoundingBox.height), left: 0 };
+        case 'center':
+          return { top: -(contentHeight / 2 - triggerBoundingBox.height / 2), left: 0 };
+        case 'start':
+        default:
+          return { top: 0, left: 0 };
+      }
+    }
     case 'top':
     case 'bottom':
-    default:
-      return {
-        top: 0,
-        left: -(contentWidth - triggerBoundingBox.width),
-      };
-  }
-};
-
-/**
- * Calculate the center alignment for
- * the popover. If side is on the x-axis
- * then the align values refer to the top
- * and bottom margins of the content.
- * If side is on the y-axis then the
- * align values refer to the left and right
- * margins of the content.
- */
-const calculatePopoverCenterAlign = (
-  side: PositionSide,
-  triggerBoundingBox: ReferenceCoordinates,
-  contentWidth: number,
-  contentHeight: number
-) => {
-  switch (side) {
-    case 'start':
-    case 'end':
-    case 'left':
-    case 'right':
-      return {
-        top: -(contentHeight / 2 - triggerBoundingBox.height / 2),
-        left: 0,
-      };
-    case 'top':
-    case 'bottom':
-    default:
-      return {
-        top: 0,
-        left: -(contentWidth / 2 - triggerBoundingBox.width / 2),
-      };
+    default: {
+      /**
+       * If side is on the y-axis then the
+       * align values refer to the left and right
+       * margins of the content.
+       */
+      switch (align) {
+        case 'end':
+          return { top: 0, left: isRTL ? 0 : -(contentWidth - triggerBoundingBox.width) };
+        case 'center':
+          return { top: 0, left: -(contentWidth / 2 - triggerBoundingBox.width / 2) };
+        case 'start':
+        default:
+          return { top: 0, left: isRTL ? -(contentWidth - triggerBoundingBox.width) : 0 };
+      }
+    }
   }
 };
 
