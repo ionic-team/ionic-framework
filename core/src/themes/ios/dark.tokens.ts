@@ -13,7 +13,7 @@ export const darkTheme: DarkTheme = {
       background: '#1c1c1d',
     },
     IonDivider: {
-      color: '#404040',
+      color: '#38383a',
     },
     IonItem: {
       background: '#000000',
