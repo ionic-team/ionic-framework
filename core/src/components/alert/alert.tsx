@@ -11,6 +11,7 @@ import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
+  createCancelButtonController,
   createDelegateController,
   createTriggerController,
   dismiss,
@@ -56,6 +57,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
   private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
+  private readonly cancelButtonController = createCancelButtonController<AlertButton>();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private activeId?: string;
   private inputType?: string;
@@ -530,6 +532,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const role = button.role;
     const values = this.getValues();
     if (isCancel(role)) {
+      this.cancelButtonController.setPressedButton(button);
       return this.dismiss({ values }, role);
     }
     const returnData = await this.callButtonHandler(button, values);
@@ -792,7 +795,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private dispatchCancelHandler = (ev: CustomEvent) => {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.processedButtons.find((b) => b.role === 'cancel');
+      const cancelButton = this.cancelButtonController.getCancelButton(this.processedButtons);
       this.callButtonHandler(cancelButton);
     }
   };

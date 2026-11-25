@@ -143,3 +143,55 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('toast: cancel buttons'), () => {
+    test.beforeEach(async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/23037',
+      });
+
+      await page.setContent(
+        `
+          <ion-toast message="Changes saved"></ion-toast>
+
+          <script>
+            window.handlerCalls = [];
+            const toast = document.querySelector('ion-toast');
+            toast.buttons = [
+              { text: 'Dismiss', role: 'cancel', handler: () => window.handlerCalls.push('first') },
+              { text: 'Close', role: 'cancel', handler: () => window.handlerCalls.push('second') },
+            ];
+          </script>
+        `,
+        config
+      );
+
+      const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+      await page.locator('ion-toast').evaluate((el: HTMLIonToastElement) => el.present());
+      await ionToastDidPresent.next();
+    });
+
+    test('should run the handler of the pressed cancel button', async ({ page }) => {
+      const ionToastDidDismiss = await page.spyOnEvent('ionToastDidDismiss');
+
+      await page.locator('ion-toast .toast-button').nth(1).click();
+      await ionToastDidDismiss.next();
+
+      expect(await page.evaluate(() => (window as any).handlerCalls)).toEqual(['second']);
+    });
+
+    test('should run the first cancel handler when dismissed with the cancel role', async ({ page }) => {
+      const ionToastDidDismiss = await page.spyOnEvent('ionToastDidDismiss');
+
+      await page.locator('ion-toast').evaluate((el: HTMLIonToastElement) => el.dismiss(undefined, 'cancel'));
+      await ionToastDidDismiss.next();
+
+      expect(await page.evaluate(() => (window as any).handlerCalls)).toEqual(['first']);
+    });
+  });
+});
