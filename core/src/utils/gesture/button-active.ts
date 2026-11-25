@@ -5,11 +5,18 @@ import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from
 import type { Gesture } from './index';
 import { createGesture } from './index';
 
-export const createButtonActiveGesture = (el: HTMLElement, isButton: (refEl: HTMLElement) => boolean): Gesture => {
+/**
+ * @param hostEl The component that owns the buttons. `ionHaptic` is dispatched from it.
+ */
+export const createButtonActiveGesture = (
+  hostEl: HTMLElement,
+  el: HTMLElement,
+  isButton: (refEl: HTMLElement) => boolean
+): Gesture => {
   let currentTouchedButton: HTMLElement | undefined;
   let initialTouchedButton: HTMLElement | undefined;
 
-  const activateButtonAtPoint = (x: number, y: number, hapticFeedbackFn: () => void) => {
+  const activateButtonAtPoint = (x: number, y: number, hapticFeedbackFn: (el: HTMLElement) => void) => {
     if (typeof (document as any) === 'undefined') {
       return;
     }
@@ -25,7 +32,7 @@ export const createButtonActiveGesture = (el: HTMLElement, isButton: (refEl: HTM
     }
   };
 
-  const setActiveButton = (button: HTMLElement, hapticFeedbackFn: () => void) => {
+  const setActiveButton = (button: HTMLElement, hapticFeedbackFn: (el: HTMLElement) => void) => {
     currentTouchedButton = button;
 
     if (!initialTouchedButton) {
@@ -34,7 +41,7 @@ export const createButtonActiveGesture = (el: HTMLElement, isButton: (refEl: HTM
 
     const buttonToModify = currentTouchedButton;
     writeTask(() => buttonToModify.classList.add('ion-activated'));
-    hapticFeedbackFn();
+    hapticFeedbackFn(hostEl);
   };
 
   const clearActiveButton = (dispatchClick = false) => {
@@ -68,7 +75,7 @@ export const createButtonActiveGesture = (el: HTMLElement, isButton: (refEl: HTM
     onMove: (ev) => activateButtonAtPoint(ev.currentX, ev.currentY, hapticSelectionChanged),
     onEnd: () => {
       clearActiveButton(true);
-      hapticSelectionEnd();
+      hapticSelectionEnd(hostEl);
       initialTouchedButton = undefined;
     },
   });

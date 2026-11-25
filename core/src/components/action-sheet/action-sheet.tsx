@@ -510,7 +510,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       if (this.gesture || !this.el.isConnected || groupEl.scrollHeight > groupEl.clientHeight) {
         return;
       }
-      this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
+      this.gesture = createButtonActiveGesture(this.el, wrapperEl, (refEl: HTMLElement) =>
         refEl.classList.contains('action-sheet-button')
       );
       this.gesture.enable(true);

@@ -6,6 +6,7 @@ import type {
 import { config } from '@global/config';
 
 import { getCapacitor } from './capacitor';
+import type { HapticEvent, HapticEventDetail } from './haptic-interface';
 
 export enum ImpactStyle {
   /**
@@ -145,32 +146,52 @@ export const hapticAvailable = (): boolean => {
 };
 
 /**
+ * Dispatch `ionHaptic` from `el`.
+ * @returns `true` if the built-in haptic should play.
+ */
+const emitHaptic = (el: HTMLElement, detail: HapticEventDetail): boolean => {
+  const ev: HapticEvent = new CustomEvent('ionHaptic', {
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+    detail,
+  });
+  el.dispatchEvent(ev);
+  /**
+   * Read defaultPrevented instead of the dispatchEvent return value:
+   * Stencil's mock-doc always returns true from dispatchEvent.
+   */
+  return !ev.defaultPrevented && hapticAvailable();
+};
+
+/**
  * Trigger a selection changed haptic event. Good for one-time events
  * (not for gestures)
  */
-export const hapticSelection = () => {
-  hapticAvailable() && HapticEngine.selection();
+export const hapticSelection = (el: HTMLElement) => {
+  emitHaptic(el, { type: 'selection' }) && HapticEngine.selection();
 };
 
 /**
  * Tell the haptic engine that a gesture for a selection change is starting.
  */
-export const hapticSelectionStart = () => {
-  hapticAvailable() && HapticEngine.selectionStart();
+export const hapticSelectionStart = (el: HTMLElement) => {
+  emitHaptic(el, { type: 'selectionStart' }) && HapticEngine.selectionStart();
 };
 
 /**
  * Tell the haptic engine that a selection changed during a gesture.
  */
-export const hapticSelectionChanged = () => {
-  hapticAvailable() && HapticEngine.selectionChanged();
+export const hapticSelectionChanged = (el: HTMLElement) => {
+  emitHaptic(el, { type: 'selectionChanged' }) && HapticEngine.selectionChanged();
 };
 
 /**
- * Tell the haptic engine we are done with a gesture. This needs to be
- * called lest resources are not properly recycled.
+ * Tell the haptic engine we're done with a gesture. This releases the
+ * engine, so it runs even when `ionHaptic` is canceled.
  */
-export const hapticSelectionEnd = () => {
+export const hapticSelectionEnd = (el: HTMLElement) => {
+  emitHaptic(el, { type: 'selectionEnd' });
   hapticAvailable() && HapticEngine.selectionEnd();
 };
 
@@ -178,14 +199,14 @@ export const hapticSelectionEnd = () => {
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ type: NotificationType.SUCCESS }` (or `WARNING`/`ERROR`)
  */
-export const hapticNotification = (options: HapticNotificationOptions) => {
-  hapticAvailable() && HapticEngine.notification(options);
+export const hapticNotification = (el: HTMLElement, options: HapticNotificationOptions) => {
+  emitHaptic(el, { type: 'notification', notificationType: options.type }) && HapticEngine.notification(options);
 };
 
 /**
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ style: ImpactStyle.LIGHT }` (or `MEDIUM`/`HEAVY`)
  */
-export const hapticImpact = (options: HapticImpactOptions) => {
-  hapticAvailable() && HapticEngine.impact(options);
+export const hapticImpact = (el: HTMLElement, options: HapticImpactOptions) => {
+  emitHaptic(el, { type: 'impact', style: options.style }) && HapticEngine.impact(options);
 };

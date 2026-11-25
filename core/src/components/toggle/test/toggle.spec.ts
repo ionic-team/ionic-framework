@@ -195,11 +195,14 @@ describe('ion-toggle: haptics', () => {
     config.reset({});
   });
 
-  const clickToggleOnIOS = async () => {
+  const clickToggleOnIOS = async (onHaptic?: (ev: CustomEvent) => void) => {
     const page = await newSpecPage({
       components: [Toggle],
       html: `<ion-toggle>Toggle</ion-toggle>`,
     });
+    if (onHaptic) {
+      page.doc.addEventListener('ionHaptic', onHaptic as EventListener);
+    }
     const win = page.win as any;
     win.Ionic = { ...win.Ionic, platforms: ['ios'] };
     // newSpecPage resets the window, so stub Capacitor after it
@@ -225,5 +228,15 @@ describe('ion-toggle: haptics', () => {
     await clickToggleOnIOS();
 
     expect(impact).not.toHaveBeenCalled();
+  });
+
+  it('should emit ionHaptic from the toggle when clicked', async () => {
+    const events: CustomEvent[] = [];
+
+    await clickToggleOnIOS((ev) => events.push(ev));
+
+    expect(events.length).toBe(1);
+    expect((events[0].target as HTMLElement).tagName.toLowerCase()).toBe('ion-toggle');
+    expect(events[0].detail).toEqual({ type: 'selection' });
   });
 });

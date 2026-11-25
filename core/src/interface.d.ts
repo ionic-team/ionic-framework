@@ -44,6 +44,7 @@ export { TextareaCustomEvent } from './components/textarea/textarea-interface';
 export { ToastOptions } from './components/toast/toast-interface';
 export { ToggleCustomEvent } from './components/toggle/toggle-interface';
 export { BackButtonEvent, BackButtonEventDetail } from './utils/hardware-back-button';
+export { HapticEvent, HapticEventDetail } from './utils/native/haptic-interface';
 
 // Types from utils
 export {
