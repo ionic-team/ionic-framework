@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App - Remounting</title>
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script>
+      window.Ionic.config.hardwareBackButton =
+        new URLSearchParams(location.search).get('hardwareBackButton') !== 'false';
+      window.Ionic.config.inputShims = false;
+      window.Ionic.config.statusTap = false;
+    </script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <body>
+    <div id="apps">
+      <ion-app>
+        <ion-content>
+          <button
+            class="ion-activatable ion-activatable-instant ion-focusable"
+            style="position: relative; padding: 24px"
+          >
+            Tap for a ripple
+            <ion-ripple-effect></ion-ripple-effect>
+          </button>
+          <button onclick="remount()">Remount app</button>
+        </ion-content>
+      </ion-app>
+    </div>
+    <script>
+      const appMarkup = document.querySelector('ion-app').outerHTML;
+      if (new URLSearchParams(location.search).has('multiple')) {
+        document.querySelector('#apps').insertAdjacentHTML('beforeend', appMarkup);
+      }
+      window.remount = () => (document.querySelector('#apps').innerHTML = appMarkup);
+    </script>
+  </body>
+</html>

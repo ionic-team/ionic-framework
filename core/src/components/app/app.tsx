@@ -8,6 +8,9 @@ import { isPlatform } from '@utils/platform';
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 
+// These helpers listen on the document and must outlive individual app elements.
+let appInitialization: Promise<FocusVisibleUtility> | undefined;
+
 @Component({
   tag: 'ion-app',
   styleUrl: 'app.scss',
@@ -21,44 +24,49 @@ export class App implements ComponentInterface {
   componentDidLoad() {
     if (Build.isBrowser) {
       this.rIC(async () => {
-        const isHybrid = isPlatform(window, 'hybrid');
-        if (!config.getBoolean('_testing')) {
-          import('../../utils/tap-click').then((module) => module.startTapClick(config));
-        }
-        if (config.getBoolean('statusTap', isHybrid)) {
-          import('../../utils/status-tap').then((module) => module.startStatusTap());
-        }
-        if (config.getBoolean('inputShims', needInputShims())) {
-          /**
-           * needInputShims() ensures that only iOS and Android
-           * platforms proceed into this block.
-           */
-          const platform = isPlatform(window, 'ios') ? 'ios' : 'android';
-          import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
-        }
-        const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
-        const supportsHardwareBackButtonEvents = isHybrid || shouldUseCloseWatcher();
-        if (config.getBoolean('hardwareBackButton', supportsHardwareBackButtonEvents)) {
-          hardwareBackButtonModule.startHardwareBackButton();
-        } else {
-          /**
-           * If an app sets hardwareBackButton: false and experimentalCloseWatcher: true
-           * then the close watcher will not be used.
-           */
-          if (shouldUseCloseWatcher()) {
-            printIonWarning(
-              '[ion-app] - experimentalCloseWatcher was set to `true`, but hardwareBackButton was set to `false`. Both config options must be `true` for the Close Watcher API to be used.'
-            );
-          }
-
-          hardwareBackButtonModule.blockHardwareBackButton();
-        }
-        if (typeof (window as any) !== 'undefined') {
-          import('../../utils/keyboard/keyboard').then((module) => module.startKeyboardAssist(window));
-        }
-        import('../../utils/focus-visible').then((module) => (this.focusVisible = module.startFocusVisible()));
+        appInitialization ??= this.initialize();
+        this.focusVisible = await appInitialization;
       });
     }
+  }
+
+  private async initialize(): Promise<FocusVisibleUtility> {
+    const isHybrid = isPlatform(window, 'hybrid');
+    if (!config.getBoolean('_testing')) {
+      import('../../utils/tap-click').then((module) => module.startTapClick(config));
+    }
+    if (config.getBoolean('statusTap', isHybrid)) {
+      import('../../utils/status-tap').then((module) => module.startStatusTap());
+    }
+    if (config.getBoolean('inputShims', needInputShims())) {
+      /**
+       * needInputShims() ensures that only iOS and Android
+       * platforms proceed into this block.
+       */
+      const platform = isPlatform(window, 'ios') ? 'ios' : 'android';
+      import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
+    }
+    const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
+    const supportsHardwareBackButtonEvents = isHybrid || shouldUseCloseWatcher();
+    if (config.getBoolean('hardwareBackButton', supportsHardwareBackButtonEvents)) {
+      hardwareBackButtonModule.startHardwareBackButton();
+    } else {
+      /**
+       * If an app sets hardwareBackButton: false and experimentalCloseWatcher: true
+       * then the close watcher will not be used.
+       */
+      if (shouldUseCloseWatcher()) {
+        printIonWarning(
+          '[ion-app] - experimentalCloseWatcher was set to `true`, but hardwareBackButton was set to `false`. Both config options must be `true` for the Close Watcher API to be used.'
+        );
+      }
+
+      hardwareBackButtonModule.blockHardwareBackButton();
+    }
+    if (typeof (window as any) !== 'undefined') {
+      import('../../utils/keyboard/keyboard').then((module) => module.startKeyboardAssist(window));
+    }
+    return (await import('../../utils/focus-visible')).startFocusVisible();
   }
 
   disconnectedCallback() {
