@@ -2,6 +2,7 @@ import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
 import { printIonError } from '@utils/logging';
 
+import { config } from '../../global/config';
 import type { NavOutlet, RouteID, RouteWrite } from '../router/utils/interface';
 import type { TabButtonClickEventDetail } from '../tab-bar/tab-bar-interface';
 
@@ -205,7 +206,7 @@ export class Tabs implements NavOutlet {
   }
 
   private onTabClicked = (ev: CustomEvent<TabButtonClickEventDetail>) => {
-    const { href, tab } = ev.detail;
+    const { href, tab, selected } = ev.detail;
     if (this.useRouter && href !== undefined) {
       const router = document.querySelector('ion-router');
       if (router) {
@@ -214,7 +215,31 @@ export class Tabs implements NavOutlet {
     } else {
       this.select(tab);
     }
+
+    if (selected && config.getBoolean('tabTap', false)) {
+      this.scrollSelectedTabToTop();
+    }
   };
+
+  /**
+   * Scrolls the content of the selected tab to the top.
+   * If the tab contains an `ion-nav` that is not at its
+   * root page, the content is not scrolled.
+   */
+  private async scrollSelectedTabToTop() {
+    const { selectedTab } = this;
+    if (selectedTab === undefined) {
+      return;
+    }
+
+    const nav = selectedTab.querySelector('ion-nav');
+    if (nav !== null && (await nav.getLength()) > 1) {
+      return;
+    }
+
+    const page = nav !== null ? (await nav.getActive())?.element : selectedTab;
+    page?.querySelector('ion-content')?.scrollToTop(300);
+  }
 
   render() {
     return (

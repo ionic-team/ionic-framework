@@ -1,6 +1,8 @@
 import { defineCustomElement } from "@ionic/core/components/ion-tab-button.js";
 import { h, defineComponent, inject } from "vue";
 
+import { getConfig } from "../utils";
+
 export const IonTabButton = /*@__PURE__*/ defineComponent({
   name: "IonTabButton",
   props: {
@@ -76,6 +78,17 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
         if (prevActiveTab === tab) {
           if (originalHref !== currentHref) {
             ionRouter.resetTab(tab, originalHref);
+          } else if (
+            hasRouterOutlet &&
+            getConfig()?.getBoolean("tabTap", false)
+          ) {
+            const page = (ev.currentTarget as HTMLElement)
+              .closest("ion-tabs")
+              ?.querySelector(
+                "ion-router-outlet > .ion-page:not(.ion-page-hidden)"
+              );
+
+            page?.querySelector("ion-content")?.scrollToTop(300);
           }
         } else {
           ionRouter.changeTab(tab, currentHref);
