@@ -3309,16 +3309,16 @@ export namespace Components {
     interface IonTabs {
         "getRouteId": () => Promise<RouteID | undefined>;
         /**
-          * Get the currently selected tab. In React and Vue, this method only works when tabs are used without a router outlet.
+          * Get the currently selected tab.  In React and Vue, this method only works when tabs are used without a router outlet.
          */
         "getSelected": () => Promise<string | undefined>;
         /**
-          * Get a specific tab by the value of its `tab` property or an element reference. In React and Vue, this method only works when tabs are used without a router outlet.
+          * Get a specific tab by the value of its `tab` property or an element reference.  In React and Vue, this method only works when tabs are used without a router outlet.
           * @param tab The tab instance to get. If passed a string, it should be the value of the tab's `tab` property.
          */
         "getTab": (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
         /**
-          * Select a tab by the value of its `tab` property or an element reference. In React and Vue, this method only works when tabs are used without a router outlet. With a router outlet, tabs are coupled to the framework's router, so navigate with the router instead.
+          * Select a tab by the value of its `tab` property or an element reference.  In React and Vue, this method only works when tabs are used without a router outlet. With a router outlet, tabs are coupled to the framework's router, so navigate with the router instead.
           * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
          */
         "select": (tab: string | HTMLIonTabElement) => Promise<boolean>;
