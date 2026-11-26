@@ -579,7 +579,7 @@ export const present = async <OverlayPresentOptions>(
    * from returning focus as a result.
    */
   if (overlay.el.tagName !== 'ION-TOAST') {
-    restoreElementFocus(overlay.el);
+    restoreElementFocus(overlay.el, overlay.keyboardClose);
   }
 
   /**
@@ -672,14 +672,16 @@ export const present = async <OverlayPresentOptions>(
  * to where they were before they
  * opened the overlay.
  */
-const restoreElementFocus = async (overlayEl: any) => {
+const restoreElementFocus = async (overlayEl: any, keyboardClose: boolean) => {
   let previousElement = document.activeElement as HTMLElement | null;
   if (!previousElement) {
     return;
   }
 
   // Ensure active element is blurred to prevent a11y warning issues
-  previousElement.blur();
+  if (keyboardClose) {
+    previousElement.blur();
+  }
 
   const shadowRoot = previousElement?.shadowRoot;
   if (shadowRoot) {
