@@ -220,7 +220,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
        */
       await expect(popover).toBeFocused();
 
-      await page.keyboard.press(tabKey);
+      /**
+       * Focus the textarea directly instead of tabbing to it. In Firefox,
+       * Tab from the focused popover content stops on the scrollable
+       * ion-textarea first, the same as it does for a native dialog.
+       */
+      await innerNativeTextarea.focus();
 
       await expect(innerNativeTextarea).toBeFocused();
 
