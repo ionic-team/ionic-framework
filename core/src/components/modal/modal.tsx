@@ -55,6 +55,7 @@ import {
   getRootSafeAreaTop,
   onRootSafeAreaTopChange,
   getModalCoveredAxes,
+  measureCoveredAxes,
   type ModalSafeAreaContext,
 } from './safe-area-utils';
 import { onModalHeightChange, setCardStatusBarDark, setCardStatusBarDefault } from './utils';
@@ -320,8 +321,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
       // Sheet modals: re-compute the internal offset property since safe-area
       // values may change on device rotation (e.g., portrait notch vs landscape).
+      // The horizontal insets are re-evaluated too, since the viewport may have
+      // crossed the breakpoint where the sheet spans the full width.
       if (context.isSheetModal) {
         this.updateSheetOffsetTop();
+        applySafeAreaOverrides(
+          this.el,
+          getInitialSafeAreaConfig({ ...context, coveredAxes: measureCoveredAxes(this.el) })
+        );
       }
 
       // Regular (non-sheet, non-card) modals: update safe-area overrides
@@ -1489,8 +1496,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Creates the context object for safe-area utilities.
    *
-   * `coveredAxes` is only set by `setInitialSafeAreaOverrides()`
-   * because it is only read by `getInitialSafeAreaConfig()`. Other callers
+   * `coveredAxes` is only set where `getInitialSafeAreaConfig()` reads it
+   * (`setInitialSafeAreaOverrides()` and the sheet resize path). Other callers
    * (resize handler, post-animation update, fullscreen-padding apply) would
    * pay a `getComputedStyle()` cost for a value they never consult.
    */
@@ -1539,7 +1546,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private setInitialSafeAreaOverrides(): void {
     const context: ModalSafeAreaContext = {
       ...this.getSafeAreaContext(),
-      coveredAxes: getModalCoveredAxes(this.el),
+      // A sheet's `--width` and `--height` don't tell whether `--max-width`
+      // keeps it clear of the edges, so its rendered size is measured instead.
+      coveredAxes: this.isSheetModal ? measureCoveredAxes(this.el) : getModalCoveredAxes(this.el),
     };
     const safeAreaConfig = getInitialSafeAreaConfig(context);
     applySafeAreaOverrides(this.el, safeAreaConfig);
@@ -1577,8 +1586,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { wrapperEl, el } = this;
     const context = this.getSafeAreaContext();
 
-    // Sheet modals: safe-area is fully determined at presentation time
-    // (top is always 0px, height is frozen). Nothing to update.
+    // Sheet modals: safe-area is determined at presentation time and on
+    // resize (top is always 0px, height is frozen). Nothing to update.
     if (context.isSheetModal) return;
 
     // Card modals have fixed safe-area requirements set by initial prediction.

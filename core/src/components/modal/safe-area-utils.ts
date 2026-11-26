@@ -135,7 +135,7 @@ export const getModalCoveredAxes = (hostEl: HTMLElement): ModalCoveredAxes => {
  * enter animation, which initially translates it by its own height, while
  * the translation does not affect its measured size.
  */
-const measureCoveredAxes = (hostEl: HTMLElement): ModalCoveredAxes => {
+export const measureCoveredAxes = (hostEl: HTMLElement): ModalCoveredAxes => {
   const wrapperEl = hostEl.shadowRoot?.querySelector('.modal-wrapper');
   if (wrapperEl == null || win === undefined) {
     return { vertical: false, horizontal: false };
@@ -172,13 +172,15 @@ export const getInitialSafeAreaConfig = (context: ModalSafeAreaContext): SafeAre
   // top edge is handled by --ion-modal-offset-top (set in modal.tsx) using
   // the resolved root value, so --ion-safe-area-top is never needed for
   // height calculation. Keeping it at 0px prevents header content from
-  // getting double-offset padding.
+  // getting double-offset padding. The horizontal insets are kept when the
+  // sheet spans the viewport width (e.g. a phone in landscape).
   if (isSheetModal) {
+    const horizontal = context.coveredAxes?.horizontal ?? true;
     return {
       top: '0px',
       bottom: 'inherit',
-      left: '0px',
-      right: '0px',
+      left: horizontal ? 'inherit' : '0px',
+      right: horizontal ? 'inherit' : '0px',
     };
   }
 
