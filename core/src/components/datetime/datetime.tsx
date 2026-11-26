@@ -951,6 +951,19 @@ export class Datetime implements ComponentInterface {
       calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
 
       const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
+        /**
+         * The calendar body has no layout while the month/year picker
+         * is open or the host is hidden. Every box measures 0 in that
+         * case, which would read below as having scrolled to the
+         * previous month, so there is no month change to detect.
+         *
+         * A force-rendered month must still go through so that
+         * updateActiveMonth can resolve the promise animateToDate is
+         * waiting on. Otherwise, forceRenderDate would never be cleared
+         * and every later scroll would commit that stale date.
+         */
+        if (calendarBodyRef.clientWidth === 0 && this.forceRenderDate === undefined) return;
+
         const box = calendarBodyRef.getBoundingClientRect();
 
         /**
