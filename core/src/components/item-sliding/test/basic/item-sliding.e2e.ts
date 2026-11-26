@@ -98,6 +98,68 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
     });
+
+    test.describe('pressing outside', () => {
+      test.beforeEach(async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/29504',
+        });
+
+        await page.setContent(
+          `
+          <ion-content>
+            <button id="outside">Outside</button>
+            <ion-list>
+              <ion-item-sliding>
+                <ion-item>
+                  <ion-label>Sliding Item</ion-label>
+                </ion-item>
+                <ion-item-options side="end">
+                  <ion-item-option>Archive</ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
+          </ion-content>
+        `,
+          config
+        );
+      });
+
+      const getOpenAmount = (page: E2EPage) =>
+        page.locator('ion-item-sliding').evaluate((el: HTMLIonItemSlidingElement) => el.getOpenAmount());
+
+      const openItem = async (page: E2EPage) => {
+        await page.locator('ion-item-sliding').evaluate((el: HTMLIonItemSlidingElement) => el.open('end'));
+        await expect.poll(() => getOpenAmount(page)).not.toBe(0);
+      };
+
+      test('should close an item opened with open() when pressing outside of it', async ({ page }) => {
+        await openItem(page);
+
+        await page.locator('#outside').click();
+
+        await expect.poll(() => getOpenAmount(page)).toBe(0);
+      });
+
+      test('should close a swiped open item when pressing outside of it', async ({ page }) => {
+        await dragElementBy(page.locator('ion-item-sliding'), page, -150);
+        await expect.poll(() => getOpenAmount(page)).not.toBe(0);
+
+        await page.locator('#outside').click();
+
+        await expect.poll(() => getOpenAmount(page)).toBe(0);
+      });
+
+      test('should not close the open item when pressing one of its options', async ({ page }) => {
+        await openItem(page);
+
+        await page.locator('ion-item-option').click();
+        await page.waitForChanges();
+
+        expect(await getOpenAmount(page)).not.toBe(0);
+      });
+    });
   });
 });
 
