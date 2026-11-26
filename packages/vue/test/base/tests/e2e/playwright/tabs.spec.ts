@@ -36,4 +36,26 @@ test.describe('Tabs', () => {
     await tabClick(page, 'tab1');
     await ionPageVisible(page, 'tab1');
   });
+
+  test('tab root should not be able to go back after resetting the tab and switching tabs', async ({ page }) => {
+    await page.goto('/tabs/tab1');
+    await ionPageVisible(page, 'tab1');
+
+    await page.locator('div.ion-page[data-pageid=tab1] #child-one').click();
+    await ionPageVisible(page, 'tab1childone');
+
+    // Tapping the active tab resets it via router.go(-1)
+    await tabClick(page, 'tab1');
+    await ionPageVisible(page, 'tab1');
+    await ionPageDoesNotExist(page, 'tab1childone');
+
+    // Pushing tab2 overwrites the history entry of tab1's child
+    await tabClick(page, 'tab2');
+    await ionPageVisible(page, 'tab2');
+
+    await tabClick(page, 'tab1');
+    await ionPageVisible(page, 'tab1');
+    await expect(page).toHaveURL(/\/tabs\/tab1(\?|$)/);
+    await expect(page.locator('div.ion-page[data-pageid=tab1]')).not.toHaveClass(/can-go-back/);
+  });
 });

@@ -664,7 +664,17 @@ export const createIonRouter = (
           const lastRoute = locationHistory.getCurrentRouteInfoForTab(
             routeInfo.tab
           );
-          routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+          /**
+           * The last route in the tab stack is not always the page
+           * the tab returns to. After the tab button resets the tab
+           * with router.go(), its child stays last in the stack, and
+           * copying the child's pushedByRoute onto the tab root would
+           * show a back button on the root.
+           */
+          routeInfo.pushedByRoute =
+            lastRoute?.pathname === routeInfo.pathname
+              ? lastRoute?.pushedByRoute
+              : undefined;
         } else if (
           routeInfo.routerAction === "push" &&
           routeInfo.routerDirection === "none" &&
