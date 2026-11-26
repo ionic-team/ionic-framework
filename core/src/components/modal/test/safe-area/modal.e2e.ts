@@ -136,30 +136,104 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(safeAreaBottom).toBe('0px');
     });
 
-    test('sheet modal should only use bottom safe-area', async ({ page }, testInfo) => {
+    test('sheet modal should only zero the top safe-area when it spans the viewport width', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
       });
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31818',
+      });
+
+      // Simulate a landscape phone with a notch on the left and right
+      await page.setViewportSize({ width: 844, height: 390 });
+      await page.evaluate(() => {
+        document.documentElement.style.setProperty('--ion-safe-area-left', '47px');
+        document.documentElement.style.setProperty('--ion-safe-area-right', '47px');
+      });
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      await page.click('#sheet-modal');
+      await ionModalDidPresent.next();
 
+      // The sheet doesn't touch the top edge, but it touches the bottom,
+      // left and right edges
+      expect(await getSettledSafeArea(page)).toEqual({
+        top: '0px',
+        bottom: 'inherit',
+        left: 'inherit',
+        right: 'inherit',
+      });
+
+      // The sheet's toolbar pads itself with the root insets
+      const toolbarSafeArea = await page.locator('ion-modal ion-header ion-toolbar').evaluate((el: HTMLElement) => {
+        const styles = getComputedStyle(el);
+        return [
+          styles.getPropertyValue('--ion-safe-area-left').trim(),
+          styles.getPropertyValue('--ion-safe-area-right').trim(),
+        ];
+      });
+      expect(toolbarSafeArea).toEqual(['47px', '47px']);
+    });
+
+    test('sheet modal should zero horizontal safe-area when max-width keeps it clear of the edges', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31818',
+      });
+
+      await page.setViewportSize({ width: 844, height: 390 });
+      await page.addStyleTag({
+        content: 'ion-modal.modal-sheet { --width: 100%; --height: 100%; --max-width: 480px; }',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      await page.click('#sheet-modal');
+      await ionModalDidPresent.next();
+
+      const wrapperWidth = await page
+        .locator('ion-modal')
+        .evaluate(
+          (el: HTMLIonModalElement) => el.shadowRoot!.querySelector('.modal-wrapper')!.getBoundingClientRect().width
+        );
+      expect(wrapperWidth).toBe(480);
+
+      const { left, right } = await getSettledSafeArea(page);
+      expect([left, right]).toEqual(['0px', '0px']);
+    });
+
+    test('sheet modal should update horizontal safe-area on resize', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31818',
+      });
+
+      // The sheet is centered with a fixed width on a tablet viewport, so it
+      // stays clear of the left and right edges.
+      await page.setViewportSize(Viewports.tablet.portrait);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       await page.click('#sheet-modal');
       await ionModalDidPresent.next();
 
       const modal = page.locator('ion-modal');
+      const getHorizontalSafeArea = () =>
+        modal.evaluate((el: HTMLIonModalElement) => [
+          el.style.getPropertyValue('--ion-safe-area-left'),
+          el.style.getPropertyValue('--ion-safe-area-right'),
+        ]);
 
-      // Sheet modals should have top safe-area zeroed (doesn't touch top edge)
-      // but bottom safe-area inherited (touches bottom edge)
-      const safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
-        return el.style.getPropertyValue('--ion-safe-area-top');
-      });
-      const safeAreaBottom = await modal.evaluate((el: HTMLIonModalElement) => {
-        return el.style.getPropertyValue('--ion-safe-area-bottom');
-      });
+      expect(await getHorizontalSafeArea()).toEqual(['0px', '0px']);
 
-      expect(safeAreaTop).toBe('0px');
-      expect(safeAreaBottom).toBe('inherit');
+      // Resize to a landscape phone viewport, where the sheet spans the full width
+      await page.setViewportSize({ width: 844, height: 390 });
+
+      await expect.poll(getHorizontalSafeArea).toEqual(['inherit', 'inherit']);
     });
 
     test('fullscreen modal without footer should set safe-area scroll padding on ion-content', async ({
