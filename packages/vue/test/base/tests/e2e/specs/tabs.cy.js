@@ -645,7 +645,11 @@ describe('Tabs', () => {
 
   describe('Without IonRouterOutlet', () => {
     beforeEach(() => {
-      cy.visit('/tabs-basic');
+      cy.visit('/tabs-basic', {
+        onBeforeLoad(win) {
+          cy.spy(win.console, 'log').as('consoleLog');
+        },
+      });
     });
 
     it('should show correct tab when clicking the tab button', () => {
@@ -672,6 +676,45 @@ describe('Tabs', () => {
       cy.get('ion-tab-button#tab-button-tab2').click();
 
       cy.url().should('include', '/tabs-basic');
+    });
+
+    it('should fire tab change events for the first tab on load', () => {
+      cy.get('#did-change-active-tab').should('have.text', 'tab1');
+      cy.get('@consoleLog').should((consoleLog) => {
+        expect(consoleLog.withArgs('ionTabsWillChange', 'tab1')).to.have.been.calledOnce;
+        expect(consoleLog.withArgs('ionTabsDidChange', 'tab1')).to.have.been.calledOnce;
+      });
+    });
+
+    it('should fire tab change events once after the tab switches', () => {
+      cy.get('ion-tab-button#tab-button-tab1').should('have.class', 'tab-selected');
+
+      cy.get('ion-tab-button#tab-button-tab2').click();
+
+      cy.get('#did-change-active-tab').should('have.text', 'tab2');
+      cy.get('@consoleLog').should((consoleLog) => {
+        expect(consoleLog.withArgs('ionTabsWillChange', 'tab2')).to.have.been.calledOnce;
+        expect(consoleLog.withArgs('ionTabsDidChange', 'tab2')).to.have.been.calledOnce;
+      });
+    });
+
+    it('should fire tab change events when a tab is selected from code', () => {
+      cy.get('ion-tab-button#tab-button-tab1').should('have.class', 'tab-selected');
+
+      cy.get('#select-tab3').click();
+
+      cy.get('#did-change-active-tab').should('have.text', 'tab3');
+      cy.get('@consoleLog').should((consoleLog) => {
+        expect(consoleLog.withArgs('ionTabsWillChange', 'tab3')).to.have.been.calledOnce;
+        expect(consoleLog.withArgs('ionTabsDidChange', 'tab3')).to.have.been.calledOnce;
+      });
+
+      cy.get('ion-tab-button#tab-button-tab2').click();
+
+      cy.get('#did-change-active-tab').should('have.text', 'tab2');
+      cy.get('@consoleLog').should((consoleLog) => {
+        expect(consoleLog.withArgs('ionTabsDidChange', 'tab2')).to.have.been.calledOnce;
+      });
     });
   })
 

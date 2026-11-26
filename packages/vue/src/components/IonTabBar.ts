@@ -138,10 +138,9 @@ export const IonTabBar = defineComponent({
 
         /**
          * If the router outlet is not defined, then the tabs are being used
-         * as a basic tab navigation without the router. In this case, the
-         * tabs will not emit the `ionTabsDidChange` and `ionTabsWillChange`
-         * events through the `checkActiveTab` method. Instead, we need to
-         * handle those events through the tab buttons.
+         * as a basic tab navigation without the router. History changes do
+         * not happen in this case, so the selected tab is updated through
+         * the tab buttons instead of the `checkActiveTab` method.
          */
         if (!hasRouterOutlet) {
           child.component.props._onClick = (
@@ -164,11 +163,7 @@ export const IonTabBar = defineComponent({
      * and updates the active tab accordingly.
      *
      * History changes only occur when the router
-     * outlet is present. Due to this, the
-     * `ionTabsDidChange` and `ionTabsWillChange`
-     * events are only emitted when the router
-     * outlet is present. A different approach must
-     * be taken for tabs without a router outlet.
+     * outlet is present.
      *
      * @param ionRouter
      */
@@ -277,10 +272,16 @@ export const IonTabBar = defineComponent({
         (child: VNode) => isTabButton(child) && child.props?.tab === activeTab
       );
       const tabBar = this.$refs.ionTabBar as HTMLIonTabBarElement | undefined;
-      const tabDidChange = activeTab !== prevActiveTab;
+      /**
+       * Without a router outlet, `IonTabs` forwards the tab change
+       * events from core `ion-tabs`, which emits them once the tab
+       * has switched.
+       */
+      const shouldEmitTabChange =
+        hasRouterOutlet && activeTab !== prevActiveTab;
       if (tabBar) {
         if (activeChild) {
-          tabDidChange && this.$data._tabsWillChange(activeTab);
+          shouldEmitTabChange && this.$data._tabsWillChange(activeTab);
 
           if (hasRouterOutlet && ionRouter !== null) {
             ionRouter.handleSetCurrentTab(activeTab);
@@ -288,7 +289,7 @@ export const IonTabBar = defineComponent({
 
           tabBar.selectedTab = tabState.activeTab = activeTab;
 
-          tabDidChange && this.$data._tabsDidChange(activeTab);
+          shouldEmitTabChange && this.$data._tabsDidChange(activeTab);
         } else {
           /**
            * When going to a tab that does
