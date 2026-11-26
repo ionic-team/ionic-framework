@@ -81,7 +81,6 @@
 
 .popover-content {
   display: flex;
-  outline: none;
   position: absolute;
 
   flex-direction: column;
@@ -93,6 +92,8 @@
   height: var(--height);
   min-height: var(--min-height);
   max-height: var(--max-height);
+
+  outline: none;
 
   background: var(--background);
 

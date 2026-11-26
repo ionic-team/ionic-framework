@@ -2,7 +2,8 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { focusFirstDescendant } from '@utils/focus-trap';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
-import { addEventListener, raf, hasLazyBuild , inheritAttributes } from '@utils/helpers';
+import { addEventListener, raf, hasLazyBuild, inheritAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
@@ -30,7 +31,6 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import type { Attributes } from '@utils/helpers';
 import type {
   PopoverInterface,
   PopoverSize,
