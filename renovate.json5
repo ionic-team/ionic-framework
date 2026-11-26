@@ -18,16 +18,25 @@
       matchPackagePatterns: ["@stencil/angular-output-target", "@stencil/react-output-target", "@stencil/vue-output-target"],
       groupName: "stencil-output-targets",
       matchFileNames: [
-        "core/package.json"
+        "core/package.json",
+        "packages/react/package.json",
+        "packages/vue/package.json"
       ]
     },
-    // TODO(ROU-11172): unpin React output target version
+    // Ignore updates to react and vue packages except for Stencil output targets
     {
-      matchPackageNames: ["@stencil/react-output-target"],
       matchFileNames: [
-        "core/package.json"
+        "packages/react/package.json"
       ],
-      allowedVersions: ["<=0.5.3"]
+      excludePackageNames: ["@stencil/react-output-target"],
+      enabled: false
+    },
+    {
+      matchFileNames: [
+        "packages/vue/package.json"
+      ],
+      excludePackageNames: ["@stencil/vue-output-target"],
+      enabled: false
     },
     {
       matchPackagePatterns: ["@capacitor/core", "@capacitor/keyboard", "@capacitor/haptics", "@capacitor/status-bar"],
@@ -173,9 +182,9 @@
     // Ionic Packages
     "packages/angular",
     "packages/angular-server",
-    "packages/react",
+    "packages/react/test",
     "packages/react-router",
-    "packages/vue",
+    "packages/vue/test",
     "packages/vue-router",
     "docs",
     // Local Development Scripts
