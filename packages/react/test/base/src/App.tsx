@@ -26,6 +26,7 @@ import Inputs from './pages/Inputs';
 import Main from './pages/Main';
 import Tabs from './pages/Tabs';
 import TabsBasic from './pages/TabsBasic';
+import TabsFunctionChildren from './pages/TabsFunctionChildren';
 import NavComponent from './pages/navigation/NavComponent';
 import NavModalComponent from './pages/navigation/NavModalComponent';
 import TabsDirectNavigation from './pages/TabsDirectNavigation';
@@ -70,6 +71,7 @@ const App: React.FC = () => (
         <Route path="/navigation-modal" element={<NavModalComponent />} />
         <Route path="/tabs/*" element={<Tabs />} />
         <Route path="/tabs-basic/*" element={<TabsBasic />} />
+        <Route path="/tabs-function-children/*" element={<TabsFunctionChildren />} />
         <Route path="/tabs-direct-navigation/*" element={<TabsDirectNavigation />} />
         <Route path="/tabs-similar-prefixes/*" element={<TabsSimilarPrefixes />} />
         <Route path="/icons" element={<Icons />} />

@@ -129,4 +129,20 @@ describe('IonTabs', () => {
       cy.get('#active-tab').should('have.text', 'tab2');
     });
   });
+
+  describe('Function Children Without IonRouterOutlet', () => {
+    beforeEach(() => {
+      cy.visit('/tabs-function-children');
+    });
+
+    it('should render the tabs returned by the function', () => {
+      cy.get('ion-tab').eq(0).should('not.have.class', 'tab-hidden');
+      cy.get('ion-tab-button[tab="tab1"]').should('have.class', 'tab-selected');
+
+      cy.get('ion-tab-button[tab="tab2"]').click();
+
+      cy.get('ion-tab').eq(1).should('not.have.class', 'tab-hidden');
+      cy.get('ion-tab').eq(0).should('have.class', 'tab-hidden');
+    });
+  });
 });
