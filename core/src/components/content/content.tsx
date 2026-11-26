@@ -618,6 +618,7 @@ export class Content implements ComponentInterface {
           }}
           ref={(scrollEl) => (this.scrollEl = scrollEl)}
           onScroll={this.scrollEvents ? (ev: UIEvent) => this.onScroll(ev) : undefined}
+          tabindex="0"
           part="scroll"
         >
           <slot></slot>

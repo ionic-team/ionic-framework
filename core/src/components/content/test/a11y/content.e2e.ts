@@ -63,5 +63,20 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await expect(content).toHaveAttribute('role', 'complementary');
     });
+
+    test('should make the scroll area keyboard-focusable', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-content>
+          <div style="height: 2000px;">Scrollable content</div>
+        </ion-content>
+      `,
+        config
+      );
+
+      const scrollArea = page.locator('ion-content [part="scroll"]');
+
+      await expect(scrollArea).toHaveAttribute('tabindex', '0');
+    });
   });
 });
