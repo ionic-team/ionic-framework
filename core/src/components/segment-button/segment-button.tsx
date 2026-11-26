@@ -40,6 +40,10 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
   @State() checked = false;
 
+  @State() ariaPosInSet?: number;
+
+  @State() ariaSetSize?: number;
+
   /**
    * The `id` of the segment content.
    */
@@ -168,8 +172,15 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     }
   }
 
+  /** @internal */
+  @Method()
+  async setButtonAriaPosition(posInSet: number, setSize: number) {
+    this.ariaPosInSet = posInSet;
+    this.ariaSetSize = setSize;
+  }
+
   render() {
-    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
+    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl, ariaPosInSet, ariaSetSize } = this;
     const mode = getIonMode(this);
     const tabindexAttributes = this.tabindexController?.attributes ?? {};
     const hasSegmentColor = () => segmentEl?.color !== undefined;
@@ -195,6 +206,8 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
       >
         <button
           aria-selected={checked ? 'true' : 'false'}
+          aria-posinset={ariaPosInSet}
+          aria-setsize={ariaSetSize}
           role="tab"
           ref={(el) => (this.nativeEl = el)}
           type={type}
