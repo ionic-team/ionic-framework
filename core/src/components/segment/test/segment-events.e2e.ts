@@ -191,6 +191,54 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
     });
 
+    test.describe('when the segment is right clicked', () => {
+      test('should not change the value when the pointer moves', async ({ page }) => {
+        test.info().annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/29872',
+        });
+
+        await page.setContent(
+          `
+          <ion-segment value="1">
+            <ion-segment-button value="1">
+              <ion-label>One</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="2">
+              <ion-label>Two</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="3">
+              <ion-label>Three</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        `,
+          config
+        );
+
+        const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+        const segment = page.locator('ion-segment');
+        const firstButton = page.locator('ion-segment-button[value="1"]');
+        const lastButton = page.locator('ion-segment-button[value="3"]');
+
+        /**
+         * A right click should not start the drag gesture. On macOS the
+         * context menu swallows the mouseup, so a drag started by a right
+         * click follows the pointer until the next left click. Playwright
+         * cannot open the native context menu, so the right button is held
+         * down while the pointer moves instead.
+         */
+        await firstButton.hover();
+        await page.mouse.down({ button: 'right' });
+
+        await lastButton.hover();
+        await page.mouse.up({ button: 'right' });
+
+        expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('1');
+        expect(ionChangeSpy).toHaveReceivedEventTimes(0);
+      });
+    });
+
     test('should not emit if the value has not changed on click', async ({ page }) => {
       await page.setContent(
         `
