@@ -16,6 +16,7 @@ import {
   eventMethod,
   FOCUS_TRAP_DISABLE_CLASS,
   GESTURE,
+  getPresentedOverlay,
   prepareOverlay,
   present,
   restoreRootFocusTrapAccessibility,
@@ -1230,8 +1231,20 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * true when a shadow child (the dialog wrapper present() focuses) is focused.
      * shadowRoot's activeElement is null only when the host was focused directly,
      * so redirect to the handle only then and leave present()'s wrapper focus intact.
+     *
+     * Only the topmost presented modal may redirect focus to its handle.
+     * When two sheets are presented back to back, the focus trap moves focus
+     * between them; if the covered sheet also redirected focus to its own
+     * handle, the trap would move focus back again, and the two would
+     * ping-pong until the call stack overflows.
      */
-    if (ev.target === el && el.shadowRoot?.activeElement == null && dragHandleEl && dragHandleEl.tabIndex !== -1) {
+    if (
+      ev.target === el &&
+      el.shadowRoot?.activeElement == null &&
+      dragHandleEl &&
+      dragHandleEl.tabIndex !== -1 &&
+      getPresentedOverlay(document, 'ion-modal') === el
+    ) {
       dragHandleEl.focus();
     }
   };
