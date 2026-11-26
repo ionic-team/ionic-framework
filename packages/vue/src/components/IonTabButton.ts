@@ -71,8 +71,12 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
        * then we must be on a child page and
        * should direct users back to the root
        * of the tab.
+       *
+       * Without a router outlet, the tabs are not
+       * tied to the router, so the router must not
+       * navigate when a tab button is clicked.
        */
-      if (ionRouter !== null) {
+      if (hasRouterOutlet && ionRouter !== null) {
         if (prevActiveTab === tab) {
           if (originalHref !== currentHref) {
             ionRouter.resetTab(tab, originalHref);
