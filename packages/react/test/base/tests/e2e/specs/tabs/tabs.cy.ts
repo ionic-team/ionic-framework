@@ -88,11 +88,61 @@ describe('IonTabs', () => {
       cy.url().should('include', '/tabs-basic');
     });
 
-    it('should fire tab change events on tab click', () => {
+    it('should fire tab change events once on tab click', () => {
       cy.get('ion-tab-button[tab="tab2"]').click();
 
-      cy.get('@consoleLog').should('be.calledWith', 'onIonTabsWillChange', 'tab2');
-      cy.get('@consoleLog').should('be.calledWith', 'onIonTabsDidChange:', 'tab2');
+      cy.get('@consoleLog').should((consoleLog: any) => {
+        expect(consoleLog.withArgs('onIonTabsWillChange', 'tab2')).to.have.been.calledOnce;
+        expect(consoleLog.withArgs('onIonTabsDidChange:', 'tab2')).to.have.been.calledOnce;
+      });
+    });
+
+    // Issue: https://github.com/ionic-team/ionic-framework/issues/30037
+    it('should select a tab with selectTab from IonTabsContext', () => {
+      cy.get('#select-tab2').click();
+
+      cy.get('#select-result').should('have.text', 'true');
+      cy.get('ion-tab').eq(1).should('not.have.class', 'tab-hidden');
+      cy.get('ion-tab').eq(0).should('have.class', 'tab-hidden');
+      cy.get('ion-tab-button[tab="tab2"]').should('have.class', 'tab-selected');
+      cy.get('@consoleLog').should((consoleLog: any) => {
+        expect(consoleLog.withArgs('onIonTabsWillChange', 'tab2')).to.have.been.calledOnce;
+        expect(consoleLog.withArgs('onIonTabsDidChange:', 'tab2')).to.have.been.calledOnce;
+      });
+    });
+
+    it('should return false from selectTab for a tab that does not exist', () => {
+      cy.get('#select-missing-tab').click();
+
+      cy.get('#select-result').should('have.text', 'false');
+      cy.get('ion-tab').eq(0).should('not.have.class', 'tab-hidden');
+    });
+
+    it('should keep activeTab on IonTabsContext in sync with the selected tab', () => {
+      cy.get('#read-active-tab').click();
+      cy.get('#active-tab').should('have.text', 'tab1');
+
+      cy.get('ion-tab-button[tab="tab2"]').click();
+      cy.get('ion-tab').eq(1).should('not.have.class', 'tab-hidden');
+
+      cy.get('#read-active-tab').click();
+      cy.get('#active-tab').should('have.text', 'tab2');
+    });
+  });
+
+  describe('Function Children Without IonRouterOutlet', () => {
+    beforeEach(() => {
+      cy.visit('/tabs-function-children');
+    });
+
+    it('should render the tabs returned by the function', () => {
+      cy.get('ion-tab').eq(0).should('not.have.class', 'tab-hidden');
+      cy.get('ion-tab-button[tab="tab1"]').should('have.class', 'tab-selected');
+
+      cy.get('ion-tab-button[tab="tab2"]').click();
+
+      cy.get('ion-tab').eq(1).should('not.have.class', 'tab-hidden');
+      cy.get('ion-tab').eq(0).should('have.class', 'tab-hidden');
     });
   });
 });
