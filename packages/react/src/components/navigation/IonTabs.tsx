@@ -222,11 +222,9 @@ export class IonTabs extends React.Component<Props> {
 
       return (
         <IonTabsContext.Provider value={this.ionTabContextState}>
-          <IonTabsInner
-            {...this.props}
-            ref={this.tabsElRef}
-            onIonTabsDidChange={this.onTabsDidChangeWithoutRouter}
-          ></IonTabsInner>
+          <IonTabsInner {...this.props} ref={this.tabsElRef} onIonTabsDidChange={this.onTabsDidChangeWithoutRouter}>
+            {children}
+          </IonTabsInner>
         </IonTabsContext.Provider>
       );
     }
