@@ -1,7 +1,14 @@
 <template>
   <ion-page data-pageid="tabs">
     <ion-content>
-      <ion-tabs id="tabs" @ionTabsWillChange="onTabWillChange" @ionTabsDidChange="onTabDidChange">
+      <ion-tabs id="tabs" ref="tabsRef" @ionTabsWillChange="onTabWillChange" @ionTabsDidChange="onTabDidChange">
+        <div slot="top">
+          <button id="select-tab3" @click="selectTab3">Select Tab 3</button>
+          <p>
+            Active tab on ionTabsDidChange: <span id="did-change-active-tab">{{ didChangeActiveTab }}</span>
+          </p>
+        </div>
+
         <ion-tab-bar slot="bottom">
           <ion-tab-button
             v-for="tab in tabs"
@@ -45,11 +52,21 @@ export default defineComponent({
       console.log('ionTabsWillChange', e.tab);
     }
 
+    const tabsRef = ref();
+    const didChangeActiveTab = ref('');
+
     const onTabDidChange = (e: { tab: string }) => {
       console.log('ionTabsDidChange', e.tab);
+
+      const activeTab = Array.from(document.querySelectorAll('ion-tab')).find((tab) => tab.active);
+      didChangeActiveTab.value = activeTab?.getAttribute('data-pageid') ?? 'none';
     }
 
-    return { tabs, onTabWillChange, onTabDidChange }
+    const selectTab3 = () => {
+      tabsRef.value.$el.select('tab3');
+    }
+
+    return { tabs, tabsRef, didChangeActiveTab, onTabWillChange, onTabDidChange, selectTab3 }
   }
 });
 </script>

@@ -52,11 +52,6 @@ const isTab = (node: VNode): boolean => {
 export const IonTabs = /*@__PURE__*/ defineComponent({
   name: "IonTabs",
   emits: [WILL_CHANGE, DID_CHANGE],
-  data() {
-    return {
-      hasRouterOutlet: false,
-    };
-  },
   setup(props, { slots, emit }) {
     const slottedContent: VNode[] | undefined =
       slots.default && slots.default();
@@ -74,6 +69,8 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
       );
     }
 
+    const hasRouterOutlet = !!routerOutlet;
+
     /**
      * Tab bar can be used as a standalone component,
      * so it cannot be modified directly through
@@ -83,7 +80,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
     provide(
       "tabBarData",
       shallowRef<TabBarData>({
-        hasRouterOutlet: !!routerOutlet,
+        hasRouterOutlet,
         _tabsWillChange: (tab) => emit(WILL_CHANGE, { tab }),
         _tabsDidChange: (tab) => emit(DID_CHANGE, { tab }),
       })
@@ -93,9 +90,28 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
       props,
       slots,
       emit,
+      hasRouterOutlet,
     };
   },
   mounted() {
+    /**
+     * Without a router outlet, core `ion-tabs` switches tabs itself,
+     * including from `select()`, and emits the tab change events once
+     * the switch is done. Forward those, since declaring the same
+     * names in `emits` keeps them from reaching the app's listeners.
+     * The listeners are added before the element is defined so the
+     * events for the first tab are not missed.
+     */
+    if (!this.hasRouterOutlet) {
+      const tabsEl = this.$el as HTMLIonTabsElement;
+      tabsEl.addEventListener(WILL_CHANGE, (ev) =>
+        this.$emit(WILL_CHANGE, { tab: (ev as CustomEvent).detail.tab })
+      );
+      tabsEl.addEventListener(DID_CHANGE, (ev) =>
+        this.$emit(DID_CHANGE, { tab: (ev as CustomEvent).detail.tab })
+      );
+    }
+
     /**
      * `defineCustomElement` must be called in the `mounted` hook
      * to ensure that the custom element is defined after the
