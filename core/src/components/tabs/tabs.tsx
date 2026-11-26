@@ -95,7 +95,10 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * Select a tab by the value of its `tab` property or an element reference. This method is only available for vanilla JavaScript projects. The Angular, React, and Vue implementations of tabs are coupled to each framework's router.
+   * Select a tab by the value of its `tab` property or an element reference.
+   * 
+   * In React and Vue, this method only works when tabs are used without a router outlet. With a router outlet,
+   * tabs are coupled to the framework's router, so navigate with the router instead.
    *
    * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
    */
@@ -113,9 +116,11 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * Get a specific tab by the value of its `tab` property or an element reference. This method is only available for vanilla JavaScript projects. The Angular, React, and Vue implementations of tabs are coupled to each framework's router.
+   * Get a specific tab by the value of its `tab` property or an element reference.
+   * 
+   * In React and Vue, this method only works when tabs are used without a router outlet.
    *
-   * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
+   * @param tab The tab instance to get. If passed a string, it should be the value of the tab's `tab` property.
    */
   @Method()
   async getTab(tab: string | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
@@ -123,7 +128,9 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * Get the currently selected tab. This method is only available for vanilla JavaScript projects. The Angular, React, and Vue implementations of tabs are coupled to each framework's router.
+   * Get the currently selected tab.
+   * 
+   * In React and Vue, this method only works when tabs are used without a router outlet.
    */
   @Method()
   getSelected(): Promise<string | undefined> {
@@ -233,7 +240,7 @@ const getTab = (tabs: HTMLIonTabElement[], tab: string | HTMLIonTabElement): HTM
   const tabEl = typeof tab === 'string' ? tabs.find((t) => t.tab === tab) : tab;
 
   if (!tabEl) {
-    printIonError(`[ion-tabs] - Tab with id: "${tabEl}" does not exist`);
+    printIonError(`[ion-tabs] - Tab with id: "${tab}" does not exist`);
   }
   return tabEl;
 };
