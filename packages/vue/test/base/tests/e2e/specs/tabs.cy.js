@@ -673,6 +673,20 @@ describe('Tabs', () => {
 
       cy.url().should('include', '/tabs-basic');
     });
+
+    it('should not navigate away when clicking the selected tab after visiting tabs with a router outlet', () => {
+      cy.routerPush('/tabs');
+      cy.ionPageVisible('tab1');
+
+      cy.routerPush('/tabs-basic');
+      cy.url().should('include', '/tabs-basic');
+      cy.get('ion-tab[data-pageid=tab1]').should('be.visible');
+
+      cy.get('ion-tabs:has(> ion-tab) ion-tab-button#tab-button-tab1').click();
+
+      cy.url().should('include', '/tabs-basic');
+      cy.get('ion-tab[data-pageid=tab1]').should('be.visible');
+    });
   })
 
   describe('Swipe to Go Back', () => {
