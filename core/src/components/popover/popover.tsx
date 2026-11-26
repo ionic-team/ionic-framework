@@ -2,7 +2,8 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { focusFirstDescendant } from '@utils/focus-trap';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
-import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
+import { addEventListener, raf, hasLazyBuild, inheritAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { OverlayFocusBoundary } from '@utils/overlay-focus-boundary';
@@ -71,6 +72,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private headerResizeObserver?: ResizeObserver;
 
   private inline = false;
+  private inheritedAttributes: Attributes = {};
   private workingDelegate?: FrameworkDelegate;
 
   private focusDescendantOnPresent = false;
@@ -389,7 +391,21 @@ export class Popover implements ComponentInterface, PopoverInterface {
   }
 
   componentWillLoad() {
-    const { el } = this;
+    const { el, htmlAttributes } = this;
+
+    const attributesToInherit = ['aria-label', 'role'];
+    this.inheritedAttributes = inheritAttributes(el, attributesToInherit);
+    if (htmlAttributes !== undefined) {
+      attributesToInherit.forEach((attribute) => {
+        if (htmlAttributes[attribute]) {
+          this.inheritedAttributes = {
+            ...this.inheritedAttributes,
+            [attribute]: htmlAttributes[attribute],
+          };
+          delete htmlAttributes[attribute];
+        }
+      });
+    }
     const popoverId = this.htmlAttributes?.id ?? setOverlayId(el);
 
     this.parentPopover = el.closest(`ion-popover:not(#${popoverId})`) as HTMLIonPopoverElement | null;
@@ -772,7 +788,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
     return (
       <Host
-        aria-modal="true"
         no-router
         tabindex="-1"
         {...(htmlAttributes as any)}
@@ -801,7 +816,19 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
         <div class="popover-wrapper ion-overlay-wrapper" onClick={dismissOnSelect ? () => this.dismiss() : undefined}>
           {enableArrow && <div class="popover-arrow" part="arrow"></div>}
-          <div class="popover-content" part="content">
+          <div
+            /*
+              role and aria-modal go on the same element inside the
+              shadow DOM, matching ion-modal. tabIndex={-1} lets
+              present() move focus here.
+            */
+            role="dialog"
+            {...this.inheritedAttributes}
+            aria-modal="true"
+            tabIndex={-1}
+            class="popover-content"
+            part="content"
+          >
             <slot></slot>
           </div>
         </div>
