@@ -3,6 +3,30 @@ import { newSpecPage } from '@stencil/core/testing';
 import { TabButton } from '../tab-button';
 
 describe('tab button: tabindex', () => {
+  // https://github.com/ionic-team/ionic-framework/issues/30648
+  it('should render tabindex="0" on the native element when href is not defined', async () => {
+    const page = await newSpecPage({
+      components: [TabButton],
+      html: `<ion-tab-button tab="schedule"></ion-tab-button>`,
+    });
+
+    const nativeEl = page.body.querySelector('ion-tab-button')!.shadowRoot!.querySelector('a')!;
+
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
+  });
+
+  // https://github.com/ionic-team/ionic-framework/issues/30648
+  it('should render tabindex="0" on the native element when href is defined', async () => {
+    const page = await newSpecPage({
+      components: [TabButton],
+      html: `<ion-tab-button tab="schedule" href="/schedule"></ion-tab-button>`,
+    });
+
+    const nativeEl = page.body.querySelector('ion-tab-button')!.shadowRoot!.querySelector('a')!;
+
+    expect(nativeEl.getAttribute('tabindex')).toBe('0');
+  });
+
   it('should move tabindex from the host to the native anchor', async () => {
     const page = await newSpecPage({
       components: [TabButton],
