@@ -153,10 +153,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   /** Whether this outlet was previously in scope. */
   private wasInScope = true;
   /**
-   * Track the last transition's entering and leaving view IDs to prevent
+   * Track the last transition's entering and leaving view IDs and element to prevent
    * duplicate transitions during rapid navigation (e.g., Navigate redirects)
    */
-  private lastTransition?: { enteringId: string; leavingId?: string };
+  private lastTransition?: { enteringId: string; leavingId?: string; enteringEl?: HTMLElement };
   /**
    * Views that have been explicitly kept alive by the pop-preserve logic
    * (shouldPreserveLeavingView) so a future forward-pop can restore their React
@@ -582,14 +582,18 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const currentTransition = {
       enteringId: enteringViewItem.id,
       leavingId: leavingViewItem?.id,
+      enteringEl: enteringViewItem.ionPageElement,
     };
 
+    // A view can swap in a new IonPage while keeping its id (e.g., a splat route rendering
+    // <Routes>), so compare the element too or the new page is skipped and stays invisible.
     const isDuplicateTransition =
       leavingViewItem &&
       this.lastTransition &&
       this.lastTransition.leavingId &&
       this.lastTransition.enteringId === currentTransition.enteringId &&
-      this.lastTransition.leavingId === currentTransition.leavingId;
+      this.lastTransition.leavingId === currentTransition.leavingId &&
+      this.lastTransition.enteringEl === currentTransition.enteringEl;
 
     // Skip if transition already performed (e.g., via swipe gesture)
     if (enteringWasVisible && leavingIsHidden && isDuplicateTransition) {
