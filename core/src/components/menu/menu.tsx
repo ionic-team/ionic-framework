@@ -470,6 +470,17 @@ export class Menu implements ComponentInterface, MenuI {
       return false;
     }
 
+    /**
+     * A pointer that went down before this animation may already have
+     * passed canStart. Reset the swipe gesture so that the pointer cannot
+     * start a swipe while the menu animates, which would call
+     * beforeAnimation a second time.
+     */
+    if (this.gesture) {
+      this.gesture.enable(false);
+      this.gesture.enable(this._isActive() && this.swipeGesture);
+    }
+
     this.beforeAnimation(shouldOpen, role);
 
     await this.loadAnimation();
