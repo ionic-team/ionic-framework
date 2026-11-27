@@ -8,6 +8,7 @@ import {
   NavigationStart,
   NavigationEnd,
   NavigationCancel,
+  NavigationCancellationCode,
   NavigationError,
   NavigationSkipped,
 } from '@angular/router';
@@ -101,12 +102,21 @@ export class NavController {
           this.commitHistoryEntry(ev.id);
         }
 
-        // Reset explicit direction when navigation is canceled (e.g., guard rejection)
-        // to prevent stale direction from leaking into the next navigation
         if (ev instanceof NavigationCancel || ev instanceof NavigationError) {
-          this.direction = DEFAULT_DIRECTION;
-          this.animated = DEFAULT_ANIMATED;
-          this.animationBuilder = undefined;
+          /**
+           * Reset the explicit direction when the navigation is canceled (e.g., a guard
+           * rejected it) so it doesn't leak into the next navigation. A redirect or a
+           * superseding navigation continues the same intent, so it keeps the direction.
+           */
+          const continuesNavigation =
+            ev instanceof NavigationCancel &&
+            (ev.code === NavigationCancellationCode.Redirect ||
+              ev.code === NavigationCancellationCode.SupersededByNewNavigation);
+          if (!continuesNavigation) {
+            this.direction = DEFAULT_DIRECTION;
+            this.animated = DEFAULT_ANIMATED;
+            this.animationBuilder = undefined;
+          }
 
           /**
            * Drop the tracked history if the browser might not be on the tracked
