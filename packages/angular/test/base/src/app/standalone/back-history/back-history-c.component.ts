@@ -31,6 +31,7 @@ import {
       <ion-button id="go-to-wrapped" routerLink="/standalone/back-history/wrapped">Go to wrapped page</ion-button>
       <ion-button id="go-to-resolved" routerLink="/standalone/back-history/resolved">Go to resolved page</ion-button>
       <ion-button id="go-to-redirected" routerLink="/standalone/back-history/redirected">Go to a page that redirects to D</ion-button>
+      <ion-button id="root-to-redirected" (click)="rootToRedirected()">Set a page that redirects to D as root</ion-button>
       <ion-button id="shallow-url-update" (click)="shallowUrlUpdate()">Update the URL outside the router</ion-button>
     </ion-content>
   `,
@@ -43,6 +44,10 @@ export class BackHistoryCComponent {
 
   pop() {
     this.navCtrl.pop();
+  }
+
+  rootToRedirected() {
+    this.navCtrl.navigateRoot('/standalone/back-history/redirected');
   }
 
   shallowUrlUpdate() {

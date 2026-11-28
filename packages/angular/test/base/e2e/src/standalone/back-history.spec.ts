@@ -196,6 +196,22 @@ test.describe('Back navigation browser history', () => {
     await ionPageVisible(page, 'app-back-history-d');
   });
 
+  test('should set the page a guard redirects to as root with navigateRoot', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/31071',
+    });
+
+    await page.locator('#root-to-redirected').click();
+    await ionPageVisible(page, 'app-back-history-d');
+    await expect(page).toHaveURL(/\/standalone\/back-history\/d$/);
+
+    // The previous pages are removed from the stack.
+    await expect(page.locator('app-back-history-a')).toHaveCount(0);
+    await expect(page.locator('app-back-history-b')).toHaveCount(0);
+    await expect(page.locator('app-back-history-c')).toHaveCount(0);
+  });
+
   test('ion-back-button should go back when the URL was changed outside the router', async ({ page }, testInfo) => {
     annotateIssue(testInfo);
 
